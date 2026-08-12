@@ -1,0 +1,133 @@
+"""Build AIRview, capture equal-budget context from both wikis, for one repo."""
+import asyncio, json, math, os, sqlite3, sys
+from pathlib import Path
+import httpx
+
+sys.path.insert(0, "/Users/arihantkaul/Documents/GitHub/Veridion/github-app")
+from scan_worker.live_wiki import (
+    attach_file_pages, generate_file_pages, generate_overview,
+    generate_subsystems, select_file_page_paths,
+)
+from aletheore.adapters.openai_compatible import OpenAICompatibleAdapter
+
+NAME = sys.argv[1]
+SRC = Path(f"/private/tmp/multi-{NAME}")
+RW = f"/private/tmp/multi-rw-{NAME}"
+BUDGET = 12000
+OUT = f"/private/tmp/bench/multi_{NAME}"
+os.makedirs(OUT, exist_ok=True)
+
+evidence = json.loads((SRC / ".aletheore" / "air.json").read_text())
+USAGE = {"in": 0, "out": 0}
+
+
+def adapter():
+    return OpenAICompatibleAdapter(
+        name="deepseek", base_url="https://api.deepseek.com/v1",
+        api_key_env_var="DEEPSEEK_API_KEY", model="deepseek-chat",
+        requires_consent=False,
+        on_usage=lambda i, o: (USAGE.__setitem__("in", USAGE["in"] + i),
+                               USAGE.__setitem__("out", USAGE["out"] + o)),
+    )
+
+
+def line_count(p):
+    try:
+        return sum(1 for _ in (SRC / p).open(errors="ignore"))
+    except Exception:
+        return None
+
+
+w = adapter()
+subs = generate_subsystems(evidence, adapter(), w, model_used="deepseek-chat",
+                           fetch_line_count=line_count)
+by_path = {f["path"]: s["name"] for s in subs for f in (s.get("files") or [])}
+planned = select_file_page_paths(evidence)
+pages = generate_file_pages(evidence, w, paths=planned, subsystem_by_path=by_path,
+                            fetch_line_count=line_count)
+attach_file_pages(subs, pages)
+ov = generate_overview(evidence, subs, w, fetch_line_count=line_count)
+print(f"{NAME}: {len(subs)} subsystems, {len(pages)}/{len(planned)} file pages, "
+      f"tokens {USAGE['in']}/{USAGE['out']}", file=sys.stderr)
+json.dump({"subsystems": subs, "overview": ov, "file_pages": pages},
+          open(f"{OUT}/airview.json", "w"), indent=2, default=str)
+
+# ---- AIRview retrieval units ----
+ovd = ov.get("description", "") if isinstance(ov, dict) else str(ov)
+units = [f"# Repository overview\n{ovd}"]
+for s in subs:
+    units.append(f"# Subsystem: {s['name']}\n{s['description']}")
+    for f in s.get("files") or []:
+        blk = f"## {f.get('path')} (subsystem: {s['name']})\nRole: {f.get('role','')}\n"
+        for k in f.get("key_symbols") or []:
+            blk += f"- `{k.get('name')}` (line {k.get('line')}): {k.get('explanation','')}\n"
+        if f.get("detail"):
+            blk += "\n" + f["detail"]
+        units.append(blk)
+
+
+def embed(texts):
+    out = []
+    for i in range(0, len(texts), 32):
+        r = httpx.post("http://localhost:11434/api/embed",
+                       json={"model": "nomic-embed-text", "input": texts[i:i + 32]}, timeout=600)
+        r.raise_for_status()
+        out.extend(r.json()["embeddings"])
+    return out
+
+
+def cos(a, b):
+    d = sum(x * y for x, y in zip(a, b))
+    return d / (math.sqrt(sum(x * x for x in a)) * math.sqrt(sum(y * y for y in b)) + 1e-9)
+
+
+qs = json.load(open("/private/tmp/bench/questions_arch_generic.json"))
+uvecs, qvecs = embed(units), embed([q["q"] for q in qs])
+
+# ---- RepoWise retrieval ----
+from repowise.cli.commands.init_cmd import _resolve_embedder
+from repowise.cli.providers.embedders import build_embedder
+from repowise.core.persistence.vector_store import LanceDBVectorStore
+
+db = sqlite3.connect(f"file:{RW}/.repowise/wiki.db?mode=ro", uri=True)
+
+
+def page_body(pid, title, snippet):
+    for q, a in (("select content from wiki_pages where id=?", pid),
+                 ("select content from wiki_pages where title=?", title)):
+        try:
+            r = db.execute(q, (a,)).fetchone()
+            if r and r[0]:
+                return r[0]
+        except Exception:
+            pass
+    return snippet or ""
+
+
+def pack(pieces):
+    buf = ""
+    for p in pieces:
+        if len(buf) >= BUDGET:
+            break
+        buf += p[: BUDGET - len(buf)] + "\n\n"
+    return buf[:BUDGET]
+
+
+async def main():
+    store = LanceDBVectorStore(f"{RW}/.repowise/lancedb",
+                               embedder=build_embedder(_resolve_embedder(None)))
+    rows = []
+    for q, qv in zip(qs, qvecs):
+        ranked = sorted(range(len(units)), key=lambda i: -cos(qv, uvecs[i]))
+        res = await store.search(q["q"], limit=5)
+        rows.append({
+            "id": q["id"], "q": q["q"],
+            "airview": pack([units[i] for i in ranked]),
+            "repowise": pack([f"[{r.title} | {r.target_path}]\n"
+                              f"{page_body(r.page_id, r.title, r.snippet)}" for r in res]),
+        })
+    await store.close()
+    json.dump(rows, open(f"{OUT}/arch_context.json", "w"), indent=2)
+    print(f"wrote {OUT}/arch_context.json", file=sys.stderr)
+
+asyncio.run(main())

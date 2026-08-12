@@ -1,0 +1,260 @@
+[
+  {
+    "id": "go01",
+    "q": "How does the router match an incoming URL path to a registered handler?",
+    "gt": [
+      "tree.go"
+    ],
+    "ranked_files": [
+      "gin.go",
+      "routergroup.go",
+      "tree.go",
+      "auth.go",
+      "debug.go",
+      "binding/uri.go"
+    ],
+    "latency_s": 0.10587270799442194
+  },
+  {
+    "id": "go02",
+    "q": "Where is the per-request object that carries state between middleware defined?",
+    "gt": [
+      "context.go"
+    ],
+    "ranked_files": [
+      "context.go",
+      "render/redirect.go",
+      "render/bson.go",
+      "binding/multipart_form_mapping.go",
+      "binding/form_mapping.go",
+      "ginS/gins.go",
+      "binding/plain.go",
+      "routergroup.go",
+      "gin.go"
+    ],
+    "latency_s": 0.1991507500060834
+  },
+  {
+    "id": "go03",
+    "q": "How does a handler chain advance to the next middleware?",
+    "gt": [
+      "context.go"
+    ],
+    "ranked_files": [
+      "context.go",
+      "gin.go",
+      "ginS/gins.go",
+      "routergroup.go",
+      "debug.go",
+      "logger.go"
+    ],
+    "latency_s": 0.2004944579966832
+  },
+  {
+    "id": "go04",
+    "q": "Where does the framework recover from a panic and turn it into a 500 response?",
+    "gt": [
+      "recovery.go"
+    ],
+    "ranked_files": [
+      "recovery.go",
+      "response_writer.go",
+      "context.go",
+      "version.go",
+      "binding/form_mapping.go",
+      "logger.go",
+      "gin.go",
+      "path.go"
+    ],
+    "latency_s": 0.21777862499584444
+  },
+  {
+    "id": "go05",
+    "q": "How are request bindings chosen based on the content type?",
+    "gt": [
+      "binding/binding.go"
+    ],
+    "ranked_files": [
+      "binding/binding.go",
+      "context.go",
+      "binding/binding_nomsgpack.go",
+      "binding/multipart_form_mapping.go",
+      "binding/form_mapping.go",
+      "binding/xml.go",
+      "binding/yaml.go",
+      "binding/plain.go",
+      "binding/header.go"
+    ],
+    "latency_s": 0.11219037498813123
+  },
+  {
+    "id": "go06",
+    "q": "Where is JSON rendered into the HTTP response body?",
+    "gt": [
+      "render/json.go"
+    ],
+    "ranked_files": [
+      "render/json.go",
+      "response_writer.go",
+      "render/render.go",
+      "render/redirect.go",
+      "codec/json/api.go",
+      "context.go",
+      "binding/json.go"
+    ],
+    "latency_s": 0.1058977080101613
+  },
+  {
+    "id": "go07",
+    "q": "How is HTTP basic authentication implemented as middleware?",
+    "gt": [
+      "auth.go"
+    ],
+    "ranked_files": [
+      "auth.go",
+      "routergroup.go",
+      "binding/binding.go",
+      "utils.go",
+      "internal/fs/fs.go",
+      "fs.go",
+      "gin.go",
+      "ginS/gins.go"
+    ],
+    "latency_s": 0.14781700001913123
+  },
+  {
+    "id": "go08",
+    "q": "Where does the framework write access log lines for each request?",
+    "gt": [
+      "logger.go"
+    ],
+    "ranked_files": [
+      "logger.go",
+      "response_writer.go",
+      "context.go",
+      "recovery.go",
+      "render/redirect.go",
+      "render/yaml.go"
+    ],
+    "latency_s": 0.10499491597875021
+  },
+  {
+    "id": "go09",
+    "q": "How are grouped routes with a shared prefix registered?",
+    "gt": [
+      "routergroup.go"
+    ],
+    "ranked_files": [
+      "routergroup.go",
+      "ginS/gins.go",
+      "gin.go",
+      "debug.go",
+      "codec/json/jsoniter.go",
+      "codec/json/go_json.go",
+      "codec/json/sonic.go"
+    ],
+    "latency_s": 0.1083209169737529
+  },
+  {
+    "id": "go10",
+    "q": "Where is the main engine struct that ties routing, middleware and rendering together?",
+    "gt": [
+      "gin.go"
+    ],
+    "ranked_files": [
+      "gin.go",
+      "routergroup.go",
+      "render/html.go",
+      "render/toml.go",
+      "render/xml.go",
+      "render/protobuf.go",
+      "render/bson.go",
+      "render/json.go"
+    ],
+    "latency_s": 0.09924820801825263
+  },
+  {
+    "id": "go11",
+    "q": "How are validation errors on a bound struct produced and reported?",
+    "gt": [
+      "binding/default_validator.go"
+    ],
+    "ranked_files": [
+      "binding/binding.go",
+      "binding/binding_nomsgpack.go",
+      "binding/default_validator.go",
+      "binding/protobuf.go",
+      "binding/uri.go",
+      "binding/form.go"
+    ],
+    "latency_s": 0.09430200001224875
+  },
+  {
+    "id": "go12",
+    "q": "Where are accumulated per-request errors collected and typed?",
+    "gt": [
+      "errors.go"
+    ],
+    "ranked_files": [
+      "context.go",
+      "logger.go",
+      "binding/multipart_form_mapping.go",
+      "errors.go",
+      "binding/form_mapping.go",
+      "binding/binding.go",
+      "binding/binding_nomsgpack.go",
+      "codec/json/api.go"
+    ],
+    "latency_s": 0.09607895798399113
+  },
+  {
+    "id": "go13",
+    "q": "How does the framework serve static files from a directory?",
+    "gt": [
+      "fs.go",
+      "routergroup.go"
+    ],
+    "ranked_files": [
+      "routergroup.go",
+      "ginS/gins.go",
+      "fs.go",
+      "context.go",
+      "gin.go",
+      "doc.go"
+    ],
+    "latency_s": 0.11119020800106227
+  },
+  {
+    "id": "go14",
+    "q": "Where is the response writer wrapped to capture the status code and size?",
+    "gt": [
+      "response_writer.go"
+    ],
+    "ranked_files": [
+      "response_writer.go",
+      "context.go",
+      "render/redirect.go",
+      "render/reader.go",
+      "gin.go",
+      "render/pdf.go",
+      "render/text.go"
+    ],
+    "latency_s": 0.09124966702074744
+  },
+  {
+    "id": "go15",
+    "q": "How is HTML template rendering configured and executed?",
+    "gt": [
+      "render/html.go"
+    ],
+    "ranked_files": [
+      "render/html.go",
+      "render/render.go",
+      "debug.go",
+      "gin.go",
+      "render/json.go",
+      "context.go"
+    ],
+    "latency_s": 0.10053075000178069
+  }
+]

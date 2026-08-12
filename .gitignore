@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+# Corpora are cloned at pinned commits by the runner, never committed.
+/corpora/
+/repos/

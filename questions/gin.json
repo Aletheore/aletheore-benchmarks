@@ -1,0 +1,17 @@
+[
+  {"id": "go01", "question": "How does the router match an incoming URL path to a registered handler?", "ground_truth_files": ["tree.go"], "verification_anchor": "func (n *node) getValue"},
+  {"id": "go02", "question": "Where is the per-request object that carries state between middleware defined?", "ground_truth_files": ["context.go"], "verification_anchor": "type Context struct"},
+  {"id": "go03", "question": "How does a handler chain advance to the next middleware?", "ground_truth_files": ["context.go"], "verification_anchor": "func (c *Context) Next"},
+  {"id": "go04", "question": "Where does the framework recover from a panic and turn it into a 500 response?", "ground_truth_files": ["recovery.go"], "verification_anchor": "func CustomRecoveryWithWriter"},
+  {"id": "go05", "question": "How are request bindings chosen based on the content type?", "ground_truth_files": ["binding/binding.go"], "verification_anchor": "func Default"},
+  {"id": "go06", "question": "Where is JSON rendered into the HTTP response body?", "ground_truth_files": ["render/json.go"], "verification_anchor": "func WriteJSON"},
+  {"id": "go07", "question": "How is HTTP basic authentication implemented as middleware?", "ground_truth_files": ["auth.go"], "verification_anchor": "func BasicAuth"},
+  {"id": "go08", "question": "Where does the framework write access log lines for each request?", "ground_truth_files": ["logger.go"], "verification_anchor": "func LoggerWithConfig"},
+  {"id": "go09", "question": "How are grouped routes with a shared prefix registered?", "ground_truth_files": ["routergroup.go"], "verification_anchor": "func (group *RouterGroup) Group"},
+  {"id": "go10", "question": "Where is the main engine struct that ties routing, middleware and rendering together?", "ground_truth_files": ["gin.go"], "verification_anchor": "type Engine struct"},
+  {"id": "go11", "question": "How are validation errors on a bound struct produced and reported?", "ground_truth_files": ["binding/default_validator.go"], "verification_anchor": "func (v *defaultValidator)"},
+  {"id": "go12", "question": "Where are accumulated per-request errors collected and typed?", "ground_truth_files": ["errors.go"], "verification_anchor": "type Error struct"},
+  {"id": "go13", "question": "How does the framework serve static files from a directory?", "ground_truth_files": ["fs.go", "routergroup.go"], "verification_anchor": "Static"},
+  {"id": "go14", "question": "Where is the response writer wrapped to capture the status code and size?", "ground_truth_files": ["response_writer.go"], "verification_anchor": "type responseWriter struct"},
+  {"id": "go15", "question": "How is HTML template rendering configured and executed?", "ground_truth_files": ["render/html.go"], "verification_anchor": "func (r HTMLProduction) Instance"}
+]

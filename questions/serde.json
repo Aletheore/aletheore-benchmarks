@@ -1,0 +1,124 @@
+[
+  {
+    "id": "rs01",
+    "question": "Where is the trait a type implements to describe how it is turned into a serialized form?",
+    "ground_truth_files": [
+      "serde_core/src/ser/mod.rs"
+    ],
+    "verification_anchor": "pub trait Serialize"
+  },
+  {
+    "id": "rs02",
+    "question": "Where is the trait a data format implements to drive deserialization?",
+    "ground_truth_files": [
+      "serde_core/src/de/mod.rs"
+    ],
+    "verification_anchor": "pub trait Deserializer"
+  },
+  {
+    "id": "rs03",
+    "question": "How are the standard library's own types taught to serialize?",
+    "ground_truth_files": [
+      "serde_core/src/ser/impls.rs"
+    ],
+    "verification_anchor": "impl Serialize for"
+  },
+  {
+    "id": "rs04",
+    "question": "How are the standard library's own types taught to deserialize?",
+    "ground_truth_files": [
+      "serde_core/src/de/impls.rs"
+    ],
+    "verification_anchor": "impl<'de> Deserialize<'de> for"
+  },
+  {
+    "id": "rs05",
+    "question": "Where is the error type that a deserializer reports failures through?",
+    "ground_truth_files": [
+      "serde_core/src/de/mod.rs"
+    ],
+    "verification_anchor": "pub trait Error"
+  },
+  {
+    "id": "rs06",
+    "question": "What code generates the serialization implementation for a user's struct at compile time?",
+    "ground_truth_files": [
+      "serde_derive/src/ser.rs"
+    ],
+    "verification_anchor": "fn serialize_struct"
+  },
+  {
+    "id": "rs07",
+    "question": "What code generates the deserialization implementation for a user's struct at compile time?",
+    "ground_truth_files": [
+      "serde_derive/src/de.rs"
+    ],
+    "verification_anchor": "fn deserialize_body"
+  },
+  {
+    "id": "rs08",
+    "question": "Where are the trait bounds inferred for the generated implementations?",
+    "ground_truth_files": [
+      "serde_derive/src/bound.rs"
+    ],
+    "verification_anchor": "fn with_bound"
+  },
+  {
+    "id": "rs09",
+    "question": "How is a value discarded during deserialization without being stored?",
+    "ground_truth_files": [
+      "serde_core/src/de/ignored_any.rs"
+    ],
+    "verification_anchor": "IgnoredAny"
+  },
+  {
+    "id": "rs10",
+    "question": "Where are the in-memory value types that can act as a deserializer defined?",
+    "ground_truth_files": [
+      "serde_core/src/de/value.rs"
+    ],
+    "verification_anchor": "pub struct StrDeserializer"
+  },
+  {
+    "id": "rs11",
+    "question": "How does the crate handle a serializer method that can never be called?",
+    "ground_truth_files": [
+      "serde_core/src/ser/impossible.rs"
+    ],
+    "verification_anchor": "pub struct Impossible"
+  },
+  {
+    "id": "rs12",
+    "question": "Where are the container and field attributes on a derive parsed?",
+    "ground_truth_files": [
+      "serde_derive_internals/src/attr.rs",
+      "serde_derive/src/internals/attr.rs"
+    ],
+    "verification_anchor": "rename"
+  },
+  {
+    "id": "rs13",
+    "question": "How are 128-bit integers supported given their conditional availability?",
+    "ground_truth_files": [
+      "serde/src/integer128.rs",
+      "serde_core/src/integer128.rs"
+    ],
+    "verification_anchor": "128"
+  },
+  {
+    "id": "rs14",
+    "question": "Where is the crate's public entry point that re-exports the main traits?",
+    "ground_truth_files": [
+      "serde/src/lib.rs"
+    ],
+    "verification_anchor": "pub use"
+  },
+  {
+    "id": "rs15",
+    "question": "What produces the code that pretends generated impls are used, to silence warnings?",
+    "ground_truth_files": [
+      "serde_derive/src/pretend.rs"
+    ],
+    "verification_anchor": "pretend"
+  }
+]

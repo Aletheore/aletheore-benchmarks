@@ -1,0 +1,72 @@
+{
+  "_comment": "Pinned corpora. Ground truth was verified against these exact commits; a different checkout invalidates the answer key and the runners refuse to score against it.",
+  "repos": [
+    {
+      "name": "flask",
+      "url": "https://github.com/pallets/flask",
+      "commit": "2a8a38b051fc248865730bf3511bf2e2ea325e81",
+      "language": "python",
+      "questions": [
+        "location.json",
+        "architecture.json"
+      ]
+    },
+    {
+      "name": "gin",
+      "url": "https://github.com/gin-gonic/gin",
+      "commit": "34dac20",
+      "language": "go",
+      "questions": [
+        "gin.json"
+      ]
+    },
+    {
+      "name": "serde",
+      "url": "https://github.com/serde-rs/serde",
+      "commit": "747814f",
+      "language": "rust",
+      "questions": [
+        "serde.json"
+      ]
+    },
+    {
+      "name": "requests",
+      "url": "https://github.com/psf/requests",
+      "commit": "806835628897",
+      "language": "python",
+      "questions": [
+        "architecture_generic.json"
+      ]
+    },
+    {
+      "name": "httpx",
+      "url": "https://github.com/encode/httpx",
+      "commit": "b5addb64f016",
+      "language": "python",
+      "questions": [
+        "architecture_generic.json"
+      ]
+    },
+    {
+      "name": "attrs",
+      "url": "https://github.com/python-attrs/attrs",
+      "commit": "c1dc5dcba16e",
+      "language": "python",
+      "questions": []
+    },
+    {
+      "name": "express",
+      "url": "https://github.com/expressjs/express",
+      "commit": "a371447",
+      "language": "javascript",
+      "questions": []
+    },
+    {
+      "name": "axios",
+      "url": "https://github.com/axios/axios",
+      "commit": "e0a02dd",
+      "language": "javascript",
+      "questions": []
+    }
+  ]
+}

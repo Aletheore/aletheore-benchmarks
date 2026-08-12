@@ -1,0 +1,14 @@
+[
+  {"id": "g01", "q": "Explain the overall architecture of this codebase: what are the major components and how do they relate?"},
+  {"id": "g02", "q": "What is the main entry point, and what happens step by step when the primary operation runs?"},
+  {"id": "g03", "q": "How is this project's public API separated from its internal implementation, and why is it split that way?"},
+  {"id": "g04", "q": "How does the codebase handle errors and exceptions, and where can a user intervene?"},
+  {"id": "g05", "q": "What is the configuration model, and how are settings resolved and layered?"},
+  {"id": "g06", "q": "How is state managed across a single operation, and what keeps concurrent operations isolated?"},
+  {"id": "g07", "q": "What are the main extension points a third-party package would hook into?"},
+  {"id": "g08", "q": "How does this project handle I/O, and what abstractions sit between the core logic and the outside world?"},
+  {"id": "g09", "q": "What are the most important data structures or types, and what invariants do they maintain?"},
+  {"id": "g10", "q": "How is the codebase tested, and what does the test structure reveal about its design?"},
+  {"id": "g11", "q": "Which parts of this codebase are most tightly coupled, and where are the clean boundaries?"},
+  {"id": "g12", "q": "If I needed to add a new feature to the core, which files would I touch and in what order?"}
+]
