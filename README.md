@@ -53,7 +53,14 @@ We win on locating code, and on setup cost ($0.00 / 74 s against $0.18 / ~7 min)
 
 ## Reproducing
 
+**Aletheore v0.8.0.** Every result below was produced by that release; earlier
+versions differ materially, because 0.8.0 is where import resolution was
+repaired for JavaScript, Rust and C#, and where module-level constants began
+being extracted in all 11 languages.
+
 ```bash
+pip install "aletheore==0.8.0"
+
 git clone https://github.com/pallets/flask /tmp/bench-flask
 git -C /tmp/bench-flask checkout 2a8a38b051fc248865730bf3511bf2e2ea325e81
 
@@ -79,7 +86,8 @@ That defect invalidated our own first run.
 | `questions/` | 86 questions across 5 sets, every ground-truth anchor mechanically verified |
 | `scripts/` | runners, scorers, the blind judge, the language-coverage matrix |
 | `results/` | raw per-query output — recompute any number without an API key |
-| `corpora.json` | pinned commits for all 8 corpora |
+| `corpora.json` | pinned commits for all corpora |
+| `CORPUS_PLAN.md` | the 11-language programme: repos, procedure, cost, and what was rejected |
 | `METHODOLOGY.md` | full method, every adjustment made in RepoWise's favour, errors caught in our own runs |
 | `REPRODUCIBILITY.md` | versions; what reproduces bit-for-bit and what does not |
 | `LANGUAGE_COVERAGE.md` | scanner coverage across all 11 supported languages |

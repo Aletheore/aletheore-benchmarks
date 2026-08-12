@@ -6,7 +6,7 @@ Read this before citing any number here as settled.
 
 | | version |
 |---|---|
-| Aletheore | 0.7.2 |
+| Aletheore | **0.8.0** |
 | RepoWise | 0.27.0 |
 | Ollama | 0.32.6 |
 | Embedding model (both tools) | `nomic-embed-text` (768-dim) |
@@ -48,11 +48,13 @@ gap figure is not.
 months calls a different model. Nothing here pins a model snapshot, so a later
 run measures a different system.
 
-**Aletheore version affects the retrieval number.** The committed
-`results_aletheore.json` (75.0% top-1) was produced by the code in this PR.
-A build that also carries the search-index chunking change — deliberately
-excluded here, see AIRVIEW_GAP.md — scores 71.9% instead. Reproduce against the
-PR's code, not a later checkout.
+**The Aletheore version materially affects every retrieval number.** 0.8.0 is
+where import resolution was repaired for JavaScript, Rust and C#, where
+module-level constants started being extracted in all 11 languages, and where
+each symbol chunk began carrying its file's header comment. Running these
+questions against 0.7.x measures a different scanner and will not reproduce
+these figures — Rust in particular scanned with **zero** import edges before
+0.8.0, so its dependency graph, clustering and ranking were all degenerate.
 
 ## Known scope limits
 
