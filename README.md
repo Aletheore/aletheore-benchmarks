@@ -21,17 +21,61 @@ re-indexed from scratch, local `nomic-embed-text` embeddings, no API key:
 | gin | Go | **80.0%** | 100% | 100% | 0.878 | 15 |
 | flask | Python | **68.8%** | 93.8% | 100% | 0.816 | 32 |
 | serde | Rust | **53.3%** | 66.7% | 73.3% | 0.617 | 15 |
+| gson | Java | **33.3%** | 66.7% | 66.7% | 0.498 | 15 |
+| jekyll | Ruby | **26.7%** | 33.3% | 46.7% | 0.337 | 15 |
 | Slim | PHP | **26.7%** | 60.0% | 66.7% | 0.458 | 15 |
+| zod | TypeScript | **20.0%** | 40.0% | 40.0% | 0.289 | 15 |
 
-Raw per-query output for all four is in `results/results_*_0.8.5.json`.
+Raw per-query output for all seven is in `results/results_*_0.8.5.json`.
 
-**PHP is our weakest language and the table says so.** Every one of Slim's six
-top-5 misses is a topical *sibling* of the right answer — asked where route
-arguments reach the handler, we return `RequestResponseNamedArgs.php` and
-`RequestResponseArgs.php` but not the `RequestResponse.php` they are variants
-of. The canonical file is crowded out by its own near-duplicates. An
-import-authority prior was tried against this and rejected: it fixed the PHP
-case but cost flask 6.2 points of top-1, which is a bad trade.
+**The spread is the finding.** Go and Python are strong; Java, Ruby, PHP and
+TypeScript are not, and the four weak corpora were measured last, so the
+published average would have looked considerably better had we stopped at three
+languages. Two causes are identified and quantified below; a third is not yet
+explained, and one plausible cause was tested and ruled out.
+
+**Caveat on the four newest sets.** The jekyll, zod and gson questions were
+authored in one sitting, deliberately avoiding the projects' own vocabulary so
+that lexical matching could not shortcut them. They may simply be harder than
+the flask and gin sets rather than the languages being worse served. That
+confound is *not* yet controlled for, and no claim about "Ruby is weaker than
+Go" should be drawn from this table until it is.
+
+#### Why the weak corpora are weak
+
+**Near-duplicate crowding (PHP).** Every one of Slim's six top-5 misses is a
+topical *sibling* of the right answer — asked where route arguments reach the
+handler, we return `RequestResponseNamedArgs.php` and `RequestResponseArgs.php`
+but not the `RequestResponse.php` they are variants of. The canonical file is
+buried by its own variants. An import-authority prior (rank bonus proportional
+to how many files import a file) was implemented and measured against this: it
+fixes the PHP case but costs flask 6.2 points of top-1, so it was **rejected**.
+The sweep is reproducible — the weight is the only knob.
+
+**Sibling-module pollution (TypeScript, Java).** In a repository holding more
+than one module, results are drawn from modules that are not the library:
+
+| corpus | top-5 slots spent outside the library subtree |
+|---|---|
+| zod | 21/75 (**28%**) — `packages/docs`, `packages/bench`, `packages/resolution` |
+| gson | 16/75 (**21%**) — `proto/`, `metrics/`, `extras/` |
+| jekyll | 5/75 (7%) |
+| flask | 7/160 (4%) |
+| serde, Slim | 0% |
+
+Roughly a quarter of zod's answer budget goes to documentation and benchmark
+code. Nothing in the index distinguishes "the library" from "everything else
+that happens to live in the repository".
+
+**Not the cause: file size.** The obvious explanation — that big central files
+lose to small peripheral ones — was tested across all seven corpora and is
+false. The top-1 result is *larger* than the ground-truth file in 80–94% of
+flask and gin questions. There is no systematic size bias in either direction.
+
+**Unexplained: Ruby.** jekyll is single-module, so pollution accounts for almost
+none of its 26.7%. Its misses are conceptual — asked for the object that drives
+the build, it returns `commands/build.rb` rather than `site.rb`. No mechanism
+has been established, and none is claimed.
 
 **These numbers replace an earlier table that did not reproduce.** The previous
 revision listed flask at 71.9% / 96.9% / 100%, which matched no committed
@@ -78,8 +122,9 @@ Stated here rather than in a footnote:
 
 - **RepoWise retrieval is faster in-process** — 68 ms against our 125 ms.
 - **RepoWise's wiki scores higher**, in every configuration tested.
-- **PHP is our weakest language** at 26.7% top-1, against 80.0% for Go, and the
-  cause is understood and unfixed — see the note under the retrieval table.
+- **Four of seven languages measured are weak** — TypeScript 20.0% top-1, Ruby
+  and PHP 26.7%, Java 33.3%, against 80.0% for Go. Two causes are quantified
+  under the retrieval table, one is unexplained, and none is fixed.
 - **An earlier revision of this README published flask figures that did not
   reproduce.** They are corrected above, and how it happened is in
   METHODOLOGY.md.
@@ -122,7 +167,7 @@ That defect invalidated our own first run.
 
 | path | what |
 |---|---|
-| `questions/` | 101 questions across 6 sets, every ground-truth anchor mechanically verified |
+| `questions/` | 146 questions across 9 sets, every ground-truth anchor mechanically verified |
 | `scripts/` | runners, scorers, the blind judge, the language-coverage matrix |
 | `results/` | raw per-query output — recompute any number without an API key |
 | `corpora.json` | pinned commits for all corpora |
@@ -146,8 +191,8 @@ RepoWise scored 2.35 against one configuration and 2.25 against another on
 byte-identical input. Only the within-run gap is comparable across
 configurations.
 
-**Scope is small.** Four languages measured for retrieval, one repository for
-the wiki comparison, 101 questions in total. RepoWise's own published benchmark
+**Scope is small.** Seven languages measured for retrieval, one repository for
+the wiki comparison, 146 questions in total. RepoWise's own published benchmark
 spans 21 repositories and 9 languages; we are not claiming parity of coverage.
 
 ## Licence

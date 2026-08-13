@@ -39,6 +39,33 @@
       ]
     },
     {
+      "name": "jekyll",
+      "url": "https://github.com/jekyll/jekyll",
+      "commit": "74d751339d3e534aa51d5d7b0640e9bd743509e4",
+      "language": "ruby",
+      "questions": [
+        "jekyll.json"
+      ]
+    },
+    {
+      "name": "zod",
+      "url": "https://github.com/colinhacks/zod",
+      "commit": "2715c12e76cf022d7dbdeb5852c09fddfe91a481",
+      "language": "typescript",
+      "questions": [
+        "zod.json"
+      ]
+    },
+    {
+      "name": "gson",
+      "url": "https://github.com/google/gson",
+      "commit": "119818bc666d3b9f897d6c0ca7546ce28e9bbcac",
+      "language": "java",
+      "questions": [
+        "gson.json"
+      ]
+    },
+    {
       "name": "requests",
       "url": "https://github.com/psf/requests",
       "commit": "806835628897",

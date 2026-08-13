@@ -9,9 +9,9 @@ build stays affordable. Status tracks how far each corpus has progressed.
 | Go | gin-gonic/gin | 12 MB | 82k | 15 | **search done** (0.8.5), wiki pending |
 | Rust | serde-rs/serde | 12 MB | 9k | 15 | **search done** (0.8.5), wiki pending |
 | JavaScript | expressjs/express | 8 MB | 66k | — | scanned, questions pending |
-| TypeScript | colinhacks/zod | 23 MB | 43k | — | not started |
-| Java | google/gson | 22 MB | 24k | — | not started |
-| Ruby | sinatra/sinatra | 7 MB | 12k | — | not started |
+| TypeScript | colinhacks/zod | 23 MB | 43k | 15 | **search done** (0.8.5), wiki pending |
+| Java | google/gson | 22 MB | 24k | 15 | **search done** (0.8.5), wiki pending |
+| Ruby | jekyll/jekyll | 10 MB | 50k | 15 | **search done** (0.8.5), wiki pending |
 | PHP | slimphp/Slim | 7 MB | 12k | 15 | **search done** (0.8.5), wiki pending |
 | C | jqlang/jq | 7 MB | 35k | — | not started |
 | C++ | fmtlib/fmt | 17 MB | 23k | — | not started |
@@ -26,6 +26,13 @@ Rejected, with reasons, so nobody re-proposes them:
   under test.
 - **curl/curl** (C, 141 MB) — jq gives the same language coverage at a
   twentieth of the size.
+- **sinatra/sinatra** (Ruby, 7 MB) — proposed and then rejected on inspection,
+  for the same reason as nlohmann/json. Its library is seven files, and
+  `lib/sinatra/base.rb` is 2,173 lines holding Request, Response, Base,
+  Application and Wrapper. Almost every location question would answer
+  "base.rb", which tests nothing about cross-file retrieval. Replaced by
+  **jekyll/jekyll**, whose 89 library files across `lib/jekyll/` exercise it
+  properly.
 - **MultiPL-E** — proposed as a "multi-language gold standard" and rejected on
   inspection: it is HumanEval/MBPP translated into ~18 languages, so every
   problem is a single self-contained function. No repositories, no cross-file

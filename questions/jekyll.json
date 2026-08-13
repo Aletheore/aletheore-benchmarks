@@ -1,0 +1,17 @@
+[
+  {"id": "rb01", "question": "Where is the central object that holds everything about the build and drives it?", "ground_truth_files": ["lib/jekyll/site.rb"], "verification_anchor": "class Site"},
+  {"id": "rb02", "question": "Where is a single piece of authored content with front matter represented?", "ground_truth_files": ["lib/jekyll/document.rb"], "verification_anchor": "class Document"},
+  {"id": "rb03", "question": "How are related pieces of content grouped and read in together?", "ground_truth_files": ["lib/jekyll/collection.rb"], "verification_anchor": "class Collection"},
+  {"id": "rb04", "question": "Where does a piece of content get turned into its final output text?", "ground_truth_files": ["lib/jekyll/renderer.rb"], "verification_anchor": "class Renderer"},
+  {"id": "rb05", "question": "Where is the reusable wrapper that surrounds rendered content represented?", "ground_truth_files": ["lib/jekyll/layout.rb"], "verification_anchor": "class Layout"},
+  {"id": "rb06", "question": "Where is the contract for turning one markup language into another defined?", "ground_truth_files": ["lib/jekyll/converter.rb"], "verification_anchor": "class Converter"},
+  {"id": "rb07", "question": "What walks the source directory and loads everything found there?", "ground_truth_files": ["lib/jekyll/reader.rb"], "verification_anchor": "class Reader"},
+  {"id": "rb08", "question": "How are stale files removed from the destination before or after a build?", "ground_truth_files": ["lib/jekyll/cleaner.rb"], "verification_anchor": "class Cleaner"},
+  {"id": "rb09", "question": "Where are user settings merged with the defaults and normalised?", "ground_truth_files": ["lib/jekyll/configuration.rb"], "verification_anchor": "class Configuration"},
+  {"id": "rb10", "question": "Where is a standalone document that is not part of a series represented?", "ground_truth_files": ["lib/jekyll/page.rb"], "verification_anchor": "class Page"},
+  {"id": "rb11", "question": "How is an asset that is copied across untouched handled?", "ground_truth_files": ["lib/jekyll/static_file.rb"], "verification_anchor": "class StaticFile"},
+  {"id": "rb12", "question": "How does the build decide which files actually need rebuilding?", "ground_truth_files": ["lib/jekyll/regenerator.rb"], "verification_anchor": "class Regenerator"},
+  {"id": "rb13", "question": "Where is an installed appearance package located and its directories resolved?", "ground_truth_files": ["lib/jekyll/theme.rb"], "verification_anchor": "class Theme"},
+  {"id": "rb14", "question": "How are third-party extensions discovered and loaded at startup?", "ground_truth_files": ["lib/jekyll/plugin_manager.rb"], "verification_anchor": "class PluginManager"},
+  {"id": "rb15", "question": "Where is the template engine invoked and its timings recorded?", "ground_truth_files": ["lib/jekyll/liquid_renderer.rb"], "verification_anchor": "class LiquidRenderer"}
+]
