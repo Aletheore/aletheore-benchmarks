@@ -1,0 +1,272 @@
+[
+  {
+    "id": "vcs01",
+    "q": "Where is AutoMapper's IMapperBase defined?",
+    "gt": [
+      "src/AutoMapper/Mapper.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Mapper.cs",
+      "src/AutoMapper/Mappers/MapperRegistry.cs",
+      "src/AutoMapper/Mappers/AssignableMapper.cs",
+      "src/AutoMapper/Configuration/Annotations/IMemberConfigurationProvider.cs",
+      "src/AutoMapper/Mappers/ConvertMapper.cs",
+      "src/AutoMapper/ResolutionContext.cs",
+      "src/AutoMapper/Mappers/ConstructorMapper.cs",
+      "src/AutoMapper/Mappers/UnderlyingEnumTypeMapper.cs",
+      "src/AutoMapper/Mappers/ParseStringMapper.cs"
+    ],
+    "latency_s": 0.0754808750061784
+  },
+  {
+    "id": "vcs02",
+    "q": "Where is AutoMapper's TypeMap defined?",
+    "gt": [
+      "src/AutoMapper/TypeMap.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/TypeMap.cs",
+      "src/AutoMapper/Configuration/MappingExpression.cs",
+      "src/AutoMapper/MemberMap.cs",
+      "src/AutoMapper/Configuration/MapperConfiguration.cs",
+      "src/AutoMapper/Features.cs",
+      "src/AutoMapper/Internal/InternalApi.cs",
+      "src/AutoMapper/Configuration/TypeMapConfiguration.cs",
+      "src/AutoMapper/PathMap.cs"
+    ],
+    "latency_s": 0.059930833987891674
+  },
+  {
+    "id": "vcs03",
+    "q": "Where is AutoMapper's PropertyMap defined?",
+    "gt": [
+      "src/AutoMapper/PropertyMap.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/PropertyMap.cs",
+      "src/AutoMapper/TypeMap.cs",
+      "src/AutoMapper/Internal/InternalApi.cs",
+      "src/AutoMapper/Configuration/Profile.cs",
+      "src/AutoMapper/Configuration/MemberConfigurationExpression.cs",
+      "src/AutoMapper/Execution/TypeMapPlanBuilder.cs",
+      "src/UnitTests/AutoMapperSpecBase.cs"
+    ],
+    "latency_s": 0.06037412499426864
+  },
+  {
+    "id": "vcs04",
+    "q": "Where is AutoMapper's ResolutionContext defined?",
+    "gt": [
+      "src/AutoMapper/ResolutionContext.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/ResolutionContext.cs",
+      "src/AutoMapper/Configuration/MapperConfiguration.cs",
+      "src/AutoMapper/Configuration/CtorParamConfigurationExpression.cs",
+      "src/AutoMapper.DI.Tests/Profiles.cs",
+      "src/AutoMapper/Mapper.cs",
+      "src/AutoMapper/Internal/InternalApi.cs",
+      "src/AutoMapper/Licensing/ProductType.cs",
+      "src/AutoMapper/Licensing/Edition.cs"
+    ],
+    "latency_s": 0.05837287500617094
+  },
+  {
+    "id": "vcs05",
+    "q": "Where is AutoMapper's IConfigurationProvider defined?",
+    "gt": [
+      "src/AutoMapper/Configuration/MapperConfiguration.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Mapper.cs",
+      "src/AutoMapper/Internal/InternalApi.cs",
+      "src/AutoMapper/Configuration/MapperConfiguration.cs",
+      "src/UnitTests/AutoMapperSpecBase.cs",
+      "src/AutoMapper/Configuration/Annotations/IMemberConfigurationProvider.cs",
+      "src/AutoMapper.DI.Tests/AppDomainResolutionTests.cs",
+      "src/AutoMapper.DI.Tests/TypeResolutionTests.cs",
+      "src/AutoMapper.DI.Tests/AssemblyResolutionTests.cs"
+    ],
+    "latency_s": 0.06704537500627339
+  },
+  {
+    "id": "vcs06",
+    "q": "Where is AutoMapper's ConfigurationValidator defined?",
+    "gt": [
+      "src/AutoMapper/Configuration/ConfigurationValidator.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Configuration/ConfigurationValidator.cs",
+      "src/AutoMapper/Configuration/MapperConfiguration.cs",
+      "src/AutoMapper/Configuration/Annotations/IMemberConfigurationProvider.cs",
+      "src/AutoMapper/Configuration/SourceMappingExpression.cs",
+      "src/AutoMapper/Licensing/Edition.cs",
+      "src/AutoMapper/Licensing/ProductType.cs",
+      "src/AutoMapper/Mappers/MapperRegistry.cs",
+      "src/AutoMapper/Licensing/License.cs"
+    ],
+    "latency_s": 0.054345833021216094
+  },
+  {
+    "id": "vcs07",
+    "q": "Where is AutoMapper's ISourceToDestinationNameMapper defined?",
+    "gt": [
+      "src/AutoMapper/Configuration/Conventions.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Configuration/Conventions.cs",
+      "src/AutoMapper/Mappers/ToStringMapper.cs",
+      "src/AutoMapper/Mappers/UnderlyingEnumTypeMapper.cs",
+      "src/AutoMapper/Mappers/AssignableMapper.cs",
+      "src/AutoMapper/Mappers/NullableDestinationMapper.cs",
+      "src/AutoMapper/Mappers/MapperRegistry.cs",
+      "src/AutoMapper/Mappers/ParseStringMapper.cs",
+      "src/AutoMapper/Mappers/NullableSourceMapper.cs",
+      "src/AutoMapper/Configuration/SourceMappingExpression.cs"
+    ],
+    "latency_s": 0.047109332983382046
+  },
+  {
+    "id": "vcs08",
+    "q": "Where is AutoMapper's IValueResolver defined?",
+    "gt": [
+      "src/AutoMapper/Execution/TypeMapPlanBuilder.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/MemberMap.cs",
+      "src/AutoMapper/Execution/TypeMapPlanBuilder.cs",
+      "src/AutoMapper.DI.Tests/Profiles.cs",
+      "src/AutoMapper/Mappers/AssignableMapper.cs",
+      "src/AutoMapper/Configuration/MemberConfigurationExpression.cs",
+      "src/AutoMapper/Mappers/UnderlyingEnumTypeMapper.cs"
+    ],
+    "latency_s": 0.05205679198843427
+  },
+  {
+    "id": "vcs09",
+    "q": "Where is AutoMapper's ObjectFactory defined?",
+    "gt": [
+      "src/AutoMapper/Execution/ObjectFactory.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Execution/ObjectFactory.cs",
+      "src/AutoMapper/Mappers/AssignableMapper.cs",
+      "src/AutoMapper/Mappers/ConstructorMapper.cs",
+      "src/AutoMapper/Mappers/ConvertMapper.cs",
+      "src/AutoMapper/Mappers/UnderlyingEnumTypeMapper.cs",
+      "src/AutoMapper/Mappers/NullableDestinationMapper.cs",
+      "src/AutoMapper/Mappers/ParseStringMapper.cs",
+      "src/AutoMapper/Mappers/ToStringMapper.cs",
+      "src/AutoMapper/Mappers/MapperRegistry.cs"
+    ],
+    "latency_s": 0.04932225000811741
+  },
+  {
+    "id": "vcs10",
+    "q": "Where is AutoMapper's ProxyGenerator defined?",
+    "gt": [
+      "src/AutoMapper/Execution/ProxyGenerator.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Execution/ProxyGenerator.cs",
+      "src/AutoMapper/QueryableExtensions/ProjectionMappers/NullableSourceProjectionMapper.cs",
+      "src/AutoMapper/QueryableExtensions/ProjectionMappers/EnumProjectionMapper.cs",
+      "src/AutoMapper/Mappers/UnderlyingEnumTypeMapper.cs",
+      "src/AutoMapper/QueryableExtensions/ProjectionMappers/AssignableProjectionMapper.cs",
+      "src/AutoMapper/Execution/ObjectFactory.cs",
+      "src/UnitTests/AutoMapperTester.cs",
+      "src/AutoMapper/Licensing/Edition.cs",
+      "src/AutoMapper/Licensing/ProductType.cs"
+    ],
+    "latency_s": 0.053363375016488135
+  },
+  {
+    "id": "vcs11",
+    "q": "Where is AutoMapper's Extensions defined?",
+    "gt": [
+      "src/AutoMapper/QueryableExtensions/Extensions.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/QueryableExtensions/Extensions.cs",
+      "src/AutoMapper/Configuration/MapperConfigurationExpression.cs",
+      "src/AutoMapper/Configuration/MapperConfiguration.cs",
+      "src/AutoMapper/AutoMapperMappingException.cs",
+      "src/AutoMapper.DI.Tests/AttributeTests.cs",
+      "src/AutoMapper.DI.Tests/AppDomainResolutionTests.cs",
+      "src/AutoMapper/QueryableExtensions/ProjectionMappers/EnumProjectionMapper.cs",
+      "src/AutoMapper.DI.Tests/ServiceProviderTests.cs"
+    ],
+    "latency_s": 0.0570424159814138
+  },
+  {
+    "id": "vcs12",
+    "q": "Where is AutoMapper's AutoMapperMappingException defined?",
+    "gt": [
+      "src/AutoMapper/AutoMapperMappingException.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/AutoMapperMappingException.cs",
+      "src/AutoMapper/Configuration/MapperConfiguration.cs",
+      "src/AutoMapper/Execution/TypeMapPlanBuilder.cs",
+      "src/AutoMapper/Mappers/AssignableMapper.cs",
+      "src/AutoMapper/Mappers/MapperRegistry.cs",
+      "src/AutoMapper/QueryableExtensions/ProjectionBuilder.cs",
+      "src/AutoMapper/Mappers/ParseStringMapper.cs",
+      "src/AutoMapper/Mappers/UnderlyingEnumTypeMapper.cs",
+      "src/AutoMapper/Mappers/ToStringMapper.cs"
+    ],
+    "latency_s": 0.06439504100126214
+  },
+  {
+    "id": "vcs13",
+    "q": "Where is AutoMapper's ProfileMap defined?",
+    "gt": [
+      "src/AutoMapper/ProfileMap.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/ProfileMap.cs",
+      "src/AutoMapper/Configuration/Conventions.cs",
+      "src/AutoMapper/Internal/TypeDetails.cs",
+      "src/AutoMapper/Mappers/ToStringDictionaryMapper.cs",
+      "src/AutoMapper/Mappers/NullableDestinationMapper.cs",
+      "src/AutoMapper/Mappers/ToDynamicMapper.cs",
+      "src/AutoMapper/Mappers/FromStringDictionaryMapper.cs",
+      "src/AutoMapper/Mappers/FromDynamicMapper.cs"
+    ],
+    "latency_s": 0.06486650000442751
+  },
+  {
+    "id": "vcs14",
+    "q": "Where is AutoMapper's ConstructorMap defined?",
+    "gt": [
+      "src/AutoMapper/ConstructorMap.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/ConstructorMap.cs",
+      "src/AutoMapper/TypeMap.cs",
+      "src/AutoMapper/Mappers/ConstructorMapper.cs",
+      "src/AutoMapper/Execution/TypeMapPlanBuilder.cs",
+      "src/AutoMapper/Mappers/AssignableMapper.cs",
+      "src/AutoMapper/Mappers/UnderlyingEnumTypeMapper.cs",
+      "src/AutoMapper/Mappers/MapperRegistry.cs",
+      "src/AutoMapper/Mappers/ConvertMapper.cs"
+    ],
+    "latency_s": 0.06908041701535694
+  },
+  {
+    "id": "vcs15",
+    "q": "Where is AutoMapper's MemberPath defined?",
+    "gt": [
+      "src/AutoMapper/Internal/MemberPath.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Internal/MemberPath.cs",
+      "src/AutoMapper/TypeMap.cs",
+      "src/AutoMapper/PathMap.cs",
+      "src/AutoMapper/QueryableExtensions/ProjectionBuilder.cs",
+      "src/AutoMapper/MemberMap.cs",
+      "src/AutoMapper/Execution/ExpressionBuilder.cs"
+    ],
+    "latency_s": 0.06969587499042973
+  }
+]

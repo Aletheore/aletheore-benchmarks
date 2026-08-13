@@ -1,0 +1,122 @@
+[
+ {
+  "id": "cpp01",
+  "question": "Where is the core machinery that turns a template and arguments into text?",
+  "ground_truth_files": [
+   "include/fmt/format.h"
+  ],
+  "verification_anchor": "is_contiguous"
+ },
+ {
+  "id": "cpp02",
+  "question": "Where are the fundamental building blocks every other header depends on?",
+  "ground_truth_files": [
+   "include/fmt/base.h"
+  ],
+  "verification_anchor": "FMT_API"
+ },
+ {
+  "id": "cpp03",
+  "question": "How are dates, times and durations rendered?",
+  "ground_truth_files": [
+   "include/fmt/chrono.h"
+  ],
+  "verification_anchor": "utc_clock"
+ },
+ {
+  "id": "cpp04",
+  "question": "How is coloured or styled terminal output produced?",
+  "ground_truth_files": [
+   "include/fmt/color.h"
+  ],
+  "verification_anchor": "class color"
+ },
+ {
+  "id": "cpp05",
+  "question": "Where is the older percent-style formatting supported?",
+  "ground_truth_files": [
+   "include/fmt/printf.h"
+  ],
+  "verification_anchor": "basic_printf_context"
+ },
+ {
+  "id": "cpp06",
+  "question": "How are containers and tuples printed element by element?",
+  "ground_truth_files": [
+   "include/fmt/ranges.h"
+  ],
+  "verification_anchor": "range_format"
+ },
+ {
+  "id": "cpp07",
+  "question": "Where are files and other operating system handles written to?",
+  "ground_truth_files": [
+   "include/fmt/os.h"
+  ],
+  "verification_anchor": "basic_cstring_view"
+ },
+ {
+  "id": "cpp08",
+  "question": "How is the work of parsing a template moved to build time?",
+  "ground_truth_files": [
+   "include/fmt/compile.h"
+  ],
+  "verification_anchor": "compiled_string"
+ },
+ {
+  "id": "cpp09",
+  "question": "How does a type that only knows how to stream itself get formatted?",
+  "ground_truth_files": [
+   "include/fmt/ostream.h"
+  ],
+  "verification_anchor": "file_access"
+ },
+ {
+  "id": "cpp10",
+  "question": "Where is support for standard library types added?",
+  "ground_truth_files": [
+   "include/fmt/std.h"
+  ],
+  "verification_anchor": "bitint"
+ },
+ {
+  "id": "cpp11",
+  "question": "Where are the heavy template instantiations compiled once into the library instead of in every translation unit?",
+  "ground_truth_files": [
+   "src/format.cc"
+  ],
+  "verification_anchor": "dragonbox::to_decimal"
+ },
+ {
+  "id": "cpp12",
+  "question": "Where are the operating system calls actually implemented?",
+  "ground_truth_files": [
+   "src/os.cc"
+  ],
+  "verification_anchor": "buffered_file"
+ },
+ {
+  "id": "cpp13",
+  "question": "How are arguments stored and passed along without templates leaking everywhere?",
+  "ground_truth_files": [
+   "include/fmt/args.h"
+  ],
+  "verification_anchor": "dynamic_format_arg_store"
+ },
+ {
+  "id": "cpp14",
+  "question": "Where is the header that exists only for backwards compatibility?",
+  "ground_truth_files": [
+   "include/fmt/core.h"
+  ],
+  "verification_anchor": "format.h"
+ },
+ {
+  "id": "cpp15",
+  "question": "Where are the slower conversion routines kept out of the fast path?",
+  "ground_truth_files": [
+   "include/fmt/format-inl.h"
+  ],
+  "verification_anchor": "assert_fail"
+ }
+]

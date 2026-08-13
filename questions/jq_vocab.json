@@ -1,0 +1,122 @@
+[
+ {
+  "id": "vc01",
+  "question": "Where is jq's frame_get_level defined?",
+  "ground_truth_files": [
+   "src/execute.c"
+  ],
+  "verification_anchor": "frame_get_level"
+ },
+ {
+  "id": "vc02",
+  "question": "Where is jq's inst_block defined?",
+  "ground_truth_files": [
+   "src/compile.c"
+  ],
+  "verification_anchor": "inst_block"
+ },
+ {
+  "id": "vc03",
+  "question": "Where is jq's parser_init defined?",
+  "ground_truth_files": [
+   "src/jv_parse.c"
+  ],
+  "verification_anchor": "parser_init"
+ },
+ {
+  "id": "vc04",
+  "question": "Where is jq's jq_set_colors defined?",
+  "ground_truth_files": [
+   "src/jv_print.c"
+  ],
+  "verification_anchor": "jq_set_colors"
+ },
+ {
+  "id": "vc05",
+  "question": "Where is jq's binop_plus defined?",
+  "ground_truth_files": [
+   "src/builtin.c"
+  ],
+  "verification_anchor": "binop_plus"
+ },
+ {
+  "id": "vc06",
+  "question": "Where is jq's jv_getpath defined?",
+  "ground_truth_files": [
+   "src/jv_aux.c"
+  ],
+  "verification_anchor": "jv_getpath"
+ },
+ {
+  "id": "vc07",
+  "question": "Where is jq's load_library defined?",
+  "ground_truth_files": [
+   "src/linker.c"
+  ],
+  "verification_anchor": "load_library"
+ },
+ {
+  "id": "vc08",
+  "question": "Where is jq's usage defined?",
+  "ground_truth_files": [
+   "src/main.c"
+  ],
+  "verification_anchor": "usage"
+ },
+ {
+  "id": "vc09",
+  "question": "Where is jq's expand_path defined?",
+  "ground_truth_files": [
+   "src/util.c"
+  ],
+  "verification_anchor": "expand_path"
+ },
+ {
+  "id": "vc10",
+  "question": "Where is jq's bytecode_operation_length defined?",
+  "ground_truth_files": [
+   "src/bytecode.c"
+  ],
+  "verification_anchor": "bytecode_operation_length"
+ },
+ {
+  "id": "vc11",
+  "question": "Where is jq's jvp_refcnt_inc defined?",
+  "ground_truth_files": [
+   "src/jv.c"
+  ],
+  "verification_anchor": "jvp_refcnt_inc"
+ },
+ {
+  "id": "vc12",
+  "question": "Where is jq's jv_nomem_handler defined?",
+  "ground_truth_files": [
+   "src/jv_alloc.c"
+  ],
+  "verification_anchor": "jv_nomem_handler"
+ },
+ {
+  "id": "vc13",
+  "question": "Where is jq's jvp_codepoint_is_whitespace defined?",
+  "ground_truth_files": [
+   "src/jv_unicode.c"
+  ],
+  "verification_anchor": "jvp_codepoint_is_whitespace"
+ },
+ {
+  "id": "vc14",
+  "question": "Where is jq's jv_load_file defined?",
+  "ground_truth_files": [
+   "src/jv_file.c"
+  ],
+  "verification_anchor": "jv_load_file"
+ },
+ {
+  "id": "vc15",
+  "question": "Where is jq's jvp_dtoa_context_init defined?",
+  "ground_truth_files": [
+   "src/jv_dtoa.c"
+  ],
+  "verification_anchor": "jvp_dtoa_context_init"
+ }
+]

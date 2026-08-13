@@ -1,0 +1,122 @@
+[
+ {
+  "id": "vcpp01",
+  "question": "Where is fmt's is_contiguous defined?",
+  "ground_truth_files": [
+   "include/fmt/format.h"
+  ],
+  "verification_anchor": "is_contiguous"
+ },
+ {
+  "id": "vcpp02",
+  "question": "Where is fmt's FMT_API defined?",
+  "ground_truth_files": [
+   "include/fmt/base.h"
+  ],
+  "verification_anchor": "FMT_API"
+ },
+ {
+  "id": "vcpp03",
+  "question": "Where is fmt's utc_clock defined?",
+  "ground_truth_files": [
+   "include/fmt/chrono.h"
+  ],
+  "verification_anchor": "utc_clock"
+ },
+ {
+  "id": "vcpp04",
+  "question": "Where is fmt's color defined?",
+  "ground_truth_files": [
+   "include/fmt/color.h"
+  ],
+  "verification_anchor": "class color"
+ },
+ {
+  "id": "vcpp05",
+  "question": "Where is fmt's basic_printf_context defined?",
+  "ground_truth_files": [
+   "include/fmt/printf.h"
+  ],
+  "verification_anchor": "basic_printf_context"
+ },
+ {
+  "id": "vcpp06",
+  "question": "Where is fmt's range_format defined?",
+  "ground_truth_files": [
+   "include/fmt/ranges.h"
+  ],
+  "verification_anchor": "range_format"
+ },
+ {
+  "id": "vcpp07",
+  "question": "Where is fmt's basic_cstring_view defined?",
+  "ground_truth_files": [
+   "include/fmt/os.h"
+  ],
+  "verification_anchor": "basic_cstring_view"
+ },
+ {
+  "id": "vcpp08",
+  "question": "Where is fmt's compiled_string defined?",
+  "ground_truth_files": [
+   "include/fmt/compile.h"
+  ],
+  "verification_anchor": "compiled_string"
+ },
+ {
+  "id": "vcpp09",
+  "question": "Where is fmt's file_access defined?",
+  "ground_truth_files": [
+   "include/fmt/ostream.h"
+  ],
+  "verification_anchor": "file_access"
+ },
+ {
+  "id": "vcpp10",
+  "question": "Where is fmt's bitint defined?",
+  "ground_truth_files": [
+   "include/fmt/std.h"
+  ],
+  "verification_anchor": "bitint"
+ },
+ {
+  "id": "vcpp11",
+  "question": "Where is fmt's dragonbox::to_decimal defined?",
+  "ground_truth_files": [
+   "src/format.cc"
+  ],
+  "verification_anchor": "dragonbox::to_decimal"
+ },
+ {
+  "id": "vcpp12",
+  "question": "Where is fmt's buffered_file defined?",
+  "ground_truth_files": [
+   "src/os.cc"
+  ],
+  "verification_anchor": "buffered_file"
+ },
+ {
+  "id": "vcpp13",
+  "question": "Where is fmt's dynamic_format_arg_store defined?",
+  "ground_truth_files": [
+   "include/fmt/args.h"
+  ],
+  "verification_anchor": "dynamic_format_arg_store"
+ },
+ {
+  "id": "vcpp14",
+  "question": "Where is fmt's format defined?",
+  "ground_truth_files": [
+   "include/fmt/core.h"
+  ],
+  "verification_anchor": "format.h"
+ },
+ {
+  "id": "vcpp15",
+  "question": "Where is fmt's assert_fail defined?",
+  "ground_truth_files": [
+   "include/fmt/format-inl.h"
+  ],
+  "verification_anchor": "assert_fail"
+ }
+]

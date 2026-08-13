@@ -1,0 +1,228 @@
+[
+  {
+    "id": "vcpp01",
+    "q": "Where is fmt's is_contiguous defined?",
+    "gt": [
+      "include/fmt/format.h"
+    ],
+    "ranked_files": [
+      "include/fmt/base.h",
+      "include/fmt/format.h",
+      "include/fmt/ranges.h",
+      "include/fmt/os.h",
+      "src/fmt.cc",
+      "include/fmt/fmt-c.h"
+    ],
+    "latency_s": 0.05269141698954627
+  },
+  {
+    "id": "vcpp02",
+    "q": "Where is fmt's FMT_API defined?",
+    "gt": [
+      "include/fmt/base.h"
+    ],
+    "ranked_files": [
+      "include/fmt/base.h",
+      "include/fmt/fmt-c.h",
+      "src/fmt-c.cc",
+      "include/fmt/format.h"
+    ],
+    "latency_s": 0.06692779099103063
+  },
+  {
+    "id": "vcpp03",
+    "q": "Where is fmt's utc_clock defined?",
+    "gt": [
+      "include/fmt/chrono.h"
+    ],
+    "ranked_files": [
+      "include/fmt/chrono.h",
+      "include/fmt/base.h",
+      "include/fmt/os.h",
+      "include/fmt/format.h",
+      "src/fmt.cc"
+    ],
+    "latency_s": 0.06998991698492318
+  },
+  {
+    "id": "vcpp04",
+    "q": "Where is fmt's color defined?",
+    "gt": [
+      "include/fmt/color.h"
+    ],
+    "ranked_files": [
+      "include/fmt/color.h",
+      "include/fmt/xchar.h"
+    ],
+    "latency_s": 0.06535995900048874
+  },
+  {
+    "id": "vcpp05",
+    "q": "Where is fmt's basic_printf_context defined?",
+    "gt": [
+      "include/fmt/printf.h"
+    ],
+    "ranked_files": [
+      "include/fmt/printf.h",
+      "include/fmt/format.h",
+      "include/fmt/base.h",
+      "include/fmt/xchar.h",
+      "include/fmt/compile.h",
+      "include/fmt/ostream.h"
+    ],
+    "latency_s": 0.05932000000029802
+  },
+  {
+    "id": "vcpp06",
+    "q": "Where is fmt's range_format defined?",
+    "gt": [
+      "include/fmt/ranges.h"
+    ],
+    "ranked_files": [
+      "include/fmt/ranges.h",
+      "include/fmt/format.h",
+      "include/fmt/xchar.h",
+      "include/fmt/base.h"
+    ],
+    "latency_s": 0.049202958995010704
+  },
+  {
+    "id": "vcpp07",
+    "q": "Where is fmt's basic_cstring_view defined?",
+    "gt": [
+      "include/fmt/os.h"
+    ],
+    "ranked_files": [
+      "include/fmt/os.h",
+      "include/fmt/base.h",
+      "include/fmt/format.h",
+      "src/os.cc",
+      "include/fmt/args.h",
+      "include/fmt/chrono.h"
+    ],
+    "latency_s": 0.049223874986637384
+  },
+  {
+    "id": "vcpp08",
+    "q": "Where is fmt's compiled_string defined?",
+    "gt": [
+      "include/fmt/compile.h"
+    ],
+    "ranked_files": [
+      "include/fmt/compile.h",
+      "include/fmt/base.h",
+      "include/fmt/format.h",
+      "include/fmt/xchar.h",
+      "include/fmt/std.h",
+      "include/fmt/fmt-c.h"
+    ],
+    "latency_s": 0.04781975000514649
+  },
+  {
+    "id": "vcpp09",
+    "q": "Where is fmt's file_access defined?",
+    "gt": [
+      "include/fmt/ostream.h"
+    ],
+    "ranked_files": [
+      "include/fmt/ostream.h",
+      "include/fmt/base.h",
+      "include/fmt/format.h",
+      "include/fmt/fmt-c.h",
+      "include/fmt/ranges.h",
+      "include/fmt/std.h",
+      "include/fmt/format-inl.h"
+    ],
+    "latency_s": 0.05020866700215265
+  },
+  {
+    "id": "vcpp10",
+    "q": "Where is fmt's bitint defined?",
+    "gt": [
+      "include/fmt/std.h"
+    ],
+    "ranked_files": [
+      "include/fmt/std.h",
+      "include/fmt/base.h",
+      "include/fmt/format.h",
+      "include/fmt/os.h",
+      "include/fmt/fmt-c.h",
+      "src/fmt.cc"
+    ],
+    "latency_s": 0.049936416995478794
+  },
+  {
+    "id": "vcpp11",
+    "q": "Where is fmt's dragonbox::to_decimal defined?",
+    "gt": [
+      "src/format.cc"
+    ],
+    "ranked_files": [
+      "include/fmt/format.h",
+      "include/fmt/format-inl.h",
+      "src/format.cc",
+      "include/fmt/base.h",
+      "include/fmt/chrono.h"
+    ],
+    "latency_s": 0.051513084006728604
+  },
+  {
+    "id": "vcpp12",
+    "q": "Where is fmt's buffered_file defined?",
+    "gt": [
+      "src/os.cc"
+    ],
+    "ranked_files": [
+      "include/fmt/os.h",
+      "src/os.cc",
+      "include/fmt/base.h",
+      "include/fmt/format-inl.h",
+      "include/fmt/format.h"
+    ],
+    "latency_s": 0.048635790997650474
+  },
+  {
+    "id": "vcpp13",
+    "q": "Where is fmt's dynamic_format_arg_store defined?",
+    "gt": [
+      "include/fmt/args.h"
+    ],
+    "ranked_files": [
+      "include/fmt/base.h",
+      "include/fmt/args.h",
+      "include/fmt/format.h",
+      "include/fmt/printf.h",
+      "include/fmt/compile.h"
+    ],
+    "latency_s": 0.04045479098567739
+  },
+  {
+    "id": "vcpp14",
+    "q": "Where is fmt's format defined?",
+    "gt": [
+      "include/fmt/core.h"
+    ],
+    "ranked_files": [
+      "include/fmt/format.h",
+      "include/fmt/format-inl.h",
+      "include/fmt/base.h"
+    ],
+    "latency_s": 0.039773124997736886
+  },
+  {
+    "id": "vcpp15",
+    "q": "Where is fmt's assert_fail defined?",
+    "gt": [
+      "include/fmt/format-inl.h"
+    ],
+    "ranked_files": [
+      "include/fmt/format-inl.h",
+      "include/fmt/format.h",
+      "include/fmt/chrono.h",
+      "include/fmt/base.h",
+      "include/fmt/fmt-c.h",
+      "include/fmt/ranges.h"
+    ],
+    "latency_s": 0.04033725001499988
+  }
+]

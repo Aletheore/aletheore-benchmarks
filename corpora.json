@@ -100,18 +100,44 @@
       "questions": []
     },
     {
-      "name": "express",
-      "url": "https://github.com/expressjs/express",
-      "commit": "a371447",
-      "language": "javascript",
-      "questions": []
-    },
-    {
       "name": "axios",
       "url": "https://github.com/axios/axios",
       "commit": "e0a02dd",
       "language": "javascript",
-      "questions": []
+      "questions": [
+        "axios.json",
+        "axios_vocab.json"
+      ]
+    },
+    {
+      "name": "jq",
+      "url": "https://github.com/jqlang/jq",
+      "commit": "4bb50d7",
+      "language": "c",
+      "questions": [
+        "jq.json",
+        "jq_vocab.json"
+      ]
+    },
+    {
+      "name": "fmt",
+      "url": "https://github.com/fmtlib/fmt",
+      "commit": "be39437",
+      "language": "cpp",
+      "questions": [
+        "fmt.json",
+        "fmt_vocab.json"
+      ]
+    },
+    {
+      "name": "automapper",
+      "url": "https://github.com/AutoMapper/AutoMapper",
+      "commit": "dfa6dd5",
+      "language": "csharp",
+      "questions": [
+        "automapper.json",
+        "automapper_vocab.json"
+      ]
     }
   ]
 }

@@ -1,0 +1,246 @@
+[
+  {
+    "id": "cpp01",
+    "q": "Where is the core machinery that turns a template and arguments into text?",
+    "gt": [
+      "include/fmt/format.h"
+    ],
+    "ranked_files": [
+      "include/fmt/compile.h",
+      "include/fmt/base.h",
+      "include/fmt/color.h",
+      "support/python/mkdocstrings_handlers/cxx/__init__.py",
+      "include/fmt/format.h"
+    ],
+    "latency_s": 0.06695487498654984
+  },
+  {
+    "id": "cpp02",
+    "q": "Where are the fundamental building blocks every other header depends on?",
+    "gt": [
+      "include/fmt/base.h"
+    ],
+    "ranked_files": [
+      "include/fmt/base.h",
+      "support/python/mkdocstrings_handlers/cxx/__init__.py",
+      "support/release.py",
+      "include/fmt/format.h",
+      "include/fmt/printf.h",
+      "include/fmt/format-inl.h"
+    ],
+    "latency_s": 0.054463750013383105
+  },
+  {
+    "id": "cpp03",
+    "q": "How are dates, times and durations rendered?",
+    "gt": [
+      "include/fmt/chrono.h"
+    ],
+    "ranked_files": [
+      "include/fmt/chrono.h",
+      "support/python/mkdocstrings_handlers/cxx/__init__.py"
+    ],
+    "latency_s": 0.05400645898771472
+  },
+  {
+    "id": "cpp04",
+    "q": "How is coloured or styled terminal output produced?",
+    "gt": [
+      "include/fmt/color.h"
+    ],
+    "ranked_files": [
+      "include/fmt/color.h",
+      "include/fmt/format-inl.h",
+      "include/fmt/format.h",
+      "include/fmt/base.h",
+      "include/fmt/ranges.h",
+      "include/fmt/os.h",
+      "include/fmt/ostream.h"
+    ],
+    "latency_s": 0.046769708016654477
+  },
+  {
+    "id": "cpp05",
+    "q": "Where is the older percent-style formatting supported?",
+    "gt": [
+      "include/fmt/printf.h"
+    ],
+    "ranked_files": [
+      "include/fmt/color.h",
+      "include/fmt/format.h",
+      "include/fmt/ranges.h",
+      "include/fmt/std.h",
+      "src/fmt-c.cc",
+      "include/fmt/base.h",
+      "include/fmt/core.h"
+    ],
+    "latency_s": 0.05296849997830577
+  },
+  {
+    "id": "cpp06",
+    "q": "How are containers and tuples printed element by element?",
+    "gt": [
+      "include/fmt/ranges.h"
+    ],
+    "ranked_files": [
+      "include/fmt/ranges.h",
+      "support/printable.py",
+      "include/fmt/base.h",
+      "support/python/mkdocstrings_handlers/cxx/__init__.py",
+      "include/fmt/color.h"
+    ],
+    "latency_s": 0.049215583014301956
+  },
+  {
+    "id": "cpp07",
+    "q": "Where are files and other operating system handles written to?",
+    "gt": [
+      "include/fmt/os.h"
+    ],
+    "ranked_files": [
+      "include/fmt/os.h",
+      "include/fmt/base.h",
+      "src/os.cc",
+      "include/fmt/format-inl.h",
+      "include/fmt/chrono.h",
+      "include/fmt/format.h",
+      "include/fmt/xchar.h",
+      "include/fmt/printf.h"
+    ],
+    "latency_s": 0.053131791995838284
+  },
+  {
+    "id": "cpp08",
+    "q": "How is the work of parsing a template moved to build time?",
+    "gt": [
+      "include/fmt/compile.h"
+    ],
+    "ranked_files": [
+      "include/fmt/chrono.h",
+      "include/fmt/args.h",
+      "include/fmt/ranges.h",
+      "include/fmt/compile.h",
+      "include/fmt/base.h",
+      "include/fmt/format.h"
+    ],
+    "latency_s": 0.054391374986153096
+  },
+  {
+    "id": "cpp09",
+    "q": "How does a type that only knows how to stream itself get formatted?",
+    "gt": [
+      "include/fmt/ostream.h"
+    ],
+    "ranked_files": [
+      "include/fmt/ostream.h",
+      "include/fmt/chrono.h",
+      "include/fmt/std.h",
+      "include/fmt/format.h",
+      "include/fmt/base.h",
+      "include/fmt/format-inl.h",
+      "include/fmt/ranges.h",
+      "src/fmt-c.cc"
+    ],
+    "latency_s": 0.05768866598373279
+  },
+  {
+    "id": "cpp10",
+    "q": "Where is support for standard library types added?",
+    "gt": [
+      "include/fmt/std.h"
+    ],
+    "ranked_files": [
+      "include/fmt/base.h",
+      "include/fmt/format.h",
+      "support/python/mkdocstrings_handlers/cxx/__init__.py",
+      "include/fmt/chrono.h",
+      "include/fmt/std.h",
+      "support/docopt.py"
+    ],
+    "latency_s": 0.056140041997423396
+  },
+  {
+    "id": "cpp11",
+    "q": "Where are the heavy template instantiations compiled once into the library instead of in every translation unit?",
+    "gt": [
+      "src/format.cc"
+    ],
+    "ranked_files": [
+      "include/fmt/compile.h",
+      "include/fmt/base.h",
+      "src/format.cc",
+      "include/fmt/ostream.h",
+      "include/fmt/format.h",
+      "include/fmt/ranges.h",
+      "include/fmt/args.h",
+      "include/fmt/chrono.h"
+    ],
+    "latency_s": 0.048646500014001504
+  },
+  {
+    "id": "cpp12",
+    "q": "Where are the operating system calls actually implemented?",
+    "gt": [
+      "src/os.cc"
+    ],
+    "ranked_files": [
+      "include/fmt/os.h",
+      "support/release.py",
+      "src/os.cc",
+      "include/fmt/chrono.h",
+      "src/fmt.cc",
+      "include/fmt/format-inl.h"
+    ],
+    "latency_s": 0.04664108299766667
+  },
+  {
+    "id": "cpp13",
+    "q": "How are arguments stored and passed along without templates leaking everywhere?",
+    "gt": [
+      "include/fmt/args.h"
+    ],
+    "ranked_files": [
+      "include/fmt/base.h",
+      "include/fmt/compile.h",
+      "include/fmt/format.h",
+      "include/fmt/args.h",
+      "support/release.py",
+      "include/fmt/color.h",
+      "include/fmt/printf.h"
+    ],
+    "latency_s": 0.048165874992264435
+  },
+  {
+    "id": "cpp14",
+    "q": "Where is the header that exists only for backwards compatibility?",
+    "gt": [
+      "include/fmt/core.h"
+    ],
+    "ranked_files": [
+      "src/fmt.cc",
+      "include/fmt/chrono.h",
+      "support/release.py",
+      "support/python/mkdocstrings_handlers/cxx/__init__.py",
+      "include/fmt/format.h",
+      "src/os.cc",
+      "include/fmt/base.h"
+    ],
+    "latency_s": 0.051321250008186325
+  },
+  {
+    "id": "cpp15",
+    "q": "Where are the slower conversion routines kept out of the fast path?",
+    "gt": [
+      "include/fmt/format-inl.h"
+    ],
+    "ranked_files": [
+      "include/fmt/chrono.h",
+      "include/fmt/format.h",
+      "include/fmt/format-inl.h",
+      "support/release.py",
+      "src/os.cc",
+      "include/fmt/std.h"
+    ],
+    "latency_s": 0.056469624978490174
+  }
+]

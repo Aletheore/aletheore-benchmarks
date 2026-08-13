@@ -16,18 +16,28 @@ Aletheore indexes code chunks and returns `file:line`.
 Measured on **Aletheore 0.8.5 installed from PyPI**, each corpus re-scanned and
 re-indexed from scratch, local `nomic-embed-text` embeddings, no API key:
 
-| corpus | language | top-1 | top-3 | top-5 | MRR | n |
-|---|---|---|---|---|---|---|
-| gin | Go | **80.0%** | 100% | 100% | 0.878 | 15 |
-| flask | Python | **68.8%** | 93.8% | 100% | 0.816 | 32 |
-| serde | Rust | **53.3%** | 66.7% | 73.3% | 0.617 | 15 |
-| gson | Java | **33.3%** | 66.7% | 66.7% | 0.498 | 15 |
-| jekyll | Ruby | **26.7%** | 33.3% | 46.7% | 0.337 | 15 |
-| Slim | PHP | **26.7%** | 60.0% | 66.7% | 0.458 | 15 |
-| zod | TypeScript | **20.0%** | 40.0% | 40.0% | 0.289 | 15 |
-| guzzle | PHP | **20.0%** | 53.3% | 66.7% | 0.374 | 15 |
+| corpus | language | general top-1 | vocabulary top-1 | general top-5 | n |
+|---|---|---|---|---|---|
+| gin | Go | **80.0%** | — | 100% | 15 |
+| flask | Python | **68.8%** | — | 100% | 32 |
+| jq | C | **53.3%** | 73.3% | 80.0% | 15 |
+| serde | Rust | **53.3%** | — | 73.3% | 15 |
+| gson | Java | **40.0%** | 60.0% | 80.0% | 15 |
+| fmt | C++ | **40.0%** | 66.7% | 86.7% | 15 |
+| jekyll | Ruby | **26.7%** | 66.7% | 46.7% | 15 |
+| Slim | PHP | **26.7%** | 73.3% | 66.7% | 15 |
+| axios | JavaScript | **20.0%** | 73.3% | 66.7% | 15 |
+| guzzle | PHP | **20.0%** | 53.3% | 66.7% | 15 |
+| zod | TypeScript | **20.0%** | 60.0% | 40.0% | 15 |
+| AutoMapper | C# | **6.7%** | 86.7% | 33.3% | 15 |
 
-Raw per-query output for all eight is in `results/results_*_0.8.5.json`.
+All **11 supported languages** are now measured, across 12 corpora. Two
+question regimes are published for every corpus written since the confound was
+found: *general* phrasing deliberately avoids the project's own vocabulary,
+*vocabulary* phrasing uses it. Real users ask somewhere between the two, so a
+language's true figure is bracketed by them rather than given by either.
+
+Raw per-query output is in `results/`, one file per corpus, regime and system.
 
 **The spread is the finding.** Go and Python are strong; Java, Ruby, PHP and
 TypeScript are not, and the weak corpora were measured last, so the published
@@ -152,6 +162,23 @@ had a wiki built for it first (`init --coverage 1.0`, deepseek-v4-flash,
 **Top-1: 5 wins, 0 losses, 2 ties.** Our weakest languages still match or beat
 them. Where we lose: jekyll top-5, 46.7% against their 66.7%.
 
+Both systems were then given the **vocabulary** questions as well, on the same
+wikis (search costs nothing to re-run once a wiki exists):
+
+| corpus | Aletheore general | RepoWise general | Aletheore vocabulary | RepoWise vocabulary |
+|---|---|---|---|---|
+| Slim | 26.7% | 26.7% | **73.3%** | 66.7% |
+| gson | **40.0%** | 26.7% | **60.0%** | 46.7% |
+| zod | **20.0%** | 13.3% | **60.0%** | 26.7% |
+| guzzle | 20.0% | 20.0% | 53.3% | 53.3% |
+| jekyll | **26.7%** | 13.3% | 66.7% | **80.0%** |
+
+RepoWise gains from vocabulary phrasing too — its wiki pages name the symbols —
+and on jekyll it overtakes us outright, 80.0% against 66.7%. That is a real
+loss and it is stated here rather than omitted. Across the ten cells we lead in
+seven, tie in two and lose one.
+
+
 Flask remains as originally measured (Aletheore 68.8% / 93.8% / 100% against
 RepoWise semantic 28.1% / 56.2% / 56.2%).
 
@@ -251,7 +278,7 @@ That defect invalidated our own first run.
 
 | path | what |
 |---|---|
-| `questions/` | 236 questions across 15 sets, every ground-truth anchor mechanically verified |
+| `questions/` | 356 questions across 23 sets, every ground-truth anchor mechanically verified |
 | `scripts/` | runners, scorers, the blind judge, the language-coverage matrix |
 | `results/` | raw per-query output — recompute any number without an API key |
 | `corpora.json` | pinned commits for all corpora |
@@ -275,8 +302,8 @@ RepoWise scored 2.35 against one configuration and 2.25 against another on
 byte-identical input. Only the within-run gap is comparable across
 configurations.
 
-**Scope is small.** Seven languages across eight corpora measured for retrieval,
-one repository for the wiki comparison, 236 questions in total. RepoWise's own published benchmark
+**Scope.** All 11 supported languages across 12 corpora measured for retrieval,
+one repository for the wiki comparison, 356 questions in total. RepoWise's own published benchmark
 spans 21 repositories and 9 languages; we are not claiming parity of coverage.
 
 ## Licence

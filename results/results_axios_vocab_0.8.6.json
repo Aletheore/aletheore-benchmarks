@@ -1,0 +1,263 @@
+[
+  {
+    "id": "vjs01",
+    "q": "Where is axios's Axios defined?",
+    "gt": [
+      "lib/core/Axios.js"
+    ],
+    "ranked_files": [
+      "lib/axios.js",
+      "index.js",
+      "scripts/axios-build-instance.js",
+      "lib/core/Axios.js",
+      "examples/network_enhanced.js",
+      "sandbox/client.js",
+      "index.d.ts"
+    ],
+    "latency_s": 0.0534071669972036
+  },
+  {
+    "id": "vjs02",
+    "q": "Where is axios's throwIfCancellationRequested defined?",
+    "gt": [
+      "lib/core/dispatchRequest.js"
+    ],
+    "ranked_files": [
+      "lib/core/dispatchRequest.js",
+      "scripts/axios-build-instance.js",
+      "lib/axios.js",
+      "index.d.ts",
+      "lib/helpers/isAxiosError.js",
+      "sandbox/client.js",
+      "gulpfile.js"
+    ],
+    "latency_s": 0.04441929198219441
+  },
+  {
+    "id": "vjs03",
+    "q": "Where is axios's trimHandlers defined?",
+    "gt": [
+      "lib/core/InterceptorManager.js"
+    ],
+    "ranked_files": [
+      "lib/core/InterceptorManager.js",
+      "sandbox/client.js",
+      "lib/axios.js",
+      "lib/core/Axios.js",
+      "index.d.ts",
+      "lib/core/AxiosHeaders.js",
+      "scripts/axios-build-instance.js",
+      "lib/helpers/isAxiosError.js"
+    ],
+    "latency_s": 0.04358716600108892
+  },
+  {
+    "id": "vjs04",
+    "q": "Where is axios's normalizeHeader defined?",
+    "gt": [
+      "lib/core/AxiosHeaders.js"
+    ],
+    "ranked_files": [
+      "lib/core/AxiosHeaders.js",
+      "index.js",
+      "scripts/axios-build-instance.js",
+      "index.d.ts",
+      "lib/helpers/isAxiosError.js",
+      "sandbox/client.js",
+      "gulpfile.js",
+      "lib/axios.js"
+    ],
+    "latency_s": 0.039981915993848816
+  },
+  {
+    "id": "vjs05",
+    "q": "Where is axios's hasOwnOrPrototypeToJSON defined?",
+    "gt": [
+      "lib/core/AxiosError.js"
+    ],
+    "ranked_files": [
+      "lib/core/AxiosError.js",
+      "scripts/axios-build-instance.js",
+      "sandbox/client.js",
+      "lib/axios.js",
+      "index.js",
+      "index.d.ts",
+      "examples/network_enhanced.js",
+      "lib/helpers/isAxiosError.js"
+    ],
+    "latency_s": 0.0480987909832038
+  },
+  {
+    "id": "vjs06",
+    "q": "Where is axios's mergeConfig defined?",
+    "gt": [
+      "lib/core/mergeConfig.js"
+    ],
+    "ranked_files": [
+      "lib/core/mergeConfig.js",
+      "lib/axios.js",
+      "lib/core/Axios.js",
+      "index.js",
+      "scripts/axios-build-instance.js",
+      "index.d.ts"
+    ],
+    "latency_s": 0.0553921660175547
+  },
+  {
+    "id": "vjs07",
+    "q": "Where is axios's redactFragment defined?",
+    "gt": [
+      "lib/core/buildFullPath.js"
+    ],
+    "ranked_files": [
+      "lib/core/buildFullPath.js",
+      "scripts/axios-build-instance.js",
+      "lib/axios.js",
+      "lib/core/Axios.js",
+      "index.d.ts",
+      "lib/core/AxiosError.js"
+    ],
+    "latency_s": 0.05451133297174238
+  },
+  {
+    "id": "vjs08",
+    "q": "Where is axios's isXHRAdapterSupported defined?",
+    "gt": [
+      "lib/adapters/xhr.js"
+    ],
+    "ranked_files": [
+      "lib/adapters/xhr.js",
+      "lib/helpers/isAxiosError.js",
+      "index.js",
+      "index.d.ts",
+      "lib/core/Axios.js",
+      "scripts/axios-build-instance.js",
+      "sandbox/client.js",
+      "gulpfile.js",
+      "lib/axios.js",
+      "rollup.config.js"
+    ],
+    "latency_s": 0.06200945799355395
+  },
+  {
+    "id": "vjs09",
+    "q": "Where is axios's handleSocketError defined?",
+    "gt": [
+      "lib/adapters/http.js"
+    ],
+    "ranked_files": [
+      "sandbox/client.js",
+      "lib/adapters/http.js",
+      "lib/core/Axios.js",
+      "index.js",
+      "scripts/axios-build-instance.js",
+      "index.d.ts",
+      "lib/core/AxiosError.js",
+      "lib/helpers/isAxiosError.js",
+      "gulpfile.js"
+    ],
+    "latency_s": 0.063162625010591
+  },
+  {
+    "id": "vjs10",
+    "q": "Where is axios's buildURL defined?",
+    "gt": [
+      "lib/helpers/buildURL.js"
+    ],
+    "ranked_files": [
+      "lib/helpers/buildURL.js",
+      "lib/core/Axios.js",
+      "scripts/axios-build-instance.js",
+      "sandbox/client.js",
+      "lib/axios.js",
+      "examples/network_enhanced.js",
+      "index.js"
+    ],
+    "latency_s": 0.06690354199963622
+  },
+  {
+    "id": "vjs11",
+    "q": "Where is axios's stringifySafely defined?",
+    "gt": [
+      "lib/defaults/index.js"
+    ],
+    "ranked_files": [
+      "lib/core/AxiosError.js",
+      "lib/defaults/index.js",
+      "scripts/axios-build-instance.js",
+      "lib/axios.js",
+      "lib/helpers/isAxiosError.js",
+      "index.js",
+      "lib/core/Axios.js"
+    ],
+    "latency_s": 0.05905812498531304
+  },
+  {
+    "id": "vjs12",
+    "q": "Where is axios's CancelToken defined?",
+    "gt": [
+      "lib/cancel/CancelToken.js"
+    ],
+    "ranked_files": [
+      "index.js",
+      "lib/cancel/CancelToken.js",
+      "lib/axios.js",
+      "scripts/axios-build-instance.js",
+      "index.d.ts",
+      "lib/cancel/CanceledError.js",
+      "lib/helpers/isAxiosError.js"
+    ],
+    "latency_s": 0.05046175001189113
+  },
+  {
+    "id": "vjs13",
+    "q": "Where is axios's settle defined?",
+    "gt": [
+      "lib/core/settle.js"
+    ],
+    "ranked_files": [
+      "lib/core/settle.js",
+      "scripts/axios-build-instance.js",
+      "lib/axios.js",
+      "lib/core/Axios.js",
+      "index.js",
+      "sandbox/client.js",
+      "lib/helpers/isAxiosError.js"
+    ],
+    "latency_s": 0.04228979200706817
+  },
+  {
+    "id": "vjs14",
+    "q": "Where is axios's transformData defined?",
+    "gt": [
+      "lib/core/transformData.js"
+    ],
+    "ranked_files": [
+      "lib/core/transformData.js",
+      "scripts/axios-build-instance.js",
+      "index.js",
+      "lib/axios.js",
+      "index.d.ts",
+      "lib/core/Axios.js",
+      "lib/core/dispatchRequest.js",
+      "lib/helpers/isAxiosError.js"
+    ],
+    "latency_s": 0.041478041996015236
+  },
+  {
+    "id": "vjs15",
+    "q": "Where is axios's createInstance defined?",
+    "gt": [
+      "lib/axios.js"
+    ],
+    "ranked_files": [
+      "lib/axios.js",
+      "scripts/axios-build-instance.js",
+      "lib/core/Axios.js",
+      "examples/network_enhanced.js",
+      "index.js",
+      "sandbox/client.js"
+    ],
+    "latency_s": 0.04014054199797101
+  }
+]

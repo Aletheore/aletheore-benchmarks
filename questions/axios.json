@@ -1,0 +1,122 @@
+[
+ {
+  "id": "js01",
+  "question": "Where is the central client object that all the request methods hang off?",
+  "ground_truth_files": [
+   "lib/core/Axios.js"
+  ],
+  "verification_anchor": "class Axios"
+ },
+ {
+  "id": "js02",
+  "question": "Where does a request get handed to whichever transport will actually send it?",
+  "ground_truth_files": [
+   "lib/core/dispatchRequest.js"
+  ],
+  "verification_anchor": "throwIfCancellationRequested"
+ },
+ {
+  "id": "js03",
+  "question": "How are the hooks that run before and after each call registered?",
+  "ground_truth_files": [
+   "lib/core/InterceptorManager.js"
+  ],
+  "verification_anchor": "trimHandlers"
+ },
+ {
+  "id": "js04",
+  "question": "Where are header names normalised so casing does not matter?",
+  "ground_truth_files": [
+   "lib/core/AxiosHeaders.js"
+  ],
+  "verification_anchor": "normalizeHeader"
+ },
+ {
+  "id": "js05",
+  "question": "Where is the failure type that carries the request and response defined?",
+  "ground_truth_files": [
+   "lib/core/AxiosError.js"
+  ],
+  "verification_anchor": "hasOwnOrPrototypeToJSON"
+ },
+ {
+  "id": "js06",
+  "question": "How are per-call settings combined with the defaults?",
+  "ground_truth_files": [
+   "lib/core/mergeConfig.js"
+  ],
+  "verification_anchor": "export default function mergeConfig"
+ },
+ {
+  "id": "js07",
+  "question": "How is a relative address combined with the base one?",
+  "ground_truth_files": [
+   "lib/core/buildFullPath.js"
+  ],
+  "verification_anchor": "redactFragment"
+ },
+ {
+  "id": "js08",
+  "question": "Where is the browser transport implemented?",
+  "ground_truth_files": [
+   "lib/adapters/xhr.js"
+  ],
+  "verification_anchor": "isXHRAdapterSupported"
+ },
+ {
+  "id": "js09",
+  "question": "Where is the server-side transport implemented?",
+  "ground_truth_files": [
+   "lib/adapters/http.js"
+  ],
+  "verification_anchor": "handleSocketError"
+ },
+ {
+  "id": "js10",
+  "question": "How are query parameters turned into a URL string?",
+  "ground_truth_files": [
+   "lib/helpers/buildURL.js"
+  ],
+  "verification_anchor": "export default function buildURL"
+ },
+ {
+  "id": "js11",
+  "question": "Where are the out-of-the-box settings defined?",
+  "ground_truth_files": [
+   "lib/defaults/index.js"
+  ],
+  "verification_anchor": "stringifySafely"
+ },
+ {
+  "id": "js12",
+  "question": "How can an in-flight call be aborted?",
+  "ground_truth_files": [
+   "lib/cancel/CancelToken.js"
+  ],
+  "verification_anchor": "class CancelToken"
+ },
+ {
+  "id": "js13",
+  "question": "Where is it decided whether a response counts as success or failure?",
+  "ground_truth_files": [
+   "lib/core/settle.js"
+  ],
+  "verification_anchor": "export default function settle"
+ },
+ {
+  "id": "js14",
+  "question": "Where is the payload passed through the user's conversion functions?",
+  "ground_truth_files": [
+   "lib/core/transformData.js"
+  ],
+  "verification_anchor": "export default function transformData"
+ },
+ {
+  "id": "js15",
+  "question": "Where is the instance that gets exported to consumers put together?",
+  "ground_truth_files": [
+   "lib/axios.js"
+  ],
+  "verification_anchor": "createInstance"
+ }
+]

@@ -1,0 +1,250 @@
+[
+  {
+    "id": "c01",
+    "q": "Where does the compiled program actually get run instruction by instruction?",
+    "gt": [
+      "src/execute.c"
+    ],
+    "ranked_files": [
+      "src/execute.c",
+      "src/compile.c",
+      "docs/build_mantests.py",
+      "src/compile.h",
+      "src/linker.c",
+      "src/jv.c",
+      "scripts/gen_utf8_tables.py"
+    ],
+    "latency_s": 0.06768808301421814
+  },
+  {
+    "id": "c02",
+    "q": "Where is the parsed syntax tree turned into executable instructions?",
+    "gt": [
+      "src/compile.c"
+    ],
+    "ranked_files": [
+      "src/jv_parse.c",
+      "docs/build_manpage.py",
+      "src/parser.c",
+      "src/execute.c",
+      "src/compile.c"
+    ],
+    "latency_s": 0.050092666991986334
+  },
+  {
+    "id": "c03",
+    "q": "How is incoming text turned into structured values?",
+    "gt": [
+      "src/jv_parse.c"
+    ],
+    "ranked_files": [
+      "src/main.c",
+      "src/lexer.c",
+      "src/jv.c",
+      "src/jv_parse.c",
+      "src/builtin.c",
+      "src/compile.c"
+    ],
+    "latency_s": 0.05360837499029003
+  },
+  {
+    "id": "c04",
+    "q": "Where are values rendered back out as text?",
+    "gt": [
+      "src/jv_print.c"
+    ],
+    "ranked_files": [
+      "src/main.c",
+      "src/jv.c",
+      "src/builtin.c",
+      "src/jv_aux.c",
+      "src/util.c",
+      "src/jv_parse.c",
+      "src/jv_unicode.c",
+      "src/jv_print.c"
+    ],
+    "latency_s": 0.052393083984497935
+  },
+  {
+    "id": "c05",
+    "q": "Where are the built-in operations such as addition implemented?",
+    "gt": [
+      "src/builtin.c"
+    ],
+    "ranked_files": [
+      "src/bytecode.c",
+      "src/builtin.c",
+      "src/execute.c",
+      "src/builtin.h",
+      "src/parser.c",
+      "src/compile.c"
+    ],
+    "latency_s": 0.05441204199451022
+  },
+  {
+    "id": "c06",
+    "q": "How is a deeply nested field reached by following a path?",
+    "gt": [
+      "src/jv_aux.c"
+    ],
+    "ranked_files": [
+      "src/execute.c",
+      "src/jv_aux.c",
+      "src/util.c",
+      "src/linker.c",
+      "src/builtin.c",
+      "src/jv_parse.c"
+    ],
+    "latency_s": 0.054391915997257456
+  },
+  {
+    "id": "c07",
+    "q": "How are external modules located and pulled in?",
+    "gt": [
+      "src/linker.c"
+    ],
+    "ranked_files": [
+      "src/locfile.h",
+      "src/compile.c",
+      "src/locfile.c",
+      "src/builtin.c",
+      "src/linker.h",
+      "src/builtin.h",
+      "src/jv_dtoa_tsd.h"
+    ],
+    "latency_s": 0.06246745798853226
+  },
+  {
+    "id": "c08",
+    "q": "Where are the command line options interpreted?",
+    "gt": [
+      "src/main.c"
+    ],
+    "ranked_files": [
+      "src/main.c",
+      "src/util.c",
+      "docs/build_manpage.py",
+      "src/execute.c",
+      "src/builtin.c",
+      "src/parser.h",
+      "src/jv_dtoa.c"
+    ],
+    "latency_s": 0.057661915983771905
+  },
+  {
+    "id": "c09",
+    "q": "Where is a path expanded, such as one starting from the home directory?",
+    "gt": [
+      "src/util.c"
+    ],
+    "ranked_files": [
+      "src/util.c",
+      "src/linker.c",
+      "src/jv_aux.c",
+      "src/execute.c",
+      "docs/build_website.py",
+      "src/util.h"
+    ],
+    "latency_s": 0.05202737500076182
+  },
+  {
+    "id": "c10",
+    "q": "Where is the instruction set and how each instruction is encoded described?",
+    "gt": [
+      "src/bytecode.c"
+    ],
+    "ranked_files": [
+      "src/bytecode.c",
+      "src/compile.c",
+      "src/jv_unicode.c",
+      "src/execute.c",
+      "src/bytecode.h",
+      "src/jv_thread.h"
+    ],
+    "latency_s": 0.053813292004633695
+  },
+  {
+    "id": "c11",
+    "q": "Where is the reference counting for values implemented?",
+    "gt": [
+      "src/jv.c"
+    ],
+    "ranked_files": [
+      "src/jv.c",
+      "src/compile.c",
+      "src/parser.c",
+      "src/jv_aux.c",
+      "src/builtin.c"
+    ],
+    "latency_s": 0.049798249994637445
+  },
+  {
+    "id": "c12",
+    "q": "What happens when the process runs out of memory?",
+    "gt": [
+      "src/jv_alloc.c"
+    ],
+    "ranked_files": [
+      "src/jv_alloc.c",
+      "src/exec_stack.h",
+      "src/main.c",
+      "src/linker.c",
+      "src/jv_parse.c",
+      "src/lexer.c",
+      "src/execute.c",
+      "src/jv.c"
+    ],
+    "latency_s": 0.04865279101068154
+  },
+  {
+    "id": "c13",
+    "q": "How are multi-byte characters decoded and validated?",
+    "gt": [
+      "src/jv_unicode.c"
+    ],
+    "ranked_files": [
+      "src/jv_unicode.c",
+      "src/jv.c",
+      "src/linker.c",
+      "src/builtin.c",
+      "src/jv_print.c",
+      "src/jv_utf8_tables.h",
+      "src/jv.h",
+      "src/lexer.c"
+    ],
+    "latency_s": 0.0563274169981014
+  },
+  {
+    "id": "c14",
+    "q": "Where is a whole file read in and turned into a value?",
+    "gt": [
+      "src/jv_file.c"
+    ],
+    "ranked_files": [
+      "src/jv_file.c",
+      "src/execute.c",
+      "src/parser.c",
+      "src/util.c",
+      "src/jv.c",
+      "docs/build_manpage.py"
+    ],
+    "latency_s": 0.04058937501395121
+  },
+  {
+    "id": "c15",
+    "q": "How are floating point numbers converted to their text form?",
+    "gt": [
+      "src/jv_dtoa.c"
+    ],
+    "ranked_files": [
+      "src/jv.c",
+      "src/main.c",
+      "docs/build_manpage.py",
+      "src/jv_aux.c",
+      "src/builtin.c",
+      "src/jv_unicode.c",
+      "src/jv_dtoa.c"
+    ],
+    "latency_s": 0.039129459008108824
+  }
+]

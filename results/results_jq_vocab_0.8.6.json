@@ -1,0 +1,246 @@
+[
+  {
+    "id": "vc01",
+    "q": "Where is jq's frame_get_level defined?",
+    "gt": [
+      "src/execute.c"
+    ],
+    "ranked_files": [
+      "src/execute.c",
+      "src/jq.h",
+      "src/jq_parser.h",
+      "src/builtin.c",
+      "src/jv.c"
+    ],
+    "latency_s": 0.03944137500366196
+  },
+  {
+    "id": "vc02",
+    "q": "Where is jq's inst_block defined?",
+    "gt": [
+      "src/compile.c"
+    ],
+    "ranked_files": [
+      "src/compile.c",
+      "src/jq.h",
+      "src/builtin.h",
+      "src/execute.c",
+      "src/parser.c",
+      "src/compile.h",
+      "src/jq_parser.h"
+    ],
+    "latency_s": 0.04786816699197516
+  },
+  {
+    "id": "vc03",
+    "q": "Where is jq's parser_init defined?",
+    "gt": [
+      "src/jv_parse.c"
+    ],
+    "ranked_files": [
+      "src/jq_parser.h",
+      "src/jv_parse.c",
+      "src/util.c",
+      "src/parser.c",
+      "src/execute.c",
+      "src/jv_dtoa.c",
+      "src/jq.h"
+    ],
+    "latency_s": 0.047443667019251734
+  },
+  {
+    "id": "vc04",
+    "q": "Where is jq's jq_set_colors defined?",
+    "gt": [
+      "src/jv_print.c"
+    ],
+    "ranked_files": [
+      "src/jv_print.c",
+      "src/execute.c",
+      "src/jq.h",
+      "src/jq_parser.h",
+      "src/util.c",
+      "src/main.c"
+    ],
+    "latency_s": 0.04536929199821316
+  },
+  {
+    "id": "vc05",
+    "q": "Where is jq's binop_plus defined?",
+    "gt": [
+      "src/builtin.c"
+    ],
+    "ranked_files": [
+      "src/builtin.c",
+      "src/builtin.h",
+      "src/jq.h",
+      "src/lexer.h",
+      "src/jq_parser.h",
+      "src/parser.c"
+    ],
+    "latency_s": 0.04484945899457671
+  },
+  {
+    "id": "vc06",
+    "q": "Where is jq's jv_getpath defined?",
+    "gt": [
+      "src/jv_aux.c"
+    ],
+    "ranked_files": [
+      "src/builtin.c",
+      "src/jv_aux.c",
+      "src/jq.h",
+      "src/jq_parser.h",
+      "src/execute.c",
+      "src/lexer.c"
+    ],
+    "latency_s": 0.0566619589808397
+  },
+  {
+    "id": "vc07",
+    "q": "Where is jq's load_library defined?",
+    "gt": [
+      "src/linker.c"
+    ],
+    "ranked_files": [
+      "src/linker.c",
+      "src/parser.c",
+      "src/execute.c",
+      "src/jv_file.c",
+      "src/jq.h",
+      "src/lexer.h",
+      "src/jq_parser.h"
+    ],
+    "latency_s": 0.0566664999932982
+  },
+  {
+    "id": "vc08",
+    "q": "Where is jq's usage defined?",
+    "gt": [
+      "src/main.c"
+    ],
+    "ranked_files": [
+      "src/jq.h",
+      "src/main.c",
+      "src/jq_parser.h",
+      "src/util.c",
+      "src/lexer.h",
+      "src/locfile.h",
+      "src/lexer.c"
+    ],
+    "latency_s": 0.05919987498782575
+  },
+  {
+    "id": "vc09",
+    "q": "Where is jq's expand_path defined?",
+    "gt": [
+      "src/util.c"
+    ],
+    "ranked_files": [
+      "src/util.c",
+      "src/linker.c",
+      "src/execute.c",
+      "src/compile.c",
+      "src/builtin.c",
+      "src/jq.h",
+      "src/jq_parser.h"
+    ],
+    "latency_s": 0.046357749990420416
+  },
+  {
+    "id": "vc10",
+    "q": "Where is jq's bytecode_operation_length defined?",
+    "gt": [
+      "src/bytecode.c"
+    ],
+    "ranked_files": [
+      "src/bytecode.c",
+      "src/execute.c",
+      "src/bytecode.h",
+      "src/jq.h",
+      "src/jq_parser.h"
+    ],
+    "latency_s": 0.0473328749940265
+  },
+  {
+    "id": "vc11",
+    "q": "Where is jq's jvp_refcnt_inc defined?",
+    "gt": [
+      "src/jv.c"
+    ],
+    "ranked_files": [
+      "src/jv.c",
+      "src/jq.h",
+      "src/jq_parser.h",
+      "src/jv.h",
+      "src/main.c",
+      "src/util.c",
+      "src/execute.c"
+    ],
+    "latency_s": 0.04839633300434798
+  },
+  {
+    "id": "vc12",
+    "q": "Where is jq's jv_nomem_handler defined?",
+    "gt": [
+      "src/jv_alloc.c"
+    ],
+    "ranked_files": [
+      "src/execute.c",
+      "src/jv_alloc.c",
+      "src/jq_parser.h",
+      "src/jq.h",
+      "src/compile.c",
+      "src/lexer.c"
+    ],
+    "latency_s": 0.046464832994388416
+  },
+  {
+    "id": "vc13",
+    "q": "Where is jq's jvp_codepoint_is_whitespace defined?",
+    "gt": [
+      "src/jv_unicode.c"
+    ],
+    "ranked_files": [
+      "src/jv_unicode.c",
+      "src/jv.c",
+      "src/jq.h",
+      "src/jq_parser.h",
+      "src/jv.h",
+      "src/builtin.c"
+    ],
+    "latency_s": 0.04389337499742396
+  },
+  {
+    "id": "vc14",
+    "q": "Where is jq's jv_load_file defined?",
+    "gt": [
+      "src/jv_file.c"
+    ],
+    "ranked_files": [
+      "src/jv_file.c",
+      "src/linker.c",
+      "src/jq.h",
+      "src/jq_parser.h",
+      "docs/build_manpage.py",
+      "src/util.c"
+    ],
+    "latency_s": 0.050052666978444904
+  },
+  {
+    "id": "vc15",
+    "q": "Where is jq's jvp_dtoa_context_init defined?",
+    "gt": [
+      "src/jv_dtoa.c"
+    ],
+    "ranked_files": [
+      "src/jv_dtoa.c",
+      "src/jv_dtoa_tsd.c",
+      "src/jv_dtoa.h",
+      "src/jv_dtoa_tsd.h",
+      "src/jv_print.c",
+      "src/jv.c"
+    ],
+    "latency_s": 0.037703959009377286
+  }
+]

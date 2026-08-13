@@ -1,0 +1,262 @@
+[
+  {
+    "id": "cs01",
+    "q": "Where is the object callers use to convert one instance into another?",
+    "gt": [
+      "src/AutoMapper/Mapper.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Internal/ReflectionHelper.cs",
+      "src/AutoMapper/Execution/TypeMapPlanBuilder.cs",
+      "src/AutoMapper/ResolutionContext.cs",
+      "src/AutoMapper/Configuration/IMemberConfigurationExpression.cs",
+      "src/AutoMapper/Configuration/MemberConfigurationExpression.cs",
+      "src/AutoMapper/Licensing/LicenseAccessor.cs",
+      "src/AutoMapper/Configuration/Annotations/ValueConverterAttribute.cs"
+    ],
+    "latency_s": 0.06551337498240173
+  },
+  {
+    "id": "cs02",
+    "q": "Where is the plan for converting one type into another represented?",
+    "gt": [
+      "src/AutoMapper/TypeMap.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Configuration/IMemberConfigurationExpression.cs",
+      "src/AutoMapper/Configuration/IMappingExpressionBase.cs",
+      "src/AutoMapper/Configuration/TypeMapConfiguration.cs",
+      "src/AutoMapper/Internal/TypeDetails.cs",
+      "src/AutoMapper/Configuration/Annotations/MapAtRuntimeAttribute.cs",
+      "src/AutoMapper/Configuration/Annotations/ValueConverterAttribute.cs"
+    ],
+    "latency_s": 0.05325258302036673
+  },
+  {
+    "id": "cs03",
+    "q": "Where is the pairing of a single source and destination member held?",
+    "gt": [
+      "src/AutoMapper/PropertyMap.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Internal/ReflectionHelper.cs",
+      "src/AutoMapper/Configuration/IProfileExpression.cs",
+      "src/AutoMapper/Configuration/IMemberConfigurationExpression.cs",
+      "src/AutoMapper/Configuration/SourceMappingExpression.cs",
+      "src/AutoMapper/MemberMap.cs",
+      "src/AutoMapper/AutoMapperMappingException.cs",
+      "src/AutoMapper/Mappers/ToDynamicMapper.cs",
+      "src/AutoMapper/Configuration/Annotations/SourceMemberAttribute.cs"
+    ],
+    "latency_s": 0.04987604098278098
+  },
+  {
+    "id": "cs04",
+    "q": "Where is the state carried through a single conversion, including already-converted instances?",
+    "gt": [
+      "src/AutoMapper/ResolutionContext.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Configuration/IMemberConfigurationExpression.cs",
+      "src/AutoMapper/Configuration/TypeMapConfiguration.cs",
+      "src/AutoMapper/Configuration/IMappingExpressionBase.cs",
+      "src/AutoMapper/Configuration/MemberConfigurationExpression.cs",
+      "src/AutoMapper/QueryableExtensions/NullsafeQueryRewriter.cs",
+      "src/AutoMapper/Configuration/MappingExpression.cs",
+      "src/AutoMapper/ResolutionContext.cs"
+    ],
+    "latency_s": 0.05043658401700668
+  },
+  {
+    "id": "cs05",
+    "q": "Where is all the configuration assembled and frozen for use?",
+    "gt": [
+      "src/AutoMapper/Configuration/MapperConfiguration.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Configuration/MapperConfigurationExpression.cs",
+      "src/TestApp/Properties/AssemblyInfo.cs",
+      "src/AutoMapper/AssemblyInfo.cs",
+      "src/AutoMapper/ServiceCollectionExtensions.cs",
+      "src/AutoMapper/TypeMap.cs",
+      "src/AutoMapper/ProfileMap.cs",
+      "src/AutoMapper/Configuration/MapperConfiguration.cs",
+      "src/AutoMapper/Configuration/TypeMapConfiguration.cs"
+    ],
+    "latency_s": 0.0466330420167651
+  },
+  {
+    "id": "cs06",
+    "q": "How is the configuration checked up front for members that cannot be resolved?",
+    "gt": [
+      "src/AutoMapper/Configuration/ConfigurationValidator.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Configuration/IMemberConfigurationExpression.cs",
+      "src/AutoMapper/Configuration/TypeMapConfiguration.cs",
+      "src/AutoMapper/MemberMap.cs",
+      "src/AutoMapper/Configuration/MappingExpression.cs",
+      "src/AutoMapper/Configuration/IProfileExpression.cs",
+      "src/AutoMapper/Internal/TypeExtensions.cs",
+      "src/AutoMapper/Configuration/MemberConfigurationExpression.cs"
+    ],
+    "latency_s": 0.04961104202084243
+  },
+  {
+    "id": "cs07",
+    "q": "Where are the rules that match names between the two sides defined?",
+    "gt": [
+      "src/AutoMapper/Configuration/Conventions.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Configuration/Conventions.cs",
+      "src/AutoMapper/Mappers/FromStringDictionaryMapper.cs",
+      "src/AutoMapper/MemberMap.cs",
+      "src/AutoMapper/Mappers/IObjectMapper.cs",
+      "src/AutoMapper/Configuration/Annotations/ValueConverterAttribute.cs",
+      "src/AutoMapper/ProfileMap.cs",
+      "src/AutoMapper/Configuration/IMappingExpression.cs",
+      "src/AutoMapper/Internal/TypePair.cs"
+    ],
+    "latency_s": 0.04464012500829995
+  },
+  {
+    "id": "cs08",
+    "q": "Where is the conversion compiled into an executable expression tree?",
+    "gt": [
+      "src/AutoMapper/Execution/TypeMapPlanBuilder.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Execution/ExpressionBuilder.cs",
+      "src/AutoMapper/Execution/TypeMapPlanBuilder.cs",
+      "src/AutoMapper/Execution/ObjectFactory.cs",
+      "src/AutoMapper/Mappers/ConversionOperatorMapper.cs",
+      "src/AutoMapper/Mappers/ConvertMapper.cs",
+      "src/AutoMapper/Mappers/IObjectMapper.cs",
+      "src/AutoMapper/Configuration/MapperConfiguration.cs",
+      "src/AutoMapper/Configuration/IMemberConfigurationExpression.cs"
+    ],
+    "latency_s": 0.05580591698526405
+  },
+  {
+    "id": "cs09",
+    "q": "How are instances of the destination type created?",
+    "gt": [
+      "src/AutoMapper/Execution/ObjectFactory.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/ResolutionContext.cs",
+      "src/AutoMapper/TypeMap.cs",
+      "src/AutoMapper/Configuration/IMappingExpressionBase.cs",
+      "src/AutoMapper/Configuration/Annotations/UseExistingValueAttribute.cs",
+      "src/AutoMapper/Execution/ObjectFactory.cs",
+      "src/AutoMapper/Execution/TypeMapPlanBuilder.cs"
+    ],
+    "latency_s": 0.05717874999390915
+  },
+  {
+    "id": "cs10",
+    "q": "How are runtime types generated for interfaces that have no implementation?",
+    "gt": [
+      "src/AutoMapper/Execution/ProxyGenerator.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Internal/TypeExtensions.cs",
+      "src/AutoMapper/Execution/ObjectFactory.cs",
+      "src/AutoMapper/Configuration/MemberConfigurationExpression.cs",
+      "src/AutoMapper/AssemblyInfo.cs",
+      "src/AutoMapper/Execution/ProxyGenerator.cs",
+      "src/TestApp/Properties/AssemblyInfo.cs",
+      "src/AutoMapper/TypeMap.cs"
+    ],
+    "latency_s": 0.05072970801847987
+  },
+  {
+    "id": "cs11",
+    "q": "How is a database query projected directly into the destination shape?",
+    "gt": [
+      "src/AutoMapper/QueryableExtensions/Extensions.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/QueryableExtensions/ProjectionMappers/EnumProjectionMapper.cs",
+      "src/AutoMapper/QueryableExtensions/ProjectionMappers/NullableSourceProjectionMapper.cs",
+      "src/AutoMapper/QueryableExtensions/ProjectionMappers/AssignableProjectionMapper.cs",
+      "src/AutoMapper/QueryableExtensions/ProjectionMappers/StringProjectionMapper.cs",
+      "src/AutoMapper/Configuration/MappingExpression.cs",
+      "src/AutoMapper/QueryableExtensions/ProjectionBuilder.cs",
+      "src/AutoMapper/QueryableExtensions/ProjectionMappers/EnumerableProjectionMapper.cs",
+      "src/AutoMapper/QueryableExtensions/Extensions.cs",
+      "src/AutoMapper/Configuration/IMemberConfigurationExpression.cs"
+    ],
+    "latency_s": 0.0488982500100974
+  },
+  {
+    "id": "cs12",
+    "q": "Where is the failure type raised when a conversion cannot be completed?",
+    "gt": [
+      "src/AutoMapper/AutoMapperMappingException.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/TypeMap.cs",
+      "src/AutoMapper/ResolutionContext.cs",
+      "src/AutoMapper/Internal/TypeExtensions.cs",
+      "src/AutoMapper/Mappers/ConversionOperatorMapper.cs",
+      "src/AutoMapper/Execution/ObjectFactory.cs",
+      "src/AutoMapper/Configuration/MemberConfigurationExpression.cs",
+      "src/AutoMapper/Configuration/IMemberConfigurationExpression.cs"
+    ],
+    "latency_s": 0.050509791006334126
+  },
+  {
+    "id": "cs13",
+    "q": "Where is a group of related configuration settings collected together?",
+    "gt": [
+      "src/AutoMapper/ProfileMap.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Features.cs",
+      "src/AutoMapper/Internal/TypeDetails.cs",
+      "src/AutoMapper/Internal/PrimitiveHelper.cs",
+      "src/AutoMapper/QueryableExtensions/NullsafeQueryRewriter.cs",
+      "src/AutoMapper/Mappers/CollectionMapper.cs",
+      "src/AutoMapper/Execution/ExpressionBuilder.cs",
+      "src/AutoMapper/Configuration/Annotations/AutoMapAttribute.cs",
+      "src/AutoMapper/Configuration/PathConfigurationExpression.cs",
+      "docs/source/conf.py"
+    ],
+    "latency_s": 0.04914666700642556
+  },
+  {
+    "id": "cs14",
+    "q": "Where is the use of a constructor rather than property assignment described?",
+    "gt": [
+      "src/AutoMapper/ConstructorMap.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Internal/TypeDetails.cs",
+      "src/AutoMapper/TypeMap.cs",
+      "src/AutoMapper/Execution/ProxyGenerator.cs",
+      "src/AutoMapper/Configuration/MapperConfigurationExpression.cs",
+      "src/AutoMapper/Configuration/IMappingOperationOptions.cs",
+      "src/AutoMapper/Execution/ExpressionBuilder.cs",
+      "src/AutoMapper/MemberMap.cs"
+    ],
+    "latency_s": 0.06427762497332878
+  },
+  {
+    "id": "cs15",
+    "q": "Where is a chain of members walked to reach a nested value?",
+    "gt": [
+      "src/AutoMapper/Internal/MemberPath.cs"
+    ],
+    "ranked_files": [
+      "src/AutoMapper/Execution/ExpressionBuilder.cs",
+      "src/AutoMapper/ProfileMap.cs",
+      "src/AutoMapper/MemberMap.cs",
+      "src/AutoMapper/Configuration/TypeMapConfiguration.cs",
+      "src/AutoMapper/Internal/MemberPath.cs",
+      "src/AutoMapper/Mappers/FromStringDictionaryMapper.cs"
+    ],
+    "latency_s": 0.06277787499129772
+  }
+]

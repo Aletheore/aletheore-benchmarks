@@ -1,0 +1,17 @@
+[
+  {"id": "cs01", "question": "Where is the object callers use to convert one instance into another?", "ground_truth_files": ["src/AutoMapper/Mapper.cs"], "verification_anchor": "public interface IMapperBase"},
+  {"id": "cs02", "question": "Where is the plan for converting one type into another represented?", "ground_truth_files": ["src/AutoMapper/TypeMap.cs"], "verification_anchor": "public sealed class TypeMap"},
+  {"id": "cs03", "question": "Where is the pairing of a single source and destination member held?", "ground_truth_files": ["src/AutoMapper/PropertyMap.cs"], "verification_anchor": "public sealed class PropertyMap"},
+  {"id": "cs04", "question": "Where is the state carried through a single conversion, including already-converted instances?", "ground_truth_files": ["src/AutoMapper/ResolutionContext.cs"], "verification_anchor": "public sealed class ResolutionContext"},
+  {"id": "cs05", "question": "Where is all the configuration assembled and frozen for use?", "ground_truth_files": ["src/AutoMapper/Configuration/MapperConfiguration.cs"], "verification_anchor": "public interface IConfigurationProvider"},
+  {"id": "cs06", "question": "How is the configuration checked up front for members that cannot be resolved?", "ground_truth_files": ["src/AutoMapper/Configuration/ConfigurationValidator.cs"], "verification_anchor": "public class ConfigurationValidator"},
+  {"id": "cs07", "question": "Where are the rules that match names between the two sides defined?", "ground_truth_files": ["src/AutoMapper/Configuration/Conventions.cs"], "verification_anchor": "ISourceToDestinationNameMapper"},
+  {"id": "cs08", "question": "Where is the conversion compiled into an executable expression tree?", "ground_truth_files": ["src/AutoMapper/Execution/TypeMapPlanBuilder.cs"], "verification_anchor": "IValueResolver"},
+  {"id": "cs09", "question": "How are instances of the destination type created?", "ground_truth_files": ["src/AutoMapper/Execution/ObjectFactory.cs"], "verification_anchor": "public static class ObjectFactory"},
+  {"id": "cs10", "question": "How are runtime types generated for interfaces that have no implementation?", "ground_truth_files": ["src/AutoMapper/Execution/ProxyGenerator.cs"], "verification_anchor": "public static class ProxyGenerator"},
+  {"id": "cs11", "question": "How is a database query projected directly into the destination shape?", "ground_truth_files": ["src/AutoMapper/QueryableExtensions/Extensions.cs"], "verification_anchor": "public static class Extensions"},
+  {"id": "cs12", "question": "Where is the failure type raised when a conversion cannot be completed?", "ground_truth_files": ["src/AutoMapper/AutoMapperMappingException.cs"], "verification_anchor": "AutoMapperMappingException"},
+  {"id": "cs13", "question": "Where is a group of related configuration settings collected together?", "ground_truth_files": ["src/AutoMapper/ProfileMap.cs"], "verification_anchor": "public sealed class ProfileMap"},
+  {"id": "cs14", "question": "Where is the use of a constructor rather than property assignment described?", "ground_truth_files": ["src/AutoMapper/ConstructorMap.cs"], "verification_anchor": "public sealed class ConstructorMap"},
+  {"id": "cs15", "question": "Where is a chain of members walked to reach a nested value?", "ground_truth_files": ["src/AutoMapper/Internal/MemberPath.cs"], "verification_anchor": "MemberPath"}
+]

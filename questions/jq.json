@@ -1,0 +1,17 @@
+[
+  {"id": "c01", "question": "Where does the compiled program actually get run instruction by instruction?", "ground_truth_files": ["src/execute.c"], "verification_anchor": "frame_get_level"},
+  {"id": "c02", "question": "Where is the parsed syntax tree turned into executable instructions?", "ground_truth_files": ["src/compile.c"], "verification_anchor": "inst_block"},
+  {"id": "c03", "question": "How is incoming text turned into structured values?", "ground_truth_files": ["src/jv_parse.c"], "verification_anchor": "parser_init"},
+  {"id": "c04", "question": "Where are values rendered back out as text?", "ground_truth_files": ["src/jv_print.c"], "verification_anchor": "jq_set_colors"},
+  {"id": "c05", "question": "Where are the built-in operations such as addition implemented?", "ground_truth_files": ["src/builtin.c"], "verification_anchor": "binop_plus"},
+  {"id": "c06", "question": "How is a deeply nested field reached by following a path?", "ground_truth_files": ["src/jv_aux.c"], "verification_anchor": "jv_getpath"},
+  {"id": "c07", "question": "How are external modules located and pulled in?", "ground_truth_files": ["src/linker.c"], "verification_anchor": "load_library"},
+  {"id": "c08", "question": "Where are the command line options interpreted?", "ground_truth_files": ["src/main.c"], "verification_anchor": "usage"},
+  {"id": "c09", "question": "Where is a path expanded, such as one starting from the home directory?", "ground_truth_files": ["src/util.c"], "verification_anchor": "expand_path"},
+  {"id": "c10", "question": "Where is the instruction set and how each instruction is encoded described?", "ground_truth_files": ["src/bytecode.c"], "verification_anchor": "bytecode_operation_length"},
+  {"id": "c11", "question": "Where is the reference counting for values implemented?", "ground_truth_files": ["src/jv.c"], "verification_anchor": "jvp_refcnt_inc"},
+  {"id": "c12", "question": "What happens when the process runs out of memory?", "ground_truth_files": ["src/jv_alloc.c"], "verification_anchor": "jv_nomem_handler"},
+  {"id": "c13", "question": "How are multi-byte characters decoded and validated?", "ground_truth_files": ["src/jv_unicode.c"], "verification_anchor": "jvp_codepoint_is_whitespace"},
+  {"id": "c14", "question": "Where is a whole file read in and turned into a value?", "ground_truth_files": ["src/jv_file.c"], "verification_anchor": "jv_load_file"},
+  {"id": "c15", "question": "How are floating point numbers converted to their text form?", "ground_truth_files": ["src/jv_dtoa.c"], "verification_anchor": "jvp_dtoa_context_init"}
+]

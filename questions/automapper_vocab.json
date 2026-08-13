@@ -1,0 +1,122 @@
+[
+ {
+  "id": "vcs01",
+  "question": "Where is AutoMapper's IMapperBase defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/Mapper.cs"
+  ],
+  "verification_anchor": "public interface IMapperBase"
+ },
+ {
+  "id": "vcs02",
+  "question": "Where is AutoMapper's TypeMap defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/TypeMap.cs"
+  ],
+  "verification_anchor": "public sealed class TypeMap"
+ },
+ {
+  "id": "vcs03",
+  "question": "Where is AutoMapper's PropertyMap defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/PropertyMap.cs"
+  ],
+  "verification_anchor": "public sealed class PropertyMap"
+ },
+ {
+  "id": "vcs04",
+  "question": "Where is AutoMapper's ResolutionContext defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/ResolutionContext.cs"
+  ],
+  "verification_anchor": "public sealed class ResolutionContext"
+ },
+ {
+  "id": "vcs05",
+  "question": "Where is AutoMapper's IConfigurationProvider defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/Configuration/MapperConfiguration.cs"
+  ],
+  "verification_anchor": "public interface IConfigurationProvider"
+ },
+ {
+  "id": "vcs06",
+  "question": "Where is AutoMapper's ConfigurationValidator defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/Configuration/ConfigurationValidator.cs"
+  ],
+  "verification_anchor": "public class ConfigurationValidator"
+ },
+ {
+  "id": "vcs07",
+  "question": "Where is AutoMapper's ISourceToDestinationNameMapper defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/Configuration/Conventions.cs"
+  ],
+  "verification_anchor": "ISourceToDestinationNameMapper"
+ },
+ {
+  "id": "vcs08",
+  "question": "Where is AutoMapper's IValueResolver defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/Execution/TypeMapPlanBuilder.cs"
+  ],
+  "verification_anchor": "IValueResolver"
+ },
+ {
+  "id": "vcs09",
+  "question": "Where is AutoMapper's ObjectFactory defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/Execution/ObjectFactory.cs"
+  ],
+  "verification_anchor": "public static class ObjectFactory"
+ },
+ {
+  "id": "vcs10",
+  "question": "Where is AutoMapper's ProxyGenerator defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/Execution/ProxyGenerator.cs"
+  ],
+  "verification_anchor": "public static class ProxyGenerator"
+ },
+ {
+  "id": "vcs11",
+  "question": "Where is AutoMapper's Extensions defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/QueryableExtensions/Extensions.cs"
+  ],
+  "verification_anchor": "public static class Extensions"
+ },
+ {
+  "id": "vcs12",
+  "question": "Where is AutoMapper's AutoMapperMappingException defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/AutoMapperMappingException.cs"
+  ],
+  "verification_anchor": "AutoMapperMappingException"
+ },
+ {
+  "id": "vcs13",
+  "question": "Where is AutoMapper's ProfileMap defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/ProfileMap.cs"
+  ],
+  "verification_anchor": "public sealed class ProfileMap"
+ },
+ {
+  "id": "vcs14",
+  "question": "Where is AutoMapper's ConstructorMap defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/ConstructorMap.cs"
+  ],
+  "verification_anchor": "public sealed class ConstructorMap"
+ },
+ {
+  "id": "vcs15",
+  "question": "Where is AutoMapper's MemberPath defined?",
+  "ground_truth_files": [
+   "src/AutoMapper/Internal/MemberPath.cs"
+  ],
+  "verification_anchor": "MemberPath"
+ }
+]

@@ -1,0 +1,122 @@
+[
+ {
+  "id": "vjs01",
+  "question": "Where is axios's Axios defined?",
+  "ground_truth_files": [
+   "lib/core/Axios.js"
+  ],
+  "verification_anchor": "class Axios"
+ },
+ {
+  "id": "vjs02",
+  "question": "Where is axios's throwIfCancellationRequested defined?",
+  "ground_truth_files": [
+   "lib/core/dispatchRequest.js"
+  ],
+  "verification_anchor": "throwIfCancellationRequested"
+ },
+ {
+  "id": "vjs03",
+  "question": "Where is axios's trimHandlers defined?",
+  "ground_truth_files": [
+   "lib/core/InterceptorManager.js"
+  ],
+  "verification_anchor": "trimHandlers"
+ },
+ {
+  "id": "vjs04",
+  "question": "Where is axios's normalizeHeader defined?",
+  "ground_truth_files": [
+   "lib/core/AxiosHeaders.js"
+  ],
+  "verification_anchor": "normalizeHeader"
+ },
+ {
+  "id": "vjs05",
+  "question": "Where is axios's hasOwnOrPrototypeToJSON defined?",
+  "ground_truth_files": [
+   "lib/core/AxiosError.js"
+  ],
+  "verification_anchor": "hasOwnOrPrototypeToJSON"
+ },
+ {
+  "id": "vjs06",
+  "question": "Where is axios's mergeConfig defined?",
+  "ground_truth_files": [
+   "lib/core/mergeConfig.js"
+  ],
+  "verification_anchor": "export default function mergeConfig"
+ },
+ {
+  "id": "vjs07",
+  "question": "Where is axios's redactFragment defined?",
+  "ground_truth_files": [
+   "lib/core/buildFullPath.js"
+  ],
+  "verification_anchor": "redactFragment"
+ },
+ {
+  "id": "vjs08",
+  "question": "Where is axios's isXHRAdapterSupported defined?",
+  "ground_truth_files": [
+   "lib/adapters/xhr.js"
+  ],
+  "verification_anchor": "isXHRAdapterSupported"
+ },
+ {
+  "id": "vjs09",
+  "question": "Where is axios's handleSocketError defined?",
+  "ground_truth_files": [
+   "lib/adapters/http.js"
+  ],
+  "verification_anchor": "handleSocketError"
+ },
+ {
+  "id": "vjs10",
+  "question": "Where is axios's buildURL defined?",
+  "ground_truth_files": [
+   "lib/helpers/buildURL.js"
+  ],
+  "verification_anchor": "export default function buildURL"
+ },
+ {
+  "id": "vjs11",
+  "question": "Where is axios's stringifySafely defined?",
+  "ground_truth_files": [
+   "lib/defaults/index.js"
+  ],
+  "verification_anchor": "stringifySafely"
+ },
+ {
+  "id": "vjs12",
+  "question": "Where is axios's CancelToken defined?",
+  "ground_truth_files": [
+   "lib/cancel/CancelToken.js"
+  ],
+  "verification_anchor": "class CancelToken"
+ },
+ {
+  "id": "vjs13",
+  "question": "Where is axios's settle defined?",
+  "ground_truth_files": [
+   "lib/core/settle.js"
+  ],
+  "verification_anchor": "export default function settle"
+ },
+ {
+  "id": "vjs14",
+  "question": "Where is axios's transformData defined?",
+  "ground_truth_files": [
+   "lib/core/transformData.js"
+  ],
+  "verification_anchor": "export default function transformData"
+ },
+ {
+  "id": "vjs15",
+  "question": "Where is axios's createInstance defined?",
+  "ground_truth_files": [
+   "lib/axios.js"
+  ],
+  "verification_anchor": "createInstance"
+ }
+]

@@ -1,0 +1,266 @@
+[
+  {
+    "id": "js01",
+    "q": "Where is the central client object that all the request methods hang off?",
+    "gt": [
+      "lib/core/Axios.js"
+    ],
+    "ranked_files": [
+      "sandbox/server.js",
+      "lib/core/Axios.js",
+      "sandbox/client.js",
+      "lib/adapters/fetch.js",
+      "lib/cancel/CanceledError.js",
+      "lib/adapters/xhr.js",
+      "lib/helpers/Http2Sessions.js"
+    ],
+    "latency_s": 0.06742833400494419
+  },
+  {
+    "id": "js02",
+    "q": "Where does a request get handed to whichever transport will actually send it?",
+    "gt": [
+      "lib/core/dispatchRequest.js"
+    ],
+    "ranked_files": [
+      "lib/adapters/xhr.js",
+      "lib/adapters/fetch.js",
+      "lib/adapters/http.js",
+      "lib/core/dispatchRequest.js",
+      "index.d.ts",
+      "sandbox/server.js"
+    ],
+    "latency_s": 0.050312417006352916
+  },
+  {
+    "id": "js03",
+    "q": "How are the hooks that run before and after each call registered?",
+    "gt": [
+      "lib/core/InterceptorManager.js"
+    ],
+    "ranked_files": [
+      "lib/adapters/xhr.js",
+      "lib/utils.js",
+      "lib/helpers/shouldBypassProxy.js",
+      "lib/helpers/AxiosTransformStream.js",
+      "lib/platform/common/utils.js",
+      "lib/adapters/http.js",
+      "lib/helpers/normalizeURLForProtocolCheck.js",
+      "lib/core/InterceptorManager.js"
+    ],
+    "latency_s": 0.05017008300637826
+  },
+  {
+    "id": "js04",
+    "q": "Where are header names normalised so casing does not matter?",
+    "gt": [
+      "lib/core/AxiosHeaders.js"
+    ],
+    "ranked_files": [
+      "lib/core/AxiosHeaders.js",
+      "lib/adapters/http.js",
+      "lib/core/setFormDataHeaders.js",
+      "lib/helpers/sanitizeHeaderValue.js",
+      "index.d.ts",
+      "lib/helpers/formDataToStream.js"
+    ],
+    "latency_s": 0.04853029100922868
+  },
+  {
+    "id": "js05",
+    "q": "Where is the failure type that carries the request and response defined?",
+    "gt": [
+      "lib/core/AxiosError.js"
+    ],
+    "ranked_files": [
+      "lib/core/settle.js",
+      "lib/adapters/xhr.js",
+      "sandbox/server.js",
+      "lib/core/dispatchRequest.js",
+      "examples/abort-controller/server.js",
+      "index.d.ts",
+      "lib/core/AxiosError.js",
+      "lib/core/transformData.js"
+    ],
+    "latency_s": 0.05685604200698435
+  },
+  {
+    "id": "js06",
+    "q": "How are per-call settings combined with the defaults?",
+    "gt": [
+      "lib/core/mergeConfig.js"
+    ],
+    "ranked_files": [
+      "lib/helpers/combineURLs.js",
+      "lib/helpers/shouldBypassProxy.js",
+      "scripts/axios-build-instance.js",
+      "lib/defaults/index.js",
+      "lib/core/mergeConfig.js",
+      "lib/helpers/isAbsoluteURL.js",
+      "lib/core/setFormDataHeaders.js",
+      "lib/core/transformData.js",
+      "lib/core/dispatchRequest.js"
+    ],
+    "latency_s": 0.05980050002108328
+  },
+  {
+    "id": "js07",
+    "q": "How is a relative address combined with the base one?",
+    "gt": [
+      "lib/core/buildFullPath.js"
+    ],
+    "ranked_files": [
+      "lib/helpers/combineURLs.js",
+      "lib/adapters/http.js",
+      "lib/helpers/isAbsoluteURL.js",
+      "index.d.ts",
+      "lib/core/settle.js",
+      "sandbox/server.js",
+      "lib/adapters/xhr.js"
+    ],
+    "latency_s": 0.04550029098754749
+  },
+  {
+    "id": "js08",
+    "q": "Where is the browser transport implemented?",
+    "gt": [
+      "lib/adapters/xhr.js"
+    ],
+    "ranked_files": [
+      "lib/adapters/xhr.js",
+      "lib/platform/browser/index.js",
+      "vitest.config.js",
+      "lib/platform/common/utils.js",
+      "lib/core/setFormDataHeaders.js",
+      "lib/adapters/http.js",
+      "eslint.config.js",
+      "lib/helpers/shouldBypassProxy.js"
+    ],
+    "latency_s": 0.04455304201110266
+  },
+  {
+    "id": "js09",
+    "q": "Where is the server-side transport implemented?",
+    "gt": [
+      "lib/adapters/http.js"
+    ],
+    "ranked_files": [
+      "sandbox/server.js",
+      "examples/server.js",
+      "index.d.ts",
+      "examples/network_enhanced.js",
+      "examples/get/server.js",
+      "lib/core/setFormDataHeaders.js",
+      "lib/adapters/http.js"
+    ],
+    "latency_s": 0.047715041000628844
+  },
+  {
+    "id": "js10",
+    "q": "How are query parameters turned into a URL string?",
+    "gt": [
+      "lib/helpers/buildURL.js"
+    ],
+    "ranked_files": [
+      "lib/helpers/normalizeURLForProtocolCheck.js",
+      "lib/helpers/combineURLs.js",
+      "lib/helpers/isAbsoluteURL.js",
+      "lib/helpers/buildURL.js",
+      "lib/helpers/fromDataURI.js",
+      "lib/core/buildFullPath.js",
+      "lib/platform/node/classes/URLSearchParams.js"
+    ],
+    "latency_s": 0.043356999987736344
+  },
+  {
+    "id": "js11",
+    "q": "Where are the out-of-the-box settings defined?",
+    "gt": [
+      "lib/defaults/index.js"
+    ],
+    "ranked_files": [
+      "lib/core/setFormDataHeaders.js",
+      "webpack.config.js",
+      "lib/helpers/shouldBypassProxy.js",
+      "lib/core/AxiosError.js",
+      "lib/helpers/sanitizeHeaderValue.js",
+      "docs/scripts/utils.js",
+      "lib/core/dispatchRequest.js",
+      "lib/helpers/AxiosURLSearchParams.js",
+      "lib/utils.js",
+      "vitest.config.js"
+    ],
+    "latency_s": 0.04633070799172856
+  },
+  {
+    "id": "js12",
+    "q": "How can an in-flight call be aborted?",
+    "gt": [
+      "lib/cancel/CancelToken.js"
+    ],
+    "ranked_files": [
+      "lib/adapters/http.js",
+      "lib/cancel/CancelToken.js",
+      "lib/helpers/composeSignals.js",
+      "lib/core/dispatchRequest.js",
+      "lib/adapters/xhr.js",
+      "index.d.ts"
+    ],
+    "latency_s": 0.05030262499349192
+  },
+  {
+    "id": "js13",
+    "q": "Where is it decided whether a response counts as success or failure?",
+    "gt": [
+      "lib/core/settle.js"
+    ],
+    "ranked_files": [
+      "lib/adapters/xhr.js",
+      "lib/core/settle.js",
+      "examples/abort-controller/server.js",
+      "docs/scripts/utils.js",
+      "lib/core/dispatchRequest.js",
+      "lib/helpers/isAbsoluteURL.js",
+      "lib/adapters/http.js",
+      "lib/helpers/isAxiosError.js"
+    ],
+    "latency_s": 0.05637512501562014
+  },
+  {
+    "id": "js14",
+    "q": "Where is the payload passed through the user's conversion functions?",
+    "gt": [
+      "lib/core/transformData.js"
+    ],
+    "ranked_files": [
+      "lib/helpers/isAxiosError.js",
+      "lib/core/transformData.js",
+      "examples/upload/server.js",
+      "lib/adapters/http.js",
+      "lib/helpers/spread.js",
+      "examples/postMultipartFormData/server.js",
+      "examples/post/server.js",
+      "lib/helpers/toURLEncodedForm.js",
+      "gulpfile.js"
+    ],
+    "latency_s": 0.058250958973076195
+  },
+  {
+    "id": "js15",
+    "q": "Where is the instance that gets exported to consumers put together?",
+    "gt": [
+      "lib/axios.js"
+    ],
+    "ranked_files": [
+      "lib/axios.js",
+      "gulpfile.js",
+      "index.d.ts",
+      "lib/adapters/fetch.js",
+      "lib/adapters/xhr.js",
+      "vitest.config.js",
+      "lib/core/Axios.js",
+      "lib/helpers/sanitizeHeaderValue.js"
+    ],
+    "latency_s": 0.054839290998643264
+  }
+]
