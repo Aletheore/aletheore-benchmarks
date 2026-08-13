@@ -1,0 +1,17 @@
+[
+  {"id": "php01", "question": "Where is the central application object that ties routing and middleware together?", "ground_truth_files": ["Slim/App.php"], "verification_anchor": "class App extends RouteCollectorProxy"},
+  {"id": "php02", "question": "How does a request pass through the chain of middleware before reaching a handler?", "ground_truth_files": ["Slim/MiddlewareDispatcher.php"], "verification_anchor": "public function handle"},
+  {"id": "php03", "question": "Where are route definitions collected and stored before dispatch?", "ground_truth_files": ["Slim/Routing/RouteCollector.php"], "verification_anchor": "class RouteCollector"},
+  {"id": "php04", "question": "How is a callable given as a string turned into something invokable?", "ground_truth_files": ["Slim/CallableResolver.php"], "verification_anchor": "public function resolve"},
+  {"id": "php05", "question": "Where is the finished response actually written back to the client?", "ground_truth_files": ["Slim/ResponseEmitter.php"], "verification_anchor": "public function emit"},
+  {"id": "php06", "question": "How are uncaught exceptions turned into an HTTP error response?", "ground_truth_files": ["Slim/Handlers/ErrorHandler.php"], "verification_anchor": "class ErrorHandler"},
+  {"id": "php07", "question": "Where does the framework decide which error handler applies to a given exception type?", "ground_truth_files": ["Slim/Middleware/ErrorMiddleware.php"], "verification_anchor": "ErrorMiddleware"},
+  {"id": "php08", "question": "How is an incoming request body decoded based on its content type?", "ground_truth_files": ["Slim/Middleware/BodyParsingMiddleware.php"], "verification_anchor": "BodyParsingMiddleware"},
+  {"id": "php09", "question": "Where is a single matched route represented, along with its arguments and callable?", "ground_truth_files": ["Slim/Routing/Route.php"], "verification_anchor": "class Route"},
+  {"id": "php10", "question": "How is a URL generated from a named route and its parameters?", "ground_truth_files": ["Slim/Routing/RouteParser.php"], "verification_anchor": "urlFor"},
+  {"id": "php11", "question": "What provides the convenient constructor that wires up default dependencies?", "ground_truth_files": ["Slim/Factory/AppFactory.php"], "verification_anchor": "AppFactory"},
+  {"id": "php12", "question": "Where are grouped routes sharing a common path prefix declared?", "ground_truth_files": ["Slim/Routing/RouteCollectorProxy.php"], "verification_anchor": "RouteCollectorProxy"},
+  {"id": "php13", "question": "How does the framework match an incoming path to a registered route?", "ground_truth_files": ["Slim/Routing/RouteResolver.php", "Slim/Routing/Dispatcher.php"], "verification_anchor": "computeRoutingResults"},
+  {"id": "php14", "question": "Where is the exception raised when no route matches the requested path?", "ground_truth_files": ["Slim/Exception/HttpNotFoundException.php"], "verification_anchor": "HttpNotFoundException"},
+  {"id": "php15", "question": "How are the arguments for a matched route passed into the user's handler?", "ground_truth_files": ["Slim/Handlers/Strategies/RequestResponse.php"], "verification_anchor": "RequestResponse"}
+]

@@ -86,6 +86,43 @@ After the fix, 0/32 results matched the FTS run.
   asking "explain the architecture" would likely invert the result — that is not
   measured here and should not be inferred either way.
 
+## A published table that did not reproduce (corrected 2026-08-13)
+
+The first revision of this repository listed flask retrieval as **71.9% / 96.9%
+/ 100%**. That row was wrong, and it is worth saying exactly how, because the
+failure mode is easy to repeat.
+
+Two results files were committed here, from two different builds:
+
+| file | top-1 | top-3 | top-5 |
+|---|---|---|---|
+| `results_aletheore.json` | 75.0% | 90.6% | 96.9% |
+| `results_aletheore_after_constants.json` | 71.9% | 90.6% | 96.9% |
+
+The published row took **71.9%** from the second file and **96.9% / 100%** from
+neither — the top-5 figure came from a later, uncommitted run. Nobody could have
+reproduced it, including us, because no single run ever produced those three
+numbers together.
+
+It was caught by re-running the harness across every 0.8.x tag while
+investigating something unrelated. Each tag from v0.8.0 through v0.8.4 produces
+**65.6% / 93.8% / 100%** on the same corpus commit and the same 32 questions.
+0.8.5 produces 68.8% / 93.8% / 100%.
+
+Two things follow, and both are now practice here:
+
+1. **A results table cites one run.** Assembling a row from the best available
+   figure in each column is not a summary, it is a fabrication, even when every
+   individual number was real at some point.
+2. **Numbers are attributed to a release that can be installed.** The old row
+   was labelled v0.8.0, a version that never existed on PyPI (see the note in
+   README about the frozen `pyproject.toml`), so "reproduce it with 0.8.0" was
+   never an instruction anyone could follow.
+
+Top-1 genuinely declined across the 0.8.x hardening work — 75.0% → 71.9% →
+65.6% — while top-3 and top-5 rose. 0.8.5 recovers part of it. That trade is
+shown in both directions in the README rather than reported as a straight win.
+
 ## Aletheore's one miss (q32)
 
 "Where are the notification hooks that extensions can subscribe to declared?"

@@ -21,6 +21,15 @@
       ]
     },
     {
+      "name": "slim",
+      "url": "https://github.com/slimphp/Slim",
+      "commit": "80900fb39cafce3ae53b18a2c4f642a122f03095",
+      "language": "php",
+      "questions": [
+        "slim.json"
+      ]
+    },
+    {
       "name": "serde",
       "url": "https://github.com/serde-rs/serde",
       "commit": "747814f",
