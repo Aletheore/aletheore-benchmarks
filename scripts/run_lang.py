@@ -1,6 +1,33 @@
 """Aletheore indexed search over a per-language question set."""
 import json, statistics, sys, time
 from pathlib import Path
+
+# Optional: run queries through OpenAI embeddings instead of local Ollama, so an
+# index built with text-embedding-3-small is queried with the same model. The
+# index and the query MUST use one embedder - 1536-dim vectors searched with a
+# 768-dim query vector fails outright.
+import os
+if os.environ.get("BENCH_EMBEDDER") == "openai":
+    import aletheore.search_index as _si
+    from openai import OpenAI as _OpenAI
+    _key = None
+    for _line in open(os.environ.get("BENCH_ENV_FILE", "/private/tmp/bench/.env")):
+        if _line.startswith("OPENAI_API_KEY="):
+            _key = _line.strip().split("=", 1)[1]
+    assert _key, "BENCH_EMBEDDER=openai but no OPENAI_API_KEY found"
+    _client = _OpenAI(base_url=_si.OPENAI_EMBEDDING_BASE_URL, api_key=_key)
+
+    def _openai_embed(texts, *a, **kw):
+        out = []
+        for i in range(0, len(texts), 256):
+            r = _client.embeddings.create(
+                model=_si.OPENAI_EMBEDDING_MODEL, input=texts[i:i + 256]
+            )
+            out.extend(x.embedding for x in r.data)
+        return out
+
+    _si.embed_texts = _openai_embed
+
 from aletheore.search_index import search_index
 
 NAME, REPO, QFILE = sys.argv[1], Path(sys.argv[2]), sys.argv[3]
