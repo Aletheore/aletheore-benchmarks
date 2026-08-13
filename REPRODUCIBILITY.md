@@ -6,7 +6,7 @@ Read this before citing any number here as settled.
 
 | | version |
 |---|---|
-| Aletheore | **0.8.0** |
+| Aletheore | **0.8.11** |
 | RepoWise | 0.27.0 |
 | Ollama | 0.32.6 |
 | Embedding model (both tools) | `nomic-embed-text` (768-dim) |
@@ -21,7 +21,10 @@ different checkout, because the ground truth was verified against that one.
 ## What reproduces exactly
 
 **Retrieval (the location benchmark).** Deterministic given the same corpus,
-same Aletheore version and the same local embedding model. Same index, same
+same Aletheore version and the same local `nomic-embed-text` embedding model.
+These published numbers describe local `nomic-embed-text`, not hosted OpenAI
+embeddings; the embedder alone moved Gin by 20 points in the comparison run.
+Same index, same
 ranking, same top-k. Re-running changes only latency.
 
 **Ground-truth verification.** `scripts/verify_ground_truth.py` is pure file

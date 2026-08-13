@@ -122,15 +122,16 @@ What this does establish is the measurement. Before it, no number distinguished
 "answered in one language" from "showed the user their options", so any work on
 unscoped polyglot queries was unfalsifiable.
 
-## Near-duplicate crowding is a symptom of phrasing, not a retrieval defect
+## Near-duplicate crowding: a falsified ranking lead
 
-"Sibling crowding" was described in this repository as the strongest open lead,
+"Sibling crowding" was initially described in this repository as the strongest
+open lead,
 observed independently on three corpora: slimphp/Slim's `RequestResponse*`
 strategies, google/gson's `TypeAdapters.java`, and apache/thrift's
 `binary_protocol` / `compact_protocol` pairs. Two ranking fixes were built
 against it and both were rejected on measurement.
 
-Before building a third, the misses were checked against the vocabulary regime.
+Before building a third ranking change, the misses were checked against the vocabulary regime.
 Every one of them disappears:
 
 | corpus | general-regime misses | vocabulary-regime misses |

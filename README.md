@@ -13,26 +13,41 @@ losses are all in this repository.
 
 Aletheore indexes code chunks and returns `file:line`.
 
-Measured on **Aletheore 0.8.5 installed from PyPI**, each corpus re-scanned and
-re-indexed from scratch, local `nomic-embed-text` embeddings, no API key:
+Measured in one run with **Aletheore 0.8.11 installed from PyPI**, each corpus
+re-scanned and re-indexed from scratch with local `nomic-embed-text` (768-dim)
+embeddings, no API key:
 
-| corpus | language | general top-1 | vocabulary top-1 | general top-5 | n |
-|---|---|---|---|---|---|
-| gin | Go | **80.0%** | — | 100% | 15 |
-| flask | Python | **68.8%** | — | 100% | 32 |
-| jq | C | **53.3%** | 73.3% | 80.0% | 15 |
-| serde | Rust | **53.3%** | — | 73.3% | 15 |
-| gson | Java | **40.0%** | 60.0% | 80.0% | 15 |
-| fmt | C++ | **40.0%** | 66.7% | 86.7% | 15 |
-| jekyll | Ruby | **26.7%** | 66.7% | 46.7% | 15 |
-| Slim | PHP | **26.7%** | 73.3% | 66.7% | 15 |
-| axios | JavaScript | **20.0%** | 73.3% | 66.7% | 15 |
-| guzzle | PHP | **20.0%** | 53.3% | 66.7% | 15 |
-| zod | TypeScript | **20.0%** | 60.0% | 40.0% | 15 |
-| AutoMapper | C# | **6.7%** | 86.7% | 33.3% | 15 |
-| thrift | **multi (8 langs)** | **6.7%** | — | 53.3% | 15 |
+| corpus | regime | top-1 | top-3 | top-5 | MRR | n |
+|---|---|---:|---:|---:|---:|---:|
+| location (Flask) | general | 71.9% | 93.8% | 100.0% | 0.832 | 32 |
+| gin | general | 80.0% | 100.0% | 100.0% | 0.878 | 15 |
+| serde | general | 53.3% | 66.7% | 73.3% | 0.617 | 15 |
+| Slim | general | 26.7% | 60.0% | 66.7% | 0.458 | 15 |
+| Slim | vocabulary | 73.3% | 80.0% | 93.3% | 0.797 | 15 |
+| guzzle | general | 20.0% | 53.3% | 66.7% | 0.374 | 15 |
+| guzzle | vocabulary | 53.3% | 93.3% | 100.0% | 0.728 | 15 |
+| jekyll | general | 26.7% | 33.3% | 46.7% | 0.337 | 15 |
+| jekyll | vocabulary | 66.7% | 86.7% | 93.3% | 0.778 | 15 |
+| zod | general | 20.0% | 40.0% | 40.0% | 0.289 | 15 |
+| zod | vocabulary | 60.0% | 73.3% | 73.3% | 0.667 | 15 |
+| gson | general | 40.0% | 66.7% | 80.0% | 0.544 | 15 |
+| gson | vocabulary | 60.0% | 86.7% | 86.7% | 0.749 | 15 |
+| axios | general | 20.0% | 46.7% | 66.7% | 0.407 | 15 |
+| axios | vocabulary | 73.3% | 93.3% | 100.0% | 0.850 | 15 |
+| jq | general | 53.3% | 66.7% | 80.0% | 0.648 | 15 |
+| jq | vocabulary | 73.3% | 100.0% | 100.0% | 0.867 | 15 |
+| fmt | general | 40.0% | 60.0% | 86.7% | 0.527 | 15 |
+| fmt | vocabulary | 66.7% | 93.3% | 93.3% | 0.789 | 15 |
+| AutoMapper | general | 6.7% | 20.0% | 33.3% | 0.177 | 15 |
+| AutoMapper | vocabulary | 86.7% | 100.0% | 100.0% | 0.933 | 15 |
+| thrift | general | 6.7% | 33.3% | 53.3% | 0.241 | 15 |
+| thrift | cross-language | 53.3% | 73.3% | 93.3% | 0.677 | 15 |
 
-All **11 supported languages** are now measured, across 13 corpora — including
+The audit file has no 0.8.11 result line for `thrift_anylang`, so this table
+does not invent one; its two published Thrift rows are reproduced exactly.
+
+All **11 supported languages** are now measured, across 12 single-language
+corpora plus Thrift's published regimes — including
 `apache/thrift`, the first genuinely polyglot corpus (eight languages, none
 above a third of the modules), which implements the same protocol separately in
 each language and so tests whether retrieval can tell one language's
@@ -43,6 +58,10 @@ found: *general* phrasing deliberately avoids the project's own vocabulary,
 language's true figure is bracketed by them rather than given by either.
 
 Raw per-query output is in `results/`, one file per corpus, regime and system.
+
+The ten pre-existing corpus rows are unchanged by 0.8.7-0.8.11 work outside
+their targets. The two changed rows are Gson top-3 (73.3% -> 66.7%) and
+AutoMapper top-3 (13.3% -> 20.0%), both from #236.
 
 **The spread is the finding.** Go and Python are strong; Java, Ruby, PHP and
 TypeScript are not, and the weak corpora were measured last, so the published
@@ -76,7 +95,8 @@ named in the question competed only as ordinary text.
 
 This is the one defect found here that the phrasing confound does **not**
 explain: the cross-language questions already use full vocabulary, so the
-failure survives good questions. It is also invisible to every single-language
+failure survives good questions. The fix raises cross-language top-5 from
+60.0% to **93.3%**. It is also invisible to every single-language
 corpus, which is what the polyglot corpus was added to find.
 
 Detection only fires when a query names a language, and across all 356
@@ -85,28 +105,13 @@ naming Python, whose results are unchanged to three decimals of MRR.
 
 #### Why the weak corpora are weak
 
-**Near-duplicate crowding (PHP), real but mostly not the cost.** Slim's top-5
-misses are topical *siblings* of the right answer — asked where route arguments
-reach the handler, we return `RequestResponseNamedArgs.php` and
-`RequestResponseArgs.php` but not the `RequestResponse.php` they are variants
-of. That crowding is visible in the raw results and is genuine.
-
-What it is *not* is the main cost. Asked in Slim's own vocabulary the same
-corpus scores 73.3% top-1 rather than 26.7%, so most of the gap was phrasing.
-Two ranking fixes were built against the crowding before that was known, and
-both were rejected on measurement:
-
-1. *An import-authority prior*, applied globally: cost flask 9.4 points of
-   top-1 and gson 6.7. Rejected.
-2. *The same prior scoped to PHP only*, so it provably could not affect another
-   language. It first appeared to lift Slim top-1 by 6.7 points — an artefact
-   of clamping the fused rank at zero, which collapses every strongly-weighted
-   hit onto one effective rank. With the floor corrected it produces no top-1
-   gain on either PHP corpus and trades Slim top-5 for guzzle top-3. Rejected.
-
-A second PHP corpus (guzzle) was added specifically so a PHP-targeted change
-could not be tuned and validated on the same 15 questions. It is what made the
-second rejection legible.
+**Near-duplicate crowding is recorded as a phrasing symptom, not a live ranking
+lead.** The apparent sibling pollution in Slim, Gson and Thrift was checked
+against the vocabulary regimes: the misses disappear when the question names
+the project's own symbols. Two ranking fixes were built and rejected on
+measurement. The finding and its falsification are recorded in
+`METHODOLOGY.md`; no further ranking work should treat crowding as the leading
+explanation without new evidence.
 
 **Not the cause: inheritance.** It was proposed that a base class is being
 crowded out by its children, and that promoting base classes would fix it.
@@ -159,12 +164,12 @@ every ranking change in this programme combined, and it means **the retrieval
 table above measures a phrasing regime at least as much as it measures the
 product**.
 
-It also retires a conclusion this file previously drew. PHP was described as a
-ranking problem - near-duplicate crowding - and two fixes were built and
-rejected against it. Slim moves 26.7% -> 73.3% on phrasing, so most of what
-those fixes were chasing was an artefact of how the questions were written.
-The crowding is real and visible in the raw results; it is not what was costing
-most of the score.
+It also retires a conclusion this file previously drew. PHP was initially
+described as a ranking problem - near-duplicate crowding - and two fixes were
+built and rejected against it. Slim moves 26.7% -> 73.3% on phrasing, so most
+of what those fixes were chasing was an artefact of how the questions were
+written. The finding is recorded in `METHODOLOGY.md` as a phrasing symptom,
+not a live ranking lead.
 
 Both sets are kept for every corpus and both numbers published. Rewriting only
 the missed questions was considered and rejected - correcting just the failures
@@ -175,9 +180,10 @@ somewhere in between.
 **These numbers replace an earlier table that did not reproduce.** The previous
 revision listed flask at 71.9% / 96.9% / 100%, which matched no committed
 results file — it blended top-1 from one run with top-3 and top-5 from another.
-Re-running the published harness against every 0.8.x release produces 65.6% /
-93.8% / 100% for that code, and 68.8% / 93.8% / 100% for 0.8.5. The lesson is
-recorded in **METHODOLOGY.md** rather than quietly corrected.
+Re-running the published harness against every 0.8.x release produced the
+earlier 65.6% / 93.8% / 100% and 68.8% / 93.8% / 100% figures for 0.8.5. The
+current table is the single 0.8.11 PyPI run from `/private/tmp/audit-0811.txt`;
+the lesson is recorded in **METHODOLOGY.md** rather than quietly corrected.
 
 Head-to-head against RepoWise, **all seven corpora**, same questions and same
 ground truth. RepoWise searches its own generated wiki pages, so each corpus
@@ -257,8 +263,8 @@ swapped, equal 12,000-character context budget, tool names scrubbed.
 seventh the cost, having closed a gap that started at 1.33.
 
 These wiki figures were measured on a pre-0.8.0 build and have **not** been
-re-run on 0.8.5. They are left as measured rather than restated against a
-version they did not come from; only the retrieval tables above are 0.8.5.
+re-run on 0.8.11. They are left as measured rather than restated against a
+version they did not come from; only the retrieval table above is 0.8.11.
 
 ### Where we lose
 
@@ -279,17 +285,19 @@ We win on locating code, and on setup cost ($0.00 / 74 s against $0.18 / ~7 min)
 
 ## Reproducing
 
-**Aletheore v0.8.5.** Every retrieval result above was produced by that release,
+**Aletheore v0.8.11.** Every retrieval result above was produced by that release,
 installed from PyPI exactly as written below.
 
-Do not substitute 0.8.0 through 0.8.4. Those tags exist on GitHub but were never
-published: their `pyproject.toml` was frozen at `0.7.2` while the code advanced,
-so no artefact could be uploaded and `pip install aletheore==0.8.0` fails. 0.8.5
-is the first release in the line that installs, and the first whose
-`aletheore --version` reports its own version.
+The retrieval table describes local `nomic-embed-text` embeddings, not hosted
+OpenAI embeddings. The embedder alone moved Gin by 20 points in the comparison
+run, so this detail is part of the result definition.
+
+The older 0.8.0 through 0.8.4 tags were never published: their `pyproject.toml`
+was frozen at `0.7.2` while the code advanced, so no artefact could be uploaded.
+The published benchmark run uses 0.8.11 exactly.
 
 ```bash
-pip install "aletheore==0.8.5"
+pip install "aletheore==0.8.11"
 
 git clone https://github.com/pallets/flask /tmp/bench-flask
 git -C /tmp/bench-flask checkout 2a8a38b051fc248865730bf3511bf2e2ea325e81
