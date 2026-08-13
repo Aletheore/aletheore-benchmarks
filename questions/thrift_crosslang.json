@@ -1,0 +1,17 @@
+[
+  {"id": "xl01", "question": "Where is TBinaryProtocol implemented in the C++ library?", "ground_truth_files": ["lib/cpp/src/thrift/protocol/TBinaryProtocol.h"], "verification_anchor": "TBinaryProtocol"},
+  {"id": "xl02", "question": "Where is TBinaryProtocol implemented in the Java library?", "ground_truth_files": ["lib/java/src/main/java/org/apache/thrift/protocol/TBinaryProtocol.java"], "verification_anchor": "class TBinaryProtocol"},
+  {"id": "xl03", "question": "Where is TBinaryProtocol implemented in the Python library?", "ground_truth_files": ["lib/py/src/protocol/TBinaryProtocol.py"], "verification_anchor": "TBinaryProtocol"},
+  {"id": "xl04", "question": "Where is TBinaryProtocol implemented in the Ruby library?", "ground_truth_files": ["lib/rb/lib/thrift/protocol/binary_protocol.rb"], "verification_anchor": "BinaryProtocol"},
+  {"id": "xl05", "question": "Where is TBinaryProtocol implemented in the PHP library?", "ground_truth_files": ["lib/php/lib/Protocol/TBinaryProtocol.php"], "verification_anchor": "TBinaryProtocol"},
+  {"id": "xl06", "question": "Where is the binary protocol implemented in the Go library?", "ground_truth_files": ["lib/go/thrift/binary_protocol.go"], "verification_anchor": "BinaryProtocol"},
+  {"id": "xl07", "question": "Where is TCompactProtocol implemented in the C++ library?", "ground_truth_files": ["lib/cpp/src/thrift/protocol/TCompactProtocol.h"], "verification_anchor": "TCompactProtocol"},
+  {"id": "xl08", "question": "Where is TCompactProtocol implemented in the Java library?", "ground_truth_files": ["lib/java/src/main/java/org/apache/thrift/protocol/TCompactProtocol.java"], "verification_anchor": "class TCompactProtocol"},
+  {"id": "xl09", "question": "Where is TCompactProtocol implemented in the Python library?", "ground_truth_files": ["lib/py/src/protocol/TCompactProtocol.py"], "verification_anchor": "TCompactProtocol"},
+  {"id": "xl10", "question": "Where is TCompactProtocol implemented in the Ruby library?", "ground_truth_files": ["lib/rb/lib/thrift/protocol/compact_protocol.rb"], "verification_anchor": "CompactProtocol"},
+  {"id": "xl11", "question": "Where is the compact protocol implemented in the Go library?", "ground_truth_files": ["lib/go/thrift/compact_protocol.go"], "verification_anchor": "CompactProtocol"},
+  {"id": "xl12", "question": "Where is TJSONProtocol implemented in the Java library?", "ground_truth_files": ["lib/java/src/main/java/org/apache/thrift/protocol/TJSONProtocol.java"], "verification_anchor": "TJSONProtocol"},
+  {"id": "xl13", "question": "Where is TJSONProtocol implemented in the C++ library?", "ground_truth_files": ["lib/cpp/src/thrift/protocol/TJSONProtocol.h"], "verification_anchor": "TJSONProtocol"},
+  {"id": "xl14", "question": "Where is the base protocol interface defined in the Ruby library?", "ground_truth_files": ["lib/rb/lib/thrift/protocol/base_protocol.rb"], "verification_anchor": "BaseProtocol"},
+  {"id": "xl15", "question": "Where is TProtocol defined in the Java library?", "ground_truth_files": ["lib/java/src/main/java/org/apache/thrift/protocol/TProtocol.java"], "verification_anchor": "TProtocol"}
+]

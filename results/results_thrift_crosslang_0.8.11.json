@@ -1,0 +1,241 @@
+[
+  {
+    "id": "xl01",
+    "q": "Where is TBinaryProtocol implemented in the C++ library?",
+    "gt": [
+      "lib/cpp/src/thrift/protocol/TBinaryProtocol.h"
+    ],
+    "ranked_files": [
+      "contrib/zeromq/test-client.cpp",
+      "lib/cpp/src/thrift/protocol/TProtocol.h",
+      "compiler/cpp/src/thrift/generate/t_dart_generator.cc",
+      "lib/cpp/src/thrift/protocol/TBinaryProtocol.h",
+      "lib/cpp/src/thrift/protocol/TVirtualProtocol.h",
+      "lib/cpp/src/thrift/protocol/TCompactProtocol.h"
+    ],
+    "latency_s": 0.1657841249834746
+  },
+  {
+    "id": "xl02",
+    "q": "Where is TBinaryProtocol implemented in the Java library?",
+    "gt": [
+      "lib/java/src/main/java/org/apache/thrift/protocol/TBinaryProtocol.java"
+    ],
+    "ranked_files": [
+      "lib/java/src/main/java/org/apache/thrift/protocol/TBinaryProtocol.java",
+      "lib/javame/src/org/apache/thrift/protocol/TBinaryProtocol.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TTupleProtocol.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TCompactProtocol.java",
+      "lib/javame/src/org/apache/thrift/protocol/TProtocolFactory.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TProtocolFactory.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TProtocolDecorator.java"
+    ],
+    "latency_s": 0.1094816249969881
+  },
+  {
+    "id": "xl03",
+    "q": "Where is TBinaryProtocol implemented in the Python library?",
+    "gt": [
+      "lib/py/src/protocol/TBinaryProtocol.py"
+    ],
+    "ranked_files": [
+      "lib/py/src/protocol/TBinaryProtocol.py",
+      "lib/py/src/protocol/TProtocol.py",
+      "lib/py/src/protocol/TCompactProtocol.py",
+      "lib/py/src/protocol/TJSONProtocol.py",
+      "lib/py/src/protocol/THeaderProtocol.py",
+      "lib/py/src/TSerialization.py"
+    ],
+    "latency_s": 0.12695645799976774
+  },
+  {
+    "id": "xl04",
+    "q": "Where is TBinaryProtocol implemented in the Ruby library?",
+    "gt": [
+      "lib/rb/lib/thrift/protocol/binary_protocol.rb"
+    ],
+    "ranked_files": [
+      "lib/rb/lib/thrift/protocol/binary_protocol_accelerated.rb",
+      "lib/rb/lib/thrift/thrift_native.rb",
+      "lib/rb/lib/thrift/protocol/base_protocol.rb",
+      "tutorial/rb/RubyServer.rb",
+      "lib/rb/lib/thrift/protocol/binary_protocol.rb",
+      "lib/rb/lib/thrift/multiplexed_processor.rb",
+      "lib/rb/lib/thrift/serializer/deserializer.rb"
+    ],
+    "latency_s": 0.11812791600823402
+  },
+  {
+    "id": "xl05",
+    "q": "Where is TBinaryProtocol implemented in the PHP library?",
+    "gt": [
+      "lib/php/lib/Protocol/TBinaryProtocol.php"
+    ],
+    "ranked_files": [
+      "lib/php/lib/Factory/TBinaryProtocolFactory.php",
+      "lib/php/lib/Protocol/TBinaryProtocol.php",
+      "lib/php/lib/Factory/TBinaryProtocolAcceleratedFactory.php",
+      "lib/php/lib/Protocol/TProtocolDecorator.php",
+      "lib/php/lib/Protocol/TBinaryProtocolAccelerated.php",
+      "lib/php/lib/Protocol/TProtocol.php"
+    ],
+    "latency_s": 0.11474762501893565
+  },
+  {
+    "id": "xl06",
+    "q": "Where is the binary protocol implemented in the Go library?",
+    "gt": [
+      "lib/go/thrift/binary_protocol.go"
+    ],
+    "ranked_files": [
+      "lib/go/thrift/binary_protocol.go",
+      "lib/go/thrift/logger.go",
+      "lib/go/thrift/uuid.go",
+      "lib/go/thrift/http_client.go",
+      "lib/go/thrift/compact_protocol.go"
+    ],
+    "latency_s": 0.11055945898988284
+  },
+  {
+    "id": "xl07",
+    "q": "Where is TCompactProtocol implemented in the C++ library?",
+    "gt": [
+      "lib/cpp/src/thrift/protocol/TCompactProtocol.h"
+    ],
+    "ranked_files": [
+      "lib/cpp/src/thrift/protocol/TCompactProtocol.h",
+      "compiler/cpp/src/thrift/generate/t_dart_generator.cc",
+      "lib/cpp/src/thrift/protocol/TProtocol.h",
+      "lib/cpp/src/thrift/protocol/TVirtualProtocol.h",
+      "lib/cpp/src/thrift/VirtualProfiling.cpp",
+      "lib/cpp/src/thrift/TOutput.h",
+      "lib/cpp/src/thrift/thrift_export.h"
+    ],
+    "latency_s": 0.13615687499986961
+  },
+  {
+    "id": "xl08",
+    "q": "Where is TCompactProtocol implemented in the Java library?",
+    "gt": [
+      "lib/java/src/main/java/org/apache/thrift/protocol/TCompactProtocol.java"
+    ],
+    "ranked_files": [
+      "lib/java/src/main/java/org/apache/thrift/protocol/TCompactProtocol.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TTupleProtocol.java",
+      "lib/javame/src/org/apache/thrift/protocol/TProtocolFactory.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TProtocolFactory.java"
+    ],
+    "latency_s": 0.10476616700179875
+  },
+  {
+    "id": "xl09",
+    "q": "Where is TCompactProtocol implemented in the Python library?",
+    "gt": [
+      "lib/py/src/protocol/TCompactProtocol.py"
+    ],
+    "ranked_files": [
+      "lib/py/src/protocol/TCompactProtocol.py",
+      "lib/py/src/protocol/TProtocol.py",
+      "lib/py/src/protocol/TBinaryProtocol.py"
+    ],
+    "latency_s": 0.10674304200801998
+  },
+  {
+    "id": "xl10",
+    "q": "Where is TCompactProtocol implemented in the Ruby library?",
+    "gt": [
+      "lib/rb/lib/thrift/protocol/compact_protocol.rb"
+    ],
+    "ranked_files": [
+      "lib/rb/lib/thrift/protocol/binary_protocol_accelerated.rb",
+      "lib/rb/lib/thrift/thrift_native.rb",
+      "lib/rb/lib/thrift/multiplexed_processor.rb",
+      "lib/rb/lib/thrift/protocol/base_protocol.rb",
+      "lib/rb/lib/thrift/protocol/compact_protocol.rb",
+      "tutorial/rb/RubyServer.rb",
+      "lib/rb/lib/thrift/protocol/protocol_decorator.rb",
+      "lib/rb/lib/thrift/serializer/deserializer.rb"
+    ],
+    "latency_s": 0.11531125000328757
+  },
+  {
+    "id": "xl11",
+    "q": "Where is the compact protocol implemented in the Go library?",
+    "gt": [
+      "lib/go/thrift/compact_protocol.go"
+    ],
+    "ranked_files": [
+      "lib/go/thrift/compact_protocol.go",
+      "lib/go/thrift/logger.go",
+      "lib/go/thrift/uuid.go",
+      "lib/go/thrift/http_client.go"
+    ],
+    "latency_s": 0.13749200000893325
+  },
+  {
+    "id": "xl12",
+    "q": "Where is TJSONProtocol implemented in the Java library?",
+    "gt": [
+      "lib/java/src/main/java/org/apache/thrift/protocol/TJSONProtocol.java"
+    ],
+    "ranked_files": [
+      "lib/javame/src/org/apache/thrift/protocol/TJSONProtocol.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TJSONProtocol.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TSimpleJSONProtocol.java",
+      "lib/javame/src/org/apache/thrift/protocol/TProtocolFactory.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TTupleProtocol.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TProtocolFactory.java"
+    ],
+    "latency_s": 0.1336555409943685
+  },
+  {
+    "id": "xl13",
+    "q": "Where is TJSONProtocol implemented in the C++ library?",
+    "gt": [
+      "lib/cpp/src/thrift/protocol/TJSONProtocol.h"
+    ],
+    "ranked_files": [
+      "lib/cpp/src/thrift/protocol/TJSONProtocol.cpp",
+      "lib/cpp/src/thrift/protocol/TJSONProtocol.h",
+      "compiler/cpp/src/thrift/generate/t_dart_generator.cc",
+      "lib/cpp/src/thrift/VirtualProfiling.cpp",
+      "lib/cpp/src/thrift/thrift_export.h",
+      "lib/cpp/src/thrift/TOutput.h",
+      "contrib/transport-sample/server/server.cpp"
+    ],
+    "latency_s": 0.1664009999949485
+  },
+  {
+    "id": "xl14",
+    "q": "Where is the base protocol interface defined in the Ruby library?",
+    "gt": [
+      "lib/rb/lib/thrift/protocol/base_protocol.rb"
+    ],
+    "ranked_files": [
+      "lib/rb/lib/thrift/protocol/base_protocol.rb",
+      "lib/rb/lib/thrift/protocol/header_protocol.rb",
+      "lib/rb/lib/thrift/serializer/deserializer.rb",
+      "lib/rb/lib/thrift/protocol/binary_protocol.rb",
+      "lib/rb/lib/thrift/protocol/protocol_decorator.rb",
+      "lib/rb/lib/thrift/transport/header_transport.rb"
+    ],
+    "latency_s": 0.10855270799947903
+  },
+  {
+    "id": "xl15",
+    "q": "Where is TProtocol defined in the Java library?",
+    "gt": [
+      "lib/java/src/main/java/org/apache/thrift/protocol/TProtocol.java"
+    ],
+    "ranked_files": [
+      "lib/java/src/main/java/org/apache/thrift/protocol/TTupleProtocol.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TProtocolFactory.java",
+      "lib/javame/src/org/apache/thrift/TProcessor.java",
+      "lib/java/src/main/java/org/apache/thrift/TProcessor.java",
+      "lib/javame/src/org/apache/thrift/protocol/TProtocolFactory.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TLegacyUuidProtocolDecorator.java",
+      "lib/java/src/main/java/org/apache/thrift/TServiceClient.java"
+    ],
+    "latency_s": 0.11841854199883528
+  }
+]

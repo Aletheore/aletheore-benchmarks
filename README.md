@@ -30,7 +30,7 @@ re-indexed from scratch, local `nomic-embed-text` embeddings, no API key:
 | guzzle | PHP | **20.0%** | 53.3% | 66.7% | 15 |
 | zod | TypeScript | **20.0%** | 60.0% | 40.0% | 15 |
 | AutoMapper | C# | **6.7%** | 86.7% | 33.3% | 15 |
-| thrift | **multi (8 langs)** | **6.7%** | — | 40.0% | 15 |
+| thrift | **multi (8 langs)** | **6.7%** | — | 53.3% | 15 |
 
 All **11 supported languages** are now measured, across 13 corpora — including
 `apache/thrift`, the first genuinely polyglot corpus (eight languages, none
@@ -52,6 +52,36 @@ Of the causes investigated below, one is fixed, one is measured but only partly
 recoverable, one was tested and ruled out, and one turned out to be **our own
 question authoring rather than the product**. Two candidate ranking changes were
 implemented in full and rejected on measurement.
+
+#### Asking in one language and being answered in another
+
+`apache/thrift` implements the same protocol separately in eight languages, so a
+question naming one has a single correct answer and seven near-identical wrong
+ones. A third regime, `thrift_crosslang.json`, tests exactly that: full project
+vocabulary plus an explicit language, so the only difficulty is picking the
+right language's file.
+
+Measured on 0.8.10, five of six failures returned a **different language's file
+entirely** — C++ missed all three of its questions, returning Python and .NET
+implementations instead. The cause was not ranking: `search_index` already
+accepted a `language` pre-filter, and nothing ever populated it, so the language
+named in the question competed only as ordinary text.
+
+| regime | metric | 0.8.10 | 0.8.11 |
+|---|---|---|---|
+| cross-language | top-3 | 60.0% | **73.3%** |
+| cross-language | top-5 | 60.0% | **93.3%** |
+| cross-language | MRR | 0.576 | **0.677** |
+| general | top-5 | 40.0% | **53.3%** |
+
+This is the one defect found here that the phrasing confound does **not**
+explain: the cross-language questions already use full vocabulary, so the
+failure survives good questions. It is also invisible to every single-language
+corpus, which is what the polyglot corpus was added to find.
+
+Detection only fires when a query names a language, and across all 356
+single-language questions in this repository it fires on two, both in flask
+naming Python, whose results are unchanged to three decimals of MRR.
 
 #### Why the weak corpora are weak
 
