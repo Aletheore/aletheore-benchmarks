@@ -33,6 +33,14 @@ Rejected, with reasons, so nobody re-proposes them:
   "base.rb", which tests nothing about cross-file retrieval. Replaced by
   **jekyll/jekyll**, whose 89 library files across `lib/jekyll/` exercise it
   properly.
+- **PyO3/pyo3** and **tauri-apps/tauri** — proposed as mixed-language corpora and
+  rejected on measurement, not reputation. Scanned: PyO3 is **90% Rust**, 10%
+  Python (mostly test and example scaffolding); Tauri is **82% Rust**, 10%
+  JavaScript, 7% TypeScript. Both are single-language repositories with a
+  minority second language, so either would have produced a Rust result wearing
+  a polyglot label. **apache/thrift** replaces them: 948 modules after test and
+  auxiliary exclusion, spread across cpp 33%, java 21%, csharp 11%, php 6%,
+  go 6%, ruby 5%, python 5%, c 5% — no language above a third.
 - **MultiPL-E** — proposed as a "multi-language gold standard" and rejected on
   inspection: it is HumanEval/MBPP translated into ~18 languages, so every
   problem is a single self-contained function. No repositories, no cross-file

@@ -30,8 +30,13 @@ re-indexed from scratch, local `nomic-embed-text` embeddings, no API key:
 | guzzle | PHP | **20.0%** | 53.3% | 66.7% | 15 |
 | zod | TypeScript | **20.0%** | 60.0% | 40.0% | 15 |
 | AutoMapper | C# | **6.7%** | 86.7% | 33.3% | 15 |
+| thrift | **multi (8 langs)** | **6.7%** | — | 40.0% | 15 |
 
-All **11 supported languages** are now measured, across 12 corpora. Two
+All **11 supported languages** are now measured, across 13 corpora — including
+`apache/thrift`, the first genuinely polyglot corpus (eight languages, none
+above a third of the modules), which implements the same protocol separately in
+each language and so tests whether retrieval can tell one language's
+implementation from another's. Two
 question regimes are published for every corpus written since the confound was
 found: *general* phrasing deliberately avoids the project's own vocabulary,
 *vocabulary* phrasing uses it. Real users ask somewhere between the two, so a

@@ -138,6 +138,15 @@
         "automapper.json",
         "automapper_vocab.json"
       ]
+    },
+    {
+      "name": "thrift",
+      "url": "https://github.com/apache/thrift",
+      "commit": "4d0faf3",
+      "language": "multi",
+      "questions": [
+        "thrift.json"
+      ]
     }
   ]
 }

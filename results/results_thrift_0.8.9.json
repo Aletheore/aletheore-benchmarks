@@ -1,0 +1,274 @@
+[
+  {
+    "id": "mx01",
+    "q": "In the C++ library, where is the space-efficient wire encoding implemented?",
+    "gt": [
+      "lib/cpp/src/thrift/protocol/TCompactProtocol.h"
+    ],
+    "ranked_files": [
+      "lib/netstd/Thrift/Protocol/Utilities/TBase64Utils.cs",
+      "lib/rs/src/errors.rs",
+      "compiler/cpp/src/thrift/generate/t_haxe_generator.cc",
+      "lib/go/thrift/json_protocol.go",
+      "compiler/cpp/src/thrift/main.cc",
+      "lib/go/thrift/simple_json_protocol.go",
+      "compiler/cpp/src/thrift/generate/t_dart_generator.cc",
+      "compiler/cpp/src/thrift/generate/t_javame_generator.cc",
+      "compiler/cpp/src/thrift/generate/t_ocaml_generator.cc"
+    ],
+    "latency_s": 0.0760312500060536
+  },
+  {
+    "id": "mx02",
+    "q": "In the Java library, where is the straightforward fixed-width wire encoding implemented?",
+    "gt": [
+      "lib/java/src/main/java/org/apache/thrift/protocol/TBinaryProtocol.java"
+    ],
+    "ranked_files": [
+      "lib/java/src/main/java/org/apache/thrift/partial/TFieldData.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TBase64Utils.java",
+      "lib/java/src/main/java/org/apache/thrift/EncodingUtils.java",
+      "lib/rs/src/errors.rs",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TLegacyUuidProtocolDecorator.java",
+      "lib/py/src/TRecursive.py",
+      "lib/javame/src/org/apache/thrift/protocol/TBase64Utils.java",
+      "compiler/cpp/src/thrift/generate/t_html_generator.h"
+    ],
+    "latency_s": 0.07392433300265111
+  },
+  {
+    "id": "mx03",
+    "q": "In the Go library, where is the straightforward fixed-width wire encoding implemented?",
+    "gt": [
+      "lib/go/thrift/binary_protocol.go"
+    ],
+    "ranked_files": [
+      "compiler/cpp/src/thrift/generate/t_go_generator.cc",
+      "lib/go/thrift/compact_protocol.go",
+      "lib/go/thrift/transport.go",
+      "lib/rs/src/errors.rs",
+      "lib/py/src/TRecursive.py",
+      "lib/go/thrift/header_transport.go",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TLegacyUuidProtocolDecorator.java",
+      "lib/go/thrift/configuration.go",
+      "lib/go/thrift/uuid.go"
+    ],
+    "latency_s": 0.059833417006302625
+  },
+  {
+    "id": "mx04",
+    "q": "In the Python library, where is the space-efficient wire encoding implemented?",
+    "gt": [
+      "lib/py/src/protocol/TCompactProtocol.py"
+    ],
+    "ranked_files": [
+      "lib/py/src/protocol/TBase.py",
+      "lib/py/src/protocol/TCompactProtocol.py",
+      "lib/rs/src/errors.rs",
+      "lib/py/src/TSerialization.py",
+      "lib/go/thrift/json_protocol.go",
+      "lib/go/thrift/simple_json_protocol.go",
+      "lib/py/src/protocol/THeaderProtocol.py",
+      "lib/py/src/ext/binary.h",
+      "lib/py/src/transport/TTwisted.py"
+    ],
+    "latency_s": 0.0588382079731673
+  },
+  {
+    "id": "mx05",
+    "q": "In the Ruby library, where is the space-efficient wire encoding implemented?",
+    "gt": [
+      "lib/rb/lib/thrift/protocol/compact_protocol.rb"
+    ],
+    "ranked_files": [
+      "lib/rb/lib/thrift/transport/header_transport.rb",
+      "lib/rb/lib/thrift/transport/framed_transport.rb",
+      "lib/rb/lib/thrift/protocol/compact_protocol.rb",
+      "lib/rb/lib/thrift/transport/io_stream_transport.rb",
+      "lib/rb/lib/thrift/transport/memory_buffer_transport.rb",
+      "lib/rs/src/errors.rs",
+      "lib/go/thrift/json_protocol.go"
+    ],
+    "latency_s": 0.05941720801638439
+  },
+  {
+    "id": "mx06",
+    "q": "In the PHP library, where is the straightforward fixed-width wire encoding implemented?",
+    "gt": [
+      "lib/php/lib/Protocol/TBinaryProtocol.php"
+    ],
+    "ranked_files": [
+      "lib/php/lib/Protocol/TProtocol.php",
+      "lib/rs/src/errors.rs",
+      "lib/php/lib/Protocol/TBinaryProtocol.php",
+      "lib/py/src/TRecursive.py",
+      "compiler/cpp/src/thrift/generate/t_php_generator.cc",
+      "lib/php/src/ext/thrift_protocol/php_thrift_protocol.cpp",
+      "lib/php/lib/Type/TType.php",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TLegacyUuidProtocolDecorator.java",
+      "lib/php/lib/Server/TServerSocket.php",
+      "compiler/cpp/src/thrift/generate/t_html_generator.h"
+    ],
+    "latency_s": 0.06692983300308697
+  },
+  {
+    "id": "mx07",
+    "q": "In the C++ library, where is the in-memory buffering layer between the encoder and the socket?",
+    "gt": [
+      "lib/cpp/src/thrift/transport/TBufferTransports.h"
+    ],
+    "ranked_files": [
+      "lib/rb/ext/memory_buffer.c",
+      "lib/c_glib/src/thrift/c_glib/transport/thrift_memory_buffer.c",
+      "lib/rb/lib/thrift/transport/memory_buffer_transport.rb",
+      "lib/rb/ext/bytes.c",
+      "lib/c_glib/src/thrift/c_glib/transport/thrift_memory_buffer.h",
+      "lib/cpp/src/thrift/protocol/TBase64Utils.cpp",
+      "lib/netstd/Thrift/Protocol/Utilities/TBase64Utils.cs",
+      "lib/cpp/src/thrift/transport/TWebSocketServer.h"
+    ],
+    "latency_s": 0.07478612498380244
+  },
+  {
+    "id": "mx08",
+    "q": "In the C++ library, where is the server that handles many connections without a thread each?",
+    "gt": [
+      "lib/cpp/src/thrift/server/TNonblockingServer.h"
+    ],
+    "ranked_files": [
+      "lib/rs/src/transport/socket.rs",
+      "contrib/transport-sample/server/server.cpp",
+      "lib/rs/src/server/threaded.rs",
+      "tutorial/cpp/CppServer.cpp",
+      "lib/cpp/src/thrift/server/TThreadedServer.cpp",
+      "lib/rb/lib/thrift/server/nonblocking_server.rb",
+      "lib/cpp/src/thrift/server/TThreadPoolServer.cpp",
+      "lib/java/src/main/java/org/apache/thrift/server/TThreadedSelectorServer.java",
+      "lib/py/src/server/TNonblockingServer.py"
+    ],
+    "latency_s": 0.06557999999495223
+  },
+  {
+    "id": "mx09",
+    "q": "In the C++ library, where is the base class every server implementation extends?",
+    "gt": [
+      "lib/cpp/src/thrift/server/TServer.h"
+    ],
+    "ranked_files": [
+      "lib/c_glib/src/thrift/c_glib/server/thrift_server.c",
+      "lib/rb/lib/thrift/server/base_server.rb",
+      "compiler/cpp/src/thrift/generate/t_dart_generator.cc",
+      "lib/rb/lib/thrift/protocol/base_protocol.rb",
+      "tutorial/cpp/CppServer.cpp",
+      "lib/java/src/main/java/org/apache/thrift/meta_data/FieldMetaData.java",
+      "contrib/zeromq/csharp/Main.cs",
+      "tutorial/c_glib/c_glib_server.c"
+    ],
+    "latency_s": 0.05875258400919847
+  },
+  {
+    "id": "mx10",
+    "q": "In the Go library, where is the error type carrying a remote failure back to the caller?",
+    "gt": [
+      "lib/go/thrift/application_exception.go"
+    ],
+    "ranked_files": [
+      "lib/rs/src/errors.rs",
+      "lib/go/thrift/application_exception.go",
+      "lib/go/thrift/client.go",
+      "compiler/cpp/src/thrift/generate/t_go_generator.cc",
+      "lib/go/thrift/simple_server.go",
+      "lib/go/thrift/transport_exception.go"
+    ],
+    "latency_s": 0.06355529199936427
+  },
+  {
+    "id": "mx11",
+    "q": "In the Java library, where is the space-efficient wire encoding implemented?",
+    "gt": [
+      "lib/java/src/main/java/org/apache/thrift/protocol/TCompactProtocol.java"
+    ],
+    "ranked_files": [
+      "lib/java/src/main/java/org/apache/thrift/partial/TFieldData.java",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TBase64Utils.java",
+      "lib/java/src/main/java/org/apache/thrift/EncodingUtils.java",
+      "lib/rs/src/errors.rs",
+      "lib/javame/src/org/apache/thrift/protocol/TBase64Utils.java",
+      "lib/java/src/main/java/org/apache/thrift/scheme/StandardScheme.java",
+      "lib/go/thrift/json_protocol.go",
+      "lib/go/thrift/simple_json_protocol.go",
+      "lib/java/src/main/java/org/apache/thrift/transport/layered/TFramedTransport.java"
+    ],
+    "latency_s": 0.0695554580015596
+  },
+  {
+    "id": "mx12",
+    "q": "In the Ruby library, where is the contract every encoding implementation follows?",
+    "gt": [
+      "lib/rb/lib/thrift/protocol/base_protocol.rb"
+    ],
+    "ranked_files": [
+      "lib/rb/lib/thrift/transport/io_stream_transport.rb",
+      "lib/rb/lib/thrift/protocol/json_protocol.rb",
+      "tutorial/rb/RubyServer.rb",
+      "lib/cpp/src/thrift/protocol/TJSONProtocol.h",
+      "lib/rs/src/errors.rs",
+      "compiler/cpp/src/thrift/generate/t_dart_generator.cc",
+      "lib/rs/src/protocol/compact.rs"
+    ],
+    "latency_s": 0.07246345898602158
+  },
+  {
+    "id": "mx13",
+    "q": "In the Python library, where is the straightforward fixed-width wire encoding implemented?",
+    "gt": [
+      "lib/py/src/protocol/TBinaryProtocol.py"
+    ],
+    "ranked_files": [
+      "lib/py/src/protocol/TProtocol.py",
+      "lib/py/src/protocol/TCompactProtocol.py",
+      "lib/rs/src/errors.rs",
+      "compiler/cpp/src/thrift/generate/t_py_generator.cc",
+      "lib/py/src/TRecursive.py",
+      "compiler/cpp/src/thrift/generate/t_html_generator.cc",
+      "lib/java/src/main/java/org/apache/thrift/protocol/TLegacyUuidProtocolDecorator.java",
+      "compiler/cpp/src/thrift/generate/t_html_generator.h",
+      "tutorial/py.twisted/PythonServer.py"
+    ],
+    "latency_s": 0.05971408300683834
+  },
+  {
+    "id": "mx14",
+    "q": "Where does the code generator emit Go source from an interface definition?",
+    "gt": [
+      "compiler/cpp/src/thrift/generate/t_go_generator.cc"
+    ],
+    "ranked_files": [
+      "compiler/cpp/src/thrift/generate/t_go_generator.cc",
+      "compiler/cpp/src/thrift/generate/t_lua_generator.cc",
+      "compiler/cpp/src/thrift/generate/t_go_generator.h",
+      "contrib/thrift-maven-plugin/src/main/java/org/apache/thrift/maven/ThriftCompileMojo.java",
+      "compiler/cpp/src/thrift/generate/t_py_generator.cc",
+      "compiler/cpp/src/thrift/generate/t_perl_generator.cc",
+      "compiler/cpp/src/thrift/generate/t_javame_generator.cc",
+      "compiler/cpp/src/thrift/generate/t_d_generator.cc"
+    ],
+    "latency_s": 0.05807745800120756
+  },
+  {
+    "id": "mx15",
+    "q": "Where does the code generator emit Java source from an interface definition?",
+    "gt": [
+      "compiler/cpp/src/thrift/generate/t_java_generator.cc"
+    ],
+    "ranked_files": [
+      "compiler/cpp/src/thrift/generate/t_javame_generator.cc",
+      "contrib/thrift-maven-plugin/src/main/java/org/apache/thrift/maven/ThriftCompileMojo.java",
+      "compiler/cpp/src/thrift/generate/t_java_generator.cc",
+      "lib/java/src/main/java/org/apache/thrift/transport/TSaslServerTransport.java",
+      "compiler/cpp/src/thrift/generate/t_perl_generator.cc",
+      "contrib/thrift-maven-plugin/src/main/java/org/apache/thrift/maven/Thrift.java"
+    ],
+    "latency_s": 0.06121124999481253
+  }
+]

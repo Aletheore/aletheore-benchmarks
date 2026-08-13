@@ -1,0 +1,17 @@
+[
+  {"id": "mx01", "question": "In the C++ library, where is the space-efficient wire encoding implemented?", "ground_truth_files": ["lib/cpp/src/thrift/protocol/TCompactProtocol.h"], "verification_anchor": "TCompactProtocol"},
+  {"id": "mx02", "question": "In the Java library, where is the straightforward fixed-width wire encoding implemented?", "ground_truth_files": ["lib/java/src/main/java/org/apache/thrift/protocol/TBinaryProtocol.java"], "verification_anchor": "class TBinaryProtocol"},
+  {"id": "mx03", "question": "In the Go library, where is the straightforward fixed-width wire encoding implemented?", "ground_truth_files": ["lib/go/thrift/binary_protocol.go"], "verification_anchor": "BinaryProtocol"},
+  {"id": "mx04", "question": "In the Python library, where is the space-efficient wire encoding implemented?", "ground_truth_files": ["lib/py/src/protocol/TCompactProtocol.py"], "verification_anchor": "TCompactProtocol"},
+  {"id": "mx05", "question": "In the Ruby library, where is the space-efficient wire encoding implemented?", "ground_truth_files": ["lib/rb/lib/thrift/protocol/compact_protocol.rb"], "verification_anchor": "CompactProtocol"},
+  {"id": "mx06", "question": "In the PHP library, where is the straightforward fixed-width wire encoding implemented?", "ground_truth_files": ["lib/php/lib/Protocol/TBinaryProtocol.php"], "verification_anchor": "TBinaryProtocol"},
+  {"id": "mx07", "question": "In the C++ library, where is the in-memory buffering layer between the encoder and the socket?", "ground_truth_files": ["lib/cpp/src/thrift/transport/TBufferTransports.h"], "verification_anchor": "TBufferedTransport"},
+  {"id": "mx08", "question": "In the C++ library, where is the server that handles many connections without a thread each?", "ground_truth_files": ["lib/cpp/src/thrift/server/TNonblockingServer.h"], "verification_anchor": "TNonblockingServer"},
+  {"id": "mx09", "question": "In the C++ library, where is the base class every server implementation extends?", "ground_truth_files": ["lib/cpp/src/thrift/server/TServer.h"], "verification_anchor": "class TServer"},
+  {"id": "mx10", "question": "In the Go library, where is the error type carrying a remote failure back to the caller?", "ground_truth_files": ["lib/go/thrift/application_exception.go"], "verification_anchor": "ApplicationException"},
+  {"id": "mx11", "question": "In the Java library, where is the space-efficient wire encoding implemented?", "ground_truth_files": ["lib/java/src/main/java/org/apache/thrift/protocol/TCompactProtocol.java"], "verification_anchor": "class TCompactProtocol"},
+  {"id": "mx12", "question": "In the Ruby library, where is the contract every encoding implementation follows?", "ground_truth_files": ["lib/rb/lib/thrift/protocol/base_protocol.rb"], "verification_anchor": "BaseProtocol"},
+  {"id": "mx13", "question": "In the Python library, where is the straightforward fixed-width wire encoding implemented?", "ground_truth_files": ["lib/py/src/protocol/TBinaryProtocol.py"], "verification_anchor": "TBinaryProtocol"},
+  {"id": "mx14", "question": "Where does the code generator emit Go source from an interface definition?", "ground_truth_files": ["compiler/cpp/src/thrift/generate/t_go_generator.cc"], "verification_anchor": "t_go_generator"},
+  {"id": "mx15", "question": "Where does the code generator emit Java source from an interface definition?", "ground_truth_files": ["compiler/cpp/src/thrift/generate/t_java_generator.cc"], "verification_anchor": "t_java_generator"}
+]
