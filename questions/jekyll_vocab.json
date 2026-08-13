@@ -1,0 +1,17 @@
+[
+  {"id": "rbv01", "question": "Where is the Jekyll::Site object that owns the build defined?", "ground_truth_files": ["lib/jekyll/site.rb"], "verification_anchor": "class Site"},
+  {"id": "rbv02", "question": "Where is Jekyll::Document, the front matter aware content object, defined?", "ground_truth_files": ["lib/jekyll/document.rb"], "verification_anchor": "class Document"},
+  {"id": "rbv03", "question": "Where is Jekyll::Collection, which reads a collection's documents, defined?", "ground_truth_files": ["lib/jekyll/collection.rb"], "verification_anchor": "class Collection"},
+  {"id": "rbv04", "question": "Where is Jekyll::Renderer#run, which renders a document through its layouts?", "ground_truth_files": ["lib/jekyll/renderer.rb"], "verification_anchor": "class Renderer"},
+  {"id": "rbv05", "question": "Where is Jekyll::Layout defined?", "ground_truth_files": ["lib/jekyll/layout.rb"], "verification_anchor": "class Layout"},
+  {"id": "rbv06", "question": "Where is the Jekyll::Converter base class that Markdown converters subclass?", "ground_truth_files": ["lib/jekyll/converter.rb"], "verification_anchor": "class Converter"},
+  {"id": "rbv07", "question": "Where is Jekyll::Reader#read, which reads the source directory?", "ground_truth_files": ["lib/jekyll/reader.rb"], "verification_anchor": "class Reader"},
+  {"id": "rbv08", "question": "Where is Jekyll::Cleaner, which removes obsolete files from the destination?", "ground_truth_files": ["lib/jekyll/cleaner.rb"], "verification_anchor": "class Cleaner"},
+  {"id": "rbv09", "question": "Where is Jekyll::Configuration, which reads _config.yml and applies defaults?", "ground_truth_files": ["lib/jekyll/configuration.rb"], "verification_anchor": "class Configuration"},
+  {"id": "rbv10", "question": "Where is Jekyll::Page, the non-collection page object, defined?", "ground_truth_files": ["lib/jekyll/page.rb"], "verification_anchor": "class Page"},
+  {"id": "rbv11", "question": "Where is Jekyll::StaticFile, used for files copied without rendering?", "ground_truth_files": ["lib/jekyll/static_file.rb"], "verification_anchor": "class StaticFile"},
+  {"id": "rbv12", "question": "Where is Jekyll::Regenerator, which drives incremental regeneration?", "ground_truth_files": ["lib/jekyll/regenerator.rb"], "verification_anchor": "class Regenerator"},
+  {"id": "rbv13", "question": "Where is Jekyll::Theme, which resolves a gem-based theme's directories?", "ground_truth_files": ["lib/jekyll/theme.rb"], "verification_anchor": "class Theme"},
+  {"id": "rbv14", "question": "Where is Jekyll::PluginManager, which requires plugins and gems?", "ground_truth_files": ["lib/jekyll/plugin_manager.rb"], "verification_anchor": "class PluginManager"},
+  {"id": "rbv15", "question": "Where is Jekyll::LiquidRenderer, which renders Liquid templates and records timings?", "ground_truth_files": ["lib/jekyll/liquid_renderer.rb"], "verification_anchor": "class LiquidRenderer"}
+]

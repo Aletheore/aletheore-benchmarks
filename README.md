@@ -93,23 +93,34 @@ lose to small peripheral ones — was tested across all corpora and is
 false. The top-1 result is *larger* than the ground-truth file in 80–94% of
 flask and gin questions. There is no systematic size bias in either direction.
 
-**Ruby: our own question authoring, not the product.** jekyll is single-module,
-so pollution accounts for almost none of its 26.7%, and the confound flagged
-above was tested directly. Five questions (`rb01`, `rb02`, `rb04`, `rb07`,
-`rb14`) were rewritten using the project's own vocabulary — `Jekyll::Site`,
-`Jekyll::Renderer#run`, `Jekyll::PluginManager` — and rerun:
+**Ruby: mostly our own question authoring, not the product.** jekyll is
+single-module, so pollution accounts for almost none of its 26.7%. The confound
+was tested directly, and it is the largest single effect measured anywhere in
+this repository.
 
-| phrasing | top-1 | top-3 | top-5 |
-|---|---|---|---|
-| original, vocabulary-avoiding | 1/5 | 1/5 | 3/5 |
-| project vocabulary | **5/5** | **5/5** | **5/5** |
+All fifteen jekyll questions — not only the ones that were missed — were
+rewritten in `questions/jekyll_vocab.json` using the project's own vocabulary
+(`Jekyll::Site`, `Jekyll::Renderer#run`, `Jekyll::PluginManager`) and rerun
+against the same corpus and the same answer key:
 
-The Ruby number is therefore substantially an artefact of how we wrote the
-questions, not evidence about the language. The set is left as authored — 
-rewriting it after seeing the score would be exactly the fitting this benchmark
-is supposed to avoid — but no conclusion about Ruby should be drawn from it, and
-the same doubt applies to the zod and gson sets, written the same way on the
-same day.
+| phrasing | top-1 | top-3 | top-5 | MRR |
+|---|---|---|---|---|
+| vocabulary-avoiding (`jekyll.json`) | 26.7% | 33.3% | 46.7% | 0.337 |
+| project vocabulary (`jekyll_vocab.json`) | **66.7%** | **86.7%** | **93.3%** | **0.778** |
+
+Forty points of top-1, from wording alone, on identical code and identical
+ground truth — more than every ranking change in this programme combined. Ruby
+is roughly Python-tier when asked in the project's own terms.
+
+Rewriting *only the missed* questions was considered and rejected: correcting
+just the failures can move the score in one direction only. Both sets are kept
+and both numbers are published; the original is not deleted.
+
+The honest reading is that this table measures a phrasing regime as much as it
+measures a product, and the same doubt applies to the zod, gson and guzzle sets,
+authored the same way on the same day. Real users ask somewhere between the two
+regimes, so the truth for any language here is bracketed by them, not given by
+either.
 
 **These numbers replace an earlier table that did not reproduce.** The previous
 revision listed flask at 71.9% / 96.9% / 100%, which matched no committed
