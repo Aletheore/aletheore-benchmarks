@@ -1,0 +1,229 @@
+[
+ {
+  "id": "al01",
+  "question": "Where is the binary protocol implemented?",
+  "ground_truth_files": [
+   "lib/cpp/src/thrift/protocol/TBinaryProtocol.h",
+   "lib/go/thrift/binary_protocol.go",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TBinaryProtocol.java",
+   "lib/javame/src/org/apache/thrift/protocol/TBinaryProtocol.java",
+   "lib/netstd/Thrift/Protocol/TBinaryProtocol.cs",
+   "lib/php/lib/Protocol/TBinaryProtocol.php",
+   "lib/py/src/protocol/TBinaryProtocol.py",
+   "lib/rb/lib/thrift/protocol/binary_protocol.rb"
+  ],
+  "verification_anchor": "BinaryProtocol",
+  "languages": [
+   "cpp",
+   "go",
+   "java",
+   "javame",
+   "netstd",
+   "php",
+   "py",
+   "rb"
+  ]
+ },
+ {
+  "id": "al02",
+  "question": "Where is the compact protocol implemented?",
+  "ground_truth_files": [
+   "lib/cpp/src/thrift/protocol/TCompactProtocol.h",
+   "lib/go/thrift/compact_protocol.go",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TCompactProtocol.java",
+   "lib/netstd/Thrift/Protocol/TCompactProtocol.cs",
+   "lib/php/lib/Protocol/TCompactProtocol.php",
+   "lib/py/src/protocol/TCompactProtocol.py",
+   "lib/rb/ext/compact_protocol.h",
+   "lib/rb/lib/thrift/protocol/compact_protocol.rb"
+  ],
+  "verification_anchor": "CompactProtocol",
+  "languages": [
+   "cpp",
+   "go",
+   "java",
+   "netstd",
+   "php",
+   "py",
+   "rb"
+  ]
+ },
+ {
+  "id": "al03",
+  "question": "Where is the JSON protocol implemented?",
+  "ground_truth_files": [
+   "lib/cpp/src/thrift/protocol/TJSONProtocol.h",
+   "lib/go/thrift/json_protocol.go",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TJSONProtocol.java",
+   "lib/javame/src/org/apache/thrift/protocol/TJSONProtocol.java",
+   "lib/netstd/Thrift/Protocol/TJSONProtocol.cs",
+   "lib/php/lib/Protocol/TJSONProtocol.php",
+   "lib/py/src/protocol/TJSONProtocol.py",
+   "lib/rb/lib/thrift/protocol/json_protocol.rb"
+  ],
+  "verification_anchor": "JSONProtocol",
+  "languages": [
+   "cpp",
+   "go",
+   "java",
+   "javame",
+   "netstd",
+   "php",
+   "py",
+   "rb"
+  ]
+ },
+ {
+  "id": "al04",
+  "question": "Where is the socket transport implemented?",
+  "ground_truth_files": [
+   "lib/cpp/src/thrift/transport/TSocket.h",
+   "lib/go/thrift/socket.go",
+   "lib/java/src/main/java/org/apache/thrift/transport/TSocket.java",
+   "lib/lua/src/socket.h",
+   "lib/php/lib/Transport/TSocket.php",
+   "lib/py/src/transport/TSocket.py",
+   "lib/rb/lib/thrift/transport/socket.rb"
+  ],
+  "verification_anchor": "ocket",
+  "languages": [
+   "cpp",
+   "go",
+   "java",
+   "lua",
+   "php",
+   "py",
+   "rb"
+  ]
+ },
+ {
+  "id": "al05",
+  "question": "Where is the in-memory buffer transport implemented?",
+  "ground_truth_files": [
+   "lib/go/thrift/memory_buffer.go",
+   "lib/java/src/main/java/org/apache/thrift/transport/TMemoryBuffer.java",
+   "lib/javame/src/org/apache/thrift/transport/TMemoryBuffer.java",
+   "lib/php/lib/Transport/TMemoryBuffer.php",
+   "lib/rb/ext/memory_buffer.h"
+  ],
+  "verification_anchor": "emory",
+  "languages": [
+   "go",
+   "java",
+   "javame",
+   "php",
+   "rb"
+  ]
+ },
+ {
+  "id": "al06",
+  "question": "Where is the framed transport implemented?",
+  "ground_truth_files": [
+   "lib/go/thrift/framed_transport.go",
+   "lib/java/src/main/java/org/apache/thrift/transport/layered/TFramedTransport.java",
+   "lib/javame/src/org/apache/thrift/transport/TFramedTransport.java",
+   "lib/netstd/Thrift/Transport/Layered/TFramedTransport.cs",
+   "lib/php/lib/Transport/TFramedTransport.php",
+   "lib/rb/lib/thrift/transport/framed_transport.rb"
+  ],
+  "verification_anchor": "ramed",
+  "languages": [
+   "go",
+   "java",
+   "javame",
+   "netstd",
+   "php",
+   "rb"
+  ]
+ },
+ {
+  "id": "al07",
+  "question": "Where is the exception type carrying a remote failure defined?",
+  "ground_truth_files": [
+   "lib/cpp/src/thrift/TApplicationException.h",
+   "lib/go/thrift/application_exception.go",
+   "lib/java/src/main/java/org/apache/thrift/TApplicationException.java",
+   "lib/javame/src/org/apache/thrift/TApplicationException.java",
+   "lib/netstd/Thrift/TApplicationException.cs",
+   "lib/php/lib/Exception/TApplicationException.php"
+  ],
+  "verification_anchor": "pplicationException",
+  "languages": [
+   "cpp",
+   "go",
+   "java",
+   "javame",
+   "netstd",
+   "php"
+  ]
+ },
+ {
+  "id": "al08",
+  "question": "Where is the base protocol interface defined?",
+  "ground_truth_files": [
+   "lib/cpp/src/thrift/protocol/TProtocol.h",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TProtocol.java",
+   "lib/javame/src/org/apache/thrift/protocol/TProtocol.java",
+   "lib/netstd/Thrift/Protocol/TProtocol.cs",
+   "lib/php/lib/Protocol/TProtocol.php",
+   "lib/py/src/protocol/TProtocol.py",
+   "lib/rb/lib/thrift/protocol/base_protocol.rb"
+  ],
+  "verification_anchor": "rotocol",
+  "languages": [
+   "cpp",
+   "java",
+   "javame",
+   "netstd",
+   "php",
+   "py",
+   "rb"
+  ]
+ },
+ {
+  "id": "al09",
+  "question": "Where is the base transport interface defined?",
+  "ground_truth_files": [
+   "lib/cpp/src/thrift/transport/TTransport.h",
+   "lib/java/src/main/java/org/apache/thrift/transport/TTransport.java",
+   "lib/javame/src/org/apache/thrift/transport/TTransport.java",
+   "lib/netstd/Thrift/Transport/TTransport.cs",
+   "lib/php/lib/Transport/TTransport.php",
+   "lib/py/src/transport/TTransport.py",
+   "lib/rb/lib/thrift/transport/base_transport.rb"
+  ],
+  "verification_anchor": "ransport",
+  "languages": [
+   "cpp",
+   "java",
+   "javame",
+   "netstd",
+   "php",
+   "py",
+   "rb"
+  ]
+ },
+ {
+  "id": "al10",
+  "question": "Where is the multiplexed protocol implemented?",
+  "ground_truth_files": [
+   "lib/cpp/src/thrift/protocol/TMultiplexedProtocol.h",
+   "lib/go/thrift/multiplexed_protocol.go",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TMultiplexedProtocol.java",
+   "lib/netstd/Thrift/Protocol/TMultiplexedProtocol.cs",
+   "lib/php/lib/Protocol/TMultiplexedProtocol.php",
+   "lib/py/src/protocol/TMultiplexedProtocol.py",
+   "lib/rb/lib/thrift/protocol/multiplexed_protocol.rb"
+  ],
+  "verification_anchor": "ultiplexed",
+  "languages": [
+   "cpp",
+   "go",
+   "java",
+   "netstd",
+   "php",
+   "py",
+   "rb"
+  ]
+ }
+]

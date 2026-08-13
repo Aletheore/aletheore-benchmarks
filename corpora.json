@@ -146,7 +146,8 @@
       "language": "multi",
       "questions": [
         "thrift.json",
-        "thrift_crosslang.json"
+        "thrift_crosslang.json",
+        "thrift_anylang.json"
       ]
     }
   ]

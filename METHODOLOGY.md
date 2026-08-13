@@ -86,6 +86,42 @@ After the fix, 0/32 results matched the FTS run.
   asking "explain the architecture" would likely invert the result — that is not
   measured here and should not be inferred either way.
 
+## Asking without naming a language: a metric, and a fix that mostly did not work
+
+A question naming no language has no single correct answer in a polyglot
+repository - "where is the binary protocol implemented?" is answered by any of
+eight files in apache/thrift. Scoring that with top-1 would reward filling every
+slot with near-duplicates from whichever language embedded closest, which is the
+behaviour under investigation rather than the goal. `thrift_anylang.json` (10
+questions, 5-8 implementations each, ground truth generated from the tree rather
+than authored) is scored by `scripts/score_coverage.py` on **coverage@k**: how
+many distinct languages of the correct set reached the top k, over the most that
+could fit.
+
+Baseline, Aletheore 0.8.11: hit@5 80.0%, **coverage@5 32.0%**, coverage@10
+24.9%. Two of ten questions surfaced no correct language at all.
+
+A per-language occupancy cap was then implemented, mirroring the existing
+per-file cap, applied only to an unscoped query whose candidates span three or
+more languages so a single-language repository is untouched by construction
+(confirmed: flask byte-identical, MRR to three decimals):
+
+| configuration | coverage@5 | coverage@10 | languages returned @10 |
+|---|---|---|---|
+| baseline | 32.0% | 24.9% | 4.9 |
+| cap 2 per language | 32.0% | 24.9% | 6.0 |
+| cap 1 per language | 36.0% | 34.6% | 7.7 |
+
+The cap does what it was built to do - more languages appear - but coverage@5
+moves only 32% to 36% against a ceiling near 71%. Freeing slots is therefore not
+the binding constraint: **the correct file in most languages is not a strong
+candidate to begin with**, so there is nothing better waiting to fill the slots
+that were freed. The change is recorded here and not shipped.
+
+What this does establish is the measurement. Before it, no number distinguished
+"answered in one language" from "showed the user their options", so any work on
+unscoped polyglot queries was unfalsifiable.
+
 ## Near-duplicate crowding is a symptom of phrasing, not a retrieval defect
 
 "Sibling crowding" was described in this repository as the strongest open lead,
