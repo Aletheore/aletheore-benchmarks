@@ -1,0 +1,122 @@
+[
+ {
+  "id": "vjava01",
+  "question": "Where is Gson's Gson defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/Gson.java"
+  ],
+  "verification_anchor": "public final class Gson {"
+ },
+ {
+  "id": "vjava02",
+  "question": "Where is Gson's GsonBuilder defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/GsonBuilder.java"
+  ],
+  "verification_anchor": "public final class GsonBuilder {"
+ },
+ {
+  "id": "vjava03",
+  "question": "Where is Gson's JsonReader defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/stream/JsonReader.java"
+  ],
+  "verification_anchor": "public class JsonReader implements Closeable {"
+ },
+ {
+  "id": "vjava04",
+  "question": "Where is Gson's JsonWriter defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/stream/JsonWriter.java"
+  ],
+  "verification_anchor": "public class JsonWriter implements Closeable, Flushable {"
+ },
+ {
+  "id": "vjava05",
+  "question": "Where is Gson's TypeToken defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/reflect/TypeToken.java"
+  ],
+  "verification_anchor": "public class TypeToken<T> {"
+ },
+ {
+  "id": "vjava06",
+  "question": "Where is Gson's TypeAdapter defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/TypeAdapter.java"
+  ],
+  "verification_anchor": "public abstract class TypeAdapter<T> {"
+ },
+ {
+  "id": "vjava07",
+  "question": "Where is Gson's TypeAdapterFactory defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/TypeAdapterFactory.java"
+  ],
+  "verification_anchor": "public interface TypeAdapterFactory {"
+ },
+ {
+  "id": "vjava08",
+  "question": "Where is Gson's ReflectiveTypeAdapterFactory defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java"
+  ],
+  "verification_anchor": "public final class ReflectiveTypeAdapterFactory"
+ },
+ {
+  "id": "vjava09",
+  "question": "Where is Gson's JsonParser defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/JsonParser.java"
+  ],
+  "verification_anchor": "public final class JsonParser {"
+ },
+ {
+  "id": "vjava10",
+  "question": "Where is Gson's JsonObject defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/JsonObject.java"
+  ],
+  "verification_anchor": "public final class JsonObject"
+ },
+ {
+  "id": "vjava11",
+  "question": "Where is Gson's Excluder defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/internal/Excluder.java"
+  ],
+  "verification_anchor": "public final class Excluder"
+ },
+ {
+  "id": "vjava12",
+  "question": "Where is Gson's FieldNamingPolicy defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/FieldNamingPolicy.java"
+  ],
+  "verification_anchor": "public enum FieldNamingPolicy"
+ },
+ {
+  "id": "vjava13",
+  "question": "Where is Gson's ConstructorConstructor defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java"
+  ],
+  "verification_anchor": "public final class ConstructorConstructor"
+ },
+ {
+  "id": "vjava14",
+  "question": "Where is Gson's CollectionTypeAdapterFactory defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/internal/bind/CollectionTypeAdapterFactory.java"
+  ],
+  "verification_anchor": "public final class CollectionTypeAdapterFactory"
+ },
+ {
+  "id": "vjava15",
+  "question": "Where is Gson's EnumTypeAdapter defined?",
+  "ground_truth_files": [
+   "gson/src/main/java/com/google/gson/internal/bind/EnumTypeAdapter.java"
+  ],
+  "verification_anchor": "class EnumTypeAdapter<T extends Enum<T>>"
+ }
+]

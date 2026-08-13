@@ -1,0 +1,294 @@
+[
+  {
+    "id": "rs01",
+    "q": "Where is the trait a type implements to describe how it is turned into a serialized form?",
+    "gt": [
+      "serde_core/src/ser/mod.rs"
+    ],
+    "ranked_files": [
+      "test_suite/tests/macros/mod.rs",
+      "serde/src/private/ser.rs",
+      "test_suite/tests/test_roundtrip.rs",
+      "test_suite/tests/unstable/mod.rs",
+      "serde_derive/src/de/unit.rs",
+      "serde_derive/src/bound.rs",
+      "serde_derive/src/lib.rs",
+      "serde_derive/src/de.rs",
+      "layer:application",
+      "serde_derive/src/internals/ast.rs"
+    ],
+    "latency_s": 2.2741913750069216
+  },
+  {
+    "id": "rs02",
+    "q": "Where is the trait a data format implements to drive deserialization?",
+    "gt": [
+      "serde_core/src/de/mod.rs"
+    ],
+    "ranked_files": [
+      "serde_core/src/de/ignored_any.rs",
+      "test_suite/tests",
+      "rw-serde",
+      "serde_core/src/de/value.rs",
+      "serde_core/src/de/mod.rs",
+      "serde_core/src/format.rs",
+      "serde_core/src/ser/impossible.rs",
+      "test_suite/tests/bytes/mod.rs",
+      "serde_derive/src/de/unit.rs",
+      "serde_derive/src/de/enum_adjacently.rs"
+    ],
+    "latency_s": 1.9221371669846121
+  },
+  {
+    "id": "rs03",
+    "q": "How are the standard library's own types taught to serialize?",
+    "gt": [
+      "serde_core/src/ser/impls.rs"
+    ],
+    "ranked_files": [
+      "rw-serde",
+      "serde_core/src/de/impls.rs",
+      "serde_core/src/ser/impls.rs",
+      "test_suite/no_std/src/main.rs",
+      "serde_core/src/crate_root.rs",
+      "serde_derive/build.rs",
+      "serde_core/build.rs",
+      "test_suite/tests",
+      "test_suite/tests/test_de.rs",
+      "test_suite/tests/ui/conflict/flatten-tuple-struct.rs"
+    ],
+    "latency_s": 2.0279494170099497
+  },
+  {
+    "id": "rs04",
+    "q": "How are the standard library's own types taught to deserialize?",
+    "gt": [
+      "serde_core/src/de/impls.rs"
+    ],
+    "ranked_files": [
+      "rw-serde",
+      "serde_core/src/de/impls.rs",
+      "serde_core/src/ser/impls.rs",
+      "test_suite/no_std/src/main.rs",
+      "serde_core/src/crate_root.rs",
+      "serde_derive/build.rs",
+      "serde_core/build.rs",
+      "test_suite/tests",
+      "test_suite/tests/test_de.rs",
+      "test_suite/tests/ui/conflict/flatten-tuple-struct.rs"
+    ],
+    "latency_s": 1.981908374989871
+  },
+  {
+    "id": "rs05",
+    "q": "Where is the error type that a deserializer reports failures through?",
+    "gt": [
+      "serde_core/src/de/mod.rs"
+    ],
+    "ranked_files": [
+      "test_suite/tests/ui/malformed/str_suffix.rs",
+      "test_suite/tests/regression",
+      "serde_core/src/private/size_hint.rs",
+      "test_suite/tests/bytes/mod.rs",
+      "test_suite/tests/ui/deprecated/deprecated_de_with.rs",
+      "layer:test",
+      "test_suite/tests/ui/identifier/other_variant.rs",
+      "serde/build.rs",
+      "serde_core/src/ser/fmt.rs",
+      "test_suite/tests/test_de.rs"
+    ],
+    "latency_s": 1.8285916250024457
+  },
+  {
+    "id": "rs06",
+    "q": "What code generates the serialization implementation for a user's struct at compile time?",
+    "gt": [
+      "serde_derive/src/ser.rs"
+    ],
+    "ranked_files": [
+      "serde_derive/src/ser.rs",
+      "serde_derive/src/lib.rs",
+      "serde_derive/src/dummy.rs",
+      "layer:application",
+      "serde_core/src/ser/impls.rs",
+      "serde_derive/src/pretend.rs",
+      "serde_core/src/ser/mod.rs",
+      "serde_derive/src/de/enum_internally.rs"
+    ],
+    "latency_s": 2.0038246659969445
+  },
+  {
+    "id": "rs07",
+    "q": "What code generates the deserialization implementation for a user's struct at compile time?",
+    "gt": [
+      "serde_derive/src/de.rs"
+    ],
+    "ranked_files": [
+      "serde_derive/src/lib.rs",
+      "serde_derive/src/pretend.rs",
+      "serde_derive/src/de/enum_internally.rs",
+      "serde_derive/src/dummy.rs",
+      "serde_derive/src/de/struct_.rs",
+      "serde_derive/src/ser.rs",
+      "serde_core/src/macros.rs",
+      "layer:application"
+    ],
+    "latency_s": 1.7881355409917887
+  },
+  {
+    "id": "rs08",
+    "q": "Where are the trait bounds inferred for the generated implementations?",
+    "gt": [
+      "serde_derive/src/bound.rs"
+    ],
+    "ranked_files": [
+      "serde_derive/src/de.rs",
+      "serde_derive/src/internals/mod.rs",
+      "test_suite/tests/test_enum_adjacently_tagged.rs",
+      "serde_core/src/private/size_hint.rs",
+      "layer:application",
+      "rw-serde",
+      "serde_derive/src/bound.rs",
+      "test_suite/tests"
+    ],
+    "latency_s": 1.7908121249929536
+  },
+  {
+    "id": "rs09",
+    "q": "How is a value discarded during deserialization without being stored?",
+    "gt": [
+      "serde_core/src/de/ignored_any.rs"
+    ],
+    "ranked_files": [
+      "serde_derive/src/internals/ctxt.rs",
+      "test_suite/tests/ui/default-attribute/union.rs",
+      "serde_core/src/macros.rs",
+      "serde_derive/src/internals/receiver.rs",
+      "test_suite/tests/test_ignored_any.rs",
+      "serde_derive/src/internals/name.rs",
+      "test_suite/tests/ui/default-attribute/enum.rs",
+      "onboarding/key_concepts",
+      "test_suite/tests/compiletest.rs",
+      "serde_derive/src/de/identifier.rs"
+    ],
+    "latency_s": 1.8639499999990221
+  },
+  {
+    "id": "rs10",
+    "q": "Where are the in-memory value types that can act as a deserializer defined?",
+    "gt": [
+      "serde_core/src/de/value.rs"
+    ],
+    "ranked_files": [
+      "serde_core/src/de/mod.rs",
+      "serde_core/src/private/size_hint.rs",
+      "serde_core/src/de/value.rs",
+      "serde_derive/src/de/enum_internally.rs",
+      "serde_core/src/ser/mod.rs",
+      "layer:test",
+      "scc-160",
+      "serde/src/private/ser.rs",
+      "serde_derive/src/lib.rs",
+      "serde_derive/src/internals/ast.rs"
+    ],
+    "latency_s": 1.8932567079900764
+  },
+  {
+    "id": "rs11",
+    "q": "How does the crate handle a serializer method that can never be called?",
+    "gt": [
+      "serde_core/src/ser/impossible.rs"
+    ],
+    "ranked_files": [
+      "serde_derive/src/ser.rs",
+      "test_suite/tests/regression/issue2844.rs",
+      "serde_derive/src/internals/ast.rs",
+      "serde_core/src/ser/impls.rs",
+      "serde_derive/src/internals/ctxt.rs",
+      "serde_core/src/ser/impossible.rs",
+      "rw-serde",
+      "serde_core/src/ser/mod.rs",
+      "serde_core/src/private/doc.rs",
+      "serde_core/src/ser/fmt.rs"
+    ],
+    "latency_s": 2.3004347500100266
+  },
+  {
+    "id": "rs12",
+    "q": "Where are the container and field attributes on a derive parsed?",
+    "gt": [
+      "serde_derive_internals/src/attr.rs",
+      "serde_derive/src/internals/attr.rs"
+    ],
+    "ranked_files": [
+      "serde_derive/src/internals/ast.rs",
+      "onboarding/key_concepts",
+      "onboarding/how_it_works",
+      "serde_derive/src/internals/check.rs",
+      "serde_derive/src/internals/name.rs",
+      "serde_derive/src/bound.rs",
+      "serde_derive/src/de.rs"
+    ],
+    "latency_s": 1.9390473330277018
+  },
+  {
+    "id": "rs13",
+    "q": "How are 128-bit integers supported given their conditional availability?",
+    "gt": [
+      "serde/src/integer128.rs",
+      "serde_core/src/integer128.rs"
+    ],
+    "ranked_files": [
+      "serde/src/integer128.rs",
+      "serde_core/src/de/mod.rs",
+      "serde_core/src/ser/mod.rs",
+      "test_suite/tests/test_value.rs",
+      "test_suite/tests/test_de.rs",
+      "test_suite/tests/test_ser.rs",
+      "serde_core/src/ser/impls.rs",
+      "serde/src/lib.rs",
+      "onboarding/codebase_map",
+      "serde_core/src/de/impls.rs"
+    ],
+    "latency_s": 1.996701750002103
+  },
+  {
+    "id": "rs14",
+    "q": "Where is the crate's public entry point that re-exports the main traits?",
+    "gt": [
+      "serde/src/lib.rs"
+    ],
+    "ranked_files": [
+      "scc-103",
+      "serde/src/lib.rs",
+      "scc-160",
+      "test_suite/tests/test_serde_path.rs",
+      "rw-serde",
+      "serde_core/src/private/doc.rs",
+      "serde_core/src/de/value.rs",
+      "serde_core/src/ser/impossible.rs",
+      "serde/src/private/mod.rs",
+      "onboarding/codebase_map"
+    ],
+    "latency_s": 2.104196125001181
+  },
+  {
+    "id": "rs15",
+    "q": "What produces the code that pretends generated impls are used, to silence warnings?",
+    "gt": [
+      "serde_derive/src/pretend.rs"
+    ],
+    "ranked_files": [
+      "test_suite/tests/test_deprecated.rs",
+      "serde_derive/src/pretend.rs",
+      "test_suite/tests/ui/conflict/alias.rs",
+      "serde_derive/src/dummy.rs",
+      "serde_derive/src/deprecated.rs",
+      "test_suite/tests/ui/conflict/alias-enum.rs",
+      "serde_derive_internals/build.rs",
+      "test_suite/tests/test_gen.rs",
+      "layer:application"
+    ],
+    "latency_s": 2.264295291999588
+  }
+]

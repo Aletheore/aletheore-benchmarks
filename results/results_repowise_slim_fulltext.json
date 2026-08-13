@@ -1,0 +1,290 @@
+[
+  {
+    "id": "php01",
+    "q": "Where is the central application object that ties routing and middleware together?",
+    "gt": [
+      "Slim/App.php"
+    ],
+    "ranked_files": [
+      "rw-slim",
+      "layer:types",
+      "Slim/Interfaces/RouteGroupInterface.php",
+      "layer:api",
+      "onboarding/key_concepts",
+      "onboarding/guided_tour",
+      "Slim/Error/AbstractErrorRenderer.php",
+      "Slim/Interfaces/ErrorRendererInterface.php",
+      "Slim/Interfaces/DispatcherInterface.php"
+    ],
+    "latency_s": 1.5414264170103706
+  },
+  {
+    "id": "php02",
+    "q": "How does a request pass through the chain of middleware before reaching a handler?",
+    "gt": [
+      "Slim/MiddlewareDispatcher.php"
+    ],
+    "ranked_files": [
+      "Slim/Exception/HttpException.php",
+      "Slim/Routing/RouteCollectorProxy.php",
+      "Slim/Interfaces/AdvancedCallableResolverInterface.php",
+      "Slim/Error/Renderers/PlainTextErrorRenderer.php",
+      "Slim/MiddlewareDispatcher.php",
+      "Slim/Error/Renderers/JsonErrorRenderer.php",
+      "Slim/Routing/RouteRunner.php",
+      "Slim/Routing/RouteCollector.php",
+      "Slim/Interfaces/RouteCollectorProxyInterface.php",
+      "Slim/Exception/HttpMethodNotAllowedException.php"
+    ],
+    "latency_s": 1.4954258749785367
+  },
+  {
+    "id": "php03",
+    "q": "Where are route definitions collected and stored before dispatch?",
+    "gt": [
+      "Slim/Routing/RouteCollector.php"
+    ],
+    "ranked_files": [
+      "Slim/Routing/RouteGroup.php",
+      "Slim/Routing/RouteCollector.php",
+      "Slim/Interfaces/CallableResolverInterface.php",
+      "Slim/Routing/Dispatcher.php",
+      "Slim/Routing/RoutingResults.php",
+      "Slim/Interfaces/RouteCollectorInterface.php",
+      "rw-slim",
+      "layer:types"
+    ],
+    "latency_s": 1.5751689999888185
+  },
+  {
+    "id": "php04",
+    "q": "How is a callable given as a string turned into something invokable?",
+    "gt": [
+      "Slim/CallableResolver.php"
+    ],
+    "ranked_files": [
+      "layer:types",
+      "Slim/Logger.php",
+      "Slim/Interfaces/AdvancedCallableResolverInterface.php",
+      "Slim/Interfaces/CallableResolverInterface.php",
+      "Slim/Routing/RoutingResults.php",
+      "Slim/Interfaces/MiddlewareDispatcherInterface.php",
+      "Slim/Interfaces/RouteCollectorProxyInterface.php",
+      "Slim/Interfaces/RouteInterface.php",
+      "Slim/Error/Renderers/HtmlErrorRenderer.php",
+      "Slim/Routing/RouteCollector.php"
+    ],
+    "latency_s": 1.563803500001086
+  },
+  {
+    "id": "php05",
+    "q": "Where is the finished response actually written back to the client?",
+    "gt": [
+      "Slim/ResponseEmitter.php"
+    ],
+    "ranked_files": [
+      "Slim/ResponseEmitter.php",
+      "Slim/Middleware/OutputBufferingMiddleware.php",
+      "Slim/Handlers/ErrorHandler.php",
+      "Slim/Logger.php",
+      "Slim/Exception/HttpTooManyRequestsException.php",
+      "Slim/Routing/RoutingResults.php",
+      "Slim/Middleware/ErrorMiddleware.php",
+      "Slim/Factory/Psr17/ServerRequestCreator.php",
+      "Slim/Routing/RouteCollectorProxy.php",
+      "onboarding/how_it_works"
+    ],
+    "latency_s": 1.5763820830034092
+  },
+  {
+    "id": "php06",
+    "q": "How are uncaught exceptions turned into an HTTP error response?",
+    "gt": [
+      "Slim/Handlers/ErrorHandler.php"
+    ],
+    "ranked_files": [
+      "Slim/Logger.php",
+      "layer:api",
+      "layer:types",
+      "Slim/Middleware/ErrorMiddleware.php",
+      "Slim/Exception/HttpForbiddenException.php",
+      "Slim/Exception/HttpBadRequestException.php",
+      "Slim/Exception/HttpException.php",
+      "Slim/Error/Renderers/PlainTextErrorRenderer.php",
+      "layer:application",
+      "Slim/Middleware/RoutingMiddleware.php"
+    ],
+    "latency_s": 1.5728605830227025
+  },
+  {
+    "id": "php07",
+    "q": "Where does the framework decide which error handler applies to a given exception type?",
+    "gt": [
+      "Slim/Middleware/ErrorMiddleware.php"
+    ],
+    "ranked_files": [
+      "Slim/Middleware/ErrorMiddleware.php",
+      "Slim/Routing/FastRouteDispatcher.php",
+      "Slim/Error/Renderers/PlainTextErrorRenderer.php",
+      "Slim/Routing/RoutingResults.php",
+      "Slim/Routing/RouteGroup.php",
+      "onboarding/guided_tour",
+      "onboarding/key_concepts",
+      "Slim/Interfaces/ServerRequestCreatorInterface.php",
+      "Slim/Interfaces/DispatcherInterface.php"
+    ],
+    "latency_s": 1.6467517910059541
+  },
+  {
+    "id": "php08",
+    "q": "How is an incoming request body decoded based on its content type?",
+    "gt": [
+      "Slim/Middleware/BodyParsingMiddleware.php"
+    ],
+    "ranked_files": [
+      "layer:middleware",
+      "Slim/Handlers/ErrorHandler.php",
+      "Slim/Routing/RoutingResults.php",
+      "Slim/Error/Renderers/XmlErrorRenderer.php",
+      "Slim/Middleware/BodyParsingMiddleware.php",
+      "Slim/ResponseEmitter.php",
+      "Slim/App.php",
+      "Slim/Error/Renderers/PlainTextErrorRenderer.php",
+      "onboarding/guided_tour",
+      "Slim/Middleware/OutputBufferingMiddleware.php"
+    ],
+    "latency_s": 1.5992702920048032
+  },
+  {
+    "id": "php09",
+    "q": "Where is a single matched route represented, along with its arguments and callable?",
+    "gt": [
+      "Slim/Routing/Route.php"
+    ],
+    "ranked_files": [
+      "Slim/Interfaces/DispatcherInterface.php",
+      "Slim/Routing/RoutingResults.php",
+      "Slim/Interfaces/RouteInterface.php",
+      "Slim/Routing/Route.php",
+      "Slim/Handlers/Strategies/RequestResponse.php",
+      "Slim/Interfaces/InvocationStrategyInterface.php",
+      "Slim/Handlers/Strategies/RequestHandler.php",
+      "layer:api"
+    ],
+    "latency_s": 1.6132560840051156
+  },
+  {
+    "id": "php10",
+    "q": "How is a URL generated from a named route and its parameters?",
+    "gt": [
+      "Slim/Routing/RouteParser.php"
+    ],
+    "ranked_files": [
+      "Slim/Interfaces/RouteParserInterface.php",
+      "Slim/Routing/RouteCollector.php",
+      "Slim/Routing/RouteParser.php",
+      "Slim/Routing/RoutingResults.php",
+      "layer:types",
+      "Slim/Interfaces/RouteCollectorInterface.php",
+      "Slim/Handlers/Strategies/RequestResponse.php",
+      "layer:api"
+    ],
+    "latency_s": 1.7522408749791794
+  },
+  {
+    "id": "php11",
+    "q": "What provides the convenient constructor that wires up default dependencies?",
+    "gt": [
+      "Slim/Factory/AppFactory.php"
+    ],
+    "ranked_files": [
+      "onboarding/how_it_works",
+      "Slim/Exception/HttpException.php",
+      "Slim/Routing/RoutingResults.php",
+      "Slim/Interfaces/DispatcherInterface.php",
+      "Slim/Routing/RouteResolver.php",
+      "Slim/Routing/RouteRunner.php",
+      "Slim/Factory/Psr17/ServerRequestCreator.php",
+      "rw-slim",
+      "Slim/Handlers/ErrorHandler.php"
+    ],
+    "latency_s": 1.3969923330005258
+  },
+  {
+    "id": "php12",
+    "q": "Where are grouped routes sharing a common path prefix declared?",
+    "gt": [
+      "Slim/Routing/RouteCollectorProxy.php"
+    ],
+    "ranked_files": [
+      "Slim/Routing/RouteGroup.php",
+      "Slim/Routing/RouteCollector.php",
+      "Slim/Interfaces/DispatcherInterface.php",
+      "Slim/Routing/RouteParser.php",
+      "Slim/Exception/HttpException.php",
+      "Slim/Routing/RouteCollectorProxy.php",
+      "Slim/Routing/Dispatcher.php",
+      "Slim/Interfaces/RouteCollectorInterface.php",
+      "Slim/Interfaces/RouteGroupInterface.php"
+    ],
+    "latency_s": 1.5993913340207655
+  },
+  {
+    "id": "php13",
+    "q": "How does the framework match an incoming path to a registered route?",
+    "gt": [
+      "Slim/Routing/RouteResolver.php",
+      "Slim/Routing/Dispatcher.php"
+    ],
+    "ranked_files": [
+      "Slim/Routing/RouteResolver.php",
+      "onboarding/guided_tour",
+      "Slim/Routing/RoutingResults.php",
+      "Slim/Interfaces/RouteResolverInterface.php",
+      "layer:middleware",
+      "Slim/Interfaces/DispatcherInterface.php",
+      "Slim/Interfaces/RouteCollectorInterface.php",
+      "Slim/Interfaces/RouteParserInterface.php",
+      "Slim/MiddlewareDispatcher.php",
+      "Slim/Middleware/RoutingMiddleware.php"
+    ],
+    "latency_s": 1.442106958013028
+  },
+  {
+    "id": "php14",
+    "q": "Where is the exception raised when no route matches the requested path?",
+    "gt": [
+      "Slim/Exception/HttpNotFoundException.php"
+    ],
+    "ranked_files": [
+      "rw-slim",
+      "Slim/Exception/HttpNotFoundException.php",
+      "Slim/Exception/HttpMethodNotAllowedException.php",
+      "Slim/Logger.php",
+      "Slim/Routing/RouteRunner.php",
+      "onboarding/key_concepts",
+      "Slim/Handlers/ErrorHandler.php",
+      "Slim/Routing/FastRouteDispatcher.php",
+      "Slim/Middleware/RoutingMiddleware.php",
+      "Slim/Exception/HttpForbiddenException.php"
+    ],
+    "latency_s": 1.5676886250148527
+  },
+  {
+    "id": "php15",
+    "q": "How are the arguments for a matched route passed into the user's handler?",
+    "gt": [
+      "Slim/Handlers/Strategies/RequestResponse.php"
+    ],
+    "ranked_files": [
+      "Slim/Routing/RoutingResults.php",
+      "Slim/Routing/Route.php",
+      "Slim/Handlers/Strategies/RequestHandler.php",
+      "Slim/Handlers/Strategies/RequestResponse.php",
+      "Slim/Interfaces/DispatcherInterface.php",
+      "Slim/Interfaces/InvocationStrategyInterface.php",
+      "Slim/Routing/RouteRunner.php"
+    ],
+    "latency_s": 1.7389074169914238
+  }
+]

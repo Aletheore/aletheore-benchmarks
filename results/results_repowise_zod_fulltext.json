@@ -1,0 +1,292 @@
+[
+  {
+    "id": "ts01",
+    "q": "Where does a value actually get run against a schema and its problems collected?",
+    "gt": [
+      "packages/zod/src/v4/core/parse.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v3/benchmarks/discriminatedUnion.ts",
+      "packages/zod/src/v4/core/errors.ts",
+      "packages/zod/src/v3/tests/array.test.ts",
+      "packages/zod/src/v4/core/json-schema-processors.ts",
+      "packages/zod/src/v4/core/util.ts",
+      "packages/zod/src/v4/core/registries.ts",
+      "packages/zod/src/v4/classic/from-json-schema.ts"
+    ],
+    "latency_s": 2.574060749990167
+  },
+  {
+    "id": "ts02",
+    "q": "Where is the base shape every schema type builds on defined?",
+    "gt": [
+      "packages/zod/src/v4/core/schemas.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/classic/schemas.ts",
+      "packages/zod/src/v4/core/api.ts",
+      "packages/zod/src/v3/index.ts",
+      "packages/zod/src/v4/core/util.ts",
+      "packages/zod/src/v4/mini/tests/string.test.ts",
+      "packages/zod/src/v4/core/schemas.ts",
+      "packages/zod/src/v3/tests/optional.test.ts",
+      "packages/zod/src/v3/tests/date.test.ts"
+    ],
+    "latency_s": 2.07058749999851
+  },
+  {
+    "id": "ts03",
+    "q": "How are extra constraints like a minimum length attached to a type?",
+    "gt": [
+      "packages/zod/src/v4/core/checks.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/checks.ts",
+      "packages/zod/src/v4/classic/from-json-schema.ts",
+      "packages/zod/src/v4/classic/tests/date.test.ts",
+      "packages/zod/src/v4/core/json-schema-processors.ts",
+      "packages/zod/src/v4/core/zsf.ts",
+      "packages/zod/src/v4/core/standard-schema.ts",
+      "packages/zod/src/v3/ZodError.ts",
+      "packages/zod/src/v4/core/util.ts",
+      "packages/zod/src/v4/core/regexes.ts"
+    ],
+    "latency_s": 2.0544972909847274
+  },
+  {
+    "id": "ts04",
+    "q": "Where are the individual failure descriptions a validation can produce declared?",
+    "gt": [
+      "packages/zod/src/v4/core/errors.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/classic/tests/description.test.ts",
+      "packages/zod/src/v3/tests/description.test.ts",
+      "layer:application",
+      "packages/docs/components/inkeep-bubble.tsx",
+      "packages/zod/src/v3/tests/object.test.ts",
+      "packages/zod/src/v4/classic/tests/date.test.ts",
+      "packages/docs/components/platinum.tsx",
+      "packages/docs/app/layout.config.tsx",
+      "packages/zod/src/v3/tests",
+      "packages/zod"
+    ],
+    "latency_s": 1.9164238329976797
+  },
+  {
+    "id": "ts05",
+    "q": "Where can descriptions be associated with a schema and looked up later?",
+    "gt": [
+      "packages/zod/src/v4/core/registries.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/locales/be.ts",
+      "packages/zod/src/v4/classic/tests/description.test.ts",
+      "packages/docs/components/sidebar-item.tsx",
+      "packages/docs/should-build-site.sh",
+      "packages/docs/components/platinum.tsx",
+      "packages/zod/src/v3/tests/description.test.ts",
+      "packages/zod/src/v4/classic/tests/date.test.ts",
+      "packages/zod/src/v4/core/util.ts",
+      "packages/zod/src/v4/core/errors.ts"
+    ],
+    "latency_s": 2.04137812499539
+  },
+  {
+    "id": "ts06",
+    "q": "Where are the patterns for well-known string formats kept?",
+    "gt": [
+      "packages/zod/src/v4/core/regexes.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/locales/lt.ts",
+      "packages/zod/src/v4/core/json-schema-processors.ts",
+      "packages/zod/src/v3/tests/recursive.test.ts",
+      "packages/zod/src/v4/core/checks.ts",
+      "layer:service",
+      "packages/zod/src/v4/core/regexes.ts",
+      "rw-zod",
+      "packages/resolution/test-resolution.ts",
+      "packages/zod/src/v4/classic/compat.ts",
+      "packages/zod/src/v4/locales/ru.ts"
+    ],
+    "latency_s": 2.2746675000234973
+  },
+  {
+    "id": "ts07",
+    "q": "How is a schema turned into a portable specification document?",
+    "gt": [
+      "packages/zod/src/v4/core/json-schema-generator.ts"
+    ],
+    "ranked_files": [
+      "packages/docs/loaders/get-llm-text.ts",
+      "packages/zod/src/v4/core/util.ts",
+      "packages/zod/src/v4/classic/tests/prototypes.test.ts",
+      "rw-zod",
+      "packages/zod/src/v3/tests/record.test.ts",
+      "packages/zod/src/v4/classic/tests/codec-examples.test.ts",
+      "packages/zod/src/v4/core/zsf.ts",
+      "packages/zod/src/v4/core/standard-schema.ts",
+      "layer:service"
+    ],
+    "latency_s": 1.9032534579746425
+  },
+  {
+    "id": "ts08",
+    "q": "Where is the vendor-neutral interface other libraries can consume implemented?",
+    "gt": [
+      "packages/zod/src/v4/core/standard-schema.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/standard-schema.ts",
+      "packages/docs/components/tabs.tsx",
+      "packages/docs/components/ecosystem.tsx",
+      "packages/zod/src/v3/standard-schema.ts",
+      "packages/zod/src/v4/core/util.ts",
+      "layer:docs-tooling",
+      "packages/docs/components/inkeep-bubble.tsx",
+      "packages/bench/metabench.ts",
+      "packages/zod/src/v4/core/schemas.ts",
+      "packages/zod/src/v4/core/config.ts"
+    ],
+    "latency_s": 2.1334859160124324
+  },
+  {
+    "id": "ts09",
+    "q": "Where are inputs converted to the expected type before checking rather than rejected?",
+    "gt": [
+      "packages/zod/src/v4/classic/coerce.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v3/tests/set.test.ts",
+      "scripts/fail-on-console.ts",
+      "packages/zod/src/v4/core/util.ts",
+      "packages/zod/src/v4/mini/tests/string.test.ts",
+      "packages/zod/src/v4/classic/tests/codec-examples.test.ts",
+      "packages/zod/src/v3/types.ts",
+      "packages/zod/src/v4/core/errors.ts",
+      "packages/bench/index.ts",
+      "packages/docs/app/llms.txt/route.ts"
+    ],
+    "latency_s": 2.419779916992411
+  },
+  {
+    "id": "ts10",
+    "q": "Where are date and time string formats defined as their own types?",
+    "gt": [
+      "packages/zod/src/v4/classic/iso.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/api.ts",
+      "packages/zod/src/v4/classic/schemas.ts",
+      "packages/zod/src/v4/classic/tests/codec-examples.test.ts",
+      "packages/zod/src/v4/core/regexes.ts",
+      "packages/zod/src/v3/tests/date.test.ts",
+      "packages/zod/src/v4/classic/tests/to-json-schema-methods.test.ts",
+      "packages/zod/src/v4/core/json-schema-processors.ts",
+      "packages/zod/src/v4/classic/from-json-schema.ts",
+      "packages/zod/src/v3/tests/string.test.ts",
+      "packages/zod/src/v3/helpers/util.ts"
+    ],
+    "latency_s": 1.9809027499868535
+  },
+  {
+    "id": "ts11",
+    "q": "Where is the user-facing type that gets chained with methods defined?",
+    "gt": [
+      "packages/zod/src/v4/classic/schemas.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/util.ts",
+      "packages/zod/src/v3/tests/description.test.ts",
+      "packages/zod/src/v4/classic/tests/function.test.ts",
+      "packages/zod/src/v4/classic/tests/description.test.ts",
+      "packages/zod/src/v3/tests/set.test.ts",
+      "packages/zod/src/v4/classic/tests/detached-methods.test.ts",
+      "packages/zod/src/v4/classic/tests/async-parsing.test.ts",
+      "packages/zod/src/v4/classic/schemas.ts",
+      "packages/zod/src/v4/classic/tests/date.test.ts"
+    ],
+    "latency_s": 2.1465901249903254
+  },
+  {
+    "id": "ts12",
+    "q": "How does a specification document get turned back into a schema?",
+    "gt": [
+      "packages/zod/src/v4/classic/from-json-schema.ts"
+    ],
+    "ranked_files": [
+      "packages/docs/loaders/get-llm-text.ts",
+      "packages/zod/src/v4/classic/tests/prototypes.test.ts",
+      "packages/zod/src/v4/core/util.ts",
+      "packages/zod/src/v3/tests/record.test.ts",
+      "rw-zod",
+      "packages/zod/src/v4/classic/tests/codec-examples.test.ts",
+      "layer:service",
+      "packages/zod/src/v4/mini/tests/prototypes.test.ts",
+      "packages/docs/app/llms.txt/route.ts",
+      "packages/zod/src/v4/core/json-schema.ts"
+    ],
+    "latency_s": 1.981694999994943
+  },
+  {
+    "id": "ts13",
+    "q": "Where are library-wide settings such as the active language held?",
+    "gt": [
+      "packages/zod/src/v4/core/config.ts"
+    ],
+    "ranked_files": [
+      "application",
+      "packages/docs/app/layout.config.tsx",
+      "packages/zod/src/v4/core/json-schema.ts",
+      "packages/zod/src/v3/tests/language-server.source.ts",
+      "onboarding/how_it_works",
+      "layer:docs-tooling",
+      "packages/resolution",
+      "packages/zod/src/v3/tests/tuple.test.ts",
+      "packages/zod/src/v4/core/versions.ts",
+      "packages/docs/components/tabs.tsx"
+    ],
+    "latency_s": 2.030663874989841
+  },
+  {
+    "id": "ts14",
+    "q": "Where are the shared helpers the rest of the internals rely on?",
+    "gt": [
+      "packages/zod/src/v4/core/util.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/schemas.ts",
+      "packages/zod/src/v4/mini/schemas.ts",
+      "packages/zod/src/v3/ZodError.ts",
+      "packages/zod/src/v4/classic/schemas.ts",
+      "packages/zod/src/index.ts",
+      "packages/zod/src/v4/core/index.ts",
+      "packages/zod/src/v3/tests/tuple.test.ts",
+      "scripts/fail-on-console.ts",
+      "packages/zod/src/v4/classic/tests/string.test.ts",
+      "packages/zod/src/v4/core/json-schema.ts"
+    ],
+    "latency_s": 2.079973207990406
+  },
+  {
+    "id": "ts15",
+    "q": "Where is everything the package exposes to importers gathered together?",
+    "gt": [
+      "packages/zod/src/v4/classic/external.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/index.ts",
+      "packages/docs/components/themed-image.tsx",
+      "packages/zod/src/v4/mini/index.ts",
+      "packages/zod",
+      "packages/bench/jit-union.ts",
+      "packages/zod/src/v4/locales/lt.ts",
+      "packages/zod/src/v4/core/util.ts",
+      "packages/zod/src/v3/tests/Mocker.ts",
+      "rw-zod",
+      "packages/bench/ipv4-regex.ts"
+    ],
+    "latency_s": 2.26027083300869
+  }
+]

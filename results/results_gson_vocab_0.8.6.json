@@ -1,0 +1,258 @@
+[
+  {
+    "id": "vjava01",
+    "q": "Where is Gson's Gson defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/Gson.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/FieldNamingPolicy.java",
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "gson/src/main/java-templates/com/google/gson/internal/GsonBuildConfig.java",
+      "gson/src/main/java/com/google/gson/internal/TroubleshootingGuide.java",
+      "gson/src/main/java/com/google/gson/InstanceCreator.java",
+      "gson/src/main/java/com/google/gson/GsonBuilder.java",
+      "test-shrinker/src/main/java/com/example/ClassWithNamedFields.java"
+    ],
+    "latency_s": 0.11393779100035317
+  },
+  {
+    "id": "vjava02",
+    "q": "Where is Gson's GsonBuilder defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/GsonBuilder.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/FieldNamingPolicy.java",
+      "gson/src/main/java/com/google/gson/GsonBuilder.java",
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "gson/src/main/java/com/google/gson/LongSerializationPolicy.java",
+      "gson/src/main/java-templates/com/google/gson/internal/GsonBuildConfig.java",
+      "gson/src/main/java/com/google/gson/InstanceCreator.java"
+    ],
+    "latency_s": 0.15135966701200232
+  },
+  {
+    "id": "vjava03",
+    "q": "Where is Gson's JsonReader defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/stream/JsonReader.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/internal/JsonReaderInternalAccess.java",
+      "gson/src/main/java/com/google/gson/TypeAdapter.java",
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "gson/src/main/java/com/google/gson/Strictness.java",
+      "gson/src/main/java/com/google/gson/JsonParser.java",
+      "gson/src/main/java/com/google/gson/internal/bind/JsonTreeReader.java",
+      "gson/src/main/java/com/google/gson/JsonStreamParser.java",
+      "metrics/src/main/java/com/google/gson/metrics/ParseBenchmark.java",
+      "gson/src/main/java/com/google/gson/stream/JsonReader.java"
+    ],
+    "latency_s": 0.1936893750098534
+  },
+  {
+    "id": "vjava04",
+    "q": "Where is Gson's JsonWriter defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/stream/JsonWriter.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/TypeAdapter.java",
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "gson/src/main/java/com/google/gson/internal/bind/JsonTreeWriter.java",
+      "gson/src/main/java/com/google/gson/Strictness.java",
+      "gson/src/main/java/com/google/gson/JsonIOException.java",
+      "gson/src/main/java/com/google/gson/stream/JsonToken.java",
+      "gson/src/main/java/com/google/gson/internal/bind/DefaultDateTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/stream/JsonWriter.java"
+    ],
+    "latency_s": 0.10125475001404993
+  },
+  {
+    "id": "vjava05",
+    "q": "Where is Gson's TypeToken defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/reflect/TypeToken.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/reflect/TypeToken.java",
+      "gson/src/main/java/com/google/gson/internal/bind/TypeAdapters.java",
+      "extras/src/main/java/com/google/gson/typeadapters/RuntimeTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/internal/bind/DefaultDateTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/internal/bind/CollectionTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/internal/bind/MapTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/internal/bind/TreeTypeAdapter.java"
+    ],
+    "latency_s": 0.11388408299535513
+  },
+  {
+    "id": "vjava06",
+    "q": "Where is Gson's TypeAdapter defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/TypeAdapter.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/TypeAdapter.java",
+      "gson/src/main/java/com/google/gson/internal/bind/DefaultDateTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/GsonBuilder.java",
+      "extras/src/main/java/com/google/gson/typeadapters/RuntimeTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/internal/bind/SerializationDelegatingTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/LongSerializationPolicy.java",
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "gson/src/main/java/com/google/gson/internal/bind/MapTypeAdapterFactory.java"
+    ],
+    "latency_s": 0.12763908298802562
+  },
+  {
+    "id": "vjava07",
+    "q": "Where is Gson's TypeAdapterFactory defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/TypeAdapterFactory.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/internal/bind/JsonAdapterAnnotationTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/TypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/GsonBuilder.java",
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "gson/src/main/java/com/google/gson/internal/bind/TypeAdapters.java",
+      "gson/src/main/java/com/google/gson/internal/bind/ObjectTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/internal/bind/NumberTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/internal/bind/DefaultDateTypeAdapter.java"
+    ],
+    "latency_s": 0.14048804200137965
+  },
+  {
+    "id": "vjava08",
+    "q": "Where is Gson's ReflectiveTypeAdapterFactory defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/internal/bind/JavaTimeTypeAdapters.java",
+      "gson/src/main/java/com/google/gson/internal/ReflectionAccessFilterHelper.java",
+      "gson/src/main/java/com/google/gson/internal/bind/JsonAdapterAnnotationTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/internal/reflect/ReflectionHelper.java",
+      "gson/src/main/java/com/google/gson/GsonBuilder.java",
+      "proto/src/main/java/com/google/gson/protobuf/LegacyProtoTypeAdapterFactory.java"
+    ],
+    "latency_s": 0.1744395839923527
+  },
+  {
+    "id": "vjava09",
+    "q": "Where is Gson's JsonParser defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/JsonParser.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/JsonParser.java",
+      "extras/src/main/java/com/google/gson/interceptors/JsonPostDeserializer.java",
+      "gson/src/main/java/com/google/gson/JsonParseException.java",
+      "gson/src/main/java/com/google/gson/stream/JsonToken.java",
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "gson/src/main/java/com/google/gson/internal/JsonReaderInternalAccess.java",
+      "gson/src/main/java/com/google/gson/stream/JsonScope.java",
+      "gson/src/main/java/com/google/gson/JsonElement.java"
+    ],
+    "latency_s": 0.13656145898858085
+  },
+  {
+    "id": "vjava10",
+    "q": "Where is Gson's JsonObject defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/JsonObject.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/JsonObject.java",
+      "gson/src/main/java/com/google/gson/JsonElement.java",
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "extras/src/main/java/com/google/gson/typeadapters/RuntimeTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/stream/JsonToken.java",
+      "gson/src/main/java/com/google/gson/JsonParser.java"
+    ],
+    "latency_s": 0.1565676659811288
+  },
+  {
+    "id": "vjava11",
+    "q": "Where is Gson's Excluder defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/Excluder.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "gson/src/main/java/com/google/gson/internal/Excluder.java",
+      "gson/src/main/java/com/google/gson/GsonBuilder.java",
+      "gson/src/main/java/com/google/gson/ExclusionStrategy.java",
+      "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/annotations/Expose.java"
+    ],
+    "latency_s": 0.12982516700867563
+  },
+  {
+    "id": "vjava12",
+    "q": "Where is Gson's FieldNamingPolicy defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/FieldNamingPolicy.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/FieldNamingPolicy.java",
+      "gson/src/main/java/com/google/gson/GsonBuilder.java",
+      "gson/src/main/java/com/google/gson/annotations/SerializedName.java",
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "proto/src/main/java/com/google/gson/protobuf/LegacyProtoTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/FieldAttributes.java"
+    ],
+    "latency_s": 0.11337437498150393
+  },
+  {
+    "id": "vjava13",
+    "q": "Where is Gson's ConstructorConstructor defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java",
+      "gson/src/main/java/com/google/gson/internal/bind/CollectionTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/GsonBuilder.java",
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "gson/src/main/java-templates/com/google/gson/internal/GsonBuildConfig.java",
+      "gson/src/main/java/com/google/gson/internal/bind/JsonAdapterAnnotationTypeAdapterFactory.java"
+    ],
+    "latency_s": 0.15683304201229475
+  },
+  {
+    "id": "vjava14",
+    "q": "Where is Gson's CollectionTypeAdapterFactory defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/bind/CollectionTypeAdapterFactory.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/internal/bind/CollectionTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/GsonBuilder.java",
+      "gson/src/main/java/com/google/gson/internal/bind/JsonAdapterAnnotationTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/internal/bind/TreeTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/internal/bind/DefaultDateTypeAdapter.java"
+    ],
+    "latency_s": 0.13076508298399858
+  },
+  {
+    "id": "vjava15",
+    "q": "Where is Gson's EnumTypeAdapter defined?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/bind/EnumTypeAdapter.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/internal/bind/EnumTypeAdapter.java",
+      "test-shrinker/src/main/java/com/example/EnumClass.java",
+      "test-shrinker/src/main/java/com/example/EnumClassWithSerializedName.java",
+      "proto/src/main/java/com/google/gson/protobuf/ProtoTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/internal/bind/TreeTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/internal/bind/MapTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/internal/bind/JsonAdapterAnnotationTypeAdapterFactory.java",
+      "test-shrinker/src/main/java/com/example/ClassWithNamedFields.java"
+    ],
+    "latency_s": 0.13061750002088957
+  }
+]

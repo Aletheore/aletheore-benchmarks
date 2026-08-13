@@ -1,0 +1,137 @@
+[
+  {
+    "id": "gz01",
+    "q": "Where is the object you call to actually send an HTTP request?",
+    "gt": [
+      "src/Client.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.88718570797937
+  },
+  {
+    "id": "gz02",
+    "q": "How are the layers wrapped around whatever finally performs the transfer?",
+    "gt": [
+      "src/HandlerStack.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.0138672500033863
+  },
+  {
+    "id": "gz03",
+    "q": "Where are the ready-made layers such as history and mapping defined together?",
+    "gt": [
+      "src/Middleware.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.3396694579860196
+  },
+  {
+    "id": "gz04",
+    "q": "How are many requests sent at once with a limit on concurrency?",
+    "gt": [
+      "src/Pool.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.1158245420083404
+  },
+  {
+    "id": "gz05",
+    "q": "Where does the client follow a response that points somewhere else?",
+    "gt": [
+      "src/RedirectMiddleware.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.114289875025861
+  },
+  {
+    "id": "gz06",
+    "q": "Where is the policy for attempting a failed transfer again?",
+    "gt": [
+      "src/RetryMiddleware.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.8311024169961456
+  },
+  {
+    "id": "gz07",
+    "q": "Where is state kept between calls so the server can recognise the caller?",
+    "gt": [
+      "src/Cookie/CookieJar.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.966100583988009
+  },
+  {
+    "id": "gz08",
+    "q": "Where is the native transfer library actually invoked?",
+    "gt": [
+      "src/Handler/CurlHandler.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.9529132079915144
+  },
+  {
+    "id": "gz09",
+    "q": "Where is the fallback transport that avoids the native extension?",
+    "gt": [
+      "src/Handler/StreamHandler.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.032208125019679
+  },
+  {
+    "id": "gz10",
+    "q": "Where is the failure type that carries both what was asked and what came back?",
+    "gt": [
+      "src/Exception/RequestException.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.0940584590134677
+  },
+  {
+    "id": "gz11",
+    "q": "How is a log line built from a request and its response?",
+    "gt": [
+      "src/MessageFormatter.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.8719508330104873
+  },
+  {
+    "id": "gz12",
+    "q": "Where are the headers describing the payload filled in automatically?",
+    "gt": [
+      "src/PrepareBodyMiddleware.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.4812171250232495
+  },
+  {
+    "id": "gz13",
+    "q": "Where is the contract that describes what a caller can rely on?",
+    "gt": [
+      "src/ClientInterface.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.069655708997743
+  },
+  {
+    "id": "gz14",
+    "q": "Where are non-ascii domain names converted to their encoded form?",
+    "gt": [
+      "src/Idn.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.1212365410174243
+  },
+  {
+    "id": "gz15",
+    "q": "Where are the shared helper routines the rest of the package reuses?",
+    "gt": [
+      "src/Utils.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.9990633749985136
+  }
+]

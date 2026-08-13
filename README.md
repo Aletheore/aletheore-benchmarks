@@ -40,25 +40,28 @@ implemented in full and rejected on measurement.
 
 #### Why the weak corpora are weak
 
-**Near-duplicate crowding (PHP), unsolved.** Every one of Slim's six top-5
-misses is a topical *sibling* of the right answer — asked where route arguments
+**Near-duplicate crowding (PHP), real but mostly not the cost.** Slim's top-5
+misses are topical *siblings* of the right answer — asked where route arguments
 reach the handler, we return `RequestResponseNamedArgs.php` and
 `RequestResponseArgs.php` but not the `RequestResponse.php` they are variants
-of. The canonical file is buried by its own variants.
+of. That crowding is visible in the raw results and is genuine.
 
-Two fixes were implemented and both were **rejected on measurement**:
+What it is *not* is the main cost. Asked in Slim's own vocabulary the same
+corpus scores 73.3% top-1 rather than 26.7%, so most of the gap was phrasing.
+Two ranking fixes were built against the crowding before that was known, and
+both were rejected on measurement:
 
-1. *An import-authority prior*, applied globally: cost flask 9.4 points of top-1
-   and gson 6.7. Rejected.
+1. *An import-authority prior*, applied globally: cost flask 9.4 points of
+   top-1 and gson 6.7. Rejected.
 2. *The same prior scoped to PHP only*, so it provably could not affect another
-   language. This first appeared to lift Slim top-1 by 6.7 points — and that was
-   an artefact of clamping the fused rank at zero, which collapses every
-   strongly-weighted hit onto one effective rank. With the floor corrected it
-   produces no top-1 gain on either PHP corpus and trades Slim top-5 for guzzle
-   top-3. Rejected.
+   language. It first appeared to lift Slim top-1 by 6.7 points — an artefact
+   of clamping the fused rank at zero, which collapses every strongly-weighted
+   hit onto one effective rank. With the floor corrected it produces no top-1
+   gain on either PHP corpus and trades Slim top-5 for guzzle top-3. Rejected.
 
 A second PHP corpus (guzzle) was added specifically so a PHP-targeted change
-could not be tuned and validated on the same 15 questions.
+could not be tuned and validated on the same 15 questions. It is what made the
+second rejection legible.
 
 **Not the cause: inheritance.** It was proposed that a base class is being
 crowded out by its children, and that promoting base classes would fix it.
@@ -93,34 +96,36 @@ lose to small peripheral ones — was tested across all corpora and is
 false. The top-1 result is *larger* than the ground-truth file in 80–94% of
 flask and gin questions. There is no systematic size bias in either direction.
 
-**Ruby: mostly our own question authoring, not the product.** jekyll is
-single-module, so pollution accounts for almost none of its 26.7%. The confound
-was tested directly, and it is the largest single effect measured anywhere in
-this repository.
+**The weak scores are mostly our own question authoring.** This was tested on
+jekyll first and then on every other weak corpus, by rewriting *all fifteen*
+questions in each set - not only the missed ones - using the project's own
+vocabulary, against identical code and identical ground truth:
 
-All fifteen jekyll questions — not only the ones that were missed — were
-rewritten in `questions/jekyll_vocab.json` using the project's own vocabulary
-(`Jekyll::Site`, `Jekyll::Renderer#run`, `Jekyll::PluginManager`) and rerun
-against the same corpus and the same answer key:
+| corpus | vocabulary-avoiding | project vocabulary | Δ top-1 |
+|---|---|---|---|
+| Slim (PHP) | 26.7% | **73.3%** | +46.6 |
+| zod (TypeScript) | 20.0% | **60.0%** | +40.0 |
+| jekyll (Ruby) | 26.7% | **66.7%** | +40.0 |
+| guzzle (PHP) | 20.0% | **53.3%** | +33.3 |
+| gson (Java) | 40.0% | **60.0%** | +20.0 |
 
-| phrasing | top-1 | top-3 | top-5 | MRR |
-|---|---|---|---|---|
-| vocabulary-avoiding (`jekyll.json`) | 26.7% | 33.3% | 46.7% | 0.337 |
-| project vocabulary (`jekyll_vocab.json`) | **66.7%** | **86.7%** | **93.3%** | **0.778** |
+Every weak corpus moves 20-47 points on wording alone. That is larger than
+every ranking change in this programme combined, and it means **the retrieval
+table above measures a phrasing regime at least as much as it measures the
+product**.
 
-Forty points of top-1, from wording alone, on identical code and identical
-ground truth — more than every ranking change in this programme combined. Ruby
-is roughly Python-tier when asked in the project's own terms.
+It also retires a conclusion this file previously drew. PHP was described as a
+ranking problem - near-duplicate crowding - and two fixes were built and
+rejected against it. Slim moves 26.7% -> 73.3% on phrasing, so most of what
+those fixes were chasing was an artefact of how the questions were written.
+The crowding is real and visible in the raw results; it is not what was costing
+most of the score.
 
-Rewriting *only the missed* questions was considered and rejected: correcting
-just the failures can move the score in one direction only. Both sets are kept
-and both numbers are published; the original is not deleted.
-
-The honest reading is that this table measures a phrasing regime as much as it
-measures a product, and the same doubt applies to the zod, gson and guzzle sets,
-authored the same way on the same day. Real users ask somewhere between the two
-regimes, so the truth for any language here is bracketed by them, not given by
-either.
+Both sets are kept for every corpus and both numbers published. Rewriting only
+the missed questions was considered and rejected - correcting just the failures
+can move a score in one direction only. The truth for any language here is
+*bracketed* by the two regimes, not given by either, and real users ask
+somewhere in between.
 
 **These numbers replace an earlier table that did not reproduce.** The previous
 revision listed flask at 71.9% / 96.9% / 100%, which matched no committed
@@ -129,20 +134,52 @@ Re-running the published harness against every 0.8.x release produces 65.6% /
 93.8% / 100% for that code, and 68.8% / 93.8% / 100% for 0.8.5. The lesson is
 recorded in **METHODOLOGY.md** rather than quietly corrected.
 
-Head-to-head on flask, same questions and ground truth:
+Head-to-head against RepoWise, **all seven corpora**, same questions and same
+ground truth. RepoWise searches its own generated wiki pages, so each corpus
+had a wiki built for it first (`init --coverage 1.0`, deepseek-v4-flash,
+1,341 pages, $1.85 total). Best RepoWise mode per corpus is shown:
 
-| | top-1 | top-3 | top-5 |
-|---|---|---|---|
-| **Aletheore 0.8.5** | **68.8%** | **93.8%** | **100%** |
-| RepoWise `--mode semantic` | 28.1% | 56.2% | 56.2% |
-| RepoWise `--mode fulltext` | 21.9% | 56.2% | 65.6% |
-| RepoWise, best mode per question (unachievable) | 40.6% | 71.9% | 78.1% |
+| corpus | language | Aletheore | RepoWise semantic | RepoWise fulltext | winner |
+|---|---|---|---|---|---|
+| gin | Go | **80.0%** | 60.0% | 46.7% | Aletheore |
+| serde | Rust | **53.3%** | 6.7% | 13.3% | Aletheore |
+| gson | Java | **40.0%** | 26.7% | 0.0% | Aletheore |
+| jekyll | Ruby | **26.7%** | 13.3% | 6.7% | Aletheore |
+| Slim | PHP | 26.7% | 26.7% | 20.0% | tie |
+| guzzle | PHP | 20.0% | 13.3% | 20.0% | tie |
+| zod | TypeScript | **20.0%** | 6.7% | 13.3% | Aletheore |
 
-The RepoWise rows are from the original run and are unchanged; only Aletheore's
-row was re-measured, against the same corpus commit and the same 32 questions.
-An earlier revision of this table put Aletheore at 75.0% / 90.6% / 96.9% from a
-pre-0.8.0 build. Top-1 fell across the 0.8.x hardening work and top-5 rose;
-both directions are shown rather than the flattering half.
+**Top-1: 5 wins, 0 losses, 2 ties.** Our weakest languages still match or beat
+them. Where we lose: jekyll top-5, 46.7% against their 66.7%.
+
+Flask remains as originally measured (Aletheore 68.8% / 93.8% / 100% against
+RepoWise semantic 28.1% / 56.2% / 56.2%).
+
+Two things this table deliberately does not claim:
+
+- **`--mode symbol` returned 0.0% on every corpus and is excluded.** Feeding
+  natural-language questions to a symbol-name search misuses the mode rather
+  than measuring it. It is in the raw results; it is not counted as a loss for
+  RepoWise.
+- **These latencies are not comparable and no speed claim is made here.**
+  RepoWise's search is invoked per query as a CLI process (2.4-4.5 s including
+  interpreter startup); Aletheore's is measured in-process (~72 ms). The honest
+  like-for-like figure, from the flask run, is RepoWise 68 ms against our
+  125 ms in-process — *they are faster*.
+
+### Cost to get to a searchable index
+
+| | Aletheore | RepoWise |
+|---|---|---|
+| indexing cost, 7 corpora | **$0.00** | **$1.85** |
+| per corpus | $0.00 | $0.09 - $0.47 |
+| what it costs money for | nothing - local `nomic-embed-text` | LLM generation of 1,341 wiki pages |
+| typical setup time | seconds to ~1 min per corpus | minutes per corpus |
+
+Per corpus, RepoWise: Slim $0.09, guzzle $0.13, gin $0.18, jekyll $0.29,
+serde $0.33, zod $0.36, gson $0.47. Aletheore's side needs no API key at all,
+which is also why every number in this repository can be recomputed without
+one.
 
 ### Explaining code — "how does X work?"
 
@@ -167,11 +204,11 @@ Stated here rather than in a footnote:
 
 - **RepoWise retrieval is faster in-process** — 68 ms against our 125 ms.
 - **RepoWise's wiki scores higher**, in every configuration tested.
-- **Five of eight corpora score below 35% top-1** — TypeScript and one PHP
-  corpus at 20.0%, Ruby and the other PHP corpus at 26.7%, Java at 33.3%,
-  against 80.0% for Go. One cause is fixed in 0.8.6, one is only partly
-  recoverable, one was our own question authoring, and PHP remains unsolved
-  after two rejected attempts.
+- **Five of eight corpora score below 35% top-1 under vocabulary-avoiding
+  phrasing** — though every one of them recovers 20-47 points when the same
+  questions are asked in the project's own terms, so most of that gap is our
+  question authoring rather than the product.
+- **jekyll top-5 loses to RepoWise**, 46.7% against 66.7%.
 - **An earlier revision of this README published flask figures that did not
   reproduce.** They are corrected above, and how it happened is in
   METHODOLOGY.md.
@@ -214,7 +251,7 @@ That defect invalidated our own first run.
 
 | path | what |
 |---|---|
-| `questions/` | 161 questions across 10 sets, every ground-truth anchor mechanically verified |
+| `questions/` | 236 questions across 15 sets, every ground-truth anchor mechanically verified |
 | `scripts/` | runners, scorers, the blind judge, the language-coverage matrix |
 | `results/` | raw per-query output — recompute any number without an API key |
 | `corpora.json` | pinned commits for all corpora |
@@ -239,7 +276,7 @@ byte-identical input. Only the within-run gap is comparable across
 configurations.
 
 **Scope is small.** Seven languages across eight corpora measured for retrieval,
-one repository for the wiki comparison, 161 questions in total. RepoWise's own published benchmark
+one repository for the wiki comparison, 236 questions in total. RepoWise's own published benchmark
 spans 21 repositories and 9 languages; we are not claiming parity of coverage.
 
 ## Licence

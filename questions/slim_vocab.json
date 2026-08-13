@@ -1,0 +1,123 @@
+[
+ {
+  "id": "vphp01",
+  "question": "Where is Slim's App defined?",
+  "ground_truth_files": [
+   "Slim/App.php"
+  ],
+  "verification_anchor": "class App extends RouteCollectorProxy"
+ },
+ {
+  "id": "vphp02",
+  "question": "Where is Slim's handle defined?",
+  "ground_truth_files": [
+   "Slim/MiddlewareDispatcher.php"
+  ],
+  "verification_anchor": "public function handle"
+ },
+ {
+  "id": "vphp03",
+  "question": "Where is Slim's RouteCollector defined?",
+  "ground_truth_files": [
+   "Slim/Routing/RouteCollector.php"
+  ],
+  "verification_anchor": "class RouteCollector"
+ },
+ {
+  "id": "vphp04",
+  "question": "Where is Slim's resolve defined?",
+  "ground_truth_files": [
+   "Slim/CallableResolver.php"
+  ],
+  "verification_anchor": "public function resolve"
+ },
+ {
+  "id": "vphp05",
+  "question": "Where is Slim's emit defined?",
+  "ground_truth_files": [
+   "Slim/ResponseEmitter.php"
+  ],
+  "verification_anchor": "public function emit"
+ },
+ {
+  "id": "vphp06",
+  "question": "Where is Slim's ErrorHandler defined?",
+  "ground_truth_files": [
+   "Slim/Handlers/ErrorHandler.php"
+  ],
+  "verification_anchor": "class ErrorHandler"
+ },
+ {
+  "id": "vphp07",
+  "question": "Where is Slim's ErrorMiddleware defined?",
+  "ground_truth_files": [
+   "Slim/Middleware/ErrorMiddleware.php"
+  ],
+  "verification_anchor": "ErrorMiddleware"
+ },
+ {
+  "id": "vphp08",
+  "question": "Where is Slim's BodyParsingMiddleware defined?",
+  "ground_truth_files": [
+   "Slim/Middleware/BodyParsingMiddleware.php"
+  ],
+  "verification_anchor": "BodyParsingMiddleware"
+ },
+ {
+  "id": "vphp09",
+  "question": "Where is Slim's Route defined?",
+  "ground_truth_files": [
+   "Slim/Routing/Route.php"
+  ],
+  "verification_anchor": "class Route"
+ },
+ {
+  "id": "vphp10",
+  "question": "Where is Slim's urlFor defined?",
+  "ground_truth_files": [
+   "Slim/Routing/RouteParser.php"
+  ],
+  "verification_anchor": "urlFor"
+ },
+ {
+  "id": "vphp11",
+  "question": "Where is Slim's AppFactory defined?",
+  "ground_truth_files": [
+   "Slim/Factory/AppFactory.php"
+  ],
+  "verification_anchor": "AppFactory"
+ },
+ {
+  "id": "vphp12",
+  "question": "Where is Slim's RouteCollectorProxy defined?",
+  "ground_truth_files": [
+   "Slim/Routing/RouteCollectorProxy.php"
+  ],
+  "verification_anchor": "RouteCollectorProxy"
+ },
+ {
+  "id": "vphp13",
+  "question": "Where is Slim's computeRoutingResults defined?",
+  "ground_truth_files": [
+   "Slim/Routing/RouteResolver.php",
+   "Slim/Routing/Dispatcher.php"
+  ],
+  "verification_anchor": "computeRoutingResults"
+ },
+ {
+  "id": "vphp14",
+  "question": "Where is Slim's HttpNotFoundException defined?",
+  "ground_truth_files": [
+   "Slim/Exception/HttpNotFoundException.php"
+  ],
+  "verification_anchor": "HttpNotFoundException"
+ },
+ {
+  "id": "vphp15",
+  "question": "Where is Slim's RequestResponse defined?",
+  "ground_truth_files": [
+   "Slim/Handlers/Strategies/RequestResponse.php"
+  ],
+  "verification_anchor": "RequestResponse"
+ }
+]

@@ -1,0 +1,122 @@
+[
+ {
+  "id": "vgz01",
+  "question": "Where is Guzzle's Client defined?",
+  "ground_truth_files": [
+   "src/Client.php"
+  ],
+  "verification_anchor": "class Client"
+ },
+ {
+  "id": "vgz02",
+  "question": "Where is Guzzle's HandlerStack defined?",
+  "ground_truth_files": [
+   "src/HandlerStack.php"
+  ],
+  "verification_anchor": "class HandlerStack"
+ },
+ {
+  "id": "vgz03",
+  "question": "Where is Guzzle's Middleware defined?",
+  "ground_truth_files": [
+   "src/Middleware.php"
+  ],
+  "verification_anchor": "final class Middleware"
+ },
+ {
+  "id": "vgz04",
+  "question": "Where is Guzzle's Pool defined?",
+  "ground_truth_files": [
+   "src/Pool.php"
+  ],
+  "verification_anchor": "class Pool"
+ },
+ {
+  "id": "vgz05",
+  "question": "Where is Guzzle's RedirectMiddleware defined?",
+  "ground_truth_files": [
+   "src/RedirectMiddleware.php"
+  ],
+  "verification_anchor": "class RedirectMiddleware"
+ },
+ {
+  "id": "vgz06",
+  "question": "Where is Guzzle's RetryMiddleware defined?",
+  "ground_truth_files": [
+   "src/RetryMiddleware.php"
+  ],
+  "verification_anchor": "class RetryMiddleware"
+ },
+ {
+  "id": "vgz07",
+  "question": "Where is Guzzle's CookieJar defined?",
+  "ground_truth_files": [
+   "src/Cookie/CookieJar.php"
+  ],
+  "verification_anchor": "class CookieJar"
+ },
+ {
+  "id": "vgz08",
+  "question": "Where is Guzzle's CurlHandler defined?",
+  "ground_truth_files": [
+   "src/Handler/CurlHandler.php"
+  ],
+  "verification_anchor": "final class CurlHandler"
+ },
+ {
+  "id": "vgz09",
+  "question": "Where is Guzzle's StreamHandler defined?",
+  "ground_truth_files": [
+   "src/Handler/StreamHandler.php"
+  ],
+  "verification_anchor": "final class StreamHandler"
+ },
+ {
+  "id": "vgz10",
+  "question": "Where is Guzzle's RequestException defined?",
+  "ground_truth_files": [
+   "src/Exception/RequestException.php"
+  ],
+  "verification_anchor": "class RequestException"
+ },
+ {
+  "id": "vgz11",
+  "question": "Where is Guzzle's MessageFormatter defined?",
+  "ground_truth_files": [
+   "src/MessageFormatter.php"
+  ],
+  "verification_anchor": "final class MessageFormatter"
+ },
+ {
+  "id": "vgz12",
+  "question": "Where is Guzzle's PrepareBodyMiddleware defined?",
+  "ground_truth_files": [
+   "src/PrepareBodyMiddleware.php"
+  ],
+  "verification_anchor": "class PrepareBodyMiddleware"
+ },
+ {
+  "id": "vgz13",
+  "question": "Where is Guzzle's ClientInterface defined?",
+  "ground_truth_files": [
+   "src/ClientInterface.php"
+  ],
+  "verification_anchor": "interface ClientInterface"
+ },
+ {
+  "id": "vgz14",
+  "question": "Where is Guzzle's Idn defined?",
+  "ground_truth_files": [
+   "src/Idn.php"
+  ],
+  "verification_anchor": "Idn"
+ },
+ {
+  "id": "vgz15",
+  "question": "Where is Guzzle's Utils defined?",
+  "ground_truth_files": [
+   "src/Utils.php"
+  ],
+  "verification_anchor": "final class Utils"
+ }
+]

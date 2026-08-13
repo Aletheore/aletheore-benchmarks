@@ -1,0 +1,290 @@
+[
+  {
+    "id": "gz01",
+    "q": "Where is the object you call to actually send an HTTP request?",
+    "gt": [
+      "src/Client.php"
+    ],
+    "ranked_files": [
+      "src/Pool.php",
+      "src/Handler/HostValidator.php",
+      "src/Idn.php",
+      "src/ClientInterface.php",
+      "src/NonSerializableTrait.php",
+      "src/Client.php",
+      "src/Exception/RequestException.php",
+      "src/AuthMiddleware.php",
+      "src/Handler/RequestFraming.php"
+    ],
+    "latency_s": 1.8922440420137718
+  },
+  {
+    "id": "gz02",
+    "q": "How are the layers wrapped around whatever finally performs the transfer?",
+    "gt": [
+      "src/HandlerStack.php"
+    ],
+    "ranked_files": [
+      "src/Handler/DeadlineSourceStream.php",
+      "src/Handler/CurlFactoryInterface.php",
+      "src/Handler/EncodedBodyStream.php",
+      "onboarding/how_it_works",
+      "src/Middleware.php",
+      "src/HandlerStack.php",
+      "src/Utils.php",
+      "rw-guzzle",
+      "src/Pool.php"
+    ],
+    "latency_s": 2.306550250010332
+  },
+  {
+    "id": "gz03",
+    "q": "Where are the ready-made layers such as history and mapping defined together?",
+    "gt": [
+      "src/Middleware.php"
+    ],
+    "ranked_files": [
+      "src/Middleware.php",
+      "rw-guzzle",
+      "onboarding/key_concepts",
+      "src/RedirectMiddleware.php",
+      "src/Handler/MockHandler.php",
+      "src/NonSerializableTrait.php",
+      "src/MessageFormatter.php",
+      "onboarding/guided_tour"
+    ],
+    "latency_s": 2.112459666997893
+  },
+  {
+    "id": "gz04",
+    "q": "How are many requests sent at once with a limit on concurrency?",
+    "gt": [
+      "src/Pool.php"
+    ],
+    "ranked_files": [
+      "src/Pool.php",
+      "src/AuthMiddleware.php",
+      "src/Handler/EncodedBodyStream.php",
+      "layer:application",
+      "src/ClientTrait.php",
+      "rw-guzzle",
+      "src/RedirectMiddleware.php",
+      "src/Handler/CurlVersion.php",
+      "src/TransferStats.php",
+      "src/Handler/RequestFraming.php"
+    ],
+    "latency_s": 2.1425600410148036
+  },
+  {
+    "id": "gz05",
+    "q": "Where does the client follow a response that points somewhere else?",
+    "gt": [
+      "src/RedirectMiddleware.php"
+    ],
+    "ranked_files": [
+      "rw-guzzle",
+      "src/Middleware.php",
+      "onboarding/key_concepts",
+      "src/Handler/HostValidator.php",
+      "src/ClientInterface.php",
+      "src/Exception/InvalidArgumentException.php",
+      "layer:application",
+      "src/Exception/RequestException.php",
+      "src/RedirectMiddleware.php",
+      "src/Idn.php"
+    ],
+    "latency_s": 2.096674417000031
+  },
+  {
+    "id": "gz06",
+    "q": "Where is the policy for attempting a failed transfer again?",
+    "gt": [
+      "src/RetryMiddleware.php"
+    ],
+    "ranked_files": [
+      "layer:application",
+      "src/NonSerializableTrait.php",
+      "src/MessageFormatterInterface.php",
+      "src/RedirectMiddleware.php",
+      "src/Handler/CurlMultiHandler.php",
+      "src/Exception/NetworkException.php",
+      "src/Handler/EncodedBodyStream.php",
+      "src/TransportSharing.php",
+      "src/Exception/TransferException.php"
+    ],
+    "latency_s": 1.83466412499547
+  },
+  {
+    "id": "gz07",
+    "q": "Where is state kept between calls so the server can recognise the caller?",
+    "gt": [
+      "src/Cookie/CookieJar.php"
+    ],
+    "ranked_files": [
+      "rw-guzzle",
+      "src/Env.php",
+      "src/Handler/CurlHandler.php",
+      "src/Exception/RequestException.php",
+      "src/Auth/DigestChallenge.php",
+      "src/Handler/DeadlineSourceStream.php",
+      "src/Cookie/SetCookie.php",
+      "src/Handler/HostValidator.php"
+    ],
+    "latency_s": 1.8390390000131447
+  },
+  {
+    "id": "gz08",
+    "q": "Where is the native transfer library actually invoked?",
+    "gt": [
+      "src/Handler/CurlHandler.php"
+    ],
+    "ranked_files": [
+      "src/Idn.php",
+      "src/Handler/CurlMultiHandler.php",
+      "src/Exception/ConnectException.php",
+      "src/Pool.php",
+      "src/Exception/RequestException.php",
+      "src/Handler/ProxyEnv.php",
+      "src/NonSerializableTrait.php",
+      "onboarding/guided_tour",
+      "src/Exception/InvalidArgumentException.php",
+      "onboarding/key_concepts"
+    ],
+    "latency_s": 1.9790406250103842
+  },
+  {
+    "id": "gz09",
+    "q": "Where is the fallback transport that avoids the native extension?",
+    "gt": [
+      "src/Handler/StreamHandler.php"
+    ],
+    "ranked_files": [
+      "src/Handler/CurlMultiHandler.php",
+      "src/Handler/StreamHandler.php",
+      "src/Env.php",
+      "src/HostIdentity.php",
+      "src/Utils.php",
+      "src/Handler/ProxyEnv.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/ProxyOptions.php",
+      "src/Handler/CurlHandler.php",
+      "src/Handler/CurlVersion.php"
+    ],
+    "latency_s": 2.0780642089957837
+  },
+  {
+    "id": "gz10",
+    "q": "Where is the failure type that carries both what was asked and what came back?",
+    "gt": [
+      "src/Exception/RequestException.php"
+    ],
+    "ranked_files": [
+      "src/Cookie/CookieJar.php",
+      "src/Handler/DeadlineSourceStream.php",
+      "src/TransferStats.php",
+      "src/Exception/TransferException.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/Handler/EncodedBodyStream.php",
+      "src/Handler/HostValidator.php",
+      "src/HostIdentity.php",
+      "src/Cookie/SessionCookieJar.php",
+      "onboarding/key_concepts"
+    ],
+    "latency_s": 1.863430208992213
+  },
+  {
+    "id": "gz11",
+    "q": "How is a log line built from a request and its response?",
+    "gt": [
+      "src/MessageFormatter.php"
+    ],
+    "ranked_files": [
+      "src/MessageFormatter.php",
+      "src/Utils.php",
+      "src/Handler/HeaderProcessor.php",
+      "src/Handler/EasyHandle.php",
+      "onboarding/codebase_map",
+      "src/MessageFormatterInterface.php",
+      "scc-51",
+      "src/ClientTrait.php",
+      "src/Env.php"
+    ],
+    "latency_s": 2.883983709005406
+  },
+  {
+    "id": "gz12",
+    "q": "Where are the headers describing the payload filled in automatically?",
+    "gt": [
+      "src/PrepareBodyMiddleware.php"
+    ],
+    "ranked_files": [
+      "src/AuthMiddleware.php",
+      "src/Exception/RequestException.php",
+      "src/NonSerializableTrait.php",
+      "src/RequestOptions.php",
+      "src/Cookie/CookieJarInterface.php",
+      "src/Auth/DigestChallenge.php",
+      "src/Handler/Proxy.php",
+      "src/Exception/ResponseException.php"
+    ],
+    "latency_s": 2.457301709015155
+  },
+  {
+    "id": "gz13",
+    "q": "Where is the contract that describes what a caller can rely on?",
+    "gt": [
+      "src/ClientInterface.php"
+    ],
+    "ranked_files": [
+      "src/Handler/CurlFactoryInterface.php",
+      "src/Handler/Clock.php",
+      "src/NonSerializableTrait.php",
+      "src/Exception/ConnectException.php",
+      "src/TransferStats.php",
+      "src/Multiplexing.php",
+      "src/Handler/EncodedBodyStream.php",
+      "src/Handler/TlsVersion.php",
+      "src/Handler/DeadlineSourceStream.php",
+      "src/Handler/ProxyEnv.php"
+    ],
+    "latency_s": 2.0617017500044312
+  },
+  {
+    "id": "gz14",
+    "q": "Where are non-ascii domain names converted to their encoded form?",
+    "gt": [
+      "src/Idn.php"
+    ],
+    "ranked_files": [
+      "src/Cookie/SetCookie.php",
+      "src/HostIdentity.php",
+      "src/Idn.php",
+      "src/RequestOptions.php",
+      "src/Cookie/CookieJar.php",
+      "src/ProxyOptions.php",
+      "src/Handler/EncodedBodyStream.php",
+      "src/Handler/HostValidator.php",
+      "src/Handler/HeaderProcessor.php"
+    ],
+    "latency_s": 2.142819792003138
+  },
+  {
+    "id": "gz15",
+    "q": "Where are the shared helper routines the rest of the package reuses?",
+    "gt": [
+      "src/Utils.php"
+    ],
+    "ranked_files": [
+      "rw-guzzle",
+      "onboarding/codebase_map",
+      "src/NonSerializableTrait.php",
+      "src/Handler/HostValidator.php",
+      "scc-51",
+      "src/HostIdentity.php",
+      "src/Handler/DeadlineSourceStream.php",
+      "onboarding/key_concepts",
+      "onboarding/guided_tour"
+    ],
+    "latency_s": 2.1695089169952553
+  }
+]

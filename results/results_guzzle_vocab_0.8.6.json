@@ -1,0 +1,257 @@
+[
+  {
+    "id": "vgz01",
+    "q": "Where is Guzzle's Client defined?",
+    "gt": [
+      "src/Client.php"
+    ],
+    "ranked_files": [
+      "src/RequestOptions.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/Exception/GuzzleException.php",
+      "src/Client.php",
+      "src/HandlerStack.php",
+      "src/ClientInterface.php",
+      "src/Handler/CurlFactoryInterface.php"
+    ],
+    "latency_s": 0.0964251669938676
+  },
+  {
+    "id": "vgz02",
+    "q": "Where is Guzzle's HandlerStack defined?",
+    "gt": [
+      "src/HandlerStack.php"
+    ],
+    "ranked_files": [
+      "src/HandlerStack.php",
+      "src/Handler/MockHandler.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/Handler/CurlShareHandleState.php",
+      "src/RequestOptions.php",
+      "src/Exception/HandlerClosedException.php",
+      "src/Exception/GuzzleException.php"
+    ],
+    "latency_s": 0.09929933300008997
+  },
+  {
+    "id": "vgz03",
+    "q": "Where is Guzzle's Middleware defined?",
+    "gt": [
+      "src/Middleware.php"
+    ],
+    "ranked_files": [
+      "src/RedirectMiddleware.php",
+      "src/Middleware.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/HandlerStack.php",
+      "src/RequestOptions.php",
+      "src/Exception/TooManyRedirectsException.php"
+    ],
+    "latency_s": 0.10147012502420694
+  },
+  {
+    "id": "vgz04",
+    "q": "Where is Guzzle's Pool defined?",
+    "gt": [
+      "src/Pool.php"
+    ],
+    "ranked_files": [
+      "src/RequestOptions.php",
+      "src/Pool.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/RedirectMiddleware.php",
+      "src/Handler/CurlFactoryInterface.php",
+      "src/AuthMiddleware.php",
+      "src/Handler/CurlShareHandleState.php"
+    ],
+    "latency_s": 0.09632812498603016
+  },
+  {
+    "id": "vgz05",
+    "q": "Where is Guzzle's RedirectMiddleware defined?",
+    "gt": [
+      "src/RedirectMiddleware.php"
+    ],
+    "ranked_files": [
+      "src/RedirectMiddleware.php",
+      "src/Middleware.php",
+      "src/RequestOptions.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/Handler/CurlFactoryInterface.php",
+      "src/Exception/TooManyRedirectsException.php",
+      "src/RetryMiddleware.php"
+    ],
+    "latency_s": 0.09494362500845455
+  },
+  {
+    "id": "vgz06",
+    "q": "Where is Guzzle's RetryMiddleware defined?",
+    "gt": [
+      "src/RetryMiddleware.php"
+    ],
+    "ranked_files": [
+      "src/RetryMiddleware.php",
+      "src/Middleware.php",
+      "src/RedirectMiddleware.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/RequestOptions.php",
+      "src/AuthMiddleware.php",
+      "src/Exception/GuzzleException.php"
+    ],
+    "latency_s": 0.1056554579990916
+  },
+  {
+    "id": "vgz07",
+    "q": "Where is Guzzle's CookieJar defined?",
+    "gt": [
+      "src/Cookie/CookieJar.php"
+    ],
+    "ranked_files": [
+      "src/Cookie/CookieJar.php",
+      "src/Middleware.php",
+      "src/Cookie/FileCookieJar.php",
+      "src/Cookie/SessionCookieJar.php",
+      "src/RequestOptions.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/RedirectMiddleware.php"
+    ],
+    "latency_s": 0.0991093750053551
+  },
+  {
+    "id": "vgz08",
+    "q": "Where is Guzzle's CurlHandler defined?",
+    "gt": [
+      "src/Handler/CurlHandler.php"
+    ],
+    "ranked_files": [
+      "src/Handler/CurlHandler.php",
+      "src/Utils.php",
+      "src/Handler/CurlFactoryInterface.php",
+      "src/Handler/CurlVersion.php",
+      "src/Handler/EasyHandle.php",
+      "src/Handler/CurlShareHandleState.php",
+      "src/RequestOptions.php",
+      "src/Handler/CurlMultiHandler.php"
+    ],
+    "latency_s": 0.08847862499533221
+  },
+  {
+    "id": "vgz09",
+    "q": "Where is Guzzle's StreamHandler defined?",
+    "gt": [
+      "src/Handler/StreamHandler.php"
+    ],
+    "ranked_files": [
+      "src/Utils.php",
+      "src/Handler/StreamHandler.php",
+      "src/RedirectMiddleware.php",
+      "src/HandlerStack.php",
+      "src/RequestOptions.php",
+      "src/Exception/InvalidArgumentException.php"
+    ],
+    "latency_s": 0.09123862499836832
+  },
+  {
+    "id": "vgz10",
+    "q": "Where is Guzzle's RequestException defined?",
+    "gt": [
+      "src/Exception/RequestException.php"
+    ],
+    "ranked_files": [
+      "src/RequestOptions.php",
+      "src/Exception/RequestException.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/Handler/HostValidator.php",
+      "src/Client.php",
+      "src/Handler/RequestFraming.php",
+      "src/Exception/ResponseException.php",
+      "src/Handler/CurlFactory.php"
+    ],
+    "latency_s": 0.0971023750025779
+  },
+  {
+    "id": "vgz11",
+    "q": "Where is Guzzle's MessageFormatter defined?",
+    "gt": [
+      "src/MessageFormatter.php"
+    ],
+    "ranked_files": [
+      "src/MessageFormatter.php",
+      "src/RequestOptions.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/RedirectMiddleware.php",
+      "src/HandlerStack.php",
+      "src/Exception/GuzzleException.php",
+      "src/AuthMiddleware.php"
+    ],
+    "latency_s": 0.10034062500926666
+  },
+  {
+    "id": "vgz12",
+    "q": "Where is Guzzle's PrepareBodyMiddleware defined?",
+    "gt": [
+      "src/PrepareBodyMiddleware.php"
+    ],
+    "ranked_files": [
+      "src/PrepareBodyMiddleware.php",
+      "src/Middleware.php",
+      "src/RedirectMiddleware.php",
+      "src/RequestOptions.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/HandlerStack.php",
+      "src/AuthMiddleware.php"
+    ],
+    "latency_s": 0.09775137499673292
+  },
+  {
+    "id": "vgz13",
+    "q": "Where is Guzzle's ClientInterface defined?",
+    "gt": [
+      "src/ClientInterface.php"
+    ],
+    "ranked_files": [
+      "src/RequestOptions.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/ClientInterface.php",
+      "src/Client.php",
+      "src/Utils.php",
+      "src/Handler/CurlFactoryInterface.php",
+      "src/HandlerStack.php",
+      "src/RedirectMiddleware.php"
+    ],
+    "latency_s": 0.0916110830148682
+  },
+  {
+    "id": "vgz14",
+    "q": "Where is Guzzle's Idn defined?",
+    "gt": [
+      "src/Idn.php"
+    ],
+    "ranked_files": [
+      "src/Idn.php",
+      "src/Exception/InvalidArgumentException.php",
+      "src/RequestOptions.php",
+      "src/Handler/CurlShareHandleState.php",
+      "src/RedirectMiddleware.php",
+      "src/ClientInterface.php",
+      "src/HostIdentity.php"
+    ],
+    "latency_s": 0.10667025001021102
+  },
+  {
+    "id": "vgz15",
+    "q": "Where is Guzzle's Utils defined?",
+    "gt": [
+      "src/Utils.php"
+    ],
+    "ranked_files": [
+      "src/Exception/InvalidArgumentException.php",
+      "src/RequestOptions.php",
+      "src/Utils.php",
+      "src/RedirectMiddleware.php",
+      "src/HandlerStack.php",
+      "src/Handler/CurlFactoryInterface.php"
+    ],
+    "latency_s": 0.09516887500649318
+  }
+]

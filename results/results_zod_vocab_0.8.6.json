@@ -1,0 +1,266 @@
+[
+  {
+    "id": "vts01",
+    "q": "Where is zod's _parse defined?",
+    "gt": [
+      "packages/zod/src/v4/core/parse.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/parse.ts",
+      "packages/zod/src/v4/core/schemas.ts",
+      "packages/zod/src/v4/classic/parse.ts",
+      "packages/zod/src/v4/classic/schemas.ts",
+      "packages/resolution/src/index.ts",
+      "packages/zod/src/v4/mini/schemas.ts",
+      "packages/treeshake/zod-mini-simple-object.ts",
+      "packages/zod/src/v3/ZodError.ts"
+    ],
+    "latency_s": 0.10571404101210646
+  },
+  {
+    "id": "vts02",
+    "q": "Where is zod's $ZodType defined?",
+    "gt": [
+      "packages/zod/src/v4/core/schemas.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/schemas.ts",
+      "play.ts",
+      "packages/treeshake/zod-full.ts",
+      "packages/treeshake/zod-boolean.ts",
+      "packages/zod/src/v4/core/api.ts",
+      "packages/treeshake/zod-object.ts",
+      "packages/treeshake/zod-string.ts",
+      "packages/treeshake/zod-mini-boolean.ts",
+      "packages/treeshake/zod-mini-object.ts"
+    ],
+    "latency_s": 0.09913008401053958
+  },
+  {
+    "id": "vts03",
+    "q": "Where is zod's $ZodCheck defined?",
+    "gt": [
+      "packages/zod/src/v4/core/checks.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/checks.ts",
+      "packages/zod/src/v4/core/schemas.ts",
+      "packages/zod/src/v4/core/api.ts",
+      "packages/zod/src/v4/mini/schemas.ts",
+      "packages/zod/src/v4/classic/schemas.ts",
+      "packages/zod/src/v4/core/errors.ts"
+    ],
+    "latency_s": 0.19103387498762459
+  },
+  {
+    "id": "vts04",
+    "q": "Where is zod's $ZodIssueBase defined?",
+    "gt": [
+      "packages/zod/src/v4/core/errors.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v3/ZodError.ts",
+      "packages/zod/src/v4/core/errors.ts",
+      "packages/zod/src/v4/core/api.ts",
+      "packages/zod/src/v4/core/schemas.ts",
+      "packages/treeshake/zod-mini-simple-object.ts",
+      "packages/zod/src/v4/core/zsf.ts"
+    ],
+    "latency_s": 0.10353370901430026
+  },
+  {
+    "id": "vts05",
+    "q": "Where is zod's globalRegistry defined?",
+    "gt": [
+      "packages/zod/src/v4/core/registries.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/registries.ts",
+      "packages/zod/src/v4/core/core.ts",
+      "packages/zod/src/v4/core/api.ts",
+      "packages/treeshake/zod-full.ts",
+      "packages/treeshake/zod-object.ts",
+      "packages/treeshake/zod-boolean.ts",
+      "packages/treeshake/zod-string.ts",
+      "packages/treeshake/zod-mini-simple-object.ts"
+    ],
+    "latency_s": 0.10030937500414439
+  },
+  {
+    "id": "vts06",
+    "q": "Where is zod's uuid defined?",
+    "gt": [
+      "packages/zod/src/v4/core/regexes.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/mini/schemas.ts",
+      "packages/zod/src/v4/core/api.ts",
+      "packages/zod/src/v4/classic/schemas.ts",
+      "packages/zod/src/v4/core/schemas.ts",
+      "packages/treeshake/zod-mini-simple-object.ts",
+      "packages/zod/src/v4/core/regexes.ts"
+    ],
+    "latency_s": 0.09074862499255687
+  },
+  {
+    "id": "vts07",
+    "q": "Where is zod's JSONSchemaGenerator defined?",
+    "gt": [
+      "packages/zod/src/v4/core/json-schema-generator.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/json-schema-generator.ts",
+      "packages/zod/src/v4/classic/schemas.ts",
+      "packages/zod/src/v4/core/index.ts",
+      "packages/zod/src/v4/classic/from-json-schema.ts",
+      "play.ts",
+      "packages/treeshake/zod-string.ts",
+      "packages/treeshake/zod-object.ts",
+      "packages/treeshake/zod-full.ts"
+    ],
+    "latency_s": 0.10069749999092892
+  },
+  {
+    "id": "vts08",
+    "q": "Where is zod's StandardSchemaV1 defined?",
+    "gt": [
+      "packages/zod/src/v4/core/standard-schema.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v3/standard-schema.ts",
+      "packages/zod/src/v4/core/schemas.ts",
+      "packages/zod/src/v4/core/standard-schema.ts",
+      "packages/zod/src/v4/classic/schemas.ts",
+      "packages/zod/src/v4/mini/schemas.ts",
+      "packages/zod/src/v4/core/errors.ts"
+    ],
+    "latency_s": 0.10672629199689254
+  },
+  {
+    "id": "vts09",
+    "q": "Where is zod's string defined?",
+    "gt": [
+      "packages/zod/src/v4/classic/coerce.ts"
+    ],
+    "ranked_files": [
+      "packages/treeshake/zod-string.ts",
+      "packages/zod/src/v4/core/core.ts",
+      "packages/zod/src/v3/ZodError.ts",
+      "packages/treeshake/zod-mini-string.ts",
+      "packages/treeshake/zod-mini-simple-object.ts",
+      "packages/treeshake/zod3-string.ts",
+      "packages/treeshake/valibot-string.ts",
+      "packages/zod/src/v4/core/schemas.ts"
+    ],
+    "latency_s": 0.08507270799600519
+  },
+  {
+    "id": "vts10",
+    "q": "Where is zod's datetime defined?",
+    "gt": [
+      "packages/zod/src/v4/classic/iso.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/classic/iso.ts",
+      "packages/zod/src/v4/mini/iso.ts",
+      "packages/zod/src/v4/core/schemas.ts",
+      "packages/zod/src/v3/benchmarks/datetime.ts",
+      "packages/zod/src/v4/classic/schemas.ts",
+      "packages/zod/src/v4/core/api.ts",
+      "packages/zod/src/v4/core/regexes.ts",
+      "packages/zod/src/v3/ZodError.ts"
+    ],
+    "latency_s": 0.0959493330155965
+  },
+  {
+    "id": "vts11",
+    "q": "Where is zod's ZodString defined?",
+    "gt": [
+      "packages/zod/src/v4/classic/schemas.ts"
+    ],
+    "ranked_files": [
+      "packages/treeshake/zod-string.ts",
+      "packages/treeshake/zod-object.ts",
+      "packages/treeshake/zod-full.ts",
+      "packages/treeshake/zod-boolean.ts",
+      "packages/treeshake/zod-mini-simple-object.ts",
+      "packages/zod/src/v4/mini/schemas.ts",
+      "packages/treeshake/zod-mini-string.ts",
+      "packages/treeshake/zod3-string.ts",
+      "packages/treeshake/zod-mini-object.ts",
+      "packages/treeshake/zod3-full.ts"
+    ],
+    "latency_s": 0.10551420800038613
+  },
+  {
+    "id": "vts12",
+    "q": "Where is zod's fromJSONSchema defined?",
+    "gt": [
+      "packages/zod/src/v4/classic/from-json-schema.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/classic/from-json-schema.ts",
+      "packages/zod/src/v4/classic/schemas.ts",
+      "play.ts",
+      "packages/treeshake/zod-string.ts",
+      "packages/treeshake/zod-object.ts",
+      "packages/treeshake/zod-full.ts",
+      "packages/treeshake/zod-boolean.ts",
+      "packages/treeshake/zod-mini-boolean.ts"
+    ],
+    "latency_s": 0.08644595800433308
+  },
+  {
+    "id": "vts13",
+    "q": "Where is zod's globalConfig defined?",
+    "gt": [
+      "packages/zod/src/v4/core/config.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/config.ts",
+      "packages/zod/src/v4/core/core.ts",
+      "packages/zod/src/v4/classic/schemas.ts",
+      "packages/zod/src/v4/core/registries.ts",
+      "play.ts",
+      "packages/treeshake/zod-object.ts",
+      "packages/treeshake/zod-string.ts"
+    ],
+    "latency_s": 0.0847729170054663
+  },
+  {
+    "id": "vts14",
+    "q": "Where is zod's assertEqual defined?",
+    "gt": [
+      "packages/zod/src/v4/core/util.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/util.ts",
+      "packages/zod/src/v3/helpers/util.ts",
+      "packages/zod/src/v4/core/checks.ts",
+      "play.ts",
+      "packages/treeshake/zod-boolean.ts",
+      "packages/treeshake/zod-object.ts",
+      "packages/zod/src/v4/core/api.ts"
+    ],
+    "latency_s": 0.09263954201014712
+  },
+  {
+    "id": "vts15",
+    "q": "Where is zod's export defined?",
+    "gt": [
+      "packages/zod/src/v4/classic/external.ts"
+    ],
+    "ranked_files": [
+      "packages/zod/src/v4/core/schemas.ts",
+      "packages/zod/src/v3/helpers/errorUtil.ts",
+      "play.ts",
+      "packages/zod/src/v4/core/api.ts",
+      "packages/treeshake/zod-object.ts",
+      "packages/treeshake/zod-full.ts",
+      "packages/zod/src/v3/helpers/enumUtil.ts",
+      "packages/treeshake/zod-string.ts",
+      "packages/treeshake/zod-boolean.ts"
+    ],
+    "latency_s": 0.09445479200803675
+  }
+]

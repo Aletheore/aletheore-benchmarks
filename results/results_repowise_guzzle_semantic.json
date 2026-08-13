@@ -1,0 +1,273 @@
+[
+  {
+    "id": "gz01",
+    "q": "Where is the object you call to actually send an HTTP request?",
+    "gt": [
+      "src/Client.php"
+    ],
+    "ranked_files": [
+      "src/AuthMiddleware.php",
+      "src/HandlerStack.php",
+      "src/Handler/ProxyEnv.php",
+      "src/Exception/RequestException.php",
+      "src/Middleware.php",
+      "src/RequestOptions.php",
+      "src/Utils.php",
+      "src/Client.php",
+      "src/Handler/RequestFraming.php"
+    ],
+    "latency_s": 4.140047792025143
+  },
+  {
+    "id": "gz02",
+    "q": "How are the layers wrapped around whatever finally performs the transfer?",
+    "gt": [
+      "src/HandlerStack.php"
+    ],
+    "ranked_files": [
+      "src/Handler/CurlMultiHandler.php",
+      "src/Handler/CurlHandler.php",
+      "src/TransferStats.php",
+      "onboarding/how_it_works",
+      "layer:application",
+      "src/RequestOptions.php",
+      "src/TransportSharing.php",
+      "src/Handler/TransferByteCounter.php"
+    ],
+    "latency_s": 4.369687250000425
+  },
+  {
+    "id": "gz03",
+    "q": "Where are the ready-made layers such as history and mapping defined together?",
+    "gt": [
+      "src/Middleware.php"
+    ],
+    "ranked_files": [
+      "onboarding/guided_tour",
+      "layer:application",
+      "onboarding/how_it_works",
+      "src/Env.php",
+      "onboarding/codebase_map",
+      "src/HostIdentity.php",
+      "src/Handler/RequestFraming.php",
+      "onboarding/key_concepts",
+      "src/Handler/CurlVersion.php",
+      "src/Handler/CurlMultiHandler.php"
+    ],
+    "latency_s": 4.166294125025161
+  },
+  {
+    "id": "gz04",
+    "q": "How are many requests sent at once with a limit on concurrency?",
+    "gt": [
+      "src/Pool.php"
+    ],
+    "ranked_files": [
+      "src/Handler/CurlHandler.php",
+      "src/Pool.php",
+      "src/Handler/CurlMultiHandler.php",
+      "src/Handler/DeadlineSourceStream.php",
+      "src/RequestOptions.php",
+      "src/AuthMiddleware.php",
+      "src/Multiplexing.php"
+    ],
+    "latency_s": 4.0638335830008145
+  },
+  {
+    "id": "gz05",
+    "q": "Where does the client follow a response that points somewhere else?",
+    "gt": [
+      "src/RedirectMiddleware.php"
+    ],
+    "ranked_files": [
+      "src/Pool.php",
+      "src/AuthMiddleware.php",
+      "src/Handler/HeaderProcessor.php",
+      "src/Exception/ResponseTransferException.php",
+      "src/Client.php",
+      "src/ClientTrait.php",
+      "src/ClientInterface.php",
+      "src/Exception/ResponseException.php",
+      "src/Handler/EasyHandle.php"
+    ],
+    "latency_s": 4.024088542006211
+  },
+  {
+    "id": "gz06",
+    "q": "Where is the policy for attempting a failed transfer again?",
+    "gt": [
+      "src/RetryMiddleware.php"
+    ],
+    "ranked_files": [
+      "src/Handler/CurlHandler.php",
+      "src/Exception/TransferException.php",
+      "src/RetryMiddleware.php",
+      "src/Handler/CurlMultiHandler.php",
+      "src/AuthMiddleware.php",
+      "src/Exception/ResponseTransferException.php",
+      "src/Exception/NetworkException.php"
+    ],
+    "latency_s": 3.9488273749884684
+  },
+  {
+    "id": "gz07",
+    "q": "Where is state kept between calls so the server can recognise the caller?",
+    "gt": [
+      "src/Cookie/CookieJar.php"
+    ],
+    "ranked_files": [
+      "src/Client.php",
+      "src/Handler/HostValidator.php",
+      "src/Cookie/SessionCookieJar.php",
+      "src/HostIdentity.php",
+      "src/Handler/DeadlineSourceStream.php",
+      "src/Pool.php",
+      "src/AuthMiddleware.php",
+      "src/RetryMiddleware.php"
+    ],
+    "latency_s": 4.189857959019719
+  },
+  {
+    "id": "gz08",
+    "q": "Where is the native transfer library actually invoked?",
+    "gt": [
+      "src/Handler/CurlHandler.php"
+    ],
+    "ranked_files": [
+      "src/Handler/CurlHandler.php",
+      "src/TransferStats.php",
+      "src/Handler/TransferByteCounter.php",
+      "src/Handler/ProxyEnv.php",
+      "src/TransportSharing.php",
+      "src/Handler/CurlMultiHandler.php"
+    ],
+    "latency_s": 5.052493875002256
+  },
+  {
+    "id": "gz09",
+    "q": "Where is the fallback transport that avoids the native extension?",
+    "gt": [
+      "src/Handler/StreamHandler.php"
+    ],
+    "ranked_files": [
+      "src/Handler/CurlHandler.php",
+      "src/TransportSharing.php",
+      "src/Handler/CurlMultiHandler.php",
+      "src/Handler/ProxyEnv.php",
+      "layer:application",
+      "src/Handler/CurlShareHandleState.php"
+    ],
+    "latency_s": 5.5743404169916175
+  },
+  {
+    "id": "gz10",
+    "q": "Where is the failure type that carries both what was asked and what came back?",
+    "gt": [
+      "src/Exception/RequestException.php"
+    ],
+    "ranked_files": [
+      "src/Handler/DeadlineSourceStream.php",
+      "src/Exception/ResponseTransferException.php",
+      "src/Handler/CurlMultiHandler.php",
+      "src/BodySummarizerInterface.php",
+      "src/RequestOptions.php",
+      "src/Handler/CurlShareHandleState.php",
+      "src/Exception/RequestException.php",
+      "src/Exception/ResponseException.php",
+      "src/Handler/HeaderProcessor.php",
+      "src/ProxyOptions.php"
+    ],
+    "latency_s": 8.279981500003487
+  },
+  {
+    "id": "gz11",
+    "q": "How is a log line built from a request and its response?",
+    "gt": [
+      "src/MessageFormatter.php"
+    ],
+    "ranked_files": [
+      "src/Handler/DeadlineSourceStream.php",
+      "src/Exception/RequestException.php",
+      "src/Handler/HeaderProcessor.php",
+      "src/RequestOptions.php",
+      "src/AuthMiddleware.php",
+      "src/Pool.php",
+      "src/Exception/ResponseTransferException.php",
+      "src/Exception/ResponseException.php",
+      "src/Handler/EasyHandle.php"
+    ],
+    "latency_s": 5.048353333986597
+  },
+  {
+    "id": "gz12",
+    "q": "Where are the headers describing the payload filled in automatically?",
+    "gt": [
+      "src/PrepareBodyMiddleware.php"
+    ],
+    "ranked_files": [
+      "src/AuthMiddleware.php",
+      "src/Handler/HeaderProcessor.php",
+      "src/RequestOptions.php",
+      "src/PrepareBodyMiddleware.php",
+      "src/Handler/EncodedBodyStream.php",
+      "src/TransportSharing.php",
+      "src/Handler/RequestFraming.php",
+      "onboarding/how_it_works",
+      "src/Pool.php"
+    ],
+    "latency_s": 4.837502750015119
+  },
+  {
+    "id": "gz13",
+    "q": "Where is the contract that describes what a caller can rely on?",
+    "gt": [
+      "src/ClientInterface.php"
+    ],
+    "ranked_files": [
+      "src/ClientInterface.php",
+      "src/Pool.php",
+      "src/RequestOptions.php",
+      "src/Exception/RequestException.php",
+      "src/TransportSharing.php",
+      "src/HostIdentity.php",
+      "src/TransferStats.php",
+      "src/Handler/HostValidator.php"
+    ],
+    "latency_s": 5.785325750010088
+  },
+  {
+    "id": "gz14",
+    "q": "Where are non-ascii domain names converted to their encoded form?",
+    "gt": [
+      "src/Idn.php"
+    ],
+    "ranked_files": [
+      "src/HostIdentity.php",
+      "src/Cookie/SetCookie.php",
+      "src/Handler/HostValidator.php",
+      "src/Idn.php",
+      "src/ProxyOptions.php",
+      "src/Handler/ProxyEnv.php",
+      "src/Handler/HeaderProcessor.php"
+    ],
+    "latency_s": 5.235016874998109
+  },
+  {
+    "id": "gz15",
+    "q": "Where are the shared helper routines the rest of the package reuses?",
+    "gt": [
+      "src/Utils.php"
+    ],
+    "ranked_files": [
+      "src/TransportSharing.php",
+      "src/Handler/CurlShareHandleState.php",
+      "src/Handler/CurlHandler.php",
+      "src/Handler/CurlVersion.php",
+      "src/Handler/CurlFactoryInterface.php",
+      "scc-51",
+      "src/Handler/EasyHandle.php",
+      "src/Handler/CurlFactory.php"
+    ],
+    "latency_s": 4.60033737498452
+  }
+]

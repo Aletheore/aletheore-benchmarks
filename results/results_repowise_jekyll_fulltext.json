@@ -1,0 +1,294 @@
+[
+  {
+    "id": "rb01",
+    "q": "Where is the central object that holds everything about the build and drives it?",
+    "gt": [
+      "lib/jekyll/site.rb"
+    ],
+    "ranked_files": [
+      "onboarding/key_concepts",
+      "lib/jekyll/reader.rb",
+      "layer:service",
+      "onboarding/codebase_map",
+      "test",
+      "onboarding/guided_tour",
+      "lib/jekyll/readers/data_reader.rb",
+      "test/test_excerpt.rb",
+      "test/test_page_without_a_file.rb",
+      "features/support/helpers.rb"
+    ],
+    "latency_s": 2.294035625003744
+  },
+  {
+    "id": "rb02",
+    "q": "Where is a single piece of authored content with front matter represented?",
+    "gt": [
+      "lib/jekyll/document.rb"
+    ],
+    "ranked_files": [
+      "rw-jekyll",
+      "lib/jekyll/convertible.rb",
+      "lib/jekyll/utils.rb",
+      "test/test_convertible.rb",
+      "lib/jekyll/document.rb",
+      "onboarding/guided_tour",
+      "lib/jekyll/page.rb",
+      "test/test_front_matter_defaults.rb",
+      "lib/jekyll/layout.rb",
+      "lib/jekyll/excerpt.rb"
+    ],
+    "latency_s": 2.1000721250020433
+  },
+  {
+    "id": "rb03",
+    "q": "How are related pieces of content grouped and read in together?",
+    "gt": [
+      "lib/jekyll/collection.rb"
+    ],
+    "ranked_files": [
+      "rw-jekyll",
+      "lib/jekyll/filters.rb",
+      "lib/jekyll/commands/serve/servlet.rb",
+      "test/test_collections.rb",
+      "onboarding/how_it_works",
+      "lib/jekyll/filters/grouping_filters.rb",
+      "onboarding/guided_tour",
+      "test/test_related_posts.rb",
+      "lib/jekyll/document.rb",
+      "lib/jekyll/related_posts.rb"
+    ],
+    "latency_s": 1.9887757500109728
+  },
+  {
+    "id": "rb04",
+    "q": "Where does a piece of content get turned into its final output text?",
+    "gt": [
+      "lib/jekyll/renderer.rb"
+    ],
+    "ranked_files": [
+      "onboarding/guided_tour",
+      "onboarding/key_concepts",
+      "lib/jekyll/commands/serve/websockets.rb",
+      "lib/jekyll/commands/serve/servlet.rb",
+      "lib/jekyll/filters.rb",
+      "lib/jekyll/converters/smartypants.rb",
+      "test/test_tag_highlight.rb",
+      "lib/jekyll/converter.rb",
+      "test/helper.rb"
+    ],
+    "latency_s": 1.8487688340246677
+  },
+  {
+    "id": "rb05",
+    "q": "Where is the reusable wrapper that surrounds rendered content represented?",
+    "gt": [
+      "lib/jekyll/layout.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/filters.rb",
+      "rw-jekyll",
+      "test/helper.rb",
+      "lib/jekyll/liquid_renderer/file.rb",
+      "lib/jekyll/liquid_renderer.rb",
+      "lib/jekyll/excerpt.rb",
+      "benchmark/parse-include-tag-params.rb",
+      "onboarding/how_it_works",
+      "test/test_document.rb",
+      "benchmark/conditional_liquid.rb"
+    ],
+    "latency_s": 1.87168737500906
+  },
+  {
+    "id": "rb06",
+    "q": "Where is the contract for turning one markup language into another defined?",
+    "gt": [
+      "lib/jekyll/converter.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/tags/highlight.rb",
+      "test/test_tag_highlight.rb",
+      "test/test_kramdown.rb",
+      "test/test_liquid_extensions.rb",
+      "test/source",
+      "benchmark/capture-assign.rb",
+      "lib/jekyll/errors.rb",
+      "layer:docs-tooling",
+      "benchmark/parse-include-tag-params.rb",
+      "layer:utility"
+    ],
+    "latency_s": 2.0135490839893464
+  },
+  {
+    "id": "rb07",
+    "q": "What walks the source directory and loads everything found there?",
+    "gt": [
+      "lib/jekyll/reader.rb"
+    ],
+    "ranked_files": [
+      "features/support/helpers.rb",
+      "lib/jekyll/regenerator.rb",
+      "script/rubies",
+      "lib/jekyll/generator.rb",
+      "onboarding/how_it_works",
+      "onboarding/key_concepts",
+      "onboarding/guided_tour",
+      "lib/jekyll/liquid_extensions.rb",
+      "lib/jekyll/readers/theme_assets_reader.rb",
+      "test/source/_plugins/custom_block.rb"
+    ],
+    "latency_s": 1.9377636249992065
+  },
+  {
+    "id": "rb08",
+    "q": "How are stale files removed from the destination before or after a build?",
+    "gt": [
+      "lib/jekyll/cleaner.rb"
+    ],
+    "ranked_files": [
+      "test/helper.rb",
+      "script/profile-docs",
+      "lib/jekyll/static_file.rb",
+      "test/test_cleaner.rb",
+      "script/test",
+      "script/travis",
+      "test/test_static_file.rb",
+      "test/test_regenerator.rb",
+      "test/test_page_without_a_file.rb",
+      "lib/jekyll/commands/serve.rb"
+    ],
+    "latency_s": 2.072366584005067
+  },
+  {
+    "id": "rb09",
+    "q": "Where are user settings merged with the defaults and normalised?",
+    "gt": [
+      "lib/jekyll/configuration.rb"
+    ],
+    "ranked_files": [
+      "test/helper.rb",
+      "lib/jekyll.rb",
+      "test/test_theme_data_reader.rb",
+      "script/travis"
+    ],
+    "latency_s": 2.4347381249826867
+  },
+  {
+    "id": "rb10",
+    "q": "Where is a standalone document that is not part of a series represented?",
+    "gt": [
+      "lib/jekyll/page.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/filters.rb",
+      "rw-jekyll",
+      "onboarding/how_it_works",
+      "layer:cli",
+      "lib/jekyll/excerpt.rb",
+      "test/test_url.rb",
+      "benchmark/string-replacement",
+      "test/test_drop.rb",
+      "test/test_front_matter_defaults.rb",
+      "test/test_tag_highlight.rb"
+    ],
+    "latency_s": 2.238778166996781
+  },
+  {
+    "id": "rb11",
+    "q": "How is an asset that is copied across untouched handled?",
+    "gt": [
+      "lib/jekyll/static_file.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/static_file.rb",
+      "lib/jekyll/readers/theme_assets_reader.rb",
+      "rw-jekyll",
+      "lib/jekyll/commands/serve/websockets.rb",
+      "test/test_theme_assets_reader.rb",
+      "test/helper.rb",
+      "lib/jekyll/cache.rb",
+      "lib/jekyll/document.rb",
+      "test/test_log_adapter.rb"
+    ],
+    "latency_s": 1.9694510409899522
+  },
+  {
+    "id": "rb12",
+    "q": "How does the build decide which files actually need rebuilding?",
+    "gt": [
+      "lib/jekyll/regenerator.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/related_posts.rb",
+      "test/test_convertible.rb",
+      "lib/jekyll/readers/post_reader.rb",
+      "script/rubies",
+      "lib/jekyll/commands/serve/servlet.rb",
+      "lib/jekyll/utils/internet.rb",
+      "script/stackprof",
+      "lib/jekyll/utils/thread_event.rb",
+      "benchmark/file-dir-ensure-trailing-slash",
+      "lib/jekyll/entry_filter.rb"
+    ],
+    "latency_s": 1.798241082986351
+  },
+  {
+    "id": "rb13",
+    "q": "Where is an installed appearance package located and its directories resolved?",
+    "gt": [
+      "lib/jekyll/theme.rb"
+    ],
+    "ranked_files": [
+      ".devcontainer/Dockerfile",
+      "lib/jekyll/layout.rb",
+      "lib/jekyll/theme.rb",
+      "test/helper.rb",
+      "lib/jekyll/filters.rb",
+      "script/cucumber",
+      "lib/jekyll/cleaner.rb",
+      "lib/jekyll/readers/post_reader.rb",
+      "lib/jekyll/static_file.rb",
+      "test/test_entry_filter.rb"
+    ],
+    "latency_s": 1.6791930829931516
+  },
+  {
+    "id": "rb14",
+    "q": "How are third-party extensions discovered and loaded at startup?",
+    "gt": [
+      "lib/jekyll/plugin_manager.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/converters/markdown.rb",
+      "layer:service",
+      "lib/jekyll.rb",
+      "test/test_commands_serve.rb",
+      "lib/jekyll/hooks.rb",
+      "layer:config",
+      "benchmark/regexp-vs-include.rb",
+      "rw-jekyll",
+      "test/test_configuration.rb",
+      "lib/jekyll/plugin_manager.rb"
+    ],
+    "latency_s": 1.9929836670053191
+  },
+  {
+    "id": "rb15",
+    "q": "Where is the template engine invoked and its timings recorded?",
+    "gt": [
+      "lib/jekyll/liquid_renderer.rb"
+    ],
+    "ranked_files": [
+      "features/support/formatter.rb",
+      "lib/jekyll/regenerator.rb",
+      "lib/jekyll/profiler.rb",
+      "lib/jekyll/utils/exec.rb",
+      "layer:application",
+      "lib/jekyll/drops/site_drop.rb",
+      "lib/jekyll/liquid_renderer.rb",
+      "lib/jekyll/filters.rb",
+      "lib/jekyll/hooks.rb",
+      "lib/jekyll/utils/win_tz.rb"
+    ],
+    "latency_s": 1.9959601250011474
+  }
+]

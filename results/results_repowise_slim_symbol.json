@@ -1,0 +1,138 @@
+[
+  {
+    "id": "php01",
+    "q": "Where is the central application object that ties routing and middleware together?",
+    "gt": [
+      "Slim/App.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.527327082992997
+  },
+  {
+    "id": "php02",
+    "q": "How does a request pass through the chain of middleware before reaching a handler?",
+    "gt": [
+      "Slim/MiddlewareDispatcher.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.4894182499847375
+  },
+  {
+    "id": "php03",
+    "q": "Where are route definitions collected and stored before dispatch?",
+    "gt": [
+      "Slim/Routing/RouteCollector.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.6710407919890713
+  },
+  {
+    "id": "php04",
+    "q": "How is a callable given as a string turned into something invokable?",
+    "gt": [
+      "Slim/CallableResolver.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.540284332993906
+  },
+  {
+    "id": "php05",
+    "q": "Where is the finished response actually written back to the client?",
+    "gt": [
+      "Slim/ResponseEmitter.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.678413375018863
+  },
+  {
+    "id": "php06",
+    "q": "How are uncaught exceptions turned into an HTTP error response?",
+    "gt": [
+      "Slim/Handlers/ErrorHandler.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.5725143339950591
+  },
+  {
+    "id": "php07",
+    "q": "Where does the framework decide which error handler applies to a given exception type?",
+    "gt": [
+      "Slim/Middleware/ErrorMiddleware.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.6078283340029884
+  },
+  {
+    "id": "php08",
+    "q": "How is an incoming request body decoded based on its content type?",
+    "gt": [
+      "Slim/Middleware/BodyParsingMiddleware.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.4301412499917205
+  },
+  {
+    "id": "php09",
+    "q": "Where is a single matched route represented, along with its arguments and callable?",
+    "gt": [
+      "Slim/Routing/Route.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.753821541002253
+  },
+  {
+    "id": "php10",
+    "q": "How is a URL generated from a named route and its parameters?",
+    "gt": [
+      "Slim/Routing/RouteParser.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.5875788330158684
+  },
+  {
+    "id": "php11",
+    "q": "What provides the convenient constructor that wires up default dependencies?",
+    "gt": [
+      "Slim/Factory/AppFactory.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.4388411669933703
+  },
+  {
+    "id": "php12",
+    "q": "Where are grouped routes sharing a common path prefix declared?",
+    "gt": [
+      "Slim/Routing/RouteCollectorProxy.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.5704106249904726
+  },
+  {
+    "id": "php13",
+    "q": "How does the framework match an incoming path to a registered route?",
+    "gt": [
+      "Slim/Routing/RouteResolver.php",
+      "Slim/Routing/Dispatcher.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.6131445420032833
+  },
+  {
+    "id": "php14",
+    "q": "Where is the exception raised when no route matches the requested path?",
+    "gt": [
+      "Slim/Exception/HttpNotFoundException.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.590336708992254
+  },
+  {
+    "id": "php15",
+    "q": "How are the arguments for a matched route passed into the user's handler?",
+    "gt": [
+      "Slim/Handlers/Strategies/RequestResponse.php"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.6717961659887806
+  }
+]

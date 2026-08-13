@@ -1,0 +1,137 @@
+[
+  {
+    "id": "rb01",
+    "q": "Where is the central object that holds everything about the build and drives it?",
+    "gt": [
+      "lib/jekyll/site.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.012145207991125
+  },
+  {
+    "id": "rb02",
+    "q": "Where is a single piece of authored content with front matter represented?",
+    "gt": [
+      "lib/jekyll/document.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.022266749991104
+  },
+  {
+    "id": "rb03",
+    "q": "How are related pieces of content grouped and read in together?",
+    "gt": [
+      "lib/jekyll/collection.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.3638484999828506
+  },
+  {
+    "id": "rb04",
+    "q": "Where does a piece of content get turned into its final output text?",
+    "gt": [
+      "lib/jekyll/renderer.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.448840500001097
+  },
+  {
+    "id": "rb05",
+    "q": "Where is the reusable wrapper that surrounds rendered content represented?",
+    "gt": [
+      "lib/jekyll/layout.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.871448749996489
+  },
+  {
+    "id": "rb06",
+    "q": "Where is the contract for turning one markup language into another defined?",
+    "gt": [
+      "lib/jekyll/converter.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.2237497919995803
+  },
+  {
+    "id": "rb07",
+    "q": "What walks the source directory and loads everything found there?",
+    "gt": [
+      "lib/jekyll/reader.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.8845582919893786
+  },
+  {
+    "id": "rb08",
+    "q": "How are stale files removed from the destination before or after a build?",
+    "gt": [
+      "lib/jekyll/cleaner.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.9957541249750648
+  },
+  {
+    "id": "rb09",
+    "q": "Where are user settings merged with the defaults and normalised?",
+    "gt": [
+      "lib/jekyll/configuration.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.031530957989162
+  },
+  {
+    "id": "rb10",
+    "q": "Where is a standalone document that is not part of a series represented?",
+    "gt": [
+      "lib/jekyll/page.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.9758679590013344
+  },
+  {
+    "id": "rb11",
+    "q": "How is an asset that is copied across untouched handled?",
+    "gt": [
+      "lib/jekyll/static_file.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.189700916991569
+  },
+  {
+    "id": "rb12",
+    "q": "How does the build decide which files actually need rebuilding?",
+    "gt": [
+      "lib/jekyll/regenerator.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.1326305830152705
+  },
+  {
+    "id": "rb13",
+    "q": "Where is an installed appearance package located and its directories resolved?",
+    "gt": [
+      "lib/jekyll/theme.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.037589666986605
+  },
+  {
+    "id": "rb14",
+    "q": "How are third-party extensions discovered and loaded at startup?",
+    "gt": [
+      "lib/jekyll/plugin_manager.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.3645378749934025
+  },
+  {
+    "id": "rb15",
+    "q": "Where is the template engine invoked and its timings recorded?",
+    "gt": [
+      "lib/jekyll/liquid_renderer.rb"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.3374569159932435
+  }
+]

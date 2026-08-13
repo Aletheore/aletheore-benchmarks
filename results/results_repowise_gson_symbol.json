@@ -1,0 +1,137 @@
+[
+  {
+    "id": "java01",
+    "q": "Where is the main entry object that converts objects to and from their JSON form?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/Gson.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.174351374997059
+  },
+  {
+    "id": "java02",
+    "q": "How is the library configured before the converter is created?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/GsonBuilder.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.3910669579927344
+  },
+  {
+    "id": "java03",
+    "q": "Where is incoming text consumed one token at a time?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/stream/JsonReader.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.14369091700064
+  },
+  {
+    "id": "java04",
+    "q": "Where is output emitted incrementally rather than built up in memory?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/stream/JsonWriter.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.227511750010308
+  },
+  {
+    "id": "java05",
+    "q": "How does the library hold on to generic type information that erasure would otherwise discard?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/reflect/TypeToken.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.8838529589993414
+  },
+  {
+    "id": "java06",
+    "q": "Where is the contract a single type's converter has to implement?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/TypeAdapter.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.160205833002692
+  },
+  {
+    "id": "java07",
+    "q": "What decides at runtime whether it can supply a converter for a given type?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/TypeAdapterFactory.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.996784499991918
+  },
+  {
+    "id": "java08",
+    "q": "How are an object's declared fields matched up with names in the document?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.2139489999972284
+  },
+  {
+    "id": "java09",
+    "q": "Where is text turned into an in-memory tree instead of being bound to a class?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/JsonParser.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.9732334169966634
+  },
+  {
+    "id": "java10",
+    "q": "Where is a name-to-value mapping represented as a tree node?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/JsonObject.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.1643203329876997
+  },
+  {
+    "id": "java11",
+    "q": "How does the library decide that a field should be skipped entirely?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/Excluder.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.081636791001074
+  },
+  {
+    "id": "java12",
+    "q": "Where are the built-in conventions for translating field names to document keys?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/FieldNamingPolicy.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.0545451660000253
+  },
+  {
+    "id": "java13",
+    "q": "How is an instance created when the class has no accessible no-argument constructor?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.13183404202573
+  },
+  {
+    "id": "java14",
+    "q": "Where are lists and sets handled as a group rather than one class at a time?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/bind/CollectionTypeAdapterFactory.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.0724263329757378
+  },
+  {
+    "id": "java15",
+    "q": "How are fixed sets of named constants converted back and forth?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/bind/EnumTypeAdapter.java"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.2792316249979194
+  }
+]

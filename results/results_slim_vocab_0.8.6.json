@@ -1,0 +1,281 @@
+[
+  {
+    "id": "vphp01",
+    "q": "Where is Slim's App defined?",
+    "gt": [
+      "Slim/App.php"
+    ],
+    "ranked_files": [
+      "Slim/App.php",
+      "Slim/Factory/AppFactory.php",
+      "Slim/Factory/Psr17/SlimPsr17Factory.php",
+      "Slim/Factory/Psr17/GuzzlePsr17Factory.php",
+      "Slim/Factory/Psr17/LaminasDiactorosPsr17Factory.php",
+      "Slim/Factory/Psr17/HttpSoftPsr17Factory.php",
+      "Slim/Interfaces/RequestHandlerInvocationStrategyInterface.php",
+      "Slim/Exception/HttpNotImplementedException.php",
+      "Slim/Exception/HttpTooManyRequestsException.php"
+    ],
+    "latency_s": 0.08423945799586363
+  },
+  {
+    "id": "vphp02",
+    "q": "Where is Slim's handle defined?",
+    "gt": [
+      "Slim/MiddlewareDispatcher.php"
+    ],
+    "ranked_files": [
+      "Slim/MiddlewareDispatcher.php",
+      "Slim/Routing/RouteRunner.php",
+      "Slim/Factory/Psr17/SlimPsr17Factory.php",
+      "Slim/App.php",
+      "Slim/Interfaces/RequestHandlerInvocationStrategyInterface.php",
+      "Slim/Exception/HttpForbiddenException.php",
+      "Slim/Exception/HttpGoneException.php",
+      "Slim/Factory/Psr17/GuzzlePsr17Factory.php",
+      "Slim/Factory/Psr17/LaminasDiactorosPsr17Factory.php"
+    ],
+    "latency_s": 0.09359516599215567
+  },
+  {
+    "id": "vphp03",
+    "q": "Where is Slim's RouteCollector defined?",
+    "gt": [
+      "Slim/Routing/RouteCollector.php"
+    ],
+    "ranked_files": [
+      "Slim/Routing/Dispatcher.php",
+      "Slim/Routing/RouteParser.php",
+      "Slim/Factory/AppFactory.php",
+      "Slim/Routing/RouteCollector.php",
+      "Slim/Routing/RouteResolver.php",
+      "Slim/Routing/RouteCollectorProxy.php"
+    ],
+    "latency_s": 0.0887653749960009
+  },
+  {
+    "id": "vphp04",
+    "q": "Where is Slim's resolve defined?",
+    "gt": [
+      "Slim/CallableResolver.php"
+    ],
+    "ranked_files": [
+      "Slim/CallableResolver.php",
+      "Slim/Interfaces/CallableResolverInterface.php",
+      "Slim/Interfaces/AdvancedCallableResolverInterface.php",
+      "Slim/Factory/Psr17/SlimPsr17Factory.php",
+      "Slim/Factory/Psr17/LaminasDiactorosPsr17Factory.php",
+      "Slim/Factory/Psr17/HttpSoftPsr17Factory.php",
+      "Slim/Factory/Psr17/GuzzlePsr17Factory.php",
+      "Slim/Exception/HttpNotImplementedException.php"
+    ],
+    "latency_s": 0.10720362499705516
+  },
+  {
+    "id": "vphp05",
+    "q": "Where is Slim's emit defined?",
+    "gt": [
+      "Slim/ResponseEmitter.php"
+    ],
+    "ranked_files": [
+      "Slim/ResponseEmitter.php",
+      "Slim/Factory/Psr17/GuzzlePsr17Factory.php",
+      "Slim/Factory/Psr17/SlimPsr17Factory.php",
+      "Slim/Factory/Psr17/HttpSoftPsr17Factory.php",
+      "Slim/Factory/Psr17/LaminasDiactorosPsr17Factory.php",
+      "Slim/Exception/HttpNotImplementedException.php",
+      "Slim/Interfaces/RequestHandlerInvocationStrategyInterface.php",
+      "Slim/Exception/HttpUnauthorizedException.php",
+      "Slim/Exception/HttpNotFoundException.php"
+    ],
+    "latency_s": 0.13282125000841916
+  },
+  {
+    "id": "vphp06",
+    "q": "Where is Slim's ErrorHandler defined?",
+    "gt": [
+      "Slim/Handlers/ErrorHandler.php"
+    ],
+    "ranked_files": [
+      "Slim/Handlers/ErrorHandler.php",
+      "Slim/Middleware/ErrorMiddleware.php",
+      "Slim/Interfaces/ErrorRendererInterface.php",
+      "Slim/Interfaces/RequestHandlerInvocationStrategyInterface.php",
+      "Slim/Factory/Psr17/SlimPsr17Factory.php",
+      "Slim/Factory/Psr17/LaminasDiactorosPsr17Factory.php",
+      "Slim/Factory/Psr17/HttpSoftPsr17Factory.php",
+      "Slim/Factory/Psr17/GuzzlePsr17Factory.php"
+    ],
+    "latency_s": 0.0777500840194989
+  },
+  {
+    "id": "vphp07",
+    "q": "Where is Slim's ErrorMiddleware defined?",
+    "gt": [
+      "Slim/Middleware/ErrorMiddleware.php"
+    ],
+    "ranked_files": [
+      "Slim/Middleware/ErrorMiddleware.php",
+      "Slim/App.php",
+      "Slim/Exception/HttpNotImplementedException.php",
+      "Slim/Exception/HttpInternalServerErrorException.php",
+      "Slim/Exception/HttpTooManyRequestsException.php",
+      "Slim/Exception/HttpGoneException.php",
+      "Slim/Interfaces/ErrorRendererInterface.php",
+      "Slim/Interfaces/ErrorHandlerInterface.php",
+      "Slim/Exception/HttpForbiddenException.php"
+    ],
+    "latency_s": 0.09516637501656078
+  },
+  {
+    "id": "vphp08",
+    "q": "Where is Slim's BodyParsingMiddleware defined?",
+    "gt": [
+      "Slim/Middleware/BodyParsingMiddleware.php"
+    ],
+    "ranked_files": [
+      "Slim/Middleware/BodyParsingMiddleware.php",
+      "Slim/App.php",
+      "Slim/Factory/Psr17/SlimPsr17Factory.php",
+      "Slim/Factory/Psr17/GuzzlePsr17Factory.php",
+      "Slim/Factory/Psr17/LaminasDiactorosPsr17Factory.php",
+      "Slim/Factory/Psr17/HttpSoftPsr17Factory.php",
+      "Slim/Exception/HttpBadRequestException.php",
+      "Slim/Exception/HttpGoneException.php"
+    ],
+    "latency_s": 0.1123330409754999
+  },
+  {
+    "id": "vphp09",
+    "q": "Where is Slim's Route defined?",
+    "gt": [
+      "Slim/Routing/Route.php"
+    ],
+    "ranked_files": [
+      "Slim/Routing/RouteContext.php",
+      "Slim/Routing/Route.php",
+      "Slim/Routing/RouteResolver.php",
+      "Slim/Routing/RouteRunner.php",
+      "Slim/Middleware/RoutingMiddleware.php",
+      "Slim/Routing/RouteCollector.php",
+      "Slim/Routing/RouteParser.php",
+      "Slim/Routing/Dispatcher.php",
+      "Slim/Routing/RoutingResults.php",
+      "Slim/Routing/RouteCollectorProxy.php"
+    ],
+    "latency_s": 0.0956388339982368
+  },
+  {
+    "id": "vphp10",
+    "q": "Where is Slim's urlFor defined?",
+    "gt": [
+      "Slim/Routing/RouteParser.php"
+    ],
+    "ranked_files": [
+      "Slim/Factory/Psr17/GuzzlePsr17Factory.php",
+      "Slim/Factory/Psr17/SlimPsr17Factory.php",
+      "Slim/Factory/Psr17/HttpSoftPsr17Factory.php",
+      "Slim/Factory/Psr17/LaminasDiactorosPsr17Factory.php",
+      "Slim/Routing/RouteParser.php",
+      "Slim/Exception/HttpUnauthorizedException.php",
+      "Slim/Interfaces/RequestHandlerInvocationStrategyInterface.php",
+      "Slim/Routing/FastRouteDispatcher.php",
+      "Slim/Interfaces/RouteResolverInterface.php",
+      "Slim/Exception/HttpTooManyRequestsException.php"
+    ],
+    "latency_s": 0.12656512498506345
+  },
+  {
+    "id": "vphp11",
+    "q": "Where is Slim's AppFactory defined?",
+    "gt": [
+      "Slim/Factory/AppFactory.php"
+    ],
+    "ranked_files": [
+      "Slim/Factory/AppFactory.php",
+      "Slim/Factory/Psr17/SlimPsr17Factory.php",
+      "Slim/Factory/Psr17/GuzzlePsr17Factory.php",
+      "Slim/Factory/Psr17/LaminasDiactorosPsr17Factory.php",
+      "Slim/Factory/Psr17/HttpSoftPsr17Factory.php",
+      "Slim/Interfaces/RequestHandlerInvocationStrategyInterface.php",
+      "Slim/Exception/HttpNotImplementedException.php",
+      "Slim/Interfaces/Psr17FactoryProviderInterface.php",
+      "Slim/Interfaces/ServerRequestCreatorInterface.php"
+    ],
+    "latency_s": 0.11931683297734708
+  },
+  {
+    "id": "vphp12",
+    "q": "Where is Slim's RouteCollectorProxy defined?",
+    "gt": [
+      "Slim/Routing/RouteCollectorProxy.php"
+    ],
+    "ranked_files": [
+      "Slim/Routing/RouteCollectorProxy.php",
+      "Slim/Routing/RouteRunner.php",
+      "Slim/Routing/RouteCollector.php",
+      "Slim/Routing/RouteGroup.php",
+      "Slim/Interfaces/RouteCollectorProxyInterface.php",
+      "Slim/App.php"
+    ],
+    "latency_s": 0.13333316700300202
+  },
+  {
+    "id": "vphp13",
+    "q": "Where is Slim's computeRoutingResults defined?",
+    "gt": [
+      "Slim/Routing/RouteResolver.php",
+      "Slim/Routing/Dispatcher.php"
+    ],
+    "ranked_files": [
+      "Slim/Factory/Psr17/SlimPsr17Factory.php",
+      "Slim/Factory/Psr17/LaminasDiactorosPsr17Factory.php",
+      "Slim/Factory/Psr17/GuzzlePsr17Factory.php",
+      "Slim/Factory/Psr17/HttpSoftPsr17Factory.php",
+      "Slim/Middleware/RoutingMiddleware.php",
+      "Slim/Interfaces/RouteResolverInterface.php",
+      "Slim/Factory/Psr17/NyholmPsr17Factory.php",
+      "Slim/Interfaces/RequestHandlerInvocationStrategyInterface.php",
+      "Slim/Interfaces/Psr17FactoryProviderInterface.php"
+    ],
+    "latency_s": 0.17514929099706933
+  },
+  {
+    "id": "vphp14",
+    "q": "Where is Slim's HttpNotFoundException defined?",
+    "gt": [
+      "Slim/Exception/HttpNotFoundException.php"
+    ],
+    "ranked_files": [
+      "Slim/Exception/HttpNotFoundException.php",
+      "Slim/Exception/HttpNotImplementedException.php",
+      "Slim/Exception/HttpForbiddenException.php",
+      "Slim/Exception/HttpTooManyRequestsException.php",
+      "Slim/Exception/HttpGoneException.php",
+      "Slim/Exception/HttpBadRequestException.php",
+      "Slim/Exception/HttpUnauthorizedException.php",
+      "Slim/Exception/HttpInternalServerErrorException.php",
+      "Slim/Middleware/RoutingMiddleware.php"
+    ],
+    "latency_s": 0.27690774999791756
+  },
+  {
+    "id": "vphp15",
+    "q": "Where is Slim's RequestResponse defined?",
+    "gt": [
+      "Slim/Handlers/Strategies/RequestResponse.php"
+    ],
+    "ranked_files": [
+      "Slim/Handlers/Strategies/RequestResponse.php",
+      "Slim/Interfaces/RequestHandlerInvocationStrategyInterface.php",
+      "Slim/Handlers/Strategies/RequestHandler.php",
+      "Slim/Exception/HttpBadRequestException.php",
+      "Slim/Interfaces/InvocationStrategyInterface.php",
+      "Slim/Interfaces/ServerRequestCreatorInterface.php",
+      "Slim/Interfaces/DispatcherInterface.php",
+      "Slim/Interfaces/Psr17FactoryInterface.php",
+      "Slim/MiddlewareDispatcher.php"
+    ],
+    "latency_s": 0.176021084014792
+  }
+]

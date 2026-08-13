@@ -1,0 +1,248 @@
+[
+  {
+    "id": "rbv01",
+    "q": "Where is the Jekyll::Site object that owns the build defined?",
+    "gt": [
+      "lib/jekyll/site.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/commands/build.rb",
+      "lib/jekyll/related_posts.rb",
+      "lib/jekyll/layout.rb",
+      "lib/jekyll/command.rb",
+      "lib/jekyll/site.rb",
+      "lib/jekyll/inclusion.rb",
+      "lib/jekyll/plugin_manager.rb"
+    ],
+    "latency_s": 0.07561416699900292
+  },
+  {
+    "id": "rbv02",
+    "q": "Where is Jekyll::Document, the front matter aware content object, defined?",
+    "gt": [
+      "lib/jekyll/document.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/page_without_a_file.rb",
+      "lib/jekyll/document.rb",
+      "lib/jekyll/drops/document_drop.rb",
+      "lib/jekyll/site.rb",
+      "lib/jekyll/collection.rb",
+      "lib/jekyll/convertible.rb",
+      "lib/jekyll/inclusion.rb"
+    ],
+    "latency_s": 0.07384249998722225
+  },
+  {
+    "id": "rbv03",
+    "q": "Where is Jekyll::Collection, which reads a collection's documents, defined?",
+    "gt": [
+      "lib/jekyll/collection.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/collection.rb",
+      "lib/jekyll/readers/collection_reader.rb",
+      "lib/jekyll/site.rb",
+      "lib/jekyll/document.rb",
+      "lib/jekyll/drops/document_drop.rb",
+      "lib/jekyll/publisher.rb"
+    ],
+    "latency_s": 0.07664054201450199
+  },
+  {
+    "id": "rbv04",
+    "q": "Where is Jekyll::Renderer#run, which renders a document through its layouts?",
+    "gt": [
+      "lib/jekyll/renderer.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/renderer.rb",
+      "lib/jekyll/convertible.rb",
+      "lib/jekyll/document.rb",
+      "lib/jekyll/page.rb",
+      "lib/jekyll/site.rb",
+      "lib/jekyll/excerpt.rb"
+    ],
+    "latency_s": 0.0729397919785697
+  },
+  {
+    "id": "rbv05",
+    "q": "Where is Jekyll::Layout defined?",
+    "gt": [
+      "lib/jekyll/layout.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/layout.rb",
+      "lib/jekyll/readers/layout_reader.rb",
+      "lib/jekyll/renderer.rb",
+      "lib/jekyll/document.rb",
+      "lib/jekyll/theme.rb",
+      "lib/jekyll/excerpt.rb"
+    ],
+    "latency_s": 0.07740916599868797
+  },
+  {
+    "id": "rbv06",
+    "q": "Where is the Jekyll::Converter base class that Markdown converters subclass?",
+    "gt": [
+      "lib/jekyll/converter.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/converters/markdown.rb",
+      "lib/jekyll/converters/markdown/kramdown_parser.rb",
+      "lib/jekyll/filters.rb",
+      "lib/jekyll/site.rb",
+      "lib/jekyll/converters/smartypants.rb",
+      "lib/jekyll/renderer.rb",
+      "lib/jekyll/converter.rb"
+    ],
+    "latency_s": 0.07919829202000983
+  },
+  {
+    "id": "rbv07",
+    "q": "Where is Jekyll::Reader#read, which reads the source directory?",
+    "gt": [
+      "lib/jekyll/reader.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/reader.rb",
+      "lib/jekyll/readers/data_reader.rb",
+      "lib/jekyll/readers/post_reader.rb",
+      "lib/jekyll/commands/serve.rb",
+      "lib/jekyll/site.rb",
+      "lib/jekyll/readers/page_reader.rb",
+      "lib/jekyll/collection.rb",
+      "lib/jekyll/readers/theme_assets_reader.rb"
+    ],
+    "latency_s": 0.07649754200247116
+  },
+  {
+    "id": "rbv08",
+    "q": "Where is Jekyll::Cleaner, which removes obsolete files from the destination?",
+    "gt": [
+      "lib/jekyll/cleaner.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/cleaner.rb",
+      "lib/jekyll/commands/clean.rb",
+      "lib/jekyll/site.rb",
+      "lib/jekyll/static_file.rb",
+      "lib/jekyll/regenerator.rb",
+      "lib/jekyll/page.rb"
+    ],
+    "latency_s": 0.07082724999054335
+  },
+  {
+    "id": "rbv09",
+    "q": "Where is Jekyll::Configuration, which reads _config.yml and applies defaults?",
+    "gt": [
+      "lib/jekyll/configuration.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/configuration.rb",
+      "lib/jekyll.rb",
+      "lib/jekyll/frontmatter_defaults.rb",
+      "lib/jekyll/site.rb",
+      "lib/jekyll/command.rb",
+      "lib/jekyll/readers/data_reader.rb"
+    ],
+    "latency_s": 0.07289133299491368
+  },
+  {
+    "id": "rbv10",
+    "q": "Where is Jekyll::Page, the non-collection page object, defined?",
+    "gt": [
+      "lib/jekyll/page.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/page_without_a_file.rb",
+      "lib/jekyll/readers/page_reader.rb",
+      "lib/jekyll/page.rb",
+      "lib/jekyll/site.rb",
+      "lib/jekyll/page_excerpt.rb",
+      "lib/jekyll/drops/drop.rb"
+    ],
+    "latency_s": 0.07056408302742057
+  },
+  {
+    "id": "rbv11",
+    "q": "Where is Jekyll::StaticFile, used for files copied without rendering?",
+    "gt": [
+      "lib/jekyll/static_file.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/static_file.rb",
+      "lib/jekyll/readers/static_file_reader.rb",
+      "lib/jekyll/collection.rb",
+      "lib/jekyll/page_without_a_file.rb",
+      "lib/jekyll/document.rb",
+      "lib/jekyll/renderer.rb"
+    ],
+    "latency_s": 0.0769681659876369
+  },
+  {
+    "id": "rbv12",
+    "q": "Where is Jekyll::Regenerator, which drives incremental regeneration?",
+    "gt": [
+      "lib/jekyll/regenerator.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/regenerator.rb",
+      "lib/jekyll/renderer.rb",
+      "lib/jekyll/site.rb",
+      "lib/jekyll/cleaner.rb",
+      "lib/jekyll/commands/build.rb",
+      "lib/jekyll/generator.rb"
+    ],
+    "latency_s": 0.07465845800470561
+  },
+  {
+    "id": "rbv13",
+    "q": "Where is Jekyll::Theme, which resolves a gem-based theme's directories?",
+    "gt": [
+      "lib/jekyll/theme.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/theme.rb",
+      "lib/jekyll/theme_builder.rb",
+      "lib/jekyll/site.rb",
+      "lib/jekyll/readers/theme_assets_reader.rb",
+      "lib/jekyll/readers/layout_reader.rb",
+      "lib/jekyll/plugin_manager.rb"
+    ],
+    "latency_s": 0.07030849999864586
+  },
+  {
+    "id": "rbv14",
+    "q": "Where is Jekyll::PluginManager, which requires plugins and gems?",
+    "gt": [
+      "lib/jekyll/plugin_manager.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/plugin_manager.rb",
+      "lib/jekyll/site.rb",
+      "lib/jekyll/commands/new.rb",
+      "lib/jekyll/external.rb",
+      "lib/jekyll/configuration.rb",
+      "lib/jekyll/theme.rb",
+      "lib/jekyll.rb"
+    ],
+    "latency_s": 0.0680593750148546
+  },
+  {
+    "id": "rbv15",
+    "q": "Where is Jekyll::LiquidRenderer, which renders Liquid templates and records timings?",
+    "gt": [
+      "lib/jekyll/liquid_renderer.rb"
+    ],
+    "ranked_files": [
+      "lib/jekyll/liquid_renderer/file.rb",
+      "lib/jekyll/liquid_renderer.rb",
+      "lib/jekyll/renderer.rb",
+      "lib/jekyll/liquid_renderer/table.rb",
+      "lib/jekyll/page_excerpt.rb",
+      "lib/jekyll/inclusion.rb"
+    ],
+    "latency_s": 0.07717441697604954
+  }
+]

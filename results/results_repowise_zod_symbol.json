@@ -1,0 +1,137 @@
+[
+  {
+    "id": "ts01",
+    "q": "Where does a value actually get run against a schema and its problems collected?",
+    "gt": [
+      "packages/zod/src/v4/core/parse.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.8447815830004402
+  },
+  {
+    "id": "ts02",
+    "q": "Where is the base shape every schema type builds on defined?",
+    "gt": [
+      "packages/zod/src/v4/core/schemas.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.041651915991679
+  },
+  {
+    "id": "ts03",
+    "q": "How are extra constraints like a minimum length attached to a type?",
+    "gt": [
+      "packages/zod/src/v4/core/checks.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.9368892910133582
+  },
+  {
+    "id": "ts04",
+    "q": "Where are the individual failure descriptions a validation can produce declared?",
+    "gt": [
+      "packages/zod/src/v4/core/errors.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.9957560420152731
+  },
+  {
+    "id": "ts05",
+    "q": "Where can descriptions be associated with a schema and looked up later?",
+    "gt": [
+      "packages/zod/src/v4/core/registries.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.830807874997845
+  },
+  {
+    "id": "ts06",
+    "q": "Where are the patterns for well-known string formats kept?",
+    "gt": [
+      "packages/zod/src/v4/core/regexes.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.851002667011926
+  },
+  {
+    "id": "ts07",
+    "q": "How is a schema turned into a portable specification document?",
+    "gt": [
+      "packages/zod/src/v4/core/json-schema-generator.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.9763586669869255
+  },
+  {
+    "id": "ts08",
+    "q": "Where is the vendor-neutral interface other libraries can consume implemented?",
+    "gt": [
+      "packages/zod/src/v4/core/standard-schema.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.0950271250039805
+  },
+  {
+    "id": "ts09",
+    "q": "Where are inputs converted to the expected type before checking rather than rejected?",
+    "gt": [
+      "packages/zod/src/v4/classic/coerce.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.904928750009276
+  },
+  {
+    "id": "ts10",
+    "q": "Where are date and time string formats defined as their own types?",
+    "gt": [
+      "packages/zod/src/v4/classic/iso.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.8083522919914685
+  },
+  {
+    "id": "ts11",
+    "q": "Where is the user-facing type that gets chained with methods defined?",
+    "gt": [
+      "packages/zod/src/v4/classic/schemas.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.9187619580188766
+  },
+  {
+    "id": "ts12",
+    "q": "How does a specification document get turned back into a schema?",
+    "gt": [
+      "packages/zod/src/v4/classic/from-json-schema.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.9629004999878816
+  },
+  {
+    "id": "ts13",
+    "q": "Where are library-wide settings such as the active language held?",
+    "gt": [
+      "packages/zod/src/v4/core/config.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 1.9921267919999082
+  },
+  {
+    "id": "ts14",
+    "q": "Where are the shared helpers the rest of the internals rely on?",
+    "gt": [
+      "packages/zod/src/v4/core/util.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.492627582978457
+  },
+  {
+    "id": "ts15",
+    "q": "Where is everything the package exposes to importers gathered together?",
+    "gt": [
+      "packages/zod/src/v4/classic/external.ts"
+    ],
+    "ranked_files": [],
+    "latency_s": 2.573216292017605
+  }
+]

@@ -1,0 +1,299 @@
+[
+  {
+    "id": "java01",
+    "q": "Where is the main entry object that converts objects to and from their JSON form?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/Gson.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+      "proto/src/main/java/com/google/gson/protobuf/StructTypeAdapter.java",
+      "extras/src/main/java/com/google/gson/typeadapters/UtcDateTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/TypeAdapter.java",
+      "gson/src/test/java/com/google/gson/ParameterizedTypeFixtures.java",
+      "gson/src/main/java/com/google/gson/internal/bind/MapTypeAdapterFactory.java",
+      "onboarding/how_it_works",
+      "gson/src/main/java/com/google/gson/internal/bind/JsonElementTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/JsonElement.java",
+      "gson/src/main/java/com/google/gson/internal/bind/DefaultDateTypeAdapter.java"
+    ],
+    "latency_s": 1.9997487499786075
+  },
+  {
+    "id": "java02",
+    "q": "How is the library configured before the converter is created?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/GsonBuilder.java"
+    ],
+    "ranked_files": [
+      "gson/src/test/java/com/google/gson/LongSerializationPolicyTest.java",
+      "gson/src/main/java/com/google/gson/TypeAdapter.java",
+      "gson/src/test/java/com/google/gson/functional/FieldExclusionTest.java",
+      "gson/src/test/java/com/google/gson/functional/PrintFormattingTest.java",
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "gson/src/main/java/com/google/gson/internal/Primitives.java",
+      "extras/src/main/java/com/google/gson/interceptors/InterceptorFactory.java",
+      "gson/src/test/java/com/google/gson/common/TestTypes.java",
+      "gson/src/main/java/com/google/gson/stream/JsonWriter.java",
+      "gson/src/main/java/com/google/gson/internal/Excluder.java"
+    ],
+    "latency_s": 1.9987453749927226
+  },
+  {
+    "id": "java03",
+    "q": "Where is incoming text consumed one token at a time?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/stream/JsonReader.java"
+    ],
+    "ranked_files": [
+      "onboarding/how_it_works",
+      "gson/src/main/java/com/google/gson/JsonStreamParser.java",
+      "gson/src/test/java/com/google/gson/internal/bind/DefaultDateTypeAdapterTest.java",
+      "layer:application",
+      "gson/src/main/java/com/google/gson/internal/LazilyParsedNumber.java",
+      "gson/src/main/java/com/google/gson/internal/sql/SqlDateTypeAdapter.java",
+      "test-shrinker/src/main/java/com/example/ClassWithNamedFields.java",
+      "test-shrinker/src/main/java/com/example/ClassWithAdapter.java",
+      "metrics/src/main/java/com/google/gson/metrics/BagOfPrimitivesDeserializationBenchmark.java",
+      "gson/src/main/java/com/google/gson/internal/bind/JsonElementTypeAdapter.java"
+    ],
+    "latency_s": 2.1773190410167444
+  },
+  {
+    "id": "java04",
+    "q": "Where is output emitted incrementally rather than built up in memory?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/stream/JsonWriter.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "gson/src/test/java/com/google/gson/metrics/PerformanceTest.java",
+      "gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java",
+      "scc-134",
+      "gson/src/test/java/com/google/gson/functional/ExposeFieldsTest.java",
+      "gson/src/main/java/com/google/gson/stream/JsonWriter.java",
+      "gson/src/test/java/com/google/gson/functional/JsonTreeTest.java",
+      "gson/src/main/java/com/google/gson/FormattingStyle.java",
+      "layer:application",
+      "proto/src/test/java/com/google/gson/protobuf/functional/ProtosWithComplexAndRepeatedFieldsTest.java"
+    ],
+    "latency_s": 2.111642916017445
+  },
+  {
+    "id": "java05",
+    "q": "How does the library hold on to generic type information that erasure would otherwise discard?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/reflect/TypeToken.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "onboarding/key_concepts",
+      "metrics/src/main/java/com/google/gson/metrics/SerializationBenchmark.java",
+      "gson/src/test/java/com/google/gson/functional/TypeVariableTest.java",
+      "gson/src/main/java/com/google/gson/internal/bind/JsonTreeWriter.java",
+      "gson/src/test/java/com/google/gson/functional/RawSerializationTest.java",
+      "gson/src/main/java/com/google/gson/reflect/TypeToken.java"
+    ],
+    "latency_s": 2.3658024999895133
+  },
+  {
+    "id": "java06",
+    "q": "Where is the contract a single type's converter has to implement?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/TypeAdapter.java"
+    ],
+    "ranked_files": [
+      "gson/src/test/java/com/google/gson/LongSerializationPolicyTest.java",
+      "gson/src/test/java/com/google/gson/common/TestTypes.java",
+      "gson/src/main/java/com/google/gson/internal/Primitives.java",
+      "proto/src/main/java/com/google/gson/protobuf/LegacyProtoTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/TypeAdapter.java",
+      "gson/src/main/java/com/google/gson/InstanceCreator.java",
+      "gson/src/main/java/com/google/gson/internal/bind/TreeTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/TypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/internal/bind/SerializationDelegatingTypeAdapter.java",
+      "gson/src/test/java/com/google/gson/functional/RuntimeTypeAdapterFactoryFunctionalTest.java"
+    ],
+    "latency_s": 2.5768564589961898
+  },
+  {
+    "id": "java07",
+    "q": "What decides at runtime whether it can supply a converter for a given type?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/TypeAdapterFactory.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/ExclusionStrategy.java",
+      "gson/src/main/java/com/google/gson/FieldAttributes.java",
+      "gson/src/main/java/com/google/gson/internal/Excluder.java",
+      "gson/src/test/java/com/google/gson/common/TestTypes.java",
+      "onboarding/how_it_works",
+      "gson/src/main/java/com/google/gson/TypeAdapter.java",
+      "gson/src/main/java/com/google/gson/FieldNamingStrategy.java",
+      "gson/src/main/java/com/google/gson/internal/bind/SerializationDelegatingTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/internal/Primitives.java",
+      "gson/src/main/java/com/google/gson/GsonBuilder.java"
+    ],
+    "latency_s": 2.7642133749905042
+  },
+  {
+    "id": "java08",
+    "q": "How are an object's declared fields matched up with names in the document?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java"
+    ],
+    "ranked_files": [
+      "gson/src/test/java/com/google/gson/functional/EnumTest.java",
+      "gson/src/test/java/com/google/gson/JsonObjectAsMapTest.java",
+      "gson/src/main/java/com/google/gson/internal/sql/SqlTimestampTypeAdapter.java",
+      "gson/src/main/java/com/google/gson/internal/bind/EnumTypeAdapter.java",
+      "gson/src/test/java/com/google/gson/functional/NamingPolicyTest.java",
+      "gson/src/test/java/com/google/gson/functional/FieldNamingTest.java",
+      "proto/src/test/java/com/google/gson/protobuf/functional/ProtosWithComplexAndRepeatedFieldsTest.java",
+      "proto/src/test/protobuf/bag.proto",
+      "test-jpms/src/test/java/com/google/gson/jpms_test/ModuleTest.java",
+      "test-shrinker/src/main/java/com/example/EnumClassWithSerializedName.java"
+    ],
+    "latency_s": 2.0579700420203153
+  },
+  {
+    "id": "java09",
+    "q": "Where is text turned into an in-memory tree instead of being bound to a class?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/JsonParser.java"
+    ],
+    "ranked_files": [
+      "onboarding/how_it_works",
+      "onboarding/getting_started",
+      "gson/src/main/java/com/google/gson/internal/bind/JsonTreeWriter.java",
+      "gson/src/main/java/com/google/gson/internal/bind/JsonElementTypeAdapter.java",
+      "gson/src/test/java/com/google/gson/internal/bind/JsonTreeWriterTest.java",
+      "onboarding/key_concepts",
+      "gson/src/test/java/com/google/gson/functional/JsonParserTest.java",
+      "onboarding/guided_tour",
+      "gson/src/test/java/com/google/gson/JsonArrayTest.java",
+      "gson/src/main/java/com/google/gson/internal/Streams.java"
+    ],
+    "latency_s": 2.8900245419936255
+  },
+  {
+    "id": "java10",
+    "q": "Where is a name-to-value mapping represented as a tree node?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/JsonObject.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/internal/Streams.java",
+      "gson/src/main/java/com/google/gson/internal/LinkedTreeMap.java",
+      "gson/src/main/java/com/google/gson/JsonElement.java",
+      "gson/src/test/java/com/google/gson/functional/StreamingTypeAdaptersTest.java",
+      "gson/src/main/java/com/google/gson/JsonNull.java",
+      "onboarding/guided_tour",
+      "gson/src/main/java/com/google/gson/internal/bind/JsonTreeWriter.java",
+      "gson/src/test/java/com/google/gson/functional/JsonTreeTest.java",
+      "proto/src/test/protobuf/json_test.proto",
+      "gson/src/test/java/com/google/gson/functional/JavaUtilTest.java"
+    ],
+    "latency_s": 2.3966586249880493
+  },
+  {
+    "id": "java11",
+    "q": "How does the library decide that a field should be skipped entirely?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/Excluder.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/ExclusionStrategy.java",
+      "onboarding/how_it_works",
+      "gson/src/main/java/com/google/gson/stream/JsonWriter.java",
+      "gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java",
+      "gson/src/main/java/com/google/gson/internal/JavaVersion.java",
+      "test-shrinker/src/test/java/com/google/gson/it/ShrinkingIT.java",
+      "gson/src/main/java/com/google/gson/GsonBuilder.java",
+      "gson/src/test/java/com/google/gson/functional/ExclusionStrategyFunctionalTest.java",
+      "test-shrinker/src/main/java/com/example/UnusedClass.java",
+      "gson/src/main/java/com/google/gson/Gson.java"
+    ],
+    "latency_s": 2.451251584017882
+  },
+  {
+    "id": "java12",
+    "q": "Where are the built-in conventions for translating field names to document keys?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/FieldNamingPolicy.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/FieldNamingStrategy.java",
+      "gson/src/main/java/com/google/gson/FieldNamingPolicy.java",
+      "gson/src/main/java/com/google/gson/internal/bind/MapTypeAdapterFactory.java",
+      "gson/src/test/java/com/google/gson/functional/FieldNamingTest.java",
+      "proto/src/test/java/com/google/gson/protobuf/functional/ProtosWithAnnotationsTest.java",
+      "gson/src/main/java/com/google/gson/JsonObject.java",
+      "gson/src/test/java/com/google/gson/JsonObjectTest.java",
+      "gson/src/test/java/com/google/gson/JsonObjectAsMapTest.java",
+      "extras/src/test/java/com/google/gson/interceptors/InterceptorTest.java",
+      "gson/src/test/java/com/google/gson/functional/VersioningTest.java"
+    ],
+    "latency_s": 1.9674605829932261
+  },
+  {
+    "id": "java13",
+    "q": "How is an instance created when the class has no accessible no-argument constructor?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java"
+    ],
+    "ranked_files": [
+      "gson/src/main/java/com/google/gson/ReflectionAccessFilter.java",
+      "test-shrinker/src/main/java/com/example/InterfaceWithImplementation.java",
+      "gson/src/main/java/com/google/gson/internal/ReflectionAccessFilterHelper.java",
+      "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java",
+      "gson/src/main/java/com/google/gson/internal/reflect/ReflectionHelper.java",
+      "gson/src/main/java/com/google/gson/internal/UnsafeAllocator.java",
+      "gson/src/test/java/com/google/gson/functional/DefaultTypeAdaptersTest.java",
+      "gson/src/main/java/com/google/gson/internal/bind/EnumTypeAdapter.java",
+      "test-jpms/src/test/java/com/google/gson/jpms_test/ExportedPackagesTest.java",
+      "test-shrinker/src/main/java/com/example/GenericClasses.java"
+    ],
+    "latency_s": 3.0380012080131564
+  },
+  {
+    "id": "java14",
+    "q": "Where are lists and sets handled as a group rather than one class at a time?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/bind/CollectionTypeAdapterFactory.java"
+    ],
+    "ranked_files": [
+      "gson/src/test/java/com/google/gson/functional",
+      "gson/src/test/java/com/google/gson/internal/bind/Java17ReflectiveTypeAdapterFactoryTest.java",
+      "gson/src/main/java/com/google/gson/internal/Excluder.java",
+      "gson/src/test/java/com/google/gson/internal/bind/JsonTreeWriterTest.java",
+      "gson/src/test/java/com/google/gson/functional/DefaultTypeAdaptersTest.java",
+      "gson/src/test/java/com/google/gson/stream/JsonReaderTest.java",
+      "gson/src/test/java/com/google/gson/functional/ParameterizedTypesTest.java",
+      "proto/src/main/java/com/google/gson/protobuf/ProtoTypeAdapter.java",
+      "gson/src/test/java/com/google/gson/functional/NullObjectAndFieldTest.java",
+      "gson/src/test/java/com/google/gson/internal/reflect/Java17ReflectionHelperTest.java"
+    ],
+    "latency_s": 2.738616250018822
+  },
+  {
+    "id": "java15",
+    "q": "How are fixed sets of named constants converted back and forth?",
+    "gt": [
+      "gson/src/main/java/com/google/gson/internal/bind/EnumTypeAdapter.java"
+    ],
+    "ranked_files": [
+      "test-shrinker/src/test/java/com/google/gson/it/ShrinkingIT.java",
+      "gson/src/main/java/com/google/gson/GsonBuilder.java",
+      "gson/src/main/java/com/google/gson/Gson.java",
+      "gson/src/main/java/com/google/gson/Strictness.java",
+      "test-shrinker/src/main/java/com/example/EnumClassWithSerializedName.java",
+      "gson/src/main/java/com/google/gson/stream/JsonToken.java",
+      "proto/src/main/java/com/google/gson/protobuf/ProtoTypeAdapter.java",
+      "proto/src/test/java/com/google/gson/protobuf/functional/LegacyProtoTypeAdapterFactoryTest.java",
+      "gson/src/main/java/com/google/gson/JsonParser.java",
+      "gson/src/main/java/com/google/gson/FieldNamingPolicy.java"
+    ],
+    "latency_s": 3.2293684169999324
+  }
+]
