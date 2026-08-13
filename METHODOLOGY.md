@@ -86,6 +86,43 @@ After the fix, 0/32 results matched the FTS run.
   asking "explain the architecture" would likely invert the result — that is not
   measured here and should not be inferred either way.
 
+## Near-duplicate crowding is a symptom of phrasing, not a retrieval defect
+
+"Sibling crowding" was described in this repository as the strongest open lead,
+observed independently on three corpora: slimphp/Slim's `RequestResponse*`
+strategies, google/gson's `TypeAdapters.java`, and apache/thrift's
+`binary_protocol` / `compact_protocol` pairs. Two ranking fixes were built
+against it and both were rejected on measurement.
+
+Before building a third, the misses were checked against the vocabulary regime.
+Every one of them disappears:
+
+| corpus | general-regime misses | vocabulary-regime misses |
+|---|---|---|
+| Slim | php02, php04, php11, php13, php14 | none |
+| gson | java07, java14 | java03 (a different question) |
+
+php04 is the `CallableResolver` case that consumed two releases and two
+rejected ranking fixes. Asked in the project's own vocabulary it is answered
+correctly.
+
+The mechanism is not mysterious. When a query carries no token that
+distinguishes one sibling from another - "the straightforward fixed-width wire
+encoding" names neither `binary` nor `compact` - the siblings are genuinely
+indistinguishable, and no ranking change can recover information the question
+never contained. Crowding is what the phrasing confound looks like from inside
+the result list.
+
+Two consequences, both now practice here:
+
+1. **A ranking fix aimed at a general-regime miss must be checked against the
+   vocabulary regime first.** If the vocabulary version already passes, the
+   miss is a question problem and a ranking change would be fitting to our own
+   prose.
+2. **The independent question set is the top open item**, not a nice-to-have.
+   Until questions come from outside, we cannot separate product weakness from
+   question weakness on any weak corpus.
+
 ## A published table that did not reproduce (corrected 2026-08-13)
 
 The first revision of this repository listed flask retrieval as **71.9% / 96.9%
