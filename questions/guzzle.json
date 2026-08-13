@@ -1,0 +1,17 @@
+[
+  {"id": "gz01", "question": "Where is the object you call to actually send an HTTP request?", "ground_truth_files": ["src/Client.php"], "verification_anchor": "class Client"},
+  {"id": "gz02", "question": "How are the layers wrapped around whatever finally performs the transfer?", "ground_truth_files": ["src/HandlerStack.php"], "verification_anchor": "class HandlerStack"},
+  {"id": "gz03", "question": "Where are the ready-made layers such as history and mapping defined together?", "ground_truth_files": ["src/Middleware.php"], "verification_anchor": "final class Middleware"},
+  {"id": "gz04", "question": "How are many requests sent at once with a limit on concurrency?", "ground_truth_files": ["src/Pool.php"], "verification_anchor": "class Pool"},
+  {"id": "gz05", "question": "Where does the client follow a response that points somewhere else?", "ground_truth_files": ["src/RedirectMiddleware.php"], "verification_anchor": "class RedirectMiddleware"},
+  {"id": "gz06", "question": "Where is the policy for attempting a failed transfer again?", "ground_truth_files": ["src/RetryMiddleware.php"], "verification_anchor": "class RetryMiddleware"},
+  {"id": "gz07", "question": "Where is state kept between calls so the server can recognise the caller?", "ground_truth_files": ["src/Cookie/CookieJar.php"], "verification_anchor": "class CookieJar"},
+  {"id": "gz08", "question": "Where is the native transfer library actually invoked?", "ground_truth_files": ["src/Handler/CurlHandler.php"], "verification_anchor": "final class CurlHandler"},
+  {"id": "gz09", "question": "Where is the fallback transport that avoids the native extension?", "ground_truth_files": ["src/Handler/StreamHandler.php"], "verification_anchor": "final class StreamHandler"},
+  {"id": "gz10", "question": "Where is the failure type that carries both what was asked and what came back?", "ground_truth_files": ["src/Exception/RequestException.php"], "verification_anchor": "class RequestException"},
+  {"id": "gz11", "question": "How is a log line built from a request and its response?", "ground_truth_files": ["src/MessageFormatter.php"], "verification_anchor": "final class MessageFormatter"},
+  {"id": "gz12", "question": "Where are the headers describing the payload filled in automatically?", "ground_truth_files": ["src/PrepareBodyMiddleware.php"], "verification_anchor": "class PrepareBodyMiddleware"},
+  {"id": "gz13", "question": "Where is the contract that describes what a caller can rely on?", "ground_truth_files": ["src/ClientInterface.php"], "verification_anchor": "interface ClientInterface"},
+  {"id": "gz14", "question": "Where are non-ascii domain names converted to their encoded form?", "ground_truth_files": ["src/Idn.php"], "verification_anchor": "Idn"},
+  {"id": "gz15", "question": "Where are the shared helper routines the rest of the package reuses?", "ground_truth_files": ["src/Utils.php"], "verification_anchor": "final class Utils"}
+]

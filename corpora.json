@@ -30,6 +30,15 @@
       ]
     },
     {
+      "name": "guzzle",
+      "url": "https://github.com/guzzle/guzzle",
+      "commit": "d1cbca76970939a9c2ced55b1e25ea26f34fc773",
+      "language": "php",
+      "questions": [
+        "guzzle.json"
+      ]
+    },
+    {
       "name": "serde",
       "url": "https://github.com/serde-rs/serde",
       "commit": "747814f",
