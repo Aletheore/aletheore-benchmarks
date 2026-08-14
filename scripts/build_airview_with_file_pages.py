@@ -31,7 +31,7 @@ def make_adapter():
         name="deepseek",
         base_url="https://api.deepseek.com/v1",
         api_key_env_var="DEEPSEEK_API_KEY",
-        model=os.environ.get("AIRVIEW_MODEL", "deepseek-chat"),
+        model=_bench.WRITER_MODEL,
         requires_consent=False,
         on_usage=_u,
     )
@@ -47,7 +47,7 @@ def fetch_line_count(path: str):
 naming, writing = make_adapter(), make_adapter()
 
 print("subsystems...", file=sys.stderr)
-subs = generate_subsystems(evidence, naming, writing, model_used="deepseek-chat",
+subs = generate_subsystems(evidence, naming, writing, model_used=_bench.WRITER_MODEL,
                            fetch_line_count=fetch_line_count)
 print(f"  {len(subs)} subsystems", file=sys.stderr)
 

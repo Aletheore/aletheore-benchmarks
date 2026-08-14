@@ -34,7 +34,7 @@ USAGE = {"in": 0, "out": 0}
 def adapter():
     return OpenAICompatibleAdapter(
         name="deepseek", base_url="https://api.deepseek.com/v1",
-        api_key_env_var="DEEPSEEK_API_KEY", model="deepseek-chat",
+        api_key_env_var="DEEPSEEK_API_KEY", model=_bench.WRITER_MODEL,
         requires_consent=False,
         on_usage=lambda i, o: (USAGE.__setitem__("in", USAGE["in"] + i),
                                USAGE.__setitem__("out", USAGE["out"] + o)),
@@ -49,7 +49,7 @@ def line_count(p):
 
 
 w = adapter()
-subs = generate_subsystems(evidence, adapter(), w, model_used="deepseek-chat",
+subs = generate_subsystems(evidence, adapter(), w, model_used=_bench.WRITER_MODEL,
                            fetch_line_count=line_count)
 by_path = {f["path"]: s["name"] for s in subs for f in (s.get("files") or [])}
 planned = select_file_page_paths(evidence)

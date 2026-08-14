@@ -24,6 +24,16 @@ OUT = os.environ.get("BENCH_OUT", os.path.join(ROOT, "results"))
 ENV_FILE = os.environ.get("BENCH_ENV_FILE", os.path.join(WORK, ".env"))
 
 
+# DeepSeek retired the `deepseek-chat` alias: the API still accepts the name but
+# serves deepseek-v4-flash, so every result labelled "deepseek-chat" is in fact
+# Flash output and the label is wrong. Pinned explicitly here so what ran is what
+# gets recorded, and so a future alias change cannot silently move the baseline
+# underneath a published number. Verified against GET /models: the only ids
+# offered are deepseek-v4-flash and deepseek-v4-pro.
+WRITER_MODEL = os.environ.get("AIRVIEW_MODEL", "deepseek-v4-flash")
+JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "deepseek-v4-flash")
+
+
 def repo_src(name):
     """Checkout Aletheore scans and indexes."""
     return os.path.join(WORK, f"multi-{name}")

@@ -23,13 +23,16 @@ the saved rows does not - use score_fallback_judge.py for that.
 import json, os, re, sys, time
 import httpx
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _bench
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 KEY = os.environ.get("DEEPSEEK_API_KEY")
 if not KEY:
     sys.exit("DEEPSEEK_API_KEY is not set. To re-derive the published numbers "
              "without a key, run: python3 scripts/score_fallback_judge.py")
-MODEL = os.environ.get("JUDGE_MODEL", "deepseek-chat")
+MODEL = _bench.JUDGE_MODEL
 
 RUBRIC = """You are grading retrieval systems for a code-comprehension task.
 

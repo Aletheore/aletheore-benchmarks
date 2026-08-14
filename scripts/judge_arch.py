@@ -9,7 +9,7 @@ KEY = None
 for line in open(_bench.ENV_FILE):
     if line.startswith("DEEPSEEK_API_KEY"):
         KEY = line.strip().split("=", 1)[1]
-MODEL = os.environ.get("JUDGE_MODEL", "deepseek-chat")
+MODEL = _bench.JUDGE_MODEL
 
 RUBRIC = """You are grading retrieval systems for a code-comprehension task.
 

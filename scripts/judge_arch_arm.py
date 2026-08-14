@@ -6,7 +6,7 @@ import _bench, os, re, sys, time
 import httpx
 
 KEY = _bench.require_key("DEEPSEEK_API_KEY")
-MODEL = os.environ.get("JUDGE_MODEL", "deepseek-chat")
+MODEL = _bench.JUDGE_MODEL
 
 # The corpus being graded. This was hard-coded to "Flask", which is correct for
 # the single-corpus arm and wrong for every other repo: telling the judge that
