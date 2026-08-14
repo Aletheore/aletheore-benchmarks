@@ -5,15 +5,19 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _bench, os, re, sys, time
 import httpx
 
-KEY = None
-for line in open(_bench.ENV_FILE):
-    if line.startswith("DEEPSEEK_API_KEY"):
-        KEY = line.strip().split("=", 1)[1]
+KEY = _bench.require_key("DEEPSEEK_API_KEY")
 MODEL = os.environ.get("JUDGE_MODEL", "deepseek-chat")
+
+# The corpus being graded. This was hard-coded to "Flask", which is correct for
+# the single-corpus arm and wrong for every other repo: telling the judge that
+# AutoMapper's C# came from Flask primes it against material that is in fact on
+# topic. Set BENCH_REPO per corpus; the wording is otherwise unchanged, so a
+# run with BENCH_REPO=Flask is identical to the published Flask numbers.
+REPO = os.environ.get("BENCH_REPO", "Flask")
 
 RUBRIC = """You are grading retrieval systems for a code-comprehension task.
 
-A developer new to the Flask codebase asked the QUESTION below. Two systems each
+A developer new to the __REPO__ codebase asked the QUESTION below. Two systems each
 returned a bundle of retrieved material (roughly equal length). You are grading
 ONLY the retrieved material — not writing the answer yourself.
 
@@ -31,7 +35,7 @@ is not automatically better than prose. Ignore which system appears first.
 Return ONLY strict JSON:
 {"system_a": {"score": <0-3>, "why": "<one sentence>"},
  "system_b": {"score": <0-3>, "why": "<one sentence>"},
- "better": "a" | "b" | "tie"}"""
+ "better": "a" | "b" | "tie"}""".replace("__REPO__", REPO)
 
 
 def scrub(t):
@@ -67,7 +71,11 @@ def ask(question, a, b):
 
 import os
 ARM=os.environ["ARM"]
-ctx = json.load(open(os.path.join(_bench.OUT,"arch_context2.json")))
+# A per-corpus run points these at ~/.aletheore-bench/bench/multi_<name>/.
+# The defaults reproduce the original single-corpus Flask behaviour exactly.
+CTX = os.environ.get("BENCH_CTX", os.path.join(_bench.OUT, "arch_context2.json"))
+SCORES_DIR = os.environ.get("BENCH_SCORES_DIR", _bench.OUT)
+ctx = json.load(open(CTX))
 rows = []
 for c in ctx:
     al, rw = scrub(c[ARM]), scrub(c["repowise"])
@@ -90,7 +98,8 @@ for c in ctx:
     print(f"{c['id']}  aletheore={sum(a_scores)/2:.1f} repowise={sum(r_scores)/2:.1f}  pref={pref}",
           file=sys.stderr)
 
-json.dump(rows, open(os.path.join(_bench.OUT,"arch_scores_"+ARM+".json"),"w"), indent=2)
+os.makedirs(SCORES_DIR, exist_ok=True)
+json.dump(rows, open(os.path.join(SCORES_DIR,"arch_scores_"+ARM+".json"),"w"), indent=2)
 n = len(rows)
 if n:
     print(f"\nARCHITECTURE QUESTIONS (n={n}, 0-3 scale, order-swapped mean)", file=sys.stderr)

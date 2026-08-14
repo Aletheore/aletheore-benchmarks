@@ -3,7 +3,16 @@ import asyncio, json, math, os, sqlite3, sys
 from pathlib import Path
 import httpx
 
-sys.path.insert(0, "/Users/arihantkaul/Documents/GitHub/Veridion/github-app")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _bench
+
+# live_wiki is imported from the product working tree, so this run measures
+# whatever is checked out there right now - branch included. Point ALETHEORE_REPO
+# at the checkout under test.
+PRODUCT = os.environ.get(
+    "ALETHEORE_REPO", os.path.expanduser("~/Documents/GitHub/Veridion")
+)
+sys.path.insert(0, os.path.join(PRODUCT, "github-app"))
 from scan_worker.live_wiki import (
     attach_file_pages, generate_file_pages, generate_overview,
     generate_subsystems, select_file_page_paths,
@@ -11,11 +20,12 @@ from scan_worker.live_wiki import (
 from aletheore.adapters.openai_compatible import OpenAICompatibleAdapter
 
 NAME = sys.argv[1]
-SRC = Path(f"/private/tmp/multi-{NAME}")
-RW = f"/private/tmp/multi-rw-{NAME}"
+SRC = Path(_bench.repo_src(NAME))
+RW = _bench.repo_rw(NAME)
 BUDGET = 12000
-OUT = f"/private/tmp/bench/multi_{NAME}"
+OUT = _bench.repo_out(NAME)
 os.makedirs(OUT, exist_ok=True)
+_bench.require_key("DEEPSEEK_API_KEY")
 
 evidence = json.loads((SRC / ".aletheore" / "air.json").read_text())
 USAGE = {"in": 0, "out": 0}
@@ -81,7 +91,13 @@ def cos(a, b):
     return d / (math.sqrt(sum(x * x for x in a)) * math.sqrt(sum(y * y for y in b)) + 1e-9)
 
 
-qs = json.load(open("/private/tmp/bench/questions_arch_generic.json"))
+# The corpus-agnostic architecture set, read from the repo rather than a copy
+# staged in scratch - the staged copy died with /private/tmp and is the same file.
+QUESTIONS = os.environ.get(
+    "BENCH_ARCH_QUESTIONS",
+    os.path.join(_bench.ROOT, "questions", "architecture_generic.json"),
+)
+qs = json.load(open(QUESTIONS))
 uvecs, qvecs = embed(units), embed([q["q"] for q in qs])
 
 # ---- RepoWise retrieval ----
