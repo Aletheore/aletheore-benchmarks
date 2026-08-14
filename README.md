@@ -249,6 +249,38 @@ serde $0.33, zod $0.36, gson $0.47. Aletheore's side needs no API key at all,
 which is also why every number in this repository can be recomputed without
 one.
 
+### Covering the files a PR touches
+
+Over the last 30 non-merge commits of Flask (100 changed files), how often does
+AIRview have anything at all to say about a file that changed?
+
+| | commits with every changed file covered | changed files covered |
+|---|---:|---:|
+| AIRview pages alone | 4 / 30 | 21 / 100 |
+| pages + deterministic file fallback | **30 / 30** | **100 / 100** |
+
+Only 15 of the 30 commits had a page for even one of their changed files.
+Coverage — not ranking quality on the files already covered — was the real gap
+against RepoWise's 100%.
+
+The fallback closes it without a model call. It reads the scanner's existing
+module record (symbols with line numbers, imports, importers) and, for files
+outside the module set, a source excerpt capped at 5,000 characters, with
+structured reduction for lockfiles and changelogs where a blind cutoff would
+keep an arbitrary byte range. Cost per file: **$0.00** — no API key, no
+generation, no addition to the paid AIRview writing pipeline.
+
+**No token-savings claim is made here, and an earlier draft's was withdrawn.**
+That draft compared the fallback's output against reading each changed file in
+full (96.5% fewer tokens) and against the commit diff (2.9x *more* tokens on
+the median commit, more expensive on 22 of 30). Both comparisons were dropped
+as meaningless rather than merely unflattering: `build_file_fallback_detail` is
+called only from the dashboard's file browser, one file at a time on request,
+and never from the pull-request review path — so it does not stand in for a
+diff or for a full-file read. What it stands in for is a blank page. The
+quality question that remains — is the block it returns actually useful — is
+measured by the judge below, not by counting its tokens.
+
 ### Explaining code — "how does X work?"
 
 Blind LLM judge, 0-3, each question graded twice with the two systems' positions
@@ -266,6 +298,34 @@ These wiki figures were measured on a pre-0.8.0 build and have **not** been
 re-run on 0.8.11. They are left as measured rather than restated against a
 version they did not come from; only the retrieval table above is 0.8.11.
 
+### Answering from a file — fallback vs RepoWise `get_context`
+
+Blind pairwise judge, 0-3, three repeats, each file graded twice with the two
+systems' positions swapped, both bundles truncated to the same character
+budget, tool names scrubbed.
+
+On the seven files where **both** systems return substantive material:
+
+| | score | n | repeats |
+|---|---:|---:|---:|
+| **Aletheore file fallback** | **2.857** | 7 | 3 |
+| RepoWise `get_context` | 2.000 | 7 | 3 |
+
+Gap **+0.857**, identical in all three repeats. The judge ran at temperature 0,
+so that zero spread shows the judge is stable — not that the result would
+survive a different judge or a different question set. At n=7, one file
+flipping moves the gap by 0.14-0.43. It is a small result.
+
+RepoWise wins one of the seven: `tests/test_blueprints.py`, 3.0 against our
+2.0, where it returned full test bodies and we truncated to a symbol index.
+
+A further 15 files (yaml, toml, rst, `uv.lock`) were graded and are reported
+here as **coverage, not score**. RepoWise returns `"<file>: empty or non-symbol
+file"` or `Target not found` for all fifteen, and the judge scored every one
+0.0. That is RepoWise declaring a file out of scope, not losing on quality.
+Pooling those fifteen zeros into the headline yields a "+2.07" gap that says
+nothing about usefulness, and we are not publishing one.
+
 ### Where we lose
 
 Stated here rather than in a footnote:
@@ -277,6 +337,11 @@ Stated here rather than in a footnote:
   questions are asked in the project's own terms, so most of that gap is our
   question authoring rather than the product.
 - **jekyll top-5 loses to RepoWise**, 46.7% against 66.7%.
+- **AIRview writes a page for only 21 of 100 changed files** on Flask's last 30
+  commits. The other 79 are served by a deterministic fallback, not by the
+  generated wiki this project is named for.
+- **RepoWise's `get_context` beats our fallback on `tests/test_blueprints.py`**,
+  3.0 against 2.0.
 - **An earlier revision of this README published flask figures that did not
   reproduce.** They are corrected above, and how it happened is in
   METHODOLOGY.md.
@@ -308,6 +373,12 @@ cd - && python3 scripts/run_aletheore.py
 python3 scripts/score.py results/results_aletheore.json=ALETHEORE
 ```
 
+The fallback sections re-derive from saved rows without a key or a network:
+
+```bash
+python3 scripts/score_fallback_judge.py
+```
+
 `corpora.json` pins every corpus commit. Runners refuse to score against a
 different checkout, because the ground truth was verified against those exact
 trees. See **REPRODUCIBILITY.md** for tool versions and for what reproduces
@@ -321,8 +392,9 @@ That defect invalidated our own first run.
 
 | path | what |
 |---|---|
-| `questions/` | 356 questions across 23 sets, every ground-truth anchor mechanically verified |
-| `scripts/` | runners, scorers, the blind judge, the language-coverage matrix |
+| `questions/` | 418 questions in 28 sets (the whole directory; the retrieval scope quoted above is a subset), every ground-truth anchor mechanically verified |
+| `scripts/` | runners, scorers, the blind judges, the language-coverage matrix |
+| `scripts/score_fallback_judge.py` | re-derives every fallback number above from `results/`, no API key |
 | `results/` | raw per-query output — recompute any number without an API key |
 | `corpora.json` | pinned commits for all corpora |
 | `CORPUS_PLAN.md` | the 11-language programme: repos, procedure, cost, and what was rejected |
@@ -338,6 +410,15 @@ public API and documentation, and every ground-truth anchor is verified
 mechanically, but this remains the weakest link in the methodology. An
 independently authored question set would be stronger evidence, and is the most
 useful contribution anyone could make here.
+
+**The AIRview fallback figures describe the GitHub App, not the CLI release.**
+The coverage and `get_context` sections above measure
+`build_file_fallback_detail` in `github-app/scan_worker/live_wiki.py` at commit
+`7089e14` (PR #243, "give AIRview a deterministic fallback for files with no
+generated page"). The measured file is byte-identical to that commit. It is not
+part of Aletheore 0.8.11 — 0.8.11 is the CLI, this is the GitHub App, which is
+versioned separately and not published to PyPI. Reproducing these two sections
+therefore needs the app repository at that commit, not `pip install`.
 
 **Judge scores are not independent.** The judge grades both systems in one
 prompt, so an absolute score moves depending on what it is compared against:
