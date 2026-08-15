@@ -326,6 +326,26 @@ file"` or `Target not found` for all fifteen, and the judge scored every one
 Pooling those fifteen zeros into the headline yields a "+2.07" gap that says
 nothing about usefulness, and we are not publishing one.
 
+### Deterministic analysis vs. bare LLM
+
+A different question from everything above: not "Aletheore vs. RepoWise,"
+but for the parts of Aletheore that are **not** an LLM call at all — hotspots,
+ownership, dead-code, computed from real git history and a real import graph —
+can a bare LLM reproduce the answer if it's simply handed the same data?
+
+No. On the same flask corpus, given the exact same git log slice and import
+statements Aletheore's scanner consumes:
+
+| | Aletheore | gpt-5.6-luna (bare) | gpt-5.6-terra (bare) |
+|---|---|---|---|
+| Hotspots (top 10 by commit count) | exact, every run | declined — asked for real code instead | **0/10 counts correct**, 4 fabricated entries |
+| Ownership (top 8 by commit count) | exact | 1/8 exact, mean error ~14.5, drops a real contributor | 4/8 exact, still fabricates a person |
+| Dead code (unreachable modules) | 2/2, zero false positives | 48 flagged, **4.2% precision** | 49 flagged, **4.1% precision** |
+
+Full write-up, methodology, and known limitations (including a real bug this
+testing surfaced — `ownership <file>` ignores its own argument) in
+[`DETERMINISTIC_VS_LLM.md`](DETERMINISTIC_VS_LLM.md).
+
 ### Where we lose
 
 Stated here rather than in a footnote:
@@ -396,12 +416,15 @@ That defect invalidated our own first run.
 | `scripts/` | runners, scorers, the blind judges, the language-coverage matrix |
 | `scripts/score_fallback_judge.py` | re-derives every fallback number above from `results/`, no API key |
 | `results/` | raw per-query output — recompute any number without an API key |
+| `results/det_vs_llm_*` | inputs, model outputs, and ground truth for the deterministic-analysis-vs-bare-LLM benchmark |
+| `scripts/det_vs_llm_*` | its runners — `det_vs_llm_exact_ground_truth.py` needs no API key |
 | `corpora.json` | pinned commits for all corpora |
 | `CORPUS_PLAN.md` | the 11-language programme: repos, procedure, cost, and what was rejected |
 | `METHODOLOGY.md` | full method, every adjustment made in RepoWise's favour, errors caught in our own runs |
 | `REPRODUCIBILITY.md` | versions; what reproduces bit-for-bit and what does not |
 | `LANGUAGE_COVERAGE.md` | scanner coverage across all 11 supported languages |
 | `AIRVIEW_GAP.md` | why our generated wiki lost, what changed, and what did not work |
+| `DETERMINISTIC_VS_LLM.md` | hotspots/ownership/dead-code: can a bare LLM reproduce the scanner's answer given the same data? |
 
 ## Honesty notes
 
