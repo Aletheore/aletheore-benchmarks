@@ -263,19 +263,24 @@ the lesson is recorded in **METHODOLOGY.md** rather than quietly corrected.
 > PyPI; this section is the one exception, and is labeled as one rather than
 > folded into the reproducible table above.
 
-Same 12 corpora, same 21 corpus/regime pairs, same questions and ground
+Same 13 corpora, same 23 corpus/regime pairs, same questions and ground
 truth as the table above - only the embedder changed, local `nomic-embed-text`
-(768-dim) to hosted `jina-embeddings-v2-base-code` (768-dim).
+(768-dim) to hosted `jina-embeddings-v2-base-code` (768-dim). Includes
+`apache/thrift`, which timed out getting a hosted index built at all until
+[`#264`](https://github.com/Aletheore/Aletheore/pull/264) fixed a crash in
+`jina-embed` under concurrent access - see that PR, and
+[`jina_embed/server.py`](https://github.com/Aletheore/Aletheore/blob/master/github-app/jina_embed/server.py),
+for what changed server-side since the CLI checkout commit cited above.
 
 ```mermaid
 xychart-beta
     title "Top-1 change, hosted jina vs local nomic (points, +better -worse)"
-    x-axis [flask, gin, serde, Slim-gen, Slim-voc, guzzle-gen, guzzle-voc, jekyll-gen, jekyll-voc, zod-gen, zod-voc, gson-gen, gson-voc, axios-gen, axios-voc, jq-gen, jq-voc, fmt-gen, fmt-voc, AutoMapper-gen, AutoMapper-voc]
+    x-axis [flask, gin, serde, Slim-gen, Slim-voc, guzzle-gen, guzzle-voc, jekyll-gen, jekyll-voc, zod-gen, zod-voc, gson-gen, gson-voc, axios-gen, axios-voc, jq-gen, jq-voc, fmt-gen, fmt-voc, AutoMapper-gen, AutoMapper-voc, thrift-gen, thrift-xlang]
     y-axis "Δ top-1 (percentage points)" -10 --> 30
-    bar [9.3, 6.7, 0.0, 26.6, -6.6, 0.0, 20.0, 0.0, 0.0, -6.7, -6.7, 6.7, 6.7, 0.0, 6.7, 0.0, 6.7, 6.7, 0.0, 6.6, 0.0]
+    bar [9.3, 6.7, 0.0, 26.6, -6.6, 0.0, 20.0, 0.0, 0.0, -6.7, -6.7, 6.7, 6.7, 0.0, 6.7, 0.0, 6.7, 6.7, 0.0, 6.6, 0.0, 13.3, 20.0]
 ```
 
-**Mean: top-1 +3.9pp, MRR +0.045. 18 of 21 rows flat or better; 3 worse, all
+**Mean: top-1 +5.0pp, MRR +0.049. 20 of 23 rows flat or better; 3 worse, all
 in either Slim's vocabulary regime or zod.**
 
 | corpus | nomic top-1 | jina top-1 | Δ top-1 | nomic MRR | jina MRR | |
@@ -301,6 +306,14 @@ in either Slim's vocabulary regime or zod.**
 | fmt (vocab) | 66.7% | 66.7% | +0.0pp | 0.789 | 0.789 | 🟰 |
 | AutoMapper (general) | 6.7% | 13.3% | +6.6pp | 0.177 | 0.243 | ✅ |
 | AutoMapper (vocab) | 86.7% | 86.7% | +0.0pp | 0.933 | 0.922 | 🟰 |
+| thrift (general) | 6.7% | 20.0% | +13.3pp | 0.241 | 0.285 | ✅ |
+| thrift (cross-language) | 53.3% | 73.3% | +20.0pp | 0.677 | 0.822 | ✅ |
+
+Thrift's cross-language row is the largest single gain in the table. That
+regime specifically tests picking the right language's file when a question
+names one explicitly - the exact defect the 0.8.10→0.8.11 language pre-filter
+fix (documented above) targeted. Hosted jina extends that gain further on
+top of the fix rather than eroding it.
 
 <details>
 <summary><strong>Why zod regresses</strong> — checked directly rather than left as a footnote</summary>

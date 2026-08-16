@@ -49,6 +49,7 @@ MATRIX: list[tuple[str, str]] = [
     ("jq", "jq"), ("jq", "jq_vocab"),
     ("fmt", "fmt"), ("fmt", "fmt_vocab"),
     ("automapper", "automapper"), ("automapper", "automapper_vocab"),
+    ("thrift", "thrift"), ("thrift", "thrift_crosslang"),
 ]
 
 TOP_K = 10
