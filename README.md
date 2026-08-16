@@ -118,6 +118,14 @@ AutoMapper top-3 (13.3% → 20.0%), both from #236.
 TypeScript are not, and the weak corpora were measured last, so the published
 average would have looked considerably better had we stopped at three languages.
 
+```mermaid
+xychart-beta
+    title "Top-1, general phrasing, by corpus - the spread the average hides"
+    x-axis [gin, flask, serde, jq, gson, fmt, Slim, jekyll, zod, axios, AutoMapper, thrift]
+    y-axis "Top-1 accuracy (%)" 0 --> 100
+    bar [80.0, 71.9, 53.3, 53.3, 40.0, 40.0, 26.7, 26.7, 20.0, 20.0, 6.7, 6.7]
+```
+
 Of the causes investigated below, one is fixed, one is measured but only partly
 recoverable, one was tested and ruled out, and one turned out to be **our own
 question authoring rather than the product**. Two candidate ranking changes were
@@ -184,6 +192,14 @@ than one module, results are drawn from modules that are not the library:
 | jekyll | 5/75 (7%) |
 | flask | 7/160 (4%) |
 | serde, Slim | 0% |
+
+```mermaid
+xychart-beta
+    title "Top-5 answer slots spent outside the library subtree"
+    x-axis [zod, gson, jekyll, flask, serde, Slim]
+    y-axis "Share of top-5 slots (%)" 0 --> 30
+    bar [28, 21, 7, 4, 0, 0]
+```
 
 Roughly a quarter of zod's answer budget goes to documentation and benchmark
 code. Nothing in the index distinguishes "the library" from "everything else
@@ -308,6 +324,17 @@ serde $0.33, zod $0.36, gson $0.47. Aletheore's side needs no API key at all,
 which is also why every number in this repository can be recomputed without
 one.
 
+```mermaid
+pie showData title RepoWise's $1.85, by corpus
+    "Slim ($0.09)" : 0.09
+    "guzzle ($0.13)" : 0.13
+    "gin ($0.18)" : 0.18
+    "jekyll ($0.29)" : 0.29
+    "serde ($0.33)" : 0.33
+    "zod ($0.36)" : 0.36
+    "gson ($0.47)" : 0.47
+```
+
 ## Covering the files a PR touches
 
 Over the last 30 non-merge commits of Flask (100 changed files), how often does
@@ -317,6 +344,15 @@ AIRview have anything at all to say about a file that changed?
 |---|---:|---:|
 | AIRview pages alone | 4 / 30 | 21 / 100 |
 | pages + deterministic file fallback | **30 / 30** | **100 / 100** |
+
+```mermaid
+xychart-beta
+    title "PR-touched-file coverage: pages alone vs pages + fallback"
+    x-axis ["commits fully covered", "changed files covered"]
+    y-axis "Coverage (%)" 0 --> 100
+    bar "AIRview pages alone" [13.3, 21]
+    bar "pages + deterministic fallback" [100, 100]
+```
 
 Only 15 of the 30 commits had a page for even one of their changed files.
 Coverage — not ranking quality on the files already covered — was the real gap
