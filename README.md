@@ -16,6 +16,7 @@
 
 <p><sub>
   <a href="#locating-code--which-file-implements-x">Locating code</a> ·
+  <a href="#hosted-embeddings-jina-vs-local-nomic">Hosted vs local</a> ·
   <a href="#head-to-head-against-repowise">Head-to-head</a> ·
   <a href="#cost-to-get-to-a-searchable-index">Cost</a> ·
   <a href="#covering-the-files-a-pr-touches">PR coverage</a> ·
@@ -249,6 +250,93 @@ current table is the single 0.8.11 PyPI run from `/private/tmp/audit-0811.txt`;
 the lesson is recorded in **METHODOLOGY.md** rather than quietly corrected.
 
 </details>
+
+## Hosted embeddings: jina vs local nomic
+
+> **This section does not carry the same "no API key, no network" guarantee
+> as the rest of this repository.** It measures Aletheore's *hosted*
+> embedding endpoint (`jina-embeddings-v2-base-code`, Q8_0 GGUF via
+> llama.cpp), which requires `aletheore login` and a paid plan. It was run
+> against a dev checkout at commit
+> [`e2cc409`](https://github.com/Aletheore/Aletheore/commit/e2cc409),
+> not a PyPI release — everything else in this repository is 0.8.11 from
+> PyPI; this section is the one exception, and is labeled as one rather than
+> folded into the reproducible table above.
+
+Same 12 corpora, same 21 corpus/regime pairs, same questions and ground
+truth as the table above - only the embedder changed, local `nomic-embed-text`
+(768-dim) to hosted `jina-embeddings-v2-base-code` (768-dim).
+
+```mermaid
+xychart-beta
+    title "Top-1 change, hosted jina vs local nomic (points, +better -worse)"
+    x-axis [flask, gin, serde, Slim-gen, Slim-voc, guzzle-gen, guzzle-voc, jekyll-gen, jekyll-voc, zod-gen, zod-voc, gson-gen, gson-voc, axios-gen, axios-voc, jq-gen, jq-voc, fmt-gen, fmt-voc, AutoMapper-gen, AutoMapper-voc]
+    y-axis "Δ top-1 (percentage points)" -10 --> 30
+    bar [9.3, 6.7, 0.0, 26.6, -6.6, 0.0, 20.0, 0.0, 0.0, -6.7, -6.7, 6.7, 6.7, 0.0, 6.7, 0.0, 6.7, 6.7, 0.0, 6.6, 0.0]
+```
+
+**Mean: top-1 +3.9pp, MRR +0.045. 18 of 21 rows flat or better; 3 worse, all
+in either Slim's vocabulary regime or zod.**
+
+| corpus | nomic top-1 | jina top-1 | Δ top-1 | nomic MRR | jina MRR | |
+|---|---:|---:|---:|---:|---:|:-:|
+| flask (location) | 71.9% | 81.2% | +9.3pp | 0.832 | 0.901 | ✅ |
+| gin | 80.0% | 86.7% | +6.7pp | 0.878 | 0.933 | ✅ |
+| serde | 53.3% | 53.3% | +0.0pp | 0.617 | 0.678 | 🟰 |
+| Slim (general) | 26.7% | 53.3% | +26.6pp | 0.458 | 0.647 | ✅ |
+| Slim (vocab) | 73.3% | 66.7% | -6.6pp | 0.797 | 0.811 | ⚠️ |
+| guzzle (general) | 20.0% | 20.0% | +0.0pp | 0.374 | 0.458 | 🟰 |
+| guzzle (vocab) | 53.3% | 73.3% | +20.0pp | 0.728 | 0.844 | ✅ |
+| jekyll (general) | 26.7% | 26.7% | +0.0pp | 0.337 | 0.382 | 🟰 |
+| jekyll (vocab) | 66.7% | 66.7% | +0.0pp | 0.778 | 0.791 | 🟰 |
+| zod (general) | 20.0% | 13.3% | -6.7pp | 0.289 | 0.237 | ⚠️ |
+| zod (vocab) | 60.0% | 53.3% | -6.7pp | 0.667 | 0.658 | ⚠️ |
+| gson (general) | 40.0% | 46.7% | +6.7pp | 0.544 | 0.569 | ✅ |
+| gson (vocab) | 60.0% | 66.7% | +6.7pp | 0.749 | 0.797 | ✅ |
+| axios (general) | 20.0% | 20.0% | +0.0pp | 0.407 | 0.420 | 🟰 |
+| axios (vocab) | 73.3% | 80.0% | +6.7pp | 0.850 | 0.878 | ✅ |
+| jq (general) | 53.3% | 53.3% | +0.0pp | 0.648 | 0.728 | 🟰 |
+| jq (vocab) | 73.3% | 80.0% | +6.7pp | 0.867 | 0.883 | ✅ |
+| fmt (general) | 40.0% | 46.7% | +6.7pp | 0.527 | 0.621 | ✅ |
+| fmt (vocab) | 66.7% | 66.7% | +0.0pp | 0.789 | 0.789 | 🟰 |
+| AutoMapper (general) | 6.7% | 13.3% | +6.6pp | 0.177 | 0.243 | ✅ |
+| AutoMapper (vocab) | 86.7% | 86.7% | +0.0pp | 0.933 | 0.922 | 🟰 |
+
+<details>
+<summary><strong>Why zod regresses</strong> — checked directly rather than left as a footnote</summary>
+
+Both zod rows are among the three cells that move against jina. Two candidate
+explanations were checked and one holds.
+
+**Not a scanner or language-specific bug.** zod's index build logged no
+warnings, its chunk count (2,395) is unremarkable, and a comparison against a
+saved older nomic run, question by question, on the general-regime questions,
+shows the exact same **6/15 top-5 hit rate** for both embedders - they
+disagree on which two questions they answer, but not on how many.
+
+**The real cause, checked at the individual question level:** zod ships
+parallel `classic` and `mini` API variants that implement near-duplicate ISO
+date/time types for different bundle targets. For "Where are date and time
+string formats defined as their own types?" (ground truth
+`packages/zod/src/v4/classic/iso.ts`), jina ranked `mini/iso.ts` 5th and the
+correct `classic/iso.ts` 7th - both files answer the question about equally
+well in isolation, and only the corpus's own name for one of them is "the"
+answer. This is the same **near-duplicate crowding** category already
+documented above for Slim, Gson and Thrift, landing on zod's classic/mini
+split instead this time. It is not new to jina, and on a 15-question sample a
+2-question rank shift is within ordinary embedder-swap noise, not a
+systematic defect.
+
+</details>
+
+Raw rows are in
+[`results/retrieval_raw_jina_hosted.json`](results/retrieval_raw_jina_hosted.json),
+produced by
+[`scripts/run_retrieval_matrix.py`](scripts/run_retrieval_matrix.py) and
+scored by
+[`scripts/score_retrieval_matrix.py`](scripts/score_retrieval_matrix.py) -
+no API key needed to re-derive the table from the saved rows, only to
+reproduce the run that generated them.
 
 ## Head-to-head against RepoWise
 
@@ -487,6 +575,21 @@ The RepoWise half needs an LLM key and, importantly, `REPOWISE_EMBEDDER=ollama`
 — without it `repowise search --mode semantic` silently degrades to full-text.
 That defect invalidated our own first run.
 
+**The hosted-embeddings comparison is the one section above that does not
+reproduce this way.** Generating fresh rows needs `aletheore login` against a
+paid plan and a dev checkout at the commit cited in that section, not a
+`pip install`:
+
+```bash
+python3 scripts/run_retrieval_matrix.py --label jina_hosted   # needs credentials
+python3 scripts/score_retrieval_matrix.py results/retrieval_raw_jina_hosted.json   # does not
+```
+
+The second line alone re-derives the published table from the rows already
+saved in `results/` - no credentials, no network, the same guarantee as
+everything else in this repository. Only generating new rows needs the
+paid plan.
+
 ## Contents
 
 | path | what |
@@ -494,6 +597,8 @@ That defect invalidated our own first run.
 | `questions/` | 418 questions in 28 sets (the whole directory; the retrieval scope quoted above is a subset), every ground-truth anchor mechanically verified |
 | `scripts/` | runners, scorers, the blind judges, the language-coverage matrix |
 | `scripts/score_fallback_judge.py` | re-derives every fallback number above from `results/`, no API key |
+| `scripts/run_retrieval_matrix.py` | runs the retrieval matrix against every corpus's built index; hosted embeddings need `aletheore login` |
+| `scripts/score_retrieval_matrix.py` | re-derives the "Locating code" and "Hosted embeddings" tables from `results/`, no API key |
 | `results/` | raw per-query output — recompute any number without an API key |
 | `corpora.json` | pinned commits for all corpora |
 | `CORPUS_PLAN.md` | the 11-language programme: repos, procedure, cost, and what was rejected |
