@@ -1,0 +1,9 @@
+{
+  "examples/celery/src/task_app/__init__.py": "What does create_app configure, and how does FlaskTask make Celery use the Flask application context?",
+  "examples/javascript/js_example/__init__.py": "What object is exported as app in this example package, and which modules does this file depend on?",
+  "tests/conftest.py": "Which fixtures establish the Flask app and request contexts, and what does leak_detector prevent between tests?",
+  "tests/test_blueprints.py": "How does this test module verify blueprint-specific error handlers and URL prefix behavior?",
+  "tests/test_cli.py": "What does this module test about locating Flask applications and running CLI commands with an application context?",
+  "tests/test_reqctx.py": "Which request-context cleanup and context-binding behaviors are covered, including the threaded context test?",
+  "tests/test_views.py": "What view dispatch behaviors does this module test, including automatic OPTIONS handling and method inheritance?"
+}

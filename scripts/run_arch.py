@@ -1,5 +1,8 @@
-import asyncio, json, sqlite3, sys
+import asyncio, json, os, sqlite3, sys
 from pathlib import Path
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _bench
 
 BUDGET = 12000  # equal context budget per tool, filled in rank order
 TOPK = 5

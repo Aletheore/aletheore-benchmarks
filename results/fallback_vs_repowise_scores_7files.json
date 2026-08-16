@@ -1,0 +1,467 @@
+[
+  {
+    "repeat": 1,
+    "rows": [
+      {
+        "file": "examples/celery/src/task_app/__init__.py",
+        "q": "What does create_app configure, and how does FlaskTask make Celery use the Flask application context?",
+        "budget_chars": 1436,
+        "fallback": 3.0,
+        "repowise": 1.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          1,
+          1
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Provides the full source code of create_app and FlaskTask, directly showing configuration and context handling.",
+        "why_repowise": "Only provides metadata and a summary, lacking the actual code needed to understand the mechanisms."
+      },
+      {
+        "file": "examples/javascript/js_example/__init__.py",
+        "q": "What object is exported as app in this example package, and which modules does this file depend on?",
+        "budget_chars": 421,
+        "fallback": 3.0,
+        "repowise": 1.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          1,
+          1
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly shows the source code defining `app` as a Flask instance and the import of views, making the dependency clear.",
+        "why_repowise": "Only provides a summary and metadata, lacking the actual code or explicit dependency details, so it's insufficient for a precise answer."
+      },
+      {
+        "file": "tests/conftest.py",
+        "q": "Which fixtures establish the Flask app and request contexts, and what does leak_detector prevent between tests?",
+        "budget_chars": 3130,
+        "fallback": 3.0,
+        "repowise": 3.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          3,
+          3
+        ],
+        "pref": [
+          "tie",
+          "tie"
+        ],
+        "why_fallback": "Provides full source of conftest.py with all relevant fixtures (app, app_ctx, req_ctx, leak_detector) and clear explanation of leak_detector's behavior.",
+        "why_repowise": "Includes the same source code and metadata, covering the fixtures and leak_detector's purpose, though slightly less direct in presentation."
+      },
+      {
+        "file": "tests/test_blueprints.py",
+        "q": "How does this test module verify blueprint-specific error handlers and URL prefix behavior?",
+        "budget_chars": 5000,
+        "fallback": 2.0,
+        "repowise": 3.0,
+        "fallback_raw": [
+          2,
+          2
+        ],
+        "repowise_raw": [
+          3,
+          3
+        ],
+        "pref": [
+          "repowise",
+          "repowise"
+        ],
+        "why_fallback": "Provides a symbol index and partial source for the error-handling tests, but omits the URL prefix tests and the full app_errorhandler test, leaving gaps.",
+        "why_repowise": "Includes the full bodies of the error-handling tests and the prefix-slash and URL-defaults tests, covering both blueprint-specific handlers and prefix behavior with specifics."
+      },
+      {
+        "file": "tests/test_cli.py",
+        "q": "What does this module test about locating Flask applications and running CLI commands with an application context?",
+        "budget_chars": 4999,
+        "fallback": 3.0,
+        "repowise": 2.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          2,
+          2
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material includes the full test file with detailed test functions and code snippets that directly cover locating Flask applications and running CLI commands with an application context, providing all necessary specifics.",
+        "why_repowise": "The material provides a summary and skeleton of the test file, but omits many key test bodies, leaving gaps in the specifics of how application context is tested."
+      },
+      {
+        "file": "tests/test_reqctx.py",
+        "q": "Which request-context cleanup and context-binding behaviors are covered, including the threaded context test?",
+        "budget_chars": 5000,
+        "fallback": 3.0,
+        "repowise": 2.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          2,
+          2
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "System A provides the full source of the test file, including the threaded context test and all relevant context-binding and cleanup tests, with enough detail to answer the question.",
+        "why_repowise": "System B provides a skeleton with summaries and partial code, but omits the full threaded context test and some details, leaving minor gaps."
+      },
+      {
+        "file": "tests/test_views.py",
+        "q": "What view dispatch behaviors does this module test, including automatic OPTIONS handling and method inheritance?",
+        "budget_chars": 4891,
+        "fallback": 3.0,
+        "repowise": 2.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          2,
+          2
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Provides full source of the test module, covering all dispatch behaviors including automatic OPTIONS handling, method inheritance, HEAD, decorators, and endpoint override.",
+        "why_repowise": "Provides a skeleton with summaries and partial code, but omits key details like the exact assertions for automatic OPTIONS enable/disable and method inheritance specifics."
+      }
+    ],
+    "fallback_mean": 2.857142857142857,
+    "repowise_mean": 2.0,
+    "gap": 0.8571428571428572
+  },
+  {
+    "repeat": 2,
+    "rows": [
+      {
+        "file": "examples/celery/src/task_app/__init__.py",
+        "q": "What does create_app configure, and how does FlaskTask make Celery use the Flask application context?",
+        "budget_chars": 1436,
+        "fallback": 3.0,
+        "repowise": 1.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          1,
+          1
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Provides the full source code of create_app and FlaskTask, directly showing configuration and context handling.",
+        "why_repowise": "Only provides metadata and a summary, lacking the actual code needed to understand the mechanisms."
+      },
+      {
+        "file": "examples/javascript/js_example/__init__.py",
+        "q": "What object is exported as app in this example package, and which modules does this file depend on?",
+        "budget_chars": 421,
+        "fallback": 3.0,
+        "repowise": 1.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          1,
+          1
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly shows the source code defining `app` as a Flask instance and the import of `views`, making the dependency explicit.",
+        "why_repowise": "Only provides a summary and metadata, lacking the actual code or explicit dependency details, so it's insufficient for a precise answer."
+      },
+      {
+        "file": "tests/conftest.py",
+        "q": "Which fixtures establish the Flask app and request contexts, and what does leak_detector prevent between tests?",
+        "budget_chars": 3130,
+        "fallback": 3.0,
+        "repowise": 3.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          3,
+          3
+        ],
+        "pref": [
+          "tie",
+          "tie"
+        ],
+        "why_fallback": "Provides full source of conftest.py with all relevant fixtures (app, app_ctx, req_ctx, leak_detector) and clear explanation of leak_detector's behavior.",
+        "why_repowise": "Also includes the full source of conftest.py with the same fixtures and leak_detector details, though slightly truncated in skeleton."
+      },
+      {
+        "file": "tests/test_blueprints.py",
+        "q": "How does this test module verify blueprint-specific error handlers and URL prefix behavior?",
+        "budget_chars": 5000,
+        "fallback": 2.0,
+        "repowise": 3.0,
+        "fallback_raw": [
+          2,
+          2
+        ],
+        "repowise_raw": [
+          3,
+          3
+        ],
+        "pref": [
+          "repowise",
+          "repowise"
+        ],
+        "why_fallback": "Provides a symbol index and partial source for the error-handling tests, but omits the URL prefix tests and the full app_errorhandler test, so a reader would need to infer some behavior.",
+        "why_repowise": "Includes the full bodies of the error-handling tests and the prefix-slash and URL-defaults tests, directly showing how blueprint-specific handlers and URL prefixes are verified."
+      },
+      {
+        "file": "tests/test_cli.py",
+        "q": "What does this module test about locating Flask applications and running CLI commands with an application context?",
+        "budget_chars": 4999,
+        "fallback": 3.0,
+        "repowise": 2.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          2,
+          2
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Provides detailed test code and symbol references covering app discovery and app context behavior, enabling a precise answer.",
+        "why_repowise": "Gives a summary and partial code but omits key test bodies for app context, leaving gaps."
+      },
+      {
+        "file": "tests/test_reqctx.py",
+        "q": "Which request-context cleanup and context-binding behaviors are covered, including the threaded context test?",
+        "budget_chars": 5000,
+        "fallback": 3.0,
+        "repowise": 2.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          2,
+          2
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "System A provides the full source of the test file, including the threaded context test and all relevant context-binding and cleanup tests, with enough detail to answer the question.",
+        "why_repowise": "System B provides a skeleton with summaries and partial code, but omits the full threaded context test and some context-binding details, leaving gaps."
+      },
+      {
+        "file": "tests/test_views.py",
+        "q": "What view dispatch behaviors does this module test, including automatic OPTIONS handling and method inheritance?",
+        "budget_chars": 4891,
+        "fallback": 3.0,
+        "repowise": 2.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          2,
+          2
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Provides full source of the test module, covering all dispatch behaviors including automatic OPTIONS, method inheritance, HEAD, decorators, and endpoint override with specifics.",
+        "why_repowise": "Provides a skeleton with summaries and partial code, but omits key details of automatic OPTIONS and method inheritance tests, requiring a reader to fetch the full file."
+      }
+    ],
+    "fallback_mean": 2.857142857142857,
+    "repowise_mean": 2.0,
+    "gap": 0.8571428571428572
+  },
+  {
+    "repeat": 3,
+    "rows": [
+      {
+        "file": "examples/celery/src/task_app/__init__.py",
+        "q": "What does create_app configure, and how does FlaskTask make Celery use the Flask application context?",
+        "budget_chars": 1436,
+        "fallback": 3.0,
+        "repowise": 1.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          1,
+          1
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Provides the full source code of create_app and FlaskTask, directly showing configuration and context handling.",
+        "why_repowise": "Only provides metadata and a summary, lacking the actual code needed to understand the mechanisms."
+      },
+      {
+        "file": "examples/javascript/js_example/__init__.py",
+        "q": "What object is exported as app in this example package, and which modules does this file depend on?",
+        "budget_chars": 421,
+        "fallback": 3.0,
+        "repowise": 1.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          1,
+          1
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly shows the source code defining app as Flask(__name__) and the import of views, fully answering the question.",
+        "why_repowise": "Only provides a summary and metadata, lacking the actual code or explicit dependency details, so it's insufficient."
+      },
+      {
+        "file": "tests/conftest.py",
+        "q": "Which fixtures establish the Flask app and request contexts, and what does leak_detector prevent between tests?",
+        "budget_chars": 3130,
+        "fallback": 3.0,
+        "repowise": 3.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          3,
+          3
+        ],
+        "pref": [
+          "tie",
+          "tie"
+        ],
+        "why_fallback": "Provides full source of conftest.py with all relevant fixtures (app, app_ctx, req_ctx, leak_detector) and clear explanation of leak_detector's behavior.",
+        "why_repowise": "Includes the same source code and metadata, covering the fixtures and leak_detector's purpose, though slightly less direct in presentation."
+      },
+      {
+        "file": "tests/test_blueprints.py",
+        "q": "How does this test module verify blueprint-specific error handlers and URL prefix behavior?",
+        "budget_chars": 5000,
+        "fallback": 2.0,
+        "repowise": 3.0,
+        "fallback_raw": [
+          2,
+          2
+        ],
+        "repowise_raw": [
+          3,
+          3
+        ],
+        "pref": [
+          "repowise",
+          "repowise"
+        ],
+        "why_fallback": "Provides a symbol index and partial source for the error-handling tests, but omits the URL prefix tests and the full app_errorhandler test, so a reader would need to infer some behavior.",
+        "why_repowise": "Includes the full bodies of the key error-handling tests and the prefix-slash and URL-defaults tests, directly showing how blueprint-specific handlers and prefixes are verified."
+      },
+      {
+        "file": "tests/test_cli.py",
+        "q": "What does this module test about locating Flask applications and running CLI commands with an application context?",
+        "budget_chars": 4999,
+        "fallback": 3.0,
+        "repowise": 2.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          2,
+          2
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Provides detailed code excerpts and symbol listings covering find_best_app, locate_app, and app context tests, enabling a complete answer.",
+        "why_repowise": "Gives a summary and skeleton with some test names but omits key details like the actual app context test bodies, leaving gaps."
+      },
+      {
+        "file": "tests/test_reqctx.py",
+        "q": "Which request-context cleanup and context-binding behaviors are covered, including the threaded context test?",
+        "budget_chars": 5000,
+        "fallback": 3.0,
+        "repowise": 2.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          2,
+          2
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "System A provides the full source of the test file, including the threaded context test and all context-binding/cleanup tests, with enough detail to answer the question completely.",
+        "why_repowise": "System B provides a skeleton with summaries and partial code, but omits the full threaded context test and some context-binding details, leaving minor gaps."
+      },
+      {
+        "file": "tests/test_views.py",
+        "q": "What view dispatch behaviors does this module test, including automatic OPTIONS handling and method inheritance?",
+        "budget_chars": 4891,
+        "fallback": 3.0,
+        "repowise": 2.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          2,
+          2
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Provides full source of the test module, covering all dispatch behaviors including automatic OPTIONS handling, method inheritance, HEAD, decorators, and endpoint override.",
+        "why_repowise": "Provides a skeleton with summaries and partial code, but omits key details of automatic OPTIONS and inheritance tests, requiring the reader to infer or fetch more."
+      }
+    ],
+    "fallback_mean": 2.857142857142857,
+    "repowise_mean": 2.0,
+    "gap": 0.8571428571428572
+  }
+]

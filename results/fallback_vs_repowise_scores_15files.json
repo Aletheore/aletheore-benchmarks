@@ -1,0 +1,971 @@
+[
+  {
+    "repeat": 1,
+    "rows": [
+      {
+        "file": ".github/workflows/lock.yaml",
+        "q": "What triggers this workflow, and what does it actually do to closed issues?",
+        "budget_chars": 771,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Provides the full workflow definition with schedule trigger, permissions, and the lock-threads action configured for 14-day inactivity on issues, directly answering what triggers it and what it does.",
+        "why_repowise": "Only contains metadata about the file with no actual workflow content, offering no information about triggers or actions."
+      },
+      {
+        "file": ".github/workflows/pre-commit.yaml",
+        "q": "Which events trigger this workflow, and what tool does it set up before running checks?",
+        "budget_chars": 891,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material directly shows the workflow triggers (pull_request and push to main/stable) and the setup steps (checkout, setup-uv, setup-python, cache) before running checks.",
+        "why_repowise": "The material only provides metadata about the workflow file, not the actual triggers or setup steps."
+      },
+      {
+        "file": ".github/workflows/publish.yaml",
+        "q": "What triggers the publish workflow, and what does the concurrency group key on?",
+        "budget_chars": 882,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly shows the workflow triggers on tag pushes and the concurrency group keyed on the pushed tag ref.",
+        "why_repowise": "Only provides metadata about the file, with no details on triggers or concurrency."
+      },
+      {
+        "file": ".github/workflows/tests.yaml",
+        "q": "On which events does this workflow run, and what does its concurrency group do?",
+        "budget_chars": 874,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly shows the workflow triggers (pull_request and push with branch/path filters) and the concurrency group expression with cancel-in-progress, fully answering the question.",
+        "why_repowise": "Provides only metadata about the file with no content about events or concurrency, making it irrelevant."
+      },
+      {
+        "file": ".github/workflows/zizmor.yaml",
+        "q": "What does this workflow analyze, and on which file paths does it trigger?",
+        "budget_chars": 686,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material directly shows the workflow triggers on pull requests and pushes to main/stable branches with paths matching '**/*.yaml?', and clearly states it analyzes GitHub Actions security with zizmor.",
+        "why_repowise": "The material is a metadata dump about the file itself, providing no information about what the workflow analyzes or its trigger paths."
+      },
+      {
+        "file": ".pre-commit-config.yaml",
+        "q": "Which pre-commit hooks are configured for ruff, and which tool's hook enforces the uv lockfile stays in sync?",
+        "budget_chars": 842,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly lists the ruff hooks (ruff-check, ruff-format) and identifies uv-pre-commit's uv-lock hook as enforcing the lockfile sync.",
+        "why_repowise": "Provides only metadata about the config file with no actual hook configuration details."
+      },
+      {
+        "file": "CHANGES.rst",
+        "q": "What Python version support was dropped in the unreleased 3.2.0 version, and what happened to RequestContext?",
+        "budget_chars": 305,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly states Python 3.9 support dropped and explains RequestContext merged with AppContext as a deprecated alias.",
+        "why_repowise": "Contains only an error message and metadata, no relevant content."
+      },
+      {
+        "file": "docs/config.rst",
+        "q": "According to this doc, when does Flask expect configuration to be available, relative to when the application starts up?",
+        "budget_chars": 318,
+        "fallback": 1.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          1,
+          1
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material is a truncated snippet that only introduces configuration handling without addressing the timing of configuration availability relative to startup.",
+        "why_repowise": "The material is an error response indicating the target document was not found, providing no relevant information."
+      },
+      {
+        "file": "docs/patterns/mongoengine.rst",
+        "q": "What package must be installed via pip to use MongoEngine with Flask per this doc?",
+        "budget_chars": 360,
+        "fallback": 1.5,
+        "repowise": 0.0,
+        "fallback_raw": [
+          1,
+          2
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material mentions Flask-MongoEngine but the pip install command is incomplete, lacking the package name.",
+        "why_repowise": "The material is an error response indicating the target document was not found, providing no relevant information."
+      },
+      {
+        "file": "docs/tutorial/layout.rst",
+        "q": "What is the first shell command a reader is told to run on this tutorial page?",
+        "budget_chars": 344,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material directly shows the first shell command 'mkdir flask-tutorial' and the subsequent 'cd flask-tutorial'.",
+        "why_repowise": "The material is an error response indicating the target document was not found, providing no relevant content."
+      },
+      {
+        "file": "examples/celery/pyproject.toml",
+        "q": "What is this example project named, and what build backend does it use?",
+        "budget_chars": 518,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly provides the project name and build backend from the pyproject.toml file.",
+        "why_repowise": "Only shows metadata about the file, not the actual content needed to answer the question."
+      },
+      {
+        "file": "examples/javascript/pyproject.toml",
+        "q": "What does this example project demonstrate, and what optional dependency group does it declare?",
+        "budget_chars": 865,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material directly shows the pyproject.toml contents, including the description 'Demonstrates making AJAX requests to Flask' and the optional dependency group 'test' with pytest.",
+        "why_repowise": "The material is metadata about the file, not the file contents, so it does not answer the question."
+      },
+      {
+        "file": "examples/tutorial/pyproject.toml",
+        "q": "What is this project's declared name, and what tutorial does it correspond to?",
+        "budget_chars": 861,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The pyproject.toml explicitly declares the project name 'flaskr' and links to the Flask tutorial documentation.",
+        "why_repowise": "The metadata provides no project name or tutorial reference, only file classification."
+      },
+      {
+        "file": "pyproject.toml",
+        "q": "What is Flask's declared license and current in-development version number in this file?",
+        "budget_chars": 815,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly provides the license (BSD-3-Clause) and version (3.2.0.dev) from pyproject.toml.",
+        "why_repowise": "Contains only metadata about the file, not the actual license or version."
+      },
+      {
+        "file": "uv.lock",
+        "q": "What Python version range does this lockfile require, and what is the first package listed in it?",
+        "budget_chars": 293,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly states the required Python version range and lists the first package (alabaster) with the lockfile content.",
+        "why_repowise": "Reports that the target file was not found, providing no relevant information about the lockfile."
+      }
+    ],
+    "fallback_mean": 2.7666666666666666,
+    "repowise_mean": 0.0,
+    "gap": 2.7666666666666666
+  },
+  {
+    "repeat": 2,
+    "rows": [
+      {
+        "file": ".github/workflows/lock.yaml",
+        "q": "What triggers this workflow, and what does it actually do to closed issues?",
+        "budget_chars": 771,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Provides the full workflow definition with schedule trigger and lock-threads action parameters, directly answering what triggers it and what it does to closed issues.",
+        "why_repowise": "Only metadata about the file with no actual workflow content, so it cannot answer the question."
+      },
+      {
+        "file": ".github/workflows/pre-commit.yaml",
+        "q": "Which events trigger this workflow, and what tool does it set up before running checks?",
+        "budget_chars": 891,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material directly shows the workflow triggers (pull_request and push to main/stable) and the setup steps (checkout, setup-uv, setup-python, cache) before running checks.",
+        "why_repowise": "The material only provides metadata about the workflow file, not the actual triggers or setup steps."
+      },
+      {
+        "file": ".github/workflows/publish.yaml",
+        "q": "What triggers the publish workflow, and what does the concurrency group key on?",
+        "budget_chars": 882,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly shows the trigger (push tags) and concurrency group key (publish-${{ github.event.push.ref }}), fully sufficient.",
+        "why_repowise": "Only metadata about the file, no workflow content, irrelevant to the question."
+      },
+      {
+        "file": ".github/workflows/tests.yaml",
+        "q": "On which events does this workflow run, and what does its concurrency group do?",
+        "budget_chars": 874,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly shows the workflow triggers (pull_request and push with branch/path filters) and the concurrency group expression with cancel-in-progress, fully answering the question.",
+        "why_repowise": "Provides only metadata about the file with no content, so it cannot answer the question."
+      },
+      {
+        "file": ".github/workflows/zizmor.yaml",
+        "q": "What does this workflow analyze, and on which file paths does it trigger?",
+        "budget_chars": 686,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material directly shows the workflow triggers on pull requests and pushes to main/stable branches with paths matching '**/*.yaml?', and clearly states it analyzes GitHub Actions security with zizmor.",
+        "why_repowise": "The material is a metadata dump about the workflow file itself, providing no information about what the workflow analyzes or its trigger paths."
+      },
+      {
+        "file": ".pre-commit-config.yaml",
+        "q": "Which pre-commit hooks are configured for ruff, and which tool's hook enforces the uv lockfile stays in sync?",
+        "budget_chars": 842,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly lists the ruff hooks (ruff-check, ruff-format) and identifies uv-pre-commit's uv-lock hook as enforcing the lockfile sync.",
+        "why_repowise": "Provides only metadata about the config file with no actual hook configuration details."
+      },
+      {
+        "file": "CHANGES.rst",
+        "q": "What Python version support was dropped in the unreleased 3.2.0 version, and what happened to RequestContext?",
+        "budget_chars": 305,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly states Python 3.9 support dropped and explains RequestContext merged with AppContext as a deprecated alias.",
+        "why_repowise": "Contains only an error message and metadata, no relevant content."
+      },
+      {
+        "file": "docs/config.rst",
+        "q": "According to this doc, when does Flask expect configuration to be available, relative to when the application starts up?",
+        "budget_chars": 318,
+        "fallback": 1.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          1,
+          1
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material is a truncated excerpt that only introduces configuration handling without addressing the timing of configuration availability relative to startup.",
+        "why_repowise": "The material is an error response indicating the target document was not found, providing no relevant information."
+      },
+      {
+        "file": "docs/patterns/mongoengine.rst",
+        "q": "What package must be installed via pip to use MongoEngine with Flask per this doc?",
+        "budget_chars": 360,
+        "fallback": 1.5,
+        "repowise": 0.0,
+        "fallback_raw": [
+          1,
+          2
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material mentions Flask-MongoEngine but the pip install command is incomplete, lacking the package name.",
+        "why_repowise": "The material is an error response indicating the target document was not found, providing no relevant information."
+      },
+      {
+        "file": "docs/tutorial/layout.rst",
+        "q": "What is the first shell command a reader is told to run on this tutorial page?",
+        "budget_chars": 344,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material directly shows the first shell command 'mkdir flask-tutorial' on the tutorial page.",
+        "why_repowise": "The material is an error response indicating the target was not found, providing no relevant content."
+      },
+      {
+        "file": "examples/celery/pyproject.toml",
+        "q": "What is this example project named, and what build backend does it use?",
+        "budget_chars": 518,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly provides the project name and build backend from the pyproject.toml file.",
+        "why_repowise": "Only shows metadata about the file, not the actual content needed to answer the question."
+      },
+      {
+        "file": "examples/javascript/pyproject.toml",
+        "q": "What does this example project demonstrate, and what optional dependency group does it declare?",
+        "budget_chars": 865,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly provides the pyproject.toml contents, showing the project description and the optional 'test' dependency group.",
+        "why_repowise": "Only metadata about the file, no content or dependency information."
+      },
+      {
+        "file": "examples/tutorial/pyproject.toml",
+        "q": "What is this project's declared name, and what tutorial does it correspond to?",
+        "budget_chars": 861,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly provides the project name 'flaskr' and links to the Flask tutorial documentation.",
+        "why_repowise": "Only metadata about the file, no name or tutorial information."
+      },
+      {
+        "file": "pyproject.toml",
+        "q": "What is Flask's declared license and current in-development version number in this file?",
+        "budget_chars": 815,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly provides the license (BSD-3-Clause) and version (3.2.0.dev) from pyproject.toml.",
+        "why_repowise": "Contains only metadata about the file, not the actual license or version."
+      },
+      {
+        "file": "uv.lock",
+        "q": "What Python version range does this lockfile require, and what is the first package listed in it?",
+        "budget_chars": 293,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly states the required Python version range and the first package listed in the lockfile.",
+        "why_repowise": "Reports that the target file was not found, providing no relevant information."
+      }
+    ],
+    "fallback_mean": 2.7666666666666666,
+    "repowise_mean": 0.0,
+    "gap": 2.7666666666666666
+  },
+  {
+    "repeat": 3,
+    "rows": [
+      {
+        "file": ".github/workflows/lock.yaml",
+        "q": "What triggers this workflow, and what does it actually do to closed issues?",
+        "budget_chars": 771,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Provides the full workflow definition with schedule trigger and lock-threads action parameters, directly answering what triggers it and what it does to closed issues.",
+        "why_repowise": "Only metadata about the file with no actual workflow content, so it cannot answer the question."
+      },
+      {
+        "file": ".github/workflows/pre-commit.yaml",
+        "q": "Which events trigger this workflow, and what tool does it set up before running checks?",
+        "budget_chars": 891,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The workflow file explicitly lists the triggering events (pull_request and push to main/stable) and the setup steps (checkout, setup-uv, setup-python, cache) before running checks.",
+        "why_repowise": "The material only provides metadata about the file, not the actual workflow content, so it cannot answer the question."
+      },
+      {
+        "file": ".github/workflows/publish.yaml",
+        "q": "What triggers the publish workflow, and what does the concurrency group key on?",
+        "budget_chars": 882,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly shows the workflow triggers on tag pushes and the concurrency group keyed on the pushed tag ref.",
+        "why_repowise": "Only provides metadata about the file, with no content about triggers or concurrency."
+      },
+      {
+        "file": ".github/workflows/tests.yaml",
+        "q": "On which events does this workflow run, and what does its concurrency group do?",
+        "budget_chars": 874,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly shows the workflow triggers (pull_request and push with branch/path filters) and the concurrency group expression with cancel-in-progress, fully answering the question.",
+        "why_repowise": "Provides only metadata about the file with no content about events or concurrency, making it irrelevant."
+      },
+      {
+        "file": ".github/workflows/zizmor.yaml",
+        "q": "What does this workflow analyze, and on which file paths does it trigger?",
+        "budget_chars": 686,
+        "fallback": 3.0,
+        "repowise": 0.5,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          1,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material directly shows the workflow triggers on pull requests and pushes to main/stable with paths matching YAML files, and clearly states it analyzes GitHub Actions security with zizmor.",
+        "why_repowise": "The material only describes the file as a CI config and does not mention the workflow's purpose or trigger paths."
+      },
+      {
+        "file": ".pre-commit-config.yaml",
+        "q": "Which pre-commit hooks are configured for ruff, and which tool's hook enforces the uv lockfile stays in sync?",
+        "budget_chars": 842,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly lists the ruff hooks (ruff-check, ruff-format) and identifies uv-pre-commit's uv-lock hook as enforcing lockfile sync.",
+        "why_repowise": "Provides only metadata about the config file with no actual hook configuration details."
+      },
+      {
+        "file": "CHANGES.rst",
+        "q": "What Python version support was dropped in the unreleased 3.2.0 version, and what happened to RequestContext?",
+        "budget_chars": 305,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly states Python 3.9 support dropped and explains RequestContext merged with AppContext as a deprecated alias.",
+        "why_repowise": "Contains only an error message and metadata, no relevant content."
+      },
+      {
+        "file": "docs/config.rst",
+        "q": "According to this doc, when does Flask expect configuration to be available, relative to when the application starts up?",
+        "budget_chars": 318,
+        "fallback": 1.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          1,
+          1
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material is a truncated snippet that only introduces configuration handling without addressing the timing of configuration availability relative to app startup.",
+        "why_repowise": "The material is an error response indicating the target document was not found, providing no relevant information."
+      },
+      {
+        "file": "docs/patterns/mongoengine.rst",
+        "q": "What package must be installed via pip to use MongoEngine with Flask per this doc?",
+        "budget_chars": 360,
+        "fallback": 1.5,
+        "repowise": 0.0,
+        "fallback_raw": [
+          1,
+          2
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material mentions Flask-MongoEngine but the pip install command is incomplete, lacking the package name.",
+        "why_repowise": "The material is an error response indicating the target document was not found, providing no relevant information."
+      },
+      {
+        "file": "docs/tutorial/layout.rst",
+        "q": "What is the first shell command a reader is told to run on this tutorial page?",
+        "budget_chars": 344,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material directly shows the first shell command, 'mkdir flask-tutorial', with the exact command and context.",
+        "why_repowise": "The material is an error response indicating the target was not found, providing no relevant information."
+      },
+      {
+        "file": "examples/celery/pyproject.toml",
+        "q": "What is this example project named, and what build backend does it use?",
+        "budget_chars": 518,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly provides the project name and build backend from the pyproject.toml.",
+        "why_repowise": "Only metadata about the file, no actual content or answer."
+      },
+      {
+        "file": "examples/javascript/pyproject.toml",
+        "q": "What does this example project demonstrate, and what optional dependency group does it declare?",
+        "budget_chars": 865,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "The material directly shows the pyproject.toml contents, including the description 'Demonstrates making AJAX requests to Flask' and the optional dependency group 'test' with pytest.",
+        "why_repowise": "The material is metadata about the file, not the file contents, and provides no information about the example's purpose or optional dependencies."
+      },
+      {
+        "file": "examples/tutorial/pyproject.toml",
+        "q": "What is this project's declared name, and what tutorial does it correspond to?",
+        "budget_chars": 861,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly provides the project name 'flaskr' and links to the Flask tutorial, fully answering the question.",
+        "why_repowise": "Only metadata about the file, no project name or tutorial reference."
+      },
+      {
+        "file": "pyproject.toml",
+        "q": "What is Flask's declared license and current in-development version number in this file?",
+        "budget_chars": 815,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly provides the license (BSD-3-Clause) and version (3.2.0.dev) from pyproject.toml.",
+        "why_repowise": "Contains only metadata about the file, not the actual license or version."
+      },
+      {
+        "file": "uv.lock",
+        "q": "What Python version range does this lockfile require, and what is the first package listed in it?",
+        "budget_chars": 293,
+        "fallback": 3.0,
+        "repowise": 0.0,
+        "fallback_raw": [
+          3,
+          3
+        ],
+        "repowise_raw": [
+          0,
+          0
+        ],
+        "pref": [
+          "fallback",
+          "fallback"
+        ],
+        "why_fallback": "Directly states the required Python version range and lists the first package (alabaster) with clear lockfile metadata.",
+        "why_repowise": "Reports the target file was not found, providing no relevant information about the lockfile."
+      }
+    ],
+    "fallback_mean": 2.7666666666666666,
+    "repowise_mean": 0.03333333333333333,
+    "gap": 2.7333333333333334
+  }
+]

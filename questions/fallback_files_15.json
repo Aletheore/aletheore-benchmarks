@@ -1,0 +1,17 @@
+{
+  ".github/workflows/lock.yaml": "What triggers this workflow, and what does it actually do to closed issues?",
+  ".github/workflows/pre-commit.yaml": "Which events trigger this workflow, and what tool does it set up before running checks?",
+  ".github/workflows/publish.yaml": "What triggers the publish workflow, and what does the concurrency group key on?",
+  ".github/workflows/tests.yaml": "On which events does this workflow run, and what does its concurrency group do?",
+  ".github/workflows/zizmor.yaml": "What does this workflow analyze, and on which file paths does it trigger?",
+  ".pre-commit-config.yaml": "Which pre-commit hooks are configured for ruff, and which tool's hook enforces the uv lockfile stays in sync?",
+  "CHANGES.rst": "What Python version support was dropped in the unreleased 3.2.0 version, and what happened to RequestContext?",
+  "docs/config.rst": "According to this doc, when does Flask expect configuration to be available, relative to when the application starts up?",
+  "docs/patterns/mongoengine.rst": "What package must be installed via pip to use MongoEngine with Flask per this doc?",
+  "docs/tutorial/layout.rst": "What is the first shell command a reader is told to run on this tutorial page?",
+  "examples/celery/pyproject.toml": "What is this example project named, and what build backend does it use?",
+  "examples/javascript/pyproject.toml": "What does this example project demonstrate, and what optional dependency group does it declare?",
+  "examples/tutorial/pyproject.toml": "What is this project's declared name, and what tutorial does it correspond to?",
+  "pyproject.toml": "What is Flask's declared license and current in-development version number in this file?",
+  "uv.lock": "What Python version range does this lockfile require, and what is the first package listed in it?"
+}
