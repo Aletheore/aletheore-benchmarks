@@ -1,15 +1,52 @@
-# Aletheore benchmarks
+<div align="center">
 
-Reproducible evaluation of Aletheore's code retrieval and generated
-documentation, measured head-to-head against RepoWise.
+# Aletheore Benchmarks
 
-Every number here can be recomputed from the raw results in `results/` with no
-API key and no network. The harness, the questions, the ground truth and the
-losses are all in this repository.
+<p>
+  <img src="https://img.shields.io/badge/License-MIT-059669?style=for-the-badge&labelColor=0A0A0A" alt="License: MIT" />
+  <img src="https://img.shields.io/badge/Languages-11-1E293B?style=for-the-badge&labelColor=0A0A0A" alt="11 languages" />
+  <img src="https://img.shields.io/badge/Corpora-12-1E293B?style=for-the-badge&labelColor=0A0A0A" alt="12 corpora" />
+  <img src="https://img.shields.io/badge/Questions-418-1E293B?style=for-the-badge&labelColor=0A0A0A" alt="418 questions" />
+  <img src="https://img.shields.io/badge/API_key-not_required-1E293B?style=for-the-badge&labelColor=0A0A0A" alt="No API key required" />
+</p>
 
-## Results
+### Reproducible evaluation of Aletheore's code retrieval and generated documentation, measured head-to-head against RepoWise.
 
-### Locating code — "which file implements X?"
+<sub>Every number here can be recomputed from the raw results in <code>results/</code> with no API key and no network.<br/>The harness, the questions, the ground truth and the losses are all in this repository.</sub>
+
+<p><sub>
+  <a href="#locating-code--which-file-implements-x">Locating code</a> ·
+  <a href="#head-to-head-against-repowise">Head-to-head</a> ·
+  <a href="#cost-to-get-to-a-searchable-index">Cost</a> ·
+  <a href="#covering-the-files-a-pr-touches">PR coverage</a> ·
+  <a href="#explaining-code--how-does-x-work">Explaining code</a> ·
+  <a href="#where-we-lose">Where we lose</a> ·
+  <a href="#reproducing">Reproducing</a> ·
+  <a href="#contents">Contents</a>
+</sub></p>
+
+---
+
+<table align="center">
+<tr>
+<td align="center" width="240"><h2>5–0–2</h2></td>
+<td align="center" width="240"><h2>$0.00</h2></td>
+<td align="center" width="240"><h2>93.3%</h2></td>
+</tr>
+<tr>
+<td align="center" valign="top"><sub><strong>head-to-head vs RepoWise.</strong><br />5 wins, 0 losses, 2 ties on top-1<br />locating code, all 7 shared corpora.</sub></td>
+<td align="center" valign="top"><sub><strong>to build a searchable index,</strong><br />all 7 corpora — local <code>nomic-embed-text</code>,<br />vs RepoWise's $1.85 for the same set.</sub></td>
+<td align="center" valign="top"><sub><strong>cross-language top-5,</strong><br />up from 60.0% after fixing a language<br />pre-filter that was silently unused.</sub></td>
+</tr>
+</table>
+
+<sub>Measured on <strong>Aletheore 0.8.11</strong>, installed from PyPI, against RepoWise's own generated wiki.<br/><strong>We publish the rows we lose</strong> — see <a href="#where-we-lose">Where we lose</a>.</sub>
+
+</div>
+
+---
+
+## Locating code — "which file implements X?"
 
 Aletheore indexes code chunks and returns `file:line`.
 
@@ -57,11 +94,25 @@ found: *general* phrasing deliberately avoids the project's own vocabulary,
 *vocabulary* phrasing uses it. Real users ask somewhere between the two, so a
 language's true figure is bracketed by them rather than given by either.
 
-Raw per-query output is in `results/`, one file per corpus, regime and system.
+```mermaid
+xychart-beta
+    title "The phrasing confound: top-1 for the same questions, project vocabulary vs avoiding it"
+    x-axis [Slim, zod, jekyll, guzzle, gson]
+    y-axis "Top-1 accuracy (%)" 0 --> 100
+    bar "vocabulary-avoiding" [26.7, 20.0, 26.7, 20.0, 40.0]
+    bar "project vocabulary" [73.3, 60.0, 66.7, 53.3, 60.0]
+```
 
+**Every weak corpus moves 20-47 points on wording alone** — larger than every
+ranking change in this programme combined. It means the retrieval table above
+measures a phrasing regime at least as much as it measures the product. Both
+regimes are kept and published for every corpus; a language's true figure is
+bracketed by the two rather than given by either.
+
+Raw per-query output is in `results/`, one file per corpus, regime and system.
 The ten pre-existing corpus rows are unchanged by 0.8.7-0.8.11 work outside
-their targets. The two changed rows are Gson top-3 (73.3% -> 66.7%) and
-AutoMapper top-3 (13.3% -> 20.0%), both from #236.
+their targets; the two changed rows are Gson top-3 (73.3% → 66.7%) and
+AutoMapper top-3 (13.3% → 20.0%), both from #236.
 
 **The spread is the finding.** Go and Python are strong; Java, Ruby, PHP and
 TypeScript are not, and the weak corpora were measured last, so the published
@@ -72,7 +123,8 @@ recoverable, one was tested and ruled out, and one turned out to be **our own
 question authoring rather than the product**. Two candidate ranking changes were
 implemented in full and rejected on measurement.
 
-#### Asking in one language and being answered in another
+<details>
+<summary><strong>Asking in one language and being answered in another</strong> — the one defect that survives good phrasing</summary>
 
 `apache/thrift` implements the same protocol separately in eight languages, so a
 question naming one has a single correct answer and seven near-identical wrong
@@ -103,7 +155,10 @@ Detection only fires when a query names a language, and across all 356
 single-language questions in this repository it fires on two, both in flask
 naming Python, whose results are unchanged to three decimals of MRR.
 
-#### Why the weak corpora are weak
+</details>
+
+<details>
+<summary><strong>Why the weak corpora are weak</strong> — near-duplicate crowding, sibling-module pollution, and the phrasing test that explained most of it</summary>
 
 **Near-duplicate crowding is recorded as a phrasing symptom, not a live ranking
 lead.** The apparent sibling pollution in Slim, Gson and Thrift was checked
@@ -159,23 +214,15 @@ vocabulary, against identical code and identical ground truth:
 | guzzle (PHP) | 20.0% | **53.3%** | +33.3 |
 | gson (Java) | 40.0% | **60.0%** | +20.0 |
 
-Every weak corpus moves 20-47 points on wording alone. That is larger than
-every ranking change in this programme combined, and it means **the retrieval
-table above measures a phrasing regime at least as much as it measures the
-product**.
-
 It also retires a conclusion this file previously drew. PHP was initially
 described as a ranking problem - near-duplicate crowding - and two fixes were
-built and rejected against it. Slim moves 26.7% -> 73.3% on phrasing, so most
+built and rejected against it. Slim moves 26.7% → 73.3% on phrasing, so most
 of what those fixes were chasing was an artefact of how the questions were
 written. The finding is recorded in `METHODOLOGY.md` as a phrasing symptom,
 not a live ranking lead.
 
-Both sets are kept for every corpus and both numbers published. Rewriting only
-the missed questions was considered and rejected - correcting just the failures
-can move a score in one direction only. The truth for any language here is
-*bracketed* by the two regimes, not given by either, and real users ask
-somewhere in between.
+Rewriting only the missed questions was considered and rejected - correcting
+just the failures can move a score in one direction only.
 
 **These numbers replace an earlier table that did not reproduce.** The previous
 revision listed flask at 71.9% / 96.9% / 100%, which matched no committed
@@ -185,20 +232,33 @@ earlier 65.6% / 93.8% / 100% and 68.8% / 93.8% / 100% figures for 0.8.5. The
 current table is the single 0.8.11 PyPI run from `/private/tmp/audit-0811.txt`;
 the lesson is recorded in **METHODOLOGY.md** rather than quietly corrected.
 
-Head-to-head against RepoWise, **all seven corpora**, same questions and same
-ground truth. RepoWise searches its own generated wiki pages, so each corpus
-had a wiki built for it first (`init --coverage 1.0`, deepseek-v4-flash,
-1,341 pages, $1.85 total). Best RepoWise mode per corpus is shown:
+</details>
+
+## Head-to-head against RepoWise
+
+Same questions, same ground truth, **all seven shared corpora**. RepoWise
+searches its own generated wiki pages, so each corpus had a wiki built for it
+first (`init --coverage 1.0`, deepseek-v4-flash, 1,341 pages, $1.85 total).
+Best RepoWise mode per corpus is shown.
+
+```mermaid
+xychart-beta
+    title "Locating code, top-1: Aletheore vs RepoWise (best mode)"
+    x-axis [gin, serde, gson, jekyll, Slim, guzzle, zod]
+    y-axis "Top-1 accuracy (%)" 0 --> 100
+    bar "Aletheore" [80.0, 53.3, 40.0, 26.7, 26.7, 20.0, 20.0]
+    bar "RepoWise" [60.0, 13.3, 26.7, 13.3, 26.7, 20.0, 13.3]
+```
 
 | corpus | language | Aletheore | RepoWise semantic | RepoWise fulltext | winner |
 |---|---|---|---|---|---|
-| gin | Go | **80.0%** | 60.0% | 46.7% | Aletheore |
-| serde | Rust | **53.3%** | 6.7% | 13.3% | Aletheore |
-| gson | Java | **40.0%** | 26.7% | 0.0% | Aletheore |
-| jekyll | Ruby | **26.7%** | 13.3% | 6.7% | Aletheore |
-| Slim | PHP | 26.7% | 26.7% | 20.0% | tie |
-| guzzle | PHP | 20.0% | 13.3% | 20.0% | tie |
-| zod | TypeScript | **20.0%** | 6.7% | 13.3% | Aletheore |
+| gin | Go | **80.0%** | 60.0% | 46.7% | ✅ Aletheore |
+| serde | Rust | **53.3%** | 6.7% | 13.3% | ✅ Aletheore |
+| gson | Java | **40.0%** | 26.7% | 0.0% | ✅ Aletheore |
+| jekyll | Ruby | **26.7%** | 13.3% | 6.7% | ✅ Aletheore |
+| Slim | PHP | 26.7% | 26.7% | 20.0% | 🟰 tie |
+| guzzle | PHP | 20.0% | 13.3% | 20.0% | 🟰 tie |
+| zod | TypeScript | **20.0%** | 6.7% | 13.3% | ✅ Aletheore |
 
 **Top-1: 5 wins, 0 losses, 2 ties.** Our weakest languages still match or beat
 them. Where we lose: jekyll top-5, 46.7% against their 66.7%.
@@ -219,7 +279,6 @@ and on jekyll it overtakes us outright, 80.0% against 66.7%. That is a real
 loss and it is stated here rather than omitted. Across the ten cells we lead in
 seven, tie in two and lose one.
 
-
 Flask remains as originally measured (Aletheore 68.8% / 93.8% / 100% against
 RepoWise semantic 28.1% / 56.2% / 56.2%).
 
@@ -235,12 +294,12 @@ Two things this table deliberately does not claim:
   like-for-like figure, from the flask run, is RepoWise 68 ms against our
   125 ms in-process — *they are faster*.
 
-### Cost to get to a searchable index
+## Cost to get to a searchable index
 
 | | Aletheore | RepoWise |
 |---|---|---|
-| indexing cost, 7 corpora | **$0.00** | **$1.85** |
-| per corpus | $0.00 | $0.09 - $0.47 |
+| indexing cost, 7 corpora | **$0.00** | $1.85 |
+| per corpus | **$0.00** | $0.09 - $0.47 |
 | what it costs money for | nothing - local `nomic-embed-text` | LLM generation of 1,341 wiki pages |
 | typical setup time | seconds to ~1 min per corpus | minutes per corpus |
 
@@ -249,7 +308,7 @@ serde $0.33, zod $0.36, gson $0.47. Aletheore's side needs no API key at all,
 which is also why every number in this repository can be recomputed without
 one.
 
-### Covering the files a PR touches
+## Covering the files a PR touches
 
 Over the last 30 non-merge commits of Flask (100 changed files), how often does
 AIRview have anything at all to say about a file that changed?
@@ -270,7 +329,9 @@ structured reduction for lockfiles and changelogs where a blind cutoff would
 keep an arbitrary byte range. Cost per file: **$0.00** — no API key, no
 generation, no addition to the paid AIRview writing pipeline.
 
-**No token-savings claim is made here, and an earlier draft's was withdrawn.**
+<details>
+<summary>No token-savings claim is made here, and an earlier draft's was withdrawn — why</summary>
+
 That draft compared the fallback's output against reading each changed file in
 full (96.5% fewer tokens) and against the commit diff (2.9x *more* tokens on
 the median commit, more expensive on 22 of 30). Both comparisons were dropped
@@ -281,7 +342,9 @@ diff or for a full-file read. What it stands in for is a blank page. The
 quality question that remains — is the block it returns actually useful — is
 measured by the judge below, not by counting its tokens.
 
-### Explaining code — "how does X work?"
+</details>
+
+## Explaining code — "how does X work?"
 
 Blind LLM judge, 0-3, each question graded twice with the two systems' positions
 swapped, equal 12,000-character context budget, tool names scrubbed.
@@ -298,7 +361,7 @@ These wiki figures were measured on a pre-0.8.0 build and have **not** been
 re-run on 0.8.11. They are left as measured rather than restated against a
 version they did not come from; only the retrieval table above is 0.8.11.
 
-### Answering from a file — fallback vs RepoWise `get_context`
+## Answering from a file — fallback vs RepoWise `get_context`
 
 Blind pairwise judge, 0-3, three repeats, each file graded twice with the two
 systems' positions swapped, both bundles truncated to the same character
@@ -307,7 +370,7 @@ budget, tool names scrubbed.
 On the seven files where **both** systems return substantive material:
 
 | | score | n | repeats |
-|---|---:|---:|---:|
+|---:|---:|---:|---:|
 | **Aletheore file fallback** | **2.857** | 7 | 3 |
 | RepoWise `get_context` | 2.000 | 7 | 3 |
 
@@ -326,23 +389,23 @@ file"` or `Target not found` for all fifteen, and the judge scored every one
 Pooling those fifteen zeros into the headline yields a "+2.07" gap that says
 nothing about usefulness, and we are not publishing one.
 
-### Where we lose
+## Where we lose
 
 Stated here rather than in a footnote:
 
-- **RepoWise retrieval is faster in-process** — 68 ms against our 125 ms.
-- **RepoWise's wiki scores higher**, in every configuration tested.
-- **Five of eight corpora score below 35% top-1 under vocabulary-avoiding
+- ⚠️ **RepoWise retrieval is faster in-process** — 68 ms against our 125 ms.
+- ⚠️ **RepoWise's wiki scores higher**, in every configuration tested.
+- ⚠️ **Five of eight corpora score below 35% top-1 under vocabulary-avoiding
   phrasing** — though every one of them recovers 20-47 points when the same
   questions are asked in the project's own terms, so most of that gap is our
   question authoring rather than the product.
-- **jekyll top-5 loses to RepoWise**, 46.7% against 66.7%.
-- **AIRview writes a page for only 21 of 100 changed files** on Flask's last 30
+- ⚠️ **jekyll top-5 loses to RepoWise**, 46.7% against 66.7%.
+- ⚠️ **AIRview writes a page for only 21 of 100 changed files** on Flask's last 30
   commits. The other 79 are served by a deterministic fallback, not by the
   generated wiki this project is named for.
-- **RepoWise's `get_context` beats our fallback on `tests/test_blueprints.py`**,
+- ⚠️ **RepoWise's `get_context` beats our fallback on `tests/test_blueprints.py`**,
   3.0 against 2.0.
-- **An earlier revision of this README published flask figures that did not
+- ⚠️ **An earlier revision of this README published flask figures that did not
   reproduce.** They are corrected above, and how it happened is in
   METHODOLOGY.md.
 
