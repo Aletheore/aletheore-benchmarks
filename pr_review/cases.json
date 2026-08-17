@@ -1,0 +1,10 @@
+[
+  {"case_id": "xref2-case-a", "pr_number": 59, "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/59"},
+  {"case_id": "xref2-case-b", "pr_number": 60, "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/60"},
+  {"case_id": "xref2-case-c", "pr_number": 61, "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/61"},
+  {"case_id": "xref2-case-d", "pr_number": 62, "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/62"},
+  {"case_id": "xref2-case-e", "pr_number": 63, "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/63"},
+  {"case_id": "xref2-case-f", "pr_number": 64, "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/64"},
+  {"case_id": "xref2-case-g", "pr_number": 65, "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/65"},
+  {"case_id": "xref2-case-h", "pr_number": 66, "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/66"}
+]

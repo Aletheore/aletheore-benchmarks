@@ -1,0 +1,2636 @@
+{
+  "experiment": {
+    "model": "llama3.1:8b",
+    "ollama_url": "http://127.0.0.1:11434",
+    "repeats": 3,
+    "temperature": 0,
+    "cache": "disabled",
+    "max_output_tokens": 1024,
+    "aletheore_root": "/Users/arihantkaul/Documents/GitHub/Veridion"
+  },
+  "ground_truth_version": 1,
+  "cases": [
+    {
+      "case_id": "xref2-case-a",
+      "pr_number": 59,
+      "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/59"
+    },
+    {
+      "case_id": "xref2-case-b",
+      "pr_number": 60,
+      "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/60"
+    },
+    {
+      "case_id": "xref2-case-c",
+      "pr_number": 61,
+      "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/61"
+    },
+    {
+      "case_id": "xref2-case-d",
+      "pr_number": 62,
+      "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/62"
+    },
+    {
+      "case_id": "xref2-case-e",
+      "pr_number": 63,
+      "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/63"
+    },
+    {
+      "case_id": "xref2-case-f",
+      "pr_number": 64,
+      "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/64"
+    },
+    {
+      "case_id": "xref2-case-g",
+      "pr_number": 65,
+      "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/65"
+    },
+    {
+      "case_id": "xref2-case-h",
+      "pr_number": 66,
+      "pr_url": "https://github.com/Aletheore/pr-review-benchmark-sandbox/pull/66"
+    }
+  ],
+  "results": [
+    {
+      "case_id": "xref2-case-a",
+      "pr_number": 59,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-a/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-a",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 270,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 493,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-a/caller.py",
+        "line": 5,
+        "issue_key": "uncaught_error_a",
+        "description": "op_one raises ErrorA for a missing key, but the changed handler removed the ErrorA catch and now only checks for None."
+      },
+      "proposed_count": 2,
+      "grounded_count": 2,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-a/caller.py",
+          "line": 5,
+          "issue": "Potential silent error handling: ErrorA exception is caught but not re-raised or handled",
+          "suggestion": "re-raise the exception or handle it explicitly"
+        },
+        {
+          "file": "benchmark-sandbox/xref2-case-a/caller.py",
+          "line": 7,
+          "issue": "Potential silent error handling: None value is returned as a response, but the function is expected to return a tuple",
+          "suggestion": "return a tuple with a meaningful error message"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T12:58:40.792604Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-a/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Potential silent error handling: ErrorA exception is caught but not re-raised or handled\",\n    \"suggestion\": \"re-raise the exception or handle it explicitly\"\n  },\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-a/caller.py\",\n    \"line\": 7,\n    \"issue\": \"Potential silent error handling: None value is returned as a response, but the function is expected to return a tuple\",\n    \"suggestion\": \"return a tuple with a meaningful error message\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 7608132917,
+        "load_duration": 141119250,
+        "prompt_eval_count": 1012,
+        "prompt_eval_duration": 360684000,
+        "eval_count": 141,
+        "eval_duration": 7099615000,
+        "elapsed_seconds": 7.622592333005741
+      }
+    },
+    {
+      "case_id": "xref2-case-a",
+      "pr_number": 59,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-a/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-a",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 270,
+        "code_evidence_context": 979,
+        "referenced_symbol_context": 493,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-a/caller.py",
+        "line": 5,
+        "issue_key": "uncaught_error_a",
+        "description": "op_one raises ErrorA for a missing key, but the changed handler removed the ErrorA catch and now only checks for None."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-a/caller.py",
+          "line": 4,
+          "issue": "The try-except block for ErrorA has been removed, but the referenced definition for op_one still raises ErrorA on missing keys.",
+          "suggestion": "try: val = op_one(key, store) except ErrorA: return {'error': 'not found'}, 404"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T12:58:47.147949Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-a/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The try-except block for ErrorA has been removed, but the referenced definition for op_one still raises ErrorA on missing keys.\",\n    \"suggestion\": \"try: val = op_one(key, store) except ErrorA: return {'error': 'not found'}, 404\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 6352677542,
+        "load_duration": 106640250,
+        "prompt_eval_count": 1243,
+        "prompt_eval_duration": 1525520000,
+        "eval_count": 94,
+        "eval_duration": 4717186000,
+        "elapsed_seconds": 6.353735083015636
+      }
+    },
+    {
+      "case_id": "xref2-case-a",
+      "pr_number": 59,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-a/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-a",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 270,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 493,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-a/caller.py",
+        "line": 5,
+        "issue_key": "uncaught_error_a",
+        "description": "op_one raises ErrorA for a missing key, but the changed handler removed the ErrorA catch and now only checks for None."
+      },
+      "proposed_count": 2,
+      "grounded_count": 2,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-a/caller.py",
+          "line": 5,
+          "issue": "Potential silent error handling: ErrorA exception is caught but not re-raised or handled",
+          "suggestion": "re-raise the exception or handle it explicitly"
+        },
+        {
+          "file": "benchmark-sandbox/xref2-case-a/caller.py",
+          "line": 7,
+          "issue": "Potential silent error handling: None value is returned as a response, but the function is expected to return a tuple",
+          "suggestion": "return a tuple with a meaningful error message"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T12:58:57.698886Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-a/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Potential silent error handling: ErrorA exception is caught but not re-raised or handled\",\n    \"suggestion\": \"re-raise the exception or handle it explicitly\"\n  },\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-a/caller.py\",\n    \"line\": 7,\n    \"issue\": \"Potential silent error handling: None value is returned as a response, but the function is expected to return a tuple\",\n    \"suggestion\": \"return a tuple with a meaningful error message\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 7505748375,
+        "load_duration": 141069708,
+        "prompt_eval_count": 1012,
+        "prompt_eval_duration": 344842000,
+        "eval_count": 141,
+        "eval_duration": 7017274000,
+        "elapsed_seconds": 7.507169832999352
+      }
+    },
+    {
+      "case_id": "xref2-case-a",
+      "pr_number": 59,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-a/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-a",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 270,
+        "code_evidence_context": 979,
+        "referenced_symbol_context": 493,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-a/caller.py",
+        "line": 5,
+        "issue_key": "uncaught_error_a",
+        "description": "op_one raises ErrorA for a missing key, but the changed handler removed the ErrorA catch and now only checks for None."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-a/caller.py",
+          "line": 4,
+          "issue": "The try-except block for ErrorA has been removed, but the referenced definition for op_one still raises ErrorA on missing keys.",
+          "suggestion": "try: val = op_one(key, store) except ErrorA: return {'error': 'not found'}, 404"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T12:59:04.066244Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-a/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The try-except block for ErrorA has been removed, but the referenced definition for op_one still raises ErrorA on missing keys.\",\n    \"suggestion\": \"try: val = op_one(key, store) except ErrorA: return {'error': 'not found'}, 404\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 6364252916,
+        "load_duration": 107484291,
+        "prompt_eval_count": 1243,
+        "prompt_eval_duration": 1531750000,
+        "eval_count": 94,
+        "eval_duration": 4721376000,
+        "elapsed_seconds": 6.365299249999225
+      }
+    },
+    {
+      "case_id": "xref2-case-a",
+      "pr_number": 59,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-a/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-a",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 270,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 493,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-a/caller.py",
+        "line": 5,
+        "issue_key": "uncaught_error_a",
+        "description": "op_one raises ErrorA for a missing key, but the changed handler removed the ErrorA catch and now only checks for None."
+      },
+      "proposed_count": 2,
+      "grounded_count": 2,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-a/caller.py",
+          "line": 5,
+          "issue": "Potential silent error handling: ErrorA exception is caught but not re-raised or handled",
+          "suggestion": "re-raise the exception or handle it explicitly"
+        },
+        {
+          "file": "benchmark-sandbox/xref2-case-a/caller.py",
+          "line": 7,
+          "issue": "Potential silent error handling: None value is returned as a response, but the function is expected to return a tuple",
+          "suggestion": "return a tuple with a meaningful error message"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T12:59:14.632425Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-a/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Potential silent error handling: ErrorA exception is caught but not re-raised or handled\",\n    \"suggestion\": \"re-raise the exception or handle it explicitly\"\n  },\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-a/caller.py\",\n    \"line\": 7,\n    \"issue\": \"Potential silent error handling: None value is returned as a response, but the function is expected to return a tuple\",\n    \"suggestion\": \"return a tuple with a meaningful error message\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 7457084958,
+        "load_duration": 140786333,
+        "prompt_eval_count": 1012,
+        "prompt_eval_duration": 349186000,
+        "eval_count": 141,
+        "eval_duration": 6962213000,
+        "elapsed_seconds": 7.459067832998699
+      }
+    },
+    {
+      "case_id": "xref2-case-a",
+      "pr_number": 59,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-a/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-a",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 270,
+        "code_evidence_context": 979,
+        "referenced_symbol_context": 493,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-a/caller.py",
+        "line": 5,
+        "issue_key": "uncaught_error_a",
+        "description": "op_one raises ErrorA for a missing key, but the changed handler removed the ErrorA catch and now only checks for None."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-a/caller.py",
+          "line": 4,
+          "issue": "The try-except block for ErrorA has been removed, but the referenced definition for op_one still raises ErrorA on missing keys.",
+          "suggestion": "try: val = op_one(key, store) except ErrorA: return {'error': 'not found'}, 404"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T12:59:21.009644Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-a/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The try-except block for ErrorA has been removed, but the referenced definition for op_one still raises ErrorA on missing keys.\",\n    \"suggestion\": \"try: val = op_one(key, store) except ErrorA: return {'error': 'not found'}, 404\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 6375812042,
+        "load_duration": 150716375,
+        "prompt_eval_count": 1243,
+        "prompt_eval_duration": 1552548000,
+        "eval_count": 94,
+        "eval_duration": 4669456000,
+        "elapsed_seconds": 6.3767695419956
+      }
+    },
+    {
+      "case_id": "xref2-case-b",
+      "pr_number": 60,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-b/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-b",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 208,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 551,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-b/caller.py",
+        "line": 5,
+        "issue_key": "mutated_input",
+        "description": "op_two sorts and removes duplicates in place, so passing raw mutates the caller's input before its length is logged."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-b/caller.py",
+          "line": 5,
+          "issue": "Unused variable 'working' assigned to but never used",
+          "suggestion": "Remove the line 'working = list(raw)'"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T12:59:30.002806Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-b/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Unused variable 'working' assigned to but never used\",\n    \"suggestion\": \"Remove the line 'working = list(raw)'\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 4220039833,
+        "load_duration": 142251250,
+        "prompt_eval_count": 947,
+        "prompt_eval_duration": 1026617999,
+        "eval_count": 63,
+        "eval_duration": 3048638000,
+        "elapsed_seconds": 4.221054791007191
+      }
+    },
+    {
+      "case_id": "xref2-case-b",
+      "pr_number": 60,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-b/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-b",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 208,
+        "code_evidence_context": 961,
+        "referenced_symbol_context": 551,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-b/caller.py",
+        "line": 5,
+        "issue_key": "mutated_input",
+        "description": "op_two sorts and removes duplicates in place, so passing raw mutates the caller's input before its length is logged."
+      },
+      "proposed_count": 2,
+      "grounded_count": 0,
+      "findings": [],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T12:59:41.864315Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-b/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The 'handler' function now consumes the input list 'raw' twice, once in the 'op_two' call and once in the 'log.append' call, which may lead to unexpected behavior or performance issues.\",\n    \"suggestion\": \"Remove the 'list(raw)' call and use 'raw' directly in the 'op_two' call.\"\n  },\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-b/caller.py\",\n    \"line\": 5,\n    \"issue\": \"The 'handler' function now consumes the input list 'raw' twice, once in the 'op_two' call and once in the 'log.append' call, which may lead to unexpected behavior or performance issues.\",\n    \"suggestion\": \"Remove the 'list(raw)' call and use 'raw' directly in the 'op_two' call.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 11859586958,
+        "load_duration": 101500708,
+        "prompt_eval_count": 1176,
+        "prompt_eval_duration": 1536508000,
+        "eval_count": 209,
+        "eval_duration": 10218867000,
+        "elapsed_seconds": 11.86068758298643
+      }
+    },
+    {
+      "case_id": "xref2-case-b",
+      "pr_number": 60,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-b/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-b",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 208,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 551,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-b/caller.py",
+        "line": 5,
+        "issue_key": "mutated_input",
+        "description": "op_two sorts and removes duplicates in place, so passing raw mutates the caller's input before its length is logged."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-b/caller.py",
+          "line": 5,
+          "issue": "Unused variable 'working' assigned to but never used",
+          "suggestion": "Remove the line 'working = list(raw)'"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T12:59:48.535385Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-b/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Unused variable 'working' assigned to but never used\",\n    \"suggestion\": \"Remove the line 'working = list(raw)'\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3518510333,
+        "load_duration": 143097875,
+        "prompt_eval_count": 947,
+        "prompt_eval_duration": 356866000,
+        "eval_count": 63,
+        "eval_duration": 3016051000,
+        "elapsed_seconds": 3.5201245000062045
+      }
+    },
+    {
+      "case_id": "xref2-case-b",
+      "pr_number": 60,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-b/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-b",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 208,
+        "code_evidence_context": 961,
+        "referenced_symbol_context": 551,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-b/caller.py",
+        "line": 5,
+        "issue_key": "mutated_input",
+        "description": "op_two sorts and removes duplicates in place, so passing raw mutates the caller's input before its length is logged."
+      },
+      "proposed_count": 2,
+      "grounded_count": 0,
+      "findings": [],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:00:00.482716Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-b/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The 'handler' function now consumes the input list 'raw' twice, once in the 'op_two' call and once in the 'log.append' call, which may lead to unexpected behavior or performance issues.\",\n    \"suggestion\": \"Remove the 'list(raw)' call and use 'raw' directly in the 'op_two' call.\"\n  },\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-b/caller.py\",\n    \"line\": 5,\n    \"issue\": \"The 'handler' function now consumes the input list 'raw' twice, once in the 'op_two' call and once in the 'log.append' call, which may lead to unexpected behavior or performance issues.\",\n    \"suggestion\": \"Remove the 'list(raw)' call and use 'raw' directly in the 'op_two' call.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 11944769875,
+        "load_duration": 109295250,
+        "prompt_eval_count": 1176,
+        "prompt_eval_duration": 1574735000,
+        "eval_count": 209,
+        "eval_duration": 10257910000,
+        "elapsed_seconds": 11.94642179098446
+      }
+    },
+    {
+      "case_id": "xref2-case-b",
+      "pr_number": 60,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-b/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-b",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 208,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 551,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-b/caller.py",
+        "line": 5,
+        "issue_key": "mutated_input",
+        "description": "op_two sorts and removes duplicates in place, so passing raw mutates the caller's input before its length is logged."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-b/caller.py",
+          "line": 5,
+          "issue": "Unused variable 'working' assigned to but never used",
+          "suggestion": "Remove the line 'working = list(raw)'"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:00:07.685586Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-b/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Unused variable 'working' assigned to but never used\",\n    \"suggestion\": \"Remove the line 'working = list(raw)'\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3519003500,
+        "load_duration": 145625875,
+        "prompt_eval_count": 947,
+        "prompt_eval_duration": 355379000,
+        "eval_count": 63,
+        "eval_duration": 3014840000,
+        "elapsed_seconds": 3.5211939580040053
+      }
+    },
+    {
+      "case_id": "xref2-case-b",
+      "pr_number": 60,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-b/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-b",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 208,
+        "code_evidence_context": 961,
+        "referenced_symbol_context": 551,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-b/caller.py",
+        "line": 5,
+        "issue_key": "mutated_input",
+        "description": "op_two sorts and removes duplicates in place, so passing raw mutates the caller's input before its length is logged."
+      },
+      "proposed_count": 2,
+      "grounded_count": 0,
+      "findings": [],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:00:19.836948Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-b/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The 'handler' function now consumes the input list 'raw' twice, once in the 'op_two' call and once in the 'log.append' call, which may lead to unexpected behavior or performance issues.\",\n    \"suggestion\": \"Remove the 'list(raw)' call and use 'raw' directly in the 'op_two' call.\"\n  },\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-b/caller.py\",\n    \"line\": 5,\n    \"issue\": \"The 'handler' function now consumes the input list 'raw' twice, once in the 'op_two' call and once in the 'log.append' call, which may lead to unexpected behavior or performance issues.\",\n    \"suggestion\": \"Remove the 'list(raw)' call and use 'raw' directly in the 'op_two' call.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 12147945125,
+        "load_duration": 119060708,
+        "prompt_eval_count": 1176,
+        "prompt_eval_duration": 1688795000,
+        "eval_count": 209,
+        "eval_duration": 10337017000,
+        "elapsed_seconds": 12.149047665996477
+      }
+    },
+    {
+      "case_id": "xref2-case-c",
+      "pr_number": 61,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-c/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-c",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 279,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 273,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-c/caller.py",
+        "line": 7,
+        "issue_key": "extra_retry_mutation",
+        "description": "The retry loop performs an additional op_three call after the third failed notification, causing an unintended fourth store mutation."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-c/caller.py",
+          "line": 5,
+          "issue": "Potential infinite loop if notify function always returns True",
+          "suggestion": "return val immediately after notify(val) if notify function is known to always return True"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:00:29.200382Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-c/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Potential infinite loop if notify function always returns True\",\n    \"suggestion\": \"return val immediately after notify(val) if notify function is known to always return True\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 4670579708,
+        "load_duration": 143896375,
+        "prompt_eval_count": 975,
+        "prompt_eval_duration": 1162939000,
+        "eval_count": 69,
+        "eval_duration": 3361148000,
+        "elapsed_seconds": 4.671385333989747
+      }
+    },
+    {
+      "case_id": "xref2-case-c",
+      "pr_number": 61,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-c/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-c",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 279,
+        "code_evidence_context": 794,
+        "referenced_symbol_context": 273,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-c/caller.py",
+        "line": 7,
+        "issue_key": "extra_retry_mutation",
+        "description": "The retry loop performs an additional op_three call after the third failed notification, causing an unintended fourth store mutation."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-c/caller.py",
+          "line": 4,
+          "issue": "The function handler now retries op_three(key, store) up to 3 times, but the referenced definition of op_three does not guarantee safety of repeated calls.",
+          "suggestion": "Consider adding a retry limit or a mechanism to handle repeated calls safely in op_three."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:00:35.311299Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-c/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The function handler now retries op_three(key, store) up to 3 times, but the referenced definition of op_three does not guarantee safety of repeated calls.\",\n    \"suggestion\": \"Consider adding a retry limit or a mechanism to handle repeated calls safely in op_three.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 6109912709,
+        "load_duration": 101942792,
+        "prompt_eval_count": 1166,
+        "prompt_eval_duration": 1420478000,
+        "eval_count": 91,
+        "eval_duration": 4584671000,
+        "elapsed_seconds": 6.110719916992821
+      }
+    },
+    {
+      "case_id": "xref2-case-c",
+      "pr_number": 61,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-c/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-c",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 279,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 273,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-c/caller.py",
+        "line": 7,
+        "issue_key": "extra_retry_mutation",
+        "description": "The retry loop performs an additional op_three call after the third failed notification, causing an unintended fourth store mutation."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-c/caller.py",
+          "line": 5,
+          "issue": "Potential infinite loop if notify function always returns True",
+          "suggestion": "return val immediately after notify(val) if notify function is known to always return True"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:00:42.419004Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-c/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Potential infinite loop if notify function always returns True\",\n    \"suggestion\": \"return val immediately after notify(val) if notify function is known to always return True\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3853833792,
+        "load_duration": 140629750,
+        "prompt_eval_count": 975,
+        "prompt_eval_duration": 348535000,
+        "eval_count": 69,
+        "eval_duration": 3362154000,
+        "elapsed_seconds": 3.8548744170111604
+      }
+    },
+    {
+      "case_id": "xref2-case-c",
+      "pr_number": 61,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-c/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-c",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 279,
+        "code_evidence_context": 794,
+        "referenced_symbol_context": 273,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-c/caller.py",
+        "line": 7,
+        "issue_key": "extra_retry_mutation",
+        "description": "The retry loop performs an additional op_three call after the third failed notification, causing an unintended fourth store mutation."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-c/caller.py",
+          "line": 4,
+          "issue": "The function handler now retries op_three(key, store) up to 3 times, but the referenced definition of op_three does not guarantee safety of repeated calls.",
+          "suggestion": "Consider adding a retry limit or a mechanism to handle repeated calls safely in op_three."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:00:49.427627Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-c/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The function handler now retries op_three(key, store) up to 3 times, but the referenced definition of op_three does not guarantee safety of repeated calls.\",\n    \"suggestion\": \"Consider adding a retry limit or a mechanism to handle repeated calls safely in op_three.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 7006512917,
+        "load_duration": 109702958,
+        "prompt_eval_count": 1166,
+        "prompt_eval_duration": 1758505000,
+        "eval_count": 91,
+        "eval_duration": 5134540000,
+        "elapsed_seconds": 7.008217041991884
+      }
+    },
+    {
+      "case_id": "xref2-case-c",
+      "pr_number": 61,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-c/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-c",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 279,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 273,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-c/caller.py",
+        "line": 7,
+        "issue_key": "extra_retry_mutation",
+        "description": "The retry loop performs an additional op_three call after the third failed notification, causing an unintended fourth store mutation."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-c/caller.py",
+          "line": 5,
+          "issue": "Potential infinite loop if notify function always returns True",
+          "suggestion": "return val immediately after notify(val) if notify function is known to always return True"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:00:56.715443Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-c/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Potential infinite loop if notify function always returns True\",\n    \"suggestion\": \"return val immediately after notify(val) if notify function is known to always return True\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 4082023375,
+        "load_duration": 142836041,
+        "prompt_eval_count": 975,
+        "prompt_eval_duration": 367946000,
+        "eval_count": 69,
+        "eval_duration": 3562284000,
+        "elapsed_seconds": 4.084326082986081
+      }
+    },
+    {
+      "case_id": "xref2-case-c",
+      "pr_number": 61,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-c/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-c",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 279,
+        "code_evidence_context": 794,
+        "referenced_symbol_context": 273,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-c/caller.py",
+        "line": 7,
+        "issue_key": "extra_retry_mutation",
+        "description": "The retry loop performs an additional op_three call after the third failed notification, causing an unintended fourth store mutation."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-c/caller.py",
+          "line": 4,
+          "issue": "The function handler now retries op_three(key, store) up to 3 times, but the referenced definition of op_three does not guarantee safety of repeated calls.",
+          "suggestion": "Consider adding a retry limit or a mechanism to handle repeated calls safely in op_three."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:01:06.212655Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-c/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The function handler now retries op_three(key, store) up to 3 times, but the referenced definition of op_three does not guarantee safety of repeated calls.\",\n    \"suggestion\": \"Consider adding a retry limit or a mechanism to handle repeated calls safely in op_three.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 9494190667,
+        "load_duration": 106581084,
+        "prompt_eval_count": 1166,
+        "prompt_eval_duration": 2741699000,
+        "eval_count": 91,
+        "eval_duration": 6642109000,
+        "elapsed_seconds": 9.495713957992848
+      }
+    },
+    {
+      "case_id": "xref2-case-d",
+      "pr_number": 62,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-d/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-d",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 212,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 746,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-d/caller.py",
+        "line": 5,
+        "issue_key": "wrong_exception_type",
+        "description": "op_four wraps filesystem failures in ErrorB, but the changed handler catches FileNotFoundError instead."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-d/caller.py",
+          "line": 5,
+          "issue": "Unexpected exception type; expected ErrorB, but caught FileNotFoundError",
+          "suggestion": "except ErrorB:"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:01:15.380266Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-d/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Unexpected exception type; expected ErrorB, but caught FileNotFoundError\",\n    \"suggestion\": \"except ErrorB:\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 4141573167,
+        "load_duration": 142888375,
+        "prompt_eval_count": 941,
+        "prompt_eval_duration": 1055140000,
+        "eval_count": 58,
+        "eval_duration": 2938332000,
+        "elapsed_seconds": 4.144926207984099
+      }
+    },
+    {
+      "case_id": "xref2-case-d",
+      "pr_number": 62,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-d/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-d",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 212,
+        "code_evidence_context": 1162,
+        "referenced_symbol_context": 746,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-d/caller.py",
+        "line": 5,
+        "issue_key": "wrong_exception_type",
+        "description": "op_four wraps filesystem failures in ErrorB, but the changed handler catches FileNotFoundError instead."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-d/caller.py",
+          "line": 5,
+          "issue": "Unexpected exception type; expected ErrorB, but caught FileNotFoundError",
+          "suggestion": "except ErrorB:"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:01:22.967809Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-d/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Unexpected exception type; expected ErrorB, but caught FileNotFoundError\",\n    \"suggestion\": \"except ErrorB:\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 7581927375,
+        "load_duration": 106192875,
+        "prompt_eval_count": 1212,
+        "prompt_eval_duration": 3828662000,
+        "eval_count": 58,
+        "eval_duration": 3643057000,
+        "elapsed_seconds": 7.583335958013777
+      }
+    },
+    {
+      "case_id": "xref2-case-d",
+      "pr_number": 62,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-d/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-d",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 212,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 746,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-d/caller.py",
+        "line": 5,
+        "issue_key": "wrong_exception_type",
+        "description": "op_four wraps filesystem failures in ErrorB, but the changed handler catches FileNotFoundError instead."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-d/caller.py",
+          "line": 5,
+          "issue": "Unexpected exception type; expected ErrorB, but caught FileNotFoundError",
+          "suggestion": "except ErrorB:"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:01:30.501161Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-d/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Unexpected exception type; expected ErrorB, but caught FileNotFoundError\",\n    \"suggestion\": \"except ErrorB:\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3312122916,
+        "load_duration": 141604250,
+        "prompt_eval_count": 941,
+        "prompt_eval_duration": 350062000,
+        "eval_count": 58,
+        "eval_duration": 2816779000,
+        "elapsed_seconds": 3.3132743749883957
+      }
+    },
+    {
+      "case_id": "xref2-case-d",
+      "pr_number": 62,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-d/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-d",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 212,
+        "code_evidence_context": 1162,
+        "referenced_symbol_context": 746,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-d/caller.py",
+        "line": 5,
+        "issue_key": "wrong_exception_type",
+        "description": "op_four wraps filesystem failures in ErrorB, but the changed handler catches FileNotFoundError instead."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-d/caller.py",
+          "line": 5,
+          "issue": "Unexpected exception type; expected ErrorB, but caught FileNotFoundError",
+          "suggestion": "except ErrorB:"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:01:37.47907Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-d/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Unexpected exception type; expected ErrorB, but caught FileNotFoundError\",\n    \"suggestion\": \"except ErrorB:\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 6975392667,
+        "load_duration": 104947667,
+        "prompt_eval_count": 1212,
+        "prompt_eval_duration": 3348619000,
+        "eval_count": 58,
+        "eval_duration": 3518717000,
+        "elapsed_seconds": 6.976703499996802
+      }
+    },
+    {
+      "case_id": "xref2-case-d",
+      "pr_number": 62,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-d/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-d",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 212,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 746,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-d/caller.py",
+        "line": 5,
+        "issue_key": "wrong_exception_type",
+        "description": "op_four wraps filesystem failures in ErrorB, but the changed handler catches FileNotFoundError instead."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-d/caller.py",
+          "line": 5,
+          "issue": "Unexpected exception type; expected ErrorB, but caught FileNotFoundError",
+          "suggestion": "except ErrorB:"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:01:43.917479Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-d/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Unexpected exception type; expected ErrorB, but caught FileNotFoundError\",\n    \"suggestion\": \"except ErrorB:\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3293627458,
+        "load_duration": 140975958,
+        "prompt_eval_count": 941,
+        "prompt_eval_duration": 357211000,
+        "eval_count": 58,
+        "eval_duration": 2792928000,
+        "elapsed_seconds": 3.294651915988652
+      }
+    },
+    {
+      "case_id": "xref2-case-d",
+      "pr_number": 62,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-d/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-d",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 212,
+        "code_evidence_context": 1162,
+        "referenced_symbol_context": 746,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-d/caller.py",
+        "line": 5,
+        "issue_key": "wrong_exception_type",
+        "description": "op_four wraps filesystem failures in ErrorB, but the changed handler catches FileNotFoundError instead."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-d/caller.py",
+          "line": 5,
+          "issue": "Unexpected exception type; expected ErrorB, but caught FileNotFoundError",
+          "suggestion": "except ErrorB:"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:01:51.337328Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-d/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Unexpected exception type; expected ErrorB, but caught FileNotFoundError\",\n    \"suggestion\": \"except ErrorB:\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 7417744958,
+        "load_duration": 103492375,
+        "prompt_eval_count": 1212,
+        "prompt_eval_duration": 3749395000,
+        "eval_count": 58,
+        "eval_duration": 3561961000,
+        "elapsed_seconds": 7.418774624995422
+      }
+    },
+    {
+      "case_id": "xref2-case-e",
+      "pr_number": 63,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-e/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-e",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 231,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 354,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-e/caller.py",
+        "line": 5,
+        "issue_key": "iterator_consumed_twice",
+        "description": "op_five returns a generator; the first sum consumes it, so the second sum produces zero after the list materialization was removed."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-e/caller.py",
+          "line": 5,
+          "issue": "Potential performance regression due to changed behavior of list() function",
+          "suggestion": "list(op_five(db))"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:02:00.352014Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-e/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Potential performance regression due to changed behavior of list() function\",\n    \"suggestion\": \"list(op_five(db))\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 4158866916,
+        "load_duration": 140117041,
+        "prompt_eval_count": 970,
+        "prompt_eval_duration": 1171639000,
+        "eval_count": 59,
+        "eval_duration": 2844590000,
+        "elapsed_seconds": 4.16001099999994
+      }
+    },
+    {
+      "case_id": "xref2-case-e",
+      "pr_number": 63,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-e/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-e",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 231,
+        "code_evidence_context": 821,
+        "referenced_symbol_context": 354,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-e/caller.py",
+        "line": 5,
+        "issue_key": "iterator_consumed_twice",
+        "description": "op_five returns a generator; the first sum consumes it, so the second sum produces zero after the list materialization was removed."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-e/caller.py",
+          "line": 4,
+          "issue": "The `handler` function now consumes the iterator returned by `op_five` without checking if it can be consumed multiple times, potentially leading to a regression in the contract of `op_five`.",
+          "suggestion": "items = iter(op_five(db))"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:02:09.30132Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-e/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The `handler` function now consumes the iterator returned by `op_five` without checking if it can be consumed multiple times, potentially leading to a regression in the contract of `op_five`.\",\n    \"suggestion\": \"items = iter(op_five(db))\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 8947236667,
+        "load_duration": 104221834,
+        "prompt_eval_count": 1171,
+        "prompt_eval_duration": 3307648000,
+        "eval_count": 88,
+        "eval_duration": 5532325000,
+        "elapsed_seconds": 8.948401375004323
+      }
+    },
+    {
+      "case_id": "xref2-case-e",
+      "pr_number": 63,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-e/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-e",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 231,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 354,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-e/caller.py",
+        "line": 5,
+        "issue_key": "iterator_consumed_twice",
+        "description": "op_five returns a generator; the first sum consumes it, so the second sum produces zero after the list materialization was removed."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-e/caller.py",
+          "line": 5,
+          "issue": "Potential performance regression due to changed behavior of list() function",
+          "suggestion": "list(op_five(db))"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:02:15.807957Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-e/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Potential performance regression due to changed behavior of list() function\",\n    \"suggestion\": \"list(op_five(db))\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3342492167,
+        "load_duration": 143267333,
+        "prompt_eval_count": 970,
+        "prompt_eval_duration": 347722000,
+        "eval_count": 59,
+        "eval_duration": 2849026000,
+        "elapsed_seconds": 3.3435307079926133
+      }
+    },
+    {
+      "case_id": "xref2-case-e",
+      "pr_number": 63,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-e/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-e",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 231,
+        "code_evidence_context": 821,
+        "referenced_symbol_context": 354,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-e/caller.py",
+        "line": 5,
+        "issue_key": "iterator_consumed_twice",
+        "description": "op_five returns a generator; the first sum consumes it, so the second sum produces zero after the list materialization was removed."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-e/caller.py",
+          "line": 4,
+          "issue": "The `handler` function now consumes the iterator returned by `op_five` without checking if it can be consumed multiple times, potentially leading to a regression in the contract of `op_five`.",
+          "suggestion": "items = iter(op_five(db))"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:02:24.660298Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-e/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The `handler` function now consumes the iterator returned by `op_five` without checking if it can be consumed multiple times, potentially leading to a regression in the contract of `op_five`.\",\n    \"suggestion\": \"items = iter(op_five(db))\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 8850268250,
+        "load_duration": 103475291,
+        "prompt_eval_count": 1171,
+        "prompt_eval_duration": 3258045000,
+        "eval_count": 88,
+        "eval_duration": 5485373000,
+        "elapsed_seconds": 8.851343791000545
+      }
+    },
+    {
+      "case_id": "xref2-case-e",
+      "pr_number": 63,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-e/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-e",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 231,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 354,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-e/caller.py",
+        "line": 5,
+        "issue_key": "iterator_consumed_twice",
+        "description": "op_five returns a generator; the first sum consumes it, so the second sum produces zero after the list materialization was removed."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-e/caller.py",
+          "line": 5,
+          "issue": "Potential performance regression due to changed behavior of list() function",
+          "suggestion": "list(op_five(db))"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:02:31.123644Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-e/caller.py\",\n    \"line\": 5,\n    \"issue\": \"Potential performance regression due to changed behavior of list() function\",\n    \"suggestion\": \"list(op_five(db))\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3371265083,
+        "load_duration": 142752208,
+        "prompt_eval_count": 970,
+        "prompt_eval_duration": 353756000,
+        "eval_count": 59,
+        "eval_duration": 2870792000,
+        "elapsed_seconds": 3.372887167002773
+      }
+    },
+    {
+      "case_id": "xref2-case-e",
+      "pr_number": 63,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-e/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-e",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 231,
+        "code_evidence_context": 821,
+        "referenced_symbol_context": 354,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-e/caller.py",
+        "line": 5,
+        "issue_key": "iterator_consumed_twice",
+        "description": "op_five returns a generator; the first sum consumes it, so the second sum produces zero after the list materialization was removed."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-e/caller.py",
+          "line": 4,
+          "issue": "The `handler` function now consumes the iterator returned by `op_five` without checking if it can be consumed multiple times, potentially leading to a regression in the contract of `op_five`.",
+          "suggestion": "items = iter(op_five(db))"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:02:40.054362Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-e/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The `handler` function now consumes the iterator returned by `op_five` without checking if it can be consumed multiple times, potentially leading to a regression in the contract of `op_five`.\",\n    \"suggestion\": \"items = iter(op_five(db))\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 8928674292,
+        "load_duration": 104180208,
+        "prompt_eval_count": 1171,
+        "prompt_eval_duration": 3317889000,
+        "eval_count": 88,
+        "eval_duration": 5503152000,
+        "elapsed_seconds": 8.929875250003533
+      }
+    },
+    {
+      "case_id": "xref2-case-f",
+      "pr_number": 64,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-f/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-f",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 315,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 736,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-f/caller.py",
+        "line": 8,
+        "issue_key": "shared_helper_race",
+        "description": "One Helper instance with an unsynchronized counter is shared across ThreadPoolExecutor workers, allowing the cap to be exceeded."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-f/caller.py",
+          "line": 10,
+          "issue": "The ThreadPoolExecutor is not properly closed in the original code, which can lead to resource leaks."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:02:48.97692Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-f/caller.py\",\n    \"line\": 10,\n    \"issue\": \"The ThreadPoolExecutor is not properly closed in the original code, which can lead to resource leaks.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 4142829875,
+        "load_duration": 139860417,
+        "prompt_eval_count": 1007,
+        "prompt_eval_duration": 1348659000,
+        "eval_count": 55,
+        "eval_duration": 2651398000,
+        "elapsed_seconds": 4.14406016599969
+      }
+    },
+    {
+      "case_id": "xref2-case-f",
+      "pr_number": 64,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-f/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-f",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 315,
+        "code_evidence_context": 1334,
+        "referenced_symbol_context": 736,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-f/caller.py",
+        "line": 8,
+        "issue_key": "shared_helper_race",
+        "description": "One Helper instance with an unsynchronized counter is shared across ThreadPoolExecutor workers, allowing the cap to be exceeded."
+      },
+      "proposed_count": 2,
+      "grounded_count": 2,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-f/caller.py",
+          "line": 6,
+          "issue": "The Helper instance is not thread-safe, but the code does not check if it can be shared across threads.",
+          "suggestion": "Add a lock or make the Helper instance thread-safe"
+        },
+        {
+          "file": "benchmark-sandbox/xref2-case-f/caller.py",
+          "line": 10,
+          "issue": "The ThreadPoolExecutor is not properly shut down after use, which can lead to resource leaks."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:03:01.315564Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-f/caller.py\",\n    \"line\": 6,\n    \"issue\": \"The Helper instance is not thread-safe, but the code does not check if it can be shared across threads.\",\n    \"suggestion\": \"Add a lock or make the Helper instance thread-safe\"\n  },\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-f/caller.py\",\n    \"line\": 10,\n    \"issue\": \"The ThreadPoolExecutor is not properly shut down after use, which can lead to resource leaks.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 12336378042,
+        "load_duration": 104140125,
+        "prompt_eval_count": 1342,
+        "prompt_eval_duration": 4224350999,
+        "eval_count": 126,
+        "eval_duration": 8003704000,
+        "elapsed_seconds": 12.337555750011234
+      }
+    },
+    {
+      "case_id": "xref2-case-f",
+      "pr_number": 64,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-f/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-f",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 315,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 736,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-f/caller.py",
+        "line": 8,
+        "issue_key": "shared_helper_race",
+        "description": "One Helper instance with an unsynchronized counter is shared across ThreadPoolExecutor workers, allowing the cap to be exceeded."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-f/caller.py",
+          "line": 10,
+          "issue": "The ThreadPoolExecutor is not properly closed in the original code, which can lead to resource leaks."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:03:07.509123Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-f/caller.py\",\n    \"line\": 10,\n    \"issue\": \"The ThreadPoolExecutor is not properly closed in the original code, which can lead to resource leaks.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3148999667,
+        "load_duration": 142107250,
+        "prompt_eval_count": 1007,
+        "prompt_eval_duration": 353354000,
+        "eval_count": 55,
+        "eval_duration": 2650982000,
+        "elapsed_seconds": 3.149938916991232
+      }
+    },
+    {
+      "case_id": "xref2-case-f",
+      "pr_number": 64,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-f/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-f",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 315,
+        "code_evidence_context": 1334,
+        "referenced_symbol_context": 736,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-f/caller.py",
+        "line": 8,
+        "issue_key": "shared_helper_race",
+        "description": "One Helper instance with an unsynchronized counter is shared across ThreadPoolExecutor workers, allowing the cap to be exceeded."
+      },
+      "proposed_count": 2,
+      "grounded_count": 2,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-f/caller.py",
+          "line": 6,
+          "issue": "The Helper instance is not thread-safe, but the code does not check if it can be shared across threads.",
+          "suggestion": "Add a lock or make the Helper instance thread-safe"
+        },
+        {
+          "file": "benchmark-sandbox/xref2-case-f/caller.py",
+          "line": 10,
+          "issue": "The ThreadPoolExecutor is not properly shut down after use, which can lead to resource leaks."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:03:19.802388Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-f/caller.py\",\n    \"line\": 6,\n    \"issue\": \"The Helper instance is not thread-safe, but the code does not check if it can be shared across threads.\",\n    \"suggestion\": \"Add a lock or make the Helper instance thread-safe\"\n  },\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-f/caller.py\",\n    \"line\": 10,\n    \"issue\": \"The ThreadPoolExecutor is not properly shut down after use, which can lead to resource leaks.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 12291771333,
+        "load_duration": 104707083,
+        "prompt_eval_count": 1342,
+        "prompt_eval_duration": 4116399999,
+        "eval_count": 126,
+        "eval_duration": 8067651000,
+        "elapsed_seconds": 12.29289174999576
+      }
+    },
+    {
+      "case_id": "xref2-case-f",
+      "pr_number": 64,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-f/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-f",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 315,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 736,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-f/caller.py",
+        "line": 8,
+        "issue_key": "shared_helper_race",
+        "description": "One Helper instance with an unsynchronized counter is shared across ThreadPoolExecutor workers, allowing the cap to be exceeded."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-f/caller.py",
+          "line": 10,
+          "issue": "The ThreadPoolExecutor is not properly closed in the original code, which can lead to resource leaks."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:03:26.080617Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-f/caller.py\",\n    \"line\": 10,\n    \"issue\": \"The ThreadPoolExecutor is not properly closed in the original code, which can lead to resource leaks.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3152374667,
+        "load_duration": 142334917,
+        "prompt_eval_count": 1007,
+        "prompt_eval_duration": 353436000,
+        "eval_count": 55,
+        "eval_duration": 2653754000,
+        "elapsed_seconds": 3.1534274170116987
+      }
+    },
+    {
+      "case_id": "xref2-case-f",
+      "pr_number": 64,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-f/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-f",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 315,
+        "code_evidence_context": 1334,
+        "referenced_symbol_context": 736,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-f/caller.py",
+        "line": 8,
+        "issue_key": "shared_helper_race",
+        "description": "One Helper instance with an unsynchronized counter is shared across ThreadPoolExecutor workers, allowing the cap to be exceeded."
+      },
+      "proposed_count": 2,
+      "grounded_count": 2,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-f/caller.py",
+          "line": 6,
+          "issue": "The Helper instance is not thread-safe, but the code does not check if it can be shared across threads.",
+          "suggestion": "Add a lock or make the Helper instance thread-safe"
+        },
+        {
+          "file": "benchmark-sandbox/xref2-case-f/caller.py",
+          "line": 10,
+          "issue": "The ThreadPoolExecutor is not properly shut down after use, which can lead to resource leaks."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:03:38.409651Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-f/caller.py\",\n    \"line\": 6,\n    \"issue\": \"The Helper instance is not thread-safe, but the code does not check if it can be shared across threads.\",\n    \"suggestion\": \"Add a lock or make the Helper instance thread-safe\"\n  },\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-f/caller.py\",\n    \"line\": 10,\n    \"issue\": \"The ThreadPoolExecutor is not properly shut down after use, which can lead to resource leaks.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 12326914334,
+        "load_duration": 104968667,
+        "prompt_eval_count": 1342,
+        "prompt_eval_duration": 4079418000,
+        "eval_count": 126,
+        "eval_duration": 8139501000,
+        "elapsed_seconds": 12.328304583003046
+      }
+    },
+    {
+      "case_id": "xref2-case-g",
+      "pr_number": 65,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-g/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-g",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 221,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 291,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-g/caller.py",
+        "line": 6,
+        "issue_key": "double_scaling",
+        "description": "The caller converts the ratio to percent and op_seven multiplies by 100 again, producing a value scaled twice."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-g/caller.py",
+          "line": 5,
+          "issue": "The `ratio` variable is assigned but never used.",
+          "suggestion": "Remove the unused variable assignment."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:03:47.323241Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-g/caller.py\",\n    \"line\": 5,\n    \"issue\": \"The `ratio` variable is assigned but never used.\",\n    \"suggestion\": \"Remove the unused variable assignment.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 4010292875,
+        "load_duration": 140696500,
+        "prompt_eval_count": 958,
+        "prompt_eval_duration": 1002608000,
+        "eval_count": 59,
+        "eval_duration": 2862932000,
+        "elapsed_seconds": 4.01133954199031
+      }
+    },
+    {
+      "case_id": "xref2-case-g",
+      "pr_number": 65,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-g/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-g",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 221,
+        "code_evidence_context": 456,
+        "referenced_symbol_context": 291,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-g/caller.py",
+        "line": 6,
+        "issue_key": "double_scaling",
+        "description": "The caller converts the ratio to percent and op_seven multiplies by 100 again, producing a value scaled twice."
+      },
+      "proposed_count": 1,
+      "grounded_count": 0,
+      "findings": [],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:03:53.850867Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-g/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The function 'handler' is not using the 'ratio' variable that was previously calculated.\",\n    \"suggestion\": \"Replace 'pct' with 'ratio' in the 'metrics.record' call.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 6525242500,
+        "load_duration": 102561459,
+        "prompt_eval_count": 1062,
+        "prompt_eval_duration": 1548940000,
+        "eval_count": 77,
+        "eval_duration": 4871023000,
+        "elapsed_seconds": 6.526473042002181
+      }
+    },
+    {
+      "case_id": "xref2-case-g",
+      "pr_number": 65,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-g/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-g",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 221,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 291,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-g/caller.py",
+        "line": 6,
+        "issue_key": "double_scaling",
+        "description": "The caller converts the ratio to percent and op_seven multiplies by 100 again, producing a value scaled twice."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-g/caller.py",
+          "line": 5,
+          "issue": "The `ratio` variable is assigned but never used.",
+          "suggestion": "Remove the unused variable assignment."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:04:00.11675Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-g/caller.py\",\n    \"line\": 5,\n    \"issue\": \"The `ratio` variable is assigned but never used.\",\n    \"suggestion\": \"Remove the unused variable assignment.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3407234041,
+        "load_duration": 141926916,
+        "prompt_eval_count": 958,
+        "prompt_eval_duration": 350373000,
+        "eval_count": 59,
+        "eval_duration": 2912316000,
+        "elapsed_seconds": 3.408394458994735
+      }
+    },
+    {
+      "case_id": "xref2-case-g",
+      "pr_number": 65,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-g/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-g",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 221,
+        "code_evidence_context": 456,
+        "referenced_symbol_context": 291,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-g/caller.py",
+        "line": 6,
+        "issue_key": "double_scaling",
+        "description": "The caller converts the ratio to percent and op_seven multiplies by 100 again, producing a value scaled twice."
+      },
+      "proposed_count": 1,
+      "grounded_count": 0,
+      "findings": [],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:04:07.278724Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-g/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The function 'handler' is not using the 'ratio' variable that was previously calculated.\",\n    \"suggestion\": \"Replace 'pct' with 'ratio' in the 'metrics.record' call.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 7160102000,
+        "load_duration": 167025375,
+        "prompt_eval_count": 1062,
+        "prompt_eval_duration": 2206338000,
+        "eval_count": 77,
+        "eval_duration": 4783400000,
+        "elapsed_seconds": 7.161171041021589
+      }
+    },
+    {
+      "case_id": "xref2-case-g",
+      "pr_number": 65,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-g/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-g",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 221,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 291,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-g/caller.py",
+        "line": 6,
+        "issue_key": "double_scaling",
+        "description": "The caller converts the ratio to percent and op_seven multiplies by 100 again, producing a value scaled twice."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-g/caller.py",
+          "line": 5,
+          "issue": "The `ratio` variable is assigned but never used.",
+          "suggestion": "Remove the unused variable assignment."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:04:13.590365Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-g/caller.py\",\n    \"line\": 5,\n    \"issue\": \"The `ratio` variable is assigned but never used.\",\n    \"suggestion\": \"Remove the unused variable assignment.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3355550875,
+        "load_duration": 137773375,
+        "prompt_eval_count": 958,
+        "prompt_eval_duration": 346477000,
+        "eval_count": 59,
+        "eval_duration": 2868222000,
+        "elapsed_seconds": 3.3566119160095695
+      }
+    },
+    {
+      "case_id": "xref2-case-g",
+      "pr_number": 65,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-g/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-g",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 221,
+        "code_evidence_context": 456,
+        "referenced_symbol_context": 291,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-g/caller.py",
+        "line": 6,
+        "issue_key": "double_scaling",
+        "description": "The caller converts the ratio to percent and op_seven multiplies by 100 again, producing a value scaled twice."
+      },
+      "proposed_count": 1,
+      "grounded_count": 0,
+      "findings": [],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:04:20.443442Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-g/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The function 'handler' is not using the 'ratio' variable that was previously calculated.\",\n    \"suggestion\": \"Replace 'pct' with 'ratio' in the 'metrics.record' call.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 6850608250,
+        "load_duration": 104366292,
+        "prompt_eval_count": 1062,
+        "prompt_eval_duration": 1994660000,
+        "eval_count": 77,
+        "eval_duration": 4748759000,
+        "elapsed_seconds": 6.852100625023013
+      }
+    },
+    {
+      "case_id": "xref2-case-h",
+      "pr_number": 66,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-h/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-h",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 206,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 431,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-h/caller.py",
+        "line": 5,
+        "issue_key": "mutation_before_logging",
+        "description": "op_eight can mutate or raise before the log append, so the record is not logged when the operation fails."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-h/caller.py",
+          "line": 3,
+          "issue": "Duplicate log.append call",
+          "suggestion": "Remove the duplicate log.append call"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:04:28.919947Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-h/caller.py\",\n    \"line\": 3,\n    \"issue\": \"Duplicate log.append call\",\n    \"suggestion\": \"Remove the duplicate log.append call\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3737197042,
+        "load_duration": 142771584,
+        "prompt_eval_count": 932,
+        "prompt_eval_duration": 998987000,
+        "eval_count": 54,
+        "eval_duration": 2592775000,
+        "elapsed_seconds": 3.738212999975076
+      }
+    },
+    {
+      "case_id": "xref2-case-h",
+      "pr_number": 66,
+      "repeat": 0,
+      "seed": 0,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-h/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-h",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 206,
+        "code_evidence_context": 963,
+        "referenced_symbol_context": 431,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-h/caller.py",
+        "line": 5,
+        "issue_key": "mutation_before_logging",
+        "description": "op_eight can mutate or raise before the log append, so the record is not logged when the operation fails."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-h/caller.py",
+          "line": 4,
+          "issue": "The function handler is documented to not mutate its argument, but the referenced definition of op_eight shows that it does mutate its argument.",
+          "suggestion": "Remove the mutation from op_eight or update the documentation of handler to reflect the actual behavior of op_eight."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:04:37.479362Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-h/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The function handler is documented to not mutate its argument, but the referenced definition of op_eight shows that it does mutate its argument.\",\n    \"suggestion\": \"Remove the mutation from op_eight or update the documentation of handler to reflect the actual behavior of op_eight.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 8557364000,
+        "load_duration": 102061500,
+        "prompt_eval_count": 1152,
+        "prompt_eval_duration": 2689579000,
+        "eval_count": 92,
+        "eval_duration": 5762819000,
+        "elapsed_seconds": 8.558534249983495
+      }
+    },
+    {
+      "case_id": "xref2-case-h",
+      "pr_number": 66,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-h/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-h",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 206,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 431,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-h/caller.py",
+        "line": 5,
+        "issue_key": "mutation_before_logging",
+        "description": "op_eight can mutate or raise before the log append, so the record is not logged when the operation fails."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-h/caller.py",
+          "line": 3,
+          "issue": "Duplicate log.append call",
+          "suggestion": "Remove the duplicate log.append call"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:04:43.556433Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-h/caller.py\",\n    \"line\": 3,\n    \"issue\": \"Duplicate log.append call\",\n    \"suggestion\": \"Remove the duplicate log.append call\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3092566416,
+        "load_duration": 140165875,
+        "prompt_eval_count": 932,
+        "prompt_eval_duration": 351643000,
+        "eval_count": 54,
+        "eval_duration": 2598299000,
+        "elapsed_seconds": 3.093643875006819
+      }
+    },
+    {
+      "case_id": "xref2-case-h",
+      "pr_number": 66,
+      "repeat": 1,
+      "seed": 1,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-h/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-h",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 206,
+        "code_evidence_context": 963,
+        "referenced_symbol_context": 431,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-h/caller.py",
+        "line": 5,
+        "issue_key": "mutation_before_logging",
+        "description": "op_eight can mutate or raise before the log append, so the record is not logged when the operation fails."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-h/caller.py",
+          "line": 4,
+          "issue": "The function handler is documented to not mutate its argument, but the referenced definition of op_eight shows that it does mutate its argument.",
+          "suggestion": "Remove the mutation from op_eight or update the documentation of handler to reflect the actual behavior of op_eight."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:04:52.541528Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-h/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The function handler is documented to not mutate its argument, but the referenced definition of op_eight shows that it does mutate its argument.\",\n    \"suggestion\": \"Remove the mutation from op_eight or update the documentation of handler to reflect the actual behavior of op_eight.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 8983012041,
+        "load_duration": 104182083,
+        "prompt_eval_count": 1152,
+        "prompt_eval_duration": 3131579000,
+        "eval_count": 92,
+        "eval_duration": 5744362000,
+        "elapsed_seconds": 8.984112874983111
+      }
+    },
+    {
+      "case_id": "xref2-case-h",
+      "pr_number": 66,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_baseline",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-h/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-h",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 206,
+        "code_evidence_context": 0,
+        "referenced_symbol_context": 431,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-h/caller.py",
+        "line": 5,
+        "issue_key": "mutation_before_logging",
+        "description": "op_eight can mutate or raise before the log append, so the record is not logged when the operation fails."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-h/caller.py",
+          "line": 3,
+          "issue": "Duplicate log.append call",
+          "suggestion": "Remove the duplicate log.append call"
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:04:58.88588Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-h/caller.py\",\n    \"line\": 3,\n    \"issue\": \"Duplicate log.append call\",\n    \"suggestion\": \"Remove the duplicate log.append call\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 3118060209,
+        "load_duration": 154062875,
+        "prompt_eval_count": 932,
+        "prompt_eval_duration": 362352000,
+        "eval_count": 54,
+        "eval_duration": 2599246000,
+        "elapsed_seconds": 3.119111709005665
+      }
+    },
+    {
+      "case_id": "xref2-case-h",
+      "pr_number": 66,
+      "repeat": 2,
+      "seed": 2,
+      "arm": "ollama_aletheore_context",
+      "model": "llama3.1:8b",
+      "temperature": 0,
+      "max_output_tokens": 1024,
+      "changed_files": [
+        "benchmark-sandbox/xref2-case-h/caller.py"
+      ],
+      "pr_title": "[xref2-benchmark] xref2-case-h",
+      "pr_body_present": true,
+      "context_lengths": {
+        "file_context": 206,
+        "code_evidence_context": 963,
+        "referenced_symbol_context": 431,
+        "pr_context": 196
+      },
+      "ground_truth": {
+        "file": "benchmark-sandbox/xref2-case-h/caller.py",
+        "line": 5,
+        "issue_key": "mutation_before_logging",
+        "description": "op_eight can mutate or raise before the log append, so the record is not logged when the operation fails."
+      },
+      "proposed_count": 1,
+      "grounded_count": 1,
+      "findings": [
+        {
+          "file": "benchmark-sandbox/xref2-case-h/caller.py",
+          "line": 4,
+          "issue": "The function handler is documented to not mutate its argument, but the referenced definition of op_eight shows that it does mutate its argument.",
+          "suggestion": "Remove the mutation from op_eight or update the documentation of handler to reflect the actual behavior of op_eight."
+        }
+      ],
+      "ollama_response_metadata": {
+        "model": "llama3.1:8b",
+        "created_at": "2026-08-17T13:05:07.803403Z",
+        "message": {
+          "role": "assistant",
+          "content": "[\n  {\n    \"file\": \"benchmark-sandbox/xref2-case-h/caller.py\",\n    \"line\": 4,\n    \"issue\": \"The function handler is documented to not mutate its argument, but the referenced definition of op_eight shows that it does mutate its argument.\",\n    \"suggestion\": \"Remove the mutation from op_eight or update the documentation of handler to reflect the actual behavior of op_eight.\"\n  }\n]"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 8915431625,
+        "load_duration": 103803083,
+        "prompt_eval_count": 1152,
+        "prompt_eval_duration": 3031804000,
+        "eval_count": 92,
+        "eval_duration": 5776786000,
+        "elapsed_seconds": 8.916618917020969
+      }
+    }
+  ]
+}
