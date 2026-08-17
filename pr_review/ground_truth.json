@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "source": "Human-reviewed xref2 benchmark cases; expected behavioral regressions reconstructed from the callee implementations and PR intent.",
+  "cases": {
+    "xref2-case-a": {
+      "file": "benchmark-sandbox/xref2-case-a/caller.py",
+      "line": 5,
+      "issue_key": "uncaught_error_a",
+      "description": "op_one raises ErrorA for a missing key, but the changed handler removed the ErrorA catch and now only checks for None."
+    },
+    "xref2-case-b": {
+      "file": "benchmark-sandbox/xref2-case-b/caller.py",
+      "line": 5,
+      "issue_key": "mutated_input",
+      "description": "op_two sorts and removes duplicates in place, so passing raw mutates the caller's input before its length is logged."
+    },
+    "xref2-case-c": {
+      "file": "benchmark-sandbox/xref2-case-c/caller.py",
+      "line": 7,
+      "issue_key": "extra_retry_mutation",
+      "description": "The retry loop performs an additional op_three call after the third failed notification, causing an unintended fourth store mutation."
+    },
+    "xref2-case-d": {
+      "file": "benchmark-sandbox/xref2-case-d/caller.py",
+      "line": 5,
+      "issue_key": "wrong_exception_type",
+      "description": "op_four wraps filesystem failures in ErrorB, but the changed handler catches FileNotFoundError instead."
+    },
+    "xref2-case-e": {
+      "file": "benchmark-sandbox/xref2-case-e/caller.py",
+      "line": 5,
+      "issue_key": "iterator_consumed_twice",
+      "description": "op_five returns a generator; the first sum consumes it, so the second sum produces zero after the list materialization was removed."
+    },
+    "xref2-case-f": {
+      "file": "benchmark-sandbox/xref2-case-f/caller.py",
+      "line": 8,
+      "issue_key": "shared_helper_race",
+      "description": "One Helper instance with an unsynchronized counter is shared across ThreadPoolExecutor workers, allowing the cap to be exceeded."
+    },
+    "xref2-case-g": {
+      "file": "benchmark-sandbox/xref2-case-g/caller.py",
+      "line": 6,
+      "issue_key": "double_scaling",
+      "description": "The caller converts the ratio to percent and op_seven multiplies by 100 again, producing a value scaled twice."
+    },
+    "xref2-case-h": {
+      "file": "benchmark-sandbox/xref2-case-h/caller.py",
+      "line": 5,
+      "issue_key": "mutation_before_logging",
+      "description": "op_eight can mutate or raise before the log append, so the record is not logged when the operation fails."
+    }
+  }
+}
