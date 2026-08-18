@@ -101,6 +101,11 @@ real observed maximum. The run reported here is the corrected one.
 | full context (file dump + diff + evidence) | 15,212 chars (~3,800 tok) | 35,390 chars | 44,760 chars |
 | compact context (diff + evidence only) | 1,480 chars (~370 tok) | 4,422 chars | 10,521 chars |
 
+**Compact context is ~10.3x smaller than a raw file-dump diff at the median** (15,212 -> 1,480
+chars), which is the number that actually determines whether a review fits inside a tight
+tokens-per-minute quota (e.g. Groq's free-tier 6,000 TPM) at all - not the max case, which any
+provider's rate limit has to be sized against regardless of arm.
+
 ### Blind LLM judge
 
 Raw finding counts and even careful manual reading are not treated as sufficient on their own - this
@@ -153,9 +158,14 @@ Dropping full file content and relying on Aletheore's own evidence context:
 
 ### Open work
 
-The false-positive rate on the compact arm is not acceptable as-is. Next step: reduce it without
-giving back the recall/reliability/cost wins above, not just accept the tradeoff. Not yet
-investigated: whether the false positives cluster around a specific finding type, file type, or
-language; whether they correlate with cases where Aletheore's evidence context was thin; whether a
-stricter grounding/citation check on the compact arm specifically would cut them without touching
-recall.
+**PENDING UPDATE (as of 2026-08-18):** the false-positive rate on the compact arm above was not
+acceptable as-is. Root cause traced to a real gap, not just "the model is noisy" - blast radius
+went silent when it found no confirmed caller, instead of stating that as a checked, bounded fact
+(e.g. "no confirmed caller found among 20 of 40 importers checked"), leaving the model to guess at
+claims like "not used anywhere in the codebase" that a compact prompt (no raw file content) can't
+actually verify. Two fixes are implemented and are being validated against this same corpus as this
+line is written: `build_blast_radius_context` now emits that bounded fact explicitly instead of
+staying silent, and the system prompt now explicitly instructs against reporting a claim the given
+context can't support. **The results tables above are the pre-fix baseline and will be superseded
+once the validation run (with a fresh blind judge pass) completes - do not cite the 0.79 avg-FP
+number as current without checking this section first.**
