@@ -48,7 +48,14 @@ def _ollama_completion(
         "model": model,
         "stream": False,
         "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
-        "options": {"temperature": 0, "seed": seed, "num_predict": max_output_tokens},
+        # num_ctx: without this, Ollama loads the model at its own default
+        # (observed: 4096 tokens), and any prompt bigger than that gets
+        # silently truncated with no error - confirmed via a real corpus
+        # measurement that full-context prompts run up to ~11,190 tokens
+        # (system prompt + file/diff/evidence context), so 16384 leaves
+        # comfortable headroom without needing more KV-cache memory than
+        # this machine reasonably has.
+        "options": {"temperature": 0, "seed": seed, "num_predict": max_output_tokens, "num_ctx": 16384},
     }
     request = Request(
         f"{base_url.rstrip('/')}/api/chat",
