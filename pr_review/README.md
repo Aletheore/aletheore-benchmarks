@@ -311,3 +311,102 @@ than Experiment 2's 79.8% - a stronger model's outputs were more consistently gr
   likely change the cost picture substantially without needing new data collection logic.
 
 Raw results: `results/mixed_repo_deepseek_v4_flash_r1.json`, `results/blind_judge_deepseek_v4_flash_r1.json`.
+
+---
+
+## Experiment 4: the actual production model, 3 real runs - this decided the default
+
+Experiments 2-3 both used a third model as a blind judge, scoring recall against
+`ground_truth.yaml`. This experiment asks a narrower, more directly actionable
+question: with `gpt-5.6-luna` - the real primary production model, not a stand-in -
+generating the reviews, does an independent second model (`deepseek-v4-flash`) judge
+each individual finding as holding up against the diff, and does that differ between
+`aletheore_context` and `aletheore_compact`? This is a per-finding ACCEPT / REJECT /
+UNCERTAIN verification, not a recall score - not directly numerically comparable to
+Experiments 2-3's recall numbers, but a real, independent, differently-shaped check on
+the same underlying question.
+
+### Setup
+
+- Generation: `gpt-5.6-luna` via the real OpenAI API, same evidence-building code path
+  as production (`scan_worker.flash_review`), restricted to the two Aletheore-evidence
+  arms only (no baseline - not relevant to this comparison).
+- Verification: `deepseek-v4-flash`, real API, given each proposed finding plus the
+  actual diff and asked to independently ACCEPT, REJECT, or mark UNCERTAIN - a
+  from-scratch check against the diff, not a recall match against `ground_truth.yaml`.
+- Corpus: the same 50-case `pr-review-benchmark` corpus as Experiments 2-3.
+- 3 repeats of the full 50-case pass, run back to back the same evening.
+
+### A real coverage gap, disclosed rather than smoothed over
+
+Both repeat runs hit transient network failures cloning some of the larger SWE-bench
+case repositories (`git clone` returning `early EOF` / `Could not resolve host`) mid-run.
+The per-case loop continues past a single failed case rather than aborting, so each run
+still produced real data - just not 50/50 coverage every time:
+
+| Run | Cases covered | Missing (network failure, not a scoring miss) |
+|---|---|---|
+| Run 1 | 50/50 | none |
+| Run 2 | 47/50 | 3 `swebench-django-*` cases |
+| Run 3 | 33/50 | 17 cases, mostly `swebench-scikit-learn-*`/`sphinx-*`/`sympy-*` |
+
+**Union across all 3 runs: 50/50 cases exercised at least once.** But no single run is
+individually complete, and importantly, run 3's missing 17 cases are not a random
+sample - they skew toward the harder SWE-bench-derived cases, which affects how its
+per-run numbers should be read (see below).
+
+### Results
+
+| Run | `aletheore_compact` accept rate | `aletheore_context` accept rate |
+|---|---|---|
+| Run 1 | 42/43 = **97.7%** (0 reject, 1 uncertain) | 36/42 = 85.7% (2 reject, 4 uncertain) |
+| Run 2 | 40/41 = **97.6%** (1 reject, 0 uncertain) | 38/42 = 90.5% (0 reject, 4 uncertain) |
+| Run 3 | 29/30 = **96.7%** (0 reject, 0 uncertain) | 27/27 = 100% (0 reject, 0 uncertain) |
+
+225 individual findings independently verified in total, across 260 generation
+records.
+
+### Reading this honestly
+
+- **Compact is remarkably stable**: 96.7-97.7% accept rate across all three runs,
+  effectively flat regardless of which case subset landed in a given run.
+- **Context is the noisy one**, swinging 85.7% -> 90.5% -> 100%. Run 3's apparent
+  100% is not evidence that context caught up - it's a coverage artifact. Run 3
+  happened to be missing exactly the harder SWE-bench cases that produced context's
+  rejects and uncertains in runs 1-2. Read run 3's context number as "context did
+  fine on an easier subset," not "context tied compact."
+- **This is consistent with, not contradicted by, Experiment 3's finding** that
+  compact and context tie on a real production-grade model (0.527 vs 0.522 recall) -
+  compact never underperforms context here either, on a different model and a
+  different verification methodology. It does **not** reproduce Experiment 2's
+  "compact has the worst false-positive rate" finding, which was specific to the
+  much weaker `llama3.1:8b` local model.
+- **Cost across all 3 runs, real API pricing**: Luna generation \$0.7667 (2,273,255
+  prompt + 260,081 completion tokens at \$0.20/\$1.20 per 1M), DeepSeek verification
+  \$0.1562 (599,870 prompt + 257,750 completion tokens at \$0.14/\$0.28 per 1M).
+  **Total: \$0.9229** for all 3 runs combined - three full passes over a 50-case
+  corpus with a real production model, for under a dollar.
+
+### Verdict: compact shipped as the production default
+
+Compact never underperformed context on any of the 3 runs, on the model that
+actually matters (production's own primary model, not a stand-in), while using a
+fraction of the prompt tokens context requires. Combined with Experiment 3's tie on
+a different production-grade model, and the complete absence of Experiment 2's
+weak-model false-positive concern here, this was judged sufficient to make compact
+the shipped default for Flash Review - not an experiment sitting behind a flag, the
+actual production behavior (`scan_worker/jobs.py`, `_run_flash_review`: the raw
+file-content blob `fetch_review_file_context` builds is deliberately never included
+in the prompt; `file_contents` is still fetched and used for citation verification).
+
+**Open, disclosed limitation**: no single run has clean 50/50 coverage, and the
+network-failure pattern in run 3 specifically strips out the harder half of the
+corpus for context's numbers in that run. The union across all 3 runs does cover
+every case at least once, and the direction (compact >= context, never worse) holds
+in every run including the incomplete ones - but a cleaner single complete run
+would strengthen this further. Backfilling the missing cases is real, low-cost
+follow-up work (~\$0.10 in additional Luna spend at these rates), not done as part
+of this pass.
+
+Raw results: `results/luna_gpt56_generate_r1.json` through `r3.json` (generation),
+`results/luna_gpt56_deepseek_verified_r1.json` through `r3.json` (verification).

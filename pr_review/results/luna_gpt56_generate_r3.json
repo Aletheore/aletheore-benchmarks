@@ -1,0 +1,1969 @@
+[
+  {
+    "case_id": "001-flask-cli-key-quote",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "001-flask-cli-key-quote",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "incorrect-error-message",
+      "expected_file": "src/flask/cli.py",
+      "expected_line": 798,
+      "fix_reference": "https://github.com/pallets/flask/commit/1d5abfadd7132c9a78e14e5ba6c07aed47115280",
+      "description": "The error message raised by Flask CLI's `_validate_key` when `--cert` is an SSLContext object was missing the closing double quote around `--key` (`'... \"--key is not used.'` instead of `'... \"--key\" is not used.'`), producing malformed, confusing CLI error text. Fixed in Flask referencing issue #5342 / PR #5344."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "src/flask/cli.py",
+        "line": 798,
+        "issue": "The BadParameter message is missing the closing quote after `--key`, so users see the malformed error `When \"--cert\" is an SSLContext object, \"--key is not used.`",
+        "suggestion": "Use `When \"--cert\" is an SSLContext object, \"--key\" is not used.`"
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 10.668807415990159,
+    "usage": {
+      "prompt_tokens": 8732,
+      "completion_tokens": 712
+    }
+  },
+  {
+    "case_id": "001-flask-cli-key-quote",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "001-flask-cli-key-quote",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "incorrect-error-message",
+      "expected_file": "src/flask/cli.py",
+      "expected_line": 798,
+      "fix_reference": "https://github.com/pallets/flask/commit/1d5abfadd7132c9a78e14e5ba6c07aed47115280",
+      "description": "The error message raised by Flask CLI's `_validate_key` when `--cert` is an SSLContext object was missing the closing double quote around `--key` (`'... \"--key is not used.'` instead of `'... \"--key\" is not used.'`), producing malformed, confusing CLI error text. Fixed in Flask referencing issue #5342 / PR #5344."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "src/flask/cli.py",
+        "line": 798,
+        "issue": "The BadParameter message is missing the closing quote after `--key`, so it displays `--key is not used.` instead of accurately referring to the `--key` option.",
+        "suggestion": "Use 'When \"--cert\" is an SSLContext object, \"--key\" is not used.'"
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 3.1294771669781767,
+    "usage": {
+      "prompt_tokens": 1054,
+      "completion_tokens": 156
+    }
+  },
+  {
+    "case_id": "002-requests-json-decode-pickle",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "002-requests-json-decode-pickle",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "unpicklable-exception",
+      "expected_file": "src/requests/exceptions.py",
+      "expected_line": 42,
+      "fix_reference": "https://github.com/psf/requests/commit/3ff3ff21dd45957c9e143cd500291959bb15f690",
+      "description": "requests.exceptions.JSONDecodeError could not be pickled/unpickled: due to the class's MRO, Python's default `__reduce__` resolved to the IOError parent's implementation, which drops required constructor arguments, so `pickle.loads(pickle.dumps(err))` raised an error. This is especially damaging inside a multiprocessing process pool, where an unpicklable exception crashes the whole pool. Fixed by explicitly delegating `__reduce__` to the JSON library's own error class. References GitHub issue #6628."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "src/requests/exceptions.py",
+        "line": 44,
+        "issue": "Removing JSONDecodeError.__reduce__ changes pickling to use IOError/OSError.__reduce__ via the class MRO. That reducer does not preserve the JSON decoder's required initialization arguments, so pickled JSONDecodeError instances can fail to unpickle or lose their message/document/position data.",
+        "suggestion": "Restore __reduce__ and return CompatJSONDecodeError.__reduce__(self)."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 19.361787832982372,
+    "usage": {
+      "prompt_tokens": 2208,
+      "completion_tokens": 1652
+    }
+  },
+  {
+    "case_id": "002-requests-json-decode-pickle",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "002-requests-json-decode-pickle",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "unpicklable-exception",
+      "expected_file": "src/requests/exceptions.py",
+      "expected_line": 42,
+      "fix_reference": "https://github.com/psf/requests/commit/3ff3ff21dd45957c9e143cd500291959bb15f690",
+      "description": "requests.exceptions.JSONDecodeError could not be pickled/unpickled: due to the class's MRO, Python's default `__reduce__` resolved to the IOError parent's implementation, which drops required constructor arguments, so `pickle.loads(pickle.dumps(err))` raised an error. This is especially damaging inside a multiprocessing process pool, where an unpicklable exception crashes the whole pool. Fixed by explicitly delegating `__reduce__` to the JSON library's own error class. References GitHub issue #6628."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "src/requests/exceptions.py",
+        "line": 41,
+        "issue": "Removing JSONDecodeError.__reduce__ causes pickling to use the inherited IOError reduction method, which does not reconstruct this exception with the multiple arguments required by CompatJSONDecodeError; pickling and unpickling JSONDecodeError can therefore fail or lose the exception type.",
+        "suggestion": "Restore __reduce__ and return CompatJSONDecodeError.__reduce__(self)."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 20.095992040995043,
+    "usage": {
+      "prompt_tokens": 1431,
+      "completion_tokens": 1647
+    }
+  },
+  {
+    "case_id": "003-requests-proxy-bypass-registry",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "003-requests-proxy-bypass-registry",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "regex-matches-empty-string",
+      "expected_file": "src/requests/utils.py",
+      "expected_line": 99,
+      "fix_reference": "https://github.com/psf/requests/commit/1604e20fc87ce212cf3a02474a6d7509b640cbbb",
+      "description": "On Windows, the proxy-bypass check read the `ProxyOverride` registry value and split it on `;` without filtering out empty entries (which occur naturally with trailing/duplicate semicolons). An empty pattern always matches under `re.match`, so once an empty entry appeared in the list, `proxy_bypass_registry` incorrectly reported that every host should bypass the proxy. Fixed by filtering out empty strings before matching."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "src/requests/utils.py",
+        "line": 99,
+        "issue": "Removing the empty-string filter causes an empty ProxyOverride entry, such as a trailing semicolon or consecutive semicolons, to reach re.match. Since re.match('', host, re.I) matches every host, Windows proxy bypassing will incorrectly return True for all hosts with such a registry value.",
+        "suggestion": "Restore `proxyOverride = filter(None, proxyOverride)` after splitting, or skip empty `test` values before calling re.match."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 6.722054667014163,
+    "usage": {
+      "prompt_tokens": 8962,
+      "completion_tokens": 400
+    }
+  },
+  {
+    "case_id": "003-requests-proxy-bypass-registry",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "003-requests-proxy-bypass-registry",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "regex-matches-empty-string",
+      "expected_file": "src/requests/utils.py",
+      "expected_line": 99,
+      "fix_reference": "https://github.com/psf/requests/commit/1604e20fc87ce212cf3a02474a6d7509b640cbbb",
+      "description": "On Windows, the proxy-bypass check read the `ProxyOverride` registry value and split it on `;` without filtering out empty entries (which occur naturally with trailing/duplicate semicolons). An empty pattern always matches under `re.match`, so once an empty entry appeared in the list, `proxy_bypass_registry` incorrectly reported that every host should bypass the proxy. Fixed by filtering out empty strings before matching."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "src/requests/utils.py",
+        "line": 99,
+        "issue": "Removing the empty-string filter makes trailing, leading, or consecutive semicolons in the Windows ProxyOverride registry value enter the matching loop. The resulting empty pattern can match an empty host and incorrectly bypass the proxy (and is explicitly the case the deleted guard prevented).",
+        "suggestion": "Restore `proxyOverride = filter(None, proxyOverride)` before iterating over the overrides."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 24.409417500020936,
+    "usage": {
+      "prompt_tokens": 1131,
+      "completion_tokens": 2166
+    }
+  },
+  {
+    "case_id": "004-click-version-package-name",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "004-click-version-package-name",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "incomplete-resolution-logic",
+      "expected_file": "src/click/decorators.py",
+      "expected_line": 501,
+      "fix_reference": "https://github.com/pallets/click/commit/bec59289d8cf9b9b4010642b2fee483e5f8eeefc",
+      "description": "click.version_option() raised RuntimeError whenever the detected or given `package_name` did not exactly match an installed distribution name, even when the name was a valid top-level import name that maps to a differently-named distribution (e.g. `PIL` is provided by the `Pillow` distribution, `jwt` by `PyJWT`). This made `--version` fail for any CLI built on top of such packages. Fixed by resolving the name via `importlib.metadata.packages_distributions()` before giving up. References issues #1884, #2331, #3125."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "src/click/decorators.py",
+        "line": 499,
+        "issue": "This now raises for import package names that differ from their distribution names, so `version_option(package_name=\"PIL\")` fails even when the installed Pillow distribution provides that package. The removed `packages_distributions()` fallback previously resolved this valid and common case.",
+        "suggestion": "Restore the import-name-to-distribution lookup for names that are not directly found by `importlib.metadata.version()`."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 31.595459999982268,
+    "usage": {
+      "prompt_tokens": 6323,
+      "completion_tokens": 2690
+    }
+  },
+  {
+    "case_id": "004-click-version-package-name",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "004-click-version-package-name",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "incomplete-resolution-logic",
+      "expected_file": "src/click/decorators.py",
+      "expected_line": 501,
+      "fix_reference": "https://github.com/pallets/click/commit/bec59289d8cf9b9b4010642b2fee483e5f8eeefc",
+      "description": "click.version_option() raised RuntimeError whenever the detected or given `package_name` did not exactly match an installed distribution name, even when the name was a valid top-level import name that maps to a differently-named distribution (e.g. `PIL` is provided by the `Pillow` distribution, `jwt` by `PyJWT`). This made `--version` fail for any CLI built on top of such packages. Fixed by resolving the name via `importlib.metadata.packages_distributions()` before giving up. References issues #1884, #2331, #3125."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "src/click/decorators.py",
+        "line": 494,
+        "issue": "When the detected or explicitly supplied name is an import package whose distribution has a different name, this now raises instead of resolving the distribution. For example, `package_name=\"PIL\"` is provided by the installed `Pillow` distribution, so `@click.version_option()` or `@click.version_option(package_name=\"PIL\")` can no longer display its version.",
+        "suggestion": "Retain the import-package-to-distribution fallback, or require callers to provide the distribution name when detecting the package name."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 14.154045833041891,
+    "usage": {
+      "prompt_tokens": 1829,
+      "completion_tokens": 1161
+    }
+  },
+  {
+    "case_id": "005-axios-progress-negative-clamp",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "005-axios-progress-negative-clamp",
+      "language": "javascript",
+      "category": "real_bug_fix",
+      "bug_type": "missing-bounds-check",
+      "expected_file": "lib/helpers/progressEventReducer.js",
+      "expected_line": 15,
+      "fix_reference": "https://github.com/axios/axios/commit/3d253b4f17a5107e6f274ee5b2e96e03508dceb2",
+      "description": "progressEventReducer computed the `loaded` byte count directly from a ProgressEvent's `loaded`/`total` fields without clamping to zero. Some environments can report a negative `loaded` value, which then propagated into progress and byte-delta calculations, producing negative `progress`/`bytes` values delivered to onDownloadProgress/onUploadProgress callbacks. Fixed by clamping the computed value with `Math.max(0, ...)`. References PR #11039."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "lib/helpers/progressEventReducer.js",
+        "line": 15,
+        "issue": "loaded used to be clamped to a bound; the changed code removed it, so loaded can now fall outside that bound.",
+        "suggestion": "Restore the bound (e.g. `max(0, ...)`) around loaded's assignment."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 7.514702959044371,
+    "usage": {
+      "prompt_tokens": 1480,
+      "completion_tokens": 581
+    }
+  },
+  {
+    "case_id": "005-axios-progress-negative-clamp",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "005-axios-progress-negative-clamp",
+      "language": "javascript",
+      "category": "real_bug_fix",
+      "bug_type": "missing-bounds-check",
+      "expected_file": "lib/helpers/progressEventReducer.js",
+      "expected_line": 15,
+      "fix_reference": "https://github.com/axios/axios/commit/3d253b4f17a5107e6f274ee5b2e96e03508dceb2",
+      "description": "progressEventReducer computed the `loaded` byte count directly from a ProgressEvent's `loaded`/`total` fields without clamping to zero. Some environments can report a negative `loaded` value, which then propagated into progress and byte-delta calculations, producing negative `progress`/`bytes` values delivered to onDownloadProgress/onUploadProgress callbacks. Fixed by clamping the computed value with `Math.max(0, ...)`. References PR #11039."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "lib/helpers/progressEventReducer.js",
+        "line": 15,
+        "issue": "loaded used to be clamped to a bound; the changed code removed it, so loaded can now fall outside that bound.",
+        "suggestion": "Restore the bound (e.g. `max(0, ...)`) around loaded's assignment."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 13.227384124998935,
+    "usage": {
+      "prompt_tokens": 1115,
+      "completion_tokens": 1156
+    }
+  },
+  {
+    "case_id": "006-express-content-length-transfer-encoding",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "006-express-content-length-transfer-encoding",
+      "language": "javascript",
+      "category": "real_bug_fix",
+      "bug_type": "http-spec-violation",
+      "expected_file": "lib/response.js",
+      "expected_line": 167,
+      "fix_reference": "https://github.com/expressjs/express/commit/18e5985b8a9d5e8423db0a9121f22bdaecd5b120",
+      "description": "res.send() always computed and set a Content-Length header whenever a body chunk was provided, even when the response also carried a Transfer-Encoding header. HTTP/1.1 forbids sending both headers on the same response, so this could confuse clients and intermediaries about how to frame the response body. Fixed by only computing Content-Length when Transfer-Encoding is absent. References PR #4893."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "lib/response.js",
+        "line": 167,
+        "issue": "This unconditional Content-Length calculation now overwrites the previous guard and sets Content-Length even when the response already has Transfer-Encoding. A response can therefore emit both headers, which is invalid HTTP and can be interpreted inconsistently by intermediaries.",
+        "suggestion": "Restore the guard: if (chunk !== undefined && !this.get('Transfer-Encoding')) {"
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 18.980639625049662,
+    "usage": {
+      "prompt_tokens": 7610,
+      "completion_tokens": 1761
+    }
+  },
+  {
+    "case_id": "006-express-content-length-transfer-encoding",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "006-express-content-length-transfer-encoding",
+      "language": "javascript",
+      "category": "real_bug_fix",
+      "bug_type": "http-spec-violation",
+      "expected_file": "lib/response.js",
+      "expected_line": 167,
+      "fix_reference": "https://github.com/expressjs/express/commit/18e5985b8a9d5e8423db0a9121f22bdaecd5b120",
+      "description": "res.send() always computed and set a Content-Length header whenever a body chunk was provided, even when the response also carried a Transfer-Encoding header. HTTP/1.1 forbids sending both headers on the same response, so this could confuse clients and intermediaries about how to frame the response body. Fixed by only computing Content-Length when Transfer-Encoding is absent. References PR #4893."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "lib/response.js",
+        "line": 167,
+        "issue": "This now computes Content-Length even when a Transfer-Encoding header is already present, causing send() to emit both mutually exclusive headers and potentially producing an invalid HTTP response or a Node.js content-length mismatch error.",
+        "suggestion": "Restore the Transfer-Encoding guard: if (chunk !== undefined && !this.get('Transfer-Encoding')) {"
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 7.61490462499205,
+    "usage": {
+      "prompt_tokens": 1063,
+      "completion_tokens": 600
+    }
+  },
+  {
+    "case_id": "007-lodash-omit-array-clone",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "007-lodash-omit-array-clone",
+      "language": "javascript",
+      "category": "real_bug_fix",
+      "bug_type": "unintended-mutation",
+      "expected_file": "lodash.js",
+      "expected_line": 5689,
+      "fix_reference": "https://github.com/lodash/lodash/commit/1fc456c5e4cf43be425f837ad5595747811f7b2d",
+      "description": "customOmitClone (used internally by `_.omit`) returned arrays by reference instead of deferring them to `cloneDeep` the way plain objects already were. As a result, when an omit path traversed into an array (e.g. `_.omit(obj, ['a[0].b'])`), `baseUnset` mutated the caller's original array in place rather than a clone. Fixed by treating arrays the same as plain objects in customOmitClone. References issue #5610."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "lodash.js",
+        "line": 5690,
+        "issue": "Deep `_.omit` no longer clones arrays because `customOmitClone` returns each array unchanged. When omitting a nested path such as `_.omit({a: [{b: 1, c: 2}]}, 'a[0].b')`, `baseUnset` mutates the original `a` array, so the input object is modified and the returned result shares nested array references with it.",
+        "suggestion": "Restore the array check: `return isPlainObject(value) || isArray(value) ? undefined : value;`"
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 9.760062541987281,
+    "usage": {
+      "prompt_tokens": 145571,
+      "completion_tokens": 648
+    }
+  },
+  {
+    "case_id": "007-lodash-omit-array-clone",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "007-lodash-omit-array-clone",
+      "language": "javascript",
+      "category": "real_bug_fix",
+      "bug_type": "unintended-mutation",
+      "expected_file": "lodash.js",
+      "expected_line": 5689,
+      "fix_reference": "https://github.com/lodash/lodash/commit/1fc456c5e4cf43be425f837ad5595747811f7b2d",
+      "description": "customOmitClone (used internally by `_.omit`) returned arrays by reference instead of deferring them to `cloneDeep` the way plain objects already were. As a result, when an omit path traversed into an array (e.g. `_.omit(obj, ['a[0].b'])`), `baseUnset` mutated the caller's original array in place rather than a clone. Fixed by treating arrays the same as plain objects in customOmitClone. References issue #5610."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "lodash.js",
+        "line": 5690,
+        "issue": "Arrays now return themselves from the omit clone customizer instead of returning undefined to defer cloning, so nested arrays in objects processed by _.omit are reused rather than deep-cloned and can alias the original object.",
+        "suggestion": "Keep arrays in the deferred-cloning branch: return isPlainObject(value) || isArray(value) ? undefined : value;"
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 12.185123959032353,
+    "usage": {
+      "prompt_tokens": 979,
+      "completion_tokens": 1090
+    }
+  },
+  {
+    "case_id": "008-axios-headers-set-cookie",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "008-axios-headers-set-cookie",
+      "language": "javascript",
+      "category": "real_bug_fix",
+      "bug_type": "inconsistent-return-type",
+      "expected_file": "lib/core/AxiosHeaders.js",
+      "expected_line": 283,
+      "fix_reference": "https://github.com/axios/axios/commit/e566ea39a22e55a05073b035c51852b4863de012",
+      "description": "AxiosHeaders.getSetCookie() returned `this.get('set-cookie') || []`, which produced a single string when only one Set-Cookie header was present, an array when multiple were present, or an empty array when absent - an inconsistent return type across call sites that expect an array of cookie strings. Fixed to always normalize the result to an array. References PR #11037."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "lib/core/AxiosHeaders.js",
+        "line": 282,
+        "issue": "getSetCookie() no longer guarantees an array: a normal single Set-Cookie header stored as a string is returned as that string, whereas the previous implementation wrapped scalar values in an array. This breaks callers that rely on the method's array return contract.",
+        "suggestion": "Return the existing value when it is an array, otherwise return value == null || value === false ? [] : [value]."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 6.4683242500177585,
+    "usage": {
+      "prompt_tokens": 3138,
+      "completion_tokens": 434
+    }
+  },
+  {
+    "case_id": "008-axios-headers-set-cookie",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "008-axios-headers-set-cookie",
+      "language": "javascript",
+      "category": "real_bug_fix",
+      "bug_type": "inconsistent-return-type",
+      "expected_file": "lib/core/AxiosHeaders.js",
+      "expected_line": 283,
+      "fix_reference": "https://github.com/axios/axios/commit/e566ea39a22e55a05073b035c51852b4863de012",
+      "description": "AxiosHeaders.getSetCookie() returned `this.get('set-cookie') || []`, which produced a single string when only one Set-Cookie header was present, an array when multiple were present, or an empty array when absent - an inconsistent return type across call sites that expect an array of cookie strings. Fixed to always normalize the result to an array. References PR #11037."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "lib/core/AxiosHeaders.js",
+        "line": 282,
+        "issue": "When the `set-cookie` header is a truthy scalar string, this returns the string directly instead of the array required by `getSetCookie()`; the previous implementation wrapped scalar values in an array, so callers iterating or indexing the result now observe characters or string properties rather than cookies.",
+        "suggestion": "Use `const value = this.get('set-cookie'); return utils.isArray(value) ? value : value == null || value === false ? [] : [value];`"
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 6.851262790965848,
+    "usage": {
+      "prompt_tokens": 1176,
+      "completion_tokens": 453
+    }
+  },
+  {
+    "case_id": "009-cobra-completions-args-mutation",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "009-cobra-completions-args-mutation",
+      "language": "go",
+      "category": "real_bug_fix",
+      "bug_type": "shared-backing-array-mutation",
+      "expected_file": "completions.go",
+      "expected_line": 320,
+      "fix_reference": "https://github.com/spf13/cobra/commit/746ef07158728502482cea9f880a6f4b21ef29a9",
+      "description": "getCompletions() built `trimmedArgs` as a re-sliced view of the caller's original args slice (ultimately backed by `os.Args` when TraverseChildren is enabled), then later called `append(finalArgs, \"--\")`. If that sub-slice had spare capacity in its backing array, the append wrote `\"--\"` directly into the shared backing array, silently corrupting `os.Args` for the rest of the program. Fixed by copying `trimmedArgs` into a freshly allocated slice. References issue #2257."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "completions.go",
+        "line": 320,
+        "issue": "trimmedArgs used to be a defensive copy of args; the changed code aliases it directly instead, so a later mutation of trimmedArgs can corrupt args's backing array.",
+        "suggestion": "Restore the copy (allocate trimmedArgs and `copy(trimmedArgs, args)`) before mutating trimmedArgs."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 9.113053374981973,
+    "usage": {
+      "prompt_tokens": 10724,
+      "completion_tokens": 627
+    }
+  },
+  {
+    "case_id": "009-cobra-completions-args-mutation",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "009-cobra-completions-args-mutation",
+      "language": "go",
+      "category": "real_bug_fix",
+      "bug_type": "shared-backing-array-mutation",
+      "expected_file": "completions.go",
+      "expected_line": 320,
+      "fix_reference": "https://github.com/spf13/cobra/commit/746ef07158728502482cea9f880a6f4b21ef29a9",
+      "description": "getCompletions() built `trimmedArgs` as a re-sliced view of the caller's original args slice (ultimately backed by `os.Args` when TraverseChildren is enabled), then later called `append(finalArgs, \"--\")`. If that sub-slice had spare capacity in its backing array, the append wrote `\"--\"` directly into the shared backing array, silently corrupting `os.Args` for the rest of the program. Fixed by copying `trimmedArgs` into a freshly allocated slice. References issue #2257."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "completions.go",
+        "line": 320,
+        "issue": "trimmedArgs used to be a defensive copy of args; the changed code aliases it directly instead, so a later mutation of trimmedArgs can corrupt args's backing array.",
+        "suggestion": "Restore the copy (allocate trimmedArgs and `copy(trimmedArgs, args)`) before mutating trimmedArgs."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 5.860331333009526,
+    "usage": {
+      "prompt_tokens": 1090,
+      "completion_tokens": 402
+    }
+  },
+  {
+    "case_id": "010-gin-runfd-file-leak",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "010-gin-runfd-file-leak",
+      "language": "go",
+      "category": "real_bug_fix",
+      "bug_type": "resource-leak",
+      "expected_file": "gin.go",
+      "expected_line": 595,
+      "fix_reference": "https://github.com/gin-gonic/gin/commit/c3d5a28ed6d3849da820195b6774d212bcc038a9",
+      "description": "Engine.RunFd() wrapped a raw file descriptor in an `os.File` via `os.NewFile` but never closed it, leaking the underlying file descriptor for the process's lifetime every time RunFd was called. Fixed by adding `defer f.Close()`. References PR #4422."
+    },
+    "proposed_count": 2,
+    "grounded_count": 2,
+    "findings": [
+      {
+        "file": "gin.go",
+        "line": 595,
+        "issue": "f is opened here, but the changed code removed its Close() call - this resource now leaks.",
+        "suggestion": "Restore closing f (e.g. `defer f.Close()`), including on early-return paths."
+      },
+      {
+        "file": "gin.go",
+        "line": 596,
+        "issue": "Removing the defer on f.Close leaks the original file descriptor created by os.NewFile. net.FileListener duplicates the descriptor for the returned listener, so listener.Close() does not close f; this leak occurs both when FileListener returns an error and after the server exits.",
+        "suggestion": "Restore defer f.Close() immediately after creating f."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 7.762611917045433,
+    "usage": {
+      "prompt_tokens": 7741,
+      "completion_tokens": 471
+    }
+  },
+  {
+    "case_id": "010-gin-runfd-file-leak",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "010-gin-runfd-file-leak",
+      "language": "go",
+      "category": "real_bug_fix",
+      "bug_type": "resource-leak",
+      "expected_file": "gin.go",
+      "expected_line": 595,
+      "fix_reference": "https://github.com/gin-gonic/gin/commit/c3d5a28ed6d3849da820195b6774d212bcc038a9",
+      "description": "Engine.RunFd() wrapped a raw file descriptor in an `os.File` via `os.NewFile` but never closed it, leaking the underlying file descriptor for the process's lifetime every time RunFd was called. Fixed by adding `defer f.Close()`. References PR #4422."
+    },
+    "proposed_count": 2,
+    "grounded_count": 2,
+    "findings": [
+      {
+        "file": "gin.go",
+        "line": 595,
+        "issue": "f is opened here, but the changed code removed its Close() call - this resource now leaks.",
+        "suggestion": "Restore closing f (e.g. `defer f.Close()`), including on early-return paths."
+      },
+      {
+        "file": "gin.go",
+        "line": 596,
+        "issue": "Removing `defer f.Close()` leaves the original `*os.File` descriptor open after `net.FileListener(f)` duplicates the descriptor for the listener. Each `RunFd` call can therefore leak a file descriptor and eventually fail with too many open files.",
+        "suggestion": "Restore `defer f.Close()` immediately after creating `f`."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 6.85955091699725,
+    "usage": {
+      "prompt_tokens": 1031,
+      "completion_tokens": 438
+    }
+  },
+  {
+    "case_id": "011-gorilla-mux-query-match",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "011-gorilla-mux-query-match",
+      "language": "go",
+      "category": "real_bug_fix",
+      "bug_type": "incorrect-error-state-clearing",
+      "expected_file": "route.go",
+      "expected_line": 76,
+      "fix_reference": "https://github.com/gorilla/mux/commit/2b030fc311d07b8c5950807800b03b2d32a7142c",
+      "description": "Route.Match cleared a sibling route's `match.MatchErr` (previously set to `ErrMethodMismatch`) whenever the *current* route's matcher failed for any reason, including a plain query-parameter mismatch - not only when the failure was itself a method mismatch. This let requests with invalid/mismatched query parameters incorrectly fall through and match a route with a different HTTP method, returning the wrong status code instead of 405 or 404. Fixed by keying the reset off the actual matcher type (query regexp) rather than the loop's else-branch. References issue gorilla/mux#739."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "route.go",
+        "line": 78,
+        "issue": "The ErrMethodMismatch cleanup was moved into the successful-matcher branch, so it is skipped when a route's method matcher fails and a later query matcher also fails. If an earlier route left match.MatchErr as ErrMethodMismatch, the query failure returns without replacing it with ErrNotFound, causing the router to report 405 Method Not Allowed instead of the intended 404 Not Found for a path/query that does not match.",
+        "suggestion": "Restore the regexpTypeQuery failure handling before the generic non-method failure return, setting matchErr to ErrNotFound and breaking out of matcher evaluation."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 34.74552408303134,
+    "usage": {
+      "prompt_tokens": 6893,
+      "completion_tokens": 2948
+    }
+  },
+  {
+    "case_id": "011-gorilla-mux-query-match",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "011-gorilla-mux-query-match",
+      "language": "go",
+      "category": "real_bug_fix",
+      "bug_type": "incorrect-error-state-clearing",
+      "expected_file": "route.go",
+      "expected_line": 76,
+      "fix_reference": "https://github.com/gorilla/mux/commit/2b030fc311d07b8c5950807800b03b2d32a7142c",
+      "description": "Route.Match cleared a sibling route's `match.MatchErr` (previously set to `ErrMethodMismatch`) whenever the *current* route's matcher failed for any reason, including a plain query-parameter mismatch - not only when the failure was itself a method mismatch. This let requests with invalid/mismatched query parameters incorrectly fall through and match a route with a different HTTP method, returning the wrong status code instead of 405 or 404. Fixed by keying the reset off the actual matcher type (query regexp) rather than the loop's else-branch. References issue gorilla/mux#739."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "route.go",
+        "line": 63,
+        "issue": "A query matcher failure now takes the generic `return false` path instead of converting the failure to `ErrNotFound`. If an earlier candidate route left `match.MatchErr` as `ErrMethodMismatch`, a later route whose path and method match but whose query constraint fails can leave that stale error in place, causing the router to report a method mismatch (405) instead of not found (404).",
+        "suggestion": "Retain the query-regexp special case before the generic failure return, setting the match error to `ErrNotFound` and clearing it before returning."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 38.79174029198475,
+    "usage": {
+      "prompt_tokens": 1391,
+      "completion_tokens": 3757
+    }
+  },
+  {
+    "case_id": "012-urfave-cli-empty-positional-arg",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "012-urfave-cli-empty-positional-arg",
+      "language": "go",
+      "category": "real_bug_fix",
+      "bug_type": "premature-loop-termination",
+      "expected_file": "command_parse.go",
+      "expected_line": 82,
+      "fix_reference": "https://github.com/urfave/cli/commit/b4f42d397e229039b5ffffe996daccc3fb3ae358",
+      "description": "parseFlags() treated any empty-string positional argument as the end of the argument list (`break`), silently dropping that argument and every argument after it from `cmd.Args()`, instead of treating the empty string as a legitimate positional value. Fixed by appending the empty argument to `posArgs` and continuing the parse loop. References issue_2292."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "command_parse.go",
+        "line": 80,
+        "issue": "Encountering an empty or whitespace-only argument now breaks parsing without appending the current argument or the remaining arguments, so inputs such as `{\"\", \"value\"}` silently lose both arguments instead of preserving them as positional arguments.",
+        "suggestion": "Append the remaining arguments before breaking, for example: `posArgs = append(posArgs, rargs...); break`."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 12.340660042013042,
+    "usage": {
+      "prompt_tokens": 3043,
+      "completion_tokens": 1024
+    }
+  },
+  {
+    "case_id": "012-urfave-cli-empty-positional-arg",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "012-urfave-cli-empty-positional-arg",
+      "language": "go",
+      "category": "real_bug_fix",
+      "bug_type": "premature-loop-termination",
+      "expected_file": "command_parse.go",
+      "expected_line": 82,
+      "fix_reference": "https://github.com/urfave/cli/commit/b4f42d397e229039b5ffffe996daccc3fb3ae358",
+      "description": "parseFlags() treated any empty-string positional argument as the end of the argument list (`break`), silently dropping that argument and every argument after it from `cmd.Args()`, instead of treating the empty string as a legitimate positional value. Fixed by appending the empty argument to `posArgs` and continuing the parse loop. References issue_2292."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "command_parse.go",
+        "line": 82,
+        "issue": "Replacing the append-and-continue with `break` causes an empty or whitespace-only argument to terminate flag parsing without adding that argument to `posArgs`, so the argument is lost and subsequent arguments are no longer processed as before.",
+        "suggestion": "Preserve the argument and continue parsing with `posArgs = append(posArgs, rargs[0]); continue`."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 14.284308958041947,
+    "usage": {
+      "prompt_tokens": 986,
+      "completion_tokens": 1126
+    }
+  },
+  {
+    "case_id": "013-gson-jsonprimitive-hashcode",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "013-gson-jsonprimitive-hashcode",
+      "language": "java",
+      "category": "real_bug_fix",
+      "bug_type": "equals-hashcode-contract-violation",
+      "expected_file": "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+      "expected_line": 267,
+      "fix_reference": "https://github.com/google/gson/commit/5e277e42786ab6441b7dd6b1a8c34d545d132307",
+      "description": "JsonPrimitive.hashCode() hashed integral numbers from their `long` value and all other numeric types from their `double` bits, but `equals()` considered numbers from different Number subclasses/branches equal to each other (e.g. an `Integer 42` equals a lazily-parsed number \"42\", and a large `long` equals the `double` it loses precision to). Two JsonPrimitives that compared equal could therefore produce different hash codes, violating the equals/hashCode contract and breaking correctness when used as HashMap/HashSet keys. Fixed by hashing every numeric branch from the same double-derived value that equals ultimately compares. References issue #992."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+        "line": 268,
+        "issue": "Integral primitives hash their long value here, but equals also considers an integral primitive equal to a floating-point primitive with the same numeric value, such as Integer 42 and Double 42.0. The floating-point branch hashes Double.doubleToLongBits(42.0), producing a different hash from 42 and violating the equals/hashCode contract.",
+        "suggestion": "Hash integral numbers using the same double-based hash as the numeric branch, while preserving normalization of integral double values if required."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 10.167289124976378,
+    "usage": {
+      "prompt_tokens": 4769,
+      "completion_tokens": 642
+    }
+  },
+  {
+    "case_id": "013-gson-jsonprimitive-hashcode",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "013-gson-jsonprimitive-hashcode",
+      "language": "java",
+      "category": "real_bug_fix",
+      "bug_type": "equals-hashcode-contract-violation",
+      "expected_file": "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+      "expected_line": 267,
+      "fix_reference": "https://github.com/google/gson/commit/5e277e42786ab6441b7dd6b1a8c34d545d132307",
+      "description": "JsonPrimitive.hashCode() hashed integral numbers from their `long` value and all other numeric types from their `double` bits, but `equals()` considered numbers from different Number subclasses/branches equal to each other (e.g. an `Integer 42` equals a lazily-parsed number \"42\", and a large `long` equals the `double` it loses precision to). Two JsonPrimitives that compared equal could therefore produce different hash codes, violating the equals/hashCode contract and breaking correctness when used as HashMap/HashSet keys. Fixed by hashing every numeric branch from the same double-derived value that equals ultimately compares. References issue #992."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+        "line": 268,
+        "issue": "This integral branch now hashes the long value, but equals considers cross-type numeric values such as Integer 42 and Double 42.0 equal. Their hashes differ (42 versus the folded bits of 42.0), violating the hashCode contract and causing equal JsonPrimitive instances to behave incorrectly in hash-based collections.",
+        "suggestion": "Hash integral numbers using the same normalized double-based algorithm as the non-integral numeric branch, restoring the removed hashOfDoubleValue behavior."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 11.165486999962013,
+    "usage": {
+      "prompt_tokens": 2340,
+      "completion_tokens": 938
+    }
+  },
+  {
+    "case_id": "014-junit4-assumption-serialization",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "014-junit4-assumption-serialization",
+      "language": "java",
+      "category": "real_bug_fix",
+      "bug_type": "missing-serialization-override",
+      "expected_file": "src/main/java/org/junit/internal/AssumptionViolatedException.java",
+      "expected_line": 111,
+      "fix_reference": "https://github.com/junit-team/junit4/commit/f8ee412316b1a94d3dc35498359cc2f0ca273216",
+      "description": "AssumptionViolatedException held a Hamcrest Matcher and an arbitrary Object value as instance fields but relied on default Java serialization. Since most Matcher implementations (and many arbitrary test values) are not themselves Serializable, calling default serialization on an instance threw NotSerializableException, breaking any test infrastructure that serializes test results/exceptions across a process boundary (e.g. forked test JVMs). Fixed by adding a custom writeObject() that wraps the matcher/value in serializable description wrappers before writing. References issue #1192."
+    },
+    "proposed_count": 3,
+    "grounded_count": 3,
+    "findings": [
+      {
+        "file": "src/main/java/org/junit/internal/AssumptionViolatedException.java",
+        "line": 108,
+        "issue": "Removing the custom writeObject method makes default Throwable serialization attempt to serialize fValue and fMatcher directly. Since the constructors accept arbitrary values and non-Serializable Hamcrest matchers, serializing an AssumptionViolatedException can now fail with NotSerializableException.",
+        "suggestion": "Retain custom serialization that replaces non-serializable values and matchers with serializable descriptions."
+      },
+      {
+        "file": "src/main/java/org/junit/internal/SerializableMatcherDescription.java",
+        "line": 1,
+        "issue": "Deleting this class breaks deserialization of AssumptionViolatedException instances written by the previous custom serializer, because those streams can contain SerializableMatcherDescription objects and the class will no longer be available at runtime.",
+        "suggestion": "Keep the compatibility class available, or provide an explicit compatibility deserialization path for streams containing it."
+      },
+      {
+        "file": "src/main/java/org/junit/internal/SerializableValueDescription.java",
+        "line": 1,
+        "issue": "Deleting this class breaks deserialization of AssumptionViolatedException instances written by the previous custom serializer when their non-serializable values were wrapped as SerializableValueDescription objects.",
+        "suggestion": "Keep the compatibility class available, or provide an explicit compatibility deserialization path for streams containing it."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 9.95614620798733,
+    "usage": {
+      "prompt_tokens": 3349,
+      "completion_tokens": 782
+    }
+  },
+  {
+    "case_id": "014-junit4-assumption-serialization",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "014-junit4-assumption-serialization",
+      "language": "java",
+      "category": "real_bug_fix",
+      "bug_type": "missing-serialization-override",
+      "expected_file": "src/main/java/org/junit/internal/AssumptionViolatedException.java",
+      "expected_line": 111,
+      "fix_reference": "https://github.com/junit-team/junit4/commit/f8ee412316b1a94d3dc35498359cc2f0ca273216",
+      "description": "AssumptionViolatedException held a Hamcrest Matcher and an arbitrary Object value as instance fields but relied on default Java serialization. Since most Matcher implementations (and many arbitrary test values) are not themselves Serializable, calling default serialization on an instance threw NotSerializableException, breaking any test infrastructure that serializes test results/exceptions across a process boundary (e.g. forked test JVMs). Fixed by adding a custom writeObject() that wraps the matcher/value in serializable description wrappers before writing. References issue #1192."
+    },
+    "proposed_count": 3,
+    "grounded_count": 3,
+    "findings": [
+      {
+        "file": "src/main/java/org/junit/internal/AssumptionViolatedException.java",
+        "line": 108,
+        "issue": "Removing writeObject makes Throwable's default serialization attempt to serialize fMatcher and fValue directly. These fields accept arbitrary Matcher and Object instances, so serializing an AssumptionViolatedException with a non-serializable matcher or value now throws NotSerializableException instead of producing the serialized description representation.",
+        "suggestion": "Restore the custom writeObject implementation, or otherwise serialize non-serializable matchers and values as their string descriptions."
+      },
+      {
+        "file": "src/main/java/org/junit/internal/SerializableMatcherDescription.java",
+        "line": 1,
+        "issue": "Deleting this class breaks deserialization of existing AssumptionViolatedException streams whose fMatcher field contains a SerializableMatcherDescription instance; Java deserialization will fail with ClassNotFoundException when loading the recorded class.",
+        "suggestion": "Retain SerializableMatcherDescription as a package-private compatibility class even if new serialization no longer uses it."
+      },
+      {
+        "file": "src/main/java/org/junit/internal/SerializableValueDescription.java",
+        "line": 1,
+        "issue": "Deleting this class breaks deserialization of existing AssumptionViolatedException streams whose fValue field contains a SerializableValueDescription instance; Java deserialization will fail with ClassNotFoundException when loading the recorded class.",
+        "suggestion": "Retain SerializableValueDescription as a package-private compatibility class for previously serialized exceptions."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 10.33561141701648,
+    "usage": {
+      "prompt_tokens": 2581,
+      "completion_tokens": 844
+    }
+  },
+  {
+    "case_id": "015-commons-lang-bitfield-sign-extension",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "015-commons-lang-bitfield-sign-extension",
+      "language": "java",
+      "category": "real_bug_fix",
+      "bug_type": "sign-extension-bug",
+      "expected_file": "src/main/java/org/apache/commons/lang3/BitField.java",
+      "expected_line": 199,
+      "fix_reference": "https://github.com/apache/commons-lang/commit/98dc24990bf93234cf63ed5c5dd43a4f07847baa",
+      "description": "BitField.getValue(int) and BitField.getValue(long) shifted the masked raw value right using the arithmetic shift operator (`>>`), which sign-extends the result. For a bit field occupying the top bit of its holder (e.g. bit 31 of an int, or a field built from `0xFF000000`), this produced a large negative or otherwise incorrect value instead of the intended unsigned bit-field value. Fixed by switching both overloads to the unsigned right-shift operator (`>>>`). References PR #1749."
+    },
+    "proposed_count": 2,
+    "grounded_count": 2,
+    "findings": [
+      {
+        "file": "src/main/java/org/apache/commons/lang3/BitField.java",
+        "line": 201,
+        "issue": "Using a signed right shift causes fields containing the sign bit to be sign-extended. For example, a BitField with int mask 0x80000000 returns -1 from getValue(0x80000000) instead of the extracted value 1, changing the method's behavior from unsigned field extraction.",
+        "suggestion": "Restore the unsigned shift: return getRawValue(holder) >>> shiftCount;"
+      },
+      {
+        "file": "src/main/java/org/apache/commons/lang3/BitField.java",
+        "line": 217,
+        "issue": "Using a signed right shift causes a long field containing bit 63 to be sign-extended. For example, a BitField with mask Long.MIN_VALUE returns -1 from getValue(Long.MIN_VALUE) instead of 1.",
+        "suggestion": "Restore the unsigned shift: return getRawValue(holder) >>> shiftCount;"
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 31.91100920800818,
+    "usage": {
+      "prompt_tokens": 4427,
+      "completion_tokens": 3235
+    }
+  },
+  {
+    "case_id": "015-commons-lang-bitfield-sign-extension",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "015-commons-lang-bitfield-sign-extension",
+      "language": "java",
+      "category": "real_bug_fix",
+      "bug_type": "sign-extension-bug",
+      "expected_file": "src/main/java/org/apache/commons/lang3/BitField.java",
+      "expected_line": 199,
+      "fix_reference": "https://github.com/apache/commons-lang/commit/98dc24990bf93234cf63ed5c5dd43a4f07847baa",
+      "description": "BitField.getValue(int) and BitField.getValue(long) shifted the masked raw value right using the arithmetic shift operator (`>>`), which sign-extends the result. For a bit field occupying the top bit of its holder (e.g. bit 31 of an int, or a field built from `0xFF000000`), this produced a large negative or otherwise incorrect value instead of the intended unsigned bit-field value. Fixed by switching both overloads to the unsigned right-shift operator (`>>>`). References PR #1749."
+    },
+    "proposed_count": 2,
+    "grounded_count": 2,
+    "findings": [
+      {
+        "file": "src/main/java/org/apache/commons/lang3/BitField.java",
+        "line": 199,
+        "issue": "Changing the shift from unsigned to arithmetic causes fields containing the int sign bit to return negative values. For example, a BitField with mask 0x80000000 returns -1 instead of 1 from getValue(0x80000000).",
+        "suggestion": "Use >>> for the int shift."
+      },
+      {
+        "file": "src/main/java/org/apache/commons/lang3/BitField.java",
+        "line": 215,
+        "issue": "Changing the shift from unsigned to arithmetic causes fields containing the long sign bit to return negative values. For example, a BitField with mask 0x8000000000000000L returns -1 instead of 1 from getValue(0x8000000000000000L).",
+        "suggestion": "Use >>> for the long shift."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 12.025619665975682,
+    "usage": {
+      "prompt_tokens": 1060,
+      "completion_tokens": 1046
+    }
+  },
+  {
+    "case_id": "016-flask-sql-injection-user-lookup",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "016-flask-sql-injection-user-lookup",
+      "language": "python",
+      "category": "injected_bug",
+      "bug_type": "sql-injection",
+      "expected_file": "src/flask/helpers.py",
+      "expected_line": 651,
+      "fix_reference": null,
+      "description": "Hand-authored (injected) bug: `build_user_lookup_query` builds a SQL query by directly concatenating an untrusted `username` string into the query text (`\"... WHERE username = '\" + username + \"'\"`) instead of using a parameterized query. A username such as `' OR '1'='1` would let an attacker read arbitrary rows, and one containing `'; DROP TABLE users;--` could delete data outright. This is a textbook SQL injection via string concatenation."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "src/flask/helpers.py",
+        "line": 652,
+        "issue": "This builds a SQL query by concatenating a variable directly into the query text - a SQL-injection risk if that value can be influenced by a caller.",
+        "suggestion": "Use a parameterized query (a placeholder plus a bound parameter) instead of string concatenation."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 31.904392459022347,
+    "usage": {
+      "prompt_tokens": 7106,
+      "completion_tokens": 2490
+    }
+  },
+  {
+    "case_id": "016-flask-sql-injection-user-lookup",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "016-flask-sql-injection-user-lookup",
+      "language": "python",
+      "category": "injected_bug",
+      "bug_type": "sql-injection",
+      "expected_file": "src/flask/helpers.py",
+      "expected_line": 651,
+      "fix_reference": null,
+      "description": "Hand-authored (injected) bug: `build_user_lookup_query` builds a SQL query by directly concatenating an untrusted `username` string into the query text (`\"... WHERE username = '\" + username + \"'\"`) instead of using a parameterized query. A username such as `' OR '1'='1` would let an attacker read arbitrary rows, and one containing `'; DROP TABLE users;--` could delete data outright. This is a textbook SQL injection via string concatenation."
+    },
+    "proposed_count": 2,
+    "grounded_count": 2,
+    "findings": [
+      {
+        "file": "src/flask/helpers.py",
+        "line": 652,
+        "issue": "This builds a SQL query by concatenating a variable directly into the query text - a SQL-injection risk if that value can be influenced by a caller.",
+        "suggestion": "Use a parameterized query (a placeholder plus a bound parameter) instead of string concatenation."
+      },
+      {
+        "file": "src/flask/helpers.py",
+        "line": 651,
+        "issue": "The username is concatenated directly into the SQL string without escaping or parameter binding, so a caller-supplied username such as `x' OR '1'='1` can alter the WHERE clause and expose unintended user rows.",
+        "suggestion": "Use a parameterized query and return the SQL with its bound parameter separately, for example `(\"SELECT id, username, email FROM users WHERE username = ?\", (username,))`."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 12.96867645898601,
+    "usage": {
+      "prompt_tokens": 1288,
+      "completion_tokens": 1073
+    }
+  },
+  {
+    "case_id": "017-commons-lang-arrayutils-off-by-one",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "017-commons-lang-arrayutils-off-by-one",
+      "language": "java",
+      "category": "injected_bug",
+      "bug_type": "off-by-one",
+      "expected_file": "src/main/java/org/apache/commons/lang3/ArrayUtils.java",
+      "expected_line": 9691,
+      "fix_reference": null,
+      "description": "Hand-authored (injected) bug: the new `getLast(T[] array)` method loops with `for (int i = 0; i <= array.length; i++)`, using `<=` instead of `<`. On the final iteration `i` equals `array.length`, which is one past the last valid index, so `array[i]` throws `ArrayIndexOutOfBoundsException` for every non-empty array. Classic off-by-one loop bound."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "src/main/java/org/apache/commons/lang3/ArrayUtils.java",
+        "line": 9691,
+        "issue": "This loop bounds i with <= against array's length/size, then indexes array[i] - the last iteration reads one past the end.",
+        "suggestion": "Use `i < array.length` (or the equivalent size/len bound) instead of <=."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 8.104375790979248,
+    "usage": {
+      "prompt_tokens": 104368,
+      "completion_tokens": 632
+    }
+  },
+  {
+    "case_id": "017-commons-lang-arrayutils-off-by-one",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "017-commons-lang-arrayutils-off-by-one",
+      "language": "java",
+      "category": "injected_bug",
+      "bug_type": "off-by-one",
+      "expected_file": "src/main/java/org/apache/commons/lang3/ArrayUtils.java",
+      "expected_line": 9691,
+      "fix_reference": null,
+      "description": "Hand-authored (injected) bug: the new `getLast(T[] array)` method loops with `for (int i = 0; i <= array.length; i++)`, using `<=` instead of `<`. On the final iteration `i` equals `array.length`, which is one past the last valid index, so `array[i]` throws `ArrayIndexOutOfBoundsException` for every non-empty array. Classic off-by-one loop bound."
+    },
+    "proposed_count": 2,
+    "grounded_count": 2,
+    "findings": [
+      {
+        "file": "src/main/java/org/apache/commons/lang3/ArrayUtils.java",
+        "line": 9691,
+        "issue": "This loop bounds i with <= against array's length/size, then indexes array[i] - the last iteration reads one past the end.",
+        "suggestion": "Use `i < array.length` (or the equivalent size/len bound) instead of <=."
+      },
+      {
+        "file": "src/main/java/org/apache/commons/lang3/ArrayUtils.java",
+        "line": 9692,
+        "issue": "The loop condition uses `i <= array.length`, so after processing the last valid element at index `array.length - 1`, it accesses `array[array.length]` and throws `ArrayIndexOutOfBoundsException` for every non-empty array instead of returning its last element.",
+        "suggestion": "Change the loop condition to `i < array.length`, or return `array[array.length - 1]` directly."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 7.835659375006799,
+    "usage": {
+      "prompt_tokens": 1682,
+      "completion_tokens": 630
+    }
+  },
+  {
+    "case_id": "018-axios-missing-null-check-charset",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "018-axios-missing-null-check-charset",
+      "language": "javascript",
+      "category": "injected_bug",
+      "bug_type": "missing-null-check",
+      "expected_file": "lib/utils.js",
+      "expected_line": 974,
+      "fix_reference": null,
+      "description": "Hand-authored (injected) bug: the new `getResponseCharset(response)` helper reads `response.headers['content-type']` without checking that `response` or `response.headers` is defined first. Any caller that passes a bare error object, an aborted/network-error response with no headers, or `undefined`, triggers a `TypeError: Cannot read properties of undefined (reading 'content-type')` instead of falling back gracefully. Missing null/undefined guard."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "lib/utils.js",
+        "line": 975,
+        "issue": "The charset pattern does not support valid Content-Type parameters with optional whitespace around `=` or quoted values, so headers such as `text/plain; charset = \"utf-8\"` produce the wrong charset (`\"utf-8\"`) or fall back to `utf-8`.",
+        "suggestion": "Use a pattern that permits whitespace and strips optional quotes, such as /charset\\s*=\\s*\"?([^;\"\\s]+)\"?/i."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 9.17631850001635,
+    "usage": {
+      "prompt_tokens": 8237,
+      "completion_tokens": 630
+    }
+  },
+  {
+    "case_id": "018-axios-missing-null-check-charset",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "018-axios-missing-null-check-charset",
+      "language": "javascript",
+      "category": "injected_bug",
+      "bug_type": "missing-null-check",
+      "expected_file": "lib/utils.js",
+      "expected_line": 974,
+      "fix_reference": null,
+      "description": "Hand-authored (injected) bug: the new `getResponseCharset(response)` helper reads `response.headers['content-type']` without checking that `response` or `response.headers` is defined first. Any caller that passes a bare error object, an aborted/network-error response with no headers, or `undefined`, triggers a `TypeError: Cannot read properties of undefined (reading 'content-type')` instead of falling back gracefully. Missing null/undefined guard."
+    },
+    "proposed_count": 1,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 9.510740374971647,
+    "usage": {
+      "prompt_tokens": 1179,
+      "completion_tokens": 627
+    }
+  },
+  {
+    "case_id": "019-gin-request-counter-race",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "019-gin-request-counter-race",
+      "language": "go",
+      "category": "injected_bug",
+      "bug_type": "race-condition",
+      "expected_file": "gin.go",
+      "expected_line": 677,
+      "fix_reference": null,
+      "description": "Hand-authored (injected) bug: a package-level `requestCount` variable is incremented with the non-atomic `requestCount++` inside `Engine.ServeHTTP`, which Go's net/http server invokes concurrently in a separate goroutine per in-flight request/connection. `requestCount++` is a read-modify-write of a plain int with no mutex or atomic operation, so concurrent requests can race and lose increments (or, under the race detector, report a data race outright). Classic unsynchronized read-modify-write race condition."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "gin.go",
+        "line": 677,
+        "issue": "requestCount++ performs an unsynchronized read-modify-write while ServeHTTP runs concurrently, causing a data race and lost increments under concurrent requests; RequestCount also reads the same variable without synchronization.",
+        "suggestion": "Use sync/atomic for both operations, such as atomic.AddInt64 on each request and atomic.LoadInt64 in RequestCount."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 17.230508041975554,
+    "usage": {
+      "prompt_tokens": 8304,
+      "completion_tokens": 1334
+    }
+  },
+  {
+    "case_id": "019-gin-request-counter-race",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "019-gin-request-counter-race",
+      "language": "go",
+      "category": "injected_bug",
+      "bug_type": "race-condition",
+      "expected_file": "gin.go",
+      "expected_line": 677,
+      "fix_reference": null,
+      "description": "Hand-authored (injected) bug: a package-level `requestCount` variable is incremented with the non-atomic `requestCount++` inside `Engine.ServeHTTP`, which Go's net/http server invokes concurrently in a separate goroutine per in-flight request/connection. `requestCount++` is a read-modify-write of a plain int with no mutex or atomic operation, so concurrent requests can race and lose increments (or, under the race detector, report a data race outright). Classic unsynchronized read-modify-write race condition."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "gin.go",
+        "line": 678,
+        "issue": "requestCount++ performs a non-atomic read-modify-write while ServeHTTP is invoked concurrently, causing data races and lost increments; RequestCount can also race when reading the same variable.",
+        "suggestion": "Use sync/atomic for both operations, for example store the counter as an int64 and call atomic.AddInt64 in ServeHTTP and atomic.LoadInt64 in RequestCount."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 7.58569191704737,
+    "usage": {
+      "prompt_tokens": 1160,
+      "completion_tokens": 610
+    }
+  },
+  {
+    "case_id": "020-express-hardcoded-webhook-secret",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "020-express-hardcoded-webhook-secret",
+      "language": "javascript",
+      "category": "injected_bug",
+      "bug_type": "hardcoded-secret",
+      "expected_file": "lib/utils.js",
+      "expected_line": 281,
+      "fix_reference": null,
+      "description": "Hand-authored (injected) bug: `DEFAULT_WEBHOOK_SECRET` hardcodes a live-looking API secret (`'sk_live_REDACTED_BENCHMARK_FIXTURE'`) directly in source as the fallback HMAC key used by `signWebhookPayload` whenever no secret is configured. Any application that forgets to configure its own secret silently signs webhooks with this public, source-controlled key, and anyone who reads the source (or a decompiled bundle) can forge valid webhook signatures. Hardcoded secret / credential in source."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "lib/utils.js",
+        "line": 281,
+        "issue": "A fixed, source-controlled signing secret is used whenever the application does not configure a webhook secret, allowing anyone who can read this package to forge valid x-webhook-signature values for every such application.",
+        "suggestion": "Require a non-empty application-configured secret and fail when it is absent instead of falling back to a hardcoded key."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 5.802649250021204,
+    "usage": {
+      "prompt_tokens": 2844,
+      "completion_tokens": 344
+    }
+  },
+  {
+    "case_id": "020-express-hardcoded-webhook-secret",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "020-express-hardcoded-webhook-secret",
+      "language": "javascript",
+      "category": "injected_bug",
+      "bug_type": "hardcoded-secret",
+      "expected_file": "lib/utils.js",
+      "expected_line": 281,
+      "fix_reference": null,
+      "description": "Hand-authored (injected) bug: `DEFAULT_WEBHOOK_SECRET` hardcodes a live-looking API secret (`'sk_live_REDACTED_BENCHMARK_FIXTURE'`) directly in source as the fallback HMAC key used by `signWebhookPayload` whenever no secret is configured. Any application that forgets to configure its own secret silently signs webhooks with this public, source-controlled key, and anyone who reads the source (or a decompiled bundle) can forge valid webhook signatures. Hardcoded secret / credential in source."
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "lib/utils.js",
+        "line": 281,
+        "issue": "Falling back to the hard-coded, publicly knowable `__BENCHMARK_FAKE_STRIPE_KEY__` lets any caller who knows the package source forge a valid `x-webhook-signature` whenever the application omits configuration, defeating webhook authentication.",
+        "suggestion": "Require a non-empty configured secret and throw a configuration error instead of using a shared hard-coded fallback."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 16.002377249998972,
+    "usage": {
+      "prompt_tokens": 1251,
+      "completion_tokens": 1371
+    }
+  },
+  {
+    "case_id": "021-requests-swallowed-close-exception",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "021-requests-swallowed-close-exception",
+      "language": "python",
+      "category": "injected_bug",
+      "bug_type": "swallowed-exception",
+      "expected_file": "src/requests/sessions.py",
+      "expected_line": 916,
+      "fix_reference": null,
+      "description": "Hand-authored (injected) bug: the new `Session.close_quietly()` method calls `v.close()` on each adapter inside a `try/except Exception: pass` with no logging, so any failure while closing an adapter (e.g. a socket error, a permissions error, or a bug in a third-party adapter's `close()`) is silently discarded. Callers have no way to know cleanup failed, resources may leak, and the underlying error is unrecoverable/undebuggable once swallowed. Classic swallowed-exception anti-pattern."
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 7.671082832966931,
+    "usage": {
+      "prompt_tokens": 9096,
+      "completion_tokens": 422
+    }
+  },
+  {
+    "case_id": "021-requests-swallowed-close-exception",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "021-requests-swallowed-close-exception",
+      "language": "python",
+      "category": "injected_bug",
+      "bug_type": "swallowed-exception",
+      "expected_file": "src/requests/sessions.py",
+      "expected_line": 916,
+      "fix_reference": null,
+      "description": "Hand-authored (injected) bug: the new `Session.close_quietly()` method calls `v.close()` on each adapter inside a `try/except Exception: pass` with no logging, so any failure while closing an adapter (e.g. a socket error, a permissions error, or a bug in a third-party adapter's `close()`) is silently discarded. Callers have no way to know cleanup failed, resources may leak, and the underlying error is unrecoverable/undebuggable once swallowed. Classic swallowed-exception anti-pattern."
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 7.771027792012319,
+    "usage": {
+      "prompt_tokens": 1631,
+      "completion_tokens": 408
+    }
+  },
+  {
+    "case_id": "022-flask-docs-mongoengine-typo",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "022-flask-docs-mongoengine-typo",
+      "language": "python",
+      "category": "clean",
+      "bug_type": null,
+      "expected_file": null,
+      "expected_line": null,
+      "fix_reference": "https://github.com/pallets/flask/commit/04b070fa26b346b48bd66d317e72de75e001a2e7",
+      "description": "Real, merged, single-line documentation fix (PR #5650): a MongoEngine usage example in docs/patterns/mongoengine.rst referred to a `Movies` model class, but the surrounding example defines and uses a `Movie` class everywhere else; the line is corrected to match. This changes prose inside a `.rst` documentation file only - no source code, tests, or behavior are touched. A correct review of this diff should produce zero findings; any finding here is a false positive."
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 1.7451689580339007,
+    "usage": {
+      "prompt_tokens": 1704,
+      "completion_tokens": 35
+    }
+  },
+  {
+    "case_id": "022-flask-docs-mongoengine-typo",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "022-flask-docs-mongoengine-typo",
+      "language": "python",
+      "category": "clean",
+      "bug_type": null,
+      "expected_file": null,
+      "expected_line": null,
+      "fix_reference": "https://github.com/pallets/flask/commit/04b070fa26b346b48bd66d317e72de75e001a2e7",
+      "description": "Real, merged, single-line documentation fix (PR #5650): a MongoEngine usage example in docs/patterns/mongoengine.rst referred to a `Movies` model class, but the surrounding example defines and uses a `Movie` class everywhere else; the line is corrected to match. This changes prose inside a `.rst` documentation file only - no source code, tests, or behavior are touched. A correct review of this diff should produce zero findings; any finding here is a false positive."
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 1.8700672499835491,
+    "usage": {
+      "prompt_tokens": 1028,
+      "completion_tokens": 61
+    }
+  },
+  {
+    "case_id": "023-cobra-test-name-typo",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "023-cobra-test-name-typo",
+      "language": "go",
+      "category": "clean",
+      "bug_type": null,
+      "expected_file": null,
+      "expected_line": null,
+      "fix_reference": "https://github.com/spf13/cobra/commit/60d056d1574d04c859638354bc9cacab70bab296",
+      "description": "Real, merged, single-line fix (PR #2000): renames a Go test function from `TestManPrintFlagsHidesShortDeperecated` to `TestManPrintFlagsHidesShortDeprecated`, correcting a misspelling in the test's own name. The test's body, assertions, and behavior are completely unchanged - only the identifier's spelling changes. A correct review of this diff should produce zero findings; any finding here is a false positive."
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 2.6431490419781767,
+    "usage": {
+      "prompt_tokens": 4803,
+      "completion_tokens": 25
+    }
+  },
+  {
+    "case_id": "023-cobra-test-name-typo",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "023-cobra-test-name-typo",
+      "language": "go",
+      "category": "clean",
+      "bug_type": null,
+      "expected_file": null,
+      "expected_line": null,
+      "fix_reference": "https://github.com/spf13/cobra/commit/60d056d1574d04c859638354bc9cacab70bab296",
+      "description": "Real, merged, single-line fix (PR #2000): renames a Go test function from `TestManPrintFlagsHidesShortDeperecated` to `TestManPrintFlagsHidesShortDeprecated`, correcting a misspelling in the test's own name. The test's body, assertions, and behavior are completely unchanged - only the identifier's spelling changes. A correct review of this diff should produce zero findings; any finding here is a false positive."
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 1.3926962499972433,
+    "usage": {
+      "prompt_tokens": 2998,
+      "completion_tokens": 36
+    }
+  },
+  {
+    "case_id": "024-lodash-test-description-fix",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "024-lodash-test-description-fix",
+      "language": "javascript",
+      "category": "clean",
+      "bug_type": null,
+      "expected_file": null,
+      "expected_line": null,
+      "fix_reference": "https://github.com/lodash/lodash/commit/abde9319fdd39e8d2f3ab70663fc41a323a22ef0",
+      "description": "Real, merged, single-line fix (PR #4334): corrects the English description string of a Mocha `it(...)` test case in test/merge.js from 'should not convert strings to arrays...' to 'should convert strings to arrays...', matching what the test body actually asserts. Only the string literal used as the test's human-readable label changes; the test's assertions and behavior are unchanged. A correct review of this diff should produce zero findings; any finding here is a false positive."
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 2.319621083966922,
+    "usage": {
+      "prompt_tokens": 3809,
+      "completion_tokens": 76
+    }
+  },
+  {
+    "case_id": "024-lodash-test-description-fix",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "024-lodash-test-description-fix",
+      "language": "javascript",
+      "category": "clean",
+      "bug_type": null,
+      "expected_file": null,
+      "expected_line": null,
+      "fix_reference": "https://github.com/lodash/lodash/commit/abde9319fdd39e8d2f3ab70663fc41a323a22ef0",
+      "description": "Real, merged, single-line fix (PR #4334): corrects the English description string of a Mocha `it(...)` test case in test/merge.js from 'should not convert strings to arrays...' to 'should convert strings to arrays...', matching what the test body actually asserts. Only the string literal used as the test's human-readable label changes; the test's assertions and behavior are unchanged. A correct review of this diff should produce zero findings; any finding here is a false positive."
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 6.866367749986239,
+    "usage": {
+      "prompt_tokens": 1018,
+      "completion_tokens": 522
+    }
+  },
+  {
+    "case_id": "025-gson-javadoc-getaschar-fix",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "025-gson-javadoc-getaschar-fix",
+      "language": "java",
+      "category": "clean",
+      "bug_type": null,
+      "expected_file": null,
+      "expected_line": null,
+      "fix_reference": "https://github.com/google/gson/commit/8260eddffe413c132b3a38e68446da6bd083220d",
+      "description": "Real, merged, single-line fix (PR #3021): corrects a copy-pasted `@return` Javadoc tag on `JsonArray.getAsCharacter()` that incorrectly claimed the method returns 'this element as a primitive short' (copied from a neighboring `getAsShort` method); the corrected text says 'this element as a character', matching the method's actual behavior and signature. Only a comment changes - no code, tests, or behavior are touched. A correct review of this diff should produce zero findings; any finding here is a false positive."
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 2.2443921249941923,
+    "usage": {
+      "prompt_tokens": 4929,
+      "completion_tokens": 83
+    }
+  },
+  {
+    "case_id": "025-gson-javadoc-getaschar-fix",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "025-gson-javadoc-getaschar-fix",
+      "language": "java",
+      "category": "clean",
+      "bug_type": null,
+      "expected_file": null,
+      "expected_line": null,
+      "fix_reference": "https://github.com/google/gson/commit/8260eddffe413c132b3a38e68446da6bd083220d",
+      "description": "Real, merged, single-line fix (PR #3021): corrects a copy-pasted `@return` Javadoc tag on `JsonArray.getAsCharacter()` that incorrectly claimed the method returns 'this element as a primitive short' (copied from a neighboring `getAsShort` method); the corrected text says 'this element as a character', matching the method's actual behavior and signature. Only a comment changes - no code, tests, or behavior are touched. A correct review of this diff should produce zero findings; any finding here is a false positive."
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 1.9101366669638082,
+    "usage": {
+      "prompt_tokens": 1365,
+      "completion_tokens": 74
+    }
+  },
+  {
+    "case_id": "swebench-astropy-14309",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-astropy-14309",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "astropy/io/fits/connect.py",
+      "expected_line": 65,
+      "fix_reference": "SWE-bench Verified instance: astropy__astropy-14309 (https://www.swebench.com/)",
+      "description": "IndexError: tuple index out of range in identify_format (io.registry) <!-- This comments are hidden when you submit the issue,\r so you do not need to remove them! -->\r \r <!-- Please be sure to check out our contributing guidelines,\r https://github.com/astropy/astropy/blob/main/CONTRIBUTING.md .\r Please be sure to check out our code of conduct,\r https://github.com/astropy/astropy/blob/main/CODE_OF_"
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 2.746697499998845,
+    "usage": {
+      "prompt_tokens": 5015,
+      "completion_tokens": 92
+    }
+  },
+  {
+    "case_id": "swebench-astropy-14309",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-astropy-14309",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "astropy/io/fits/connect.py",
+      "expected_line": 65,
+      "fix_reference": "SWE-bench Verified instance: astropy__astropy-14309 (https://www.swebench.com/)",
+      "description": "IndexError: tuple index out of range in identify_format (io.registry) <!-- This comments are hidden when you submit the issue,\r so you do not need to remove them! -->\r \r <!-- Please be sure to check out our contributing guidelines,\r https://github.com/astropy/astropy/blob/main/CONTRIBUTING.md .\r Please be sure to check out our code of conduct,\r https://github.com/astropy/astropy/blob/main/CODE_OF_"
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "astropy/io/fits/connect.py",
+        "line": 69,
+        "issue": "When filepath is provided but does not have a recognized FITS extension, execution now falls through to args[0]. If is_fits is called without positional arguments, this raises IndexError instead of returning False as the previous code did.",
+        "suggestion": "Return False after the filepath extension check fails, before accessing args[0]."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 6.2667676659766585,
+    "usage": {
+      "prompt_tokens": 1074,
+      "completion_tokens": 455
+    }
+  },
+  {
+    "case_id": "swebench-django-11095",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-11095",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/contrib/admin/options.py",
+      "expected_line": 327,
+      "fix_reference": "SWE-bench Verified instance: django__django-11095 (https://www.swebench.com/)",
+      "description": "add ModelAdmin.get_inlines() hook to allow set inlines based on the request or model instance. Description \t add ModelAdmin.get_inlines() hook to allow set inlines based on the request or model instance. Currently, We can override the method get_inline_instances to do such a thing, but a for loop should be copied to my code. So I wished add a hook get_inlines(request, obj=None)"
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "django/contrib/admin/options.py",
+        "line": 584,
+        "issue": "ModelAdmin subclasses that override get_inlines(request, obj) can no longer select inlines dynamically per request or object; iterating self.inlines bypasses that public hook and silently changes the inline set.",
+        "suggestion": "Restore the loop to iterate over self.get_inlines(request, obj) and retain the get_inlines() method returning self.inlines."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 7.326923957967665,
+    "usage": {
+      "prompt_tokens": 20615,
+      "completion_tokens": 463
+    }
+  },
+  {
+    "case_id": "swebench-django-11095",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-11095",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/contrib/admin/options.py",
+      "expected_line": 327,
+      "fix_reference": "SWE-bench Verified instance: django__django-11095 (https://www.swebench.com/)",
+      "description": "add ModelAdmin.get_inlines() hook to allow set inlines based on the request or model instance. Description \t add ModelAdmin.get_inlines() hook to allow set inlines based on the request or model instance. Currently, We can override the method get_inline_instances to do such a thing, but a for loop should be copied to my code. So I wished add a hook get_inlines(request, obj=None)"
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "django/contrib/admin/options.py",
+        "line": 585,
+        "issue": "get_inline_instances() now iterates over self.inlines directly instead of calling get_inlines(request, obj), so ModelAdmin subclasses that override the documented get_inlines() hook no longer have their dynamic inline classes used.",
+        "suggestion": "Restore iteration over self.get_inlines(request, obj)."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 5.466456790978555,
+    "usage": {
+      "prompt_tokens": 2130,
+      "completion_tokens": 341
+    }
+  },
+  {
+    "case_id": "swebench-django-11999",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-11999",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/db/models/fields/__init__.py",
+      "expected_line": 763,
+      "fix_reference": "SWE-bench Verified instance: django__django-11999 (https://www.swebench.com/)",
+      "description": "Cannot override get_FOO_display() in Django 2.2+. Description \t I cannot override the get_FIELD_display function on models since version 2.2. It works in version 2.1. Example: class FooBar(models.Model): \tfoo_bar = models.CharField(_(\"foo\"), choices=[(1, 'foo'), (2, 'bar')]) \tdef __str__(self): \t\treturn self.get_foo_bar_display() # This returns 'foo' or 'bar' in 2.2, but 'something' in 2.1 \tdef ge"
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "django/db/models/fields/__init__.py",
+        "line": 764,
+        "issue": "This unconditional assignment overwrites a model's explicitly defined `get_<field>_display()` method whenever the field has choices, so custom display logic is silently replaced during model class construction.",
+        "suggestion": "Only install the generated method when an explicit user-defined method is not already present; if inherited generated methods must be refreshed, distinguish those from custom methods before replacing them."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 14.628671832964756,
+    "usage": {
+      "prompt_tokens": 19787,
+      "completion_tokens": 1077
+    }
+  },
+  {
+    "case_id": "swebench-django-11999",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-11999",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/db/models/fields/__init__.py",
+      "expected_line": 763,
+      "fix_reference": "SWE-bench Verified instance: django__django-11999 (https://www.swebench.com/)",
+      "description": "Cannot override get_FOO_display() in Django 2.2+. Description \t I cannot override the get_FIELD_display function on models since version 2.2. It works in version 2.1. Example: class FooBar(models.Model): \tfoo_bar = models.CharField(_(\"foo\"), choices=[(1, 'foo'), (2, 'bar')]) \tdef __str__(self): \t\treturn self.get_foo_bar_display() # This returns 'foo' or 'bar' in 2.2, but 'something' in 2.1 \tdef ge"
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "django/db/models/fields/__init__.py",
+        "line": 764,
+        "issue": "The unconditional setattr() replaces any get_<field>_display() method explicitly defined on the model, whereas the previous hasattr() guard preserved custom display methods. Models with custom choice-display logic will now silently use the field's generated method instead.",
+        "suggestion": "Restore the hasattr() guard before assigning the generated get_<field>_display method."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 7.540320000029169,
+    "usage": {
+      "prompt_tokens": 2152,
+      "completion_tokens": 508
+    }
+  },
+  {
+    "case_id": "swebench-django-12155",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-12155",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/contrib/admindocs/utils.py",
+      "expected_line": 3,
+      "fix_reference": "SWE-bench Verified instance: django__django-12155 (https://www.swebench.com/)",
+      "description": "docutils reports an error rendering view docstring when the first line is not empty Description \t Currently admindoc works correctly only with docstrings where the first line is empty, and all Django docstrings are formatted in this way. However usually the docstring text starts at the first line, e.g.: def test(): \t\"\"\"test tests something. \t\"\"\" and this cause an error: Error in \"default-role\" dir"
+    },
+    "proposed_count": 1,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 39.2864679589984,
+    "usage": {
+      "prompt_tokens": 7310,
+      "completion_tokens": 2858
+    }
+  },
+  {
+    "case_id": "swebench-django-12155",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-12155",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/contrib/admindocs/utils.py",
+      "expected_line": 3,
+      "fix_reference": "SWE-bench Verified instance: django__django-12155 (https://www.swebench.com/)",
+      "description": "docutils reports an error rendering view docstring when the first line is not empty Description \t Currently admindoc works correctly only with docstrings where the first line is empty, and all Django docstrings are formatted in this way. However usually the docstring text starts at the first line, e.g.: def test(): \t\"\"\"test tests something. \t\"\"\" and this cause an error: Error in \"default-role\" dir"
+    },
+    "proposed_count": 1,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 16.300715416960884,
+    "usage": {
+      "prompt_tokens": 1908,
+      "completion_tokens": 1161
+    }
+  },
+  {
+    "case_id": "swebench-django-12262",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-12262",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/template/library.py",
+      "expected_line": 261,
+      "fix_reference": "SWE-bench Verified instance: django__django-12262 (https://www.swebench.com/)",
+      "description": "Custom template tags raise TemplateSyntaxError when keyword-only arguments with defaults are provided. Description \t  \t\t(last modified by P-Seebauer) \t  When creating simple tags without variable keyword args, but an keyword argument with a default value. It's not possible to supply any other variable. @register.simple_tag def hello(*, greeting='hello'): \treturn f'{greeting} world' {% hello greeti"
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "django/template/library.py",
+        "line": 264,
+        "issue": "Optional keyword-only arguments are incorrectly rejected when supplied. `unhandled_kwargs` intentionally contains only required keyword-only parameters, so a valid call such as a tag function defined as `def tag(*, option='default')` with `option=value` now raises an unexpected keyword argument error.",
+        "suggestion": "Check `param not in kwonly` (or otherwise allow all declared keyword-only parameters) in the unexpected-keyword condition."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 4.440586624958087,
+    "usage": {
+      "prompt_tokens": 3731,
+      "completion_tokens": 274
+    }
+  },
+  {
+    "case_id": "swebench-django-12262",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-12262",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/template/library.py",
+      "expected_line": 261,
+      "fix_reference": "SWE-bench Verified instance: django__django-12262 (https://www.swebench.com/)",
+      "description": "Custom template tags raise TemplateSyntaxError when keyword-only arguments with defaults are provided. Description \t  \t\t(last modified by P-Seebauer) \t  When creating simple tags without variable keyword args, but an keyword argument with a default value. It's not possible to supply any other variable. @register.simple_tag def hello(*, greeting='hello'): \treturn f'{greeting} world' {% hello greeti"
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "django/template/library.py",
+        "line": 261,
+        "issue": "The validation no longer checks whether the keyword matches a declared keyword-only parameter. When a tag function has a keyword-only argument and no **kwargs parameter, that valid argument is absent from unhandled_kwargs and is incorrectly rejected as an unexpected keyword argument.",
+        "suggestion": "Keep the keyword-only check in this guard: if param not in params and param not in kwonly and varkw is None:"
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 37.651761124958284,
+    "usage": {
+      "prompt_tokens": 1163,
+      "completion_tokens": 3724
+    }
+  },
+  {
+    "case_id": "swebench-django-12663",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-12663",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/db/models/sql/query.py",
+      "expected_line": 233,
+      "fix_reference": "SWE-bench Verified instance: django__django-12663 (https://www.swebench.com/)",
+      "description": "Using SimpleLazyObject with a nested subquery annotation fails. Description \t  \t\t(last modified by Jordan Ephron) \t  Prior to 35431298226165986ad07e91f9d3aca721ff38ec it was possible to use a SimpleLazyObject in a queryset as demonstrated below. This new behavior appears to be a regression. Models from django.contrib.auth.models import User from django.db import models class A(models.Model): \tpass"
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 9.423799875017721,
+    "usage": {
+      "prompt_tokens": 23132,
+      "completion_tokens": 522
+    }
+  },
+  {
+    "case_id": "swebench-django-12663",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-12663",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/db/models/sql/query.py",
+      "expected_line": 233,
+      "fix_reference": "SWE-bench Verified instance: django__django-12663 (https://www.swebench.com/)",
+      "description": "Using SimpleLazyObject with a nested subquery annotation fails. Description \t  \t\t(last modified by Jordan Ephron) \t  Prior to 35431298226165986ad07e91f9d3aca721ff38ec it was possible to use a SimpleLazyObject in a queryset as demonstrated below. This new behavior appears to be a regression. Models from django.contrib.auth.models import User from django.db import models class A(models.Model): \tpass"
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 13.29171966703143,
+    "usage": {
+      "prompt_tokens": 1254,
+      "completion_tokens": 1040
+    }
+  },
+  {
+    "case_id": "swebench-django-13279",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-13279",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/contrib/sessions/backends/base.py",
+      "expected_line": 108,
+      "fix_reference": "SWE-bench Verified instance: django__django-13279 (https://www.swebench.com/)",
+      "description": "Session data cannot be decoded during the transition to Django 3.1. Description \t In d4fff711d4c97356bd6ba1273d2a5e349326eb5f (#31274) we've changed format for session data, that's why setting DEFAULT_HASHING_ALGORITHM to 'sha1' is not enough to support running multiple instances of the same project during the transition to Django 3.1. We could use the legacy encode() when DEFAULT_HASHING_ALGORITH"
+    },
+    "proposed_count": 0,
+    "grounded_count": 0,
+    "findings": [],
+    "error": null,
+    "elapsed_seconds": 6.489664624969009,
+    "usage": {
+      "prompt_tokens": 4220,
+      "completion_tokens": 369
+    }
+  },
+  {
+    "case_id": "swebench-django-13279",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-13279",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/contrib/sessions/backends/base.py",
+      "expected_line": 108,
+      "fix_reference": "SWE-bench Verified instance: django__django-13279 (https://www.swebench.com/)",
+      "description": "Session data cannot be decoded during the transition to Django 3.1. Description \t In d4fff711d4c97356bd6ba1273d2a5e349326eb5f (#31274) we've changed format for session data, that's why setting DEFAULT_HASHING_ALGORITHM to 'sha1' is not enough to support running multiple instances of the same project during the transition to Django 3.1. We could use the legacy encode() when DEFAULT_HASHING_ALGORITH"
+    },
+    "proposed_count": 1,
+    "grounded_count": 1,
+    "findings": [
+      {
+        "file": "django/contrib/sessions/backends/base.py",
+        "line": 111,
+        "issue": "This now calls signing.dumps() with salt, serializer, and compress keyword arguments, but the provided signing.dumps definition accepts only the object argument, so every session encode raises TypeError instead of returning encoded data.",
+        "suggestion": "Call signing.dumps() using its supported signature, or update the signing.dumps implementation to accept these keyword arguments before removing the legacy encoding path."
+      }
+    ],
+    "error": null,
+    "elapsed_seconds": 15.097121790982783,
+    "usage": {
+      "prompt_tokens": 1495,
+      "completion_tokens": 930
+    }
+  },
+  {
+    "case_id": "swebench-django-13670",
+    "arm": "luna_aletheore_context",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-13670",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/utils/dateformat.py",
+      "expected_line": 325,
+      "fix_reference": "SWE-bench Verified instance: django__django-13670 (https://www.swebench.com/)",
+      "description": "dateformat.y() doesn't support years < 1000. Description \t  \t\t(last modified by Sam) \t  When using the the dateformat of django with a date before 999 (or 99 and 9 for similar matters) and the format character \"y\" no leading zero will be printed. This is not consistent with the way the python datetime module and PHP handle that character \"y\" in format strings: django (version 3.1): >>> import date"
+    },
+    "proposed_count": null,
+    "grounded_count": 0,
+    "findings": [],
+    "error": "AdapterInvocationError: Luna invocation failed: APIConnectionError",
+    "elapsed_seconds": 14.38353420898784,
+    "usage": {}
+  },
+  {
+    "case_id": "swebench-django-13670",
+    "arm": "luna_aletheore_compact",
+    "model": "gpt-5.6-luna",
+    "ground_truth": {
+      "case_id": "swebench-django-13670",
+      "language": "python",
+      "category": "real_bug_fix",
+      "bug_type": "swebench-derived",
+      "expected_file": "django/utils/dateformat.py",
+      "expected_line": 325,
+      "fix_reference": "SWE-bench Verified instance: django__django-13670 (https://www.swebench.com/)",
+      "description": "dateformat.y() doesn't support years < 1000. Description \t  \t\t(last modified by Sam) \t  When using the the dateformat of django with a date before 999 (or 99 and 9 for similar matters) and the format character \"y\" no leading zero will be printed. This is not consistent with the way the python datetime module and PHP handle that character \"y\" in format strings: django (version 3.1): >>> import date"
+    },
+    "proposed_count": null,
+    "grounded_count": 0,
+    "findings": [],
+    "error": "AdapterInvocationError: Luna invocation failed: APIConnectionError",
+    "elapsed_seconds": 7.009943792014383,
+    "usage": {}
+  }
+]

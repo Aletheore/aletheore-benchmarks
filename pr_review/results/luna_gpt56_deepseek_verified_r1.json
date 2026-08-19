@@ -1,0 +1,1447 @@
+[
+  {
+    "case_id": "001-flask-cli-key-quote",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "src/flask/cli.py",
+      "line": 798,
+      "issue": "The BadParameter message is missing the closing quote after `--key`, so the user-facing error says `--key is not used.` instead of correctly quoting the option as `--key\" is not used.`",
+      "suggestion": "Use 'When \"--cert\" is an SSLContext object, \"--key\" is not used.', ctx, param"
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the closing quote after `--key` in the BadParameter message, so the error text incorrectly reads `--key is not used.` instead of `--key\" is not used.`.",
+    "usage": {
+      "prompt_tokens": 2158,
+      "completion_tokens": 242
+    }
+  },
+  {
+    "case_id": "005-axios-progress-negative-clamp",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "lib/helpers/progressEventReducer.js",
+      "line": 15,
+      "issue": "loaded used to be clamped to a bound; the changed code removed it, so loaded can now fall outside that bound.",
+      "suggestion": "Restore the bound (e.g. `max(0, ...)`) around loaded's assignment."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The change removes the Math.max(0, ...) clamp, so loaded is no longer bounded below by zero when rawLoaded is negative.",
+    "usage": {
+      "prompt_tokens": 1201,
+      "completion_tokens": 236
+    }
+  },
+  {
+    "case_id": "005-axios-progress-negative-clamp",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "lib/helpers/progressEventReducer.js",
+      "line": 15,
+      "issue": "loaded used to be clamped to a bound; the changed code removed it, so loaded can now fall outside that bound.",
+      "suggestion": "Restore the bound (e.g. `max(0, ...)`) around loaded's assignment."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff clearly removes the Math.max(0, ...) clamp, so loaded can now be negative if rawLoaded is negative, directly supporting the finding.",
+    "usage": {
+      "prompt_tokens": 1201,
+      "completion_tokens": 969
+    }
+  },
+  {
+    "case_id": "009-cobra-completions-args-mutation",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "completions.go",
+      "line": 320,
+      "issue": "trimmedArgs used to be a defensive copy of args; the changed code aliases it directly instead, so a later mutation of trimmedArgs can corrupt args's backing array.",
+      "suggestion": "Restore the copy (allocate trimmedArgs and `copy(trimmedArgs, args)`) before mutating trimmedArgs."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes a defensive copy that was explicitly justified by avoiding mutation of the caller's backing array when later appending '--', and the current code at line 369 still appends to finalArgs derived from trimmedArgs, so the risk reintroduced is directly supported by the evidence.",
+    "usage": {
+      "prompt_tokens": 2971,
+      "completion_tokens": 1640
+    }
+  },
+  {
+    "case_id": "009-cobra-completions-args-mutation",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "completions.go",
+      "line": 321,
+      "issue": "This slice aliases the caller's backing array, so the later `append(finalArgs, \"--\")` can overwrite the last element of `args` (the value stored in `toComplete`). This mutates caller-owned argument slices such as `os.Args` during completion processing.",
+      "suggestion": "Retain the copied slice allocation before appending, e.g. `trimmedArgs := append([]string(nil), args[:len(args)-1]...)`."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the copy that the comment says prevents mutating the caller's backing array when appending '--', so the finding is directly supported by the code and comment.",
+    "usage": {
+      "prompt_tokens": 2975,
+      "completion_tokens": 1707
+    }
+  },
+  {
+    "case_id": "009-cobra-completions-args-mutation",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "completions.go",
+      "line": 320,
+      "issue": "trimmedArgs used to be a defensive copy of args; the changed code aliases it directly instead, so a later mutation of trimmedArgs can corrupt args's backing array.",
+      "suggestion": "Restore the copy (allocate trimmedArgs and `copy(trimmedArgs, args)`) before mutating trimmedArgs."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removed a defensive copy with a comment explicitly warning about backing-array mutation from a later append of \"--\", and the current code contains that append, so the finding is directly supported.",
+    "usage": {
+      "prompt_tokens": 2971,
+      "completion_tokens": 728
+    }
+  },
+  {
+    "case_id": "013-gson-jsonprimitive-hashcode",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+      "line": 268,
+      "issue": "The integral branch hashes the long value while the numeric equality branch compares integral and floating-point primitives by double value. Consequently, equal values such as new JsonPrimitive(42) and new JsonPrimitive(42.0) produce different hash codes, violating the equals/hashCode contract.",
+      "suggestion": "Hash integral primitives using the same double-based value hash as the other numeric branch, or otherwise normalize all numeric values according to the cross-branch equality rules."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The new integral hash uses the long value, but equals considers integral and floating-point primitives with the same numeric value equal, so 42 and 42.0 now hash differently, violating equals/hashCode.",
+    "usage": {
+      "prompt_tokens": 3408,
+      "completion_tokens": 533
+    }
+  },
+  {
+    "case_id": "013-gson-jsonprimitive-hashcode",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+      "line": 268,
+      "issue": "This integral branch hashes the underlying long value, while equals compares an integral number and a floating-point number by their double values. Consequently, equal primitives such as new JsonPrimitive(42) and new JsonPrimitive(42.0) produce different hash codes (42 versus the hash of Double 42.0), violating the equals/hashCode contract.",
+      "suggestion": "Hash integral numbers using the same canonical double-based algorithm as the numeric branch, including normalization of exactly representable integral double values."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The new integral branch hashes the long value, while equals compares an integral and a floating-point number by double value, causing equal primitives like 42 and 42.0 to have different hash codes, violating the equals/hashCode contract.",
+    "usage": {
+      "prompt_tokens": 3415,
+      "completion_tokens": 1058
+    }
+  },
+  {
+    "case_id": "020-express-hardcoded-webhook-secret",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "lib/utils.js",
+      "line": 281,
+      "issue": "The default webhook signing key is a hardcoded shared secret, so every application that omits its configuration uses the same key and an attacker who obtains this source can forge valid x-webhook-signature values.",
+      "suggestion": "Require a non-empty application-specific secret and fail closed when it is not configured instead of using a hardcoded fallback."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff shows a hardcoded default webhook secret that is used as a fallback for signing, directly enabling signature forgery when the app fails to configure its own secret.",
+    "usage": {
+      "prompt_tokens": 1661,
+      "completion_tokens": 142
+    }
+  },
+  {
+    "case_id": "020-express-hardcoded-webhook-secret",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "lib/utils.js",
+      "line": 281,
+      "issue": "When no secret is provided, this assigns a publicly known hardcoded value as the HMAC key, allowing anyone who knows the library source to generate valid webhook signatures for arbitrary payloads.",
+      "suggestion": "Require a non-empty, application-specific secret and throw an error when it is absent instead of falling back to a constant."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The code explicitly falls back to a hardcoded constant HMAC key when no secret is provided, enabling anyone who knows the default to forge valid webhook signatures.",
+    "usage": {
+      "prompt_tokens": 1656,
+      "completion_tokens": 389
+    }
+  },
+  {
+    "case_id": "002-requests-json-decode-pickle",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "src/requests/exceptions.py",
+      "line": 47,
+      "issue": "Removing JSONDecodeError.__reduce__ causes pickling to resolve __reduce__ through the first base class in the MRO (InvalidJSONError/IOError) instead of CompatJSONDecodeError. That reducer does not preserve all constructor arguments required by the JSON decoder exception, so unpickling JSONDecodeError can fail or reconstruct it incorrectly.",
+      "suggestion": "Retain __reduce__ and return CompatJSONDecodeError.__reduce__(self)."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The removed code and its embedded comment explicitly document that __reduce__ must delegate to CompatJSONDecodeError because the MRO would otherwise use IOError.__reduce__, which fails to preserve all constructor arguments; since the class hierarchy is unchanged, removing it reintroduces the pickling bug.",
+    "usage": {
+      "prompt_tokens": 2103,
+      "completion_tokens": 1482
+    }
+  },
+  {
+    "case_id": "003-requests-proxy-bypass-registry",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "src/requests/utils.py",
+      "line": 102,
+      "issue": "Empty entries in a semicolon-separated Windows ProxyOverride value are now tested directly; for an empty `test`, `re.match(test, host, re.I)` matches every hostname, so values such as a trailing semicolon can cause proxy bypass for all requests.",
+      "suggestion": "Filter empty entries after splitting, e.g. `proxyOverride = filter(None, proxyOverride)`."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The removal of the filter allows empty strings from a trailing semicolon to reach re.match, which matches every host and causes unintended proxy bypass.",
+    "usage": {
+      "prompt_tokens": 2303,
+      "completion_tokens": 269
+    }
+  },
+  {
+    "case_id": "003-requests-proxy-bypass-registry",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "src/requests/utils.py",
+      "line": 103,
+      "issue": "Removing the empty-string filter allows empty entries from proxyOverride.split(\";\") (for example, a trailing semicolon) to reach the matching loop. The resulting empty regex matches every host, causing proxy_bypass_registry to bypass the proxy for all requests.",
+      "suggestion": "Restore filtering of empty entries before iterating, e.g. proxyOverride = filter(None, proxyOverride)."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Removing the empty-string filter allows empty entries from split() to reach re.match, which matches any host, causing incorrect proxy bypass.",
+    "usage": {
+      "prompt_tokens": 2303,
+      "completion_tokens": 347
+    }
+  },
+  {
+    "case_id": "004-click-version-package-name",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "src/click/decorators.py",
+      "line": 503,
+      "issue": "Automatic version detection now fails for installed packages whose import name differs from their distribution name. For example, stack inspection detects `PIL`, but the installed distribution is commonly `Pillow`, so `@version_option()` raises this error even though the package is installed.",
+      "suggestion": "When `version(package_name)` raises `PackageNotFoundError`, resolve `package_name` through `importlib.metadata.packages_distributions()` and retry when it maps to exactly one distribution."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the packages_distributions fallback that previously resolved import names like PIL to distribution names like Pillow, so the finding accurately describes the new failure mode.",
+    "usage": {
+      "prompt_tokens": 2948,
+      "completion_tokens": 272
+    }
+  },
+  {
+    "case_id": "004-click-version-package-name",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "src/click/decorators.py",
+      "line": 500,
+      "issue": "This removes the fallback that resolved an import package name to its installed distribution, so valid calls such as `version_option(package_name=\"PIL\")` now raise `RuntimeError` even when the Pillow distribution is installed. The same regression affects any package whose import name differs from its distribution name.",
+      "suggestion": "Restore the `packages_distributions()` lookup and use the uniquely mapped distribution name before raising `RuntimeError`."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the packages_distributions fallback, so package_name values like 'PIL' that do not match a distribution name now raise RuntimeError, directly causing the described regression.",
+    "usage": {
+      "prompt_tokens": 2959,
+      "completion_tokens": 246
+    }
+  },
+  {
+    "case_id": "006-express-content-length-transfer-encoding",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "lib/response.js",
+      "line": 167,
+      "issue": "This now calculates and sets Content-Length even when a Transfer-Encoding header is already present. A response can therefore send both mutually exclusive headers, producing an invalid HTTP response or causing Node/client errors when the response is finalized.",
+      "suggestion": "Restore the Transfer-Encoding guard: if (chunk !== undefined && !this.get('Transfer-Encoding')) {"
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the guard that prevented setting Content-Length when Transfer-Encoding is present, which can produce invalid HTTP responses with both headers set.",
+    "usage": {
+      "prompt_tokens": 2046,
+      "completion_tokens": 420
+    }
+  },
+  {
+    "case_id": "007-lodash-omit-array-clone",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "lodash.js",
+      "line": 5690,
+      "issue": "Returning arrays directly from the omit clone customizer causes deep `_.omit` operations to share nested arrays with the input. `baseUnset` then deletes properties or array elements through those shared arrays, mutating the original object (for example, `_.omit({a:[{b:1}]}, 'a[0].b')` deletes `b` from the input).",
+      "suggestion": "Restore array deferral: return isPlainObject(value) || isArray(value) ? undefined : value;"
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "UNCERTAIN",
+    "reason": "The diff clearly shows arrays are no longer deferred to cloneDeep, but proving that this causes mutation of the original object requires knowledge of lodash's internal baseUnset and cloneDeep behavior not shown in the provided context.",
+    "usage": {
+      "prompt_tokens": 2652,
+      "completion_tokens": 1732
+    }
+  },
+  {
+    "case_id": "007-lodash-omit-array-clone",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "lodash.js",
+      "line": 5690,
+      "issue": "`customOmitClone` now returns every array unchanged, so deep `_.omit` operations no longer clone array values. The omitted result can therefore share nested arrays with the source object, and mutating the result can mutate the original.",
+      "suggestion": "Restore the array check: return isPlainObject(value) || isArray(value) ? undefined : value;"
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The change removes the isArray(value) check, so arrays are no longer deep-cloned by customOmitClone, causing nested arrays in _.omit results to be shared with the source object.",
+    "usage": {
+      "prompt_tokens": 2621,
+      "completion_tokens": 554
+    }
+  },
+  {
+    "case_id": "008-axios-headers-set-cookie",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "lib/core/AxiosHeaders.js",
+      "line": 283,
+      "issue": "getSetCookie() no longer guarantees an array: when the stored Set-Cookie value is a non-empty string (or another truthy scalar), this line returns that scalar directly, whereas the previous implementation wrapped it in an array. Callers expecting the method's array result will receive a string instead.",
+      "suggestion": "Restore array normalization: const value = this.get('set-cookie'); return utils.isArray(value) ? value : value == null || value === false ? [] : [value];"
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The new implementation returns the raw, non-array value for truthy scalars, whereas the previous code always wrapped non-null/non-false values in an array, so the method no longer guarantees an array result as stated.",
+    "usage": {
+      "prompt_tokens": 1937,
+      "completion_tokens": 511
+    }
+  },
+  {
+    "case_id": "008-axios-headers-set-cookie",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "lib/core/AxiosHeaders.js",
+      "line": 284,
+      "issue": "getSetCookie() no longer guarantees an array: when the stored Set-Cookie value is a non-empty string, it returns that string directly instead of the previous [value] array, breaking callers that rely on getSetCookie() returning an array of cookie values.",
+      "suggestion": "Restore the array normalization, for example: const value = this.get('set-cookie'); return utils.isArray(value) ? value : value == null || value === false ? [] : [value];"
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The new implementation returns the raw string value when set-cookie is a non-empty string, whereas the original always normalized to an array, so the finding correctly identifies a regression in the array guarantee.",
+    "usage": {
+      "prompt_tokens": 1931,
+      "completion_tokens": 483
+    }
+  },
+  {
+    "case_id": "010-gin-runfd-file-leak",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "gin.go",
+      "line": 595,
+      "issue": "f is opened here, but the changed code removed its Close() call - this resource now leaks.",
+      "suggestion": "Restore closing f (e.g. `defer f.Close()`), including on early-return paths."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Removing the only Close call for the file created via os.NewFile leaks the file descriptor, including on the early-return path when net.FileListener fails.",
+    "usage": {
+      "prompt_tokens": 2641,
+      "completion_tokens": 494
+    }
+  },
+  {
+    "case_id": "010-gin-runfd-file-leak",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "gin.go",
+      "line": 593,
+      "issue": "Removing the deferred close leaves the original file descriptor represented by f open. net.FileListener duplicates the descriptor for the listener, and listener.Close only closes that duplicate, so each RunFd call leaks the original descriptor (including when FileListener returns an error).",
+      "suggestion": "Restore defer f.Close() immediately after creating f."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Removing defer f.Close() leaks the original file descriptor because net.FileListener duplicates it and listener.Close only closes the duplicate.",
+    "usage": {
+      "prompt_tokens": 2670,
+      "completion_tokens": 333
+    }
+  },
+  {
+    "case_id": "010-gin-runfd-file-leak",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "gin.go",
+      "line": 595,
+      "issue": "f is opened here, but the changed code removed its Close() call - this resource now leaks.",
+      "suggestion": "Restore closing f (e.g. `defer f.Close()`), including on early-return paths."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Removing defer f.Close() means the *os.File f is never closed, and net.FileListener does not take ownership of the original file, causing a file descriptor leak on all paths.",
+    "usage": {
+      "prompt_tokens": 2641,
+      "completion_tokens": 903
+    }
+  },
+  {
+    "case_id": "010-gin-runfd-file-leak",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "gin.go",
+      "line": 596,
+      "issue": "Removing `defer f.Close()` leaves the original file descriptor open because `net.FileListener` duplicates the descriptor rather than taking ownership of and closing the `*os.File`; each `RunFd` call therefore leaks a descriptor, including when `FileListener` returns an error.",
+      "suggestion": "Restore `defer f.Close()` immediately after creating `f`."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Removing `defer f.Close()` leaks the file descriptor because `net.FileListener` duplicates rather than takes ownership; the original `*os.File` must be closed by the caller.",
+    "usage": {
+      "prompt_tokens": 2679,
+      "completion_tokens": 522
+    }
+  },
+  {
+    "case_id": "011-gorilla-mux-query-match",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "route.go",
+      "line": 72,
+      "issue": "ErrMethodMismatch is cleared only after a matcher succeeds. If a prior route set this error and the current route's first matcher (for example, a path or query matcher registered before the method matcher) fails with ErrNotFound, this branch is never reached, so the stale method mismatch remains and the router can incorrectly return 405 instead of 404.",
+      "suggestion": "Clear or otherwise isolate a prior ErrMethodMismatch when the current route fails a non-method matcher, rather than relying on a preceding successful matcher."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff shows ErrMethodMismatch is cleared only in the else (successful matcher) branch, while the failure branch only clears ErrNotFound, leaving a stale ErrMethodMismatch from a prior route when the current route fails a non-method matcher.",
+    "usage": {
+      "prompt_tokens": 2484,
+      "completion_tokens": 2793
+    }
+  },
+  {
+    "case_id": "012-urfave-cli-empty-positional-arg",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "command_parse.go",
+      "line": 83,
+      "issue": "Encountering an empty or whitespace-only argument now breaks parsing without appending that argument or any remaining arguments to posArgs, so inputs such as [\"\", \"value\"] are returned as an empty positional argument list and trailing arguments are silently lost.",
+      "suggestion": "Append rargs[0] and break, or append rargs[0] followed by the remaining arguments before returning; restore the previous append-and-continue behavior if empty arguments should not terminate parsing."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff changes empty/whitespace handling from appending and continuing to breaking, so inputs like [\"\", \"value\"] now leave remaining arguments unprocessed and omitted from posArgs, exactly as the finding describes.",
+    "usage": {
+      "prompt_tokens": 2497,
+      "completion_tokens": 926
+    }
+  },
+  {
+    "case_id": "012-urfave-cli-empty-positional-arg",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "command_parse.go",
+      "line": 83,
+      "issue": "A whitespace-only argument now breaks flag parsing entirely. For an invocation such as `command value \"\" --flag`, `--flag` is no longer parsed as a flag, whereas the previous code preserved the empty positional argument and continued processing subsequent arguments.",
+      "suggestion": "Preserve the argument and continue parsing, or explicitly append the remaining arguments as positional arguments before breaking."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff changes the empty-argument branch from appending and continuing to breaking, so a whitespace-only argument now terminates flag parsing and drops subsequent args like --flag.",
+    "usage": {
+      "prompt_tokens": 2476,
+      "completion_tokens": 980
+    }
+  },
+  {
+    "case_id": "014-junit4-assumption-serialization",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "src/main/java/org/junit/internal/AssumptionViolatedException.java",
+      "line": 111,
+      "issue": "Removing the custom writeObject implementation makes Java serialization use the default field serialization, so constructing an assumption exception with a non-Serializable matcher or value now causes NotSerializableException instead of serializing its description as before.",
+      "suggestion": "Restore writeObject or otherwise serialize non-Serializable fMatcher and fValue as stable descriptions."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the custom writeObject method that explicitly handled non-Serializable matchers and values, so without it default serialization will attempt to serialize those fields and can throw NotSerializableException.",
+    "usage": {
+      "prompt_tokens": 2244,
+      "completion_tokens": 343
+    }
+  },
+  {
+    "case_id": "014-junit4-assumption-serialization",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "src/main/java/org/junit/internal/AssumptionViolatedException.java",
+      "line": 108,
+      "issue": "Removing the custom writeObject implementation makes default Java serialization attempt to serialize fMatcher and fValue directly. AssumptionViolatedException accepts non-serializable matchers and values, so serializing such an exception now fails with NotSerializableException instead of serializing their descriptions.",
+      "suggestion": "Retain writeObject and the serializable matcher/value wrappers, or implement equivalent replacement serialization logic."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Removing writeObject reverts to default serialization, which will directly serialize potentially non-serializable fMatcher/fValue fields, causing NotSerializableException, exactly what the removed code was designed to prevent.",
+    "usage": {
+      "prompt_tokens": 2284,
+      "completion_tokens": 344
+    }
+  },
+  {
+    "case_id": "014-junit4-assumption-serialization",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "src/main/java/org/junit/internal/SerializableMatcherDescription.java",
+      "line": 1,
+      "issue": "Deleting SerializableMatcherDescription breaks deserialization of previously serialized AssumptionViolatedException instances whose fMatcher was wrapped by this class; deserialization will fail with ClassNotFoundException because the serialized stream references the deleted class.",
+      "suggestion": "Keep this class available for deserialization compatibility, even if new serialization no longer uses it."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The class's own documentation states it exists to preserve deserialization compatibility for previously serialized AssumptionViolatedException instances, so deleting it will cause ClassNotFoundException when those old streams are deserialized.",
+    "usage": {
+      "prompt_tokens": 1577,
+      "completion_tokens": 563
+    }
+  },
+  {
+    "case_id": "014-junit4-assumption-serialization",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "src/main/java/org/junit/internal/SerializableValueDescription.java",
+      "line": 1,
+      "issue": "Deleting SerializableValueDescription breaks deserialization of previously serialized AssumptionViolatedException instances whose fValue was wrapped by this class; deserialization will fail with ClassNotFoundException because the serialized stream references the deleted class.",
+      "suggestion": "Keep this class available for deserialization compatibility, even if new serialization no longer uses it."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Deleting SerializableValueDescription, which was used as the serialized representation of non-serializable values in AssumptionViolatedException, will cause ClassNotFoundException during deserialization of previously serialized instances.",
+    "usage": {
+      "prompt_tokens": 1448,
+      "completion_tokens": 534
+    }
+  },
+  {
+    "case_id": "015-commons-lang-bitfield-sign-extension",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "src/main/java/org/apache/commons/lang3/BitField.java",
+      "line": 200,
+      "issue": "Using arithmetic right shift causes fields containing bit 31 to decode as negative values. For example, new BitField(0x80000000).getValue(0x80000000) returns -1 instead of 1 because getRawValue(int) is negative and >> sign-extends.",
+      "suggestion": "Use >>> shiftCount as before."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Changing >>> to >> causes sign extension for fields with the sign bit set, producing negative values (e.g., 0x80000000 field returns -1) instead of the expected positive value.",
+    "usage": {
+      "prompt_tokens": 2450,
+      "completion_tokens": 668
+    }
+  },
+  {
+    "case_id": "015-commons-lang-bitfield-sign-extension",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "src/main/java/org/apache/commons/lang3/BitField.java",
+      "line": 216,
+      "issue": "Using arithmetic right shift causes fields containing bit 63 to decode as negative values. For example, new BitField(Long.MIN_VALUE).getValue(Long.MIN_VALUE) returns -1 instead of 1 because getRawValue(long) is negative and >> sign-extends.",
+      "suggestion": "Use >>> shiftCount as before."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Changing `>>>` to `>>` sign-extends when the field includes the sign bit, so for a mask of Long.MIN_VALUE the result becomes -1 instead of 1, exactly as described.",
+    "usage": {
+      "prompt_tokens": 2422,
+      "completion_tokens": 730
+    }
+  },
+  {
+    "case_id": "015-commons-lang-bitfield-sign-extension",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "src/main/java/org/apache/commons/lang3/BitField.java",
+      "line": 199,
+      "issue": "Changing the unsigned right shift to a signed right shift makes fields that include the int sign bit return negative values. For example, a BitField with mask 0x80000000 returns -1 instead of 1 when that bit is set.",
+      "suggestion": "Use >>> for extracting the int field value."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Replacing unsigned right shift with signed right shift makes fields using the sign bit produce negative values, e.g., mask 0x80000000 returns -1 instead of 1.",
+    "usage": {
+      "prompt_tokens": 2435,
+      "completion_tokens": 676
+    }
+  },
+  {
+    "case_id": "015-commons-lang-bitfield-sign-extension",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "src/main/java/org/apache/commons/lang3/BitField.java",
+      "line": 215,
+      "issue": "Changing the unsigned right shift to a signed right shift makes fields that include the long sign bit return negative values. For example, a BitField with mask 0x8000000000000000L returns -1 instead of 1 when that bit is set.",
+      "suggestion": "Use >>> for extracting the long field value."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The change from unsigned to signed right shift in getValue(long) causes fields that include the long sign bit to be sign-extended, yielding negative values (e.g., mask 0x8000000000000000L with shiftCount 63 returns -1 instead of 1), contradicting the intended unsigned field extraction.",
+    "usage": {
+      "prompt_tokens": 2437,
+      "completion_tokens": 1113
+    }
+  },
+  {
+    "case_id": "016-flask-sql-injection-user-lookup",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "src/flask/helpers.py",
+      "line": 652,
+      "issue": "This builds a SQL query by concatenating a variable directly into the query text - a SQL-injection risk if that value can be influenced by a caller.",
+      "suggestion": "Use a parameterized query (a placeholder plus a bound parameter) instead of string concatenation."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The function directly concatenates the username into the SQL query string, which is a clear SQL-injection risk if the value is caller-controlled.",
+    "usage": {
+      "prompt_tokens": 2138,
+      "completion_tokens": 288
+    }
+  },
+  {
+    "case_id": "016-flask-sql-injection-user-lookup",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "src/flask/helpers.py",
+      "line": 652,
+      "issue": "This builds a SQL query by concatenating a variable directly into the query text - a SQL-injection risk if that value can be influenced by a caller.",
+      "suggestion": "Use a parameterized query (a placeholder plus a bound parameter) instead of string concatenation."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The function directly concatenates the username parameter into a SQL query string, which is a clear SQL injection risk if the input is untrusted.",
+    "usage": {
+      "prompt_tokens": 2138,
+      "completion_tokens": 747
+    }
+  },
+  {
+    "case_id": "017-commons-lang-arrayutils-off-by-one",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "src/main/java/org/apache/commons/lang3/ArrayUtils.java",
+      "line": 9691,
+      "issue": "This loop bounds i with <= against array's length/size, then indexes array[i] - the last iteration reads one past the end.",
+      "suggestion": "Use `i < array.length` (or the equivalent size/len bound) instead of <=."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The loop condition i <= array.length causes an out-of-bounds read at array[array.length] on the final iteration.",
+    "usage": {
+      "prompt_tokens": 2523,
+      "completion_tokens": 148
+    }
+  },
+  {
+    "case_id": "017-commons-lang-arrayutils-off-by-one",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "src/main/java/org/apache/commons/lang3/ArrayUtils.java",
+      "line": 9692,
+      "issue": "The loop condition uses <= array.length, so every non-empty array access reaches index array.length and throws ArrayIndexOutOfBoundsException instead of returning the last element.",
+      "suggestion": "Replace the loop with `for (int i = 0; i < array.length; i++)` or return `array[array.length - 1]` directly."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The loop condition `i <= array.length` accesses `array[array.length]` on the final iteration, which throws ArrayIndexOutOfBoundsException for every non-empty array.",
+    "usage": {
+      "prompt_tokens": 2529,
+      "completion_tokens": 176
+    }
+  },
+  {
+    "case_id": "017-commons-lang-arrayutils-off-by-one",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "src/main/java/org/apache/commons/lang3/ArrayUtils.java",
+      "line": 9691,
+      "issue": "This loop bounds i with <= against array's length/size, then indexes array[i] - the last iteration reads one past the end.",
+      "suggestion": "Use `i < array.length` (or the equivalent size/len bound) instead of <=."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The loop condition `i <= array.length` causes an out-of-bounds access on the final iteration when `i` equals `array.length`, so the finding is directly supported by the code shown.",
+    "usage": {
+      "prompt_tokens": 2523,
+      "completion_tokens": 177
+    }
+  },
+  {
+    "case_id": "018-axios-missing-null-check-charset",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "lib/utils.js",
+      "line": 974,
+      "issue": "The regex does not handle valid Content-Type charset parameters with optional whitespace around '=' or quoted values. For example, `text/plain; charset=\"utf-8\"` returns `\"utf-8\"`, and `charset = utf-8` falls back to `utf-8` instead of extracting the declared charset.",
+      "suggestion": "Use a parameter-aware pattern such as /(?:^|;)\\s*charset\\s*=\\s*(?:\"([^\"]*)\"|([^;\\s]*))/i and return the first non-undefined capture."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The regex does not handle whitespace around '=' or quoted charset values, as the finding demonstrates.",
+    "usage": {
+      "prompt_tokens": 2253,
+      "completion_tokens": 544
+    }
+  },
+  {
+    "case_id": "019-gin-request-counter-race",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "gin.go",
+      "line": 677,
+      "issue": "requestCount++ is accessed concurrently by ServeHTTP calls without synchronization, causing a data race and lost increments under concurrent requests; RequestCount also reads the same variable unsafely.",
+      "suggestion": "Use sync/atomic, such as an atomic.Int64 counter with Add(1) in ServeHTTP and Load() in RequestCount."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff shows unsynchronized concurrent reads/writes to the package-level requestCount variable from ServeHTTP and RequestCount, which is a data race; using sync/atomic is the correct fix.",
+    "usage": {
+      "prompt_tokens": 2584,
+      "completion_tokens": 192
+    }
+  },
+  {
+    "case_id": "019-gin-request-counter-race",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "gin.go",
+      "line": 678,
+      "issue": "requestCount++ is accessed concurrently by ServeHTTP invocations without synchronization, causing a data race and potentially losing increments; RequestCount also reads the same variable unsafely.",
+      "suggestion": "Use an atomic counter, such as an int64 updated with atomic.AddInt64 and read with atomic.LoadInt64."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The added requestCount is incremented and read from concurrent ServeHTTP invocations without synchronization, which is a genuine data race.",
+    "usage": {
+      "prompt_tokens": 2592,
+      "completion_tokens": 109
+    }
+  },
+  {
+    "case_id": "swebench-astropy-14309",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "astropy/io/fits/connect.py",
+      "line": 70,
+      "issue": "When filepath is provided but does not have a recognized FITS suffix, this new conditional falls through to the final isinstance(args[0], ...) expression instead of returning False. If args is empty, that raises IndexError; otherwise it can incorrectly classify a non-FITS filepath based on an unrelated positional argument.",
+      "suggestion": "Return False after the suffix check when filepath is not recognized, before evaluating args[0]."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff clearly causes a non-matching filepath to fall through to the args[0] isinstance check instead of returning False, which can raise IndexError or misclassify based on unrelated arguments.",
+    "usage": {
+      "prompt_tokens": 2409,
+      "completion_tokens": 704
+    }
+  },
+  {
+    "case_id": "swebench-django-11095",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "django/contrib/admin/options.py",
+      "line": 585,
+      "issue": "Changing the loop to use self.inlines bypasses the get_inlines(request, obj) hook, so ModelAdmin subclasses that dynamically select or configure inline classes per request or object will no longer have their custom inlines applied.",
+      "suggestion": "Keep iterating over self.get_inlines(request, obj), or reintroduce get_inlines() as a ModelAdmin hook."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes get_inlines and changes the loop to self.inlines, directly bypassing the documented hook for customizing inlines per request/object.",
+    "usage": {
+      "prompt_tokens": 3319,
+      "completion_tokens": 318
+    }
+  },
+  {
+    "case_id": "swebench-django-11095",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "django/contrib/admin/options.py",
+      "line": 585,
+      "issue": "This bypasses the public `get_inlines(request, obj)` hook, so any `ModelAdmin` subclass that dynamically returns inline classes from an override will silently use the static `self.inlines` value instead.",
+      "suggestion": "Restore `for inline_class in self.get_inlines(request, obj):` and retain the hook definition."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the get_inlines() hook and changes get_inline_instances() to iterate self.inlines directly, so any ModelAdmin subclass overriding get_inlines() would indeed have its override silently bypassed.",
+    "usage": {
+      "prompt_tokens": 3313,
+      "completion_tokens": 218
+    }
+  },
+  {
+    "case_id": "swebench-django-11999",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "django/db/models/fields/__init__.py",
+      "line": 764,
+      "issue": "The unconditional setattr() overwrites a get_<field>_display() method explicitly defined on the model class, so custom display logic is silently replaced by the generated choices-based method.",
+      "suggestion": "Only install the generated method when the name is not defined directly on the class, for example: if 'get_%s_display' % self.name not in cls.__dict__: setattr(cls, 'get_%s_display' % self.name, partialmethod(cls._get_FIELD_display, field=self))"
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the hasattr guard, so the unconditional setattr now overwrites any explicitly defined get_<field>_display() method.",
+    "usage": {
+      "prompt_tokens": 3260,
+      "completion_tokens": 330
+    }
+  },
+  {
+    "case_id": "swebench-django-11999",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "django/db/models/fields/__init__.py",
+      "line": 766,
+      "issue": "This unconditional setattr overwrites a model's existing get_<field>_display method whenever the field has choices, whereas the previous guard preserved explicitly defined custom display methods.",
+      "suggestion": "Restore the hasattr check before installing the partialmethod."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the hasattr guard, so the new unconditional setattr will overwrite an existing get_<field>_display method defined on the model.",
+    "usage": {
+      "prompt_tokens": 3216,
+      "completion_tokens": 204
+    }
+  },
+  {
+    "case_id": "swebench-django-12262",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "django/template/library.py",
+      "line": 264,
+      "issue": "Optional keyword-only parameters are no longer accepted in template tags. `unhandled_kwargs` contains only required keyword-only parameters, so a supplied optional keyword-only argument reaches this condition and raises an unexpected keyword argument error even though the wrapped function accepts it.",
+      "suggestion": "Check `param not in kwonly` instead of `param not in unhandled_kwargs` when rejecting unknown keyword arguments."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The change replaces `kwonly` with `unhandled_kwargs`, which excludes keyword-only parameters that have defaults, causing optional keyword-only arguments to be incorrectly rejected.",
+    "usage": {
+      "prompt_tokens": 2346,
+      "completion_tokens": 881
+    }
+  },
+  {
+    "case_id": "swebench-django-12262",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "django/template/library.py",
+      "line": 265,
+      "issue": "After a keyword-only parameter is consumed, it is removed from unhandled_kwargs, so supplying that declared keyword-only parameter a second time now takes this branch and raises \"unexpected keyword argument\" even though the parameter is valid; this also bypasses the duplicate-argument error handling that distinguishes repeated arguments.",
+      "suggestion": "Keep the accepted-parameter check against kwonly and handle duplicates separately, or test duplicates before removing/checking unhandled_kwargs so repeated keyword-only arguments receive the duplicate-value error."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff changes the unexpected-keyword check from kwonly to unhandled_kwargs, which is mutated by removing consumed keyword-only parameters, causing a repeated valid keyword-only argument to be misreported as unexpected instead of as a duplicate.",
+    "usage": {
+      "prompt_tokens": 2359,
+      "completion_tokens": 779
+    }
+  },
+  {
+    "case_id": "swebench-django-13670",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "django/utils/dateformat.py",
+      "line": 329,
+      "issue": "For datetime years below 1000, slicing the string representation from index 2 produces an incorrect result: years 1 and 99 produce an empty string, and year 999 produces '9', whereas the two-digit year format must return '01', '99', and '99' respectively.",
+      "suggestion": "return '%02d' % (self.data.year % 100)"
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The new implementation using `str(self.data.year)[2:]` clearly produces empty strings for years 1-99 and '9' for year 999, whereas the two-digit year format requires zero-padded two-digit output, which the original `%02d` correctly provided.",
+    "usage": {
+      "prompt_tokens": 1742,
+      "completion_tokens": 478
+    }
+  },
+  {
+    "case_id": "swebench-django-13670",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "django/utils/dateformat.py",
+      "line": 329,
+      "issue": "Slicing the unpadded year string at index 2 produces incorrect results for years before 1000. For example, year 99 becomes an empty string and year 999 becomes \"9\", whereas the format requires two digits such as \"99\" and \"99\".",
+      "suggestion": "Return '%02d' % (self.data.year % 100), or pad the year to four digits before slicing."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The new slicing implementation fails to produce two-digit years for years below 1000 (e.g., year 99 yields an empty string), while the original modulo-based formatting correctly yielded '99'.",
+    "usage": {
+      "prompt_tokens": 1747,
+      "completion_tokens": 406
+    }
+  },
+  {
+    "case_id": "swebench-django-15503",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "django/db/models/fields/json.py",
+      "line": 202,
+      "issue": "For a direct HasKey RHS that is None (and similarly other non-string values that int() cannot accept), compile_json_path() now calls int(key_transform) and raises TypeError during query compilation. Before this change, the final key was passed to json.dumps(), so values such as None were compiled without this exception.",
+      "suggestion": "Convert direct RHS keys to strings before passing them to compile_json_path, or make compile_json_path catch TypeError as well as ValueError."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The change routes all RHS keys through compile_json_path, which calls int() and catches only ValueError, so a None (or similar non-int-able) final key now raises TypeError where previously json.dumps handled it.",
+    "usage": {
+      "prompt_tokens": 3931,
+      "completion_tokens": 2154
+    }
+  },
+  {
+    "case_id": "swebench-django-15503",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "django/db/models/fields/json.py",
+      "line": 200,
+      "issue": "The final RHS key is now passed through compile_json_path(), which interprets numeric strings such as \"0\" or \"01\" as array indexes instead of object keys. Consequently, has_key/has_keys/has_any_keys lookups for JSON objects containing numeric-string keys no longer match those keys on non-PostgreSQL backends, unlike the previous implementation and PostgreSQL's ? operator.",
+      "suggestion": "Keep the final key quoted with json.dumps() for HasKeyLookup, and retain a separate array-index variant for lookups that intentionally target array indexes."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the final-key quoting and now passes all RHS key transforms through compile_json_path(), which converts integer-like strings to array indices, so has_key lookups on numeric-string object keys will break on non-PostgreSQL backends.",
+    "usage": {
+      "prompt_tokens": 3934,
+      "completion_tokens": 541
+    }
+  },
+  {
+    "case_id": "swebench-matplotlib-25775",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "lib/matplotlib/backends/backend_cairo.py",
+      "line": 205,
+      "issue": "The new rcParams-based antialiasing is applied only in the non-math branch of draw_text. Cairo mathtext is rendered by _draw_mathtext using show_text without setting FontOptions, so setting text.antialiased=False no longer disables antialiasing for mathtext, whereas the previous Text.draw call configured the graphics context for both paths.",
+      "suggestion": "Apply the text.antialiased setting to the Cairo context before both the normal-text and mathtext rendering paths, or configure the FontOptions/context inside _draw_mathtext as well."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "REJECT",
+    "reason": "The old code also never set FontOptions in the mathtext path, so the change does not create a new regression; the claim that antialiasing was previously configured for mathtext is contradicted by the unchanged _draw_mathtext.",
+    "usage": {
+      "prompt_tokens": 3821,
+      "completion_tokens": 4147
+    }
+  },
+  {
+    "case_id": "swebench-matplotlib-25775",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "lib/matplotlib/backends/backend_cairo.py",
+      "line": 315,
+      "issue": "Removing GraphicsContextCairo.get_antialiased causes the class to inherit GraphicsContextBase.get_antialiased, which returns _antialiased. GraphicsContextCairo.set_antialiased only changes the Cairo context and does not update _antialiased, so get_antialiased() can now return the initial value instead of the value actually applied to the context.",
+      "suggestion": "Retain the Cairo-specific get_antialiased implementation, or have GraphicsContextCairo.set_antialiased call super().set_antialiased(b) before updating the Cairo context."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Removing the Cairo-specific get_antialiased means GraphicsContextCairo inherits GraphicsContextBase.get_antialiased, which returns _antialiased, but the overridden set_antialiased only modifies the Cairo context and never updates _antialiased, so get_antialiased returns stale data.",
+    "usage": {
+      "prompt_tokens": 3757,
+      "completion_tokens": 1417
+    }
+  },
+  {
+    "case_id": "swebench-matplotlib-25775",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "lib/matplotlib/text.py",
+      "line": 118,
+      "issue": "Removing the explicit antialiased parameter and set_antialiased method makes existing calls such as Text(..., antialiased=False) pass the argument through **kwargs without a corresponding setter, so they are rejected instead of preserving the previously supported per-Text configuration.",
+      "suggestion": "Retain the antialiased parameter and setter, or deprecate them explicitly before removal."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the explicit antialiased parameter and setter, so existing calls like Text(..., antialiased=False) will now be passed via **kwargs and rejected due to no corresponding setter.",
+    "usage": {
+      "prompt_tokens": 4044,
+      "completion_tokens": 491
+    }
+  },
+  {
+    "case_id": "swebench-matplotlib-25775",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "lib/matplotlib/backends/backend_cairo.py",
+      "line": 312,
+      "issue": "After deleting GraphicsContextCairo.get_antialiased, calls use GraphicsContextBase.get_antialiased(), which reads _antialiased, but this override of set_antialiased only updates the Cairo context and never updates _antialiased; consequently, set_antialiased(False) can still be reported as enabled.",
+      "suggestion": "Update _antialiased in GraphicsContextCairo.set_antialiased, for example by calling super().set_antialiased(b) before updating the Cairo context."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The removal of the override exposes GraphicsContextBase.get_antialiased(), which reads _antialiased, but the Cairo set_antialiased override never updates _antialiased, so it will report stale/default state.",
+    "usage": {
+      "prompt_tokens": 3738,
+      "completion_tokens": 552
+    }
+  },
+  {
+    "case_id": "swebench-scikit-learn-12973",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sklearn/linear_model/least_angle.py",
+      "line": 1502,
+      "issue": "The fit-time copy_X argument is ignored during preprocessing because self.copy_X is passed unconditionally. Consequently, calling an estimator constructed with copy_X=False as fit(X, y) still mutates the caller's X when centering or normalizing, despite the new fit-time default being True; conversely, fit(copy_X=False) cannot disable that copy.",
+      "suggestion": "Pass copy_X to _preprocess_data, or remove the fit-time copy_X parameter and consistently use self.copy_X."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff clearly shows _preprocess_data is called with self.copy_X instead of the fit-time copy_X argument, so the fit-time parameter no longer controls preprocessing, exactly as described.",
+    "usage": {
+      "prompt_tokens": 3492,
+      "completion_tokens": 877
+    }
+  },
+  {
+    "case_id": "swebench-scikit-learn-12973",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "sklearn/linear_model/least_angle.py",
+      "line": 1504,
+      "issue": "The fit-time copy_X argument is ignored because preprocessing always receives self.copy_X. Consequently, fit(copy_X=False) still copies the input when the estimator was constructed with copy_X=True, and fit(copy_X=True) cannot override an estimator constructed with copy_X=False.",
+      "suggestion": "Pass copy_X to _preprocess_data instead of self.copy_X."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff confirms that _preprocess_data is called with self.copy_X, so the fit-time copy_X argument indeed no longer controls the copying behavior in preprocessing, as the finding states.",
+    "usage": {
+      "prompt_tokens": 3449,
+      "completion_tokens": 362
+    }
+  },
+  {
+    "case_id": "swebench-scikit-learn-13439",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sklearn/pipeline.py",
+      "line": 199,
+      "issue": "Removing Pipeline.__len__ makes len(pipeline) raise TypeError instead of returning the number of configured steps, breaking existing callers that use the public Python container interface.",
+      "suggestion": "Restore __len__ with `return len(self.steps)`."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Removing Pipeline.__len__ means len(pipeline) will raise TypeError, breaking public container behavior, so the finding is directly supported by the diff.",
+    "usage": {
+      "prompt_tokens": 2475,
+      "completion_tokens": 247
+    }
+  },
+  {
+    "case_id": "swebench-scikit-learn-13439",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "sklearn/pipeline.py",
+      "line": 199,
+      "issue": "Removing `__len__` makes `len(pipeline)` raise `TypeError` instead of returning the number of configured steps, breaking callers that use Pipeline's existing length API.",
+      "suggestion": "Restore `__len__` and return `len(self.steps)`."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the Pipeline.__len__ method, so len(pipeline) will now raise TypeError instead of returning the number of steps, directly supporting the finding.",
+    "usage": {
+      "prompt_tokens": 2481,
+      "completion_tokens": 156
+    }
+  },
+  {
+    "case_id": "swebench-scikit-learn-14983",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sklearn/model_selection/_split.py",
+      "line": 1163,
+      "issue": "Removing _RepeatedSplits.__repr__ leaves RepeatedKFold and RepeatedStratifiedKFold with object.__repr__, so printing either public cross-validator now produces a non-deterministic memory-address representation instead of its parameter representation.",
+      "suggestion": "Keep __repr__ on _RepeatedSplits, or make _RepeatedSplits inherit a base class that provides the parameter-aware representation."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "Removing _RepeatedSplits.__repr__ leaves its public subclasses RepeatedKFold and RepeatedStratifiedKFold without any parameter-aware repr, falling back to object.__repr__ as the class has no base providing one.",
+    "usage": {
+      "prompt_tokens": 3407,
+      "completion_tokens": 1319
+    }
+  },
+  {
+    "case_id": "swebench-scikit-learn-25232",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "sklearn/impute/_iterative.py",
+      "line": 304,
+      "issue": "Removing `fill_value` from the constructor breaks the documented IterativeImputer API and prevents `initial_strategy=\"constant\"` from using a user-specified initialization value; callers now receive an unexpected-keyword error, while the internal SimpleImputer falls back to 0 or \"missing_value\".",
+      "suggestion": "Restore the `fill_value` parameter and assign it to `self.fill_value`, then pass `fill_value=self.fill_value` when constructing the initial SimpleImputer."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the `fill_value` parameter from the constructor, parameter constraints, and its use in the internal SimpleImputer, which clearly breaks the documented API and breaks `initial_strategy='constant'` with a user-specified fill value.",
+    "usage": {
+      "prompt_tokens": 3753,
+      "completion_tokens": 199
+    }
+  },
+  {
+    "case_id": "swebench-sphinx-11510",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sphinx/directives/other.py",
+      "line": 380,
+      "issue": "The Include directive no longer emits the `source-read` event for included files. Extensions that listen for `source-read` and transform included RST content will therefore not be applied to either standard or Sphinx-relative includes.",
+      "suggestion": "Restore the `state_machine.insert_input` wrapper that emits `source-read` for the included document before delegating to docutils."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the state_machine.insert_input wrapper that emitted the 'source-read' event from Include.run, directly supporting the claim that the event is no longer emitted for included files.",
+    "usage": {
+      "prompt_tokens": 3287,
+      "completion_tokens": 284
+    }
+  },
+  {
+    "case_id": "swebench-sphinx-11510",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "sphinx/directives/other.py",
+      "line": 371,
+      "issue": "Removing the insert_input wrapper stops emitting the `source-read` event for files included by the `.. include::` directive, so extensions that transform or otherwise process included source text no longer receive those files.",
+      "suggestion": "Restore the insert_input wrapper (or use an equivalent supported hook) so included text is passed through the `source-read` event before being parsed."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes the only code that emitted Sphinx's source-read event for included files, directly supporting the finding.",
+    "usage": {
+      "prompt_tokens": 3406,
+      "completion_tokens": 292
+    }
+  },
+  {
+    "case_id": "swebench-sphinx-7757",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sphinx/util/inspect.py",
+      "line": 529,
+      "issue": "This indexes defaults only relative to args.args, but args.defaults also contains defaults for positional-only parameters. For a signature such as `(a=1, /, b=2)`, it assigns `2` to `b` and leaves `a` without a default, producing an incorrect Signature.",
+      "suggestion": "Account for positional-only parameters when indexing defaults, or build a combined positional-parameter list and align the defaults against its trailing parameters."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The refactored code no longer assigns defaults to positional-only parameters, so for a signature like (a=1, /, b=2), a loses its default and b receives the last default, which is incorrect.",
+    "usage": {
+      "prompt_tokens": 3012,
+      "completion_tokens": 1985
+    }
+  },
+  {
+    "case_id": "swebench-sphinx-7757",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "sphinx/util/inspect.py",
+      "line": 531,
+      "issue": "Positional-only defaults are ignored and the defaults list is indexed as though it contained only args.args. For a signature such as `f(a=1, /, b=2)`, this assigns `2` to `b` while leaving `a` without its default; a signature with only positional-only defaults loses all defaults.",
+      "suggestion": "Align defaults against the combined positional-only and positional-or-keyword parameter list, or offset the index by len(args.posonlyargs) and assign the corresponding defaults to positional-only parameters."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes default assignment for positional-only parameters and the new indexing uses only len(args.args) defaults, so positional-only defaults are ignored.",
+    "usage": {
+      "prompt_tokens": 3033,
+      "completion_tokens": 2733
+    }
+  },
+  {
+    "case_id": "swebench-sphinx-8551",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sphinx/domains/python.py",
+      "line": 275,
+      "issue": "Removing the py:module and py:class assignments causes Python cross-references created by PyXrefMixin to lose the current module/class context. PythonDomain.resolve_xref() reads these attributes to perform context-specific lookup, so references such as a parameter type inside a class can become unresolved or resolve to an unrelated object.",
+      "suggestion": "Keep setting result['py:module'] and result['py:class'] from env.ref_context when env is available."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "UNCERTAIN",
+    "reason": "The removal is evident, but confirming that PythonDomain.resolve_xref relies on these attributes requires code not shown here.",
+    "usage": {
+      "prompt_tokens": 3417,
+      "completion_tokens": 777
+    }
+  },
+  {
+    "case_id": "swebench-sphinx-8551",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sphinx/util/docfields.py",
+      "line": 295,
+      "issue": "Removing env from this make_xrefs() call makes Field.make_xref() receive its default None, so it skips env.get_domain(domain).process_field_xref(refnode). Domain-specific field cross-reference processing is therefore no longer performed for type references in this fallback path.",
+      "suggestion": "Pass env=self.directive.state.document.settings.env to typed_field.make_xrefs()."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "UNCERTAIN",
+    "reason": "The diff removes the explicit env argument, but we cannot verify from this window whether make_xrefs/make_xref handle a None env by skipping process_field_xref; the claim is plausible but not directly provable here.",
+    "usage": {
+      "prompt_tokens": 3197,
+      "completion_tokens": 1045
+    }
+  },
+  {
+    "case_id": "swebench-sphinx-8551",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "sphinx/domains/python.py",
+      "line": 275,
+      "issue": "Removing the `py:module` and `py:class` attributes from Python pending cross-references prevents docfield references from carrying the current module/class context, so relative targets such as parameter or type references can no longer resolve against the enclosing Python object.",
+      "suggestion": "Keep assigning `result['py:module']` and `result['py:class']` from `env.ref_context`, and continue passing `env` from `DocFieldTransformer`."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff directly removes storing py:module and py:class on xref nodes, which is required for docfield references to resolve relative targets against the enclosing Python module/class context.",
+    "usage": {
+      "prompt_tokens": 3416,
+      "completion_tokens": 637
+    }
+  },
+  {
+    "case_id": "swebench-sphinx-8595",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sphinx/ext/autodoc/__init__.py",
+      "line": 1077,
+      "issue": "An explicitly defined empty __all__ (for example, __all__ = []) is now treated the same as a missing __all__, so automodule documents every implicit member instead of documenting none of the module's members.",
+      "suggestion": "Use `if self.__all__ is None:` here, or otherwise distinguish an absent __all__ from an empty one."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The change from `is None` to `not` makes an explicit empty `__all__` (a valid list) fall into the implicit-members branch, so automodule documents all members instead of none, which is a behavioral regression.",
+    "usage": {
+      "prompt_tokens": 3457,
+      "completion_tokens": 796
+    }
+  },
+  {
+    "case_id": "swebench-sphinx-8595",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "sphinx/ext/autodoc/__init__.py",
+      "line": 1077,
+      "issue": "An explicitly empty module `__all__` is falsy, so this now treats `__all__ = []` like an absent `__all__` and returns every module member for documentation instead of documenting no exported members.",
+      "suggestion": "Use `if self.__all__ is None:` to distinguish an absent `__all__` from an explicitly empty export list."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The change from `is None` to `not` makes an explicitly empty `__all__ = []` falsy, causing it to be treated like an absent `__all__` and document all members instead of none, so the finding is directly supported.",
+    "usage": {
+      "prompt_tokens": 3458,
+      "completion_tokens": 743
+    }
+  },
+  {
+    "case_id": "swebench-sympy-15599",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sympy/core/mod.py",
+      "line": 64,
+      "issue": "On Python 2, int(r) can produce a long for a quotient outside the native int range. Replacing isinstance(d, integer_types) with type(d) is int then skips the ratio-based reduction for large exact quotients, leaving expressions such as Mod(10**30*x, 10**30) unevaluated instead of reducing them.",
+      "suggestion": "Use isinstance(d, integer_types), or remove the redundant type check while preserving the ratio-based path."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff changes `isinstance(d, integer_types)` to `type(d) is int`, and on Python 2 `int(r)` can return a `long` for large quotients, so `integer_types` (which includes `long`) would have matched while `type(d) is int` does not, skipping the ratio-based reduction.",
+    "usage": {
+      "prompt_tokens": 3238,
+      "completion_tokens": 1245
+    }
+  },
+  {
+    "case_id": "swebench-sympy-15599",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sympy/core/mod.py",
+      "line": 139,
+      "issue": "Removing the integer-factor reduction after the Mul handling prevents valid modulo simplifications when the dividend is a product without a Mod factor. For example, Mod(6*x, 3) no longer reduces the factor 6 modulo 3 and remains unevaluated instead of becoming 0.",
+      "suggestion": "Restore the q.is_Integer block that replaces integer factors in non_mod_l by their remainders before rebuilding p."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "REJECT",
+    "reason": "The removed block appends i%q only when the remainder is not S.Zero, so for the example Mod(6*x, 3) the factor 6 would be left unchanged (not reduced to 0), contradicting the finding's claim.",
+    "usage": {
+      "prompt_tokens": 3427,
+      "completion_tokens": 19324
+    }
+  },
+  {
+    "case_id": "swebench-sympy-23413",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sympy/polys/matrices/normalforms.py",
+      "line": 216,
+      "issue": "Limiting the loop to the bottom min(m, n) rows skips nonzero rows above them for tall matrices. For example, with A = [[1], [0], [0]], the only iteration processes the bottom zero row, increments k to 1, and returns A[:, 1:] with no columns instead of the HNF containing the nonzero column.",
+      "suggestion": "Continue processing rows until all m rows are examined or k reaches zero; for example, restore the full row range and retain the k == 0 early break."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The change to iterate only the bottom min(m,n) rows skips nonzero pivot rows above when those bottom rows are zero, as shown by A = [[1],[0],[0]] where the correct HNF is lost.",
+    "usage": {
+      "prompt_tokens": 3453,
+      "completion_tokens": 876
+    }
+  },
+  {
+    "case_id": "swebench-sympy-23413",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "sympy/polys/matrices/normalforms.py",
+      "line": 212,
+      "issue": "Limiting the loop to min(m, n) rows skips valid pivot rows for tall rank-deficient matrices when one or more of the bottom n rows has no pivot. For example, [[1, 0], [0, 0], [0, 0]] processes only the last two zero rows and never reaches the nonzero first row, producing an incorrect Hermite normal form.",
+      "suggestion": "Iterate over all rows and retain the k == 0 termination guard, or otherwise continue scanning earlier rows whenever a processed row does not produce a pivot."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The change to iterate only min(m, n) rows removes the original k==0 termination guard and stops after the bottom zero rows in a tall rank-deficient matrix like [[1,0],[0,0],[0,0]], skipping the nonzero first row and returning an incorrect (empty) HNF, as the example demonstrates.",
+    "usage": {
+      "prompt_tokens": 3453,
+      "completion_tokens": 1604
+    }
+  },
+  {
+    "case_id": "swebench-sympy-23534",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sympy/core/symbol.py",
+      "line": 794,
+      "issue": "When `names` is an iterable and a non-default `cls` is supplied, the recursive call now omits `cls`, so `symbols(('f', 'g'), cls=Function)` and similar calls create ordinary `Symbol` instances instead of the requested class.",
+      "suggestion": "Restore `cls=cls` in the recursive call: `result.append(symbols(name, cls=cls, **args))`."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The change removes `cls=cls` from the recursive call, which would cause a non-default `cls` to be ignored when `names` is an iterable, exactly as described.",
+    "usage": {
+      "prompt_tokens": 2675,
+      "completion_tokens": 805
+    }
+  },
+  {
+    "case_id": "swebench-sympy-23534",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "sympy/core/symbol.py",
+      "line": 794,
+      "issue": "When `symbols` is called with a non-string iterable and a custom `cls`, this recursive call now omits `cls`, so nested names are created with the default `Symbol` class instead of the requested class. For example, `symbols(('x', 'y'), cls=Dummy)` no longer returns `Dummy` instances.",
+      "suggestion": "Pass the class through the recursive call: `result.append(symbols(name, cls=cls, **args))`."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff removes `cls` from the recursive `symbols` call, so custom symbol classes are ignored for non-string iterables, directly supporting the finding.",
+    "usage": {
+      "prompt_tokens": 2686,
+      "completion_tokens": 978
+    }
+  },
+  {
+    "case_id": "swebench-sympy-24213",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "sympy/physics/units/unitsystem.py",
+      "line": 178,
+      "issue": "This changes the addend compatibility check from dimensional equivalence to structural equality, so physically compatible dimensions represented differently are rejected. For example, a force dimension such as `newton` can be represented as `Dimension(force)`, while `kilogram*meter/second**2` produces a composed dimension; `newton + kilogram*meter/second**2` was accepted by `equivalent_dims` but now raises `ValueError`.",
+      "suggestion": "Restore `self.get_dimension_system().equivalent_dims(dim, addend_dim)` for this validation."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The diff replaces a dimensional-equivalence check with structural equality, which will reject physically equivalent dimensions represented by different Dimension objects.",
+    "usage": {
+      "prompt_tokens": 2776,
+      "completion_tokens": 1372
+    }
+  },
+  {
+    "case_id": "swebench-sympy-24213",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "sympy/physics/units/unitsystem.py",
+      "line": 177,
+      "issue": "This changes the addend compatibility check from dimensional equivalence to structural equality. Two distinct Dimension expressions or aliases can have identical dimensional dependencies in a UnitSystem, so valid sums such as quantities with separately represented but equivalent length dimensions now raise ValueError.",
+      "suggestion": "Use self.get_dimension_system().equivalent_dims(dim, addend_dim) for this validation."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The replacement of `equivalent_dims` with structural `!=` makes the check stricter, and since `equivalent_dims` compares dimensional dependencies (which can be equal for non-identical Dimension expressions), valid additions of dimensionally equivalent but structurally different units will now raise ValueError.",
+    "usage": {
+      "prompt_tokens": 2748,
+      "completion_tokens": 1553
+    }
+  },
+  {
+    "case_id": "swebench-xarray-6992",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "xarray/core/dataset.py",
+      "line": 4165,
+      "issue": "When reset_index() is called with drop=True on a MultiIndex dimension, only the dimension name is added to drop_variables. The MultiIndex level variables remain in the result as orphaned coordinates even though dropping the dimension index should remove all coordinates belonging to that index.",
+      "suggestion": "When drop is true and name is an indexed dimension, add all coordinates from self.xindexes.get_all_coords(name) to drop_variables; only drop the single requested name when resetting a level."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "The reset_index code only appends the dimension name to drop_variables when drop=True, so level variables from a MultiIndex (which are separate variables in self._variables) are not removed, leaving them as orphaned coordinates, contradicting the intended removal of the index.",
+    "usage": {
+      "prompt_tokens": 4177,
+      "completion_tokens": 9013
+    }
+  },
+  {
+    "case_id": "swebench-xarray-6992",
+    "arm": "luna_aletheore_context",
+    "finding": {
+      "file": "xarray/core/dataset.py",
+      "line": 4181,
+      "issue": "Using _replace() instead of _replace_with_new_dims() leaves the original _dims mapping unchanged. For example, resetting and dropping the only indexed coordinate from a dataset with no remaining variables leaves a stale dimension in result.dims even though no variable uses it.",
+      "suggestion": "Return self._replace_with_new_dims(variables, coord_names=coord_names, indexes=indexes)."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "UNCERTAIN",
+    "reason": "The finding's claim depends on the behavior of _replace() regarding dimension updates, which is not defined in the provided diff or context, so it cannot be verified or refuted from the evidence shown.",
+    "usage": {
+      "prompt_tokens": 4126,
+      "completion_tokens": 4768
+    }
+  },
+  {
+    "case_id": "swebench-xarray-6992",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "xarray/core/dataset.py",
+      "line": 4167,
+      "issue": "When resetting a MultiIndex dimension with drop=True, only the dimension name is added to drop_variables. The index level coordinates are left in variables, whereas the previous implementation dropped all level coordinates as well, so reset_index('dim', drop=True) leaves orphaned level coordinates.",
+      "suggestion": "When name refers to a MultiIndex dimension, append index.index.names and index.dim to drop_variables when drop is True."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "UNCERTAIN",
+    "reason": "The finding is plausible about reset_index's drop_variables handling, but the diff shown only modifies set_index, so the claim that the previous implementation dropped all level coordinates cannot be verified from the provided evidence.",
+    "usage": {
+      "prompt_tokens": 4163,
+      "completion_tokens": 6280
+    }
+  },
+  {
+    "case_id": "swebench-xarray-6992",
+    "arm": "luna_aletheore_compact",
+    "finding": {
+      "file": "xarray/core/dataset.py",
+      "line": 4179,
+      "issue": "coord_names is built by unioning the original coordinate names without removing drop_variables. For reset_index(drop=True), the corresponding variables have already been removed, leaving coordinate names that are absent from variables and producing an inconsistent Dataset.",
+      "suggestion": "Set coord_names to self._coord_names - set(drop_variables) | set(new_variables)."
+    },
+    "verifier_model": "deepseek-v4-flash",
+    "verdict": "ACCEPT",
+    "reason": "In reset_index with drop=True, dropped variable names are removed from variables but not from coord_names, leaving inconsistent coordinate references.",
+    "usage": {
+      "prompt_tokens": 4124,
+      "completion_tokens": 531
+    }
+  }
+]
