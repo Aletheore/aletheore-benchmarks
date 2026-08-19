@@ -56,6 +56,24 @@ commons-lang), plus 25 SWE-bench-derived Python cases (django, astropy, scikit-l
 sphinx, sympy, xarray). By `ground_truth.yaml` category: 40 `real_bug_fix`, 6 `injected_bug`, 4
 `clean` (no real bug - used to check false-positive rate, not recall).
 
+**Known methodology caveat with the SWE-bench-derived cases (25 of 50), found while investigating
+Experiment 3's misses:** `ground_truth` for these cases is the original GitHub issue that motivated
+the real PR, not a description of every problem in the diff. The diff under review is often a
+multi-file fix/enhancement, and Flash Review's job (per its own system prompt) is to flag *regressions
+the diff introduces*, not to rediscover the specific issue that motivated it - those are frequently
+different, non-overlapping sets of valid findings. Spot-checked two concrete misses to confirm this is
+real, not a guess: `swebench-xarray-6992` - the model's finding at line 4180 ("`coord_names` no longer
+subtracts `drop_variables`... producing an inconsistent Dataset") describes almost exactly the ground
+truth's stated symptom ("more `_coord_names` than `_variables`"), scored as a miss anyway;
+`swebench-matplotlib-25775` - the model flagged a real backward-compatibility regression in
+`lib/matplotlib/text.py` (a genuinely changed file in this exact diff, confirmed against `pr.diff`),
+while `ground_truth.expected_file` points at `backend_agg.py` - a different file in the same diff,
+because the "expected" issue is the feature the PR was written to add, not a regression the PR
+introduces. **Recall numbers on the SWE-bench-derived half of this corpus should be read as a lower
+bound, not a precise measurement** - some fraction of "misses" are real, on-target, uncredited
+findings, not failures to find anything. This affects every recall number reported for this corpus in
+this document, not just Experiment 3's.
+
 ### Arms
 
 Three arms, same model, same diff, same production finding parser and grounding validator:
@@ -273,7 +291,21 @@ than Experiment 2's 79.8% - a stronger model's outputs were more consistently gr
   out to be separate axes here, not the same thing.
 - **Absolute recall ceiling is still only ~53%** even on the best arm and a real production-grade
   model - real room for improvement remains, just not evidence that the evidence layer specifically is
-  the bottleneck relative to no evidence at all.
+  the bottleneck relative to no evidence at all. Some of that gap is real (see the two concrete misses
+  fixed below); some of it is the SWE-bench-derived-corpus methodology caveat under "Corpus" above -
+  this number is a lower bound, not a precise measurement.
+- **Two concrete, verified misses led to a real product fix, not just a benchmark note:** spot-checking
+  individual misses (not just categories) found `001-flask-cli-key-quote`, `003-requests-proxy-bypass-registry`,
+  and `018-axios-missing-null-check-charset` all came back completely empty from the model - not a
+  wrong guess, total silence on a real bug. All three are pure local-logic bugs (a missing quote in an
+  error string, an unfiltered empty regex match, a missing null check) with zero cross-file signal -
+  Aletheore's evidence layer (blast radius, referenced symbols) structurally cannot help with this
+  category, and Flash Review's system prompt review procedure was framed entirely around cross-file
+  call tracing and control/data-flow comparison, with no explicit instruction to sanity-check a changed
+  expression on its own terms. Fixed by adding an explicit checklist step (null/undefined guards on
+  new property access, regex/pattern correctness on edge-case input, string-literal accuracy) to
+  `FLASH_REVIEW_SYSTEM_PROMPT` in `github-app/scan_worker/flash_review.py` - not yet validated by a
+  benchmark rerun (a live-model prompt-following claim can't be unit-tested), a real v2 candidate.
 - **Not yet reflecting the reasoning-mode-disable optimization** already proven elsewhere in this repo
   (87% fewer tokens, 6.2x faster, no quality loss) - a real, low-risk v2 rerun candidate that would
   likely change the cost picture substantially without needing new data collection logic.
