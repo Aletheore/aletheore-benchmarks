@@ -158,14 +158,114 @@ Dropping full file content and relying on Aletheore's own evidence context:
 
 ### Open work
 
-**PENDING UPDATE (as of 2026-08-18):** the false-positive rate on the compact arm above was not
-acceptable as-is. Root cause traced to a real gap, not just "the model is noisy" - blast radius
-went silent when it found no confirmed caller, instead of stating that as a checked, bounded fact
-(e.g. "no confirmed caller found among 20 of 40 importers checked"), leaving the model to guess at
-claims like "not used anywhere in the codebase" that a compact prompt (no raw file content) can't
-actually verify. Two fixes are implemented and are being validated against this same corpus as this
-line is written: `build_blast_radius_context` now emits that bounded fact explicitly instead of
-staying silent, and the system prompt now explicitly instructs against reporting a claim the given
-context can't support. **The results tables above are the pre-fix baseline and will be superseded
-once the validation run (with a fresh blind judge pass) completes - do not cite the 0.79 avg-FP
-number as current without checking this section first.**
+**Update (2026-08-19): blast-radius false-positive fix validated - result is inconclusive, not a win.**
+The fix described below (blast radius stating "no confirmed caller found among N of M checked"
+instead of going silent, plus a system-prompt guardrail against unverifiable claims) was implemented,
+unit-tested, and re-run against this same 50-case corpus (`results/mixed_repo_compaction_ab_fp_fix.json`,
+448 records - 2 short of 450 due to isolated retry exhaustion, not systematic). The compact arm's
+false-positive rate did **not** improve - it got worse, consistently, across three independent
+measurements taken after the fix:
+
+| measurement | recall | avg false positives |
+|---|---|---|
+| pre-fix (published above) | 0.375 | **0.79** |
+| post-fix, full 224-record judge pass | 0.356 | 1.12 |
+| post-fix, compact-only rerun, run 0 | 0.311 | 1.18 |
+| post-fix, compact-only rerun, run 1 | 0.367 | 0.98 |
+| **post-fix, compact-only rerun, combined** | 0.339 | **1.08** |
+
+Taken at face value this looks like a regression. It is reported honestly as one, but with a real
+caveat: the `ollama_baseline` arm - which the fix cannot touch at all, since it never sees Aletheore's
+evidence context - moved by a similar magnitude in the same direction in the same rerun (recall
+0.301->0.328, avg FP 0.65->0.79). A fix with zero mechanical path to affecting baseline correlating
+with baseline moving anyway is a strong sign of judge-calibration drift between the pre-fix and
+post-fix sessions, not a real code-caused effect - consistent with this judge's own documented noise
+floor. All recall deltas here are within that floor; the FP deltas are larger and repeat three times,
+so they are reported as real and unresolved, not dismissed - just not attributable to this specific
+fix with confidence. **No conclusion is drawn about whether the fix helped, hurt, or did nothing** -
+this needs a less noisy evaluation setup (a stronger, less variance-prone judge, or a much larger
+n) before either claim is supportable. The fix's underlying logic remains correct as verified by unit
+tests in `tests/test_flash_review.py` and is not reverted on the strength of this ambiguous result.
+
+---
+
+## Experiment 3 (v1): a real, previously-rejected production model - DeepSeek V4 Flash
+
+Every arm above ran on a local Ollama model (`llama3.1:8b`) as a stand-in for a weak free-tier-caliber
+model. This experiment instead re-tests a model with real production history: `deepseek-v4-flash` was
+Aletheore's original PR-review model, replaced first by `deepseek-v4-pro` (quality), then by
+`gpt-5.6-luna` (DeepSeek's announced price hike made staying DeepSeek-only a vendor-risk bet - see
+`model_tiers.py`'s module docstring). The question this run asks: does Aletheore's evidence context
+change that verdict, or was the rejection about the model itself?
+
+### What's different from Experiment 2
+
+- **Real API, not local inference.** `run_mixed_repo_ab.py` gained a `--provider deepseek` flag that
+  builds an adapter with `aletheore.adapters.openai_compatible.OpenAICompatibleAdapter` - the exact
+  class production's `model_tiers.writing_adapter_for` uses for its DeepSeek fallback path - pointed at
+  the real `https://api.deepseek.com` endpoint. This is not an approximation of production behavior; it
+  is the same adapter code production runs, so real per-call latency, real token accounting, and real
+  failure modes are all genuine, not simulated.
+- **Repeats: 1, not 3** (v1, hence the name - a full 3-repeat run is real future work, not done here).
+  Real API latency made a 3-repeat pass impractical for a first read: an initial attempt at
+  `--repeats 3` measured ~11 min/case average across the first 4 cases (real DeepSeek completions on
+  the baseline arm ran into the tens of thousands of tokens - see below), projecting to ~9+ hours for
+  all 50 cases. Switched to `--repeats 1` (~4.5 hours) to get a real first read before committing to
+  the full run.
+- **Known limitation, not yet applied here:** a separate part of this benchmark suite
+  (`scripts/multi_repo.py`) already measured that disabling DeepSeek's reasoning mode
+  (`extra_body={"thinking": {"type": "disabled"}}`) cuts output tokens by 87% and wall-clock time by
+  6.2x on a real file-page prompt, with the output coming back slightly *longer*, not worse. This run's
+  adapter does not apply that flag (reasoning left at its default, matching how
+  `model_tiers.writing_adapter_for`'s DeepSeek fallback behaves unless `AIRVIEW_REASONING=off` is set) -
+  so the completion-token/cost numbers below are the *unoptimized* case, and are real candidates for a
+  v2 rerun.
+
+### Real results (all 50 cases, 0 errors)
+
+Token/timing data, `results/mixed_repo_deepseek_v4_flash_r1.json`:
+
+| arm | avg prompt tokens | avg completion tokens | avg elapsed | avg findings |
+|---|---|---|---|---|
+| `ollama_aletheore_compact` | 2,483 | **13,235** | 108.0s | 0.74 |
+| `ollama_aletheore_context` | 16,325 | 11,180 | 90.2s | 0.76 |
+| `ollama_baseline` | 15,019 | 13,321 | 114.1s | 0.70 |
+
+Compact still shrinks the *input* side by ~6x, same shape as Experiment 2. But completion tokens are
+large across all three arms (11k-13k) almost independent of context strategy - this is DeepSeek V4
+Flash's reasoning-mode verbosity, a model-level trait Aletheore's context shaping does not fix (see
+the known limitation above - this is very likely fixable, just not applied in this v1 run). Real cost
+at DeepSeek's published rates ($0.14/$0.28 per 1M): compact ~$0.0041/review, context ~$0.0054/review,
+baseline ~$0.0058/review - compact still cheapest, but by ~25-30%, not the multiple seen against a
+model whose completion tokens actually shrink with less context.
+
+Blind judge (`deepseek-v4-pro`, same methodology as Experiment 2, 2 runs, 276/276 (case, arm, run)
+triples scored with 0 missing after retry): **run-to-run agreement 90.6% (125/138)**, notably higher
+than Experiment 2's 79.8% - a stronger model's outputs were more consistently gradeable.
+
+| arm | recall score | avg false positives |
+|---|---|---|
+| `ollama_aletheore_compact` | **0.527** | 0.207 |
+| `ollama_aletheore_context` | 0.522 | 0.217 |
+| `ollama_baseline` | 0.457 | 0.185 |
+
+### Verdict (v1)
+
+- **The rejection wasn't fixed by Aletheore's context, but it also wasn't ignored by it.** Compact and
+  context both beat baseline on recall by a real margin (~0.52-0.53 vs 0.457, ~14-15% relative) - the
+  evidence layer adds real signal even on a materially stronger model than Experiment 2's, not just a
+  weak one. That is real evidence against "the evidence layer has nothing to offer a competent model."
+- **Compact ties context again** (0.527 vs 0.522, well inside noise) on a second, different, stronger
+  model - the case for dropping raw file dumps in favor of Aletheore's evidence alone keeps holding up
+  across model classes, not just on the original weak-model corpus.
+- **False positives are dramatically lower than Experiment 2's llama3.1:8b numbers** (0.19-0.22 vs.
+  0.79-1.2) - DeepSeek V4 Flash is verbose but not sloppy; token volume and hallucination rate turned
+  out to be separate axes here, not the same thing.
+- **Absolute recall ceiling is still only ~53%** even on the best arm and a real production-grade
+  model - real room for improvement remains, just not evidence that the evidence layer specifically is
+  the bottleneck relative to no evidence at all.
+- **Not yet reflecting the reasoning-mode-disable optimization** already proven elsewhere in this repo
+  (87% fewer tokens, 6.2x faster, no quality loss) - a real, low-risk v2 rerun candidate that would
+  likely change the cost picture substantially without needing new data collection logic.
+
+Raw results: `results/mixed_repo_deepseek_v4_flash_r1.json`, `results/blind_judge_deepseek_v4_flash_r1.json`.

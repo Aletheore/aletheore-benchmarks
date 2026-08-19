@@ -30,6 +30,32 @@ def _load_cases(bench_root: Path) -> list[Path]:
     return sorted(p for p in cases_dir.iterdir() if p.is_dir())
 
 
+def _deepseek_adapter(model: str, capture: dict):
+    # Reuses the exact same adapter class production Flash Review builds
+    # DeepSeek adapters with (model_tiers.writing_adapter_for's fallback
+    # path) rather than a parallel HTTP client, so this genuinely tests
+    # what production would send/receive, not an approximation of it.
+    from aletheore.adapters.openai_compatible import OpenAICompatibleAdapter
+
+    def _on_usage(prompt_tokens: int, completion_tokens: int) -> None:
+        # Field names match Ollama's response schema on purpose - every
+        # downstream consumer of these records (blind_judge.py, this
+        # project's analysis scripts) reads "prompt_eval_count"/
+        # "eval_count" off ollama_response_metadata regardless of which
+        # provider actually served the request.
+        capture["prompt_eval_count"] = prompt_tokens
+        capture["eval_count"] = completion_tokens
+
+    return OpenAICompatibleAdapter(
+        name="DeepSeek",
+        base_url="https://api.deepseek.com",
+        api_key_env_var="DEEPSEEK_API_KEY",
+        model=model,
+        supports_tool_choice=False,
+        on_usage=_on_usage,
+    )
+
+
 def _run_case(
     case_dir: Path,
     model: str,
@@ -38,6 +64,7 @@ def _run_case(
     max_output_tokens: int,
     aletheore_root: Path,
     bench_root: Path,
+    provider: str = "ollama",
 ) -> list[dict]:
     from run_ollama_ab import _OllamaAdapter  # local import: needs sys.path set up first (see main())
 
@@ -136,9 +163,12 @@ def _run_case(
             ):
                 capture: dict = {}
                 original_factory = flash_review.writing_adapter_for
-                flash_review.writing_adapter_for = lambda *a, **kw: _OllamaAdapter(
-                    base_url, model, repeat, max_output_tokens, capture
-                )
+                if provider == "deepseek":
+                    flash_review.writing_adapter_for = lambda *a, **kw: _deepseek_adapter(model, capture)
+                else:
+                    flash_review.writing_adapter_for = lambda *a, **kw: _OllamaAdapter(
+                        base_url, model, repeat, max_output_tokens, capture
+                    )
                 grounding: dict = {}
                 started = time.monotonic()
                 try:
@@ -195,6 +225,11 @@ def main() -> int:
     parser.add_argument("--bench-root", type=Path, required=True)
     parser.add_argument("--model", default="llama3.1:8b")
     parser.add_argument("--repeats", type=int, default=3)
+    parser.add_argument(
+        "--provider", choices=["ollama", "deepseek"], default="ollama",
+        help="ollama calls a local Ollama server; deepseek calls the real DeepSeek API "
+        "(needs DEEPSEEK_API_KEY in the environment) via the same adapter class production uses.",
+    )
     parser.add_argument("--ollama-url", default="http://127.0.0.1:11434")
     parser.add_argument("--max-output-tokens", type=int, default=1024)
     parser.add_argument("--case-id", help="run only one case dir name for a smoke test")
@@ -215,9 +250,27 @@ def main() -> int:
             parser.error(f"unknown case id: {args.case_id}")
     args.output.parent.mkdir(parents=True, exist_ok=True)
 
+    # Resume automatically rather than requiring an explicit flag: a case is
+    # only ever appended to --output after _run_case returns for it (see the
+    # write below), so any case_id present in an existing output file is
+    # genuinely complete, never partial - a killed/restarted run can safely
+    # skip every case_id already there instead of redoing real work.
     all_records: list[dict] = []
-    for i, case_dir in enumerate(cases, 1):
-        print(f"[{i}/{len(cases)}] {case_dir.name}", flush=True)
+    already_done: set[str] = set()
+    if args.output.exists():
+        try:
+            all_records = json.loads(args.output.read_text())
+            already_done = {r["case_id"] for r in all_records}
+            if already_done:
+                print(f"resuming: {len(already_done)} case(s) already complete in {args.output}", flush=True)
+        except (json.JSONDecodeError, KeyError) as exc:
+            print(f"could not resume from {args.output} ({type(exc).__name__}: {exc}) - starting fresh", flush=True)
+            all_records = []
+            already_done = set()
+
+    remaining = [c for c in cases if c.name not in already_done]
+    for i, case_dir in enumerate(remaining, 1):
+        print(f"[{i}/{len(remaining)}, {len(already_done) + i}/{len(cases)} overall] {case_dir.name}", flush=True)
         try:
             records = _run_case(
                 case_dir,
@@ -227,6 +280,7 @@ def main() -> int:
                 args.max_output_tokens,
                 args.aletheore_root,
                 args.bench_root,
+                provider=args.provider,
             )
         except Exception as exc:  # noqa: BLE001 - one broken case must not kill the whole overnight run
             print(f"  CASE FAILED: {type(exc).__name__}: {exc}", flush=True)

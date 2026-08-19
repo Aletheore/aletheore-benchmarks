@@ -1,0 +1,1379 @@
+[
+  {
+    "run": 0,
+    "case_id": "001-flask-cli-key-quote",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "src/flask/cli.py",
+          "line": 795,
+          "issue": "Trailing comma in string literal",
+          "suggestion": ","
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "002-requests-json-decode-pickle",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "003-requests-proxy-bypass-registry",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "src/requests/utils.py",
+          "line": 98,
+          "issue": "Potential bug: filter() is not needed as split() already returns a list of non-empty strings",
+          "suggestion": "proxyOverride = proxyOverride.split(';')"
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "004-click-version-package-name",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "src/click/decorators.py",
+          "line": 460,
+          "issue": "The comment about version detection based on the entry point name is outdated and incorrect."
+        },
+        {
+          "file": "src/click/decorators.py",
+          "line": 494,
+          "issue": "The variable 'package_name' is not in scope."
+        },
+        {
+          "file": "src/click/decorators.py",
+          "line": 505,
+          "issue": "The code does not handle the case where 'package_name' maps to multiple installed distributions."
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "005-axios-progress-negative-clamp",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [
+        {
+          "file": "lib/helpers/progressEventReducer.js",
+          "line": 12,
+          "issue": "Potential integer overflow in Math.min() when total is null",
+          "suggestion": "Use a safe default value instead of null"
+        }
+      ],
+      "actionability": 4
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "006-express-content-length-transfer-encoding",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [
+        {
+          "file": "lib/response.js",
+          "line": 163,
+          "issue": "Potential bug: Content-Length and Transfer-Encoding cannot be present in the response headers together. However, the code does not check for the presence of Transfer-Encoding before setting Content-Length."
+        }
+      ],
+      "actionability": 4
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "007-lodash-omit-array-clone",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "008-axios-headers-set-cookie",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        "The finding misunderstands the issue: `this.get('set-cookie')` returning null or undefined is not the actual bug, and the claim about boolean context is inaccurate."
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "009-cobra-completions-args-mutation",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "010-gin-runfd-file-leak",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "011-gorilla-mux-query-match",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 3
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "012-urfave-cli-empty-positional-arg",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "013-gson-jsonprimitive-hashcode",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+          "line": 262,
+          "issue": "The comment about the hashing algorithm for longs and doubles is outdated and no longer accurate.",
+          "suggestion": "Remove the comment or update it to reflect the current implementation."
+        },
+        {
+          "file": "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+          "line": 264,
+          "issue": "The method `hashOfDoubleValue` is no longer used and can be removed.",
+          "suggestion": "Remove the method and its call."
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "014-junit4-assumption-serialization",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "015-commons-lang-bitfield-sign-extension",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 3
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "016-flask-sql-injection-user-lookup",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [
+        {
+          "file": "src/flask/helpers.py",
+          "line": 641,
+          "issue": "SQL injection vulnerability due to direct concatenation of user input into a SQL query",
+          "suggestion": "Use parameterized query or a library like SQLAlchemy to prevent SQL injection"
+        }
+      ],
+      "actionability": 5
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "017-commons-lang-arrayutils-off-by-one",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "018-axios-missing-null-check-charset",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "lib/utils.js",
+          "line": 1039,
+          "issue": "The getResponseCharset function is exported, but its usage is not confirmed among 20 of the 40 files that import lib/utils.js."
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "019-gin-request-counter-race",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [
+        {
+          "file": "gin.go",
+          "line": 658,
+          "issue": "The requestCount variable is not thread-safe due to concurrent access from multiple goroutines in ServeHTTP.",
+          "suggestion": "Use a thread-safe data structure, such as a mutex, to protect access to requestCount."
+        },
+        {
+          "file": "gin.go",
+          "line": 670,
+          "issue": "The requestCount variable is not thread-safe due to concurrent access from multiple goroutines in ServeHTTP.",
+          "suggestion": "Use a thread-safe data structure, such as a mutex, to protect access to requestCount."
+        }
+      ],
+      "actionability": 3
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "020-express-hardcoded-webhook-secret",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "lib/utils.js",
+          "line": 281,
+          "issue": "The `normalizeType` function is called with a symbol named `stripe_key` which is not a string, but the function expects a string as its first argument."
+        },
+        {
+          "file": "lib/utils.js",
+          "line": 281,
+          "issue": "The `generic_credential_assignment` function is called with a symbol named `stripe_key` which is not a string, but the function expects a string as its first argument."
+        },
+        {
+          "file": "lib/utils.js",
+          "line": 281,
+          "issue": "The `signWebhookPayload` function is called with a secret that is not a string, but the function expects a string as its second argument."
+        },
+        {
+          "file": "lib/utils.js",
+          "line": 281,
+          "issue": "The `parseExtendedQueryString` function has no confirmed callers among the 12 files that import lib/utils.js."
+        },
+        {
+          "file": "lib/utils.js",
+          "line": 281,
+          "issue": "The `signWebhookPayload` function has no confirmed callers among the 12 files that import lib/utils.js."
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "021-requests-swallowed-close-exception",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [
+        {
+          "file": "src/requests/sessions.py",
+          "line": 911,
+          "issue": "The close_quietly method calls v.close() without checking if v is an adapter or not, which may raise an AttributeError if it's not."
+        },
+        {
+          "file": "src/requests/sessions.py",
+          "line": 914,
+          "issue": "The close_quietly method calls v.close() without checking if v is an adapter or not, which may raise an AttributeError if it's not."
+        }
+      ],
+      "actionability": 4
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-astropy-14309",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-django-11095",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        "The get_inlines method is removed without a clear indication of what it was used for or how its functionality is handled elsewhere in the code.",
+        "The get_inline_instances method now directly accesses self.inlines instead of calling get_inlines, which may have side effects or different behavior."
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-django-11999",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        "The `partialmethod` call is missing the `cls` argument, which is required for the `partialmethod` function."
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-django-12155",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "django/contrib/admindocs/utils.py",
+          "line": 21,
+          "issue": "The function get_view_name is not imported correctly in the trim_docstring function call.",
+          "suggestion": "utils.get_view_name"
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-django-12262",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-django-12663",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "django/db/models/sql/query.py",
+          "line": 233,
+          "issue": "Potential FieldError raised when select has more than one element",
+          "suggestion": "Check len(self.select) > 1 before accessing self.select[0].field"
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-django-13279",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "django/contrib/sessions/backends/base.py",
+          "line": 108,
+          "issue": "The RemovedInDjango40Warning comment is not removed, but the code that triggers it is removed. This may cause confusion or errors if the warning is not properly handled.",
+          "suggestion": "Remove the RemovedInDjango40Warning comment or update the code to handle the warning properly."
+        },
+        {
+          "file": "django/contrib/sessions/backends/base.py",
+          "line": 124,
+          "issue": "The _legacy_decode method is not removed, but the warning comment suggests it will be removed in Django 40. This may cause confusion or errors if the method is not properly handled.",
+          "suggestion": "Remove the _legacy_decode method or update the code to handle it properly."
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-django-13670",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "django/utils/dateformat.py",
+          "line": 325,
+          "issue": "The comment for the y method is outdated and does not match the new implementation.",
+          "suggestion": "Update the comment to match the new implementation."
+        },
+        {
+          "file": "django/utils/dateformat.py",
+          "line": 327,
+          "issue": "The comment for the Y method is missing a description of the format.",
+          "suggestion": "Add a description of the format to the comment."
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-django-14434",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "django/db/backends/base/schema.py",
+          "line": 1253,
+          "issue": "The Expressions class uses mutation operations (append) which may not be deterministic."
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-django-15503",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "django/db/models/fields/json.py",
+          "line": 197,
+          "issue": "rhs_json_path += self.compile_json_path_final_key(final_key) is removed, but rhs_params.append(lhs_json_path + rhs_json_path) remains"
+        },
+        {
+          "file": "django/db/models/fields/json.py",
+          "line": 254,
+          "issue": "class HasKeyOrArrayIndex(HasKey): is removed, but its methods are still called"
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-matplotlib-25775",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [
+        "lib/matplotlib/backends/backend_cairo.py line 25 import removal",
+        "lib/matplotlib/backends/backend_cairo.py line 203 antialiased value suggestion",
+        "lib/matplotlib/text.py line 115 parameter removal",
+        "lib/matplotlib/text.py line 136 attribute removal",
+        "lib/matplotlib/text.py line 151 parameter removal",
+        "lib/matplotlib/text.py line 170 parameter removal"
+      ],
+      "actionability": 3
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-scikit-learn-12973",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-scikit-learn-13439",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "sklearn/pipeline.py",
+          "line": 199,
+          "issue": "Removed __len__ method without checking for potential usage in subclasses",
+          "suggestion": "Add a deprecation warning or a check for subclasses that may be using this method"
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-scikit-learn-14983",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [
+        {
+          "file": "sklearn/model_selection/_split.py",
+          "line": 2161,
+          "issue": "The cvargs dictionary is accessed without checking if it exists, potentially leading to a KeyError."
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-scikit-learn-25973",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "sklearn/feature_selection/_sequential.py",
+          "line": 259,
+          "issue": "Missing check for cv parameter in SequentialFeatureSelector"
+        },
+        {
+          "file": "sklearn/feature_selection/_sequential.py",
+          "line": 277,
+          "issue": "Missing check for tol parameter in SequentialFeatureSelector"
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-sphinx-11510",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-sphinx-7757",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-sphinx-8551",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "sphinx/util/docfields.py",
+          "line": 295,
+          "issue": "The 'env' parameter is removed from the make_xref call without checking if it is needed.",
+          "suggestion": "env=self.directive.state.document.settings.env"
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-sphinx-8595",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-sympy-15599",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        "line 46 type return issue",
+        "line 65 type checking issue"
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-sympy-23413",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [
+        {
+          "file": "sympy/polys/matrices/normalforms.py",
+          "line": 206,
+          "issue": "The variable k is not initialized before being used in the for loop.",
+          "suggestion": "k = 0"
+        },
+        {
+          "file": "sympy/polys/matrices/normalforms.py",
+          "line": 208,
+          "issue": "The break statement is not necessary and may cause unexpected behavior if the loop is not properly terminated.",
+          "suggestion": "Remove the break statement"
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-sympy-23534",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        "sympy/core/symbol.py:791",
+        "sympy/core/symbol.py:792"
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-sympy-24213",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 0,
+    "case_id": "swebench-xarray-6992",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "xarray/core/dataset.py",
+          "line": 4065,
+          "issue": "The PandasMultiIndex class is not properly handled in the reorder_levels method. It should replace the multi-index with a new one with dropped levels instead of just dropping the index.",
+          "suggestion": "Replace the multi-index with a new one with dropped levels."
+        },
+        {
+          "file": "xarray/core/dataset.py",
+          "line": 4091,
+          "issue": "The new_variables dictionary is not properly updated with the base variables.",
+          "suggestion": "Update the new_variables dictionary with the base variables."
+        },
+        {
+          "file": "xarray/core/indexes.py",
+          "line": 717,
+          "issue": "The PandasMultiIndex class is not properly handled in the reorder_levels method. It should replace the multi-index with a new one with dropped levels instead of just dropping the index.",
+          "suggestion": "Replace the multi-index with a new one with dropped levels."
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "001-flask-cli-key-quote",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "src/flask/cli.py",
+          "line": 795,
+          "issue": "Trailing comma in string literal",
+          "suggestion": ","
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "002-requests-json-decode-pickle",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        "The __reduce__ method is not defined, which is required for pickling the object."
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "003-requests-proxy-bypass-registry",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        "The finding contradicts the ground truth. The ground truth issue is that split(';') can yield empty strings (e.g., trailing/duplicate semicolons) which cause false bypass matches, so filtering them out IS the correct fix. The tool's claim that filter() is unnecessary is factually wrong and its suggested change would reintroduce the bug."
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "004-click-version-package-name",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [
+        {
+          "file": "src/click/decorators.py",
+          "line": 460,
+          "issue": "The comment about version detection based on the entry point name is outdated and incorrect."
+        }
+      ],
+      "actionability": 3
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "005-axios-progress-negative-clamp",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 3
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "006-express-content-length-transfer-encoding",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [
+        "Potential bug: The code does not handle the case where chunk is not a Buffer."
+      ],
+      "actionability": 4
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "007-lodash-omit-array-clone",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "008-axios-headers-set-cookie",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "009-cobra-completions-args-mutation",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "010-gin-runfd-file-leak",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "011-gorilla-mux-query-match",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "012-urfave-cli-empty-positional-arg",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "013-gson-jsonprimitive-hashcode",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [
+        {
+          "file": "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+          "line": 264,
+          "issue": "The method `hashOfDoubleValue` is no longer used and can be removed.",
+          "suggestion": "Remove the method and its call."
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "014-junit4-assumption-serialization",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "015-commons-lang-bitfield-sign-extension",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "src/main/java/org/apache/commons/lang3/BitField.java",
+          "line": 196,
+          "issue": "Inconsistent bitwise shift operator usage: >>> vs >>",
+          "suggestion": "Use a consistent bitwise shift operator throughout the method"
+        },
+        {
+          "file": "src/main/java/org/apache/commons/lang3/BitField.java",
+          "line": 212,
+          "issue": "Inconsistent bitwise shift operator usage: >>> vs >>",
+          "suggestion": "Use a consistent bitwise shift operator throughout the method"
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "016-flask-sql-injection-user-lookup",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "017-commons-lang-arrayutils-off-by-one",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "018-axios-missing-null-check-charset",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "lib/utils.js",
+          "line": 1039,
+          "issue": "The getResponseCharset function is exported, but its usage is not confirmed among 20 of the 40 files that import lib/utils.js."
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "019-gin-request-counter-race",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 3
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "020-express-hardcoded-webhook-secret",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        "The `normalizeType` function is called with a symbol named `stripe_key` which is not a string, but the function expects a string as its first argument.",
+        "The `generic_credential_assignment` function is called with a symbol named `stripe_key` which is not a string, but the function expects a string as its first argument.",
+        "The `signWebhookPayload` function is called with a secret that is not a string, but the function expects a string as its second argument.",
+        "The `parseExtendedQueryString` function has no confirmed callers among the 12 files that import lib/utils.js.",
+        "The `signWebhookPayload` function has no confirmed callers among the 12 files that import lib/utils.js."
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "021-requests-swallowed-close-exception",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [
+        {
+          "file": "src/requests/sessions.py",
+          "line": 911,
+          "issue": "The close_quietly method calls v.close() without checking if v is an adapter or not, which may raise an AttributeError if it's not."
+        },
+        {
+          "file": "src/requests/sessions.py",
+          "line": 914,
+          "issue": "The close_quietly method calls v.close() without checking if v is an adapter or not, which may raise an AttributeError if it's not."
+        }
+      ],
+      "actionability": 3
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-astropy-14309",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 3
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-django-11095",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-django-11999",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-django-12155",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "django/contrib/admindocs/utils.py",
+          "line": 21,
+          "issue": "The function get_view_name is not imported correctly in the trim_docstring function call."
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-django-12262",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-django-12663",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        "Potential FieldError raised when select has more than one element"
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-django-13279",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "django/contrib/sessions/backends/base.py",
+          "line": 108,
+          "issue": "The RemovedInDjango40Warning comment is not removed, but the code that triggers it is removed. This may cause confusion or errors if the warning is not properly handled."
+        },
+        {
+          "file": "django/contrib/sessions/backends/base.py",
+          "line": 124,
+          "issue": "The _legacy_decode method is not removed, but the warning comment suggests it will be removed in Django 40. This may cause confusion or errors if the method is not properly handled."
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-django-13670",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "django/utils/dateformat.py",
+          "line": 325,
+          "issue": "The comment for the y method is outdated and does not match the new implementation."
+        },
+        {
+          "file": "django/utils/dateformat.py",
+          "line": 327,
+          "issue": "The comment for the Y method is missing a description of the format."
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-django-14434",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "django/db/backends/base/schema.py",
+          "line": 1253,
+          "issue": "The Expressions class uses mutation operations (append) which may not be deterministic."
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-django-15503",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "django/db/models/fields/json.py",
+          "line": 197,
+          "issue": "rhs_json_path += self.compile_json_path_final_key(final_key) is removed, but rhs_params.append(lhs_json_path + rhs_json_path) remains"
+        },
+        {
+          "file": "django/db/models/fields/json.py",
+          "line": 254,
+          "issue": "class HasKeyOrArrayIndex(HasKey): is removed, but its methods are still called"
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-matplotlib-25775",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [
+        {
+          "file": "lib/matplotlib/backends/backend_cairo.py",
+          "line": 25,
+          "issue": "The import of `matplotlib` is not necessary and can be removed."
+        },
+        {
+          "file": "lib/matplotlib/text.py",
+          "line": 115,
+          "issue": "The parameter `antialiased` is being removed from the function signature."
+        },
+        {
+          "file": "lib/matplotlib/text.py",
+          "line": 136,
+          "issue": "The attribute `_antialiased` is being removed from the class."
+        },
+        {
+          "file": "lib/matplotlib/text.py",
+          "line": 151,
+          "issue": "The parameter `antialiased` is being removed from the function signature."
+        },
+        {
+          "file": "lib/matplotlib/text.py",
+          "line": 170,
+          "issue": "The parameter `antialiased` is being removed from the function signature."
+        }
+      ],
+      "actionability": 3
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-scikit-learn-12973",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-scikit-learn-13439",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "sklearn/pipeline.py",
+          "line": 199,
+          "issue": "Removed __len__ method without checking for potential usage in subclasses",
+          "suggestion": "Add a deprecation warning or a check for subclasses that may be using this method"
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-scikit-learn-14983",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [
+        {
+          "file": "sklearn/model_selection/_split.py",
+          "line": 2161,
+          "issue": "The cvargs dictionary is accessed without checking if it exists, potentially leading to a KeyError."
+        }
+      ],
+      "actionability": 3
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-scikit-learn-25973",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "sklearn/feature_selection/_sequential.py",
+          "line": 259,
+          "issue": "Missing check for cv parameter in SequentialFeatureSelector",
+          "suggestion": "Add check_cv(self.cv, y, classifier=is_classifier(self.estimator))"
+        },
+        {
+          "file": "sklearn/feature_selection/_sequential.py",
+          "line": 277,
+          "issue": "Missing check for tol parameter in SequentialFeatureSelector",
+          "suggestion": "Add check for tol < 0 and self.direction == 'forward'"
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-sphinx-11510",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-sphinx-7757",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-sphinx-8551",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        "The 'env' parameter is removed from the make_xref call without checking if it is needed."
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-sphinx-8595",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-sympy-15599",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "sympy/core/mod.py",
+          "line": 46,
+          "issue": "The return type of the function doit(p, q) is not specified.",
+          "suggestion": "return (p % q)"
+        },
+        {
+          "file": "sympy/core/mod.py",
+          "line": 65,
+          "issue": "The type of the variable d is not checked before it is used in the expression p - d*q.",
+          "suggestion": "if type(d) is int:"
+        }
+      ],
+      "actionability": 1
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-sympy-23413",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "hit",
+      "false_positives": [
+        {
+          "file": "sympy/polys/matrices/normalforms.py",
+          "line": 206,
+          "issue": "The variable k is not initialized before being used in the for loop.",
+          "suggestion": "k = 0"
+        },
+        {
+          "file": "sympy/polys/matrices/normalforms.py",
+          "line": 208,
+          "issue": "The break statement is not necessary and may cause unexpected behavior if the loop is not properly terminated.",
+          "suggestion": "Remove the break statement"
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-sympy-23534",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "sympy/core/symbol.py",
+          "line": 791,
+          "issue": "Potential mutation of the result list without checking if it's a mutable type",
+          "suggestion": "result.append(symbols(name, **args)) should be result.append(symbols(name, cls=cls, **args))"
+        },
+        {
+          "file": "sympy/core/symbol.py",
+          "line": 792,
+          "issue": "Potential mutation of the result list without checking if it's a mutable type",
+          "suggestion": "return type(names)(result)"
+        }
+      ],
+      "actionability": 2
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-sympy-24213",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 3
+    }
+  },
+  {
+    "run": 1,
+    "case_id": "swebench-xarray-6992",
+    "arm": "ollama_aletheore_compact",
+    "score": {
+      "recall": "miss",
+      "false_positives": [
+        {
+          "file": "xarray/core/dataset.py",
+          "line": 4065,
+          "issue": "The PandasMultiIndex class is not properly handled in the reorder_levels method. It should replace the multi-index with a new one with dropped levels instead of just dropping the index."
+        },
+        {
+          "file": "xarray/core/dataset.py",
+          "line": 4091,
+          "issue": "The new_variables dictionary is not properly updated with the base variables."
+        },
+        {
+          "file": "xarray/core/indexes.py",
+          "line": 717,
+          "issue": "The PandasMultiIndex class is not properly handled in the reorder_levels method. It should replace the multi-index with a new one with dropped levels instead of just dropping the index."
+        }
+      ],
+      "actionability": 2
+    }
+  }
+]
