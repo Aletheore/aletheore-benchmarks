@@ -20,7 +20,9 @@
   <a href="#head-to-head-against-repowise">Head-to-head</a> ·
   <a href="#cost-to-get-to-a-searchable-index">Cost</a> ·
   <a href="#covering-the-files-a-pr-touches">PR coverage</a> ·
+  <a href="#pr-review--compact-evidence-vs-full-file-context">PR review</a> ·
   <a href="#explaining-code--how-does-x-work">Explaining code</a> ·
+  <a href="#deterministic-analysis-vs-bare-llm">Deterministic vs. LLM</a> ·
   <a href="#where-we-lose">Where we lose</a> ·
   <a href="#reproducing">Reproducing</a> ·
   <a href="#contents">Contents</a>
@@ -485,6 +487,52 @@ measured by the judge below, not by counting its tokens.
 
 </details>
 
+## PR review — compact evidence vs. full file context
+
+Flash Review (Aletheore's GitHub PR reviewer) can build its prompt two ways:
+`aletheore_context`, which includes the full raw content of every changed file
+alongside Aletheore's own evidence (blast radius, referenced symbols), or
+`aletheore_compact`, which drops the raw file dump and sends evidence alone.
+Four experiments across three models asked the same question: does dropping
+full file content actually cost review quality? Full experiment log,
+methodology, and every raw result in [`pr_review/README.md`](pr_review/README.md).
+
+The one that decided it: `gpt-5.6-luna`, the real primary production model,
+generating reviews under both arms; `deepseek-v4-flash` independently
+verifying every individual finding against the diff (ACCEPT / REJECT /
+UNCERTAIN), 3 full repeats of a 50-case mixed-language corpus.
+
+| Run | `aletheore_compact` verified-accept rate | `aletheore_context` verified-accept rate |
+|---|---|---|
+| Run 1 | **97.7%** (42/43) | 85.7% (36/42) |
+| Run 2 | **97.6%** (40/41) | 90.5% (38/42) |
+| Run 3 | **96.7%** (29/30) | 100% (27/27) — coverage artifact, see below |
+
+```mermaid
+xychart-beta
+    title "Verified-accept rate by run: compact vs. full-context evidence"
+    x-axis [Run 1, Run 2, Run 3]
+    y-axis "Verified-accept rate (%)" 80 --> 100
+    bar "aletheore_compact" [97.7, 97.6, 96.7]
+    bar "aletheore_context" [85.7, 90.5, 100]
+```
+
+Compact is flat and stable across all three runs; context swings 85.7% to
+100%. That apparent 100% is not context catching up — run 3's network
+failures happened to strip out exactly the harder cases that produced
+context's rejects and uncertains in the other two runs. Compact never
+underperformed context in any run. This holds up consistently with an
+earlier tie (0.527 vs. 0.522 recall) on a second production-grade model,
+DeepSeek V4 Flash — see `pr_review/README.md` for that run and for the
+original 50-case A/B where compact's real recall win (0.375 vs.
+0.290-0.301) came with its own real cost: the highest false-positive rate
+of the three arms tested, an open problem, not a resolved one.
+
+**Result: compact shipped as the actual production default**, not an
+experiment behind a flag — `scan_worker/jobs.py`'s `_run_flash_review` now
+deliberately never includes the raw file-content blob in the prompt.
+Cost for all 3 validation runs combined, real API pricing: **$0.9229**.
+
 ## Explaining code — "how does X work?"
 
 Blind LLM judge, 0-3, each question graded twice with the two systems' positions
@@ -638,6 +686,8 @@ paid plan.
 | `scripts/score_retrieval_matrix.py` | re-derives the "Locating code" and "Hosted embeddings" tables from `results/`, no API key |
 | `results/` | raw per-query output — recompute any number without an API key |
 | `results/det_vs_llm_*` | inputs, model outputs, and ground truth for the deterministic-analysis-vs-bare-LLM benchmark |
+| `pr_review/` | the Flash Review compact-vs-full-context A/B — 4 experiments, 3 models, full writeup in `pr_review/README.md` |
+| `pr_review/results/` | raw generation and verification output for every PR-review experiment run |
 | `scripts/det_vs_llm_*` | its runners — `det_vs_llm_exact_ground_truth.py` needs no API key |
 | `corpora.json` | pinned commits for all corpora |
 | `CORPUS_PLAN.md` | the 11-language programme: repos, procedure, cost, and what was rejected |
