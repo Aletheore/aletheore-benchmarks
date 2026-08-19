@@ -120,6 +120,7 @@ TypeScript are not, and the weak corpora were measured last, so the published
 average would have looked considerably better had we stopped at three languages.
 
 ```mermaid
+%%{init: {"xyChart": {"width": 1000, "height": 500}}}%%
 xychart-beta
     title "Top-1, general phrasing, by corpus - the spread the average hides"
     x-axis [gin, flask, serde, jq, gson, fmt, Slim, jekyll, zod, axios, AutoMapper, thrift]
@@ -273,12 +274,15 @@ truth as the table above - only the embedder changed, local `nomic-embed-text`
 for what changed server-side since the CLI checkout commit cited above.
 
 ```mermaid
+%%{init: {"xyChart": {"width": 1700, "height": 550}}}%%
 xychart-beta
     title "Top-1 change, hosted jina vs local nomic (points, +better -worse)"
-    x-axis [flask, gin, serde, Slim-gen, Slim-voc, guzzle-gen, guzzle-voc, jekyll-gen, jekyll-voc, zod-gen, zod-voc, gson-gen, gson-voc, axios-gen, axios-voc, jq-gen, jq-voc, fmt-gen, fmt-voc, AutoMapper-gen, AutoMapper-voc, thrift-gen, thrift-xlang]
+    x-axis [flask, gin, serde, Slim-g, Slim-v, guzzle-g, guzzle-v, jekyll-g, jekyll-v, zod-g, zod-v, gson-g, gson-v, axios-g, axios-v, jq-g, jq-v, fmt-g, fmt-v, AutoMapper-g, AutoMapper-v, thrift-g, thrift-x]
     y-axis "Δ top-1 (percentage points)" -10 --> 30
     bar [9.3, 6.7, 0.0, 26.6, -6.6, 0.0, 20.0, 0.0, 0.0, -6.7, -6.7, 6.7, 6.7, 0.0, 6.7, 0.0, 6.7, 6.7, 0.0, 6.6, 0.0, 13.3, 20.0]
 ```
+
+<sub>`-g` = general phrasing, `-v` = vocabulary phrasing, `thrift-x` = cross-language regime - see the corpus table below for the full names.</sub>
 
 **Mean: top-1 +5.0pp, MRR +0.049. 20 of 23 rows flat or better; 3 worse, all
 in either Slim's vocabulary regime or zod.**
