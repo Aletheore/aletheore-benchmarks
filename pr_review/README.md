@@ -234,10 +234,20 @@ Token/timing data, `results/mixed_repo_deepseek_v4_flash_r1.json`:
 Compact still shrinks the *input* side by ~6x, same shape as Experiment 2. But completion tokens are
 large across all three arms (11k-13k) almost independent of context strategy - this is DeepSeek V4
 Flash's reasoning-mode verbosity, a model-level trait Aletheore's context shaping does not fix (see
-the known limitation above - this is very likely fixable, just not applied in this v1 run). Real cost
-at DeepSeek's published rates ($0.14/$0.28 per 1M): compact ~$0.0041/review, context ~$0.0054/review,
-baseline ~$0.0058/review - compact still cheapest, but by ~25-30%, not the multiple seen against a
-model whose completion tokens actually shrink with less context.
+the known limitation above - this is very likely fixable, just not applied in this v1 run).
+
+**`deepseek-v4-flash` published token price** (`llm_cost.py`, verified 2026-07-23): **$0.14 / 1M input
+tokens, $0.28 / 1M output tokens.** Real cost per review at those rates:
+
+| arm | avg cost/review | vs. compact |
+|---|---|---|
+| `ollama_aletheore_compact` | **$0.0041** | - |
+| `ollama_aletheore_context` | $0.0054 | +32% |
+| `ollama_baseline` | $0.0058 | +41% |
+
+Compact is still cheapest, but by ~25-30% relative, not the multiple seen against a model whose
+completion tokens actually shrink with less context - the reasoning-mode bloat above eats most of the
+input-side savings.
 
 Blind judge (`deepseek-v4-pro`, same methodology as Experiment 2, 2 runs, 276/276 (case, arm, run)
 triples scored with 0 missing after retry): **run-to-run agreement 90.6% (125/138)**, notably higher
