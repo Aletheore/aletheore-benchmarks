@@ -160,6 +160,87 @@ Two consequences, both now practice here:
    Until questions come from outside, we cannot separate product weakness from
    question weakness on any weak corpus.
 
+## Two undisclosed reproducibility gaps, found by audit (2026-08-20)
+
+An independent pass re-ran the published retrieval numbers against their own
+committed source files, rather than trusting that "committed" meant "matches
+what's published." Two real gaps turned up that this repository's own
+methodology should have caught earlier:
+
+- **gin and serde did not reproduce.** `results/results_gin.json` and
+  `results/results_serde.json` carry no version tag in their filename (every
+  other corpus file does), and re-scoring them gave gin top-3 = 93.3% against
+  the published 100.0%, and serde top-1 = 46.7% against the published 53.3%.
+  Neither discrepancy was disclosed anywhere - unlike the flask, gson, and
+  automapper version-drift cases, which are.
+- **guzzle's general-regime row had no committed source at all.** Only
+  `results_guzzle_vocab_0.8.6.json` exists; there was never a
+  `results_guzzle_*.json` for the general regime. The published 20.0% top-1
+  for guzzle general was not reproducible from anything in this repository.
+
+Re-installing a clean `aletheore==0.8.11` in an isolated environment and
+re-running gin and serde against their pinned commits confirmed the
+committed files were simply stale, not that the published numbers were
+fabricated: a genuine fresh 0.8.11 run scores *higher* than the stale files
+on both corpora (gin top-3 100.0%, serde top-1 53.3% - both matching the
+original published table). The most likely explanation is the same one
+documented above for flask: the run that produced the published table was
+never fully committed to `results/`, only assembled from whatever local
+files existed at the time.
+
+**Practice change:** every row in the main retrieval table must now trace to
+one committed, script-scorable raw-rows file
+(`results/retrieval_raw_0813.json`, replacing the previous per-corpus,
+per-version file sprawl), the same discipline
+`results/retrieval_raw_jina_hosted.json` already followed for the hosted-
+embeddings comparison. A table entry with no such file behind it is not
+published.
+
+## zod regresses under 0.8.13 - found, not yet root-caused (2026-08-20)
+
+Confirming the 0.8.11 → 0.8.13 upgrade (see "Two undisclosed reproducibility
+gaps" above) meant re-running every corpus, not just the two that were known
+to be broken. Every corpus moved flat-to-better except one: zod fell off a
+cliff.
+
+| | 0.8.11 (published) | 0.8.13 (measured) | Δ |
+|---|---|---|---|
+| general top-1 | 20.0% | **0.0%** | -20.0pp |
+| general top-3 | 40.0% | 6.7% | -33.3pp |
+| vocabulary top-1 | 60.0% | **6.7%** | -53.3pp |
+| vocabulary top-3 | 73.3% | 40.0% | -33.3pp |
+
+This is not the same finding as "Why zod regresses" in the README's hosted-
+embeddings section (jina vs. local nomic, a 2-question shift within ordinary
+noise). This is nomic-vs-nomic, 0.8.11 vs. 0.8.13, and it is not noise - zod
+went from mid-pack to dead last among all 12 corpora, below even thrift's
+weakest regime.
+
+**What the misses look like**, read from `results/retrieval_raw_0813.json`
+(`zod/zod`): of 15 questions, 11 return no hit in the top 5 at all. Ground
+truth is consistently in `packages/zod/src/v4/core/*.ts`; the top-ranked
+result is consistently `packages/zod/src/v3/*.ts` (a legacy near-duplicate
+implementation) or `packages/resolution/src/index.ts` (a different
+subpackage entirely - the same sibling-module pollution this file already
+documents at 28% of zod's top-5 slots under 0.8.11, apparently worse now).
+
+**What's checked so far:**
+- Chunk count is stable: 2,395 chunks both under the hosted-jina comparison
+  run cited in the README and this fresh 0.8.13 index build. Whatever
+  changed, it is not gross re-chunking.
+- Retrieval is deterministic (re-ran zod's queries twice under 0.8.13,
+  byte-identical output) - not a flaky-embedder explanation.
+
+**What's not yet checked:** whether something in the 0.8.11 → 0.8.13 range
+changed ranking, ordering, or embedding behavior specifically for near-
+duplicate-heavy repositories (a `git log` between the two tags on the
+scanner/chunking/ranking path would be the next step), or whether this is
+existing near-duplicate crowding crossing a threshold for this specific
+corpus rather than a new defect. **Marked open. Not fixed. Not worked around
+in the published numbers** - the 0.8.13 table reports zod exactly as
+measured, including the loss to RepoWise this regression now causes (see
+README, "Where we lose").
+
 ## A published table that did not reproduce (corrected 2026-08-13)
 
 The first revision of this repository listed flask retrieval as **71.9% / 96.9%
