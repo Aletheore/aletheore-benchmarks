@@ -1,0 +1,506 @@
+{
+  "zod/zod": {
+    "rows": [
+      {
+        "id": "ts01",
+        "question": "Where does a value actually get run against a schema and its problems collected?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/parse.ts"
+        ],
+        "ranked_files": [
+          "packages/resolution/src/index.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/core/checks.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/zod/src/v3/types.ts",
+          "packages/bench/property-access.ts",
+          "packages/bench/lazy-box.ts"
+        ]
+      },
+      {
+        "id": "ts02",
+        "question": "Where is the base shape every schema type builds on defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/schemas.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/mini/schemas.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/core/json-schema-processors.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/zod/src/v4/core/util.ts",
+          "packages/zod/src/v4/core/json-schema.ts"
+        ]
+      },
+      {
+        "id": "ts03",
+        "question": "How are extra constraints like a minimum length attached to a type?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/checks.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/api.ts",
+          "packages/zod/src/v4/core/checks.ts",
+          "packages/zod/src/v4/core/util.ts",
+          "packages/zod/src/v4/core/zsf.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/classic/schemas.ts"
+        ]
+      },
+      {
+        "id": "ts04",
+        "question": "Where are the individual failure descriptions a validation can produce declared?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/errors.ts"
+        ],
+        "ranked_files": [
+          "packages/resolution/src/index.ts",
+          "packages/bench/instanceof.ts",
+          "packages/zod/src/v4/core/api.ts",
+          "packages/zod/src/v3/types.ts",
+          "packages/zod/src/v3/benchmarks/primitives.ts",
+          "packages/zod/src/v3/standard-schema.ts",
+          "packages/zod/src/v4/core/standard-schema.ts",
+          "scripts/fail-on-console.ts"
+        ]
+      },
+      {
+        "id": "ts05",
+        "question": "Where can descriptions be associated with a schema and looked up later?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/registries.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/to-json-schema.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/zod/src/v4/core/checks.ts",
+          "packages/zod/src/v4/core/api.ts",
+          "packages/zod/src/v3/types.ts",
+          "packages/zod/src/v4/core/standard-schema.ts"
+        ]
+      },
+      {
+        "id": "ts06",
+        "question": "Where are the patterns for well-known string formats kept?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/regexes.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/checks.ts",
+          "packages/zod/src/v4/core/api.ts",
+          "packages/zod/src/v4/core/json-schema-processors.ts",
+          "packages/zod/src/v4/mini/schemas.ts",
+          "packages/zod/src/v4/core/errors.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/core/zsf.ts",
+          "packages/zod/src/v4/classic/schemas.ts"
+        ]
+      },
+      {
+        "id": "ts07",
+        "question": "How is a schema turned into a portable specification document?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/json-schema-generator.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/to-json-schema.ts",
+          "packages/zod/src/v4/core/json-schema-processors.ts",
+          "packages/zod/src/v3/standard-schema.ts",
+          "packages/zod/src/v4/core/standard-schema.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/docs/app/llms.txt/route.ts"
+        ]
+      },
+      {
+        "id": "ts08",
+        "question": "Where is the vendor-neutral interface other libraries can consume implemented?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/standard-schema.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/standard-schema.ts",
+          "packages/zod/src/v4/core/api.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/classic/errors.ts",
+          "packages/zod/src/v3/types.ts",
+          "packages/zod/src/v3/standard-schema.ts"
+        ]
+      },
+      {
+        "id": "ts09",
+        "question": "Where are inputs converted to the expected type before checking rather than rejected?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/classic/coerce.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/standard-schema.ts",
+          "packages/zod/src/v4/core/errors.ts",
+          "packages/zod/src/v4/core/registries.ts",
+          "packages/zod/src/v3/types.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/zod/src/v4/mini/schemas.ts",
+          "packages/zod/src/v4/core/checks.ts",
+          "packages/zod/src/v4/locales/en.ts"
+        ]
+      },
+      {
+        "id": "ts10",
+        "question": "Where are date and time string formats defined as their own types?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/classic/iso.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/mini/iso.ts",
+          "packages/zod/src/v4/core/api.ts",
+          "packages/zod/src/v4/classic/iso.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/mini/schemas.ts",
+          "packages/zod/src/v4/core/json-schema-processors.ts",
+          "packages/zod/src/v3/types.ts"
+        ]
+      },
+      {
+        "id": "ts11",
+        "question": "Where is the user-facing type that gets chained with methods defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/classic/schemas.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/integration/fixtures/internal-types/index.ts",
+          "packages/zod/src/v4/locales/is.ts",
+          "packages/zod/src/v4/locales/no.ts",
+          "packages/zod/src/v4/locales/hy.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/core/json-schema-generator.ts",
+          "packages/tsc/generate.ts",
+          "scripts/fail-on-console.ts"
+        ]
+      },
+      {
+        "id": "ts12",
+        "question": "How does a specification document get turned back into a schema?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/classic/from-json-schema.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/classic/from-json-schema.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/resolution/src/index.ts",
+          "packages/zod/src/v4/core/to-json-schema.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/docs/app/llms.txt/route.ts",
+          "packages/zod/src/v4/core/registries.ts",
+          "packages/docs/components/scroller.tsx"
+        ]
+      },
+      {
+        "id": "ts13",
+        "question": "Where are library-wide settings such as the active language held?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/config.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/locales/hy.ts",
+          "packages/zod/src/v4/locales/be.ts",
+          "packages/zod/src/v4/classic/errors.ts",
+          "packages/zod/src/v4/locales/ru.ts",
+          "packages/docs/components/sidebar-item.tsx",
+          "packages/zod/src/v4/core/util.ts",
+          "packages/zod/src/v4/core/registries.ts",
+          "packages/zod/src/v4/mini/schemas.ts"
+        ]
+      },
+      {
+        "id": "ts14",
+        "question": "Where are the shared helpers the rest of the internals rely on?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/util.ts"
+        ],
+        "ranked_files": [
+          "packages/tsc/bench/lots-of-objects.ts",
+          "packages/zod/src/v4/mini/schemas.ts",
+          "packages/integration/fixtures/internal-types/index.ts",
+          "packages/zod/src/v3/external.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/zod/src/v4/core/errors.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/core/core.ts"
+        ]
+      },
+      {
+        "id": "ts15",
+        "question": "Where is everything the package exposes to importers gathered together?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/classic/external.ts"
+        ],
+        "ranked_files": [
+          "packages/bench/init.ts",
+          "packages/bench/object.ts",
+          "packages/resolution/test-resolution.ts",
+          "packages/docs/loaders/source.ts",
+          "packages/bench/error-handling.ts",
+          "packages/bench/libs.ts",
+          "packages/docs/pages/api/_og.tsx",
+          "packages/bench/jit-union.ts",
+          "packages/docs/components/accordion.tsx",
+          "packages/zod/src/v4/core/api.ts"
+        ]
+      }
+    ]
+  },
+  "zod/zod_vocab": {
+    "rows": [
+      {
+        "id": "vts01",
+        "question": "Where is zod's _parse defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/parse.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/parse.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/classic/parse.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/resolution/src/index.ts",
+          "packages/zod/src/v4/mini/schemas.ts",
+          "packages/treeshake/zod-mini-simple-object.ts",
+          "packages/zod/src/v3/ZodError.ts"
+        ]
+      },
+      {
+        "id": "vts02",
+        "question": "Where is zod's $ZodType defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/schemas.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/schemas.ts",
+          "play.ts",
+          "packages/treeshake/zod-full.ts",
+          "packages/treeshake/zod-boolean.ts",
+          "packages/zod/src/v4/core/api.ts",
+          "packages/treeshake/zod-object.ts",
+          "packages/treeshake/zod-string.ts",
+          "packages/treeshake/zod-mini-boolean.ts",
+          "packages/treeshake/zod-mini-object.ts"
+        ]
+      },
+      {
+        "id": "vts03",
+        "question": "Where is zod's $ZodCheck defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/checks.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/checks.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/core/api.ts",
+          "packages/zod/src/v4/mini/schemas.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/zod/src/v4/core/errors.ts"
+        ]
+      },
+      {
+        "id": "vts04",
+        "question": "Where is zod's $ZodIssueBase defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/errors.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v3/ZodError.ts",
+          "packages/zod/src/v4/core/errors.ts",
+          "packages/zod/src/v4/core/api.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/treeshake/zod-mini-simple-object.ts",
+          "packages/zod/src/v4/core/zsf.ts"
+        ]
+      },
+      {
+        "id": "vts05",
+        "question": "Where is zod's globalRegistry defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/registries.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/registries.ts",
+          "packages/zod/src/v4/core/core.ts",
+          "packages/zod/src/v4/core/api.ts",
+          "packages/treeshake/zod-full.ts",
+          "packages/treeshake/zod-object.ts",
+          "packages/treeshake/zod-boolean.ts",
+          "packages/treeshake/zod-string.ts",
+          "packages/treeshake/zod-mini-simple-object.ts"
+        ]
+      },
+      {
+        "id": "vts06",
+        "question": "Where is zod's uuid defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/regexes.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/mini/schemas.ts",
+          "packages/zod/src/v4/core/api.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/treeshake/zod-mini-simple-object.ts",
+          "packages/zod/src/v4/core/regexes.ts"
+        ]
+      },
+      {
+        "id": "vts07",
+        "question": "Where is zod's JSONSchemaGenerator defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/json-schema-generator.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/json-schema-generator.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/zod/src/v4/core/index.ts",
+          "packages/zod/src/v4/classic/from-json-schema.ts",
+          "play.ts",
+          "packages/treeshake/zod-string.ts",
+          "packages/treeshake/zod-object.ts",
+          "packages/treeshake/zod-full.ts"
+        ]
+      },
+      {
+        "id": "vts08",
+        "question": "Where is zod's StandardSchemaV1 defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/standard-schema.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v3/standard-schema.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/core/standard-schema.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/zod/src/v4/mini/schemas.ts",
+          "packages/zod/src/v4/core/errors.ts"
+        ]
+      },
+      {
+        "id": "vts09",
+        "question": "Where is zod's string defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/classic/coerce.ts"
+        ],
+        "ranked_files": [
+          "packages/treeshake/zod-string.ts",
+          "packages/zod/src/v4/core/core.ts",
+          "packages/zod/src/v3/ZodError.ts",
+          "packages/treeshake/zod-mini-string.ts",
+          "packages/treeshake/zod-mini-simple-object.ts",
+          "packages/treeshake/zod3-string.ts",
+          "packages/treeshake/valibot-string.ts",
+          "packages/zod/src/v4/core/schemas.ts"
+        ]
+      },
+      {
+        "id": "vts10",
+        "question": "Where is zod's datetime defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/classic/iso.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/classic/iso.ts",
+          "packages/zod/src/v4/mini/iso.ts",
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v3/benchmarks/datetime.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/zod/src/v4/core/api.ts",
+          "packages/zod/src/v4/core/regexes.ts",
+          "packages/zod/src/v3/ZodError.ts"
+        ]
+      },
+      {
+        "id": "vts11",
+        "question": "Where is zod's ZodString defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/classic/schemas.ts"
+        ],
+        "ranked_files": [
+          "packages/treeshake/zod-string.ts",
+          "packages/treeshake/zod-object.ts",
+          "packages/treeshake/zod-full.ts",
+          "packages/treeshake/zod-boolean.ts",
+          "packages/treeshake/zod-mini-simple-object.ts",
+          "packages/zod/src/v4/mini/schemas.ts",
+          "packages/treeshake/zod-mini-string.ts",
+          "packages/treeshake/zod3-string.ts",
+          "packages/treeshake/zod-mini-object.ts",
+          "packages/treeshake/zod3-full.ts"
+        ]
+      },
+      {
+        "id": "vts12",
+        "question": "Where is zod's fromJSONSchema defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/classic/from-json-schema.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/classic/from-json-schema.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "play.ts",
+          "packages/treeshake/zod-string.ts",
+          "packages/treeshake/zod-object.ts",
+          "packages/treeshake/zod-full.ts",
+          "packages/treeshake/zod-boolean.ts",
+          "packages/treeshake/zod-mini-boolean.ts"
+        ]
+      },
+      {
+        "id": "vts13",
+        "question": "Where is zod's globalConfig defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/config.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/config.ts",
+          "packages/zod/src/v4/core/core.ts",
+          "packages/zod/src/v4/classic/schemas.ts",
+          "packages/zod/src/v4/core/registries.ts",
+          "play.ts",
+          "packages/treeshake/zod-object.ts",
+          "packages/treeshake/zod-string.ts"
+        ]
+      },
+      {
+        "id": "vts14",
+        "question": "Where is zod's assertEqual defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/core/util.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/util.ts",
+          "packages/zod/src/v3/helpers/util.ts",
+          "packages/zod/src/v4/core/checks.ts",
+          "play.ts",
+          "packages/treeshake/zod-boolean.ts",
+          "packages/treeshake/zod-object.ts",
+          "packages/zod/src/v4/core/api.ts"
+        ]
+      },
+      {
+        "id": "vts15",
+        "question": "Where is zod's export defined?",
+        "ground_truth_files": [
+          "packages/zod/src/v4/classic/external.ts"
+        ],
+        "ranked_files": [
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v3/helpers/errorUtil.ts",
+          "play.ts",
+          "packages/zod/src/v4/core/api.ts",
+          "packages/treeshake/zod-object.ts",
+          "packages/treeshake/zod-full.ts",
+          "packages/zod/src/v3/helpers/enumUtil.ts",
+          "packages/treeshake/zod-string.ts",
+          "packages/treeshake/zod-boolean.ts"
+        ]
+      }
+    ]
+  }
+}
