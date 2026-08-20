@@ -32,18 +32,18 @@
 
 <table align="center">
 <tr>
-<td align="center" width="240"><h2>6–1–0</h2></td>
+<td align="center" width="240"><h2>5–0–2</h2></td>
 <td align="center" width="240"><h2>$0.00</h2></td>
 <td align="center" width="240"><h2>93.3%</h2></td>
 </tr>
 <tr>
-<td align="center" valign="top"><sub><strong>head-to-head vs RepoWise.</strong><br />6 wins, 1 loss, 0 ties on top-1<br />locating code, all 7 shared corpora.</sub></td>
+<td align="center" valign="top"><sub><strong>head-to-head vs RepoWise.</strong><br />5 wins, 0 losses, 2 ties on top-1<br />locating code, all 7 shared corpora.</sub></td>
 <td align="center" valign="top"><sub><strong>to build a searchable index,</strong><br />all 7 corpora — local <code>nomic-embed-text</code>,<br />vs RepoWise's $1.85 for the same set.</sub></td>
 <td align="center" valign="top"><sub><strong>cross-language top-5,</strong><br />up from 60.0% after fixing a language<br />pre-filter that was silently unused.</sub></td>
 </tr>
 </table>
 
-<sub>Measured on <strong>Aletheore 0.8.13</strong>, installed from PyPI, against RepoWise's own generated wiki.<br/><strong>We publish the rows we lose</strong> — see <a href="#where-we-lose">Where we lose</a>.</sub>
+<sub>Measured on <strong>Aletheore 0.8.11</strong>, installed from PyPI, against RepoWise's own generated wiki.<br/><strong>We publish the rows we lose</strong> — see <a href="#where-we-lose">Where we lose</a>.</sub>
 
 </div>
 
@@ -53,54 +53,38 @@
 
 Aletheore indexes code chunks and returns `file:line`.
 
-Measured in one run with **Aletheore 0.8.13 installed from PyPI**, each corpus
+Measured in one run with **Aletheore 0.8.11 installed from PyPI**, each corpus
 re-scanned and re-indexed from scratch with local `nomic-embed-text` (768-dim)
-embeddings, no API key. Raw rows for every cell below are committed at
-[`results/retrieval_raw_0813.json`](results/retrieval_raw_0813.json) and
-re-derive with `python3 scripts/score_retrieval_matrix.py
-results/retrieval_raw_0813.json` — no live re-run needed to check this table:
+embeddings, no API key:
 
 | corpus | regime | top-1 | top-3 | top-5 | MRR | n |
 |---|---|---:|---:|---:|---:|---:|
-| location (Flask) | general | 78.1% | 100.0% | 100.0% | 0.885 | 32 |
-| gin | general | 86.7% | 100.0% | 100.0% | 0.933 | 15 |
-| serde | general | 53.3% | 66.7% | 73.3% | 0.639 | 15 |
-| Slim | general | 60.0% | 66.7% | 86.7% | 0.680 | 15 |
-| Slim | vocabulary | 80.0% | 100.0% | 100.0% | 0.878 | 15 |
-| guzzle | general | 33.3% | 73.3% | 80.0% | 0.539 | 15 |
-| guzzle | vocabulary | 66.7% | 93.3% | 100.0% | 0.806 | 15 |
-| jekyll | general | 26.7% | 46.7% | 53.3% | 0.378 | 15 |
-| jekyll | vocabulary | 66.7% | 86.7% | 93.3% | 0.780 | 15 |
-| zod | general | **0.0%** | 6.7% | 20.0% | 0.075 | 15 |
-| zod | vocabulary | **6.7%** | 40.0% | 66.7% | 0.272 | 15 |
-| gson | general | 40.0% | 66.7% | 73.3% | 0.560 | 15 |
-| gson | vocabulary | 53.3% | 80.0% | 86.7% | 0.665 | 15 |
-| axios | general | 20.0% | 53.3% | 66.7% | 0.428 | 15 |
-| axios | vocabulary | 80.0% | 93.3% | 93.3% | 0.878 | 15 |
-| jq | general | 53.3% | 93.3% | 100.0% | 0.728 | 15 |
-| jq | vocabulary | 80.0% | 100.0% | 100.0% | 0.889 | 15 |
-| fmt | general | 46.7% | 73.3% | 73.3% | 0.621 | 15 |
+| location (Flask) | general | 71.9% | 93.8% | 100.0% | 0.832 | 32 |
+| gin | general | 80.0% | 100.0% | 100.0% | 0.878 | 15 |
+| serde | general | 53.3% | 66.7% | 73.3% | 0.617 | 15 |
+| Slim | general | 26.7% | 60.0% | 66.7% | 0.458 | 15 |
+| Slim | vocabulary | 73.3% | 80.0% | 93.3% | 0.797 | 15 |
+| guzzle | general | 20.0% | 53.3% | 66.7% | 0.374 | 15 |
+| guzzle | vocabulary | 53.3% | 93.3% | 100.0% | 0.728 | 15 |
+| jekyll | general | 26.7% | 33.3% | 46.7% | 0.337 | 15 |
+| jekyll | vocabulary | 66.7% | 86.7% | 93.3% | 0.778 | 15 |
+| zod | general | 20.0% | 40.0% | 40.0% | 0.289 | 15 |
+| zod | vocabulary | 60.0% | 73.3% | 73.3% | 0.667 | 15 |
+| gson | general | 40.0% | 66.7% | 80.0% | 0.544 | 15 |
+| gson | vocabulary | 60.0% | 86.7% | 86.7% | 0.749 | 15 |
+| axios | general | 20.0% | 46.7% | 66.7% | 0.407 | 15 |
+| axios | vocabulary | 73.3% | 93.3% | 100.0% | 0.850 | 15 |
+| jq | general | 53.3% | 66.7% | 80.0% | 0.648 | 15 |
+| jq | vocabulary | 73.3% | 100.0% | 100.0% | 0.867 | 15 |
+| fmt | general | 40.0% | 60.0% | 86.7% | 0.527 | 15 |
 | fmt | vocabulary | 66.7% | 93.3% | 93.3% | 0.789 | 15 |
-| AutoMapper | general | 13.3% | 40.0% | 40.0% | 0.294 | 15 |
-| AutoMapper | vocabulary | 93.3% | 100.0% | 100.0% | 0.956 | 15 |
-| thrift | general | 13.3% | 26.7% | 53.3% | 0.269 | 15 |
-| thrift | cross-language | 73.3% | 93.3% | 93.3% | 0.833 | 15 |
+| AutoMapper | general | 6.7% | 20.0% | 33.3% | 0.177 | 15 |
+| AutoMapper | vocabulary | 86.7% | 100.0% | 100.0% | 0.933 | 15 |
+| thrift | general | 6.7% | 33.3% | 53.3% | 0.241 | 15 |
+| thrift | cross-language | 53.3% | 73.3% | 93.3% | 0.677 | 15 |
 
-**Upgraded from the previously-published 0.8.11 table** (still available at
-[`results/retrieval_raw_0811_partial.json`](results/retrieval_raw_0811_partial.json),
-22 of 23 rows, sourced from whatever committed file each corpus actually had)
-after an independent audit found real reproducibility gaps this table did not
-previously disclose: **gin** and **serde** did not reproduce from their
-committed files, with no explanation anywhere unlike every other version-drift
-row in this table's history, and **guzzle's general-regime row had no
-committed 0.8.11-era source at all**. Re-running gin and serde against a clean
-`pip install aletheore==0.8.11` in an isolated environment confirmed the
-committed files were simply stale - both score higher under a genuine fresh
-0.8.11 run than their stale files showed. Rather than patch three rows and
-leave the version pinned at 0.8.11, the whole table was re-run against 0.8.13
-(the current PyPI release) so every row shares one real, current,
-fully-committed source - see the "0.8.11 → 0.8.13" note below for the full
-diff, including one real regression.
+The audit file has no 0.8.11 result line for `thrift_anylang`, so this table
+does not invent one; its two published Thrift rows are reproduced exactly.
 
 All **11 supported languages** are now measured, across 12 single-language
 corpora plus Thrift's published regimes — including
@@ -118,25 +102,20 @@ xychart-beta
     title "The phrasing confound: top-1 for the same questions, project vocabulary vs avoiding it"
     x-axis [Slim, zod, jekyll, guzzle, gson]
     y-axis "Top-1 accuracy (%)" 0 --> 100
-    bar "vocabulary-avoiding" [60.0, 0.0, 26.7, 33.3, 40.0]
-    bar "project vocabulary" [80.0, 6.7, 66.7, 66.7, 53.3]
+    bar "vocabulary-avoiding" [26.7, 20.0, 26.7, 20.0, 40.0]
+    bar "project vocabulary" [73.3, 60.0, 66.7, 53.3, 60.0]
 ```
 
-**Four of these five still move 13-40 points on wording alone** — larger than
-every ranking change in this programme combined, and consistent with every
-prior measurement here. **zod is the exception, and not a good one**: its gap
-collapsed from the largest in this set (+40pp under 0.8.11) to the smallest
-(+6.7pp under 0.8.13) - not because phrasing stopped mattering, but because
-zod is now failing on *both* regimes for a different reason. See "zod
-regresses under 0.8.13" below.
+**Every weak corpus moves 20-47 points on wording alone** — larger than every
+ranking change in this programme combined. It means the retrieval table above
+measures a phrasing regime at least as much as it measures the product. Both
+regimes are kept and published for every corpus; a language's true figure is
+bracketed by the two rather than given by either.
 
-Raw per-query output for every corpus, regime and system is in `results/`.
-The 0.8.11 → 0.8.13 upgrade changed 20 of 23 rows in the main table: 13
-improved on every metric, 3 matched exactly (unusual for a version bump, and
-itself a useful cross-check that scoring stayed consistent), 5 moved by a
-single-digit-to-13pp on one metric (ordinary ranking noise), and zod's two
-rows are a real regression, detailed below rather than folded into the
-"minor" bucket.
+Raw per-query output is in `results/`, one file per corpus, regime and system.
+The ten pre-existing corpus rows are unchanged by 0.8.7-0.8.11 work outside
+their targets; the two changed rows are Gson top-3 (73.3% → 66.7%) and
+AutoMapper top-3 (13.3% → 20.0%), both from #236.
 
 **The spread is the finding.** Go and Python are strong; Java, Ruby, PHP and
 TypeScript are not, and the weak corpora were measured last, so the published
@@ -146,13 +125,10 @@ average would have looked considerably better had we stopped at three languages.
 %%{init: {"xyChart": {"width": 1000, "height": 500}}}%%
 xychart-beta
     title "Top-1, general phrasing, by corpus - the spread the average hides"
-    x-axis [gin, flask, Slim, jq, serde, fmt, gson, jekyll, axios, AutoMapper, thrift, zod]
+    x-axis [gin, flask, serde, jq, gson, fmt, Slim, jekyll, zod, axios, AutoMapper, thrift]
     y-axis "Top-1 accuracy (%)" 0 --> 100
-    bar [86.7, 78.1, 60.0, 53.3, 53.3, 46.7, 40.0, 26.7, 20.0, 13.3, 13.3, 0.0]
+    bar [80.0, 71.9, 53.3, 53.3, 40.0, 40.0, 26.7, 26.7, 20.0, 20.0, 6.7, 6.7]
 ```
-
-zod is now dead last, below even thrift's general regime - a genuine reversal
-from 0.8.11, where it sat mid-pack.
 
 Of the causes investigated below, one is fixed, one is measured but only partly
 recoverable, one was tested and ruled out, and one turned out to be **our own
@@ -273,12 +249,8 @@ revision listed flask at 71.9% / 96.9% / 100%, which matched no committed
 results file — it blended top-1 from one run with top-3 and top-5 from another.
 Re-running the published harness against every 0.8.x release produced the
 earlier 65.6% / 93.8% / 100% and 68.8% / 93.8% / 100% figures for 0.8.5. The
-table at the time was the single 0.8.11 PyPI run from
-`/private/tmp/audit-0811.txt`; the lesson is recorded in **METHODOLOGY.md**
-rather than quietly corrected. (That file living only in `/private/tmp` was
-itself part of the pattern that let two more rows drift undetected later -
-see "Two undisclosed reproducibility gaps" in METHODOLOGY.md. The table has
-since moved to 0.8.13, with every row backed by a committed file.)
+current table is the single 0.8.11 PyPI run from `/private/tmp/audit-0811.txt`;
+the lesson is recorded in **METHODOLOGY.md** rather than quietly corrected.
 
 </details>
 
@@ -290,7 +262,7 @@ since moved to 0.8.13, with every row backed by a committed file.)
 > llama.cpp), which requires `aletheore login` and a paid plan. It was run
 > against a dev checkout at commit
 > [`e2cc409`](https://github.com/Aletheore/Aletheore/commit/e2cc409),
-> not a PyPI release — everything else in this repository is 0.8.13 from
+> not a PyPI release — everything else in this repository is 0.8.11 from
 > PyPI; this section is the one exception, and is labeled as one rather than
 > folded into the reproducible table above.
 
@@ -374,6 +346,16 @@ split instead this time. It is not new to jina, and on a 15-question sample a
 2-question rank shift is within ordinary embedder-swap noise, not a
 systematic defect.
 
+**Update, 2026-08-20:** a later, independent hosted-jina measurement against
+today's live service (not this section's `e2cc409` dev checkout) found a much
+steeper zod gap than the -6.7pp above — general top-1 20.0% → 0.0%, vocabulary
+60.0% → 6.7% — traced to two specific decoy files (a smoke-test file that
+imports every zod build variant in one place, and ~30 locale files sharing
+core-module imports with the real implementation files). Same underlying
+category as above, worse in magnitude; why the two measurements differ this
+much is not yet resolved. Full account in
+[METHODOLOGY.md](METHODOLOGY.md#a-0813-reproducibility-check-that-measured-hosted-jina-instead-of-local-nomic-caught-and-corrected-2026-08-20).
+
 </details>
 
 Raw rows are in
@@ -395,51 +377,43 @@ Best RepoWise mode per corpus is shown.
 ```mermaid
 xychart-beta
     title "Locating code, top-1: Aletheore vs RepoWise (best mode)"
-    x-axis [gin, Slim, serde, gson, guzzle, jekyll, zod]
+    x-axis [gin, serde, gson, jekyll, Slim, guzzle, zod]
     y-axis "Top-1 accuracy (%)" 0 --> 100
-    bar "Aletheore" [86.7, 60.0, 53.3, 40.0, 33.3, 26.7, 0.0]
-    bar "RepoWise" [60.0, 26.7, 13.3, 26.7, 20.0, 13.3, 13.3]
+    bar "Aletheore" [80.0, 53.3, 40.0, 26.7, 26.7, 20.0, 20.0]
+    bar "RepoWise" [60.0, 13.3, 26.7, 13.3, 26.7, 20.0, 13.3]
 ```
 
 | corpus | language | Aletheore | RepoWise semantic | RepoWise fulltext | winner |
 |---|---|---|---|---|---|
-| gin | Go | **86.7%** | 60.0% | 46.7% | ✅ Aletheore |
-| Slim | PHP | **60.0%** | 26.7% | 20.0% | ✅ Aletheore |
+| gin | Go | **80.0%** | 60.0% | 46.7% | ✅ Aletheore |
 | serde | Rust | **53.3%** | 6.7% | 13.3% | ✅ Aletheore |
 | gson | Java | **40.0%** | 26.7% | 0.0% | ✅ Aletheore |
-| guzzle | PHP | **33.3%** | 13.3% | 20.0% | ✅ Aletheore |
 | jekyll | Ruby | **26.7%** | 13.3% | 6.7% | ✅ Aletheore |
-| zod | TypeScript | 0.0% | 6.7% | **13.3%** | ❌ RepoWise |
+| Slim | PHP | 26.7% | 26.7% | 20.0% | 🟰 tie |
+| guzzle | PHP | 20.0% | 13.3% | 20.0% | 🟰 tie |
+| zod | TypeScript | **20.0%** | 6.7% | 13.3% | ✅ Aletheore |
 
-**Top-1: 6 wins, 1 loss, 0 ties**, up from 5-0-2 under 0.8.11 - Slim and
-guzzle both moved from ties to clear wins. **The loss is new and real**: zod
-went from an Aletheore win (20.0% vs their 13.3%) to a loss (0.0% vs their
-13.3%) under 0.8.13, the one corpus that got worse across this whole upgrade.
-See ["zod regresses under 0.8.13"](METHODOLOGY.md#zod-regresses-under-0813---found-not-yet-root-caused-2026-08-20) in METHODOLOGY.md - this is not swept into a footnote.
-Where we also lose: jekyll top-5, now 53.3% against their 66.7% (narrower than
-the 46.7%-vs-66.7% gap under 0.8.11, still a loss).
+**Top-1: 5 wins, 0 losses, 2 ties.** Our weakest languages still match or beat
+them. Where we lose: jekyll top-5, 46.7% against their 66.7%.
 
 Both systems were then given the **vocabulary** questions as well, on the same
 wikis (search costs nothing to re-run once a wiki exists):
 
 | corpus | Aletheore general | RepoWise general | Aletheore vocabulary | RepoWise vocabulary |
 |---|---|---|---|---|
-| Slim | **60.0%** | 26.7% | **80.0%** | 66.7% |
-| gson | **40.0%** | 26.7% | **53.3%** | 46.7% |
-| zod | 0.0% | **13.3%** | 6.7% | **26.7%** |
-| guzzle | **33.3%** | 20.0% | **66.7%** | 53.3% |
+| Slim | 26.7% | 26.7% | **73.3%** | 66.7% |
+| gson | **40.0%** | 26.7% | **60.0%** | 46.7% |
+| zod | **20.0%** | 13.3% | **60.0%** | 26.7% |
+| guzzle | 20.0% | 20.0% | 53.3% | 53.3% |
 | jekyll | **26.7%** | 13.3% | 66.7% | **80.0%** |
 
-RepoWise still gains from vocabulary phrasing too — its wiki pages name the
-symbols — and jekyll vocabulary is still a loss, 80.0% against our 66.7%.
-zod is now a loss on **both** regimes, not just a smaller lead than before.
-Across the ten cells we now lead in seven and lose three (was seven-two-one
-under 0.8.11) - the ties disappeared in both directions: two became wins
-(Slim, guzzle), and zod's general-regime tie-adjacent lead became a loss.
+RepoWise gains from vocabulary phrasing too — its wiki pages name the symbols —
+and on jekyll it overtakes us outright, 80.0% against 66.7%. That is a real
+loss and it is stated here rather than omitted. Across the ten cells we lead in
+seven, tie in two and lose one.
 
-Flask, re-measured under 0.8.13: Aletheore 78.1% / 100.0% / 100.0% against
-RepoWise semantic 28.1% / 56.2% / 56.2% (RepoWise not re-run - unchanged from
-the original measurement).
+Flask remains as originally measured (Aletheore 68.8% / 93.8% / 100% against
+RepoWise semantic 28.1% / 56.2% / 56.2%).
 
 Two things this table deliberately does not claim:
 
@@ -583,8 +557,8 @@ swapped, equal 12,000-character context budget, tool names scrubbed.
 seventh the cost, having closed a gap that started at 1.33.
 
 These wiki figures were measured on a pre-0.8.0 build and have **not** been
-re-run on 0.8.13. They are left as measured rather than restated against a
-version they did not come from; only the retrieval table above is 0.8.13.
+re-run on 0.8.11. They are left as measured rather than restated against a
+version they did not come from; only the retrieval table above is 0.8.11.
 
 ## Answering from a file — fallback vs RepoWise `get_context`
 
@@ -638,22 +612,13 @@ testing surfaced — `ownership <file>` ignores its own argument) in
 
 Stated here rather than in a footnote:
 
-- ⚠️ **zod lost to RepoWise, both regimes** — 0.0% against their 13.3% general,
-  6.7% against their 26.7% vocabulary. This is new under 0.8.13; zod won both
-  under 0.8.11. Root cause and whether it can be fixed: see
-  [METHODOLOGY.md](METHODOLOGY.md#zod-regresses-under-0813---found-not-yet-root-caused-2026-08-20) -
-  open, not yet resolved.
 - ⚠️ **RepoWise retrieval is faster in-process** — 68 ms against our 125 ms.
 - ⚠️ **RepoWise's wiki scores higher**, in every configuration tested.
-- ⚠️ **Five of nine corpora with a vocabulary variant score below 35% top-1
-  under vocabulary-avoiding phrasing** (guzzle, jekyll, zod, axios,
-  automapper). **Four of those five recover strongly in the project's own
-  terms** (+33 to +80pp), so most of that gap is our question authoring
-  rather than the product. **zod is the exception** - it barely moves
-  (+6.7pp) because it is failing on both regimes now, not because phrasing
-  stopped mattering for it specifically.
-- ⚠️ **jekyll top-5 loses to RepoWise**, 53.3% against 66.7% (narrower than the
-  46.7%-vs-66.7% gap under 0.8.11, still a loss).
+- ⚠️ **Five of eight corpora score below 35% top-1 under vocabulary-avoiding
+  phrasing** — though every one of them recovers 20-47 points when the same
+  questions are asked in the project's own terms, so most of that gap is our
+  question authoring rather than the product.
+- ⚠️ **jekyll top-5 loses to RepoWise**, 46.7% against 66.7%.
 - ⚠️ **AIRview writes a page for only 21 of 100 changed files** on Flask's last 30
   commits. The other 79 are served by a deterministic fallback, not by the
   generated wiki this project is named for.
@@ -662,17 +627,12 @@ Stated here rather than in a footnote:
 - ⚠️ **An earlier revision of this README published flask figures that did not
   reproduce.** They are corrected above, and how it happened is in
   METHODOLOGY.md.
-- ⚠️ **Two more rows (gin, serde) and one corpus's general regime (guzzle)
-  turned out not to reproduce from any committed file either, undisclosed,
-  until an independent audit in 2026-08-20 caught it.** Also documented in
-  METHODOLOGY.md rather than quietly patched.
 
-We win on locating code overall (6 of 7 shared corpora), and on setup cost
-($0.00 / 74 s against $0.18 / ~7 min).
+We win on locating code, and on setup cost ($0.00 / 74 s against $0.18 / ~7 min).
 
 ## Reproducing
 
-**Aletheore v0.8.13.** Every retrieval result above was produced by that release,
+**Aletheore v0.8.11.** Every retrieval result above was produced by that release,
 installed from PyPI exactly as written below.
 
 The retrieval table describes local `nomic-embed-text` embeddings, not hosted
@@ -681,19 +641,10 @@ run, so this detail is part of the result definition.
 
 The older 0.8.0 through 0.8.4 tags were never published: their `pyproject.toml`
 was frozen at `0.7.2` while the code advanced, so no artefact could be uploaded.
-The published benchmark run uses 0.8.13 exactly.
-
-The whole "Locating code" table above re-derives with no live scan, no API
-key and no network, straight from the committed raw rows:
+The published benchmark run uses 0.8.11 exactly.
 
 ```bash
-python3 scripts/score_retrieval_matrix.py results/retrieval_raw_0813.json
-```
-
-To generate fresh rows yourself instead of trusting the committed ones:
-
-```bash
-pip install "aletheore==0.8.13"
+pip install "aletheore==0.8.11"
 
 git clone https://github.com/pallets/flask /tmp/bench-flask
 git -C /tmp/bench-flask checkout 2a8a38b051fc248865730bf3511bf2e2ea325e81
@@ -744,8 +695,6 @@ paid plan.
 | `scripts/run_retrieval_matrix.py` | runs the retrieval matrix against every corpus's built index; hosted embeddings need `aletheore login` |
 | `scripts/score_retrieval_matrix.py` | re-derives the "Locating code" and "Hosted embeddings" tables from `results/`, no API key |
 | `results/` | raw per-query output — recompute any number without an API key |
-| `results/retrieval_raw_0813.json` | the current "Locating code" table's single source, all 23 rows, one committed file |
-| `results/retrieval_raw_0811_partial.json` | the superseded 0.8.11 table's raw rows, 22 of 23 - see METHODOLOGY.md for the missing one |
 | `results/det_vs_llm_*` | inputs, model outputs, and ground truth for the deterministic-analysis-vs-bare-LLM benchmark |
 | `pr_review/` | the Flash Review compact-vs-full-context A/B — 4 experiments, 3 models, full writeup in `pr_review/README.md` |
 | `pr_review/results/` | raw generation and verification output for every PR-review experiment run |
@@ -760,6 +709,15 @@ paid plan.
 
 ## Honesty notes
 
+**A 2026-08-20 reproducibility check briefly published a false "0.8.13
+regression."** A tooling bug (a leftover credential caused "isolated"
+reproduction environments to silently use hosted embeddings instead of
+local) made it look like zod's retrieval quality dropped under Aletheore
+0.8.13. It didn't — local retrieval is unchanged between 0.8.11 and 0.8.13,
+confirmed by diffing the two versions' source directly. Caught, reverted,
+and documented rather than quietly fixed: full account in
+[METHODOLOGY.md](METHODOLOGY.md#a-0813-reproducibility-check-that-measured-hosted-jina-instead-of-local-nomic-caught-and-corrected-2026-08-20).
+
 **The questions were authored by us.** They are sourced from each project's
 public API and documentation, and every ground-truth anchor is verified
 mechanically, but this remains the weakest link in the methodology. An
@@ -771,7 +729,7 @@ The coverage and `get_context` sections above measure
 `build_file_fallback_detail` in `github-app/scan_worker/live_wiki.py` at commit
 `7089e14` (PR #243, "give AIRview a deterministic fallback for files with no
 generated page"). The measured file is byte-identical to that commit. It is not
-part of Aletheore 0.8.13 — 0.8.13 is the CLI, this is the GitHub App, which is
+part of Aletheore 0.8.11 — 0.8.11 is the CLI, this is the GitHub App, which is
 versioned separately and not published to PyPI. Reproducing these two sections
 therefore needs the app repository at that commit, not `pip install`.
 

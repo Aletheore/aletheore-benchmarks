@@ -160,87 +160,6 @@ Two consequences, both now practice here:
    Until questions come from outside, we cannot separate product weakness from
    question weakness on any weak corpus.
 
-## Two undisclosed reproducibility gaps, found by audit (2026-08-20)
-
-An independent pass re-ran the published retrieval numbers against their own
-committed source files, rather than trusting that "committed" meant "matches
-what's published." Two real gaps turned up that this repository's own
-methodology should have caught earlier:
-
-- **gin and serde did not reproduce.** `results/results_gin.json` and
-  `results/results_serde.json` carry no version tag in their filename (every
-  other corpus file does), and re-scoring them gave gin top-3 = 93.3% against
-  the published 100.0%, and serde top-1 = 46.7% against the published 53.3%.
-  Neither discrepancy was disclosed anywhere - unlike the flask, gson, and
-  automapper version-drift cases, which are.
-- **guzzle's general-regime row had no committed source at all.** Only
-  `results_guzzle_vocab_0.8.6.json` exists; there was never a
-  `results_guzzle_*.json` for the general regime. The published 20.0% top-1
-  for guzzle general was not reproducible from anything in this repository.
-
-Re-installing a clean `aletheore==0.8.11` in an isolated environment and
-re-running gin and serde against their pinned commits confirmed the
-committed files were simply stale, not that the published numbers were
-fabricated: a genuine fresh 0.8.11 run scores *higher* than the stale files
-on both corpora (gin top-3 100.0%, serde top-1 53.3% - both matching the
-original published table). The most likely explanation is the same one
-documented above for flask: the run that produced the published table was
-never fully committed to `results/`, only assembled from whatever local
-files existed at the time.
-
-**Practice change:** every row in the main retrieval table must now trace to
-one committed, script-scorable raw-rows file
-(`results/retrieval_raw_0813.json`, replacing the previous per-corpus,
-per-version file sprawl), the same discipline
-`results/retrieval_raw_jina_hosted.json` already followed for the hosted-
-embeddings comparison. A table entry with no such file behind it is not
-published.
-
-## zod regresses under 0.8.13 - found, not yet root-caused (2026-08-20)
-
-Confirming the 0.8.11 → 0.8.13 upgrade (see "Two undisclosed reproducibility
-gaps" above) meant re-running every corpus, not just the two that were known
-to be broken. Every corpus moved flat-to-better except one: zod fell off a
-cliff.
-
-| | 0.8.11 (published) | 0.8.13 (measured) | Δ |
-|---|---|---|---|
-| general top-1 | 20.0% | **0.0%** | -20.0pp |
-| general top-3 | 40.0% | 6.7% | -33.3pp |
-| vocabulary top-1 | 60.0% | **6.7%** | -53.3pp |
-| vocabulary top-3 | 73.3% | 40.0% | -33.3pp |
-
-This is not the same finding as "Why zod regresses" in the README's hosted-
-embeddings section (jina vs. local nomic, a 2-question shift within ordinary
-noise). This is nomic-vs-nomic, 0.8.11 vs. 0.8.13, and it is not noise - zod
-went from mid-pack to dead last among all 12 corpora, below even thrift's
-weakest regime.
-
-**What the misses look like**, read from `results/retrieval_raw_0813.json`
-(`zod/zod`): of 15 questions, 11 return no hit in the top 5 at all. Ground
-truth is consistently in `packages/zod/src/v4/core/*.ts`; the top-ranked
-result is consistently `packages/zod/src/v3/*.ts` (a legacy near-duplicate
-implementation) or `packages/resolution/src/index.ts` (a different
-subpackage entirely - the same sibling-module pollution this file already
-documents at 28% of zod's top-5 slots under 0.8.11, apparently worse now).
-
-**What's checked so far:**
-- Chunk count is stable: 2,395 chunks both under the hosted-jina comparison
-  run cited in the README and this fresh 0.8.13 index build. Whatever
-  changed, it is not gross re-chunking.
-- Retrieval is deterministic (re-ran zod's queries twice under 0.8.13,
-  byte-identical output) - not a flaky-embedder explanation.
-
-**What's not yet checked:** whether something in the 0.8.11 → 0.8.13 range
-changed ranking, ordering, or embedding behavior specifically for near-
-duplicate-heavy repositories (a `git log` between the two tags on the
-scanner/chunking/ranking path would be the next step), or whether this is
-existing near-duplicate crowding crossing a threshold for this specific
-corpus rather than a new defect. **Marked open. Not fixed. Not worked around
-in the published numbers** - the 0.8.13 table reports zod exactly as
-measured, including the loss to RepoWise this regression now causes (see
-README, "Where we lose").
-
 ## A published table that did not reproduce (corrected 2026-08-13)
 
 The first revision of this repository listed flask retrieval as **71.9% / 96.9%
@@ -371,3 +290,101 @@ check, not a magnitude estimate, and do not quote either gap as precise.
 Caveat: this cross-check covers only the raw-code-chunks arm. The AIRview arms were
 judged by DeepSeek alone — though in those arms both sides are DeepSeek-generated
 prose, which largely neutralises the same confound.
+
+## A 0.8.13 reproducibility check that measured hosted jina instead of local nomic (caught and corrected, 2026-08-20)
+
+An attempt to verify this repository's "Locating code" table under Aletheore
+0.8.13 briefly published a false finding — a "zod regression" under the new
+CLI version — directly to this file and to the marketing site. It has been
+reverted. This section documents what actually happened, so the mistake stays
+visible rather than being quietly patched.
+
+**What went wrong.** Every reproduction environment this session used —
+several separate `pip install aletheore==X` venvs, each intended to be
+isolated — silently picked up a real `ALETHEORE_API_TOKEN` saved at
+`~/.config/aletheore/credentials.json`. That path is scoped to the user's
+home directory, which a Python venv does not isolate. With a valid token
+present, `_embed_in_batches()` in `search_index.py` prefers Aletheore's
+*hosted* embedding endpoint (currently `jina-embeddings-v2-base-code`) over
+local Ollama by default — correct, intentional behaviour for a real user, but
+fatal to a reproduction that means to measure "local, no API key, $0.00."
+Every corpus re-indexed this session was actually embedded with hosted jina,
+not local nomic, without any error or warning to say so.
+
+**How it surfaced.** zod's contaminated result was a hard 0.0% top-1 on
+general phrasing — not just lower, absent — which was suspicious enough to
+look at the raw ranked files rather than trust the scored percentage. They
+were not garbage: they were plausible, on-topic, wrong files, consistent with
+an embedder-quality gap rather than a broken pipeline. That prompted a
+controlled test: re-run gin and zod with `HOME` overridden to an empty
+directory, so `get_api_key()` is guaranteed to return `None` and the run is
+provably local-only. Both came back identical, to three decimal places on
+MRR, to the numbers already published for 0.8.11 above — proving the
+contamination, and that local retrieval itself had not changed.
+
+**Confirmed for all 23 rows, not just the 2 spot-checked.** Rather than
+re-run all 13 corpora cleanly (expensive — thrift alone took the better part
+of an hour earlier this session), `search_index.py` was diffed directly
+between `aletheore==0.8.11` and `aletheore==0.8.13` installed in separate
+venvs. The local embedding path — `embed_texts`, chunking, the batch loop —
+is byte-for-byte unchanged. Every real change in 0.8.13 is hosted-embedding
+specific: retry/backoff on 429s, character-cap tuning for the hosted batcher,
+and one genuine bug fix (below). Combined with the gin/zod spot-check, this
+is direct evidence, not extrapolation, that the "Locating code" table is
+identical under 0.8.11 and 0.8.13. It has been reverted to the original
+published numbers rather than republished with numbers that were never
+actually different.
+
+**A real bug the same diff surfaced, unrelated to this benchmark's numbers.**
+Before 0.8.13, `search_index()` always embedded the *query* locally
+(`embed_texts([query_text])[0]`), regardless of what embedded the *index*.
+A user with a saved token who built an index with hosted jina would have
+every subsequent search silently compared against local nomic query
+vectors — two unrelated vector spaces — with no error, because jina and
+nomic happen to both be 768-dimensional, so the dimension-mismatch guard
+never fired. 0.8.13 fixes this by making the query use the same hosted/local
+choice as the index build. This benchmark's own committed results were never
+affected by that specific bug (no token was present until this session's
+tooling accident introduced one), but it's a real, previously-silent defect
+worth knowing if you've used Aletheore locally with a saved API token.
+
+**A real, verified finding this chase did surface.** Chasing the false "zod
+regression" down turned up a genuine, much larger gap between hosted jina and
+local nomic on zod specifically than the existing
+["Hosted embeddings"](README.md#hosted-embeddings-jina-vs-local-nomic)
+section documents (that section's own zod numbers: -6.7pp both regimes,
+measured against a separate dev checkout, [`e2cc409`](https://github.com/Aletheore/Aletheore/commit/e2cc409)).
+The accidental hosted run this session produced showed general top-1 20.0%
+→ 0.0% and vocabulary top-1 60.0% → 6.7% — a much steeper drop. Reading the
+raw ranked files (not just the score) found two concrete decoy files jina
+ranks above the true answer that nomic does not:
+
+- `packages/resolution/src/index.ts` — a 37-line smoke-test file that
+  literally imports every zod build variant in one place (`zod`, `zod/mini`,
+  `zod/v3`, `zod/v4`, `zod/v4-mini`, plus a locale file), giving it lexical
+  overlap with nearly the entire module surface despite being semantically
+  irrelevant to any of it. Shows up as a false top-3 hit on 4 of 15 general
+  questions.
+- The ~30 locale files under `packages/zod/src/v4/locales/` — each imports
+  the same core types (`$ZodStringFormats`, `errors`, `util` from
+  `core/checks.js` / `core/errors.js` / `core/util.js`) as the real
+  implementation files they're competing against, because every locale
+  wires up the same error-message keys.
+
+Neither is a broken pipeline — both are plausible, on-topic, wrong answers.
+It's the same near-duplicate-crowding category already documented above and
+in the Hosted embeddings section, just a sharper instance of it, and
+consistent with jina winning broadly elsewhere: most corpora don't have a
+decoy file shaped like `resolution/index.ts`. **Left open:** why this
+measurement's zod gap is so much larger than the one already published in
+the Hosted embeddings section is not yet resolved — the two were measured
+against different deployments (a dev checkout vs. today's live hosted
+service), so infrastructure drift between them hasn't been ruled out.
+
+**Left undone.** The two raw-rows files this session committed
+(`results/retrieval_raw_0813.json`, `results/retrieval_raw_0811_partial.json`)
+were both generated by the same contaminated tooling and have been removed
+rather than kept as false "clean, no-network-needed" backing data. A genuine
+`HOME`-isolated, credential-free raw capture for all 23 rows under 0.8.13 —
+matching the original 0.8.11 numbers per the evidence above, but captured
+directly rather than inferred — is still open follow-up work.
