@@ -1,0 +1,410 @@
+[
+  {
+    "id": "a01",
+    "q": "Explain the overall architecture of this codebase: what are the major layers and how do they relate?",
+    "aletheore": 2.8333333333333335,
+    "repowise": 1.3333333333333333,
+    "aletheore_raw": [
+      3,
+      2,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      3,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides a clear description of the three main layers (sansio core, WSGI runtime, public API/examples) with specific file references and explains how they relate.",
+    "why_r": "Focuses largely on CI/CD and repository tooling, and its Application layer description is cut off, leaving major gaps in explaining the framework's architectural layers and relationships."
+  },
+  {
+    "id": "a02",
+    "q": "How does a request flow through the system from the WSGI entry point to a returned response?",
+    "aletheore": 3.0,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Covers the core request flow with specifics: wsgi_app entry, request_context, full_dispatch_request, match_request, and finalize steps, enough for a correct answer.",
+    "why_r": "Mostly tangential material about logging and individual Request/Response classes, lacking the request dispatch pipeline and WSGI-to-response sequence."
+  },
+  {
+    "id": "a03",
+    "q": "Why is there a 'sansio' package, and what design problem does splitting it out solve?",
+    "aletheore": 1.6666666666666667,
+    "repowise": 2.6666666666666665,
+    "aletheore_raw": [
+      2,
+      2,
+      2,
+      2,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      1,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "repowise",
+      "aletheore",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "The material gives role descriptions and symbol listings but never explicitly explains the design problem that the sansio split solves, requiring the reader to infer the rationale from phrases like 'protocol-agnostic' and 'subclassed by the concrete WSGI Flask class'.",
+    "why_r": "The material explicitly explains that sansio holds everything not needing a request/response I/O cycle, with the WSGI-specific parts in the Flask subclass and a clear seam (NotImplementedError), directly answering why the split exists."
+  },
+  {
+    "id": "a04",
+    "q": "How does the framework keep per-request state isolated when several requests are handled concurrently?",
+    "aletheore": 3.0,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Directly explains per-request state via context locals, thread-local proxies, and the push/pop stack mechanics in ctx.py and globals.py, including copy_current_request_context for concurrent use.",
+    "why_r": "Mentions globals and context resolution only in passing, focusing mostly on request/response wrappers and architecture without explaining the isolation mechanism for concurrent requests."
+  },
+  {
+    "id": "a05",
+    "q": "What is the extension model \u2014 how do third-party packages hook into the framework's lifecycle?",
+    "aletheore": 2.3333333333333335,
+    "repowise": 0.8333333333333334,
+    "aletheore_raw": [
+      3,
+      3,
+      2,
+      2,
+      2,
+      2
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      0,
+      1
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "It covers the core extension mechanisms\u2014blueprints, request hooks, teardown, context processors, signals, setupmethod, and init_app\u2014with specific symbols from scaffold.py and examples.",
+    "why_r": "It focuses on Request/Response customization and a single tutorial blueprint, omitting the lifecycle hook and init_app mechanisms that define Flask's extension model."
+  },
+  {
+    "id": "a06",
+    "q": "How is configuration layered, and what is the order of precedence between the different sources?",
+    "aletheore": 1.3333333333333333,
+    "repowise": 0.0,
+    "aletheore_raw": [
+      2,
+      1,
+      1,
+      2,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides the configuration class and all loading methods (pyfile, envvar, object, mapping) but does not explicitly state the precedence order, leaving a minor gap.",
+    "why_r": "Describes dev-container and CI/CD files, which are unrelated to application configuration precedence in Flask."
+  },
+  {
+    "id": "a07",
+    "q": "Describe the error handling strategy: how do exceptions become HTTP responses, and where can users intervene?",
+    "aletheore": 1.0,
+    "repowise": 2.8333333333333335,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      2,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Mentions abort and signals but omits the central error-handler registration/dispatch mechanism, so a reader could not explain the full strategy.",
+    "why_r": "Explains handler registration, class/code aliasing, inheritance, blueprint scoping, wrapping, and propagation, directly answering both how exceptions become responses and where users intervene."
+  },
+  {
+    "id": "a08",
+    "q": "How does the templating integration work, and how does it stay aware of modular components?",
+    "aletheore": 2.8333333333333335,
+    "repowise": 1.3333333333333333,
+    "aletheore_raw": [
+      3,
+      2,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      3,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides concrete mechanisms such as DispatchingJinjaLoader iterating app/blueprint loaders, deferred blueprint template registrations, and jinja_loader, directly explaining templating integration and modular awareness.",
+    "why_r": "Focuses on test behavior and high-level overview, omitting the internal loader and blueprint registration details needed for a specific answer."
+  },
+  {
+    "id": "a09",
+    "q": "What is the session architecture, and what are the security trade-offs of the default implementation?",
+    "aletheore": 1.0,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Material provides only a high-level description of the default session interface with no detail on architecture or security trade-offs, alongside many unrelated modules.",
+    "why_r": "Material thoroughly explains the default secure cookie session architecture, including signing, expiration, cookie attributes, and security implications such as data being readable but tamper-evident."
+  },
+  {
+    "id": "a10",
+    "q": "How does the CLI discover and load the application, and why is it designed that way?",
+    "aletheore": 1.0,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Lists the key CLI functions and subsystem context but omits the actual discovery heuristics, FLASK_APP handling, and design rationale, so a reader could only sketch the answer.",
+    "why_r": "Provides a detailed walkthrough of app discovery and loading with explicit design rationale and specific mechanisms (locate_app, find_best_app, FlaskGroup lazy loading, FLASK_APP handling), sufficient for a precise answer."
+  },
+  {
+    "id": "a11",
+    "q": "How does the framework support async view functions on top of a synchronous WSGI core?",
+    "aletheore": 0.5,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Material describes the synchronous WSGI core and general framework architecture but never mentions async view support, asgiref, or coroutine wrapping, leaving the core question unanswered.",
+    "why_r": "Material explicitly details the optional asgiref dependency, lazy async_to_sync wrapping, and tests covering async routes, hooks, and views, which fully explains the bridging mechanism."
+  },
+  {
+    "id": "a12",
+    "q": "What are the main extension points for grouping and reusing sets of routes across projects?",
+    "aletheore": 3.0,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides comprehensive coverage of Blueprint and Scaffold APIs, registration mechanisms, and examples, fully enabling a specific answer.",
+    "why_r": "Focuses mainly on one blueprint example and includes unrelated content, leaving major gaps about the main extension points."
+  }
+]

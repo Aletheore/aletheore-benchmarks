@@ -1,0 +1,410 @@
+[
+  {
+    "id": "g01",
+    "q": "Explain the overall architecture of this codebase: what are the major components and how do they relate?",
+    "aletheore": 2.6666666666666665,
+    "repowise": 2.3333333333333335,
+    "aletheore_raw": [
+      3,
+      2,
+      3,
+      2,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      3,
+      1,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "repowise",
+      "tie",
+      "tie"
+    ],
+    "why_a": "Provides detailed subsystem descriptions with file-level specifics and the request flow, covering all major components and their relationships.",
+    "why_r": "Gives a high-level directory map and dependency graph but omits key components like adapters and the request lifecycle, leaving major gaps."
+  },
+  {
+    "id": "g02",
+    "q": "What is the main entry point, and what happens step by step when the primary operation runs?",
+    "aletheore": 3.0,
+    "repowise": 0.16666666666666666,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Covers the request lifecycle from entry point (lib/axios.js) through config merge, interceptors, transforms, dispatch, cancellation, and adapter selection with specific file references.",
+    "why_r": "Mostly describes configuration/CI files and low-level interceptor internals, lacking any coherent step-by-step account of the primary request operation."
+  },
+  {
+    "id": "g03",
+    "q": "How is this project's public API separated from its internal implementation, and why is it split that way?",
+    "aletheore": 2.1666666666666665,
+    "repowise": 2.6666666666666665,
+    "aletheore_raw": [
+      3,
+      1,
+      2,
+      2,
+      3,
+      2
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      1,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "tie",
+      "repowise",
+      "repowise",
+      "repowise",
+      "aletheore",
+      "repowise"
+    ],
+    "why_a": "It explicitly maps the public API surface (lib/axios.js, helpers, types) against internal subsystems (core engine, adapters, platform, build) and gives concrete reasons for each separation.",
+    "why_r": "It clearly distinguishes the public Application layer (index.js, types, package.json) as a fa\u00e7ade over internal Service/Core, with specific architectural rationale."
+  },
+  {
+    "id": "g04",
+    "q": "How does the codebase handle errors and exceptions, and where can a user intervene?",
+    "aletheore": 1.6666666666666667,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      2,
+      1,
+      2,
+      2,
+      2,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Covers AxiosError and cancellation with some specifics, but leaves the reader to infer exact error codes and how adapters/settle propagate errors, and gives only a general mention of interceptors.",
+    "why_r": "Provides deep detail on the AxiosError class (codes, from(), toJSON, redaction) and a concrete user intervention pattern via response interceptors, though it omits cancellation."
+  },
+  {
+    "id": "g05",
+    "q": "What is the configuration model, and how are settings resolved and layered?",
+    "aletheore": 3.0,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides the actual relevant files (defaults, mergeConfig, resolveConfig) with specifics on merge helpers and defaults as baseline, sufficient to explain layered resolution.",
+    "why_r": "Focuses mostly on version/environment config and only describes resolveConfig at a high level, missing the layered merge rules and instance/config precedence."
+  },
+  {
+    "id": "g06",
+    "q": "How is state managed across a single operation, and what keeps concurrent operations isolated?",
+    "aletheore": 1.5,
+    "repowise": 2.5,
+    "aletheore_raw": [
+      2,
+      1,
+      1,
+      1,
+      2,
+      2
+    ],
+    "repowise_raw": [
+      1,
+      2,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "aletheore",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Covers the request lifecycle with config merging, interceptor chains, adapter dispatch, and per-request cancellation signals, but lacks an explicit description of the per-operation promise-chain/state snapshot that isolates concurrent calls.",
+    "why_r": "Provides a detailed interceptor-manager internals and a high-level request flow, but omits per-operation cancellation/signal isolation and adapter-level state, leaving major gaps for a correct, specific answer."
+  },
+  {
+    "id": "g07",
+    "q": "What are the main extension points a third-party package would hook into?",
+    "aletheore": 1.5,
+    "repowise": 1.1666666666666667,
+    "aletheore_raw": [
+      1,
+      1,
+      2,
+      2,
+      2,
+      1
+    ],
+    "repowise_raw": [
+      0,
+      0,
+      1,
+      1,
+      3,
+      2
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Provides some architectural overview mentioning adapters and interceptors, but lacks concrete hook APIs and mostly focuses on low-level helpers.",
+    "why_r": "Describes public API layering and a utility function, but never identifies actual extension mechanisms like interceptors, adapters, or custom config."
+  },
+  {
+    "id": "g08",
+    "q": "How does this project handle I/O, and what abstractions sit between the core logic and the outside world?",
+    "aletheore": 3.0,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "It explicitly identifies the adapter layer as the I/O boundary, names HTTP/XHR/Fetch adapters, and explains transport selection and platform separation with specific file references.",
+    "why_r": "It focuses on utility functions and the public entry surface, mentioning adapters only in passing and providing no details on I/O handling or the adapter abstraction."
+  },
+  {
+    "id": "g09",
+    "q": "What are the most important data structures or types, and what invariants do they maintain?",
+    "aletheore": 1.5,
+    "repowise": 1.5,
+    "aletheore_raw": [
+      2,
+      1,
+      3,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      1,
+      2,
+      1,
+      2,
+      1,
+      2
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "repowise",
+      "tie",
+      "repowise"
+    ],
+    "why_a": "It catalogs the key TypeScript types (AxiosHeaders, AxiosRequestConfig, AxiosResponse, etc.) and their roles, but does not explicitly discuss the invariants they maintain, so a reader would need to infer them.",
+    "why_r": "It explains invariants around safe property access and type guards, but focuses on utility functions rather than the core data structures, leaving major gaps for the question."
+  },
+  {
+    "id": "g10",
+    "q": "How is the codebase tested, and what does the test structure reveal about its design?",
+    "aletheore": 1.0,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Material is fragmented, mixing production code with scattered test mentions (Vitest config, sandbox, a few test files) without a coherent picture of the overall test structure or its design implications.",
+    "why_r": "Provides a comprehensive, organized description of the test layer, key helpers, data flow, and architectural insights such as dual CJS/ESM support and hybrid real/mocked verification."
+  },
+  {
+    "id": "g11",
+    "q": "Which parts of this codebase are most tightly coupled, and where are the clean boundaries?",
+    "aletheore": 1.5,
+    "repowise": 2.6666666666666665,
+    "aletheore_raw": [
+      1,
+      1,
+      3,
+      1,
+      1,
+      2
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      1,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "aletheore",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Provides many subsystem and function descriptions but lacks a focused analysis of coupling or centrality, so an engineer cannot identify the most tightly coupled parts.",
+    "why_r": "Directly pinpoints the most tightly coupled components (HTTP adapter and its tests, type declarations) and clean boundaries between top-level directories."
+  },
+  {
+    "id": "g12",
+    "q": "If I needed to add a new feature to the core, which files would I touch and in what order?",
+    "aletheore": 3.0,
+    "repowise": 1.1666666666666667,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      2,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "System A thoroughly documents the core request engine's file roles and flow (Axios, mergeConfig, resolveConfig, AxiosHeaders, InterceptorManager, transformData, utils) with specific line numbers and a clear call sequence, enabling a precise file-touch order.",
+    "why_r": "System B gives a high-level repo map and points to lib/ but lacks the core pipeline details and any ordering of files to touch for a new core feature."
+  }
+]

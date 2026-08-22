@@ -74,6 +74,27 @@ airtight win on its own - but going from catastrophic to competitive on
 the identical corpus, questions, and RepoWise material is strong direct
 confirmation that the clustering bug, not the model, was the real cause.
 
+**Did the fix hurt any corpus that was already fine?** Checked directly,
+not assumed - re-scanned every corpus with the fix, which dropped cluster
+counts everywhere (flask 12->4, axios 71->27, fmt 32->11, jq 18->11 nearly
+unchanged since it had almost no test-file pollution to begin with), then
+fully re-ran the two most exposed to the change end-to-end:
+
+| corpus | before fix | after fix |
+|---|---|---|
+| flask | 1.88 vs 1.99 (tie) | 1.96 vs 1.75 (still a tie, slightly better) |
+| axios | 2.28 vs 1.61 (win, gap 0.67) | 2.12 vs 1.85 (win, gap 0.27) |
+
+axios's gap narrowed, but a meaningful part of that is judge noise, not a
+real change: RepoWise's own score moved 1.61->1.85 on **byte-identical
+material** between the two runs - this harness's own measured judge drift
+on identical bytes elsewhere is ~0.21 (`JUDGE_NOISE.md`), the same order
+of magnitude. AIRview's own score only moved 2.28->2.12. No corpus flipped
+from a win or tie into a loss. fmt and jq were checked at the cluster
+level only (not re-judged end-to-end) - jq is low-risk given its clusters
+barely changed; fmt's did shrink similarly to axios's and remains
+unverified end-to-end.
+
 **With automapper's fixed score, all 5 corpora average AIRview 2.04 vs
 RepoWise 1.76** - a real lead across five languages, not a toss-up, and
 considerably stronger than the single-Flask tie above suggested on its
