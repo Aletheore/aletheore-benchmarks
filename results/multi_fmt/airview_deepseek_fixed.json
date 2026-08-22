@@ -1,0 +1,1457 @@
+{
+  "subsystems": [
+    {
+      "subsystem_id": "0",
+      "name": "Core Format API",
+      "description": "Core Format API is the type-erased argument and buffered-output foundation that fmt's formatting entry points build on. It exists as a separate unit because the library needs one stable place to hold the polymorphic value model, format-spec parsing state, and output buffers that all higher-level formatters can reuse, so a formatter written for a custom type does not have to know whether output goes to a string, a container, or a FILE*. Control starts when format() packages arguments; dynamic_arg_list (include/fmt/args.h:43) and named_arg_store (include/fmt/base.h:2326) manage runtime and named arguments, while parse_context (include/fmt/base.h:842) tracks argument ids and buffer (include/fmt/base.h:1759) receives rendered chunks. The format engine then calls basic_format_arg::get or visit (include/fmt/base.h:2545 / :2504) to dispatch to a type's formatter; in compile mode compile_format_string (include/fmt/compile.h:385) turns the format string into a typed structure before rendering. It connects to chrono.h, color.h, ranges.h, std.h, and xchar.h, which add formatter specializations and wide-string entry points on top of this core.",
+      "files": [
+        {
+          "path": "include/fmt/args.h",
+          "role": "Stores format arguments in a type-erased, dynamically sized list for runtime format calls. It is the entry point for named and positional arguments that cannot be resolved at compile time.",
+          "key_symbols": [
+            {
+              "name": "dynamic_arg_list",
+              "line": 43,
+              "explanation": "Owns the runtime argument list; users push values of any formattable type and the list keeps them alive for the duration of formatting."
+            },
+            {
+              "name": "node",
+              "line": 38,
+              "explanation": "Base node in the intrusive linked list used by dynamic_arg_list; each pushed argument is a typed_node chained through it."
+            },
+            {
+              "name": "typed_node",
+              "line": 44,
+              "explanation": "Holds one dynamically added argument's value and links it to the list."
+            },
+            {
+              "name": "need_copy",
+              "line": 78,
+              "explanation": "Trait deciding whether a stored value must be copied or can be referenced."
+            },
+            {
+              "name": "emplace_arg",
+              "line": 116,
+              "explanation": "Constructs an argument node in place within an arg list."
+            },
+            {
+              "name": "push_back",
+              "line": 185,
+              "explanation": "Appends a new dynamic argument to the list."
+            },
+            {
+              "name": "reserve",
+              "line": 205,
+              "explanation": "Preallocates list storage as an optimization."
+            },
+            {
+              "name": "clear",
+              "line": 197,
+              "explanation": "Destroys all stored arguments."
+            }
+          ]
+        },
+        {
+          "path": "include/fmt/base.h",
+          "role": "Defines the core data model and buffered output primitives used by every formatter: basic_format_arg, value, parse_context, buffer, and iterator adapters.",
+          "key_symbols": [
+            {
+              "name": "basic_format_arg",
+              "line": 2464,
+              "explanation": "Type-erased wrapper around a format argument; get and visit dispatch to the concrete formatter."
+            },
+            {
+              "name": "value",
+              "line": 2148,
+              "explanation": "Tagged union holding all built-in argument types for efficient storage."
+            },
+            {
+              "name": "basic_specs",
+              "line": 682,
+              "explanation": "Common format-spec flags parsed for all types, including fill, alignment, sign, and presentation type."
+            },
+            {
+              "name": "parse_context",
+              "line": 842,
+              "explanation": "Tracks the current format string position and argument id while a formatter parses its spec."
+            },
+            {
+              "name": "buffer",
+              "line": 1759,
+              "explanation": "Abstract growable output destination that formatters write to instead of a concrete container."
+            },
+            {
+              "name": "visit",
+              "line": 2504,
+              "explanation": "Applies a visitor to the concrete type stored in a basic_format_arg."
+            },
+            {
+              "name": "get",
+              "line": 2545,
+              "explanation": "Extracts a concrete typed value from a basic_format_arg, returning a handle for custom types."
+            },
+            {
+              "name": "named_arg_store",
+              "line": 2326,
+              "explanation": "Pairs a name with a value for named-argument formatting."
+            },
+            {
+              "name": "presentation_type",
+              "line": 654,
+              "explanation": "Enumerates output presentation kinds such as decimal, hex, and scientific."
+            },
+            {
+              "name": "locale_ref",
+              "line": 904,
+              "explanation": "Minimal locale reference passed to formatters when locale-aware output is requested."
+            }
+          ]
+        },
+        {
+          "path": "include/fmt/compile.h",
+          "role": "Implements the compile-time format string path: parses replacement fields into typed structures and lets the compiler optimize formatting.",
+          "key_symbols": [
+            {
+              "name": "compile_format_string",
+              "line": 385,
+              "explanation": "Parses a format string at compile time and returns a nested structure of text, code_unit, and field nodes."
+            },
+            {
+              "name": "format",
+              "line": 496,
+              "explanation": "Renders a compiled format string into a string."
+            },
+            {
+              "name": "format_to",
+              "line": 523,
+              "explanation": "Renders a compiled format string into an output iterator."
+            },
+            {
+              "name": "formatted_size",
+              "line": 548,
+              "explanation": "Computes the size required for a compiled format string without writing."
+            },
+            {
+              "name": "print",
+              "line": 556,
+              "explanation": "Prints a compiled format string to stdout."
+            },
+            {
+              "name": "field",
+              "line": 172,
+              "explanation": "Represents a replacement field with its argument id and specs in the compiled representation."
+            },
+            {
+              "name": "text",
+              "line": 127,
+              "explanation": "Represents literal text in the compiled representation."
+            },
+            {
+              "name": "code_unit",
+              "line": 146,
+              "explanation": "A single character or format-code unit in the compiled string."
+            },
+            {
+              "name": "concat",
+              "line": 244,
+              "explanation": "Concatenates adjacent compiled nodes to reduce runtime work."
+            },
+            {
+              "name": "get_arg_index_by_name",
+              "line": 88,
+              "explanation": "Maps a named argument to its position in the argument list at compile time."
+            }
+          ]
+        },
+        {
+          "path": "include/fmt/core.h",
+          "role": "Compatibility umbrella header that re-exports the core API for older include paths; the scan found no dedicated symbols in it.",
+          "key_symbols": []
+        },
+        {
+          "path": "include/fmt/format-inl.h",
+          "role": "Provides out-of-line implementations for expensive or non-template operations: floating-point power-of-ten caches, decimal conversion, Unicode checks, and console/file printing.",
+          "key_symbols": [
+            {
+              "name": "cache_accessor<double>",
+              "line": 385,
+              "explanation": "Templated cache holder that computes or stores powers of ten for double formatting."
+            },
+            {
+              "name": "get_cached_power",
+              "line": 389,
+              "explanation": "Returns a cached power of ten for a given binary exponent."
+            },
+            {
+              "name": "to_decimal",
+              "line": 1275,
+              "explanation": "Converts a floating-point value to a decimal significand and exponent representation."
+            },
+            {
+              "name": "is_printable",
+              "line": 1827,
+              "explanation": "Uses platform-specific tables to decide whether a code point can be printed directly."
+            },
+            {
+              "name": "file_base",
+              "line": 1508,
+              "explanation": "Base class for FILE*-based output buffers used by print functions."
+            },
+            {
+              "name": "glibc_file",
+              "line": 1537,
+              "explanation": "Glibc-specific FILE* buffer implementation."
+            },
+            {
+              "name": "format_error_code",
+              "line": 92,
+              "explanation": "Formats an error code into a small stack buffer for error messages."
+            },
+            {
+              "name": "vformat_to",
+              "line": 1468,
+              "explanation": "Core runtime formatting dispatch that writes to a given output iterator."
+            },
+            {
+              "name": "write_console",
+              "line": 1731,
+              "explanation": "Writes a buffer to the console on Windows."
+            },
+            {
+              "name": "remove_trailing_zeros",
+              "line": 1172,
+              "explanation": "Strips trailing zero digits after floating-point conversion."
+            }
+          ]
+        },
+        {
+          "path": "include/fmt/format.h",
+          "role": "The full formatting implementation: digit generation, integer, float, string, and char output, locale grouping, and special formatters such as format_int and nested_formatter.",
+          "key_symbols": [
+            {
+              "name": "format_int",
+              "line": 4204,
+              "explanation": "Fast integer-to-string conversion class that writes into a fixed buffer with no allocation."
+            },
+            {
+              "name": "write_int",
+              "line": 1997,
+              "explanation": "Writes a formatted integer with sign, grouping, and padding applied."
+            },
+            {
+              "name": "digit_grouping",
+              "line": 1917,
+              "explanation": "Implements locale-specific thousands separators from a grouping string."
+            },
+            {
+              "name": "basic_fp",
+              "line": 1614,
+              "explanation": "Floating-point value with an extended significand used for accurate decimal output."
+            },
+            {
+              "name": "umul128",
+              "line": 1436,
+              "explanation": "Unsigned 128-bit multiply used by the float-to-decimal algorithm."
+            },
+            {
+              "name": "writer",
+              "line": 908,
+              "explanation": "Low-level output writer that tracks position and grows the destination buffer."
+            },
+            {
+              "name": "do_count_digits",
+              "line": 1125,
+              "explanation": "Counts decimal digits quickly for integer sizes."
+            },
+            {
+              "name": "write_padded",
+              "line": 1736,
+              "explanation": "Writes a value inside a padded field according to alignment specs."
+            },
+            {
+              "name": "utf8_decode",
+              "line": 576,
+              "explanation": "Decodes one UTF-8 code point from a char range."
+            },
+            {
+              "name": "nested_formatter",
+              "line": 4131,
+              "explanation": "Formatter that applies an outer spec to a nested format result."
+            }
+          ]
+        },
+        {
+          "path": "include/fmt/os.h",
+          "role": "Thin OS wrappers for files, FILE*, and std::ostream used when formatted output targets files or system streams.",
+          "key_symbols": [
+            {
+              "name": "buffered_file",
+              "line": 165,
+              "explanation": "RAII wrapper around a FILE* with automatic close."
+            },
+            {
+              "name": "ostream",
+              "line": 359,
+              "explanation": "Wraps std::ostream for direct formatted output."
+            },
+            {
+              "name": "ostream_params",
+              "line": 328,
+              "explanation": "Holds buffer-size and file-access options used when creating an ostream."
+            },
+            {
+              "name": "buffer_size",
+              "line": 318,
+              "explanation": "Specifies the preferred buffer size for an ostream."
+            },
+            {
+              "name": "print",
+              "line": 392,
+              "explanation": "Prints a format string through the ostream wrapper."
+            },
+            {
+              "name": "close",
+              "line": 385,
+              "explanation": "Closes the wrapped stream."
+            },
+            {
+              "name": "file",
+              "line": 227,
+              "explanation": "Owns a POSIX file descriptor and exposes read, write, and close operations."
+            },
+            {
+              "name": "flush",
+              "line": 376,
+              "explanation": "Flushes the ostream buffer."
+            }
+          ]
+        },
+        {
+          "path": "include/fmt/printf.h",
+          "role": "Implements printf-compatible formatting, including its own flag, width, and precision parser and C-style argument conversion rules.",
+          "key_symbols": [
+            {
+              "name": "vprintf",
+              "line": 406,
+              "explanation": "Parses a printf format string and writes arguments to stdout."
+            },
+            {
+              "name": "printf_arg_formatter",
+              "line": 232,
+              "explanation": "Formats one printf argument with the parsed flags."
+            },
+            {
+              "name": "parse_header",
+              "line": 330,
+              "explanation": "Parses flags, width, and precision from a printf format string."
+            },
+            {
+              "name": "arg_converter",
+              "line": 120,
+              "explanation": "Performs C-style numeric promotions and conversions required by printf."
+            },
+            {
+              "name": "printf_width_handler",
+              "line": 196,
+              "explanation": "Handles dynamic width and precision specified as printf arguments."
+            },
+            {
+              "name": "parse_printf_presentation_type",
+              "line": 381,
+              "explanation": "Maps a printf conversion letter to a presentation type."
+            },
+            {
+              "name": "vsprintf",
+              "line": 582,
+              "explanation": "Formats to a std::string with printf syntax."
+            },
+            {
+              "name": "vfprintf",
+              "line": 609,
+              "explanation": "Formats to a FILE* with printf syntax."
+            },
+            {
+              "name": "fprintf",
+              "line": 632,
+              "explanation": "Prints printf-style to a FILE*."
+            },
+            {
+              "name": "sprintf",
+              "line": 603,
+              "explanation": "Prints printf-style to a std::string."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"include/fmt/args.h\"]\n    N1[\"include/fmt/base.h\"]\n    N2[\"include/fmt/compile.h\"]\n    N3[\"include/fmt/core.h\"]\n    N4[\"include/fmt/format-inl.h\"]\n    N5[\"include/fmt/format.h\"]\n    N6[\"include/fmt/os.h\"]\n    N7[\"include/fmt/printf.h\"]\n    N0 --> N5\n    N1 --> N5\n    N2 --> N5\n    N3 --> N1\n    N3 --> N5\n    N4 --> N5\n    N5 --> N1\n    N5 --> N4\n    N6 --> N5\n    N7 --> N5"
+    },
+    {
+      "subsystem_id": "1",
+      "name": "Chrono Stream Support",
+      "description": "This subsystem adapts std::chrono and std::ostream types to fmt's formatter protocol. It is separated from the core so the complexity of calendar arithmetic, locale-specific tm fields, and stream insertion is isolated behind formatter specializations, keeping the central format engine independent of std::chrono headers. For chrono values, parse_chrono_format (include/fmt/chrono.h:630) validates the spec, tm_writer (include/fmt/chrono.h:1044) emits date and time fields, and duration_formatter (include/fmt/chrono.h:1612) combines safe_duration_cast (include/fmt/chrono.h:160) with fractional-second handling to render durations. For ostreams, format() wraps a type via streamed (include/fmt/ostream.h:114), and formatter<detail::streamed_view<T>, Char> (include/fmt/ostream.h:96) funnels the value into write_buffer (include/fmt/ostream.h:55). std.h builds related standard-library formatters, such as formatter<std::optional<T>> (include/fmt/std.h:400), on the same interface. It depends on format.h for core formatter machinery and interoperates with xchar.h for wide-character formatting.",
+      "files": [
+        {
+          "path": "include/fmt/chrono.h",
+          "role": "Implements formatting for std::chrono durations, time points, calendar types, and std::tm using strftime-like spec parsing and locale handling.",
+          "key_symbols": [
+            {
+              "name": "parse_chrono_format",
+              "line": 630,
+              "explanation": "Parses a chrono format string and invokes callbacks for each field, validating spec combinations."
+            },
+            {
+              "name": "tm_writer",
+              "line": 1044,
+              "explanation": "Writes individual std::tm fields such as year, month, day, hour, and minute with locale and numeric formatting."
+            },
+            {
+              "name": "duration_formatter",
+              "line": 1612,
+              "explanation": "Formats a chrono duration with units, precision, and subsecond output."
+            },
+            {
+              "name": "safe_duration_cast",
+              "line": 160,
+              "explanation": "Performs lossless or checked conversion between duration representations."
+            },
+            {
+              "name": "write_fractional_seconds",
+              "line": 966,
+              "explanation": "Writes the fractional part of a duration according to the requested precision."
+            },
+            {
+              "name": "formatter<std::tm, Char>",
+              "line": 2101,
+              "explanation": "Formatter specialization that lets std::tm be used in fmt::format."
+            },
+            {
+              "name": "formatter<std::chrono::duration<Rep, Period>, Char>",
+              "line": 2036,
+              "explanation": "Formatter specialization for chrono durations."
+            },
+            {
+              "name": "chrono_format_checker",
+              "line": 1472,
+              "explanation": "Compile-time checker ensuring the chrono format spec is valid."
+            },
+            {
+              "name": "formatbuf",
+              "line": 279,
+              "explanation": "std::streambuf adapter used when formatting chrono types with locale facets."
+            },
+            {
+              "name": "gmtime",
+              "line": 492,
+              "explanation": "Thread-local wrapper around gmtime for time-point conversion."
+            },
+            {
+              "name": "write_digit2_separated",
+              "line": 544,
+              "explanation": "Writes two-digit fields separated by punctuation such as dates and times."
+            }
+          ]
+        },
+        {
+          "path": "include/fmt/ostream.h",
+          "role": "Lets any type with operator<< be formatted through fmt by inserting into a std::ostream, and provides print and println helpers.",
+          "key_symbols": [
+            {
+              "name": "streamed",
+              "line": 114,
+              "explanation": "Wraps a value to opt into stream-based formatting."
+            },
+            {
+              "name": "streamed_view",
+              "line": 68,
+              "explanation": "View type carried by the streamed wrapper."
+            },
+            {
+              "name": "formatter<detail::streamed_view<T>, Char>",
+              "line": 96,
+              "explanation": "Formatter that converts a streamed value to an output buffer by streaming into a std::ostream."
+            },
+            {
+              "name": "write_buffer",
+              "line": 55,
+              "explanation": "Feeds chunks from fmt's output buffer into the underlying ostream."
+            },
+            {
+              "name": "vprint",
+              "line": 118,
+              "explanation": "Formats arguments to a std::ostream with validation."
+            },
+            {
+              "name": "print",
+              "line": 153,
+              "explanation": "Convenience wrapper printing to std::cout or a given ostream."
+            },
+            {
+              "name": "println",
+              "line": 162,
+              "explanation": "Like print but appends a newline."
+            },
+            {
+              "name": "format",
+              "line": 81,
+              "explanation": "Formats a streamed value into a fmt string."
+            }
+          ]
+        },
+        {
+          "path": "include/fmt/std.h",
+          "role": "Adds formatter specializations for standard library types such as optional, variant, expected, bitset, filesystem::path, error_code, exception_ptr, and type_info so they format via fmt.",
+          "key_symbols": [
+            {
+              "name": "formatter<std::error_code>",
+              "line": 549,
+              "explanation": "Formats error_code using its message and category."
+            },
+            {
+              "name": "formatter<std::filesystem::path, Char>",
+              "line": 305,
+              "explanation": "Formats paths with the necessary narrow or wide conversion."
+            },
+            {
+              "name": "formatter<std::bitset<N>, Char>",
+              "line": 372,
+              "explanation": "Formats a bitset as a binary string."
+            },
+            {
+              "name": "formatter<std::source_location>",
+              "line": 480,
+              "explanation": "Formats source_location as file:line:column information."
+            },
+            {
+              "name": "formatter<std::monostate, Char>",
+              "line": 505,
+              "explanation": "Formats monostate as a fixed string."
+            },
+            {
+              "name": "formatter<std::type_info>",
+              "line": 604,
+              "explanation": "Formats type_info as its name."
+            },
+            {
+              "name": "formatter<std::exception_ptr>",
+              "line": 674,
+              "explanation": "Formats an exception via its message when available."
+            },
+            {
+              "name": "write",
+              "line": 645,
+              "explanation": "Writes exception or error messages into an output buffer."
+            },
+            {
+              "name": "format",
+              "line": 580,
+              "explanation": "Renders an error_code value with fmt."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"include/fmt/chrono.h\"]\n    N1[\"include/fmt/ostream.h\"]\n    N2[\"include/fmt/std.h\"]\n    N1 --> N0\n    N2 --> N1"
+    },
+    {
+      "subsystem_id": "2",
+      "name": "Extended Format Features",
+      "description": "This subsystem contains the optional front-end formatters that make fmt convenient: ANSI terminal styling, range/tuple/container formatting, and wide-character entry points. It is a separate unit so users pay compile-time cost only for features they opt into, and because these features are orthogonal to the core value and argument machinery in format.h. Color output begins with text_style (include/fmt/color.h:236), which stores foreground, background, and emphasis, and ansi_color_escape (include/fmt/color.h:366) translates it to escape sequences before formatter<detail::styled_arg<T>, Char> (include/fmt/color.h:620) renders the wrapped value. ranges.h classifies containers with range_format_kind_ (include/fmt/ranges.h:253), then dispatches to map, string, sequence, tuple, or join formatter specializations such as the sequence formatter at include/fmt/ranges.h:501; xchar.h wraps all the core entry points for wchar_t, e.g. make_wformat_args (include/fmt/xchar.h:126). It connects to format.h for the core API and to ostream.h for stream-friendly print helpers.",
+      "files": [
+        {
+          "path": "include/fmt/color.h",
+          "role": "Defines terminal styles and writes ANSI escape sequences for colored and emphasized output.",
+          "key_symbols": [
+            {
+              "name": "text_style",
+              "line": 236,
+              "explanation": "Aggregate of foreground and background colors plus emphasis flags."
+            },
+            {
+              "name": "ansi_color_escape",
+              "line": 366,
+              "explanation": "Encodes a text_style into an ANSI SGR escape sequence."
+            },
+            {
+              "name": "formatter<detail::styled_arg<T>, Char>",
+              "line": 620,
+              "explanation": "Formatter that applies a text_style to a value while rendering."
+            },
+            {
+              "name": "styled",
+              "line": 665,
+              "explanation": "Wraps a value with a text_style so fmt::format renders it with color."
+            },
+            {
+              "name": "vprint",
+              "line": 471,
+              "explanation": "Prints styled arguments to a stream."
+            },
+            {
+              "name": "terminal_color",
+              "line": 160,
+              "explanation": "Representation of terminal color values."
+            },
+            {
+              "name": "rgb",
+              "line": 192,
+              "explanation": "True-color RGB value."
+            },
+            {
+              "name": "emphasis",
+              "line": 179,
+              "explanation": "Stores bold, italic, and underline emphasis flags."
+            },
+            {
+              "name": "fg",
+              "line": 348,
+              "explanation": "Sets the foreground color in a text_style."
+            },
+            {
+              "name": "bg",
+              "line": 354,
+              "explanation": "Sets the background color in a text_style."
+            },
+            {
+              "name": "reset_color",
+              "line": 466,
+              "explanation": "ANSI reset sequence constant used after styled output."
+            }
+          ]
+        },
+        {
+          "path": "include/fmt/ranges.h",
+          "role": "Formats ranges, tuples, maps, and joins via formatter specializations, with delimiter and container-style support.",
+          "key_symbols": [
+            {
+              "name": "range_format_kind_",
+              "line": 253,
+              "explanation": "Classifies a range as generic, map, string, debug string, or disabled to choose a formatter."
+            },
+            {
+              "name": "formatter<\n    R, Char,\n    enable_if_t<conjunction<\n        bool_constant<\n            range_format_kind<R, Char>::value != range_format::disabled &&\n            range_format_kind<R, Char>::value != range_format::map &&\n            range_format_kind<R, Char>::value != range_format::string &&\n            range_format_kind<R, Char>::value != range_format::debug_string>,\n        detail::is_formattable_delayed<R, Char>>::value>>",
+              "line": 501,
+              "explanation": "Formats generic ranges of formattable elements with begin, end, and a delimiter."
+            },
+            {
+              "name": "formatter<\n    R, Char,\n    enable_if_t<conjunction<\n        bool_constant<range_format_kind<R, Char>::value == range_format::map>,\n        detail::is_formattable_delayed<R, Char>>::value>>",
+              "line": 537,
+              "explanation": "Formats map-like ranges as key/value pairs."
+            },
+            {
+              "name": "formatter<tuple_join_view<Tuple, Char>, Char,\n                 enable_if_t<is_tuple_like<Tuple>::value>>",
+              "line": 701,
+              "explanation": "Formats a joined tuple with a custom separator."
+            },
+            {
+              "name": "formatter<Tuple, Char,\n                 enable_if_t<fmt::is_tuple_like<Tuple>::value &&\n                             fmt::is_tuple_formattable<Tuple, Char>::value>>",
+              "line": 301,
+              "explanation": "Formats tuple-like types by formatting each element in sequence."
+            },
+            {
+              "name": "formatter<join_view<It, Sentinel, Char>, Char>",
+              "line": 643,
+              "explanation": "Formats a join_view by writing elements separated by a delimiter."
+            },
+            {
+              "name": "range_begin",
+              "line": 84,
+              "explanation": "Returns an iterator to the start of a range with ADL."
+            },
+            {
+              "name": "for_each",
+              "line": 191,
+              "explanation": "Applies a function to each element of a tuple."
+            },
+            {
+              "name": "is_tuple_like_",
+              "line": 123,
+              "explanation": "Detects tuple-like types."
+            },
+            {
+              "name": "format_tuple_element",
+              "line": 272,
+              "explanation": "Formats one tuple element with its index."
+            },
+            {
+              "name": "is_container_adaptor",
+              "line": 777,
+              "explanation": "Detects container adaptors such as stack and queue."
+            }
+          ]
+        },
+        {
+          "path": "include/fmt/xchar.h",
+          "role": "Wide-character (wchar_t) API layer providing wide format strings, wide format args, and wide variants of format, print, and join.",
+          "key_symbols": [
+            {
+              "name": "basic_fstring",
+              "line": 78,
+              "explanation": "Holder for wide-character format strings."
+            },
+            {
+              "name": "make_wformat_args",
+              "line": 126,
+              "explanation": "Builds a wformat_args from wide arguments."
+            },
+            {
+              "name": "vformat",
+              "line": 178,
+              "explanation": "Formats wide arguments into a wide string."
+            },
+            {
+              "name": "format",
+              "line": 221,
+              "explanation": "Wide string format convenience."
+            },
+            {
+              "name": "format_to",
+              "line": 264,
+              "explanation": "Wide format to an output iterator."
+            },
+            {
+              "name": "format_to_n",
+              "line": 294,
+              "explanation": "Wide format with a maximum length."
+            },
+            {
+              "name": "formatted_size",
+              "line": 303,
+              "explanation": "Computes the wide result size."
+            },
+            {
+              "name": "vprint",
+              "line": 310,
+              "explanation": "Prints wide arguments to a stream."
+            },
+            {
+              "name": "join",
+              "line": 148,
+              "explanation": "Wide join view for ranges and tuples."
+            },
+            {
+              "name": "str_",
+              "line": 97,
+              "explanation": "Extracts the wide string from a basic_fstring."
+            },
+            {
+              "name": "runtime",
+              "line": 121,
+              "explanation": "Marks a wide format string as runtime-parsed."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"include/fmt/color.h\"]\n    N1[\"include/fmt/ranges.h\"]\n    N2[\"include/fmt/xchar.h\"]\n    N2 --> N0\n    N2 --> N1"
+    },
+    {
+      "subsystem_id": "3",
+      "name": "Format Engine Implementation",
+      "description": "This subsystem is the compiled, non-header-only part of the library: src/fmt.cc conditionally builds fmt as a C++ module, src/format.cc is the companion implementation translation unit, and src/os.cc supplies POSIX and Windows file-descriptor plumbing used by file and buffered_file. It exists because many of fmt's formatting primitives are templates, but a few operations such as error messaging, file I/O, and module export glue must live in exactly one translation unit and be exported from the library ABI. The module unit src/fmt.cc establishes FMT_MODULE (src/fmt.cc:10) and FMT_EXPORT (src/fmt.cc:108), deciding what is visible; src/os.cc then provides concrete helpers such as system_message (src/os.cc:75), file (src/os.cc:216), and pipe (src/os.cc:342) that the header include/fmt/os.h declares. This keeps header-only users unaffected while linked users get those symbols from the compiled artifact. It connects to test/posix-mock-test.cc, which exercises the same OS layer with mock POSIX calls.",
+      "files": [
+        {
+          "path": "src/fmt.cc",
+          "role": "Module and export preamble for building fmt as a C++20 module. It defines the module macros and gates the implementation units that follow.",
+          "key_symbols": [
+            {
+              "name": "FMT_MODULE",
+              "line": 10,
+              "explanation": "Marks the file as the module interface for fmt when built as a module."
+            },
+            {
+              "name": "FMT_EXPORT",
+              "line": 108,
+              "explanation": "Export macro controlling which symbols are visible from the module."
+            },
+            {
+              "name": "FMT_BEGIN_EXPORT",
+              "line": 109,
+              "explanation": "Opens the module export block."
+            },
+            {
+              "name": "FMT_END_EXPORT",
+              "line": 110,
+              "explanation": "Closes the module export block."
+            },
+            {
+              "name": "FMT_OS",
+              "line": 122,
+              "explanation": "Controls whether OS-dependent implementation code is included in the module build."
+            }
+          ]
+        },
+        {
+          "path": "src/format.cc",
+          "role": "Companion translation unit of the compiled library. The scan found no public symbols in it, but it supplies the out-of-line format engine code paired with src/fmt.cc.",
+          "key_symbols": []
+        },
+        {
+          "path": "src/os.cc",
+          "role": "Implements the OS and file abstractions declared by include/fmt/os.h, including error categories, file descriptors, pipes, and console output.",
+          "key_symbols": [
+            {
+              "name": "system_message",
+              "line": 75,
+              "explanation": "Builds a message string from an OS error code."
+            },
+            {
+              "name": "system_category",
+              "line": 136,
+              "explanation": "Returns the error_category for native OS errors."
+            },
+            {
+              "name": "format_windows_error",
+              "line": 147,
+              "explanation": "Formats a Windows error code into a fmt string."
+            },
+            {
+              "name": "buffered_file",
+              "line": 175,
+              "explanation": "Creates a buffered_file wrapper from a FILE*."
+            },
+            {
+              "name": "close",
+              "line": 236,
+              "explanation": "Closes a file descriptor."
+            },
+            {
+              "name": "file",
+              "line": 216,
+              "explanation": "Wraps a native file descriptor in a fmt::file object."
+            },
+            {
+              "name": "read",
+              "line": 272,
+              "explanation": "Reads from an OS file descriptor into a buffer."
+            },
+            {
+              "name": "write",
+              "line": 280,
+              "explanation": "Writes a buffer to an OS file descriptor."
+            },
+            {
+              "name": "pipe",
+              "line": 342,
+              "explanation": "Creates a pipe and wraps both ends as fmt::file objects."
+            },
+            {
+              "name": "getpagesize",
+              "line": 361,
+              "explanation": "Returns the system page size for buffer sizing."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/fmt.cc\"]\n    N1[\"src/format.cc\"]\n    N2[\"src/os.cc\"]\n    N0 --> N1\n    N0 --> N2"
+    },
+    {
+      "subsystem_id": "4",
+      "name": "Documentation Scripts",
+      "description": "This subsystem is the documentation site's client-side JavaScript, responsible for the dynamic parts of the fmt manual that static HTML cannot provide. It exists as a separate unit to keep C++ header documentation content and website behavior independent, so documentation changes do not require recompiling the library. On page load, doc/fmt.js hooks into document elements and enhances them; the scan found no function or class symbols, so its behavior is loaded directly as a script rather than through an exported API. It has no related files in this build, meaning it is self-contained and does not participate in the library's format engine or build graph.",
+      "files": [
+        {
+          "path": "doc/fmt.js",
+          "role": "Client-side script for the fmt documentation site. It is self-contained and provides dynamic page behavior for the generated documentation.",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"doc/fmt.js\"]"
+    },
+    {
+      "subsystem_id": "5",
+      "name": "C Wrapper Header",
+      "description": "This subsystem is the C wrapper header for {fmt}, exposing a small set of plain-C functions that convert C scalar and string values into C++ format arguments. It exists as a separate unit to give C programs a stable C ABI and a header that does not require a C++ compiler, while still routing through the C++ formatting engine. A C caller uses fmt_from_int, fmt_from_uint, fmt_from_bool, fmt_from_char, fmt_from_float, fmt_from_double, fmt_from_long_double, fmt_from_str, and fmt_from_ptr to build argument lists that are then consumed by the implementation in src/fmt-c.cc. The repeated FMT_CAPI definitions at include/fmt/fmt-c.h:17 choose the correct import/export decoration for shared libraries on different platforms. The header connects directly to src/fmt-c.cc, which implements the declared functions, while staying independent of the C++ core API so downstream C projects can include only this one file. Since no related files were recorded, its main coupling is to the wrapper implementation and to any consumer that installs the published C header.",
+      "files": [
+        {
+          "path": "include/fmt/fmt-c.h",
+          "role": "Public C header that declares the C ABI conversion functions and the FMT_CAPI export macro. It provides no implementation and is designed to be includable from plain C translation units.",
+          "key_symbols": [
+            {
+              "name": "FMT_C_H_",
+              "line": 9,
+              "explanation": "Include guard macro that prevents the C header from being processed more than once per translation unit."
+            },
+            {
+              "name": "FMT_CAPI",
+              "line": 17,
+              "explanation": "One of the platform-dependent macro definitions that attach dllexport/dllimport or visibility decoration to the exported C functions."
+            },
+            {
+              "name": "FMT_CAPI",
+              "line": 19,
+              "explanation": "Alternative FMT_CAPI definition for a different Windows/compiler branch, still selecting the correct shared-library linkage."
+            },
+            {
+              "name": "FMT_CAPI",
+              "line": 23,
+              "explanation": "Branch of the FMT_CAPI macro used when no special export decoration is required."
+            },
+            {
+              "name": "FMT_CAPI",
+              "line": 25,
+              "explanation": "Further FMT_CAPI branch kept separate so each supported toolchain gets the appropriate visibility attributes."
+            },
+            {
+              "name": "FMT_CAPI",
+              "line": 29,
+              "explanation": "Final FMT_CAPI fallback definition, completing the set of compiler/platform compatibility branches."
+            },
+            {
+              "name": "fmt_from_int",
+              "line": 76,
+              "explanation": "Declares the C-callable function that converts an int into a fmt format argument; implemented in src/fmt-c.cc."
+            },
+            {
+              "name": "fmt_from_uint",
+              "line": 80,
+              "explanation": "Declares the C-callable conversion for unsigned int values, mirroring the C++ fmt unsigned support."
+            },
+            {
+              "name": "fmt_from_bool",
+              "line": 84,
+              "explanation": "Declares the C-callable conversion for bool values used when formatting C boolean inputs."
+            },
+            {
+              "name": "fmt_from_char",
+              "line": 88,
+              "explanation": "Declares the C-callable conversion for char values so single characters can be formatted through the C API."
+            },
+            {
+              "name": "fmt_from_float",
+              "line": 92,
+              "explanation": "Declares the C-callable conversion for float values, keeping floating-point formatting inside the C++ engine."
+            },
+            {
+              "name": "fmt_from_double",
+              "line": 96,
+              "explanation": "Declares the C-callable conversion for double values, the usual C floating-point type passed by clients."
+            },
+            {
+              "name": "fmt_from_long_double",
+              "line": 100,
+              "explanation": "Declares the C-callable conversion for long double values, covering extended-precision C floating-point inputs."
+            },
+            {
+              "name": "fmt_from_str",
+              "line": 104,
+              "explanation": "Declares the C-callable conversion for C string arguments, passing them as fmt string views."
+            },
+            {
+              "name": "fmt_from_ptr",
+              "line": 108,
+              "explanation": "Declares the C-callable conversion for pointer values used with the pointer format specifier."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"include/fmt/fmt-c.h\"]"
+    },
+    {
+      "subsystem_id": "6",
+      "name": "C Wrapper Implementation",
+      "description": "This subsystem implements the C wrapper functions declared in include/fmt/fmt-c.h and is the bridge that converts C-style variadic argument lists into fmt's type-safe format_args by calling convert_c_format_args at src/fmt-c.cc:14. It exists as a separate translation unit so all C++ exception handling and template instantiation stay out of the public C header and are compiled once into the fmt library. The FMT_CATCH macro wraps the exported bodies at src/fmt-c.cc:50 and src/fmt-c.cc:65, converting C++ exceptions into an error result for C callers. Data flows from a C caller's va_list into format_args via convert_c_format_args, then into fmt_vformat or fmt_vprint at src/fmt-c.cc:38 and src/fmt-c.cc:54, with the formatted result returned as a string or written to stdout. Because no related files were recorded, the main neighboring subsystem is the header itself; the implementation also depends on the core fmt formatting engine whose entry points are referenced inside these functions.",
+      "files": [
+        {
+          "path": "src/fmt-c.cc",
+          "role": "C++ implementation file that implements the C ABI functions declared in include/fmt/fmt-c.h. It translates C variadic arguments into fmt's type-safe API and guards exported calls against C++ exceptions.",
+          "key_symbols": [
+            {
+              "name": "convert_c_format_args",
+              "line": 14,
+              "explanation": "Walks the format string's argument types and builds a fmt::format_args container from a C-style va_list; runs before every vformat/vprint call."
+            },
+            {
+              "name": "fmt_vformat",
+              "line": 38,
+              "explanation": "Public C entry point that formats into a string buffer and returns a C string; the result is produced by the core fmt engine."
+            },
+            {
+              "name": "FMT_CATCH",
+              "line": 50,
+              "explanation": "Macro used immediately after fmt_vformat's body to catch C++ exceptions and return a failure/null result across the C ABI."
+            },
+            {
+              "name": "fmt_vprint",
+              "line": 54,
+              "explanation": "Public C entry point that formats the supplied arguments and writes the result to stdout using the C++ fmt output path."
+            },
+            {
+              "name": "FMT_CATCH",
+              "line": 65,
+              "explanation": "Same exception guard applied around fmt_vprint so errors are reported without unwinding through C callers."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/fmt-c.cc\"]"
+    },
+    {
+      "subsystem_id": "7",
+      "name": "Build Support Scripts",
+      "description": "This file is a vendored copy of the docopt command-line argument parser, used by the repository's build and support scripts to turn usage-message docstrings into parsed options. It exists as a separate utility so all Python tooling shares one dependency-free implementation rather than relying on an external package. Entry point docopt at support/docopt.py:490 parses the usage pattern through parse_expr, parse_seq, parse_atom, and parse_shorts/parse_long into a Pattern tree, then calls Pattern.match to decide whether argv satisfies it. The tree is normalized first by fix_identities and fix_repeating_arguments, and token handling is encapsulated by the Tokens class at support/docopt.py:282. The different node classes Required, Optional, OneOrMore, and Either encode how matches are combined at support/docopt.py:219, support/docopt.py:232, support/docopt.py:246, and support/docopt.py:268. This subsystem connects to build scripts by providing their CLI contract; since no related files were recorded, its only links are the scripts that import it and the usage strings they pass into docopt.",
+      "files": [
+        {
+          "path": "support/docopt.py",
+          "role": "Dependency-free command-line parser implemented from the docopt specification. It is imported by repository support/build scripts to turn usage-message strings into option dictionaries.",
+          "key_symbols": [
+            {
+              "name": "DocoptExit",
+              "line": 22,
+              "explanation": "Exception raised when usage text or argv is invalid, carrying the exit message and status used by command-line callers."
+            },
+            {
+              "name": "Pattern",
+              "line": 32,
+              "explanation": "Abstract base class for all docopt pattern nodes; it defines the structure and matching contract for the parsed usage tree."
+            },
+            {
+              "name": "fix_identities",
+              "line": 45,
+              "explanation": "Normalizes equal leaf patterns so they share identity, which simplifies later matching and fix-up passes."
+            },
+            {
+              "name": "fix_repeating_arguments",
+              "line": 57,
+              "explanation": "Transforms repeated arguments into OneOrMore or Required groups so repeating usage syntax matches correctly."
+            },
+            {
+              "name": "transform",
+              "line": 72,
+              "explanation": "Rewrites the pattern tree into canonical Either form before matching begins."
+            },
+            {
+              "name": "LeafPattern",
+              "line": 99,
+              "explanation": "Base class for argument, command, and option leaves that hold no child patterns."
+            },
+            {
+              "name": "match",
+              "line": 112,
+              "explanation": "LeafPattern.match checks whether a single token in the collected argv list corresponds to this leaf and returns the appropriate match subset."
+            },
+            {
+              "name": "BranchPattern",
+              "line": 133,
+              "explanation": "Base class for composite pattern nodes that hold child patterns such as Required and Optional."
+            },
+            {
+              "name": "Argument",
+              "line": 150,
+              "explanation": "Leaf pattern representing a positional command-line argument."
+            },
+            {
+              "name": "Command",
+              "line": 165,
+              "explanation": "Leaf pattern representing a literal command name that must appear in the argv list."
+            },
+            {
+              "name": "single_match",
+              "line": 170,
+              "explanation": "Argument-specific matcher that tests one collected token against this argument and returns a match when it succeeds."
+            },
+            {
+              "name": "Option",
+              "line": 180,
+              "explanation": "Leaf pattern representing a command-line option, storing its short name, long name, and whether it takes an argument."
+            },
+            {
+              "name": "parse",
+              "line": 188,
+              "explanation": "Option.parse classmethod that builds an Option object from a usage/options declaration line."
+            },
+            {
+              "name": "Required",
+              "line": 219,
+              "explanation": "Branch pattern that succeeds only if every child pattern matches."
+            },
+            {
+              "name": "match",
+              "line": 221,
+              "explanation": "Required.match runs each child and fails unless all children produce matches."
+            },
+            {
+              "name": "Optional",
+              "line": 232,
+              "explanation": "Branch pattern whose children may all be absent; used for bracketed usage elements."
+            },
+            {
+              "name": "OneOrMore",
+              "line": 246,
+              "explanation": "Branch pattern requiring at least one child match, used for repeatable elements."
+            },
+            {
+              "name": "match",
+              "line": 248,
+              "explanation": "OneOrMore.match repeatedly matches children until no further progress is possible, collecting all matches."
+            },
+            {
+              "name": "Either",
+              "line": 268,
+              "explanation": "Branch pattern that succeeds when any child alternative matches."
+            },
+            {
+              "name": "match",
+              "line": 270,
+              "explanation": "Either.match tries each alternative and returns a match for the first successful option."
+            },
+            {
+              "name": "Tokens",
+              "line": 282,
+              "explanation": "Wrapper over the argv token list with a current position, consumed by the long/short option parsers."
+            },
+            {
+              "name": "parse_long",
+              "line": 301,
+              "explanation": "Parses a --long option token and adds the corresponding Option match to the collected patterns."
+            },
+            {
+              "name": "parse_shorts",
+              "line": 334,
+              "explanation": "Parses a -short option cluster, expanding each grouped flag into its own option match."
+            },
+            {
+              "name": "parse_expr",
+              "line": 377,
+              "explanation": "Parses a usage expression into alternatives separated by |."
+            },
+            {
+              "name": "parse_seq",
+              "line": 390,
+              "explanation": "Parses a sequence of atoms within a usage expression into an ordered pattern list."
+            },
+            {
+              "name": "parse_atom",
+              "line": 402,
+              "explanation": "Parses a single atom such as an option, argument, command, or bracketed group."
+            },
+            {
+              "name": "parse_argv",
+              "line": 428,
+              "explanation": "Converts raw argv tokens into a matched pattern list used by the final docopt matching pass."
+            },
+            {
+              "name": "parse_defaults",
+              "line": 452,
+              "explanation": "Collects default Options declared in the docstring's options section."
+            },
+            {
+              "name": "extras",
+              "line": 476,
+              "explanation": "Checks for extra arguments, missing required options, or help/version requests and reports them via DocoptExit."
+            },
+            {
+              "name": "docopt",
+              "line": 490,
+              "explanation": "Public entry point: parses a usage docstring, builds the pattern tree, matches argv, applies defaults, and returns a dict of values."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"support/docopt.py\"]"
+    },
+    {
+      "subsystem_id": "8",
+      "name": "Unicode Utility Script",
+      "description": "This script generates the printable-characters table used by {fmt} from Python's Unicode database. It exists as a separate support utility so the C++ source tables can be regenerated when the Unicode version changes, instead of maintaining large code-point lists by hand. main at support/printable.py:133 coordinates the pipeline: get_file fetches or opens the Unicode data file, get_codepoints enumerates code points and classifies them, compress_singletons and compress_normal turn the set into compact singleton and range forms, and print_singletons/print_normal emit the generated tables. Helper functions to_ranges and get_escaped at support/printable.py:18 and support/printable.py:30 convert individual code points into ranges and escaped character literals. The script is invoked from a developer's shell or build script, and the text it prints is copied into fmt source files that drive printable-character checks. Since no related files were recorded, its interface is the generated output plus the command-line inputs handled by main.",
+      "files": [
+        {
+          "path": "support/printable.py",
+          "role": "Python generator script that reads Unicode data and emits compact C++ tables of printable characters. It is a build-support tool rather than part of the runtime library.",
+          "key_symbols": [
+            {
+              "name": "NUM_CODEPOINTS",
+              "line": 16,
+              "explanation": "Total number of Unicode scalar values considered, used as the loop upper bound when scanning possible code points."
+            },
+            {
+              "name": "to_ranges",
+              "line": 18,
+              "explanation": "Converts a sorted sequence of code points into inclusive start/end ranges for compact table output."
+            },
+            {
+              "name": "get_escaped",
+              "line": 30,
+              "explanation": "Returns the escaped C-style literal for a single code point, handling control characters and special unicode separators."
+            },
+            {
+              "name": "get_file",
+              "line": 35,
+              "explanation": "Opens the Unicode data file from the given path or source so the classifier can read code point entries."
+            },
+            {
+              "name": "Codepoint",
+              "line": 42,
+              "explanation": "Constant container pairing a code point's index with its printable classification, yielded by get_codepoints."
+            },
+            {
+              "name": "get_codepoints",
+              "line": 44,
+              "explanation": "Parses the Unicode data file and yields Codepoint records whose printable flag reflects whether the character should be treated as printable."
+            },
+            {
+              "name": "compress_singletons",
+              "line": 73,
+              "explanation": "Reduces printable code points that have no printable neighbours to a compact singleton list used in the generated tables."
+            },
+            {
+              "name": "compress_normal",
+              "line": 89,
+              "explanation": "Converts runs of printable code points into compressed ranges and ensures the last range extends to the upper bound."
+            },
+            {
+              "name": "print_singletons",
+              "line": 117,
+              "explanation": "Prints the generated singleton table as C++ source text."
+            },
+            {
+              "name": "print_normal",
+              "line": 127,
+              "explanation": "Prints the generated range table as C++ source text."
+            },
+            {
+              "name": "main",
+              "line": 133,
+              "explanation": "Entry point that loads Unicode data, runs the classification and compression pipeline, and emits the printable-character tables."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"support/printable.py\"]"
+    },
+    {
+      "subsystem_id": "9",
+      "name": "Docstrings Handler",
+      "description": "This subsystem is the mkdocstrings C++ handler that turns Doxygen XML for {fmt} into HTML/Markdown documentation for the project's documentation site. It exists as a separate Python package under support/python so the documentation generator can import one handler without coupling to the fmt C++ codebase. The pipeline starts with Definition at support/python/mkdocstrings_handlers/cxx/__init__.py:24 wrapping each XML node, then collect_compound and collect at support/python/mkdocstrings_handlers/cxx/__init__.py:313 and support/python/mkdocstrings_handlers/cxx/__init__.py:358 walk the Doxygen tree and accumulate members. Rendering is driven by render_decl and render at support/python/mkdocstrings_handlers/cxx/__init__.py:181 and support/python/mkdocstrings_handlers/cxx/__init__.py:423, which use convert_template_params, convert_type, convert_params, and convert_return_type to produce type strings, while doxyxml2html and tag_map handle markup. CxxHandler.__init__ at support/python/mkdocstrings_handlers/cxx/__init__.py:236 stores collected data, and get_handler at support/python/mkdocstrings_handlers/cxx/__init__.py:447 registers the plugin with mkdocstrings. This handler connects Doxygen XML generated from fmt's C++ headers to the mkdocstrings/MkDocs pipeline, importing the mkdocstrings base classes that define the plugin interface.",
+      "files": [
+        {
+          "path": "support/python/mkdocstrings_handlers/cxx/__init__.py",
+          "role": "mkdocstrings handler package for rendering C++ Doxygen XML into documentation pages. It implements the plugin entry point, XML traversal, and HTML rendering helpers.",
+          "key_symbols": [
+            {
+              "name": "Definition",
+              "line": 24,
+              "explanation": "Wrapper class representing one Doxygen definition such as a class, function, or enum, with metadata parsed from the XML node."
+            },
+            {
+              "name": "__init__",
+              "line": 27,
+              "explanation": "Definition.__init__ stores the definition's identifier, location, and XML node so later collection and rendering can access it."
+            },
+            {
+              "name": "tag_map",
+              "line": 50,
+              "explanation": "Maps Doxygen XML tags to the HTML tags used when converting description fragments."
+            },
+            {
+              "name": "tag_text_map",
+              "line": 60,
+              "explanation": "Maps text-only Doxygen tags to their HTML wrappers for simple formatting."
+            },
+            {
+              "name": "escape_html",
+              "line": 63,
+              "explanation": "Escapes HTML-sensitive characters so Doxygen text can be safely embedded in generated pages."
+            },
+            {
+              "name": "convert_node",
+              "line": 68,
+              "explanation": "Recursively converts a Doxygen XML node into an HTML string using the tag maps."
+            },
+            {
+              "name": "doxyxml2html",
+              "line": 87,
+              "explanation": "Converts a complete Doxygen description fragment into HTML for display in the documentation page."
+            },
+            {
+              "name": "convert_template_params",
+              "line": 106,
+              "explanation": "Renders Doxygen template parameter lists into formatted C++ template declarations."
+            },
+            {
+              "name": "get_description",
+              "line": 125,
+              "explanation": "Extracts the brief or detailed description text from a Doxygen XML node."
+            },
+            {
+              "name": "normalize_type",
+              "line": 131,
+              "explanation": "Normalizes type strings by removing unnecessary qualifiers and whitespace for consistent display."
+            },
+            {
+              "name": "convert_type",
+              "line": 136,
+              "explanation": "Converts a Doxygen type element into a formatted C++ type string."
+            },
+            {
+              "name": "convert_params",
+              "line": 152,
+              "explanation": "Converts a Doxygen parameter list into rendered HTML parameter entries."
+            },
+            {
+              "name": "convert_return_type",
+              "line": 164,
+              "explanation": "Converts a Doxygen return-type element into the displayed C++ return type."
+            },
+            {
+              "name": "render_param",
+              "line": 175,
+              "explanation": "Renders one parameter, combining its name, type, and description into a single HTML fragment."
+            },
+            {
+              "name": "render_decl",
+              "line": 181,
+              "explanation": "Builds the displayed declaration line for a definition by combining template parameters, parameters, and return type."
+            },
+            {
+              "name": "CxxHandler",
+              "line": 231,
+              "explanation": "Main mkdocstrings handler class that collects Doxygen data, stores configuration, and produces rendered output pages."
+            },
+            {
+              "name": "__init__",
+              "line": 236,
+              "explanation": "CxxHandler.__init__ initializes the handler with the Doxygen XML path and collects the definitions needed for rendering."
+            },
+            {
+              "name": "collect_compound",
+              "line": 313,
+              "explanation": "Walks compound Doxygen elements such as classes and namespaces and collects their member definitions."
+            },
+            {
+              "name": "collect",
+              "line": 358,
+              "explanation": "Top-level collection routine that processes the Doxygen XML root and builds the definition map used by rendering."
+            },
+            {
+              "name": "render",
+              "line": 423,
+              "explanation": "Generates the final Markdown/HTML page for the requested identifier using the collected definitions."
+            },
+            {
+              "name": "get_handler",
+              "line": 447,
+              "explanation": "Factory function that returns a configured CxxHandler instance and is registered as the mkdocstrings plugin entry point."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"support/python/mkdocstrings_handlers/cxx/__init__.py\"]"
+    },
+    {
+      "subsystem_id": "10",
+      "name": "Release Automation",
+      "description": "Release Automation provides a thin Python wrapper around Git operations and shell command execution used to prepare clean build and documentation environments. The Git class (support/release.py:19) turns subprocess calls into reusable methods such as clone, fetch, pull, commit, and push, while Runner (support/release.py:69) executes arbitrary commands in a controlled manner. It exists as a separate unit to isolate the messy, side-effecting parts of release tooling, such as checkout, reset, and environment creation, from the rest of the repository so release logic can be reused and tested without leaking subprocess machinery into callers. Control flows from create_build_env (support/release.py:81) and create_doc_env (support/release.py:92), which first call clean_checkout (support/release.py:60) to reset a repository, and then use Runner/Git to set up environments and push artifacts. The module keeps repository state reproducible by using clean_checkout to force a known state before any build or documentation generation begins. Its related_files list is empty, so it currently has no direct coupling to other scanned subsystems; instead it acts as a standalone support module whose only external connections are to the system git executable and the shell environment.",
+      "files": [
+        {
+          "path": "support/release.py",
+          "role": "Central support module for release automation. It defines wrappers for Git and command execution plus environment-creation helpers, so release jobs can invoke safe, repeatable operations without embedding subprocess calls in every script. This file is the only file in the subsystem and exposes the high-level entry points used by release workflows.",
+          "key_symbols": [
+            {
+              "name": "Git",
+              "line": 19,
+              "explanation": "Thin wrapper class around a git binary; its constructor stores the command prefix and each method such as clone/fetch/pull/commit/push runs a corresponding git subcommand."
+            },
+            {
+              "name": "__init__",
+              "line": 20,
+              "explanation": "Initializes the Git wrapper, storing the executable path or command prefix used for all subsequent git operations."
+            },
+            {
+              "name": "call",
+              "line": 23,
+              "explanation": "Executes a git command via subprocess and is the single choke point for all Git operations in the wrapper."
+            },
+            {
+              "name": "add",
+              "line": 26,
+              "explanation": "Runs git add to stage changes before a commit."
+            },
+            {
+              "name": "checkout",
+              "line": 29,
+              "explanation": "Runs git checkout to switch branches or restore files."
+            },
+            {
+              "name": "clean",
+              "line": 32,
+              "explanation": "Runs git clean to remove untracked files, helping produce a pristine working tree."
+            },
+            {
+              "name": "clone",
+              "line": 35,
+              "explanation": "Runs git clone to copy a remote repository locally."
+            },
+            {
+              "name": "fetch",
+              "line": 38,
+              "explanation": "Runs git fetch to retrieve remote refs without merging."
+            },
+            {
+              "name": "commit",
+              "line": 41,
+              "explanation": "Runs git commit to record staged changes with a message."
+            },
+            {
+              "name": "pull",
+              "line": 44,
+              "explanation": "Runs git pull to update the current branch from its remote."
+            },
+            {
+              "name": "push",
+              "line": 47,
+              "explanation": "Runs git push to upload local commits to the remote repository."
+            },
+            {
+              "name": "reset",
+              "line": 50,
+              "explanation": "Runs git reset to move the current branch or index to a specified state."
+            },
+            {
+              "name": "update",
+              "line": 53,
+              "explanation": "Performs a repository update, likely pulling or resetting to bring the local checkout in sync with the remote before release work."
+            },
+            {
+              "name": "clean_checkout",
+              "line": 60,
+              "explanation": "Resets and cleans a checkout so builds and documentation generation start from a known, reproducible repository state."
+            },
+            {
+              "name": "Runner",
+              "line": 69,
+              "explanation": "Small executable-object class that runs arbitrary shell commands when called."
+            },
+            {
+              "name": "__init__",
+              "line": 70,
+              "explanation": "Stores configuration needed by the runner, such as the shell command or environment."
+            },
+            {
+              "name": "__call__",
+              "line": 74,
+              "explanation": "Makes Runner instances callable, executing the configured command and returning or propagating its result."
+            },
+            {
+              "name": "create_build_env",
+              "line": 81,
+              "explanation": "Prepares the environment needed for building artifacts; uses clean_checkout and helper commands to reach a clean build state."
+            },
+            {
+              "name": "Env",
+              "line": 83,
+              "explanation": "Minimal class or type marker created inside create_build_env to represent the prepared build environment."
+            },
+            {
+              "name": "create_doc_env",
+              "line": 92,
+              "explanation": "Prepares the environment for documentation generation, ensuring a clean repository and the required tooling before docs are built."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"support/release.py\"]"
+    }
+  ],
+  "overview": {
+    "description": "This repository is the {fmt} formatting library, a C++ text-formatting system built around a type-erased core API that packages arguments, parses format specs, and writes rendered output to buffers or streams. The Core Format API provides the foundational polymorphic value model and output infrastructure, while the Chrono Stream Support and Extended Format Features layers supply optional formatter specializations for chrono types, ostreams, ANSI colors, ranges, and wide characters. A compiled Format Engine Implementation supplies the non-template ABI pieces such as error messaging and file-descriptor helpers, and separate C wrapper header/implementation expose a plain-C interface for C callers. Supporting the library are documentation and release tooling: Documentation Scripts enrich the manual, the Docstrings Handler converts Doxygen XML for the docs site, Release Automation manages build/doc environments, and Unicode Utility and Build Support Scripts generate tables and parse CLI options. All subsystems either build on the core formatting machinery or support its maintenance and distribution, with the core's buffer and argument interfaces tying the higher-level formatters and C bridge together.",
+    "diagram_mermaid": "flowchart TD\n    C0[\"Core Format API\"]\n    C1[\"Chrono Stream Support\"]\n    C2[\"Extended Format Features\"]\n    C1 --> C0\n    C2 --> C0\n    C2 --> C1"
+  }
+}
