@@ -1,0 +1,410 @@
+[
+  {
+    "id": "g01",
+    "q": "Explain the overall architecture of this codebase: what are the major components and how do they relate?",
+    "aletheore": 1.0,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Mostly describes isolated test fixtures and TestApp metadata rather than the core engine's major components and their relationships, leaving the actual architecture mostly unaddressed.",
+    "why_r": "Clearly identifies the core AutoMapper components (MapperConfiguration, TypeMap, Profile, TypeMapPlanBuilder, ExpressionBuilder, ResolutionContext), their layered relationships, and the role of test/benchmark projects."
+  },
+  {
+    "id": "g02",
+    "q": "What is the main entry point, and what happens step by step when the primary operation runs?",
+    "aletheore": 0.0,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Material only describes test fixture DTOs/entities and never addresses the main entry point or the primary mapping operation.",
+    "why_r": "Provides an overview of the Application layer's execution flow, including the public Mapper API, TypePair, ResolutionContext, TypeMap, and ExpressionBuilder, sufficient to explain the entry point and step-by-step operation."
+  },
+  {
+    "id": "g03",
+    "q": "How is this project's public API separated from its internal implementation, and why is it split that way?",
+    "aletheore": 0.3333333333333333,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "The material is mostly withheld descriptions and empty file listings, providing no explanation of the public/internal API split.",
+    "why_r": "It thoroughly details the InternalApi bridge between public and internal interfaces, with specific members and rationale for hiding implementation."
+  },
+  {
+    "id": "g04",
+    "q": "How does the codebase handle errors and exceptions, and where can a user intervene?",
+    "aletheore": 0.16666666666666666,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Material is entirely about test assertion helpers and bug fixture files, with no explanation of exception handling or user intervention points.",
+    "why_r": "It mentions AutoMapperMappingException and shows PreCondition preventing source-getter exceptions, giving a narrow glimpse of error handling and user intervention, but lacks core mechanism details."
+  },
+  {
+    "id": "g05",
+    "q": "What is the configuration model, and how are settings resolved and layered?",
+    "aletheore": 0.16666666666666666,
+    "repowise": 1.5,
+    "aletheore_raw": [
+      0,
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      2,
+      2,
+      1,
+      2
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "The material is just a list of file paths with empty role descriptions, providing no substantive information about the configuration model or settings resolution.",
+    "why_r": "It contains a brief relevant overview of the Application layer and a null-coalescing note, but the bulk is about GitHub workflows and lacks specific resolution/layering details."
+  },
+  {
+    "id": "g06",
+    "q": "How is state managed across a single operation, and what keeps concurrent operations isolated?",
+    "aletheore": 0.0,
+    "repowise": 1.6666666666666667,
+    "aletheore_raw": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "repowise_raw": [
+      3,
+      1,
+      1,
+      2,
+      2,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Material focuses on test DTO fixtures and does not address state management or isolation.",
+    "why_r": "Directly identifies per-map state in ResolutionContext and thread-safe memoization, sufficient to explain isolation."
+  },
+  {
+    "id": "g07",
+    "q": "What are the main extension points a third-party package would hook into?",
+    "aletheore": 0.3333333333333333,
+    "repowise": 1.6666666666666667,
+    "aletheore_raw": [
+      1,
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    "repowise_raw": [
+      3,
+      2,
+      2,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "The material mostly covers test assertion extensions, licensing types, and runtime DTO fixtures, which are tangential to third-party extension points and lack specifics on configuration, DI, or queryable extension APIs.",
+    "why_r": "The material directly identifies and explains key extension points such as custom validators, IncludeSourceExtensionMethods, ProjectTo queryable extensions, and ServiceCollectionExtensions, with enough detail for a competent engineer to answer correctly."
+  },
+  {
+    "id": "g08",
+    "q": "How does this project handle I/O, and what abstractions sit between the core logic and the outside world?",
+    "aletheore": 0.0,
+    "repowise": 2.0,
+    "aletheore_raw": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "repowise_raw": [
+      3,
+      1,
+      3,
+      1,
+      3,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Material is entirely about DTO fixtures and subsystem metadata, with no mention of I/O handling or boundary abstractions.",
+    "why_r": "Material concretely demonstrates EF Core database I/O in integration tests and details the mapping/projection abstractions (Profile, ProjectTo, As<T>) bridging core logic and external data sources."
+  },
+  {
+    "id": "g09",
+    "q": "What are the most important data structures or types, and what invariants do they maintain?",
+    "aletheore": 0.16666666666666666,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "The material is almost entirely about unrelated test fixture classes and licensing domain types, with no substantive coverage of core AutoMapper data structures or their invariants.",
+    "why_r": "It thoroughly documents TypePair and MapRequest, including their structural equality, immutability, exclusion of MemberMap from equality, and generic-closing invariants, which are central to AutoMapper's mapping pipeline."
+  },
+  {
+    "id": "g10",
+    "q": "How is the codebase tested, and what does the test structure reveal about its design?",
+    "aletheore": 1.0,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "The material is fragmented into low-level fixture descriptions and lacks an overall testing strategy, integration details, or design insights, leaving major gaps for answering how the codebase is tested.",
+    "why_r": "It comprehensively describes test layers, specific harnesses, data flows, and architectural implications, fully enabling a correct and specific answer."
+  },
+  {
+    "id": "g11",
+    "q": "Which parts of this codebase are most tightly coupled, and where are the clean boundaries?",
+    "aletheore": 0.6666666666666666,
+    "repowise": 1.6666666666666667,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      0,
+      0
+    ],
+    "repowise_raw": [
+      2,
+      1,
+      2,
+      2,
+      1,
+      2
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "The material is almost entirely file-by-file trivia about isolated test fixtures and never addresses coupling or clean boundaries in the actual AutoMapper engine.",
+    "why_r": "It identifies a specific coupling area\u2014circular-graph mapping tests exercising PreserveReferences and ResolutionContext\u2014and the clean boundary formed by the AutoMapperSpecBase test harness and companion counter-test file."
+  },
+  {
+    "id": "g12",
+    "q": "If I needed to add a new feature to the core, which files would I touch and in what order?",
+    "aletheore": 0.6666666666666666,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      0,
+      1,
+      0
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Merely lists many core files with empty role descriptions, offering no mechanism or order for adding a feature.",
+    "why_r": "Explains the feature interfaces, registration, and lifecycle, plus key core files, enabling a developer to infer the files to touch and the order."
+  }
+]

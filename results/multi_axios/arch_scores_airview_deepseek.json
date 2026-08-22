@@ -1,0 +1,410 @@
+[
+  {
+    "id": "g01",
+    "q": "Explain the overall architecture of this codebase: what are the major components and how do they relate?",
+    "aletheore": 3.0,
+    "repowise": 2.1666666666666665,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      3,
+      2,
+      2,
+      2,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "tie",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "tie"
+    ],
+    "why_a": "Provides detailed runtime flow from entry through config merging, dispatch, adapters, cancellation, and headers, with specific file references and relationships.",
+    "why_r": "Gives a directory-level map and import graph but omits the request pipeline, adapters, interceptors, and transforms, so it's insufficient for a specific architecture explanation."
+  },
+  {
+    "id": "g02",
+    "q": "What is the main entry point, and what happens step by step when the primary operation runs?",
+    "aletheore": 3.0,
+    "repowise": 0.16666666666666666,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "The material clearly identifies index.js and lib/axios.js as entry points and lays out the step-by-step request pipeline (createInstance -> Axios -> mergeConfig -> transformData -> dispatchRequest -> adapter) with specific file references.",
+    "why_r": "The material is almost entirely about config/CI workflows, test setup, and unrelated code snippets, with no substantive explanation of the main entry point or the primary operation's execution flow."
+  },
+  {
+    "id": "g03",
+    "q": "How is this project's public API separated from its internal implementation, and why is it split that way?",
+    "aletheore": 1.3333333333333333,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      3,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "tie",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Provides a subsystem breakdown but never clearly defines the public API boundary or gives a focused rationale for the split, leaving the core question only partially addressed.",
+    "why_r": "Explicitly identifies the public API as the Application-layer fa\u00e7ade (index.js/types) and explains the separation rationale with a stable-depended boundary and dual type declarations."
+  },
+  {
+    "id": "g04",
+    "q": "How does the codebase handle errors and exceptions, and where can a user intervene?",
+    "aletheore": 1.8333333333333333,
+    "repowise": 2.0,
+    "aletheore_raw": [
+      1,
+      1,
+      3,
+      2,
+      3,
+      1
+    ],
+    "repowise_raw": [
+      2,
+      3,
+      1,
+      2,
+      1,
+      3
+    ],
+    "repeats": 3,
+    "spread": 1.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "repowise"
+    ],
+    "why_a": "Describes internal error classes and settle logic but fails to explicitly cover user intervention points like interceptors or config options.",
+    "why_r": "Gives a detailed explanation of AxiosError and a concrete response-interceptor example for user intervention, though it misses other hook points such as validateStatus."
+  },
+  {
+    "id": "g05",
+    "q": "What is the configuration model, and how are settings resolved and layered?",
+    "aletheore": 3.0,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Covers the actual request configuration layering\u2014defaults, instance/request merges via mergeConfig, transitional options, and resolveConfig\u2014with enough specifics to explain the model.",
+    "why_r": "Describes repository-level config files and one resolver function but omits the core defaults/merge/transitional layering, making it largely tangential to the question."
+  },
+  {
+    "id": "g06",
+    "q": "How is state managed across a single operation, and what keeps concurrent operations isolated?",
+    "aletheore": 1.5,
+    "repowise": 2.1666666666666665,
+    "aletheore_raw": [
+      2,
+      1,
+      2,
+      1,
+      2,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      2,
+      3,
+      2,
+      1,
+      2
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "aletheore",
+      "repowise"
+    ],
+    "why_a": "Describes pipeline stages and concurrency safeguards (interceptor iteration, HTTP/2 pooling, signal composition) but lacks a focused explanation of per-operation state scoping and isolation.",
+    "why_r": "Provides a direct walkthrough of one request's state flow and explicit mechanisms for concurrent isolation, including interceptor mutation safety and socket close deferral."
+  },
+  {
+    "id": "g07",
+    "q": "What are the main extension points a third-party package would hook into?",
+    "aletheore": 1.6666666666666667,
+    "repowise": 0.6666666666666666,
+    "aletheore_raw": [
+      1,
+      2,
+      1,
+      2,
+      2,
+      2
+    ],
+    "repowise_raw": [
+      0,
+      1,
+      0,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Mentions the adapter registry and pipeline but omits interceptors and transforms, so only partially covers extension points.",
+    "why_r": "Describes architecture layers and a utility helper without explaining any third-party extension mechanism."
+  },
+  {
+    "id": "g08",
+    "q": "How does this project handle I/O, and what abstractions sit between the core logic and the outside world?",
+    "aletheore": 3.0,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "It thoroughly details the core pipeline, adapter selection, and specific I/O abstractions (XHR, fetch, Node HTTP, FormData, streams) with file references, fully enabling a correct specific answer.",
+    "why_r": "It focuses on config merging and public-surface architecture but lacks specifics on the actual I/O mechanisms, adapters, or transport abstractions, leaving major gaps for the question."
+  },
+  {
+    "id": "g09",
+    "q": "What are the most important data structures or types, and what invariants do they maintain?",
+    "aletheore": 1.5,
+    "repowise": 1.6666666666666667,
+    "aletheore_raw": [
+      3,
+      1,
+      1,
+      1,
+      2,
+      1
+    ],
+    "repowise_raw": [
+      1,
+      2,
+      2,
+      2,
+      1,
+      2
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "aletheore",
+      "repowise",
+      "repowise",
+      "repowise",
+      "aletheore",
+      "repowise"
+    ],
+    "why_a": "It thoroughly catalogs major public types and internal serialization structures with specific invariants like depth limits, key rendering, and header normalization, enabling a correct and detailed answer.",
+    "why_r": "It emphasizes utility functions for prototype-pollution safety and only partially covers type definitions, omitting core types such as AxiosResponse, AxiosError, and AxiosRequestConfig, leaving major gaps."
+  },
+  {
+    "id": "g10",
+    "q": "How is the codebase tested, and what does the test structure reveal about its design?",
+    "aletheore": 1.8333333333333333,
+    "repowise": 2.8333333333333335,
+    "aletheore_raw": [
+      2,
+      1,
+      2,
+      1,
+      3,
+      2
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      2,
+      3
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "aletheore",
+      "repowise"
+    ],
+    "why_a": "Provides a rich catalog of test files and helpers but omits module-resolution tests and lacks a coherent architectural synthesis, leaving design implications partially implicit.",
+    "why_r": "Gives a clear layered view of the test suite, including subprocess and module-format verification, and explicitly connects structure to architectural choices like leaf-layer isolation and hybrid mocking."
+  },
+  {
+    "id": "g11",
+    "q": "Which parts of this codebase are most tightly coupled, and where are the clean boundaries?",
+    "aletheore": 2.8333333333333335,
+    "repowise": 1.6666666666666667,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      2,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      2,
+      1,
+      3,
+      1,
+      2
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides a subsystem decomposition with specific file references, explicit descriptions of shared dependencies (e.g., utils, resolveConfig) and isolation boundaries (adapters, FormData), enabling a precise answer about coupling and clean separation.",
+    "why_r": "Focuses on commit activity and repository layout rather than architectural dependencies, so it offers little concrete detail about structural coupling or clean boundaries."
+  },
+  {
+    "id": "g12",
+    "q": "If I needed to add a new feature to the core, which files would I touch and in what order?",
+    "aletheore": 2.8333333333333335,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      2,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "It details the core request pipeline files with roles, function-level specifics, and the merge/dispatch flow, enabling a precise ordering of files to touch for a core feature.",
+    "why_r": "It provides a high-level repo orientation but lacks concrete details on the core pipeline's internal files and their interaction order for adding a feature."
+  }
+]

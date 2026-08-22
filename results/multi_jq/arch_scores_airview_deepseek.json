@@ -1,0 +1,410 @@
+[
+  {
+    "id": "g01",
+    "q": "Explain the overall architecture of this codebase: what are the major components and how do they relate?",
+    "aletheore": 2.8333333333333335,
+    "repowise": 2.5,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      2,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      2,
+      3,
+      2,
+      2
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "tie",
+      "tie",
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides a detailed breakdown of the compiler runtime and JSON value system, with specific file roles and the data flow from parsing to execution, sufficient for a correct architectural summary.",
+    "why_r": "Presents a clear dependency graph and codebase map that identifies major components and their relationships, including the parser/compiler/bytecode pipeline and the shared jv value core."
+  },
+  {
+    "id": "g02",
+    "q": "What is the main entry point, and what happens step by step when the primary operation runs?",
+    "aletheore": 1.0,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Identifies the entry point and lists related functions but lacks a concrete step-by-step walkthrough of main's operation, burying key details among unrelated vendor examples.",
+    "why_r": "Provides a thorough, explicit walkthrough of main's initialization, argument parsing, compilation, input iteration, process() execution, and exit-code handling, fully sufficient for a correct specific answer."
+  },
+  {
+    "id": "g03",
+    "q": "How is this project's public API separated from its internal implementation, and why is it split that way?",
+    "aletheore": 2.6666666666666665,
+    "repowise": 1.5,
+    "aletheore_raw": [
+      3,
+      2,
+      3,
+      3,
+      3,
+      2
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      2,
+      1,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "repowise"
+    ],
+    "why_a": "It clearly explains the separation between the public API headers (jq.h, jv.h) and private/internal headers, describes the two main subsystems (JSON Value System and Core Compiler Runtime), and articulates concrete reasons for the split such as independent evolution, encapsulation, and separate testing.",
+    "why_r": "It provides detailed but narrow header-level descriptions without addressing the overall public-API vs internal-implementation split or the architectural rationale behind it."
+  },
+  {
+    "id": "g04",
+    "q": "How does the codebase handle errors and exceptions, and where can a user intervene?",
+    "aletheore": 1.1666666666666667,
+    "repowise": 1.3333333333333333,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      2,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      1,
+      2,
+      1,
+      1,
+      1,
+      2
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "tie",
+      "repowise",
+      "tie",
+      "aletheore",
+      "aletheore",
+      "repowise"
+    ],
+    "why_a": "Provides a few relevant pointers (stderr_cb, locfile, inject_errors) but omits the core exception mechanisms (try/catch, error builtin) and is diluted by unrelated decNumber examples.",
+    "why_r": "Identifies try/catch and related tokens in the parser header but gives no semantics or runtime behavior, so an engineer cannot write a specific answer about error handling."
+  },
+  {
+    "id": "g05",
+    "q": "What is the configuration model, and how are settings resolved and layered?",
+    "aletheore": 0.3333333333333333,
+    "repowise": 0.0,
+    "aletheore_raw": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "repowise_raw": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "tie",
+      "tie",
+      "aletheore",
+      "aletheore",
+      "tie",
+      "tie"
+    ],
+    "why_a": "Material describes jq's value system and compiler runtime internals, but never addresses the configuration model or how settings are resolved and layered.",
+    "why_r": "Material focuses on CI workflow configuration for Oniguruma and a generic jq application layer, with no information about jq's configuration model or settings resolution."
+  },
+  {
+    "id": "g06",
+    "q": "How is state managed across a single operation, and what keeps concurrent operations isolated?",
+    "aletheore": 3.0,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides specific details on VM stack frames, fork points, stack save/restore, thread-local dtoa contexts, mutex wrappers, and per-thread OOM state, directly covering operation state and concurrency isolation.",
+    "why_r": "Mostly describes high-level data flow and value representation, with only brief mentions of thread-local storage and reentrancy, lacking specifics on operation state management."
+  },
+  {
+    "id": "g07",
+    "q": "What are the main extension points a third-party package would hook into?",
+    "aletheore": 1.0,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Material is mostly a scattered file listing with decNumber examples, only touching linker/imports tangentially without explaining the extension mechanisms.",
+    "why_r": "Provides a detailed, focused explanation of the linker's module resolution, search paths, import conventions, and API, which are the core extension points for third-party packages."
+  },
+  {
+    "id": "g08",
+    "q": "How does this project handle I/O, and what abstractions sit between the core logic and the outside world?",
+    "aletheore": 3.0,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "It explicitly maps input via util.c's jq_util_input_next_input, parsing via jv_parse, output via jv_dump_term, and clearly describes the JSON Value System and Core Compiler Runtime as the abstraction layers between core logic and the outside world.",
+    "why_r": "It focuses on internal value APIs and linker flow but never concretely explains how input/output streams are read, parsed, and printed, leaving the core I/O mechanics unaddressed."
+  },
+  {
+    "id": "g09",
+    "q": "What are the most important data structures or types, and what invariants do they maintain?",
+    "aletheore": 1.0,
+    "repowise": 2.6666666666666665,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      2,
+      3,
+      3,
+      2
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "It surveys many file roles and functions but provides almost no explicit invariants beyond a passing UTF-8 note, leaving major gaps for a correct answer.",
+    "why_r": "It details the central jv data structure with concrete invariants around reference counting, kind tags, inline vs. heap values, and error propagation, enough to answer specifically."
+  },
+  {
+    "id": "g10",
+    "q": "How is the codebase tested, and what does the test structure reveal about its design?",
+    "aletheore": 1.1666666666666667,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      2,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "It details the jq_test.c harness and subsystem separation, but omits fuzzing and shell-based tests, leaving a major gap in how the codebase is exercised.",
+    "why_r": "It comprehensively covers deterministic suites, fuzzing harnesses, and explicitly ties test structure to architectural boundaries, enabling a specific and complete answer."
+  },
+  {
+    "id": "g11",
+    "q": "Which parts of this codebase are most tightly coupled, and where are the clean boundaries?",
+    "aletheore": 3.0,
+    "repowise": 1.1666666666666667,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      2,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "It explicitly identifies the two main subsystems, their dependency flows, and the key interface (bytecode.h) bridging compile and execute, providing a clear picture of tight couplings and clean boundaries.",
+    "why_r": "It is mostly a navigation map with hints about central files and bridges but lacks a systematic analysis of coupling and boundaries needed to answer the question specifically."
+  },
+  {
+    "id": "g12",
+    "q": "If I needed to add a new feature to the core, which files would I touch and in what order?",
+    "aletheore": 3.0,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides a detailed, accurate map of the core compiler pipeline (lexer, parser, compile, execute, builtin, opcode, linker) with specific files and functions, and the subsystem overview implicitly orders them.",
+    "why_r": "Mostly a high-level codebase map and irrelevant Dockerfile/snippets; it names src/main.c and jv.h but omits the compiler pipeline and specific files needed to add a core feature."
+  }
+]

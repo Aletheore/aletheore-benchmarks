@@ -1,0 +1,1906 @@
+{
+  "subsystems": [
+    {
+      "subsystem_id": "0",
+      "name": "Core Compiler Runtime",
+      "description": "This subsystem is the entire jq-language front end and runtime: it scans and parses filter source, compiles it into a bytecode program, and executes that program against a stream of JSON values. It is split from the JSON value system so that language processing (parsing, binding, optimization, and VM interpretation) can evolve independently of the memory-managed `jv` data model and so both sides can be tested separately. Control flows from the flex-based scanner in `src/lexer.c` into the bison grammar in `src/parser.c`, whose `jq_parse` (`src/parser.c:4152`) returns a `block` tree; `compile` (`src/compile.c:1218`) then binds names and emits bytecode. At run time `jq_next` (`src/execute.c:340`) drives the interpreter loop, using the stack helpers in `src/exec_stack.h` and calling C builtins registered by `builtins_bind` (`src/builtin.c:2144`). Bytecode disassembly and deallocation live in `src/bytecode.c`, module/import resolution in `src/linker.c`, and source-location tracking in `src/locfile.c`. This subsystem connects to the JSON Value System through the `jv.h`/`jv.c` APIs used throughout `builtin.c` and `execute.c`, and to the command-line driver through `src/main.c` and `src/util.c`, which provide the program text and input values.",
+      "files": [
+        {
+          "path": "src/builtin.c",
+          "role": "Implements jq's C-callable builtins: arithmetic, string, regex, and date operations, plus the table that registers them with the VM. It is invoked whenever the bytecode interpreter hits a CFUNC opcode, and each function normalizes its `jv` arguments before producing a `jv` result.",
+          "key_symbols": [
+            {
+              "name": "f_format",
+              "line": 617,
+              "explanation": "Implements the `format`/`@` formatting builtins used in string interpolation; runs at runtime on FORMAT nodes."
+            },
+            {
+              "name": "f_match",
+              "line": 965,
+              "explanation": "Implements the `match` regex builtin, returning match objects/arrays for a filter."
+            },
+            {
+              "name": "f_strftime",
+              "line": 1824,
+              "explanation": "Implements `strftime`, converting a parsed time structure into a formatted string."
+            },
+            {
+              "name": "jv2tm",
+              "line": 1683,
+              "explanation": "Converts a jq time value into a `struct tm`, used by date formatting and parsing builtins."
+            },
+            {
+              "name": "f_strptime",
+              "line": 1631,
+              "explanation": "Implements `strptime`, parsing a string according to a time format into a time value."
+            },
+            {
+              "name": "minmax_by",
+              "line": 1182,
+              "explanation": "Implements `min_by`/`max_by` by comparing values with a key expression."
+            },
+            {
+              "name": "binop_plus",
+              "line": 84,
+              "explanation": "Addition for numbers, strings, arrays, and objects; executed for every `+` filter."
+            },
+            {
+              "name": "binop_multiply",
+              "line": 325,
+              "explanation": "Multiplication for numbers and string/array repetition; part of arithmetic dispatch."
+            },
+            {
+              "name": "f_tonumber",
+              "line": 462,
+              "explanation": "Implements `tonumber`, parsing strings into numeric jv values."
+            },
+            {
+              "name": "f_toboolean",
+              "line": 491,
+              "explanation": "Implements `toboolean` and truthiness conversion for filter conditionals."
+            },
+            {
+              "name": "f_length",
+              "line": 512,
+              "explanation": "Implements `length` for strings, arrays, objects, and numbers."
+            },
+            {
+              "name": "f_startswith",
+              "line": 254,
+              "explanation": "Implements the `startswith` string predicate."
+            },
+            {
+              "name": "f_endswith",
+              "line": 270,
+              "explanation": "Implements the `endswith` string predicate."
+            },
+            {
+              "name": "builtins_bind",
+              "line": 2144,
+              "explanation": "Registers every C builtin in the jq state; called during initialization before execution."
+            }
+          ]
+        },
+        {
+          "path": "src/builtin.h",
+          "role": "Declares the builtin function table and the BINOPS macro shared between the compiler and runtime. It gives compile.c and execute.c a single list of binary operator implementations.",
+          "key_symbols": [
+            {
+              "name": "BINOPS",
+              "line": 10,
+              "explanation": "X-macro list of binary operators implemented by builtin.c; expanded to build dispatch tables."
+            }
+          ]
+        },
+        {
+          "path": "src/bytecode.c",
+          "role": "Provides bytecode disassembly, opcode metadata, and freeing of compiled programs. It is used for debugging generated code and for releasing bytecode during teardown.",
+          "key_symbols": [
+            {
+              "name": "dump_disassembly",
+              "line": 64,
+              "explanation": "Prints a full disassembly of a bytecode block for debugging."
+            },
+            {
+              "name": "dump_operation",
+              "line": 95,
+              "explanation": "Prints one bytecode instruction with its operands."
+            },
+            {
+              "name": "bytecode_free",
+              "line": 149,
+              "explanation": "Frees all memory owned by a compiled bytecode program."
+            }
+          ]
+        },
+        {
+          "path": "src/bytecode.h",
+          "role": "Defines the bytecode representation, opcode descriptions, cfunction records, symbol tables, and operand kind constants. It is the interface contract between compile.c and execute.c.",
+          "key_symbols": [
+            {
+              "name": "bytecode",
+              "line": 72,
+              "explanation": "The compiled program structure holding instructions, constants, and symbol tables."
+            },
+            {
+              "name": "cfunction",
+              "line": 48,
+              "explanation": "Describes a C builtin callable from bytecode, including name, pointer, and argument count."
+            },
+            {
+              "name": "symbol_table",
+              "line": 59,
+              "explanation": "Maps variable names to bytecode symbol slots for closure and global access."
+            },
+            {
+              "name": "MAX_CFUNCTION_ARGS",
+              "line": 47,
+              "explanation": "Compile-time limit on arguments passed to a C builtin."
+            }
+          ]
+        },
+        {
+          "path": "src/compile.c",
+          "role": "Compiles the parser's block tree into executable bytecode, resolving variable bindings, closures, constants, imports, and control-flow constructs. It is the bridge between parser.c and execute.c.",
+          "key_symbols": [
+            {
+              "name": "compile",
+              "line": 1218,
+              "explanation": "Top-level compiler entry point that lowers a parsed block tree into a bytecode program."
+            },
+            {
+              "name": "gen_const_array",
+              "line": 671,
+              "explanation": "Generates bytecode that builds a constant array value."
+            },
+            {
+              "name": "gen_const_object",
+              "line": 613,
+              "explanation": "Generates bytecode that builds a constant object value."
+            },
+            {
+              "name": "gen_function",
+              "line": 552,
+              "explanation": "Generates closure creation for user-defined functions."
+            },
+            {
+              "name": "gen_foreach",
+              "line": 850,
+              "explanation": "Generates bytecode for `foreach` loops."
+            },
+            {
+              "name": "gen_import",
+              "line": 528,
+              "explanation": "Generates an import of an external module into the current block."
+            },
+            {
+              "name": "expand_call_arglist",
+              "line": 1128,
+              "explanation": "Expands splat arguments in function calls before code generation."
+            },
+            {
+              "name": "make_env",
+              "line": 1108,
+              "explanation": "Builds an environment mapping for closure and variable resolution."
+            }
+          ]
+        },
+        {
+          "path": "src/compile.h",
+          "role": "Forward-declares the `block` type so parser.c and compile.c can pass syntax trees without exposing internals. It is the minimal shared header for the compilation pipeline.",
+          "key_symbols": [
+            {
+              "name": "block",
+              "line": 12,
+              "explanation": "Opaque block type representing compiled or parsed jq code."
+            }
+          ]
+        },
+        {
+          "path": "src/exec_stack.h",
+          "role": "Provides an arena-style stack used by execute.c for VM frames and fork points, avoiding per-frame malloc traffic. It supports aligned allocation, block push/pop, and reallocation.",
+          "key_symbols": [
+            {
+              "name": "stack_init",
+              "line": 58,
+              "explanation": "Initializes a new execution stack."
+            },
+            {
+              "name": "stack_push_block",
+              "line": 101,
+              "explanation": "Pushes a new aligned stack block for a frame or fork point."
+            },
+            {
+              "name": "stack_pop_block",
+              "line": 112,
+              "explanation": "Pops the current stack block, freeing its contents."
+            },
+            {
+              "name": "stack_reallocate",
+              "line": 85,
+              "explanation": "Grows or shrinks the underlying stack memory."
+            }
+          ]
+        },
+        {
+          "path": "src/execute.c",
+          "role": "Implements the virtual machine: jq state, stack frames, fork points for multiple outputs, tail-call analysis, and the main opcode dispatch loop. It is the largest runtime component and the direct consumer of compiled bytecode.",
+          "key_symbols": [
+            {
+              "name": "jq_next",
+              "line": 340,
+              "explanation": "Main interpreter loop; runs bytecode until it produces one output value or halts."
+            },
+            {
+              "name": "jq_init",
+              "line": 1054,
+              "explanation": "Creates a jq_state and installs the builtin functions."
+            },
+            {
+              "name": "jq_compile_args",
+              "line": 1232,
+              "explanation": "Compiles a program with named JSON arguments bound into the environment."
+            },
+            {
+              "name": "jq_start",
+              "line": 1116,
+              "explanation": "Begins execution after compilation."
+            },
+            {
+              "name": "jq_teardown",
+              "line": 1131,
+              "explanation": "Frees the interpreter state and all associated resources."
+            },
+            {
+              "name": "optimize_code",
+              "line": 1190,
+              "explanation": "Runs bytecode peephole optimizations before the first execution."
+            },
+            {
+              "name": "tail_call_analyze",
+              "line": 1177,
+              "explanation": "Analyzes bytecode for tail calls so deep recursion does not grow the stack."
+            },
+            {
+              "name": "frame_push",
+              "line": 130,
+              "explanation": "Pushes a new call frame onto the execution stack."
+            },
+            {
+              "name": "frame_pop",
+              "line": 150,
+              "explanation": "Pops the current call frame and restores the previous one."
+            },
+            {
+              "name": "stack_save",
+              "line": 211,
+              "explanation": "Saves the stack state at a fork point for backtracking."
+            },
+            {
+              "name": "stack_restore",
+              "line": 270,
+              "explanation": "Restores a previously saved stack state when a fork point is revisited."
+            }
+          ]
+        },
+        {
+          "path": "src/jq.h",
+          "role": "Public API header for the jq library entry points used by main.c, tests, and embedding applications. It declares jq_state operations without exposing the VM internals.",
+          "key_symbols": [
+            {
+              "name": "JQ_H",
+              "line": 2,
+              "explanation": "Include guard for the public jq API header."
+            }
+          ]
+        },
+        {
+          "path": "src/jq_parser.h",
+          "role": "Parser-facing declarations shared with the compile and linker machinery. It keeps the grammar's public surface separate from parser.c internals.",
+          "key_symbols": [
+            {
+              "name": "JQ_PARSER_H",
+              "line": 2,
+              "explanation": "Include guard for the parser interface header."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_alloc.h",
+          "role": "Declares the allocation wrappers used by both jv and the runtime, including OOM handling. It lets execute.c and builtin.c allocate JSON values without depending on jv.c internals.",
+          "key_symbols": [
+            {
+              "name": "JV_ALLOC_H",
+              "line": 2,
+              "explanation": "Include guard for the jv allocation header."
+            }
+          ]
+        },
+        {
+          "path": "src/lexer.c",
+          "role": "Generated flex scanner that tokenizes jq source text into the token stream consumed by the bison parser. It manages scan buffers, states, line/column tracking, and scanner lifecycle.",
+          "key_symbols": [
+            {
+              "name": "yylex_init",
+              "line": 2507,
+              "explanation": "Initializes a new lexer instance."
+            },
+            {
+              "name": "yy_scan_bytes",
+              "line": 2231,
+              "explanation": "Creates a scan buffer over a byte string, used to feed program source to the parser."
+            },
+            {
+              "name": "yy_create_buffer",
+              "line": 1973,
+              "explanation": "Allocates a flex buffer for scanning input."
+            },
+            {
+              "name": "yylex_destroy",
+              "line": 2595,
+              "explanation": "Destroys a lexer instance and frees scanner resources."
+            },
+            {
+              "name": "yy_init_globals",
+              "line": 2561,
+              "explanation": "Initializes global flex state for a fresh scan."
+            }
+          ]
+        },
+        {
+          "path": "src/lexer.h",
+          "role": "Generated flex header declaring buffer types, scanner entry points, and reentrant-state macros. It is included by parser.c to connect the grammar to the scanner.",
+          "key_symbols": [
+            {
+              "name": "YY_DECL",
+              "line": 572,
+              "explanation": "Macro defining the yylex function signature used by the parser."
+            },
+            {
+              "name": "jq_yyHEADER_H",
+              "line": 2,
+              "explanation": "Include guard for the generated lexer header."
+            }
+          ]
+        },
+        {
+          "path": "src/libm.h",
+          "role": "Portability header for math library functions used by builtin.c. It has no standalone symbols.",
+          "key_symbols": []
+        },
+        {
+          "path": "src/linker.c",
+          "role": "Resolves `import` and `include` directives, searches library paths, loads module metadata, and splices dependencies into a program block. It lets jq programs be split across multiple source files.",
+          "key_symbols": [
+            {
+              "name": "find_lib",
+              "line": 144,
+              "explanation": "Searches the library search chain for a named module file."
+            },
+            {
+              "name": "process_dependencies",
+              "line": 252,
+              "explanation": "Recursively loads and processes a module's dependencies."
+            },
+            {
+              "name": "load_library",
+              "line": 349,
+              "explanation": "Loads one library module and returns its parsed block."
+            },
+            {
+              "name": "load_program",
+              "line": 435,
+              "explanation": "Loads a full program with its module dependencies into one block."
+            },
+            {
+              "name": "build_lib_search_chain",
+              "line": 54,
+              "explanation": "Builds the ordered list of directories used to find libraries."
+            }
+          ]
+        },
+        {
+          "path": "src/linker.h",
+          "role": "Declares the linker API used by compile.c and main.c. It isolates module-loading implementation details behind a small header.",
+          "key_symbols": [
+            {
+              "name": "LINKER_H",
+              "line": 2,
+              "explanation": "Include guard for the linker header."
+            }
+          ]
+        },
+        {
+          "path": "src/locfile.c",
+          "role": "Tracks source file contents and line locations so the parser and runtime can report errors with original source lines. It is the shared source-location service for the front end.",
+          "key_symbols": [
+            {
+              "name": "locfile_locate",
+              "line": 63,
+              "explanation": "Finds and opens a source file, returning a locfile for error reporting."
+            },
+            {
+              "name": "locfile_init",
+              "line": 12,
+              "explanation": "Initializes a locfile from an in-memory buffer."
+            },
+            {
+              "name": "locfile_get_line",
+              "line": 50,
+              "explanation": "Returns a specific source line for diagnostics."
+            }
+          ]
+        },
+        {
+          "path": "src/locfile.h",
+          "role": "Defines the locfile structure and its accessor API. It is the contract used by parser.c, compile.c, and execute.c for error positions.",
+          "key_symbols": [
+            {
+              "name": "locfile",
+              "line": 12,
+              "explanation": "Structure holding source data and line information for error messages."
+            }
+          ]
+        },
+        {
+          "path": "src/opcode_list.h",
+          "role": "X-macro list of opcode names included by bytecode.c. It keeps the opcode enumeration and descriptions in one generated list.",
+          "key_symbols": []
+        },
+        {
+          "path": "src/parser.c",
+          "role": "Generated bison parser that converts the lexer token stream into a `block` tree, with grammar actions that call compile helpers for constants, binops, updates, slices, and definitions. It is the syntactic front end of the compiler.",
+          "key_symbols": [
+            {
+              "name": "yyparse",
+              "line": 2219,
+              "explanation": "Parses one complete jq program; invoked by jq_parse."
+            },
+            {
+              "name": "yylex",
+              "line": 412,
+              "explanation": "Parser-side wrapper that pulls the next token from the flex scanner."
+            },
+            {
+              "name": "jq_parse",
+              "line": 4152,
+              "explanation": "Public entry point that initializes the lexer and parser and returns the parsed block."
+            },
+            {
+              "name": "jq_parse_library",
+              "line": 4169,
+              "explanation": "Parses library/module source, allowing top-level definitions without a full program."
+            },
+            {
+              "name": "constant_fold",
+              "line": 461,
+              "explanation": "Folds constant expressions at parse time to reduce runtime work."
+            },
+            {
+              "name": "gen_binop",
+              "line": 492,
+              "explanation": "Builds bytecode for binary operator expressions."
+            },
+            {
+              "name": "gen_update",
+              "line": 529,
+              "explanation": "Builds bytecode for update-assignment expressions such as `|=`."
+            },
+            {
+              "name": "gen_slice_index",
+              "line": 450,
+              "explanation": "Builds bytecode for slice and index expressions."
+            },
+            {
+              "name": "check_object_key",
+              "line": 432,
+              "explanation": "Validates object key expressions during grammar reduction."
+            }
+          ]
+        },
+        {
+          "path": "src/parser.h",
+          "role": "Generated parser header defining token constants, semantic value types, and location types. It is included wherever grammar tokens or parse results need to be named.",
+          "key_symbols": [
+            {
+              "name": "yytokentype",
+              "line": 70,
+              "explanation": "Enum of all token kinds produced by the lexer."
+            },
+            {
+              "name": "YYSTYPE",
+              "line": 179,
+              "explanation": "Semantic value union attached to grammar symbols."
+            },
+            {
+              "name": "YYLTYPE",
+              "line": 197,
+              "explanation": "Source-location type attached to grammar symbols."
+            },
+            {
+              "name": "IDENT",
+              "line": 131,
+              "explanation": "Token constant for identifier names."
+            },
+            {
+              "name": "DEF",
+              "line": 142,
+              "explanation": "Token constant for the `def` keyword."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/builtin.c\"]\n    N1[\"src/builtin.h\"]\n    N2[\"src/bytecode.c\"]\n    N3[\"src/bytecode.h\"]\n    N4[\"src/compile.c\"]\n    N5[\"src/compile.h\"]\n    N6[\"src/exec_stack.h\"]\n    N7[\"src/execute.c\"]\n    N8[\"src/jq.h\"]\n    N9[\"src/jq_parser.h\"]\n    N10[\"src/jv_alloc.h\"]\n    N11[\"src/lexer.c\"]\n    N12[\"src/lexer.h\"]\n    N13[\"src/libm.h\"]\n    N14[\"src/linker.c\"]\n    N15[\"src/linker.h\"]\n    N16[\"src/locfile.c\"]\n    N17[\"src/locfile.h\"]\n    N18[\"src/opcode_list.h\"]\n    N19[\"src/parser.c\"]\n    N20[\"src/parser.h\"]\n    N0 --> N1\n    N0 --> N5\n    N0 --> N9\n    N0 --> N3\n    N0 --> N15\n    N0 --> N17\n    N0 --> N10\n    N0 --> N13\n    N1 --> N8\n    N1 --> N3\n    N1 --> N5\n    N2 --> N3\n    N2 --> N10\n    N3 --> N8\n    N3 --> N18\n    N4 --> N5\n    N4 --> N3\n    N4 --> N17\n    N4 --> N10\n    N5 --> N3\n    N5 --> N17\n    N6 --> N10\n    N7 --> N6\n    N7 --> N3\n    N7 --> N10\n    N7 --> N17\n    N7 --> N8\n    N7 --> N1\n    N7 --> N15\n    N9 --> N17\n    N9 --> N5\n    N11 --> N10\n    N11 --> N5\n    N11 --> N20\n    N14 --> N9\n    N14 --> N17\n    N14 --> N8\n    N14 --> N5\n    N14 --> N10\n    N16 --> N8\n    N16 --> N10\n    N16 --> N17\n    N17 --> N8\n    N19 --> N5\n    N19 --> N10\n    N19 --> N1\n    N19 --> N17\n    N19 --> N12\n    N20 --> N17"
+    },
+    {
+      "subsystem_id": "1",
+      "name": "JSON Value System",
+      "description": "This subsystem implements jq's JSON data model and all value I/O: reference-counted JSON values (`jv`), parsing, printing, number formatting, Unicode validation, and the CLI/test harness around them. It exists separately so the compiler/runtime can manipulate a stable value abstraction while all representation concerns (copy-on-write, allocation failure, decimal conversion, UTF-8, and output formatting) remain encapsulated in one place. Input data enters through `src/util.c`'s `jq_util_input_next_input` (`src/util.c:399`) and `main` (`src/main.c:289`), is converted by `jv_parse` (`src/jv_parse.c:913`) into a `jv`, and is printed by `jv_dump_term` (`src/jv_print.c:219`). Values are allocated with `jv_mem_alloc` (`src/jv_alloc.c:141`) and released by `jv_free` (`src/jv.c:2014`), while `jv_aux.c` supplies structural operations such as `jv_get`, `jv_set`, and `jv_setpath` used by the runtime. Floating-point rendering is delegated to `jvp_dtoa_fmt` (`src/jv_dtoa.c:4205`) and Unicode handling to `jvp_utf8_next` (`src/jv_unicode.c:30`). Tests in `jq_test.c` exercise both the value layer and the runtime, and the subsystem connects to Core Compiler Runtime through `execute.c`, `compile.c`, and `linker.c`, which call into these jv APIs.",
+      "files": [
+        {
+          "path": "src/jq_test.c",
+          "role": "Standalone test driver that compiles and runs jq programs, checks outputs and error messages, and exercises recompilation, compile arguments, start-state reset, and threaded use. It is the primary integration test harness for the runtime and value system.",
+          "key_symbols": [
+            {
+              "name": "run_jq_tests",
+              "line": 91,
+              "explanation": "Runs the main jq test suite from test data, comparing expected outputs and errors."
+            },
+            {
+              "name": "jv_test",
+              "line": 604,
+              "explanation": "Unit tests for jv value construction, comparison, and manipulation."
+            },
+            {
+              "name": "run_jq_recompile_tests",
+              "line": 401,
+              "explanation": "Tests that the same jq state can safely recompile and run multiple programs."
+            },
+            {
+              "name": "run_jq_compile_args_tests",
+              "line": 355,
+              "explanation": "Tests compiling with named JSON arguments."
+            },
+            {
+              "name": "test_pthread_run",
+              "line": 546,
+              "explanation": "Runs jq programs concurrently in pthreads to check thread-safety."
+            },
+            {
+              "name": "jq_testsuite",
+              "line": 21,
+              "explanation": "Top-level dispatcher for the whole jq test run."
+            }
+          ]
+        },
+        {
+          "path": "src/jv.c",
+          "role": "Core implementation of the jv JSON value: tagged union storage, reference counting, copy-on-write arrays/objects/strings, hashing, equality, string operations, and merging. It is the foundation on which the rest of the JSON Value System and the runtime depend.",
+          "key_symbols": [
+            {
+              "name": "jv_free",
+              "line": 2014,
+              "explanation": "Decrements a value's reference count and frees storage when it reaches zero."
+            },
+            {
+              "name": "jvp_equal",
+              "line": 2087,
+              "explanation": "Deep equality comparison for two jv values, used by `==` and sorting."
+            },
+            {
+              "name": "jvp_string_hash",
+              "line": 1240,
+              "explanation": "Computes a hash for string values, used by object key lookup."
+            },
+            {
+              "name": "jvp_object_new",
+              "line": 1615,
+              "explanation": "Creates a new empty object value with a hash table for keys."
+            },
+            {
+              "name": "jvp_array_write",
+              "line": 866,
+              "explanation": "Writes an element into an array, unsharing the array first when needed."
+            },
+            {
+              "name": "jv_string_split",
+              "line": 1400,
+              "explanation": "Splits a string on a separator, producing an array of strings."
+            },
+            {
+              "name": "jv_string_implode",
+              "line": 1450,
+              "explanation": "Implodes an array of codepoints into a UTF-8 string."
+            },
+            {
+              "name": "jvp_object_merge_recursive",
+              "line": 1922,
+              "explanation": "Recursively merges two objects, used by `*` object multiplication."
+            }
+          ]
+        },
+        {
+          "path": "src/jv.h",
+          "role": "Public API header for the jv type, constants, and functions. It is included by nearly every other subsystem because they all pass JSON values.",
+          "key_symbols": [
+            {
+              "name": "jv_print_flags",
+              "line": 218,
+              "explanation": "Flags controlling JSON output formatting such as color, sorting, and indentation."
+            },
+            {
+              "name": "jv_is_valid",
+              "line": 52,
+              "explanation": "Checks whether a jv is an actual value rather than an error/invalid marker."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_alloc.c",
+          "role": "Memory allocator wrappers for jv with an installable out-of-memory handler and thread-local error state. This centralizes allocation policy so jv.c and other components never call malloc directly.",
+          "key_symbols": [
+            {
+              "name": "jv_nomem_handler",
+              "line": 92,
+              "explanation": "Installs or returns the callback invoked when an allocation fails."
+            },
+            {
+              "name": "jv_mem_alloc",
+              "line": 141,
+              "explanation": "Allocates memory through jv's guarded allocator, triggering the OOM handler on failure."
+            },
+            {
+              "name": "jv_mem_calloc",
+              "line": 153,
+              "explanation": "Zero-initialized allocation wrapper used for arrays and objects."
+            },
+            {
+              "name": "memory_exhausted",
+              "line": 108,
+              "explanation": "Internal handler that raises the jv out-of-memory error."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_aux.c",
+          "role": "Higher-level structural operations on jv: path get/set, key enumeration, sorting, grouping, and uniqueness. These are used by jq filters such as `getpath`, `setpath`, `keys`, `sort`, and `group_by`.",
+          "key_symbols": [
+            {
+              "name": "jv_get",
+              "line": 98,
+              "explanation": "Indexes into an object or array with a jv key."
+            },
+            {
+              "name": "jv_set",
+              "line": 164,
+              "explanation": "Sets a key/element in an object or array, producing a new value."
+            },
+            {
+              "name": "jv_setpath",
+              "line": 390,
+              "explanation": "Sets a value at a path represented by an array of keys."
+            },
+            {
+              "name": "jv_getpath",
+              "line": 449,
+              "explanation": "Gets a value at an array path."
+            },
+            {
+              "name": "jv_delpaths",
+              "line": 522,
+              "explanation": "Deletes multiple paths from an object/array."
+            },
+            {
+              "name": "jv_keys_unsorted",
+              "line": 572,
+              "explanation": "Returns an array of an object's keys in hash order."
+            },
+            {
+              "name": "jv_sort",
+              "line": 761,
+              "explanation": "Sorts an array using jv comparison semantics."
+            },
+            {
+              "name": "jv_group",
+              "line": 779,
+              "explanation": "Groups array elements by equality, backing `group_by`."
+            },
+            {
+              "name": "jvp_cmp",
+              "line": 618,
+              "explanation": "Total ordering comparison used by sort and min/max."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_dtoa.c",
+          "role": "David Gay dtoa port that performs exact conversion between binary doubles and decimal strings. It is what makes `1.1` print and parse correctly in JSON output.",
+          "key_symbols": [
+            {
+              "name": "jvp_dtoa_fmt",
+              "line": 4205,
+              "explanation": "Formats a double into the shortest/round-trippable decimal representation used by jv printing."
+            },
+            {
+              "name": "jvp_dtoa_context_init",
+              "line": 522,
+              "explanation": "Initializes a dtoa context holding thread-local scratch state."
+            },
+            {
+              "name": "jvp_dtoa_context_free",
+              "line": 569,
+              "explanation": "Frees a dtoa context and its big-integer scratch blocks."
+            },
+            {
+              "name": "d2b",
+              "line": 1184,
+              "explanation": "Converts a double to binary big-integer representation during formatting."
+            },
+            {
+              "name": "Balloc",
+              "line": 530,
+              "explanation": "Allocates big-integer blocks from dtoa's internal pool."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_dtoa.h",
+          "role": "Header for the dtoa context type and formatting limits. It keeps the vendored dtoa implementation behind a small interface.",
+          "key_symbols": [
+            {
+              "name": "dtoa_context",
+              "line": 6,
+              "explanation": "Opaque context holding dtoa scratch state for a thread."
+            },
+            {
+              "name": "JVP_DTOA_FMT_MAX_LEN",
+              "line": 20,
+              "explanation": "Maximum length of a formatted double string produced by jvp_dtoa_fmt."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_dtoa_tsd.c",
+          "role": "Thread-local storage wrappers around the dtoa context so number formatting is reentrant and thread-safe. This matters because jq can be embedded and run concurrently.",
+          "key_symbols": [
+            {
+              "name": "tsd_dtoa_context_get",
+              "line": 39,
+              "explanation": "Returns the calling thread's dtoa context, creating it on first use."
+            },
+            {
+              "name": "jv_tsd_dtoa_ctx_init",
+              "line": 31,
+              "explanation": "Initializes thread-local dtoa state for the process."
+            },
+            {
+              "name": "jv_tsd_dtoa_ctx_fini",
+              "line": 22,
+              "explanation": "Cleans up thread-local dtoa state at shutdown."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_dtoa_tsd.h",
+          "role": "Declares the thread-local dtoa context API. It is the connection between jv_dtoa.c and platform thread-local storage.",
+          "key_symbols": [
+            {
+              "name": "JV_DTOA_TSD_H",
+              "line": 2,
+              "explanation": "Include guard for the dtoa thread-local header."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_file.c",
+          "role": "Loads an entire file into a jv string value. It is used by the CLI and linker to read source files and input files.",
+          "key_symbols": [
+            {
+              "name": "jv_load_file",
+              "line": 12,
+              "explanation": "Reads a file from disk and returns its contents as a jv string, or an error jv."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_parse.c",
+          "role": "Streaming JSON parser that accepts incremental buffer input and produces jv values. It handles strings, escapes, numbers, literals, arrays, objects, and truncation/error states.",
+          "key_symbols": [
+            {
+              "name": "jv_parse_sized",
+              "line": 909,
+              "explanation": "Parses a length-delimited JSON string into a jv value."
+            },
+            {
+              "name": "jv_parse",
+              "line": 913,
+              "explanation": "Parses a NUL-terminated JSON string into a jv value."
+            },
+            {
+              "name": "jv_parse_sized_custom_flags",
+              "line": 869,
+              "explanation": "Parses JSON with custom parser flags, used for streaming/input control."
+            },
+            {
+              "name": "jv_parser_new",
+              "line": 715,
+              "explanation": "Creates a new streaming parser state."
+            },
+            {
+              "name": "jv_parser_next",
+              "line": 772,
+              "explanation": "Returns the next complete JSON value from the streaming parser."
+            },
+            {
+              "name": "parse_token",
+              "line": 158,
+              "explanation": "Handles a single token of JSON during non-streaming parse."
+            },
+            {
+              "name": "stream_token",
+              "line": 243,
+              "explanation": "Handles a single token during streaming parse mode."
+            },
+            {
+              "name": "jv_parser_set_buf",
+              "line": 735,
+              "explanation": "Feeds a new input buffer into the streaming parser."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_print.c",
+          "role": "Prints jv values as JSON text with support for colors, indentation, sorting, and truncation. It is the output side of the value system and is called by the CLI and runtime debugging paths.",
+          "key_symbols": [
+            {
+              "name": "jv_dump_term",
+              "line": 219,
+              "explanation": "Serializes a jv value to a terminal/file with formatting flags."
+            },
+            {
+              "name": "jvp_dump_string",
+              "line": 144,
+              "explanation": "Writes a JSON string literal with proper escaping."
+            },
+            {
+              "name": "jv_dump_string",
+              "line": 405,
+              "explanation": "Serializes a jv value into a newly allocated string."
+            },
+            {
+              "name": "jv_show",
+              "line": 398,
+              "explanation": "Debug helper that prints a jv value to stderr."
+            },
+            {
+              "name": "jq_set_colors",
+              "line": 40,
+              "explanation": "Configures the ANSI color palette used for pretty-printed output."
+            },
+            {
+              "name": "DEFAULT_COLORS",
+              "line": 31,
+              "explanation": "The default color assignments for JSON types."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_private.h",
+          "role": "Internal macros and declarations shared among jv implementation files. It exposes the private representation only to code inside this subsystem.",
+          "key_symbols": [
+            {
+              "name": "JV_PRIVATE",
+              "line": 2,
+              "explanation": "Include guard for the private jv implementation header."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_thread.h",
+          "role": "Portable thread and mutex wrappers used by jv_alloc.c and jv_dtoa_tsd.c. It hides platform differences behind a small API.",
+          "key_symbols": [
+            {
+              "name": "pthread_mutex",
+              "line": 11,
+              "explanation": "Type alias/wrapper for a mutex used by the value system."
+            },
+            {
+              "name": "pthread_mutex_init",
+              "line": 17,
+              "explanation": "Initializes a mutex for thread-safe jv operations."
+            },
+            {
+              "name": "pthread_mutex_lock",
+              "line": 26,
+              "explanation": "Locks a mutex around critical sections."
+            },
+            {
+              "name": "pthread_mutex_unlock",
+              "line": 48,
+              "explanation": "Unlocks a mutex after a critical section."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_unicode.c",
+          "role": "UTF-8 validation, decoding, encoding, and whitespace classification used by jv strings and the JSON parser. It enforces that string values always contain valid UTF-8.",
+          "key_symbols": [
+            {
+              "name": "jvp_utf8_next",
+              "line": 30,
+              "explanation": "Advances to the next UTF-8 codepoint in a string, validating as it goes."
+            },
+            {
+              "name": "jvp_utf8_encode",
+              "line": 101,
+              "explanation": "Encodes a codepoint into one to four UTF-8 bytes."
+            },
+            {
+              "name": "jvp_utf8_is_valid",
+              "line": 78,
+              "explanation": "Checks whether a byte sequence is valid UTF-8."
+            },
+            {
+              "name": "jvp_codepoint_is_whitespace",
+              "line": 125,
+              "explanation": "Classifies a codepoint as JSON whitespace."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_unicode.h",
+          "role": "Declares the UTF-8 helper API used by jv.c and jv_parse.c. It keeps Unicode policy in one header.",
+          "key_symbols": [
+            {
+              "name": "JV_UNICODE_H",
+              "line": 2,
+              "explanation": "Include guard for the Unicode header."
+            }
+          ]
+        },
+        {
+          "path": "src/jv_utf8_tables.h",
+          "role": "Generated static tables consumed by jv_unicode.c. It provides fast lookup data for UTF-8 decoding without runtime computation.",
+          "key_symbols": [
+            {
+              "name": "UTF8_CONTINUATION_BYTE",
+              "line": 1,
+              "explanation": "Table classifying bytes as UTF-8 continuation bytes."
+            }
+          ]
+        },
+        {
+          "path": "src/main.c",
+          "role": "CLI entry point: parses command-line options, reads program text, sets up input/output callbacks, and drives execution. It ties together the JSON value system and the core compiler runtime.",
+          "key_symbols": [
+            {
+              "name": "main",
+              "line": 289,
+              "explanation": "Top-level program entry that parses arguments and runs the jq process."
+            },
+            {
+              "name": "process",
+              "line": 175,
+              "explanation": "Runs a single input value through the compiled program and prints outputs."
+            },
+            {
+              "name": "usage",
+              "line": 49,
+              "explanation": "Prints command-line usage information."
+            },
+            {
+              "name": "isoption",
+              "line": 129,
+              "explanation": "Checks whether an argument is a command-line option."
+            },
+            {
+              "name": "stderr_cb",
+              "line": 259,
+              "explanation": "Callback that formats jq error messages to stderr."
+            }
+          ]
+        },
+        {
+          "path": "src/util.c",
+          "role": "Input stream handling, path expansion, file reading, and time/date formatting helpers used by the CLI and builtins. It provides the input plumbing from files/stdin into jq's JSON parser.",
+          "key_symbols": [
+            {
+              "name": "jq_util_input_init",
+              "line": 203,
+              "explanation": "Initializes the input reader state."
+            },
+            {
+              "name": "jq_util_input_add_input",
+              "line": 245,
+              "explanation": "Adds a file or stdin source to the input queue."
+            },
+            {
+              "name": "jq_util_input_read_more",
+              "line": 260,
+              "explanation": "Reads more bytes from the current input source into the parser buffer."
+            },
+            {
+              "name": "jq_util_input_next_input",
+              "line": 399,
+              "explanation": "Advances to the next input value after the current source is exhausted."
+            },
+            {
+              "name": "jq_util_input_get_position",
+              "line": 355,
+              "explanation": "Returns the current line/column position for error reporting."
+            },
+            {
+              "name": "jq_realpath",
+              "line": 130,
+              "explanation": "Resolves a path to its canonical absolute form, used for module imports."
+            },
+            {
+              "name": "conv_num",
+              "line": 1210,
+              "explanation": "Parses a numeric field for the strptime-compatible date parser."
+            }
+          ]
+        },
+        {
+          "path": "src/util.h",
+          "role": "Declares utility functions and the private output wrapper used by the CLI. It is the shared header for main.c and builtin.c helper code.",
+          "key_symbols": [
+            {
+              "name": "priv_fwrite",
+              "line": 33,
+              "explanation": "Internal bounded write helper used for output."
+            },
+            {
+              "name": "UTIL_H",
+              "line": 2,
+              "explanation": "Include guard for the utility header."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/jq_test.c\"]\n    N1[\"src/jv.c\"]\n    N2[\"src/jv.h\"]\n    N3[\"src/jv_alloc.c\"]\n    N4[\"src/jv_aux.c\"]\n    N5[\"src/jv_dtoa.c\"]\n    N6[\"src/jv_dtoa.h\"]\n    N7[\"src/jv_dtoa_tsd.c\"]\n    N8[\"src/jv_dtoa_tsd.h\"]\n    N9[\"src/jv_file.c\"]\n    N10[\"src/jv_parse.c\"]\n    N11[\"src/jv_print.c\"]\n    N12[\"src/jv_private.h\"]\n    N13[\"src/jv_thread.h\"]\n    N14[\"src/jv_unicode.c\"]\n    N15[\"src/jv_unicode.h\"]\n    N16[\"src/jv_utf8_tables.h\"]\n    N17[\"src/main.c\"]\n    N18[\"src/util.c\"]\n    N19[\"src/util.h\"]\n    N0 --> N2\n    N1 --> N2\n    N1 --> N15\n    N1 --> N19\n    N1 --> N6\n    N1 --> N8\n    N1 --> N13\n    N3 --> N2\n    N4 --> N2\n    N4 --> N12\n    N5 --> N6\n    N5 --> N2\n    N7 --> N13\n    N7 --> N8\n    N7 --> N6\n    N9 --> N2\n    N9 --> N15\n    N10 --> N2\n    N10 --> N6\n    N10 --> N15\n    N11 --> N2\n    N11 --> N6\n    N11 --> N8\n    N11 --> N15\n    N11 --> N12\n    N11 --> N19\n    N14 --> N15\n    N14 --> N16\n    N17 --> N2\n    N17 --> N19\n    N18 --> N19\n    N18 --> N15\n    N19 --> N2"
+    },
+    {
+      "subsystem_id": "2",
+      "name": "Decimal Number Library",
+      "description": "This subsystem is the vendor-supplied decNumber library, which provides arbitrary-precision decimal numbers and the three IEEE 754 decimal floating-point encodings (decimal32, decimal64, and decimal128) that jq uses to avoid binary floating-point artifacts in JSON numbers. It is kept as a separate vendored unit because it is a self-contained, externally maintained arithmetic package with its own headers, examples, and internal build assumptions; isolating it lets jq's own code treat decimal conversion as a stable interface. Text and numbers enter through `decNumberFromString` (`vendor/decNumber/decNumber.c:478`) and are converted to and from the dense packed decimal (DPD) storage formats by `decimal128FromNumber` (`vendor/decNumber/decimal128.c:74`) and `decimal64FromNumber` (`vendor/decNumber/decimal64.c:80`). Arithmetic and comparison operations such as `decExpOp` (`vendor/decNumber/decNumber.c:5227`) and `decCompareOp` (`vendor/decNumber/decNumber.c:6004`) operate on the generic `decNumber` type, while `decPackedToNumber` (`vendor/decNumber/decPacked.c:147`) and `decPackedFromNumber` (`vendor/decNumber/decPacked.c:59`) handle packed BCD exchange format. The existing `decNumber` type covers the Number Library role, while related `decContext.c`, `decDouble.c`, `decQuad.c`, and `decSingle.c` files are the parallel decimal core with which it shares design.",
+      "files": [
+        {
+          "path": "vendor/decNumber/decNumber.c",
+          "role": "Core generic decimal arithmetic: parsing, arithmetic, transcendental functions, rounding, comparisons, and bitwise operations on the `decNumber` type. This is the largest file in the vendored library and the main implementation behind decimal values.",
+          "key_symbols": [
+            {
+              "name": "decNumberFromString",
+              "line": 478,
+              "explanation": "Parses a decimal string into a `decNumber`, the entry point for text-to-number conversion."
+            },
+            {
+              "name": "decNumberToInt32",
+              "line": 369,
+              "explanation": "Converts a `decNumber` to a 32-bit integer, applying context rounding if needed."
+            },
+            {
+              "name": "decExpOp",
+              "line": 5227,
+              "explanation": "Computes the exponential function for a decimal number."
+            },
+            {
+              "name": "decCompareOp",
+              "line": 6004,
+              "explanation": "Compares two decimal numbers with full NaN/Infinity semantics."
+            },
+            {
+              "name": "decNumberFMA",
+              "line": 1094,
+              "explanation": "Fused multiply-add for decimal operands."
+            },
+            {
+              "name": "decNumberLog10",
+              "line": 1386,
+              "explanation": "Computes the base-10 logarithm of a decimal number."
+            },
+            {
+              "name": "decNumberExp",
+              "line": 1038,
+              "explanation": "Public wrapper for the exponential operation."
+            },
+            {
+              "name": "decApplyRound",
+              "line": 7070,
+              "explanation": "Applies the context rounding rule to a coefficient."
+            },
+            {
+              "name": "decUnitAddSub",
+              "line": 6337,
+              "explanation": "Adds or subtracts arrays of decimal units, the low-level arithmetic kernel."
+            },
+            {
+              "name": "decNumberShow",
+              "line": 7813,
+              "explanation": "Debug dump of a decNumber's fields."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decNumber.h",
+          "role": "Public header for the `decNumber` type, its flags, and its unit constants. It defines what a decimal number looks like at the ABI level.",
+          "key_symbols": [
+            {
+              "name": "DECNUMDIGITS",
+              "line": 51,
+              "explanation": "Maximum number of digits in a default decNumber."
+            },
+            {
+              "name": "DECNEG",
+              "line": 31,
+              "explanation": "Sign bit mask for negative numbers."
+            },
+            {
+              "name": "DECSPECIAL",
+              "line": 36,
+              "explanation": "Mask for special values such as Infinity and NaN."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decNumberLocal.h",
+          "role": "Internal macros, types, D2U conversion tables, and compilation flags shared by decNumber.c. It is the private implementation header of the generic decimal core.",
+          "key_symbols": [
+            {
+              "name": "D2UTABLE",
+              "line": 199,
+              "explanation": "Table converting digit counts to internal unit counts."
+            },
+            {
+              "name": "DECLITEND",
+              "line": 35,
+              "explanation": "Compile flag selecting little-endian unit layout."
+            },
+            {
+              "name": "DECUSE64",
+              "line": 40,
+              "explanation": "Compile flag selecting 64-bit internal units."
+            },
+            {
+              "name": "DECBUFFER",
+              "line": 61,
+              "explanation": "Compile flag setting the size of the stack scratch buffer."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decPacked.c",
+          "role": "Converts between decNumber and packed BCD byte arrays, the exchange format defined by the decimal arithmetic specification. It is used when decimal values must be stored or transmitted in fixed-width BCD.",
+          "key_symbols": [
+            {
+              "name": "decPackedToNumber",
+              "line": 147,
+              "explanation": "Converts a packed BCD byte array into a decNumber."
+            },
+            {
+              "name": "decPackedFromNumber",
+              "line": 59,
+              "explanation": "Converts a decNumber into a packed BCD byte array."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decPacked.h",
+          "role": "Public header for the packed BCD conversion API and its flags. It declares the constants used with decPackedFromNumber/decPackedToNumber.",
+          "key_symbols": [
+            {
+              "name": "DECPUNSIGNED",
+              "line": 40,
+              "explanation": "Flag marking the packed digits as unsigned when converting."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decimal128.c",
+          "role": "Implements the 128-bit IEEE 754 decimal format: conversions to/from decNumber, string parsing/printing, and canonical/DPD helpers. This is the widest decimal format in the library.",
+          "key_symbols": [
+            {
+              "name": "decimal128FromNumber",
+              "line": 74,
+              "explanation": "Packs a decNumber into the 128-bit DPD representation."
+            },
+            {
+              "name": "decimal128ToNumber",
+              "line": 189,
+              "explanation": "Unpacks a 128-bit decimal value into a decNumber."
+            },
+            {
+              "name": "decimal128ToString",
+              "line": 276,
+              "explanation": "Formats a 128-bit decimal value as a string."
+            },
+            {
+              "name": "decimal128FromString",
+              "line": 451,
+              "explanation": "Parses a string into a 128-bit decimal value."
+            },
+            {
+              "name": "decimal128IsCanonical",
+              "line": 473,
+              "explanation": "Checks whether a 128-bit value uses canonical encoding."
+            },
+            {
+              "name": "decimal128Show",
+              "line": 531,
+              "explanation": "Debug printer for the raw 128-bit decimal encoding."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decimal128.h",
+          "role": "Public header defining decimal128 field widths, exponent limits, and API macro aliases. It maps the generic decFloat API to the 128-bit implementation.",
+          "key_symbols": [
+            {
+              "name": "DECIMAL128_Bytes",
+              "line": 27,
+              "explanation": "Storage size of decimal128 in bytes."
+            },
+            {
+              "name": "DECIMAL128_Pmax",
+              "line": 28,
+              "explanation": "Maximum precision in digits for decimal128."
+            },
+            {
+              "name": "DECIMAL128_Emax",
+              "line": 29,
+              "explanation": "Maximum exponent for decimal128."
+            },
+            {
+              "name": "DECNUMDIGITS",
+              "line": 45,
+              "explanation": "Digit capacity used when allocating decNumber scratch for decimal128."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decimal32.c",
+          "role": "Implements the 32-bit IEEE 754 decimal format conversions and string handling. It is the smallest DPD format and is used where storage is more important than range.",
+          "key_symbols": [
+            {
+              "name": "decimal32FromNumber",
+              "line": 74,
+              "explanation": "Packs a decNumber into the 32-bit DPD representation."
+            },
+            {
+              "name": "decimal32ToNumber",
+              "line": 179,
+              "explanation": "Unpacks a 32-bit decimal value into a decNumber."
+            },
+            {
+              "name": "decimal32ToString",
+              "line": 247,
+              "explanation": "Formats a 32-bit decimal value as a string."
+            },
+            {
+              "name": "decimal32FromString",
+              "line": 378,
+              "explanation": "Parses a string into a 32-bit decimal value."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decimal32.h",
+          "role": "Public header defining decimal32 field widths, exponent limits, and API macros. It keeps the generic decimal format contract for the 32-bit width.",
+          "key_symbols": [
+            {
+              "name": "DECIMAL32_Bytes",
+              "line": 27,
+              "explanation": "Storage size of decimal32 in bytes."
+            },
+            {
+              "name": "DECIMAL32_Pmax",
+              "line": 28,
+              "explanation": "Maximum precision in digits for decimal32."
+            },
+            {
+              "name": "DECIMAL32_Emax",
+              "line": 29,
+              "explanation": "Maximum exponent for decimal32."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decimal64.c",
+          "role": "Implements the 64-bit IEEE 754 decimal format conversions and the DPD/BIN table functions used by the dense encoding. This is the format most likely to be used by jq's JSON numbers.",
+          "key_symbols": [
+            {
+              "name": "decimal64FromNumber",
+              "line": 80,
+              "explanation": "Packs a decNumber into the 64-bit DPD representation."
+            },
+            {
+              "name": "decimal64ToNumber",
+              "line": 206,
+              "explanation": "Unpacks a 64-bit decimal value into a decNumber."
+            },
+            {
+              "name": "decimal64ToString",
+              "line": 292,
+              "explanation": "Formats a 64-bit decimal value as a string."
+            },
+            {
+              "name": "decimal64FromString",
+              "line": 439,
+              "explanation": "Parses a string into a 64-bit decimal value."
+            },
+            {
+              "name": "decDigitsToDPD",
+              "line": 608,
+              "explanation": "Converts 3 BCD digits into a 10-bit DPD code."
+            },
+            {
+              "name": "decDigitsFromDPD",
+              "line": 734,
+              "explanation": "Converts a 10-bit DPD code back into 3 BCD digits."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decimal64.h",
+          "role": "Public header defining decimal64 field widths, exponent limits, and API macros. It connects the generic decimal API to the 64-bit implementation.",
+          "key_symbols": [
+            {
+              "name": "DECIMAL64_Bytes",
+              "line": 28,
+              "explanation": "Storage size of decimal64 in bytes."
+            },
+            {
+              "name": "DECIMAL64_Pmax",
+              "line": 29,
+              "explanation": "Maximum precision in digits for decimal64."
+            },
+            {
+              "name": "DECIMAL64_Emax",
+              "line": 30,
+              "explanation": "Maximum exponent for decimal64."
+            },
+            {
+              "name": "DECNUMDIGITS",
+              "line": 47,
+              "explanation": "Digit capacity used when allocating decNumber scratch for decimal64."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/example1.c",
+          "role": "Standalone example program demonstrating basic decNumber creation, arithmetic, and printing. It is documentation-by-example rather than part of the runtime.",
+          "key_symbols": [
+            {
+              "name": "main",
+              "line": 15,
+              "explanation": "Runs a simple decNumber arithmetic demonstration."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/example2.c",
+          "role": "Example program showing arithmetic with an explicit decContext, including rounding behavior. It illustrates how callers set precision and rounding mode.",
+          "key_symbols": [
+            {
+              "name": "main",
+              "line": 15,
+              "explanation": "Exercises context-controlled decimal arithmetic."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/example3.c",
+          "role": "Example program that tours many decNumber functions, including special values and transcendental operations. It serves as a compact API reference.",
+          "key_symbols": [
+            {
+              "name": "main",
+              "line": 15,
+              "explanation": "Runs the decNumber API overview demonstration."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/example4.c",
+          "role": "Example program demonstrating decimal exception handling with a signal handler. It shows how to detect overflow, division by zero, and invalid operations.",
+          "key_symbols": [
+            {
+              "name": "main",
+              "line": 27,
+              "explanation": "Runs the exception-handling demonstration."
+            },
+            {
+              "name": "signalHandler",
+              "line": 22,
+              "explanation": "Catches decimal status signals and reports the error."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/example5.c",
+          "role": "Example program demonstrating string conversion and formatting of decimal numbers. It is a minimal usage sample for decNumberFromString and decNumberToString.",
+          "key_symbols": [
+            {
+              "name": "main",
+              "line": 13,
+              "explanation": "Parses and prints a decimal value."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/example6.c",
+          "role": "Example program showing conversion between decimal formats, likely decNumber and one of the packed/DPD formats. It demonstrates the library's interoperability functions.",
+          "key_symbols": [
+            {
+              "name": "main",
+              "line": 14,
+              "explanation": "Runs the format-conversion demonstration."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/example8.c",
+          "role": "Example program demonstrating use of the decimal64/decimal128 DPD APIs from C. It shows the higher-level packed format functions in action.",
+          "key_symbols": [
+            {
+              "name": "main",
+              "line": 17,
+              "explanation": "Runs the decimal-format example using the public decimal API."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"vendor/decNumber/decNumber.c\"]\n    N1[\"vendor/decNumber/decNumber.h\"]\n    N2[\"vendor/decNumber/decNumberLocal.h\"]\n    N3[\"vendor/decNumber/decPacked.c\"]\n    N4[\"vendor/decNumber/decPacked.h\"]\n    N5[\"vendor/decNumber/decimal128.c\"]\n    N6[\"vendor/decNumber/decimal128.h\"]\n    N7[\"vendor/decNumber/decimal32.c\"]\n    N8[\"vendor/decNumber/decimal32.h\"]\n    N9[\"vendor/decNumber/decimal64.c\"]\n    N10[\"vendor/decNumber/decimal64.h\"]\n    N11[\"vendor/decNumber/example1.c\"]\n    N12[\"vendor/decNumber/example2.c\"]\n    N13[\"vendor/decNumber/example3.c\"]\n    N14[\"vendor/decNumber/example4.c\"]\n    N15[\"vendor/decNumber/example5.c\"]\n    N16[\"vendor/decNumber/example6.c\"]\n    N17[\"vendor/decNumber/example8.c\"]\n    N0 --> N1\n    N0 --> N2\n    N3 --> N1\n    N3 --> N4\n    N3 --> N2\n    N4 --> N1\n    N5 --> N1\n    N5 --> N2\n    N5 --> N6\n    N6 --> N1\n    N7 --> N1\n    N7 --> N2\n    N7 --> N8\n    N8 --> N1\n    N9 --> N1\n    N9 --> N2\n    N9 --> N10\n    N10 --> N1\n    N11 --> N1\n    N12 --> N1\n    N13 --> N1\n    N14 --> N1\n    N15 --> N10\n    N16 --> N4\n    N17 --> N6"
+    },
+    {
+      "subsystem_id": "3",
+      "name": "Decimal Core Arithmetic",
+      "description": "This subsystem is the IEEE 754 decimal floating-point core of the vendored decNumber library, providing the common `decFloat` arithmetic engine shared by decSingle, decDouble, and decQuad. It is separated from the generic `decNumber` library because decimal floating point has a different representation (DPD-encoded fields) and a different operation set; decBasic.c and decCommon.c implement that DFP layer once instead of duplicating it for each format. Context and status flow through `decContextDefault` (`vendor/decNumber/decContext.c:72`) and `decContextTestStatus` (`vendor/decNumber/decContext.c:421`), which configure rounding and report exceptions for all arithmetic. Conversions enter through `decFloatFromString` (`vendor/decNumber/decCommon.c:776`) and leave through `decFloatToString` (`vendor/decNumber/decCommon.c:1500`), while `decFloatAdd` (`vendor/decNumber/decBasic.c:1102`), `decFiniteMultiply` (`vendor/decNumber/decBasic.c:708`), and `decDivide` (`vendor/decNumber/decBasic.c:167`) perform the core operations. Format-specific macros in `decDouble.c`, `decQuad.c`, and `decSingle.c` instantiate the public API, and the DPD conversion tables in `decDPD.h` feed the encoding helpers. It connects to the Number Library through `decNumber.h` and `decNumberLocal.h` conventions and to `decimal64.c`/`example8.c` in its related files, which use the same context and conversion functions.",
+      "files": [
+        {
+          "path": "vendor/decNumber/decBasic.c",
+          "role": "Implements the arithmetic engine for decFloat formats: add/subtract, multiply, divide, FMA, quantize, comparisons, and bitwise operations. It is the core computation file for all DFP widths.",
+          "key_symbols": [
+            {
+              "name": "decDivide",
+              "line": 167,
+              "explanation": "Implements decimal division for decFloat operands with full rounding and status reporting."
+            },
+            {
+              "name": "decFloatAdd",
+              "line": 1102,
+              "explanation": "Implements addition and subtraction for decimal floating-point values."
+            },
+            {
+              "name": "decFiniteMultiply",
+              "line": 708,
+              "explanation": "Multiplies two finite decimal coefficients before final rounding."
+            },
+            {
+              "name": "decFloatQuantize",
+              "line": 2899,
+              "explanation": "Rounds a value to the exponent of another, implementing `quantize`."
+            },
+            {
+              "name": "decFloatFMA",
+              "line": 1996,
+              "explanation": "Fused multiply-add for decimal floating-point values."
+            },
+            {
+              "name": "decNumCompare",
+              "line": 3621,
+              "explanation": "Compares two decFloat values numerically."
+            },
+            {
+              "name": "decCanonical",
+              "line": 75,
+              "explanation": "Returns the canonical encoding of a decFloat value."
+            },
+            {
+              "name": "decFloatCompareTotal",
+              "line": 1727,
+              "explanation": "Total ordering comparison that distinguishes NaN payloads and signed zero."
+            },
+            {
+              "name": "decFloatNextToward",
+              "line": 2781,
+              "explanation": "Computes the next representable value toward a second operand."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decCommon.c",
+          "role": "Shares conversion, string formatting, coefficient/exponent access, and final rounding logic for all decFloat widths. It is the common code behind the per-format C files.",
+          "key_symbols": [
+            {
+              "name": "decFinalize",
+              "line": 230,
+              "explanation": "Applies rounding, overflow, and subnormal handling to a result before returning it."
+            },
+            {
+              "name": "decFloatFromString",
+              "line": 776,
+              "explanation": "Parses a decimal string into the native decFloat encoding."
+            },
+            {
+              "name": "decFloatToString",
+              "line": 1500,
+              "explanation": "Formats a decFloat value as a decimal string."
+            },
+            {
+              "name": "decFloatToEngString",
+              "line": 1221,
+              "explanation": "Formats a decFloat using engineering notation."
+            },
+            {
+              "name": "decFloatFromBCD",
+              "line": 577,
+              "explanation": "Builds a decFloat from binary-coded decimal digits."
+            },
+            {
+              "name": "decFloatSetCoefficient",
+              "line": 1095,
+              "explanation": "Writes a coefficient into a decFloat encoding."
+            },
+            {
+              "name": "decFloatGetExponent",
+              "line": 1078,
+              "explanation": "Reads the biased exponent from a decFloat value."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decContext.c",
+          "role": "Implements the decContext type that controls precision, rounding mode, and status flags for all decimal operations. Every arithmetic call reads and updates a context.",
+          "key_symbols": [
+            {
+              "name": "decContextDefault",
+              "line": 72,
+              "explanation": "Initializes a context to the IEEE default precision, rounding, and status state."
+            },
+            {
+              "name": "decContextSetStatusFromString",
+              "line": 230,
+              "explanation": "Parses a status name string and sets the corresponding status flag."
+            },
+            {
+              "name": "decContextStatusToString",
+              "line": 339,
+              "explanation": "Converts status flags into a human-readable string."
+            },
+            {
+              "name": "decContextRestoreStatus",
+              "line": 165,
+              "explanation": "Restores previously saved status flags into a context."
+            },
+            {
+              "name": "decContextSetRounding",
+              "line": 195,
+              "explanation": "Sets the rounding mode used by subsequent operations."
+            },
+            {
+              "name": "decContextTestStatus",
+              "line": 421,
+              "explanation": "Tests whether any of a set of status flags is set."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decContext.h",
+          "role": "Defines rounding modes, the context struct, status constants, and the decimal class enumeration. It is the shared contract between the decimal arithmetic core and its callers.",
+          "key_symbols": [
+            {
+              "name": "decClass",
+              "line": 99,
+              "explanation": "Enum classifying a decFloat value (sNaN, qNaN, Infinity, normal, zero, etc.)."
+            },
+            {
+              "name": "rounding",
+              "line": 61,
+              "explanation": "Enum of IEEE rounding modes such as half-even, floor, ceiling, and truncate."
+            },
+            {
+              "name": "DEC_Errors",
+              "line": 183,
+              "explanation": "Mask of all error status flags."
+            },
+            {
+              "name": "DEC_Information",
+              "line": 191,
+              "explanation": "Mask of informational status flags such as inexact and rounded."
+            },
+            {
+              "name": "DEC_MAX_DIGITS",
+              "line": 88,
+              "explanation": "Maximum digits representable in a decContext."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decDPD.h",
+          "role": "Constant tables for converting among dense packed decimal (DPD), BCD, binary, and character representations. It is the encoding substrate for decimal32/64/128.",
+          "key_symbols": [
+            {
+              "name": "DECDPD2BCD",
+              "line": 230,
+              "explanation": "Table converting a 10-bit DPD value to 3 BCD digits."
+            },
+            {
+              "name": "DECBIN2DPD",
+              "line": 315,
+              "explanation": "Table converting a binary-coded value to a DPD code."
+            },
+            {
+              "name": "DECDPD2BIN",
+              "line": 398,
+              "explanation": "Table converting a DPD code back to binary."
+            },
+            {
+              "name": "DECBIN2BCD8",
+              "line": 1069,
+              "explanation": "Table converting binary to 8-bit BCD representation."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decDouble.c",
+          "role": "Macro-based instantiation of the decFloat API for the 64-bit decimal64 format. It provides the storage layout constants and compiles decBasic/decCommon for this width.",
+          "key_symbols": [
+            {
+              "name": "DECPMAX",
+              "line": 26,
+              "explanation": "Maximum precision of decimal64 in digits."
+            },
+            {
+              "name": "DECEMIN",
+              "line": 27,
+              "explanation": "Minimum exponent of decimal64."
+            },
+            {
+              "name": "DECEMAX",
+              "line": 28,
+              "explanation": "Maximum exponent of decimal64."
+            },
+            {
+              "name": "DECBYTES",
+              "line": 30,
+              "explanation": "Storage size of decimal64 in bytes."
+            },
+            {
+              "name": "DECBIAS",
+              "line": 33,
+              "explanation": "Exponent bias used by decimal64."
+            },
+            {
+              "name": "DECLETS",
+              "line": 34,
+              "explanation": "Number of 10-bit DPD declets in decimal64."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decDouble.h",
+          "role": "Public header for decimal64 constants and API names. It lets callers use the generic decimal functions without seeing the per-format implementation macros.",
+          "key_symbols": [
+            {
+              "name": "DECDOUBLE_Bytes",
+              "line": 28,
+              "explanation": "Storage size of the decimal64 format."
+            },
+            {
+              "name": "DECDOUBLE_Pmax",
+              "line": 29,
+              "explanation": "Maximum precision of decimal64 in digits."
+            },
+            {
+              "name": "DECDOUBLE_Emax",
+              "line": 31,
+              "explanation": "Maximum exponent of decimal64."
+            },
+            {
+              "name": "DECDOUBLE_Bias",
+              "line": 33,
+              "explanation": "Exponent bias of decimal64."
+            },
+            {
+              "name": "DECDOUBLE_String",
+              "line": 34,
+              "explanation": "Buffer size needed for decimal64 string output."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decQuad.c",
+          "role": "Macro-based instantiation of the decFloat API for the 128-bit decimal128 format. It defines the largest DFP format and compiles the shared core with quad precision constants.",
+          "key_symbols": [
+            {
+              "name": "DECPMAX",
+              "line": 24,
+              "explanation": "Maximum precision of decimal128 in digits."
+            },
+            {
+              "name": "DECEMIN",
+              "line": 25,
+              "explanation": "Minimum exponent of decimal128."
+            },
+            {
+              "name": "DECEMAX",
+              "line": 26,
+              "explanation": "Maximum exponent of decimal128."
+            },
+            {
+              "name": "DECBYTES",
+              "line": 28,
+              "explanation": "Storage size of decimal128 in bytes."
+            },
+            {
+              "name": "DECBIAS",
+              "line": 31,
+              "explanation": "Exponent bias used by decimal128."
+            },
+            {
+              "name": "DECLETS",
+              "line": 32,
+              "explanation": "Number of 10-bit DPD declets in decimal128."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decQuad.h",
+          "role": "Public header for decimal128 constants and API names. It exposes the quad format through the generic decimal API macros.",
+          "key_symbols": [
+            {
+              "name": "DECQUAD_Bytes",
+              "line": 30,
+              "explanation": "Storage size of the decimal128 format."
+            },
+            {
+              "name": "DECQUAD_Pmax",
+              "line": 31,
+              "explanation": "Maximum precision of decimal128 in digits."
+            },
+            {
+              "name": "DECQUAD_Emax",
+              "line": 33,
+              "explanation": "Maximum exponent of decimal128."
+            },
+            {
+              "name": "DECQUAD_Bias",
+              "line": 35,
+              "explanation": "Exponent bias of decimal128."
+            },
+            {
+              "name": "DECQUAD_String",
+              "line": 36,
+              "explanation": "Buffer size needed for decimal128 string output."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decSingle.c",
+          "role": "Macro-based instantiation of the decFloat API for the 32-bit decimal32 format. It defines the narrowest DFP format and compiles the shared core with single precision constants.",
+          "key_symbols": [
+            {
+              "name": "DECPMAX",
+              "line": 26,
+              "explanation": "Maximum precision of decimal32 in digits."
+            },
+            {
+              "name": "DECEMIN",
+              "line": 27,
+              "explanation": "Minimum exponent of decimal32."
+            },
+            {
+              "name": "DECEMAX",
+              "line": 28,
+              "explanation": "Maximum exponent of decimal32."
+            },
+            {
+              "name": "DECBYTES",
+              "line": 30,
+              "explanation": "Storage size of decimal32 in bytes."
+            },
+            {
+              "name": "DECBIAS",
+              "line": 33,
+              "explanation": "Exponent bias used by decimal32."
+            },
+            {
+              "name": "DECLETS",
+              "line": 34,
+              "explanation": "Number of 10-bit DPD declets in decimal32."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/decSingle.h",
+          "role": "Public header for decimal32 constants and API names. It connects the 32-bit format to the shared decimalFloat API.",
+          "key_symbols": [
+            {
+              "name": "DECSINGLE_Bytes",
+              "line": 28,
+              "explanation": "Storage size of the decimal32 format."
+            },
+            {
+              "name": "DECSINGLE_Pmax",
+              "line": 29,
+              "explanation": "Maximum precision of decimal32 in digits."
+            },
+            {
+              "name": "DECSINGLE_Emax",
+              "line": 31,
+              "explanation": "Maximum exponent of decimal32."
+            },
+            {
+              "name": "DECSINGLE_Bias",
+              "line": 33,
+              "explanation": "Exponent bias of decimal32."
+            }
+          ]
+        },
+        {
+          "path": "vendor/decNumber/example7.c",
+          "role": "Example program demonstrating use of the decQuad/decimal128 APIs and context handling. It is documentation-by-example for the DFP layer.",
+          "key_symbols": [
+            {
+              "name": "main",
+              "line": 15,
+              "explanation": "Runs a decimal floating-point demonstration with one of the DFP formats."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"vendor/decNumber/decBasic.c\"]\n    N1[\"vendor/decNumber/decCommon.c\"]\n    N2[\"vendor/decNumber/decContext.c\"]\n    N3[\"vendor/decNumber/decContext.h\"]\n    N4[\"vendor/decNumber/decDPD.h\"]\n    N5[\"vendor/decNumber/decDouble.c\"]\n    N6[\"vendor/decNumber/decDouble.h\"]\n    N7[\"vendor/decNumber/decQuad.c\"]\n    N8[\"vendor/decNumber/decQuad.h\"]\n    N9[\"vendor/decNumber/decSingle.c\"]\n    N10[\"vendor/decNumber/decSingle.h\"]\n    N11[\"vendor/decNumber/example7.c\"]\n    N1 --> N4\n    N2 --> N3\n    N5 --> N3\n    N5 --> N6\n    N5 --> N1\n    N5 --> N0\n    N6 --> N3\n    N6 --> N8\n    N7 --> N3\n    N7 --> N8\n    N7 --> N1\n    N7 --> N0\n    N8 --> N3\n    N9 --> N3\n    N9 --> N10\n    N9 --> N1\n    N10 --> N3\n    N10 --> N8\n    N10 --> N6\n    N11 --> N8"
+    },
+    {
+      "subsystem_id": "9",
+      "name": "UTF-8 Table Generation",
+      "description": "This subsystem is a small build-time Python generator that emits static UTF-8 lookup tables for the C runtime. It exists as a separate script so the generated table data in `src/jv_utf8_tables.h` is produced reproducibly from Unicode definitions and is never hand-maintained inside the JSON value system. The top-level `table` constant and `mask` constant define the source data, `print_table` (`scripts/gen_utf8_tables.py:8`) writes a table in C syntax, and `utf8info` (`scripts/gen_utf8_tables.py:16`) computes the per-codepoint metadata that fills it. Although its `related_files` list is empty, the script's output is consumed by `src/jv_unicode.c` through `src/jv_utf8_tables.h` in the JSON Value System, so this is effectively a companion generation step for that subsystem.",
+      "files": [
+        {
+          "path": "scripts/gen_utf8_tables.py",
+          "role": "Python script that generates the static UTF-8 tables included by the C code. It is invoked at build/development time, not at jq runtime.",
+          "key_symbols": [
+            {
+              "name": "utf8info",
+              "line": 16,
+              "explanation": "Computes metadata about a Unicode codepoint, used to fill the output tables."
+            },
+            {
+              "name": "print_table",
+              "line": 8,
+              "explanation": "Prints a generated lookup table in C array syntax."
+            },
+            {
+              "name": "mask",
+              "line": 5,
+              "explanation": "Constant bitmask used when computing UTF-8 table entries."
+            },
+            {
+              "name": "table",
+              "line": 25,
+              "explanation": "Top-level input data/configuration for the table generator."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"scripts/gen_utf8_tables.py\"]"
+    },
+    {
+      "subsystem_id": "10",
+      "name": "Error Injection Testing",
+      "description": "_Description withheld: the generated summary for this subsystem cited code that could not be verified against the scan. The file list and diagram below come directly from the scan and are unaffected._",
+      "files": [
+        {
+          "path": "src/inject_errors.c",
+          "role": "",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/inject_errors.c\"]"
+    }
+  ],
+  "overview": {
+    "description": "This is the jq codebase: a JSON processor with a custom filter language and a memory-managed JSON data model. The Core Compiler Runtime scans, parses, compiles, and interprets jq filters, while the JSON Value System provides the reference-counted jv values and JSON parsing/printing that the runtime consumes. The vendored Decimal Number Library and Decimal Core Arithmetic subsystems supply arbitrary-precision and decimal floating-point arithmetic for JSON number handling. The UTF-8 Table Generation script produces static Unicode lookup tables used by the JSON Value System, and an Error Injection Testing subsystem is included as a separate test component.",
+    "diagram_mermaid": "flowchart TD\n    C0[\"Core Compiler Runtime\"]\n    C1[\"JSON Value System\"]\n    C2[\"Decimal Number Library\"]\n    C3[\"Decimal Core Arithmetic\"]\n    C0 --> C1\n    C1 --> C0\n    C2 --> C3\n    C3 --> C2"
+  }
+}

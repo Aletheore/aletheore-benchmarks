@@ -1,0 +1,410 @@
+[
+  {
+    "id": "g01",
+    "q": "Explain the overall architecture of this codebase: what are the major components and how do they relate?",
+    "aletheore": 2.3333333333333335,
+    "repowise": 2.5,
+    "aletheore_raw": [
+      3,
+      2,
+      3,
+      2,
+      3,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      2,
+      3,
+      1,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "tie",
+      "repowise",
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "repowise"
+    ],
+    "why_a": "Covers the major subsystems, their roles, and data flow with specific file and symbol references, sufficient for a detailed architecture answer.",
+    "why_r": "Provides a clear dependency stack, directory roles, API layer components, and data flows, enough for a correct architecture overview."
+  },
+  {
+    "id": "g02",
+    "q": "What is the main entry point, and what happens step by step when the primary operation runs?",
+    "aletheore": 2.6666666666666665,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      2,
+      2,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides specific internal mechanics of the formatting pipeline (argument type-erasure, parse_context, buffers) and identifies src/fmt.cc as the module entry point, enabling a concrete step-by-step answer.",
+    "why_r": "Focuses on high-level architecture and test harness entry points but lacks the detailed step-by-step formatting internals needed for a specific answer."
+  },
+  {
+    "id": "g03",
+    "q": "How is this project's public API separated from its internal implementation, and why is it split that way?",
+    "aletheore": 2.3333333333333335,
+    "repowise": 2.5,
+    "aletheore_raw": [
+      3,
+      1,
+      3,
+      2,
+      3,
+      2
+    ],
+    "repowise_raw": [
+      1,
+      3,
+      3,
+      3,
+      2,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "repowise",
+      "tie",
+      "repowise",
+      "aletheore",
+      "repowise"
+    ],
+    "why_a": "Covers both the C API header/implementation split and the header-only vs compiled core split with concrete file/function references and clear rationale for ABI stability and template instantiation.",
+    "why_r": "Describes the API layer and header/format-inl.h split but omits the compiled library implementation and C API separation, leaving major gaps for the full answer."
+  },
+  {
+    "id": "g04",
+    "q": "How does the codebase handle errors and exceptions, and where can a user intervene?",
+    "aletheore": 1.1666666666666667,
+    "repowise": 2.6666666666666665,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      2
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "aletheore"
+    ],
+    "why_a": "Provides scattered details about error handling in specific components (C API catches, OS error messages, error type formatters) but misses the central FMT_THROW override mechanism, leaving a major gap.",
+    "why_r": "Directly documents FMT_THROW as the core exception-throwing macro and explains that users can intervene by defining it, with concrete examples."
+  },
+  {
+    "id": "g05",
+    "q": "What is the configuration model, and how are settings resolved and layered?",
+    "aletheore": 1.1666666666666667,
+    "repowise": 0.0,
+    "aletheore_raw": [
+      2,
+      1,
+      1,
+      1,
+      2,
+      0
+    ],
+    "repowise_raw": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "tie"
+    ],
+    "why_a": "Provides details about fmt's argument storage, parse_context, and basic_specs, which are core to how format settings are parsed and applied, though it lacks explicit discussion of layering/precedence.",
+    "why_r": "Describes repository governance and documentation tooling (GitHub config files, docs), which is unrelated to fmt's internal configuration model and settings resolution."
+  },
+  {
+    "id": "g06",
+    "q": "How is state managed across a single operation, and what keeps concurrent operations isolated?",
+    "aletheore": 1.8333333333333333,
+    "repowise": 0.6666666666666666,
+    "aletheore_raw": [
+      2,
+      3,
+      1,
+      2,
+      2,
+      1
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      0,
+      1,
+      1,
+      0
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Describes per-operation state components (dynamic_arg_list, parse_context, buffer) from which a reader can infer isolation via local instances, but lacks explicit concurrency discussion.",
+    "why_r": "Mentions preserving ostream state and a formatting flow, but does not explain per-operation state management or concurrent isolation meaningfully."
+  },
+  {
+    "id": "g07",
+    "q": "What are the main extension points a third-party package would hook into?",
+    "aletheore": 1.6666666666666667,
+    "repowise": 1.3333333333333333,
+    "aletheore_raw": [
+      2,
+      1,
+      2,
+      1,
+      2,
+      2
+    ],
+    "repowise_raw": [
+      1,
+      3,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "It directly covers the C API and formatter specializations (via ranges.h), giving concrete hooks, though it buries them among release/tooling details and lacks the general formatter template.",
+    "why_r": "It describes the public entry points and C/module/wide-char edge connectors but omits the fundamental formatter-specialization extension mechanism, so it is only partially relevant."
+  },
+  {
+    "id": "g08",
+    "q": "How does this project handle I/O, and what abstractions sit between the core logic and the outside world?",
+    "aletheore": 2.8333333333333335,
+    "repowise": 2.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      2,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      2,
+      3,
+      1,
+      3,
+      1,
+      2
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "tie",
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides concrete I/O abstractions (buffered_file, ostream, output_file) and their implementations in os.cc, plus the C API bridge, so an engineer can write a specific answer about how output reaches files/consoles.",
+    "why_r": "Gives a clear layered architecture and identifies os.h/ostream.h as output sink adapters, but lacks the concrete classes and functions inside those abstractions, leaving important specifics to be inferred."
+  },
+  {
+    "id": "g09",
+    "q": "What are the most important data structures or types, and what invariants do they maintain?",
+    "aletheore": 2.0,
+    "repowise": 0.6666666666666666,
+    "aletheore_raw": [
+      2,
+      2,
+      1,
+      3,
+      1,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      0,
+      1,
+      0,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "System A inventories many key fmt types and their storage/lifetime roles, but it mostly describes what they do rather than explicitly stating the invariants they maintain, leaving the invariant part to be inferred.",
+    "why_r": "System B focuses on high-level function flow and isolated implementation comments, with almost no attention to core data structures or their invariants."
+  },
+  {
+    "id": "g10",
+    "q": "How is the codebase tested, and what does the test structure reveal about its design?",
+    "aletheore": 1.0,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Mostly library internals with only a brief mention of POSIX mock tests, leaving the broader test structure and design implications largely unaddressed.",
+    "why_r": "Provides a detailed account of the test layer, frameworks, suites, mock/fuzz strategies, and how the test structure mirrors the API's modular design."
+  },
+  {
+    "id": "g11",
+    "q": "Which parts of this codebase are most tightly coupled, and where are the clean boundaries?",
+    "aletheore": 2.8333333333333335,
+    "repowise": 2.1666666666666665,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      2
+    ],
+    "repowise_raw": [
+      2,
+      1,
+      3,
+      2,
+      2,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "repowise"
+    ],
+    "why_a": "Provides explicit subsystem dependency flows and separation rationale (header-only core vs compiled implementation, C ABI translation), directly answering coupling and boundaries with specific files.",
+    "why_r": "Offers directory-level boundaries and churn-based coupling hints, but lacks the specific dependency mechanisms needed for a precise answer."
+  },
+  {
+    "id": "g12",
+    "q": "If I needed to add a new feature to the core, which files would I touch and in what order?",
+    "aletheore": 2.6666666666666665,
+    "repowise": 1.1666666666666667,
+    "aletheore_raw": [
+      3,
+      2,
+      3,
+      3,
+      3,
+      2
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      2,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "The material directly details the core formatting engine's files and their roles, making it clear which headers and implementation units to modify and in what logical order.",
+    "why_r": "The material focuses on architectural layering and metadata rather than the actual core implementation files, leaving major gaps about where feature logic resides."
+  }
+]

@@ -37,6 +37,45 @@ silently discarded. Swap `AIRVIEW_MODEL=deepseek-v4-flash` for
 `AIRVIEW_MODEL=gpt-5.6-luna` and `airview_deepseek` for `airview_luna`
 throughout the commands above to reproduce.
 
+**Extended to 4 more corpora (2026-08-22), deepseek-v4-flash writer, same
+methodology, `questions/architecture_generic.json` (corpus-agnostic, 12
+questions) in place of Flask-specific wording:**
+
+| corpus | language | AIRview | RepoWise | verdict |
+|---|---|---|---|---|
+| flask | Python | 1.88 | 1.99 | tie (noise floor 0.50) |
+| automapper | C# | **0.38** | 2.29 | severe loss - see below, not a model issue |
+| axios | JavaScript | **2.28** | 1.61 | clear win (noise floor 0.50) |
+| fmt | C++ | **2.04** | 1.64 | win (noise floor 0.46) |
+| jq | C | 1.93 | 1.76 | tie/lean win (noise floor 0.25) |
+
+**automapper is a real, separate bug, not evidence against the model
+choice.** Investigated directly: automapper's clustering produced **119
+subsystems for 512 files** (3.9 files/subsystem) against axios's 17
+subsystems for 154 files (9.1/subsystem) and flask's 5 for 65 (13.0/subsystem)
+- roughly 2-3x more fragmented than any other corpus measured, on the same
+clustering code every corpus shares. Each retrieval bundle for automapper's
+questions ends up stitching together many tiny, disconnected fragments
+instead of a few substantial ones, which plausibly explains the 72/72
+RepoWise sweep independent of which model wrote the prose - the
+architecture-clustering step over-fragmenting certain codebases (dense
+namespace/generic-heavy C# in this case) is a distinct, unfixed defect
+worth its own investigation, not a data point against deepseek-v4-flash.
+
+**Excluding automapper as the confirmed outlier, the remaining 4 corpora
+average AIRview 2.03 vs RepoWise 1.75** across four different languages -
+a real lead, not a toss-up, and considerably stronger than the single-Flask
+tie above suggested on its own. Including automapper drags the average the
+other way (aggregate pref count: Aletheore 161/360, RepoWise 182/360,
+ties 17/360) - that number is real but attributable to one identified bug,
+not representative of the model comparison this benchmark set out to make.
+
+Reproduce any corpus with `BENCH_CORPUS=<name>` (resolves via
+`corpora.json`, e.g. `automapper`/`axios`/`fmt`/`jq`) on
+`build_repowise_arch_context.py` and `build_airview.py`, and
+`BENCH_CTX=results/multi_<name>/arch_context2.json` throughout - see each
+script's docstring.
+
 Everything below this point is the original analysis that led to the fix
 above - kept for the reasoning, not as the current number. The README's
 "2.13 vs 2.35" figure is a different, later-stage number that predates

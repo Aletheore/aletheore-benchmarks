@@ -9,7 +9,8 @@ sys.path.insert(0, os.environ.get("GITHUB_APP_PATH", os.path.join(_bench.ROOT, "
 from scan_worker.live_wiki import generate_subsystems, generate_overview
 from aletheore.adapters.openai_compatible import OpenAICompatibleAdapter
 
-REPO = Path(_bench.FLASK)
+CORPUS = os.environ.get("BENCH_CORPUS")
+REPO = Path(_bench.repo_src(CORPUS)) if CORPUS else Path(_bench.FLASK)
 evidence = json.loads((REPO / ".aletheore" / "air.json").read_text())
 
 # Mirrors production's real adapter choice - see

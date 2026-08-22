@@ -48,8 +48,10 @@ def cos(a, b):
     return d / (na * nb + 1e-9)
 
 
+CTX = os.environ.get("BENCH_CTX", os.path.join(_bench.OUT, "arch_context2.json"))
+
 uvecs = embed(units)
-base = json.load(open(os.path.join(_bench.OUT,"arch_context2.json")))
+base = json.load(open(CTX))
 qvecs = embed([c["q"] for c in base])
 
 out = []
@@ -64,4 +66,4 @@ for c, qv in zip(base, qvecs):
     out.append(c)
     print(c["id"], len(c[ARM]))
 
-json.dump(out, open(os.path.join(_bench.OUT,"arch_context2.json"), "w"), indent=2)
+json.dump(out, open(CTX, "w"), indent=2)

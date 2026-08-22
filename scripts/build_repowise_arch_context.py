@@ -45,13 +45,20 @@ for line in open(_bench.ENV_FILE):
 BUDGET = 12000
 TOPK = 5
 
-qs = _bench.load_questions("architecture")
+# BENCH_CORPUS selects a corpus from corpora.json (e.g. "gin", "jq") instead
+# of the single hardcoded Flask path; questions/architecture_generic.json is
+# the corpus-agnostic 12-question set that makes that possible without
+# authoring a new set per corpus - architecture.json's wording (Flask's own
+# "sansio" package etc.) is Flask-specific and does not generalize.
+CORPUS = os.environ.get("BENCH_CORPUS")
+QUESTION_SET = os.environ.get("BENCH_QUESTIONS", "architecture_generic" if CORPUS else "architecture")
+qs = _bench.load_questions(QUESTION_SET)
 
 from repowise.cli.commands.init_cmd import _resolve_embedder
 from repowise.cli.providers.embedders import build_embedder
 from repowise.core.persistence.vector_store import LanceDBVectorStore
 
-REPO_R = _bench.FLASK_RW
+REPO_R = _bench.repo_rw(CORPUS) if CORPUS else _bench.FLASK_RW
 db = sqlite3.connect(f"file:{REPO_R}/.repowise/wiki.db?mode=ro", uri=True)
 
 
@@ -98,7 +105,7 @@ async def main():
     await store.close()
 
     os.makedirs(_bench.OUT, exist_ok=True)
-    target = os.path.join(_bench.OUT, "arch_context2.json")
+    target = os.environ.get("BENCH_CTX", os.path.join(_bench.OUT, "arch_context2.json"))
     json.dump(out, open(target, "w"), indent=2)
     print(f"wrote {target}", file=sys.stderr)
 

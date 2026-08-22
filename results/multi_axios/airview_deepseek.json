@@ -1,0 +1,3237 @@
+{
+  "subsystems": [
+    {
+      "subsystem_id": "0",
+      "name": "Core Request Pipeline",
+      "description": "The Core Request Pipeline is the orchestration layer that turns a user-facing axios call into a resolved configuration, a dispatched request, and a settled promise. It exists as its own unit so that adapter selection, config merging, header normalization, cancellation, and transform logic are independent of any particular transport, letting XHR, fetch, and Node HTTP plug in behind one API. A call enters through `createInstance` (`lib/axios.js:28`) and the `Axios` class (`lib/core/Axios.js:22`), then `mergeConfig` (`lib/core/mergeConfig.js:28`) and `transformData` (`lib/core/transformData.js:15`) prepare the request before `dispatchRequest` (`lib/core/dispatchRequest.js:34`) asks `getAdapter` (`lib/adapters/adapters.js:65`) for the environment's transport. Cancellation flows through `CancelToken` (`lib/cancel/CancelToken.js:12`) and `isCancel` (`lib/cancel/isCancel.js:3`), while `AxiosHeaders` (`lib/core/AxiosHeaders.js:198`) owns header mutation and serialization. It connects outward to `lib/adapters/fetch.js`, `lib/adapters/http.js`, and `lib/core/AxiosError.js`, and its public entry in `index.js` calls back into `createInstance`.",
+      "files": [
+        {
+          "path": "lib/adapters/adapters.js",
+          "role": "Selects the active HTTP adapter by name from knownAdapters or by a provided function, and renders reason strings when an adapter is unsupported. It is the bridge between the core dispatch pipeline and transport-specific implementations like xhr, fetch, and http.",
+          "key_symbols": [
+            {
+              "name": "getAdapter",
+              "line": 65,
+              "explanation": "Looks up a named adapter in knownAdapters, validates it, and returns it for dispatchRequest to invoke."
+            },
+            {
+              "name": "knownAdapters",
+              "line": 16,
+              "explanation": "Registry mapping adapter names to their factory/entry functions; used by getAdapter."
+            },
+            {
+              "name": "isResolvedHandle",
+              "line": 52,
+              "explanation": "Tests whether an adapter value is already a resolved dispatch function rather than a name."
+            },
+            {
+              "name": "renderReason",
+              "line": 44,
+              "explanation": "Returns a human-readable message describing why an adapter could not be used."
+            }
+          ]
+        },
+        {
+          "path": "lib/adapters/xhr.js",
+          "role": "Browser XHR adapter that actually issues XMLHttpRequest calls, wires progress/timeout/abort events, and handles cancellation. It turns a configured request into browser network traffic when the environment does not support fetch or Node http.",
+          "key_symbols": [
+            {
+              "name": "isXHRAdapterSupported",
+              "line": 14,
+              "explanation": "Environment flag indicating whether XMLHttpRequest is available."
+            },
+            {
+              "name": "done",
+              "line": 27,
+              "explanation": "Internal completion helper invoked when the request reaches a terminal state."
+            },
+            {
+              "name": "onloadend",
+              "line": 43,
+              "explanation": "Main response handler that parses headers/status and resolves or rejects the promise."
+            },
+            {
+              "name": "onreadystatechange",
+              "line": 108,
+              "explanation": "Legacy state-change handler that also detects completion in some environments."
+            },
+            {
+              "name": "onabort",
+              "line": 130,
+              "explanation": "Handles XHR abort and forwards to cancel handling."
+            },
+            {
+              "name": "onerror",
+              "line": 143,
+              "explanation": "Handles network errors and rejects the request."
+            },
+            {
+              "name": "ontimeout",
+              "line": 157,
+              "explanation": "Handles timeout expiry and rejects with a timeout error."
+            },
+            {
+              "name": "onCanceled",
+              "line": 217,
+              "explanation": "Terminal handler for canceled requests, ensuring the promise settles as canceled."
+            }
+          ]
+        },
+        {
+          "path": "lib/axios.js",
+          "role": "Public entry module that creates the default axios instance and attaches helper methods like all, spread, and formToJSON. It is the first module users import and hands off to createInstance.",
+          "key_symbols": [
+            {
+              "name": "createInstance",
+              "line": 28,
+              "explanation": "Constructs an Axios instance with default config and binds request/verb methods to it."
+            },
+            {
+              "name": "create",
+              "line": 39,
+              "explanation": "Instance method exposed as axios.create, allowing new instances with merged config."
+            },
+            {
+              "name": "axios",
+              "line": 47,
+              "explanation": "Default singleton instance returned by createInstance with the default config."
+            },
+            {
+              "name": "all",
+              "line": 66,
+              "explanation": "Resolves an array of promises via Promise.all."
+            },
+            {
+              "name": "formToJSON",
+              "line": 80,
+              "explanation": "Converts a FormData object into a plain JSON object."
+            }
+          ]
+        },
+        {
+          "path": "lib/cancel/CancelToken.js",
+          "role": "Implements the cancellation token API used to abort in-flight requests from user code. It links external cancel calls to the adapter's abort/error paths.",
+          "key_symbols": [
+            {
+              "name": "CancelToken",
+              "line": 12,
+              "explanation": "Class wrapping a promise that resolves when cancellation is requested."
+            },
+            {
+              "name": "then",
+              "line": 39,
+              "explanation": "Registers a callback to run if the token has been canceled."
+            },
+            {
+              "name": "cancel",
+              "line": 47,
+              "explanation": "Trigger method that rejects the token promise with a CanceledError."
+            },
+            {
+              "name": "abort",
+              "line": 108,
+              "explanation": "Browser-compatible abort alias for canceling the request."
+            },
+            {
+              "name": "unsubscribe",
+              "line": 114,
+              "explanation": "Removes a cancel listener so tokens can be cleaned up."
+            }
+          ]
+        },
+        {
+          "path": "lib/cancel/CanceledError.js",
+          "role": "Defines the error type used when a request is canceled, so isCancel can identify it reliably. It carries the cancellation reason and flags the error as canceled.",
+          "key_symbols": [
+            {
+              "name": "CanceledError",
+              "line": 5,
+              "explanation": "Class extending AxiosError with __CANCEL__ set to true."
+            }
+          ]
+        },
+        {
+          "path": "lib/cancel/isCancel.js",
+          "role": "Predicate used across the core and adapters to test whether a thrown value represents a cancellation. It keeps cancellation handling lightweight and uniform.",
+          "key_symbols": [
+            {
+              "name": "isCancel",
+              "line": 3,
+              "explanation": "Checks whether the given value is a CanceledError by looking for __CANCEL__."
+            }
+          ]
+        },
+        {
+          "path": "lib/core/Axios.js",
+          "role": "Core class implementing request orchestration, config merging, interceptors, and HTTP verb helpers. It owns the instance lifecycle and calls dispatchRequest.",
+          "key_symbols": [
+            {
+              "name": "validators",
+              "line": 13,
+              "explanation": "Validator functions used when asserting config options."
+            },
+            {
+              "name": "Axios",
+              "line": 22,
+              "explanation": "Main class that stores defaults and interceptors and implements request(), get(), post(), etc."
+            },
+            {
+              "name": "generateHTTPMethod",
+              "line": 275,
+              "explanation": "Factory that creates verb-specific methods such as get, post, put on the prototype."
+            }
+          ]
+        },
+        {
+          "path": "lib/core/AxiosHeaders.js",
+          "role": "Header container that parses, normalizes, sets, and serializes HTTP headers in a case-insensitive way. It is used by core and adapters to avoid raw object manipulation.",
+          "key_symbols": [
+            {
+              "name": "normalizeHeader",
+              "line": 9,
+              "explanation": "Normalizes a header name to canonical form."
+            },
+            {
+              "name": "normalizeValue",
+              "line": 13,
+              "explanation": "Converts a header value to string form."
+            },
+            {
+              "name": "$internals",
+              "line": 7,
+              "explanation": "Symbol/constant used to store private header state."
+            },
+            {
+              "name": "parseTokens",
+              "line": 21,
+              "explanation": "Parses comma/whitespace separated header tokens."
+            },
+            {
+              "name": "parameterNameRE",
+              "line": 33,
+              "explanation": "Regex for parsing header parameter names."
+            },
+            {
+              "name": "trimOWS",
+              "line": 35,
+              "explanation": "Trims optional whitespace from header values."
+            },
+            {
+              "name": "decodeQuotedString",
+              "line": 62,
+              "explanation": "Decodes quoted-string header parameter values."
+            },
+            {
+              "name": "parseParameters",
+              "line": 92,
+              "explanation": "Splits a header value into its main value and parameters."
+            },
+            {
+              "name": "parseParameter",
+              "line": 99,
+              "explanation": "Parses one header parameter assignment."
+            },
+            {
+              "name": "isValidHeaderName",
+              "line": 151,
+              "explanation": "Checks whether a string is a valid HTTP header name."
+            },
+            {
+              "name": "matchHeaderValue",
+              "line": 153,
+              "explanation": "Matches a header value against expected content."
+            },
+            {
+              "name": "formatHeader",
+              "line": 173,
+              "explanation": "Formats a normalized header name."
+            },
+            {
+              "name": "buildAccessors",
+              "line": 182,
+              "explanation": "Creates case-insensitive accessor getters/setters for header names."
+            },
+            {
+              "name": "AxiosHeaders",
+              "line": 198,
+              "explanation": "Class representing a header bag with methods for set, get, delete, and serialization."
+            },
+            {
+              "name": "setHeader",
+              "line": 206,
+              "explanation": "Sets a single header on the AxiosHeaders instance."
+            },
+            {
+              "name": "setHeaders",
+              "line": 225,
+              "explanation": "Sets multiple headers at once."
+            },
+            {
+              "name": "deleteHeader",
+              "line": 309,
+              "explanation": "Removes a header and returns the deleted value."
+            },
+            {
+              "name": "defineAccessor",
+              "line": 437,
+              "explanation": "Defines a property accessor for a known header name."
+            }
+          ]
+        },
+        {
+          "path": "lib/core/dispatchRequest.js",
+          "role": "Dispatcher that checks cancellation, transforms request data, invokes the selected adapter, and transforms the response. It is the choke point between config preparation and transport execution.",
+          "key_symbols": [
+            {
+              "name": "throwIfCancellationRequested",
+              "line": 17,
+              "explanation": "Throws a CanceledError if the request config has a canceled signal."
+            },
+            {
+              "name": "dispatchRequest",
+              "line": 34,
+              "explanation": "Performs cancellation check, calls transformRequest, runs the adapter, and applies transformResponse."
+            }
+          ]
+        },
+        {
+          "path": "lib/core/mergeConfig.js",
+          "role": "Merges default, instance, and per-request configs with protocol-specific semantics for deep properties, transitionals, and direct keys. It defines how user overrides combine with defaults.",
+          "key_symbols": [
+            {
+              "name": "headersToObject",
+              "line": 6,
+              "explanation": "Coerces headers config into a plain object for merging."
+            },
+            {
+              "name": "ownEnumerableKeys",
+              "line": 8,
+              "explanation": "Lists own enumerable keys of a value."
+            },
+            {
+              "name": "mergeConfig",
+              "line": 28,
+              "explanation": "Main merge routine returning a new config object."
+            },
+            {
+              "name": "getMergedValue",
+              "line": 48,
+              "explanation": "Decides whether to merge, default, or take config2's value for a key."
+            },
+            {
+              "name": "mergeDeepProperties",
+              "line": 59,
+              "explanation": "Deep-merges objects when the key is in the deep property list."
+            },
+            {
+              "name": "valueFromConfig2",
+              "line": 68,
+              "explanation": "Returns config2's value or undefined."
+            },
+            {
+              "name": "defaultToConfig2",
+              "line": 75,
+              "explanation": "Falls back to config2's value when config1 does not define the key."
+            },
+            {
+              "name": "getMergedTransitionalOption",
+              "line": 83,
+              "explanation": "Resolves transitional options with deprecation warnings."
+            },
+            {
+              "name": "mergeDirectKeys",
+              "line": 110,
+              "explanation": "Copies direct keys from config sources."
+            }
+          ]
+        },
+        {
+          "path": "lib/core/transformData.js",
+          "role": "Applies the configured transformRequest/transformResponse call chain to the data. It keeps transformation out of the dispatch and adapter code.",
+          "key_symbols": [
+            {
+              "name": "transformData",
+              "line": 15,
+              "explanation": "Runs each transformer function over the data with headers and status."
+            }
+          ]
+        },
+        {
+          "path": "lib/defaults/index.js",
+          "role": "Defines the library-wide default config: adapter choice, timeouts, headers, transforms, and validation behavior. It is the baseline merged into every request.",
+          "key_symbols": [
+            {
+              "name": "own",
+              "line": 11,
+              "explanation": "Helper checking own-property existence."
+            },
+            {
+              "name": "stringifySafely",
+              "line": 23,
+              "explanation": "Serializes JSON while replacing circular references."
+            },
+            {
+              "name": "defaults",
+              "line": 38,
+              "explanation": "Default config object consumed by createInstance and mergeConfig."
+            }
+          ]
+        },
+        {
+          "path": "lib/defaults/transitional.js",
+          "role": "Holds transitional option defaults that control backwards-compatible behavior changes. It is merged into configs by mergeConfig.",
+          "key_symbols": []
+        },
+        {
+          "path": "lib/helpers/HttpStatusCode.js",
+          "role": "Maps named HTTP status codes to their numeric values for readable config/reference use. It is a static dictionary used in user code and tests.",
+          "key_symbols": [
+            {
+              "name": "HttpStatusCode",
+              "line": 1,
+              "explanation": "Constant object of HTTP status names to numeric codes."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/sanitizeHeaderValue.js",
+          "role": "Cleans header values of invalid Unicode or byte-string characters before they are sent. It protects the network layer from malformed header injection.",
+          "key_symbols": [
+            {
+              "name": "trimSPorHTAB",
+              "line": 5,
+              "explanation": "Trims spaces and horizontal tabs from input."
+            },
+            {
+              "name": "INVALID_UNICODE_HEADER_VALUE_CHARS",
+              "line": 34,
+              "explanation": "Regex of invalid Unicode characters in header values."
+            },
+            {
+              "name": "INVALID_BYTE_STRING_HEADER_VALUE_CHARS",
+              "line": 36,
+              "explanation": "Regex of invalid bytes in byte-string header values."
+            },
+            {
+              "name": "sanitizeValue",
+              "line": 38,
+              "explanation": "Sanitizes a single value string."
+            },
+            {
+              "name": "sanitizeHeaderValue",
+              "line": 46,
+              "explanation": "Public sanitizer for normal string header values."
+            },
+            {
+              "name": "sanitizeByteStringHeaderValue",
+              "line": 49,
+              "explanation": "Public sanitizer for byte-string header values."
+            },
+            {
+              "name": "toByteStringHeaderObject",
+              "line": 52,
+              "explanation": "Builds a byte-string-safe header value object."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/spread.js",
+          "role": "Small callback helper that wraps a function so it receives an array of arguments spread across parameters. It supports the axios.all callback API.",
+          "key_symbols": [
+            {
+              "name": "spread",
+              "line": 24,
+              "explanation": "Returns a function that expands a callback's array argument into individual arguments."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/cancelToken.browser.test.js",
+          "role": "Browser test for cancellation tokens against a mocked XHR surface. It verifies cancel propagation in the browser path.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/browser/defaults.browser.test.js",
+          "role": "Browser tests for default config behavior, XSRF cookies, and request creation with a mock XHR. It defines fake XHR helpers used by the suite.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 7,
+              "explanation": "Fake XHR class simulating request recording and completion."
+            },
+            {
+              "name": "XSRF_COOKIE_NAME",
+              "line": 64,
+              "explanation": "Cookie name used to test XSRF token handling."
+            },
+            {
+              "name": "getLastRequest",
+              "line": 69,
+              "explanation": "Returns the most recently captured mock request."
+            },
+            {
+              "name": "finishRequest",
+              "line": 77,
+              "explanation": "Completes the current mock request with a canned response."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/axios.test.js",
+          "role": "Unit tests for the public axios module and instance creation. It checks error stack behavior and request internals.",
+          "key_symbols": [
+            {
+              "name": "testUnwritableErrorStack",
+              "line": 7,
+              "explanation": "Test helper verifying that AxiosError.stack stays unwritable."
+            },
+            {
+              "name": "_request",
+              "line": 10,
+              "explanation": "Internal request helper used to exercise request paths."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/axiosHeaders.test.js",
+          "role": "Unit tests for AxiosHeaders parsing, accessors, and serialization. Includes a HeaderBag helper for comparison.",
+          "key_symbols": [
+            {
+              "name": "HeaderBag",
+              "line": 165,
+              "explanation": "Small test-only header collection used to assert AxiosHeaders behavior."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/cancel/canceledError.test.js",
+          "role": "Unit tests for CanceledError construction and type flagging.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/cancel/isCancel.test.js",
+          "role": "Unit tests for the isCancel predicate with various error values.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/core/dispatchRequest.test.js",
+          "role": "Unit tests for dispatchRequest, including React Native FormData behavior and base config setup.",
+          "key_symbols": [
+            {
+              "name": "ReactNativeFormData",
+              "line": 8,
+              "explanation": "Test FormData stub mimicking React Native's form data shape."
+            },
+            {
+              "name": "baseConfig",
+              "line": 20,
+              "explanation": "Builds a minimal config used across dispatch tests."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/core/mergeConfig.test.js",
+          "role": "Unit tests for mergeConfig semantics, including validateStatus handling.",
+          "key_symbols": [
+            {
+              "name": "validateStatus",
+              "line": 366,
+              "explanation": "Sample status validator used in mergeConfig test assertions."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/core/transformData.test.js",
+          "role": "Unit tests for transformData's transformer invocation.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/helpers/HttpStatusCode.test.js",
+          "role": "Unit tests checking HTTP status code constants.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/helpers/spread.test.js",
+          "role": "Unit tests for the spread helper.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/prototypePollution.test.js",
+          "role": "Integration tests guarding against prototype pollution through config, JSON parsing, params serializers, and transforms. The many functions define live servers, adapters, and parsers used by those tests.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/transformResponse.test.js",
+          "role": "",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"lib/adapters/adapters.js\"]\n    N1[\"lib/adapters/xhr.js\"]\n    N2[\"lib/axios.js\"]\n    N3[\"lib/cancel/CancelToken.js\"]\n    N4[\"lib/cancel/CanceledError.js\"]\n    N5[\"lib/cancel/isCancel.js\"]\n    N6[\"lib/core/Axios.js\"]\n    N7[\"lib/core/AxiosHeaders.js\"]\n    N8[\"lib/core/dispatchRequest.js\"]\n    N9[\"lib/core/mergeConfig.js\"]\n    N10[\"lib/core/transformData.js\"]\n    N11[\"lib/defaults/index.js\"]\n    N12[\"lib/defaults/transitional.js\"]\n    N13[\"lib/helpers/HttpStatusCode.js\"]\n    N14[\"lib/helpers/sanitizeHeaderValue.js\"]\n    N15[\"lib/helpers/spread.js\"]\n    N16[\"tests/browser/cancelToken.browser.test.js\"]\n    N17[\"tests/browser/defaults.browser.test.js\"]\n    N18[\"tests/unit/axios.test.js\"]\n    N19[\"tests/unit/axiosHeaders.test.js\"]\n    N20[\"tests/unit/cancel/canceledError.test.js\"]\n    N21[\"tests/unit/cancel/isCancel.test.js\"]\n    N22[\"tests/unit/core/dispatchRequest.test.js\"]\n    N23[\"tests/unit/core/mergeConfig.test.js\"]\n    N24[\"tests/unit/core/transformData.test.js\"]\n    N25[\"tests/unit/helpers/HttpStatusCode.test.js\"]\n    N26[\"tests/unit/helpers/spread.test.js\"]\n    N27[\"tests/unit/prototypePollution.test.js\"]\n    N28[\"tests/unit/transformResponse.test.js\"]\n    N0 --> N1\n    N1 --> N12\n    N1 --> N4\n    N1 --> N7\n    N1 --> N14\n    N2 --> N6\n    N2 --> N9\n    N2 --> N11\n    N2 --> N4\n    N2 --> N3\n    N2 --> N5\n    N2 --> N15\n    N2 --> N7\n    N2 --> N0\n    N2 --> N13\n    N3 --> N4\n    N6 --> N8\n    N6 --> N9\n    N6 --> N7\n    N6 --> N12\n    N7 --> N14\n    N8 --> N10\n    N8 --> N5\n    N8 --> N11\n    N8 --> N4\n    N8 --> N7\n    N8 --> N0\n    N9 --> N7\n    N10 --> N11\n    N10 --> N7\n    N11 --> N12\n    N16 --> N3\n    N16 --> N4\n    N17 --> N11\n    N17 --> N7\n    N18 --> N6\n    N19 --> N7\n    N20 --> N4\n    N21 --> N5\n    N21 --> N4\n    N22 --> N8\n    N22 --> N11\n    N23 --> N11\n    N23 --> N9\n    N24 --> N10\n    N25 --> N13\n    N26 --> N15\n    N27 --> N9\n    N27 --> N11\n    N27 --> N7\n    N28 --> N11\n    N28 --> N10"
+    },
+    {
+      "subsystem_id": "1",
+      "name": "HTTP Networking Layer",
+      "description": "The HTTP Networking Layer is the Node.js adapter that performs real socket-level HTTP/1.1 and HTTP/2 requests after the core pipeline has selected an adapter. It is a separate subsystem because transport concerns\u2014proxying, redirects, TLS, compression, streaming, and FormData encoding\u2014are completely different on Node than in browsers, and isolating them keeps the rest of axios platform-neutral. `resolveConfig` (`lib/helpers/resolveConfig.js:25`) prepares the final config, while the adapter in `lib/adapters/http.js` chooses proxy behavior through `setProxy` (`lib/adapters/http.js:258`) and can switch to `http2Transport` (`lib/adapters/http.js:466`) when HTTP/2 is enabled. Streaming bodies and multipart data are built by `formDataToStream` (`lib/helpers/formDataToStream.js:68`) and `ZlibHeaderTransformStream` (`lib/helpers/ZlibHeaderTransformStream.js:5`), and proxy bypass decisions are made by `shouldBypassProxy` (`lib/helpers/shouldBypassProxy.js:274`). URL building (`lib/helpers/buildURL.js:31`) and data-URI decoding (`lib/helpers/fromDataURI.js:21`) support the adapter's input handling. It connects to `lib/adapters/adapters.js`, `lib/core/Axios.js`, `lib/core/AxiosError.js`, and `lib/core/settle.js`, and is exercised by `tests/unit/adapters/http.test.js`.",
+      "files": [
+        {
+          "path": "lib/adapters/http.js",
+          "role": "Node.js HTTP/HTTPS adapter that speaks to the network using http, https, http2, net, and streams. It implements proxy support, redirects, compression, and socket handling for the core dispatcher.",
+          "key_symbols": [
+            {
+              "name": "zlibOptions",
+              "line": 39,
+              "explanation": "Compression option presets for gzip/deflate."
+            },
+            {
+              "name": "brotliOptions",
+              "line": 44,
+              "explanation": "Compression option preset for brotli."
+            },
+            {
+              "name": "zstdOptions",
+              "line": 49,
+              "explanation": "Compression option preset for zstd."
+            },
+            {
+              "name": "isBrotliSupported",
+              "line": 54,
+              "explanation": "Feature flag for brotli support."
+            },
+            {
+              "name": "isZstdSupported",
+              "line": 55,
+              "explanation": "Feature flag for zstd support."
+            },
+            {
+              "name": "ACCEPT_ENCODING",
+              "line": 56,
+              "explanation": "Value sent in the Accept-Encoding header."
+            },
+            {
+              "name": "scheduleProgress",
+              "line": 58,
+              "explanation": "Helper that throttles progress event callbacks."
+            },
+            {
+              "name": "handleSocketError",
+              "line": 72,
+              "explanation": "Handles socket-level errors before the request is fully wired."
+            },
+            {
+              "name": "NODE_NATIVE_ENV_PROXY_SUPPORT",
+              "line": 93,
+              "explanation": "Constant defining whether native env proxy support is enabled."
+            },
+            {
+              "name": "isNodeNativeEnvProxySupported",
+              "line": 98,
+              "explanation": "Checks Node version and env for native proxy support."
+            },
+            {
+              "name": "isNodeEnvProxyEnabled",
+              "line": 118,
+              "explanation": "Determines whether proxy env vars should be used."
+            },
+            {
+              "name": "getProxyEnvAgent",
+              "line": 132,
+              "explanation": "Builds an agent from proxy environment variables when supported."
+            },
+            {
+              "name": "getTunnelingAgent",
+              "line": 138,
+              "explanation": "Creates a tunneling agent for CONNECT-based proxy requests."
+            },
+            {
+              "name": "supportedProtocols",
+              "line": 173,
+              "explanation": "Whitelist of protocols the adapter can handle."
+            },
+            {
+              "name": "decodeURIComponentSafe",
+              "line": 181,
+              "explanation": "Safely decodes URI components in request paths."
+            },
+            {
+              "name": "flushOnFinish",
+              "line": 193,
+              "explanation": "Flushes buffered output when the stream finishes."
+            },
+            {
+              "name": "dispatchBeforeRedirect",
+              "line": 209,
+              "explanation": "Prepares config/headers before following a redirect."
+            },
+            {
+              "name": "stripMatchingHeaders",
+              "line": 224,
+              "explanation": "Removes headers that must change during cross-origin redirects."
+            },
+            {
+              "name": "isSameOriginRedirect",
+              "line": 236,
+              "explanation": "Tests whether a redirect stays on the same origin."
+            },
+            {
+              "name": "setProxy",
+              "line": 258,
+              "explanation": "Resolves proxy URL/agent settings and applies them to the request."
+            },
+            {
+              "name": "isHttpAdapterSupported",
+              "line": 423,
+              "explanation": "Environment flag marking whether this adapter can run."
+            },
+            {
+              "name": "wrapAsync",
+              "line": 428,
+              "explanation": "Wraps an async function to ensure promise/callback behavior."
+            },
+            {
+              "name": "resolveFamily",
+              "line": 453,
+              "explanation": "Selects the address family when resolving the host."
+            },
+            {
+              "name": "buildAddressEntry",
+              "line": 463,
+              "explanation": "Builds an address tuple for family resolution."
+            },
+            {
+              "name": "http2Transport",
+              "line": 466,
+              "explanation": "HTTP/2 transport object implementing request streaming and session handling."
+            }
+          ]
+        },
+        {
+          "path": "lib/core/setFormDataHeaders.js",
+          "role": "Sets Content-Type and boundary-style headers when the request body is FormData. It bridges form-data bodies and header normalization.",
+          "key_symbols": [
+            {
+              "name": "FORM_DATA_CONTENT_HEADERS",
+              "line": 3,
+              "explanation": "Constant list of headers relevant to form-data payloads."
+            },
+            {
+              "name": "setFormDataHeaders",
+              "line": 16,
+              "explanation": "Ensures required form-data headers are present on the request."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/Http2Sessions.js",
+          "role": "Manages pooled HTTP/2 sessions so concurrent requests reuse connections. It owns session lifecycle and request multiplexing for http2Transport.",
+          "key_symbols": [
+            {
+              "name": "Http2Sessions",
+              "line": 11,
+              "explanation": "Class tracking active HTTP/2 sessions per origin."
+            },
+            {
+              "name": "removeSession",
+              "line": 46,
+              "explanation": "Closes and removes a session from the pool."
+            },
+            {
+              "name": "request",
+              "line": 84,
+              "explanation": "Sends a request on a pooled or newly-created HTTP/2 session."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/ZlibHeaderTransformStream.js",
+          "role": "Transform stream that synchronizes zlib/brotli header bytes with downstream compression streams. It makes streamed compression work with Node's Transform API.",
+          "key_symbols": [
+            {
+              "name": "ZlibHeaderTransformStream",
+              "line": 5,
+              "explanation": "Writable/transform stream that rewrites or strips compression headers."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/buildURL.js",
+          "role": "Builds a full request URL by combining baseURL, params, and serializers. It also encodes query parameters consistently.",
+          "key_symbols": [
+            {
+              "name": "encode",
+              "line": 14,
+              "explanation": "URL-encodes a query component without double-encoding reserved characters."
+            },
+            {
+              "name": "buildURL",
+              "line": 31,
+              "explanation": "Constructs the final URL with serialized query string and hash handling."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/cookies.js",
+          "role": "Browser cookie read/write helpers used for XSRF tokens. The file is intentionally empty on Node where cookies are not available.",
+          "key_symbols": []
+        },
+        {
+          "path": "lib/helpers/formDataToStream.js",
+          "role": "Converts FormData objects into Node Readable streams for multipart uploads. It generates boundaries and encodes each part as a stream.",
+          "key_symbols": [
+            {
+              "name": "BOUNDARY_ALPHABET",
+              "line": 7,
+              "explanation": "Characters used to generate multipart boundaries."
+            },
+            {
+              "name": "textEncoder",
+              "line": 9,
+              "explanation": "TextEncoder instance for encoding string parts."
+            },
+            {
+              "name": "CRLF",
+              "line": 11,
+              "explanation": "Line-ending constant for multipart bodies."
+            },
+            {
+              "name": "CRLF_BYTES",
+              "line": 12,
+              "explanation": "Byte representation of CRLF."
+            },
+            {
+              "name": "CRLF_BYTES_COUNT",
+              "line": 13,
+              "explanation": "Length of the CRLF byte sequence."
+            },
+            {
+              "name": "FormDataPart",
+              "line": 15,
+              "explanation": "Helper class representing one multipart part stream."
+            },
+            {
+              "name": "formDataToStream",
+              "line": 68,
+              "explanation": "Transforms FormData into a Node Readable stream."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/fromDataURI.js",
+          "role": "Decodes data: URIs into Buffers or Blobs so axios can send data-URI bodies. It parses mime type, charset, and base64 payload.",
+          "key_symbols": [
+            {
+              "name": "DATA_URL_PATTERN",
+              "line": 9,
+              "explanation": "Regex matching data URL scheme and metadata."
+            },
+            {
+              "name": "fromDataURI",
+              "line": 21,
+              "explanation": "Extracts and decodes the payload portion of a data URI."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/isURLSameOrigin.js",
+          "role": "Determines whether a target URL is same-origin with the current page. It supports XSRF cookie allowances and browser platform checks.",
+          "key_symbols": []
+        },
+        {
+          "path": "lib/helpers/readBlob.js",
+          "role": "Reads a Blob into an ArrayBuffer for use as a request body. It wraps FileReader or arrayBuffer() depending on environment.",
+          "key_symbols": [
+            {
+              "name": "readBlob",
+              "line": 3,
+              "explanation": "Asynchronously reads a blob to an ArrayBuffer."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/resolveConfig.js",
+          "role": "Finalizes config for each adapter by merging headers, params, data, and transitional options. It produces the exact config object the adapters consume.",
+          "key_symbols": [
+            {
+              "name": "encodeUTF8",
+              "line": 20,
+              "explanation": "Encodes a string with UTF-8 for header/body handling."
+            },
+            {
+              "name": "resolveConfig",
+              "line": 25,
+              "explanation": "Resolves request/instance/default configs into a single normalized config."
+            },
+            {
+              "name": "own",
+              "line": 30,
+              "explanation": "Own-property existence helper used during config copying."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/shouldBypassProxy.js",
+          "role": "Implements NO_PROXY parsing and IP matching so requests can skip proxies correctly. It handles IPv4, IPv6, loopback, and hostname wildcards.",
+          "key_symbols": [
+            {
+              "name": "LOOPBACK_HOSTNAMES",
+              "line": 1,
+              "explanation": "Hostnames considered loopback."
+            },
+            {
+              "name": "isIPv4Loopback",
+              "line": 3,
+              "explanation": "Checks loopback IPv4 addresses."
+            },
+            {
+              "name": "parseIPv4Octet",
+              "line": 32,
+              "explanation": "Parses one IPv4 octet from a no-proxy entry."
+            },
+            {
+              "name": "normalizeIPAddress",
+              "line": 51,
+              "explanation": "Normalizes IPv4/IPv6 strings for comparison."
+            },
+            {
+              "name": "isIPv6ZeroGroup",
+              "line": 116,
+              "explanation": "Detects zero groups in IPv6 addresses."
+            },
+            {
+              "name": "isIPv6Unspecified",
+              "line": 122,
+              "explanation": "Checks unspecified IPv6 address."
+            },
+            {
+              "name": "isIPv6Loopback",
+              "line": 147,
+              "explanation": "Checks IPv6 loopback addresses."
+            },
+            {
+              "name": "isLoopback",
+              "line": 178,
+              "explanation": "Common loopback check for IP addresses."
+            },
+            {
+              "name": "DEFAULT_PORTS",
+              "line": 186,
+              "explanation": "Default ports used when matching proxy bypass."
+            },
+            {
+              "name": "parseNoProxyEntry",
+              "line": 194,
+              "explanation": "Parses a no_proxy entry into address/port patterns."
+            },
+            {
+              "name": "IPV4_MAPPED_DOTTED_RE",
+              "line": 234,
+              "explanation": "Regex for dotted IPv4-mapped IPv6 addresses."
+            },
+            {
+              "name": "IPV4_MAPPED_HEX_RE",
+              "line": 235,
+              "explanation": "Regex for hex IPv4-mapped IPv6 addresses."
+            },
+            {
+              "name": "unmapIPv4MappedIPv6",
+              "line": 237,
+              "explanation": "Converts IPv4-mapped IPv6 to IPv4 notation."
+            },
+            {
+              "name": "normalizeNoProxyHost",
+              "line": 253,
+              "explanation": "Normalizes hostnames for no-proxy comparison."
+            },
+            {
+              "name": "shouldBypassProxy",
+              "line": 274,
+              "explanation": "Main decision function for whether a proxy should be skipped."
+            }
+          ]
+        },
+        {
+          "path": "lib/platform/common/utils.js",
+          "role": "Platform detection and small environment helpers shared by browser and Node platforms. It identifies standard browser env and origins.",
+          "key_symbols": [
+            {
+              "name": "hasBrowserEnv",
+              "line": 1,
+              "explanation": "Whether a browser-like global object exists."
+            },
+            {
+              "name": "_navigator",
+              "line": 3,
+              "explanation": "Reference to the navigator object when available."
+            },
+            {
+              "name": "hasStandardBrowserEnv",
+              "line": 22,
+              "explanation": "True for standard browser environments with navigator and document."
+            },
+            {
+              "name": "hasStandardBrowserWebWorkerEnv",
+              "line": 35,
+              "explanation": "True for standard browser-like web worker environments."
+            },
+            {
+              "name": "origin",
+              "line": 44,
+              "explanation": "Computed current origin from location or navigator."
+            }
+          ]
+        },
+        {
+          "path": "lib/platform/index.js",
+          "role": "Exports the platform-specific utilities object, choosing between browser and Node implementations. It is consumed by resolveConfig and adapters.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/browser/cookies.browser.test.js",
+          "role": "Browser tests for cookie helpers, clearing cookies between cases.",
+          "key_symbols": [
+            {
+              "name": "clearAllCookies",
+              "line": 5,
+              "explanation": "Clears document.cookie entries for test isolation."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/isURLSameOrigin.browser.test.js",
+          "role": "Browser tests for same-origin URL detection.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/browser/xsrf.browser.test.js",
+          "role": "Browser tests for XSRF cookie/header logic using a mock XHR and cookie helpers.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 6,
+              "explanation": "Fake XHR class that records requests and allows manual completes."
+            },
+            {
+              "name": "setXsrfCookie",
+              "line": 59,
+              "explanation": "Writes the XSRF cookie used by the test."
+            },
+            {
+              "name": "clearXsrfCookie",
+              "line": 63,
+              "explanation": "Removes the XSRF cookie."
+            },
+            {
+              "name": "sendRequest",
+              "line": 69,
+              "explanation": "Triggers a request and asserts header behavior."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/fromDataURI.test.js",
+          "role": "Unit tests for data URI decoding, including malformed URI component handling.",
+          "key_symbols": [
+            {
+              "name": "decodeURIComponent",
+              "line": 17,
+              "explanation": "Test-local decode function used to simulate URI decoding."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/helpers/Http2Sessions.test.js",
+          "role": "Unit tests for HTTP/2 session pooling with fake sessions.",
+          "key_symbols": [
+            {
+              "name": "createFakeSession",
+              "line": 6,
+              "explanation": "Creates a stub HTTP/2 session for testing session reuse and removal."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/helpers/buildURL.test.js",
+          "role": "Unit tests for URL construction and query serialization.",
+          "key_symbols": [
+            {
+              "name": "customSerializer",
+              "line": 138,
+              "explanation": "User-defined params serializer used to test custom serialization."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/helpers/formDataToStream.test.js",
+          "role": "Unit tests converting FormData-like objects into Node streams.",
+          "key_symbols": [
+            {
+              "name": "SpecFormData",
+              "line": 4,
+              "explanation": "Spec-compatible FormData stub for stream tests."
+            },
+            {
+              "name": "makeBlobLike",
+              "line": 20,
+              "explanation": "Helper making a blob-like object."
+            },
+            {
+              "name": "collect",
+              "line": 29,
+              "explanation": "Collects stream output into a string for assertions."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/helpers/resolveConfig.test.js",
+          "role": "Unit tests for config resolution, including React Native FormData handling and headers.",
+          "key_symbols": [
+            {
+              "name": "ReactNativeFormData",
+              "line": 7,
+              "explanation": "FormData stub shaped like React Native's implementation."
+            },
+            {
+              "name": "getHeaders",
+              "line": 81,
+              "explanation": "Helper fetching headers from resolved config."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/helpers/shouldBypassProxy.test.js",
+          "role": "Unit tests for no_proxy parsing and proxy bypass decisions.",
+          "key_symbols": [
+            {
+              "name": "originalNoProxy",
+              "line": 4,
+              "explanation": "Snapshot of the original NO_PROXY env value."
+            },
+            {
+              "name": "originalNOProxy",
+              "line": 5,
+              "explanation": "Snapshot of the original no_proxy env value."
+            },
+            {
+              "name": "setNoProxy",
+              "line": 7,
+              "explanation": "Sets or clears NO_PROXY for each test."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/platform.test.js",
+          "role": "Unit tests for platform detection helpers.",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"lib/adapters/http.js\"]\n    N1[\"lib/core/setFormDataHeaders.js\"]\n    N2[\"lib/helpers/Http2Sessions.js\"]\n    N3[\"lib/helpers/ZlibHeaderTransformStream.js\"]\n    N4[\"lib/helpers/buildURL.js\"]\n    N5[\"lib/helpers/cookies.js\"]\n    N6[\"lib/helpers/formDataToStream.js\"]\n    N7[\"lib/helpers/fromDataURI.js\"]\n    N8[\"lib/helpers/isURLSameOrigin.js\"]\n    N9[\"lib/helpers/readBlob.js\"]\n    N10[\"lib/helpers/resolveConfig.js\"]\n    N11[\"lib/helpers/shouldBypassProxy.js\"]\n    N12[\"lib/platform/common/utils.js\"]\n    N13[\"lib/platform/index.js\"]\n    N14[\"tests/browser/cookies.browser.test.js\"]\n    N15[\"tests/browser/isURLSameOrigin.browser.test.js\"]\n    N16[\"tests/browser/xsrf.browser.test.js\"]\n    N17[\"tests/unit/fromDataURI.test.js\"]\n    N18[\"tests/unit/helpers/Http2Sessions.test.js\"]\n    N19[\"tests/unit/helpers/buildURL.test.js\"]\n    N20[\"tests/unit/helpers/formDataToStream.test.js\"]\n    N21[\"tests/unit/helpers/resolveConfig.test.js\"]\n    N22[\"tests/unit/helpers/shouldBypassProxy.test.js\"]\n    N23[\"tests/unit/platform.test.js\"]\n    N0 --> N4\n    N0 --> N13\n    N0 --> N7\n    N0 --> N1\n    N0 --> N6\n    N0 --> N9\n    N0 --> N3\n    N0 --> N2\n    N0 --> N11\n    N5 --> N13\n    N6 --> N9\n    N6 --> N13\n    N7 --> N13\n    N8 --> N13\n    N10 --> N13\n    N10 --> N8\n    N10 --> N5\n    N10 --> N1\n    N10 --> N4\n    N13 --> N12\n    N14 --> N5\n    N15 --> N8\n    N16 --> N5\n    N17 --> N7\n    N18 --> N2\n    N19 --> N4\n    N20 --> N6\n    N21 --> N10\n    N22 --> N11\n    N23 --> N13"
+    },
+    {
+      "subsystem_id": "2",
+      "name": "Build and Test Infrastructure",
+      "description": "The Build and Test Infrastructure subsystem contains the tooling that packages, serves, and validates axios during development and CI. It is split from runtime code because build orchestration, sandbox pages, fake XMLHttpRequest implementations, and HTTP test servers should not ship to consumers and would pollute the library's runtime modules. `gulpfile.js` drives the build using `packageJSON` (`gulpfile.js:36`) and `getContributors` (`gulpfile.js:16`), while `tests/setup/server.js` provides shared test servers through `startHTTPServer` (`tests/setup/server.js:20`) and `startTestServer` (`tests/setup/server.js:208`). Browser suites such as `tests/browser/adapter.browser.test.js` and `tests/browser/requests.browser.test.js` inject `MockXMLHttpRequest` classes to simulate XHR behavior, and `tests/unit/adapters/http.test.js` and `tests/unit/adapters/fetch.test.js` cover Node and fetch transports. `sandbox/client.js` and `scripts/axios-build-instance.js` support manual and build-time validation of the produced bundle. It connects to the runtime through `index.js`, `lib/axios.js`, `lib/adapters/fetch.js`, and `lib/adapters/http.js`.",
+      "files": [
+        {
+          "path": "gulpfile.js",
+          "role": "Defines the build pipeline: packaging, source map, banner, and contributor updates. It reads package.json and argv to drive build targets.",
+          "key_symbols": [
+            {
+              "name": "argv",
+              "line": 6,
+              "explanation": "Parsed command-line args controlling build tasks."
+            },
+            {
+              "name": "clear",
+              "line": 12,
+              "explanation": "Console-clearing helper."
+            },
+            {
+              "name": "getContributors",
+              "line": 16,
+              "explanation": "Reads contributor list from git or package metadata."
+            },
+            {
+              "name": "packageJSON",
+              "line": 36,
+              "explanation": "Parsed package.json contents used for version and metadata."
+            },
+            {
+              "name": "env",
+              "line": 60,
+              "explanation": "Environment variables injected into build tasks."
+            },
+            {
+              "name": "version",
+              "line": 77,
+              "explanation": "Current library version pulled from packageJSON."
+            }
+          ]
+        },
+        {
+          "path": "index.js",
+          "role": "Root entry file that re-exports the public axios API from lib/axios.js. It is the package's main module consumers import.",
+          "key_symbols": []
+        },
+        {
+          "path": "sandbox/client.js",
+          "role": "Small client script for the sandbox page used during manual testing. It sends requests to the sandbox server and prints the outcome.",
+          "key_symbols": [
+            {
+              "name": "URL",
+              "line": 3,
+              "explanation": "Sandbox API endpoint constant."
+            },
+            {
+              "name": "BODY",
+              "line": 4,
+              "explanation": "Payload constant sent by the sandbox client."
+            },
+            {
+              "name": "handleSuccess",
+              "line": 9,
+              "explanation": "Callback that logs successful responses."
+            },
+            {
+              "name": "handleFailure",
+              "line": 12,
+              "explanation": "Callback that logs failures."
+            }
+          ]
+        },
+        {
+          "path": "scripts/axios-build-instance.js",
+          "role": "Build-time script creating a custom axios instance for validation after bundling. It checks that the built output still exposes the expected API.",
+          "key_symbols": [
+            {
+              "name": "defaultTransform",
+              "line": 11,
+              "explanation": "Default transform used when constructing the build instance."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/adapter.browser.test.js",
+          "role": "Browser test verifying adapter selection with a mock XHR. It exercises XHR request lifecycle and completion states.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 5,
+              "explanation": "Fake XHR class recording readyState changes and responses."
+            },
+            {
+              "name": "sleep",
+              "line": 63,
+              "explanation": "Async delay helper."
+            },
+            {
+              "name": "waitForRequest",
+              "line": 65,
+              "explanation": "Polls until a request is captured."
+            },
+            {
+              "name": "onreadystatechange",
+              "line": 100,
+              "explanation": "Handlers that drive the mock XHR through readyState transitions."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/basicAuth.browser.test.js",
+          "role": "Browser tests for basic auth headers sent through the mock XHR.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 5,
+              "explanation": "Fake XHR class capturing request headers."
+            },
+            {
+              "name": "startRequest",
+              "line": 65,
+              "explanation": "Creates and starts a mock request."
+            },
+            {
+              "name": "flushSuccess",
+              "line": 74,
+              "explanation": "Completes the request with a successful response."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/cancel.browser.test.js",
+          "role": "Browser tests for cancellation behavior with mock XHR and add/remove event listeners.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 5,
+              "explanation": "Fake XHR supporting event listener registration."
+            },
+            {
+              "name": "waitForRequest",
+              "line": 71,
+              "explanation": "Waits for the request to start."
+            },
+            {
+              "name": "addEventListener",
+              "line": 199,
+              "explanation": "Mock method recording event subscriptions."
+            },
+            {
+              "name": "removeEventListener",
+              "line": 203,
+              "explanation": "Mock method recording event unsubscriptions."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/formdata.browser.test.js",
+          "role": "Browser tests for FormData request bodies captured by the mock XHR.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 5,
+              "explanation": "Fake XHR capturing send body."
+            },
+            {
+              "name": "getLastRequest",
+              "line": 65,
+              "explanation": "Returns the last recorded request."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/headers.browser.test.js",
+          "role": "Browser tests verifying header serialization on mock requests.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 5,
+              "explanation": "Fake XHR class storing headers."
+            },
+            {
+              "name": "getLastRequest",
+              "line": 63,
+              "explanation": "Returns captured request for assertions."
+            },
+            {
+              "name": "finishRequest",
+              "line": 71,
+              "explanation": "Completes the request."
+            },
+            {
+              "name": "testHeaderValue",
+              "line": 76,
+              "explanation": "Helper asserting a header's final value."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/instance.browser.test.js",
+          "role": "Browser tests for instance-level defaults and method chaining.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 5,
+              "explanation": "Fake XHR class for request capture."
+            },
+            {
+              "name": "getLastRequest",
+              "line": 63,
+              "explanation": "Returns the last captured request."
+            },
+            {
+              "name": "flushSuccess",
+              "line": 71,
+              "explanation": "Completes the request successfully."
+            },
+            {
+              "name": "waitForRequest",
+              "line": 76,
+              "explanation": "Waits until a request is made."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/interceptors.browser.test.js",
+          "role": "Browser tests for request/response interceptors, including async and failure paths.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 5,
+              "explanation": "Fake XHR class with response firing helpers."
+            },
+            {
+              "name": "sleep",
+              "line": 106,
+              "explanation": "Delay helper for async interceptor tests."
+            },
+            {
+              "name": "waitForRequest",
+              "line": 108,
+              "explanation": "Waits for a request to be captured."
+            },
+            {
+              "name": "fireRequest",
+              "line": 607,
+              "explanation": "Triggers a mock request with a response."
+            },
+            {
+              "name": "fireRequestCatch",
+              "line": 661,
+              "explanation": "Triggers a mock request that rejects."
+            },
+            {
+              "name": "onGetCall",
+              "line": 292,
+              "explanation": "Callback helper for get requests."
+            },
+            {
+              "name": "onPostCall",
+              "line": 312,
+              "explanation": "Callback helper for post requests."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/options.browser.test.js",
+          "role": "Browser tests for per-request options and defaults.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 5,
+              "explanation": "Fake XHR class for option tests."
+            },
+            {
+              "name": "startRequest",
+              "line": 63,
+              "explanation": "Starts a mock request."
+            },
+            {
+              "name": "flushSuccess",
+              "line": 72,
+              "explanation": "Completes the request successfully."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/progress.browser.test.js",
+          "role": "Browser tests for upload/download progress events using mock XHR.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 5,
+              "explanation": "Fake XHR emitting progress events."
+            },
+            {
+              "name": "getLastRequest",
+              "line": 101,
+              "explanation": "Returns the last recorded request for assertions."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/promise.browser.test.js",
+          "role": "Browser tests for promise resolution patterns.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 5,
+              "explanation": "Fake XHR used to drive promise resolution."
+            },
+            {
+              "name": "getLastRequest",
+              "line": 65,
+              "explanation": "Returns the last recorded request."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/requests.browser.test.js",
+          "role": "Comprehensive browser request tests covering methods, bodies, headers, and event listeners.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 6,
+              "explanation": "Fake XHR class with request recording and completion."
+            },
+            {
+              "name": "startRequest",
+              "line": 102,
+              "explanation": "Starts a mock request."
+            },
+            {
+              "name": "flushSuccess",
+              "line": 110,
+              "explanation": "Completes the request successfully."
+            },
+            {
+              "name": "str2ab",
+              "line": 495,
+              "explanation": "Converts a string to an ArrayBuffer for request bodies."
+            },
+            {
+              "name": "addEventListener",
+              "line": 568,
+              "explanation": "Records event listener subscriptions."
+            },
+            {
+              "name": "removeEventListener",
+              "line": 574,
+              "explanation": "Records event listener removal."
+            }
+          ]
+        },
+        {
+          "path": "tests/setup/server.js",
+          "role": "Shared test HTTP server factory used by unit and browser suites. It starts HTTPS/HTTP servers, serves echo endpoints, and tracks server lifetimes.",
+          "key_symbols": [
+            {
+              "name": "SERVER_HANDLER_STREAM_ECHO",
+              "line": 9,
+              "explanation": "Identifier for the stream echo handler."
+            },
+            {
+              "name": "setTimeoutAsync",
+              "line": 11,
+              "explanation": "Promise-based setTimeout."
+            },
+            {
+              "name": "certificatePromise",
+              "line": 13,
+              "explanation": "Promise producing a self-signed cert for HTTPS tests."
+            },
+            {
+              "name": "trackedServers",
+              "line": 14,
+              "explanation": "Set of running servers for cleanup."
+            },
+            {
+              "name": "untrackServer",
+              "line": 16,
+              "explanation": "Removes a server from tracking."
+            },
+            {
+              "name": "startHTTPServer",
+              "line": 20,
+              "explanation": "Starts an HTTP server with the given handler."
+            },
+            {
+              "name": "stopHTTPServer",
+              "line": 111,
+              "explanation": "Stops a running test server."
+            },
+            {
+              "name": "stopAllTrackedHTTPServers",
+              "line": 140,
+              "explanation": "Stops every tracked server after tests."
+            },
+            {
+              "name": "handleFormData",
+              "line": 145,
+              "explanation": "Server handler for multipart form data."
+            },
+            {
+              "name": "nodeVersion",
+              "line": 163,
+              "explanation": "Current Node version used to decide stream support."
+            },
+            {
+              "name": "generateReadable",
+              "line": 165,
+              "explanation": "Builds a readable stream payload."
+            },
+            {
+              "name": "makeReadableStream",
+              "line": 187,
+              "explanation": "Constructs a web ReadableStream for tests."
+            },
+            {
+              "name": "makeEchoStream",
+              "line": 201,
+              "explanation": "Creates an echo stream handler."
+            },
+            {
+              "name": "startTestServer",
+              "line": 208,
+              "explanation": "Starts the full test server with all endpoints."
+            },
+            {
+              "name": "handler",
+              "line": 209,
+              "explanation": "Main request handler dispatching to test endpoints."
+            },
+            {
+              "name": "closeAllSessions",
+              "line": 90,
+              "explanation": "Closes server sessions on shutdown."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/adapters/errorDetails.test.js",
+          "role": "Unit tests verifying error details for refused connections and closed ports.",
+          "key_symbols": [
+            {
+              "name": "__filename",
+              "line": 10,
+              "explanation": "Module path constant used to locate fixtures."
+            },
+            {
+              "name": "__dirname",
+              "line": 11,
+              "explanation": "Directory path constant used to locate fixtures."
+            },
+            {
+              "name": "getClosedPort",
+              "line": 13,
+              "explanation": "Reserves a port that is immediately closed to provoke connection errors."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/adapters/fetch.test.js",
+          "role": "Unit tests for the fetch adapter, covering streaming, abort, Safari quirks, and server integration.",
+          "key_symbols": [
+            {
+              "name": "SERVER_PORT",
+              "line": 21,
+              "explanation": "Port constant for the local test server."
+            },
+            {
+              "name": "LOCAL_SERVER_URL",
+              "line": 22,
+              "explanation": "URL of the local test server."
+            },
+            {
+              "name": "pipelineAsync",
+              "line": 24,
+              "explanation": "Promisified stream pipeline helper."
+            },
+            {
+              "name": "fetchAxios",
+              "line": 26,
+              "explanation": "Axios instance forced to use the fetch adapter."
+            },
+            {
+              "name": "getFetchSignal",
+              "line": 31,
+              "explanation": "Creates an AbortSignal for fetch tests."
+            },
+            {
+              "name": "createBrokenDOMExceptionLikeError",
+              "line": 33,
+              "explanation": "Constructs DOMException-like errors to simulate broken fetch."
+            },
+            {
+              "name": "makeUploadStream",
+              "line": 1281,
+              "explanation": "Builds an upload stream for request tests."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/adapters/http.test.js",
+          "role": "Large unit test suite for the Node HTTP adapter covering proxy, compression, redirects, HTTP/2, unix sockets, and errors.",
+          "key_symbols": [
+            {
+              "name": "toleranceRange",
+              "line": 51,
+              "explanation": "Computes allowed timing tolerance."
+            },
+            {
+              "name": "HangingConnectSocket",
+              "line": 60,
+              "explanation": "Socket stub that never connects for proxy timeouts."
+            },
+            {
+              "name": "HangingConnectAgent",
+              "line": 85,
+              "explanation": "Agent returning hanging sockets."
+            },
+            {
+              "name": "gzip",
+              "line": 1047,
+              "explanation": "Compression helper for encoding test bodies."
+            },
+            {
+              "name": "deflate",
+              "line": 1059,
+              "explanation": "Compression helper for deflate bodies."
+            },
+            {
+              "name": "deflateRaw",
+              "line": 1071,
+              "explanation": "Compression helper for raw deflate bodies."
+            },
+            {
+              "name": "brotliCompress",
+              "line": 1083,
+              "explanation": "Compression helper for brotli bodies."
+            },
+            {
+              "name": "zstdCompress",
+              "line": 1095,
+              "explanation": "Compression helper for zstd bodies."
+            },
+            {
+              "name": "startServer",
+              "line": 3721,
+              "explanation": "Starts a local HTTP server for adapter tests."
+            },
+            {
+              "name": "buildOptions",
+              "line": 3903,
+              "explanation": "Builds request options for assertions."
+            },
+            {
+              "name": "pollute",
+              "line": 4343,
+              "explanation": "Prototype-pollution helper used for security tests."
+            },
+            {
+              "name": "createStubTransport",
+              "line": 4419,
+              "explanation": "Stub transport factory for connection tests."
+            },
+            {
+              "name": "createHttp2Axios",
+              "line": 5412,
+              "explanation": "Creates an axios instance using HTTP/2."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/adapters/xhr.test.js",
+          "role": "Unit tests for the XHR adapter using a stub XMLHttpRequest in jsdom-like environments.",
+          "key_symbols": [
+            {
+              "name": "StubXMLHttpRequest",
+              "line": 9,
+              "explanation": "Minimal XHR stub enabling adapter tests outside a real browser."
+            },
+            {
+              "name": "importAxiosForPage",
+              "line": 43,
+              "explanation": "Imports the browser build for page-level XHR tests."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/api.test.js",
+          "role": "Unit tests for the public axios API surface and helper methods.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/core/Axios.test.js",
+          "role": "Unit tests for the Axios class, including adapter failure preservation and stack trace behavior.",
+          "key_symbols": [
+            {
+              "name": "expectAdapterFailurePreserved",
+              "line": 6,
+              "explanation": "Asserts that adapter errors pass through unchanged."
+            },
+            {
+              "name": "prepareStackTrace",
+              "line": 21,
+              "explanation": "Custom stack prepare implementation for tests."
+            },
+            {
+              "name": "captureStackTrace",
+              "line": 45,
+              "explanation": "Stubs Error.captureStackTrace behavior in older engines."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/query.test.js",
+          "role": "Unit tests for query string serialization and params handling.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/regression.test.js",
+          "role": "Regression tests guarding against previously fixed bugs across the API.",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"gulpfile.js\"]\n    N1[\"index.js\"]\n    N2[\"sandbox/client.js\"]\n    N3[\"scripts/axios-build-instance.js\"]\n    N4[\"tests/browser/adapter.browser.test.js\"]\n    N5[\"tests/browser/basicAuth.browser.test.js\"]\n    N6[\"tests/browser/cancel.browser.test.js\"]\n    N7[\"tests/browser/formdata.browser.test.js\"]\n    N8[\"tests/browser/headers.browser.test.js\"]\n    N9[\"tests/browser/instance.browser.test.js\"]\n    N10[\"tests/browser/interceptors.browser.test.js\"]\n    N11[\"tests/browser/options.browser.test.js\"]\n    N12[\"tests/browser/progress.browser.test.js\"]\n    N13[\"tests/browser/promise.browser.test.js\"]\n    N14[\"tests/browser/requests.browser.test.js\"]\n    N15[\"tests/setup/server.js\"]\n    N16[\"tests/unit/adapters/errorDetails.test.js\"]\n    N17[\"tests/unit/adapters/fetch.test.js\"]\n    N18[\"tests/unit/adapters/http.test.js\"]\n    N19[\"tests/unit/adapters/xhr.test.js\"]\n    N20[\"tests/unit/api.test.js\"]\n    N21[\"tests/unit/core/Axios.test.js\"]\n    N22[\"tests/unit/query.test.js\"]\n    N23[\"tests/unit/regression.test.js\"]\n    N0 --> N3\n    N2 --> N1\n    N3 --> N1\n    N4 --> N1\n    N5 --> N1\n    N6 --> N1\n    N7 --> N1\n    N8 --> N1\n    N9 --> N1\n    N10 --> N1\n    N11 --> N1\n    N12 --> N1\n    N13 --> N1\n    N14 --> N1\n    N16 --> N1\n    N17 --> N15\n    N17 --> N1\n    N18 --> N15\n    N18 --> N1\n    N19 --> N1\n    N20 --> N1\n    N21 --> N1\n    N22 --> N1\n    N22 --> N15\n    N23 --> N1"
+    },
+    {
+      "subsystem_id": "3",
+      "name": "Shared Utilities",
+      "description": "The Shared Utilities subsystem is a collection of small, dependency-free helpers that the core pipeline, adapters, and public API all rely on. It exists as a distinct unit to centralize common object, function, and stream operations so behavior such as deep merging, type detection, and interceptor bookkeeping is implemented once instead of duplicated across transport layers. `InterceptorManager` (`lib/core/InterceptorManager.js:34`) maintains the request/response interceptor chains, while `lib/utils.js` provides foundational functions like `merge` (`lib/utils.js:461`), `extend` (`lib/utils.js:522`), and `forEach` (`lib/utils.js:371`). Protocol/header helpers such as `parseProtocol` (`lib/helpers/parseProtocol.js:3`) and `parseHeaders` (`lib/helpers/parseHeaders.js:7`) normalize raw inputs, and `bind` (`lib/helpers/bind.js:10`) and `callbackify` (`lib/helpers/callbackify.js:3`) adapt functions for API callers. `AxiosTransformStream` (`lib/helpers/AxiosTransformStream.js:8`) handles streaming transform chunks for Node. These utilities are imported across `lib/axios.js`, `lib/core/Axios.js`, `lib/core/mergeConfig.js`, `lib/helpers/resolveConfig.js`, and every adapter, making them the shared substrate for the whole request pipeline.",
+      "files": [
+        {
+          "path": "lib/core/InterceptorManager.js",
+          "role": "Stores and runs request/response interceptors, filtering out stale handlers during dispatch. It is used by Axios to build the pre/post request chains.",
+          "key_symbols": [
+            {
+              "name": "$internals",
+              "line": 5,
+              "explanation": "Private storage symbol for interceptor state."
+            },
+            {
+              "name": "trimHandlers",
+              "line": 7,
+              "explanation": "Removes null/undefined handlers from the array."
+            },
+            {
+              "name": "syncHandlerEntries",
+              "line": 13,
+              "explanation": "Synchronizes handler arrays between public list and internal state."
+            },
+            {
+              "name": "InterceptorManager",
+              "line": 34,
+              "explanation": "Class managing interceptor registration, ejection, and iteration."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/AxiosTransformStream.js",
+          "role": "Transform stream that applies transform functions to streamed data. It buffers chunks and flushes transformed output.",
+          "key_symbols": [
+            {
+              "name": "kInternals",
+              "line": 6,
+              "explanation": "Symbol for internal stream state."
+            },
+            {
+              "name": "AxiosTransformStream",
+              "line": 8,
+              "explanation": "Class implementing transform logic."
+            },
+            {
+              "name": "pushChunk",
+              "line": 77,
+              "explanation": "Pushes an incoming chunk into the transform buffer."
+            },
+            {
+              "name": "onReadCallback",
+              "line": 87,
+              "explanation": "Callback when the consumer requests data."
+            },
+            {
+              "name": "transformChunk",
+              "line": 94,
+              "explanation": "Runs the transform function over a chunk."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/bind.js",
+          "role": "Binds a function to a context and creates a bound helper with the same prototype. It is used to attach axios methods to instances.",
+          "key_symbols": [
+            {
+              "name": "bind",
+              "line": 10,
+              "explanation": "Returns fn wrapped with Function.prototype.apply on the given context."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/callbackify.js",
+          "role": "Converts promise-returning functions into callback-style functions for backward compatibility. It is used in the public API when callbacks are passed.",
+          "key_symbols": [
+            {
+              "name": "callbackify",
+              "line": 3,
+              "explanation": "Returns a function that invokes a callback with the promise's result or error."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/isAxiosError.js",
+          "role": "Predicate for detecting AxiosError instances. It is used throughout errors and tests.",
+          "key_symbols": [
+            {
+              "name": "isAxiosError",
+              "line": 12,
+              "explanation": "Checks a value's isAxiosError flag or class identity."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/parseHeaders.js",
+          "role": "Parses raw header strings into a plain object, ignoring duplicate headers. It is used by XHR and fetch adapters.",
+          "key_symbols": [
+            {
+              "name": "ignoreDuplicateOf",
+              "line": 7,
+              "explanation": "List of headers whose later duplicate values are ignored."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/parseProtocol.js",
+          "role": "Extracts the URL protocol before ':' in a string. It supports URL building and adapter protocol checks.",
+          "key_symbols": [
+            {
+              "name": "parseProtocol",
+              "line": 3,
+              "explanation": "Returns the protocol portion of a URL string."
+            }
+          ]
+        },
+        {
+          "path": "lib/utils.js",
+          "role": "Large collection of shared helpers: type checks, object iteration, merging, extending, descriptor handling, and environment utilities.",
+          "key_symbols": [
+            {
+              "name": "hasOwnInPrototypeChain",
+              "line": 30,
+              "explanation": "Checks if a key exists anywhere in an object's prototype chain."
+            },
+            {
+              "name": "isPlainObject",
+              "line": 186,
+              "explanation": "Determines if a value is a plain object."
+            },
+            {
+              "name": "isEmptyObject",
+              "line": 211,
+              "explanation": "Checks whether an object has no enumerable keys."
+            },
+            {
+              "name": "isFormData",
+              "line": 314,
+              "explanation": "Checks if a value looks like FormData."
+            },
+            {
+              "name": "forEach",
+              "line": 371,
+              "explanation": "Iterates arrays/objects and calls a callback with value, key, and collection."
+            },
+            {
+              "name": "findKey",
+              "line": 417,
+              "explanation": "Finds the first key whose value satisfies a predicate."
+            },
+            {
+              "name": "merge",
+              "line": 461,
+              "explanation": "Deep-merges objects with deduplication and type-aware replacement."
+            },
+            {
+              "name": "extend",
+              "line": 522,
+              "explanation": "Copies enumerable properties from source objects onto a target."
+            },
+            {
+              "name": "inherits",
+              "line": 574,
+              "explanation": "Sets up prototype inheritance with constructor linking."
+            },
+            {
+              "name": "toFlatObject",
+              "line": 599,
+              "explanation": "Flattens inherited enumerable properties into a new object."
+            },
+            {
+              "name": "toArray",
+              "line": 651,
+              "explanation": "Converts array-like values to real arrays."
+            },
+            {
+              "name": "forEachEntry",
+              "line": 687,
+              "explanation": "Iterates entries of a collection."
+            },
+            {
+              "name": "reduceDescriptors",
+              "line": 739,
+              "explanation": "Iterates all property descriptors on an object."
+            },
+            {
+              "name": "freezeMethods",
+              "line": 758,
+              "explanation": "Freezes an object's methods while allowing property additions."
+            },
+            {
+              "name": "toObjectSet",
+              "line": 792,
+              "explanation": "Converts an array of strings into an object set."
+            },
+            {
+              "name": "toJSONObject",
+              "line": 834,
+              "explanation": "Converts a value to a JSON-safe plain object, avoiding cycles."
+            },
+            {
+              "name": "_setImmediate",
+              "line": 912,
+              "explanation": "Cross-platform immediate task scheduler."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/core/InterceptorManager.test.js",
+          "role": "Unit tests for interceptor add/remove/iteration behavior.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/helpers/bind.test.js",
+          "role": "Unit tests for the bind helper.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/helpers/isAxiosError.test.js",
+          "role": "Unit tests for isAxiosError detection.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/helpers/parseHeaders.test.js",
+          "role": "Unit tests for raw header string parsing.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/parseProtocol.test.js",
+          "role": "Unit tests for protocol extraction.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/utils.test.js",
+          "role": "Unit tests for shared utils, including fake FormData for environment checks.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/utils/endsWith.test.js",
+          "role": "Unit tests for string suffix checks.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/utils/extend.test.js",
+          "role": "Unit tests for the extend helper.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/utils/forEach.test.js",
+          "role": "Unit tests for the forEach helper.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/utils/isX.test.js",
+          "role": "Unit tests for type-detection predicates.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/utils/kindOf.test.js",
+          "role": "Unit tests for kindOf type strings.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/utils/kindOfTest.test.js",
+          "role": "Unit tests for kindOfTest factories.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/utils/merge.test.js",
+          "role": "Unit tests for the merge helper.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/utils/toArray.test.js",
+          "role": "Unit tests for array conversion.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/utils/toFlatObject.test.js",
+          "role": "Unit tests for flattening objects.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/utils/trim.test.js",
+          "role": "Unit tests for string trimming helpers.",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"lib/core/InterceptorManager.js\"]\n    N1[\"lib/helpers/AxiosTransformStream.js\"]\n    N2[\"lib/helpers/bind.js\"]\n    N3[\"lib/helpers/callbackify.js\"]\n    N4[\"lib/helpers/isAxiosError.js\"]\n    N5[\"lib/helpers/parseHeaders.js\"]\n    N6[\"lib/helpers/parseProtocol.js\"]\n    N7[\"lib/utils.js\"]\n    N8[\"tests/unit/core/InterceptorManager.test.js\"]\n    N9[\"tests/unit/helpers/bind.test.js\"]\n    N10[\"tests/unit/helpers/isAxiosError.test.js\"]\n    N11[\"tests/unit/helpers/parseHeaders.test.js\"]\n    N12[\"tests/unit/parseProtocol.test.js\"]\n    N13[\"tests/unit/utils.test.js\"]\n    N14[\"tests/unit/utils/endsWith.test.js\"]\n    N15[\"tests/unit/utils/extend.test.js\"]\n    N16[\"tests/unit/utils/forEach.test.js\"]\n    N17[\"tests/unit/utils/isX.test.js\"]\n    N18[\"tests/unit/utils/kindOf.test.js\"]\n    N19[\"tests/unit/utils/kindOfTest.test.js\"]\n    N20[\"tests/unit/utils/merge.test.js\"]\n    N21[\"tests/unit/utils/toArray.test.js\"]\n    N22[\"tests/unit/utils/toFlatObject.test.js\"]\n    N23[\"tests/unit/utils/trim.test.js\"]\n    N0 --> N7\n    N1 --> N7\n    N3 --> N7\n    N4 --> N7\n    N5 --> N7\n    N7 --> N2\n    N8 --> N0\n    N9 --> N2\n    N10 --> N4\n    N11 --> N5\n    N12 --> N7\n    N12 --> N6\n    N13 --> N7\n    N14 --> N7\n    N15 --> N7\n    N16 --> N7\n    N17 --> N7\n    N18 --> N7\n    N19 --> N7\n    N20 --> N7\n    N21 --> N7\n    N22 --> N7\n    N23 --> N7"
+    },
+    {
+      "subsystem_id": "4",
+      "name": "Fetch Adapter and Errors",
+      "description": "The Fetch Adapter and Errors subsystem provides the fetch-based transport for browsers and workers together with the error and signal infrastructure shared by all adapters. It is separated because fetch has a different streaming, abort, and body-size model than XHR or Node's http module, and the error types need to be centralized so every transport reports failures consistently. `factory` (`lib/adapters/fetch.js:68`) constructs the fetch request, `trackStream` (`lib/helpers/trackStream.js:45`) monitors upload/download progress, and `composeSignals` (`lib/helpers/composeSignals.js:5`) merges user and internal abort signals. `settle` (`lib/core/settle.js:14`) decides resolution or rejection based on `validateStatus`, and failures are represented by `AxiosError` (`lib/core/AxiosError.js:98`), whose `redactConfig` logic scrubs sensitive config fields. `validator` (`lib/helpers/validator.js:81`) asserts config options, while `formDataToJSON` (`lib/helpers/formDataToJSON.js:75`) and `estimateDataURLDecodedBytes` (`lib/helpers/estimateDataURLDecodedBytes.js:148`) support body conversions and size checks. It is selected by `lib/adapters/adapters.js`, invoked from `lib/core/Axios.js`, and tested by `tests/unit/adapters/fetch.test.js`.",
+      "files": [
+        {
+          "path": "lib/adapters/fetch.js",
+          "role": "Fetch-based adapter used in browsers and workers. It transforms an axios config into a fetch Request, tracks body streams, enforces maxBodyLength, and handles progress reporting and abort signals.",
+          "key_symbols": [
+            {
+              "name": "DEFAULT_CHUNK_SIZE",
+              "line": 18,
+              "explanation": "Chunk size for reading streamed request bodies."
+            },
+            {
+              "name": "encodeUTF8",
+              "line": 30,
+              "explanation": "UTF-8 encoder helper for request data."
+            },
+            {
+              "name": "decodeURIComponentSafe",
+              "line": 39,
+              "explanation": "Safely decodes URI components when handling response URLs."
+            },
+            {
+              "name": "test",
+              "line": 51,
+              "explanation": "Environment check deciding whether this adapter can be used."
+            },
+            {
+              "name": "maybeWithAuthCredentials",
+              "line": 59,
+              "explanation": "Adds credentials to fetch requests when auth is configured."
+            },
+            {
+              "name": "factory",
+              "line": 68,
+              "explanation": "Main adapter factory building and executing the fetch request."
+            },
+            {
+              "name": "getBodyLength",
+              "line": 159,
+              "explanation": "Computes the byte length of a request body for size limits."
+            },
+            {
+              "name": "resolveBodyLength",
+              "line": 189,
+              "explanation": "Resolves body length when it is async."
+            },
+            {
+              "name": "own",
+              "line": 215,
+              "explanation": "Own-property helper used inside factory."
+            },
+            {
+              "name": "maxBodyLengthError",
+              "line": 243,
+              "explanation": "Creates an AxiosError when body length exceeds the configured limit."
+            },
+            {
+              "name": "trackRequestStream",
+              "line": 327,
+              "explanation": "Wraps the request body stream to count sent bytes."
+            },
+            {
+              "name": "onChunkProgress",
+              "line": 480,
+              "explanation": "Callback invoked as chunks are read to emit progress."
+            },
+            {
+              "name": "seedCache",
+              "line": 616,
+              "explanation": "Cache used to memoize the fetch implementation."
+            },
+            {
+              "name": "getFetch",
+              "line": 618,
+              "explanation": "Returns the globally available fetch implementation, seeded into cache."
+            },
+            {
+              "name": "adapter",
+              "line": 641,
+              "explanation": "Adapter function exported for getAdapter."
+            }
+          ]
+        },
+        {
+          "path": "lib/core/AxiosError.js",
+          "role": "Defines axios's unified error class with toJSON serialization and config redaction. It is thrown by adapters and settle for all request failures.",
+          "key_symbols": [
+            {
+              "name": "REDACTED",
+              "line": 6,
+              "explanation": "Placeholder for redacted config fields."
+            },
+            {
+              "name": "hasOwnOrPrototypeToJSON",
+              "line": 8,
+              "explanation": "Checks for toJSON on an object or its prototype."
+            },
+            {
+              "name": "redactConfig",
+              "line": 29,
+              "explanation": "Recursively removes sensitive config fields from error toJSON."
+            },
+            {
+              "name": "visit",
+              "line": 33,
+              "explanation": "Recursive walker used by redactConfig."
+            },
+            {
+              "name": "stringifySafely",
+              "line": 75,
+              "explanation": "JSON stringifier that handles circular structures."
+            },
+            {
+              "name": "aggregateErrorMessage",
+              "line": 83,
+              "explanation": "Joins multiple error messages for AggregatedError support."
+            },
+            {
+              "name": "AxiosError",
+              "line": 98,
+              "explanation": "The error class itself with code, config, request, response, and cause."
+            }
+          ]
+        },
+        {
+          "path": "lib/core/settle.js",
+          "role": "Resolves or rejects a promise based on validateStatus and the response. It is the final common post-adapter step shared by all transports.",
+          "key_symbols": [
+            {
+              "name": "settle",
+              "line": 14,
+              "explanation": "Checks response status and calls resolve/reject with AxiosError when needed."
+            }
+          ]
+        },
+        {
+          "path": "lib/env/data.js",
+          "role": "Stores build-time environment metadata, notably the library version. It is imported by defaults and error serialization.",
+          "key_symbols": [
+            {
+              "name": "VERSION",
+              "line": 1,
+              "explanation": "Package version string injected at build time."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/composeSignals.js",
+          "role": "Merges multiple AbortSignals into one signal so user cancellation and axios internal cancellation work together. It unsubscribes cleanly when the composed signal completes.",
+          "key_symbols": [
+            {
+              "name": "composeSignals",
+              "line": 5,
+              "explanation": "Combines signal sources and invokes abort listeners."
+            },
+            {
+              "name": "onabort",
+              "line": 16,
+              "explanation": "Calls the composed signal's abort handler when any source aborts."
+            },
+            {
+              "name": "unsubscribe",
+              "line": 36,
+              "explanation": "Removes composed-signal listeners from source signals."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/estimateDataURLDecodedBytes.js",
+          "role": "Estimates the allocated byte size of a data URL after decoding, avoiding full decode before enforcing maxBodyLength. It uses base64 and percent-encoding heuristics.",
+          "key_symbols": [
+            {
+              "name": "isHexDigit",
+              "line": 8,
+              "explanation": "Checks if a character is a hex digit."
+            },
+            {
+              "name": "isPercentEncodedByte",
+              "line": 13,
+              "explanation": "Checks if characters form a percent-encoded byte."
+            },
+            {
+              "name": "hexValue",
+              "line": 16,
+              "explanation": "Converts a hex digit to its numeric value."
+            },
+            {
+              "name": "isBase64Char",
+              "line": 18,
+              "explanation": "Checks base64 alphabet membership."
+            },
+            {
+              "name": "isBase64Whitespace",
+              "line": 27,
+              "explanation": "Checks whitespace allowed inside base64."
+            },
+            {
+              "name": "base64Bytes",
+              "line": 30,
+              "explanation": "Counts bytes per base64 character group."
+            },
+            {
+              "name": "estimateBase64BufferAllocation",
+              "line": 38,
+              "explanation": "Estimates allocation for base64-decoded buffers."
+            },
+            {
+              "name": "estimatePercentDecodedBase64Bytes",
+              "line": 53,
+              "explanation": "Estimates size of percent-decoded base64 payloads."
+            },
+            {
+              "name": "estimateDataURLBytes",
+              "line": 98,
+              "explanation": "Estimates total URL payload bytes before decoding."
+            },
+            {
+              "name": "estimateDataURLDecodedBytes",
+              "line": 148,
+              "explanation": "Public estimate for decoded data URL byte length."
+            },
+            {
+              "name": "estimateDataURLBufferAllocation",
+              "line": 164,
+              "explanation": "Estimates Buffer allocation for decoded data URL."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/formDataToJSON.js",
+          "role": "Converts FormData objects to nested JSON, handling array indices and path-like keys. It is used in tests and for body serialization.",
+          "key_symbols": [
+            {
+              "name": "MAX_DEPTH",
+              "line": 7,
+              "explanation": "Maximum nesting depth allowed."
+            },
+            {
+              "name": "throwIfDepthExceeded",
+              "line": 9,
+              "explanation": "Throws when JSON conversion exceeds MAX_DEPTH."
+            },
+            {
+              "name": "parsePropPath",
+              "line": 25,
+              "explanation": "Parses bracket/dot paths into nested keys."
+            },
+            {
+              "name": "arrayToObject",
+              "line": 55,
+              "explanation": "Builds an object with numeric keys from the parsed path."
+            },
+            {
+              "name": "formDataToJSON",
+              "line": 75,
+              "explanation": "Main FormData-to-JSON conversion entry."
+            },
+            {
+              "name": "buildPath",
+              "line": 76,
+              "explanation": "Builds nested output objects along a parsed path."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/trackStream.js",
+          "role": "Wraps a ReadableStream to observe bytes read while passing chunks through. It powers upload progress reporting in fetch and http adapters.",
+          "key_symbols": [
+            {
+              "name": "streamChunk",
+              "line": 1,
+              "explanation": "Handles a chunk read from the source stream."
+            },
+            {
+              "name": "readBytes",
+              "line": 19,
+              "explanation": "Calculates bytes read from a chunk."
+            },
+            {
+              "name": "readStream",
+              "line": 25,
+              "explanation": "Asynchronously reads stream chunks and invokes callback."
+            },
+            {
+              "name": "trackStream",
+              "line": 45,
+              "explanation": "Creates a tracked stream wrapper with finish/error callbacks."
+            },
+            {
+              "name": "_onFinish",
+              "line": 50,
+              "explanation": "Internal callback when the tracked stream finishes."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/validator.js",
+          "role": "Config option validator with deprecation warnings, spelling suggestions, and type assertions. It is used by Axios to detect invalid options.",
+          "key_symbols": [
+            {
+              "name": "validators",
+              "line": 6,
+              "explanation": "Registry of type-checking functions."
+            },
+            {
+              "name": "deprecatedWarnings",
+              "line": 15,
+              "explanation": "Tracking for emitted deprecation warnings."
+            },
+            {
+              "name": "transitional",
+              "line": 26,
+              "explanation": "Wraps a validator for transitional options."
+            },
+            {
+              "name": "formatMessage",
+              "line": 27,
+              "explanation": "Formats validation error messages."
+            },
+            {
+              "name": "spelling",
+              "line": 63,
+              "explanation": "Suggests close option names when an unknown option is passed."
+            },
+            {
+              "name": "assertOptions",
+              "line": 81,
+              "explanation": "Asserts all provided options pass validation."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/settle.browser.test.js",
+          "role": "Browser tests for settle's resolve/reject behavior.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/browser/transform.browser.test.js",
+          "role": "Browser tests for request/response transforms, using mock XHR.",
+          "key_symbols": [
+            {
+              "name": "MockXMLHttpRequest",
+              "line": 6,
+              "explanation": "Fake XHR class for capturing transformed requests."
+            },
+            {
+              "name": "getLastRequest",
+              "line": 70,
+              "explanation": "Returns the last captured mock request."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/adapters/adapters.test.js",
+          "role": "Unit tests for adapter lookup and custom adapter functions.",
+          "key_symbols": [
+            {
+              "name": "adapter",
+              "line": 18,
+              "explanation": "Test adapter function used to exercise getAdapter behavior."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/composeSignals.test.js",
+          "role": "Unit tests for composed signals.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/core/AxiosError.test.js",
+          "role": "Unit tests for AxiosError serialization, circular causes, credential classes, and toJSON.",
+          "key_symbols": [
+            {
+              "name": "makeCircularCause",
+              "line": 144,
+              "explanation": "Builds a circular cause object for error serialization tests."
+            },
+            {
+              "name": "loggerWalk",
+              "line": 175,
+              "explanation": "Test helper walking an error chain like a logger would."
+            },
+            {
+              "name": "Credentials",
+              "line": 401,
+              "explanation": "Test class with sensitive props for redaction tests."
+            },
+            {
+              "name": "toJSON",
+              "line": 407,
+              "explanation": "Custom toJSON method on the Credentials test class."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/core/settle.test.js",
+          "role": "Unit tests for settle with custom response factories.",
+          "key_symbols": [
+            {
+              "name": "makeResponse",
+              "line": 10,
+              "explanation": "Builds a minimal response object for settle tests."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/estimateDataURLDecodedBytes.test.js",
+          "role": "Unit tests for data URL byte estimation.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/helpers/composeSignals.test.js",
+          "role": "Unit tests for signal composition with addEventListener stubs.",
+          "key_symbols": [
+            {
+              "name": "addEventListener",
+              "line": 10,
+              "explanation": "Stub recording event subscriptions for signal tests."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/helpers/formDataToJSON.test.js",
+          "role": "Unit tests for FormData JSON conversion.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/helpers/validator.test.js",
+          "role": "Unit tests for option validation.",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"lib/adapters/fetch.js\"]\n    N1[\"lib/core/AxiosError.js\"]\n    N2[\"lib/core/settle.js\"]\n    N3[\"lib/env/data.js\"]\n    N4[\"lib/helpers/composeSignals.js\"]\n    N5[\"lib/helpers/estimateDataURLDecodedBytes.js\"]\n    N6[\"lib/helpers/formDataToJSON.js\"]\n    N7[\"lib/helpers/trackStream.js\"]\n    N8[\"lib/helpers/validator.js\"]\n    N9[\"tests/browser/settle.browser.test.js\"]\n    N10[\"tests/browser/transform.browser.test.js\"]\n    N11[\"tests/unit/adapters/adapters.test.js\"]\n    N12[\"tests/unit/composeSignals.test.js\"]\n    N13[\"tests/unit/core/AxiosError.test.js\"]\n    N14[\"tests/unit/core/settle.test.js\"]\n    N15[\"tests/unit/estimateDataURLDecodedBytes.test.js\"]\n    N16[\"tests/unit/helpers/composeSignals.test.js\"]\n    N17[\"tests/unit/helpers/formDataToJSON.test.js\"]\n    N18[\"tests/unit/helpers/validator.test.js\"]\n    N0 --> N1\n    N0 --> N4\n    N0 --> N7\n    N0 --> N2\n    N0 --> N5\n    N0 --> N3\n    N2 --> N1\n    N4 --> N1\n    N6 --> N1\n    N8 --> N3\n    N8 --> N1\n    N9 --> N2\n    N9 --> N1\n    N10 --> N1\n    N11 --> N1\n    N12 --> N4\n    N13 --> N1\n    N14 --> N2\n    N14 --> N1\n    N15 --> N5\n    N16 --> N4\n    N17 --> N6\n    N17 --> N1\n    N18 --> N1\n    N18 --> N8"
+    },
+    {
+      "subsystem_id": "5",
+      "name": "Form Data Serialization",
+      "description": "Form Data Serialization turns arbitrary JavaScript request bodies \u2014 nested objects, arrays, primitives, Blobs/Files, and URLSearchParams \u2014 into platform-facing FormData or URL-encoded pairs. It exists as its own subsystem because Axios supports browser, Node, and React Native environments, all of which expose different FormData/Blob constructors, so the same body-serialization logic must be able to target whichever implementation is present. The flow starts at `toFormData` (lib/helpers/toFormData.js:94), which uses `build` and `defaultVisitor` to walk the object, applies key shaping via `renderKey`/`removeBrackets`, and appends leaves to a native FormData or to an `AxiosURLSearchParams` instance. `toURLEncodedForm` (lib/helpers/toURLEncodedForm.js:7) is the small adapter that chooses the latter for URL-encoded bodies, and the platform index files select the correct Blob/FormData/URLSearchParams classes at runtime. This subsystem is invoked by `lib/defaults/index.js` during transformRequest, is paired with `lib/helpers/formDataToJSON.js` for the inverse conversion, and shares error reporting with `lib/core/AxiosError.js`; `lib/platform/index.js` resolves its browser/node platform exports while `lib/utils.js` supplies the type checks these serializers rely on.",
+      "files": [
+        {
+          "path": "lib/helpers/AxiosURLSearchParams.js",
+          "role": "Custom URLSearchParams class used to represent URL-encoded body data. It stores entries in a simple pair list and delays encoding until `toString` is called, which lets Axios match browser serialization semantics.",
+          "key_symbols": [
+            {
+              "name": "encode",
+              "line": 13,
+              "explanation": "Percent-encodes a value with the same character set used by browser URLSearchParams serialization, including the extra non-standard characters Axios intentionally escapes."
+            },
+            {
+              "name": "toString",
+              "line": 47,
+              "explanation": "Joins all stored pairs into a `name=value&name=value` string, using the supplied encoder or the default `encode` function."
+            },
+            {
+              "name": "AxiosURLSearchParams",
+              "line": 35,
+              "explanation": "Constructor that receives params/options and immediately calls `toFormData` to populate the internal pair list."
+            },
+            {
+              "name": "append",
+              "line": 43,
+              "explanation": "Appends a single name/value pair to the internal list for later serialization."
+            },
+            {
+              "name": "prototype",
+              "line": 41,
+              "explanation": "Prototype object to which `append` and `toString` are attached, giving instances their behavior."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/toFormData.js",
+          "role": "Core recursive serializer that converts a JS object into a FormData-compatible collection. It handles nested keys, arrays, depth limits, and visitors, and is the workhorse behind both multipart and URL-encoded bodies.",
+          "key_symbols": [
+            {
+              "name": "toFormData",
+              "line": 94,
+              "explanation": "Public entry point; walks the supplied value with the configured visitor and fills the given FormData or URLSearchParams-style object."
+            },
+            {
+              "name": "renderKey",
+              "line": 44,
+              "explanation": "Formats a key for nested values by appending bracket notation, producing names such as `a[b]` for nested objects."
+            },
+            {
+              "name": "isVisitable",
+              "line": 20,
+              "explanation": "Predicate that decides whether a value is a plain object or array that should be recursed into rather than appended as a leaf."
+            },
+            {
+              "name": "removeBrackets",
+              "line": 31,
+              "explanation": "Converts bracket-style keys into a dot-like form when they need to be flattened or normalized."
+            },
+            {
+              "name": "isFlatArray",
+              "line": 63,
+              "explanation": "Detects one-dimensional arrays whose elements can be appended directly without per-index recursive visits."
+            },
+            {
+              "name": "predicates",
+              "line": 67,
+              "explanation": "Small set of type checks used to recognize values such as Blobs, Files, FormData, and URLSearchParams that should be preserved rather than converted."
+            },
+            {
+              "name": "DEFAULT_FORM_DATA_MAX_DEPTH",
+              "line": 11,
+              "explanation": "Default recursive depth limit used when serializing deeply nested objects."
+            },
+            {
+              "name": "defaultVisitor",
+              "line": 201,
+              "explanation": "Standard visitor passed to `build`; appends leaf values to the target collection and decides when to recurse into child values."
+            },
+            {
+              "name": "convertValue",
+              "line": 131,
+              "explanation": "Transforms values before appending, for example dates and typed arrays, while preserving recognized form-compatible types."
+            },
+            {
+              "name": "build",
+              "line": 253,
+              "explanation": "Walks the current key path and value, calling the visitor and managing recursion into nested objects and arrays."
+            },
+            {
+              "name": "stringifyWithDepthLimit",
+              "line": 168,
+              "explanation": "Stringifies nested values with a depth counter so deeply nested structures can be represented without recursing forever."
+            },
+            {
+              "name": "throwIfMaxDepthExceeded",
+              "line": 159,
+              "explanation": "Guard that raises an AxiosError when the configured maximum serialization depth is exceeded."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/toURLEncodedForm.js",
+          "role": "Small bridge that feeds a value through `toFormData` into an `AxiosURLSearchParams` rather than a native FormData. It is the entry point used when an adapter needs `application/x-www-form-urlencoded` output.",
+          "key_symbols": [
+            {
+              "name": "toURLEncodedForm",
+              "line": 7,
+              "explanation": "Serializes data via `toFormData` into an `AxiosURLSearchParams` instance and returns it as the URL-encoded form body."
+            }
+          ]
+        },
+        {
+          "path": "lib/platform/browser/classes/Blob.js",
+          "role": "Re-exports the browser's native Blob class so platform-neutral code can import one consistent name. This keeps browser globals out of the shared serialization helpers.",
+          "key_symbols": []
+        },
+        {
+          "path": "lib/platform/browser/classes/FormData.js",
+          "role": "Re-exports the browser's native FormData constructor. Serializers use this binding rather than the global directly, matching the platform-selection pattern.",
+          "key_symbols": []
+        },
+        {
+          "path": "lib/platform/browser/classes/URLSearchParams.js",
+          "role": "Re-exports the browser's native URLSearchParams for the browser platform. It is the default backing class for generated URL-encoded strings.",
+          "key_symbols": []
+        },
+        {
+          "path": "lib/platform/browser/index.js",
+          "role": "Central export for browser platform classes and protocol metadata. `lib/platform/index.js` chooses this module when running in a browser-like environment.",
+          "key_symbols": []
+        },
+        {
+          "path": "lib/platform/node/classes/Buffer.js",
+          "role": "Provides the Node `Buffer` implementation to platform-neutral serializers. It is used when typed-array values are converted into Blob-like payloads on the Node side.",
+          "key_symbols": []
+        },
+        {
+          "path": "lib/platform/node/classes/FormData.js",
+          "role": "Provides the Node-side FormData implementation used for multipart bodies. Keeping it behind a platform module means `toFormData` never assumes a global FormData exists.",
+          "key_symbols": []
+        },
+        {
+          "path": "lib/platform/node/classes/URLSearchParams.js",
+          "role": "Provides the Node URLSearchParams implementation used for URL-encoded bodies. It allows the serializer to rely on a platform-provided class instead of a global.",
+          "key_symbols": []
+        },
+        {
+          "path": "lib/platform/node/index.js",
+          "role": "Assembles the Node platform object, including FormData/Buffer/URLSearchParams and the `generateString` boundary helper. It is the Node counterpart of `lib/platform/browser/index.js`.",
+          "key_symbols": [
+            {
+              "name": "generateString",
+              "line": 15,
+              "explanation": "Generates a random string of a given length from ALPHABET, typically used to create multipart boundary values in Node."
+            },
+            {
+              "name": "generateString",
+              "line": 15,
+              "explanation": "The same helper exposed as a constant binding in the Node platform module for boundary generation."
+            },
+            {
+              "name": "ALPHABET",
+              "line": 9,
+              "explanation": "Combination of lower-case letters, upper-case letters, and digits used by `generateString`."
+            },
+            {
+              "name": "ALPHA",
+              "line": 5,
+              "explanation": "Lower-case alphabet constant used to build ALPHABET."
+            },
+            {
+              "name": "DIGIT",
+              "line": 7,
+              "explanation": "Digits constant used to build ALPHABET."
+            }
+          ]
+        },
+        {
+          "path": "tests/browser/toFormData.browser.test.js",
+          "role": "Browser integration test that verifies `toFormData` against real browser FormData/Blob behavior. It exercises the browser platform classes as a genuine runtime would.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/helpers/AxiosURLSearchParams.test.js",
+          "role": "Unit tests for AxiosURLSearchParams serialization. They cover encoding behavior and the exact `toString` output.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/toFormData.test.js",
+          "role": "Unit tests for `toFormData`, using a React Native FormData spy and custom Blob classes to verify platform-neutral conversion. It also checks depth-limit handling.",
+          "key_symbols": [
+            {
+              "name": "createRNFormDataSpy",
+              "line": 9,
+              "explanation": "Creates a fake FormData object that records calls, simulating the React Native FormData API used by Axios in native environments."
+            },
+            {
+              "name": "CustomBlob",
+              "line": 70,
+              "explanation": "A test Blob-like class used to verify Blob handling without depending on the host environment's global Blob."
+            },
+            {
+              "name": "nest",
+              "line": 176,
+              "explanation": "Test helper that builds deeply nested objects so the serializer's depth-limit protection can be exercised."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"lib/helpers/AxiosURLSearchParams.js\"]\n    N1[\"lib/helpers/toFormData.js\"]\n    N2[\"lib/helpers/toURLEncodedForm.js\"]\n    N3[\"lib/platform/browser/classes/Blob.js\"]\n    N4[\"lib/platform/browser/classes/FormData.js\"]\n    N5[\"lib/platform/browser/classes/URLSearchParams.js\"]\n    N6[\"lib/platform/browser/index.js\"]\n    N7[\"lib/platform/node/classes/Buffer.js\"]\n    N8[\"lib/platform/node/classes/FormData.js\"]\n    N9[\"lib/platform/node/classes/URLSearchParams.js\"]\n    N10[\"lib/platform/node/index.js\"]\n    N11[\"tests/browser/toFormData.browser.test.js\"]\n    N12[\"tests/unit/helpers/AxiosURLSearchParams.test.js\"]\n    N13[\"tests/unit/toFormData.test.js\"]\n    N0 --> N1\n    N1 --> N8\n    N1 --> N7\n    N2 --> N1\n    N5 --> N0\n    N6 --> N5\n    N6 --> N4\n    N6 --> N3\n    N10 --> N9\n    N10 --> N8\n    N11 --> N1\n    N12 --> N0\n    N13 --> N1\n    N13 --> N0"
+    },
+    {
+      "subsystem_id": "6",
+      "name": "URL Path Utilities",
+      "description": "URL Path Utilities resolve the final request URL from a configured `baseURL` and a per-request `requestedURL`. It exists as a separate subsystem because URL joining involves several non-trivial concerns \u2014 trailing/leading slashes, absolute-URL detection, protocol validation, and sanitization of sensitive fragments \u2014 that should not be duplicated by the HTTP, XHR, and fetch adapters. `buildFullPath` (lib/core/buildFullPath.js:68) is the entry point: it calls `combineURLs` to join segments, `isAbsoluteURL` to detect absolute targets, and `assertValidHttpProtocolURL`/`redactSensitiveURLParts` to reject or scrub malformed URLs before returning the final path. `normalizeURLForProtocolCheck` is used as a preprocessor for the protocol checks. The subsystem connects outward to `lib/adapters/xhr.js`, `lib/adapters/http.js`, and `lib/core/Axios.js`, which all call `buildFullPath` when dispatching requests, and it uses `lib/core/AxiosError.js` to surface invalid-URL failures; `lib/helpers/resolveConfig.js` ties the resolved config into this path-building step.",
+      "files": [
+        {
+          "path": "lib/core/buildFullPath.js",
+          "role": "Core URL-composition module used before dispatching every request. It combines baseURL with requestedURL after running protocol-safety checks, so all adapters share identical final-URL behavior.",
+          "key_symbols": [
+            {
+              "name": "redactSensitiveURLParts",
+              "line": 28,
+              "explanation": "Redacts sensitive portions of a URL before protocol validation or before the URL is returned as the request target."
+            },
+            {
+              "name": "assertValidHttpProtocolURL",
+              "line": 45,
+              "explanation": "Checks the normalized URL for a valid HTTP(S) protocol and raises an AxiosError when the URL is malformed."
+            },
+            {
+              "name": "redactFragment",
+              "line": 18,
+              "explanation": "Strips or redacts URL fragments so sensitive hash data cannot leak into the final request URL."
+            },
+            {
+              "name": "buildFullPath",
+              "line": 68,
+              "explanation": "Public entry point that resolves baseURL and requestedURL, applying protocol validation and returning the complete path."
+            },
+            {
+              "name": "malformedHttpProtocol",
+              "line": 8,
+              "explanation": "Constant pattern used to recognize malformed HTTP(S) URLs that should be rejected before combining."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/combineURLs.js",
+          "role": "Simple joining utility used by `buildFullPath`. It intelligently combines two URL segments exactly once, preventing duplicate or missing slashes.",
+          "key_symbols": [
+            {
+              "name": "combineURLs",
+              "line": 11,
+              "explanation": "Combines a base URL and a relative/requested URL into a single normalized URL string."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/isAbsoluteURL.js",
+          "role": "Predicate used to decide whether a requested URL is already absolute. This lets `buildFullPath` skip prepending the base URL when it is not needed.",
+          "key_symbols": [
+            {
+              "name": "isAbsoluteURL",
+              "line": 10,
+              "explanation": "Returns true when the input matches an absolute URL pattern with a scheme."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/normalizeURLForProtocolCheck.js",
+          "role": "Preprocessing helper for protocol checks. It normalizes a URL and strips control characters before `assertValidHttpProtocolURL` inspects it.",
+          "key_symbols": [
+            {
+              "name": "normalizeURLForProtocolCheck",
+              "line": 12,
+              "explanation": "Normalizes the provided URL so later protocol validation sees a clean, consistently formatted value."
+            },
+            {
+              "name": "urlParserControlCharacters",
+              "line": 3,
+              "explanation": "Constant pattern matching control characters that are removed from URLs before parsing/validation."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/core/buildFullPath.test.js",
+          "role": "Unit tests for `buildFullPath` covering baseURL/requestedURL combinations, absolute URLs, and validation errors.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/helpers/combineURLs.test.js",
+          "role": "Unit tests for the `combineURLs` helper, verifying slash joining and edge cases.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/unit/helpers/isAbsoluteURL.test.js",
+          "role": "Unit tests for `isAbsoluteURL`, covering protocol-relative, relative, and absolute URL inputs.",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"lib/core/buildFullPath.js\"]\n    N1[\"lib/helpers/combineURLs.js\"]\n    N2[\"lib/helpers/isAbsoluteURL.js\"]\n    N3[\"lib/helpers/normalizeURLForProtocolCheck.js\"]\n    N4[\"tests/unit/core/buildFullPath.test.js\"]\n    N5[\"tests/unit/helpers/combineURLs.test.js\"]\n    N6[\"tests/unit/helpers/isAbsoluteURL.test.js\"]\n    N0 --> N2\n    N0 --> N1\n    N0 --> N3\n    N4 --> N0\n    N5 --> N1\n    N6 --> N2"
+    },
+    {
+      "subsystem_id": "8",
+      "name": "Progress Event Helpers",
+      "description": "Progress Event Helpers supply a uniform progress-reporting layer on top of the different event models of XMLHttpRequest, fetch, and Node streams. It is split out so each adapter can call the same reducers/decorators instead of reimplementing throttling, speed estimation, and progress-callback normalization. `progressEventReducer` (lib/helpers/progressEventReducer.js:5) builds a listener that feeds raw loaded/total values through `speedometer` (lib/helpers/speedometer.js:9) and invokes the user callback with computed rate/estimated fields; `progressEventDecorator` and `asyncDecorator` adapt that listener to streamed or promise-based adapters. `throttle` (lib/helpers/throttle.js:7) provides the interval-based pacing used by the reducer so callbacks do not fire on every chunk. It is consumed directly by `lib/adapters/xhr.js`, `lib/adapters/http.js`, and `lib/adapters/fetch.js`, with `lib/utils.js` providing shared utilities such as warning/type helpers.",
+      "files": [
+        {
+          "path": "lib/helpers/progressEventReducer.js",
+          "role": "Builds a normalized progress listener from a user callback, computing rate/estimated/total fields and throttled delivery. Adapters wrap their native progress events with this helper before forwarding them upward.",
+          "key_symbols": [
+            {
+              "name": "progressEventReducer",
+              "line": 5,
+              "explanation": "Factory that creates the progress listener, tracking bytes and rate with a speedometer and invoking the user listener with computed fields."
+            },
+            {
+              "name": "progressEventReducer",
+              "line": 5,
+              "explanation": "The same factory exposed as a constant binding that adapters import for progress normalization."
+            },
+            {
+              "name": "progressEventDecorator",
+              "line": 37,
+              "explanation": "Decorator that adds lengthComputable/total metadata to a progress callback for streamed payloads."
+            },
+            {
+              "name": "progressEventDecorator",
+              "line": 37,
+              "explanation": "The same decorator exposed as a constant so streamed adapters can compose normalized progress events."
+            },
+            {
+              "name": "asyncDecorator",
+              "line": 51,
+              "explanation": "Async wrapper that lets progress listeners participate in Promise-based flows without breaking the event pipeline."
+            },
+            {
+              "name": "asyncDecorator",
+              "line": 51,
+              "explanation": "The same async wrapper exposed as a constant for adapters that support asynchronous progress callbacks."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/speedometer.js",
+          "role": "Tracks transfer rates over a rolling time window. It is used by `progressEventReducer` to calculate bytes-per-second statistics and remaining-time estimates.",
+          "key_symbols": [
+            {
+              "name": "speedometer",
+              "line": 9,
+              "explanation": "Returns a function that records transferred bytes and returns a rate sample based on recent activity."
+            }
+          ]
+        },
+        {
+          "path": "lib/helpers/throttle.js",
+          "role": "Provides interval-based throttling with a trailing flush so progress callbacks fire at most once per period while still delivering the final value. This prevents adapters from overwhelming user code with high-frequency events.",
+          "key_symbols": [
+            {
+              "name": "throttle",
+              "line": 7,
+              "explanation": "Creates a throttled function with a configurable wait interval and a `flush` method to force any pending invocation to run."
+            },
+            {
+              "name": "throttled",
+              "line": 23,
+              "explanation": "The returned callable wrapper that schedules invocations and stores the latest arguments until the interval elapses."
+            },
+            {
+              "name": "invoke",
+              "line": 13,
+              "explanation": "Executes the scheduled call once the throttle interval has elapsed."
+            },
+            {
+              "name": "flush",
+              "line": 39,
+              "explanation": "Immediately executes any pending throttled invocation, used at the end of a stream to deliver the final progress event."
+            }
+          ]
+        },
+        {
+          "path": "tests/unit/helpers/progressEventReducer.test.js",
+          "role": "Unit tests for `progressEventReducer`'s event transformation behavior. They verify that progress payloads include the expected fields and that decorators compose correctly.",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"lib/helpers/progressEventReducer.js\"]\n    N1[\"lib/helpers/speedometer.js\"]\n    N2[\"lib/helpers/throttle.js\"]\n    N3[\"tests/unit/helpers/progressEventReducer.test.js\"]\n    N0 --> N1\n    N0 --> N2\n    N3 --> N0"
+    },
+    {
+      "subsystem_id": "11",
+      "name": "Rollup Build Config",
+      "description": "Rollup Build Config is the repository's distribution-bundling subsystem: it turns the lib source tree into the published ESM, CJS, and UMD artifacts. It is separate because the packaging matrix (input entries, output file names, Node builtin externalization, minification) is orthogonal to runtime source code and would otherwise clutter package scripts. Rollup loads `rollup.config.js`, then `build` (rollup.config.js:25) collects `buildConfig` (rollup.config.js:18) results for each target, while `nodeCjsExternal` (rollup.config.js:67) decides which Node built-ins are left external for CJS bundles. The constants near the top of the file \u2014 `lib`, `outputFileName`, `name`, `namedInput`, and `defaultInput` \u2014 parameterize each generated configuration. Its `related_files` list is empty because it is build tooling rather than a runtime module, but it is tightly coupled to `lib/axios.js` and `package.json` as the source entry and metadata for the published bundles.",
+      "files": [
+        {
+          "path": "rollup.config.js",
+          "role": "Rollup configuration that defines how the source tree is packaged into distributable ESM, CJS, and UMD bundles. It owns the build matrix, so source modules never need environment-specific packaging directives.",
+          "key_symbols": [
+            {
+              "name": "buildConfig",
+              "line": 18,
+              "explanation": "Factory that returns a complete Rollup options object for a given build target, including input, output, and plugins."
+            },
+            {
+              "name": "buildConfig",
+              "line": 18,
+              "explanation": "The same factory exported as a constant for use while composing the build target list."
+            },
+            {
+              "name": "nodeCjsExternal",
+              "line": 67,
+              "explanation": "Determines which Node built-in modules should be treated as external for Node/CJS builds."
+            },
+            {
+              "name": "nodeCjsExternal",
+              "line": 67,
+              "explanation": "The same helper exposed as a constant so it can be reused by each CJS-focused configuration."
+            },
+            {
+              "name": "require",
+              "line": 11,
+              "explanation": "Module-level require used to resolve package metadata or plugins when the configuration is loaded by Rollup."
+            },
+            {
+              "name": "lib",
+              "line": 12,
+              "explanation": "Resolved reference to package.json, used by buildConfig for metadata such as version and name."
+            },
+            {
+              "name": "outputFileName",
+              "line": 13,
+              "explanation": "Base filename used for generated bundle files."
+            },
+            {
+              "name": "name",
+              "line": 14,
+              "explanation": "UMD global/package name assigned to the built library."
+            },
+            {
+              "name": "namedInput",
+              "line": 15,
+              "explanation": "Input entry used when building a bundle that exposes named exports."
+            },
+            {
+              "name": "defaultInput",
+              "line": 16,
+              "explanation": "Default source entry point used for the primary builds."
+            },
+            {
+              "name": "build",
+              "line": 25,
+              "explanation": "Collects and returns the final array of Rollup configurations produced by `buildConfig` for each target."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"package.json\"]\n    N1[\"rollup.config.js\"]\n    N1 --> N0"
+    },
+    {
+      "subsystem_id": "13",
+      "name": "ESLint Configuration",
+      "description": "ESLint Configuration is the repository's linting policy, expressed in the modern flat-config format used by ESLint v9+. It exists as its own item so style and error rules are centralized and easy to adjust without touching source files or package scripts. When a developer runs the lint command, ESLint loads `eslint.config.js` and applies the exported rule set, language options, and ignore patterns across source, tests, configuration, and build files. Because its `related_files` list is empty, it has no runtime imports or execution path; it only constrains how every other subsystem is written during development.",
+      "files": [
+        {
+          "path": "eslint.config.js",
+          "role": "Flat ESLint configuration exporting the repository's lint rules, language options, and ignore patterns. ESLint loads it automatically during lint runs.",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"eslint.config.js\"]"
+    },
+    {
+      "subsystem_id": "21",
+      "name": "TypeScript Definitions",
+      "description": "This subsystem is the TypeScript definition surface for the axios API, exposing request configuration, headers, responses, errors, interceptors, and cancellation types through index.d.ts. It exists as a separate unit because type declarations must be consumable by the TypeScript compiler and editors without pulling in runtime JavaScript, giving axios a typed contract for users while keeping the implementation untyped. Data flows through the public types when a user calls methods on AxiosInstance (index.d.ts:710) or AxiosStatic (index.d.ts:766); the compiler resolves options against AxiosRequestConfig (index.d.ts:391) and headers against AxiosHeaders (index.d.ts:25). Runtime values such as Axios (index.d.ts:646), AxiosError (index.d.ts:524), and CanceledError (index.d.ts:566) are declared so that imported objects have usable shapes, while helper and option types like MethodsHeaders (index.d.ts:12), ContentType (index.d.ts:113), and ResponseType (index.d.ts:272) constrain individual configuration fields. The scan lists no related files for this subsystem, so its direct neighbour is the package TypeScript entry point that re-exports these declarations to consumers.",
+      "files": [
+        {
+          "path": "index.d.ts",
+          "role": "Declares the public TypeScript surface for axios, including request/response types, header classes, error classes, and interceptor managers. It is the file TypeScript users compile against, while runtime implementation stays in the JavaScript lib tree.",
+          "key_symbols": [
+            {
+              "name": "MethodsHeaders",
+              "line": 12,
+              "explanation": "Defines a map of method names to header objects, used to type per-method default headers."
+            },
+            {
+              "name": "AxiosHeaders",
+              "line": 25,
+              "explanation": "Models the AxiosHeaders class that normalizes and manipulates request and response headers."
+            },
+            {
+              "name": "CommonRequestHeadersList",
+              "line": 105,
+              "explanation": "Lists common request header names, providing a typed union for known headers."
+            },
+            {
+              "name": "ContentType",
+              "line": 113,
+              "explanation": "Represents the Content-Type header value type, distinguishing JSON, form, multipart, and text encodings."
+            },
+            {
+              "name": "RawAxiosRequestHeaders",
+              "line": 122,
+              "explanation": "Describes the raw request header object accepted before AxiosHeaders normalization is applied."
+            },
+            {
+              "name": "CommonResponseHeadersList",
+              "line": 132,
+              "explanation": "Lists common response header names, giving a typed union for response header access."
+            },
+            {
+              "name": "RawCommonResponseHeaders",
+              "line": 141,
+              "explanation": "Defines the raw response header record without AxiosHeaders methods."
+            },
+            {
+              "name": "AxiosResponseTransformer",
+              "line": 155,
+              "explanation": "Types the transformers applied to response data, such as JSON parsing."
+            },
+            {
+              "name": "AxiosProxyConfig",
+              "line": 173,
+              "explanation": "Declares the proxy configuration shape accepted when making a request through a proxy."
+            },
+            {
+              "name": "UppercaseMethod",
+              "line": 257,
+              "explanation": "Defines uppercase HTTP method names like GET and POST used in internal method lists."
+            },
+            {
+              "name": "ResponseType",
+              "line": 272,
+              "explanation": "Restricts responseType values to the supported types: arraybuffer, blob, document, json, text, and stream."
+            },
+            {
+              "name": "UppercaseResponseEncoding",
+              "line": 281,
+              "explanation": "Defines the uppercase response encoding names accepted by public types."
+            },
+            {
+              "name": "TransitionalOptions",
+              "line": 300,
+              "explanation": "Describes the transitional compatibility flags axios uses to deprecate legacy behaviors incrementally."
+            },
+            {
+              "name": "GenericAbortSignal",
+              "line": 309,
+              "explanation": "Declares the minimal abort-signal shape accepted for canceling requests."
+            },
+            {
+              "name": "FormDataVisitorHelpers",
+              "line": 316,
+              "explanation": "Types helper functions used when traversing FormData-like objects during serialization."
+            },
+            {
+              "name": "SerializerVisitor",
+              "line": 322,
+              "explanation": "Declares the visitor callback shape used by custom serializers to walk a parameter tree."
+            },
+            {
+              "name": "SerializerOptions",
+              "line": 332,
+              "explanation": "Defines options controlling how parameters are serialized, including array and index formatting."
+            },
+            {
+              "name": "AxiosProgressEvent",
+              "line": 363,
+              "explanation": "Describes the progress event payload emitted during upload and download progress events."
+            },
+            {
+              "name": "AxiosRequestConfig",
+              "line": 391,
+              "explanation": "The central configuration type for a single request, combining URL options, headers, params, data, timeout, auth, and response settings."
+            },
+            {
+              "name": "HeadersDefaults",
+              "line": 489,
+              "explanation": "Defines the default headers configuration used when creating an axios instance."
+            },
+            {
+              "name": "CreateAxiosDefaults",
+              "line": 508,
+              "explanation": "Describes the defaults object accepted by axios.create for instantiating a new client."
+            },
+            {
+              "name": "AxiosResponse",
+              "line": 515,
+              "explanation": "Types the resolved response object containing data, status, statusText, headers, config, and request."
+            },
+            {
+              "name": "AxiosError",
+              "line": 524,
+              "explanation": "Models an error thrown by axios, carrying request, response, and config context plus error codes."
+            },
+            {
+              "name": "CanceledError",
+              "line": 566,
+              "explanation": "Represents a request that was canceled, subclassing AxiosError with cancellation-specific properties."
+            },
+            {
+              "name": "CancelToken",
+              "line": 599,
+              "explanation": "Declares the legacy cancellation token shape used to abort requests."
+            },
+            {
+              "name": "AxiosInterceptorHandler",
+              "line": 632,
+              "explanation": "Types the fulfilled and rejected handler functions supplied to an interceptor."
+            },
+            {
+              "name": "AxiosInterceptorManager",
+              "line": 639,
+              "explanation": "Declares the manager that allows interceptors to be added and removed per type."
+            },
+            {
+              "name": "Axios",
+              "line": 646,
+              "explanation": "Describes the Axios class instance with request methods such as get, post, put, and delete."
+            },
+            {
+              "name": "AxiosInstance",
+              "line": 710,
+              "explanation": "Represents the callable axios instance returned by axios.create, combining function invocation with method properties."
+            },
+            {
+              "name": "AxiosStatic",
+              "line": 766,
+              "explanation": "Describes the global axios object with create, request, interceptors, defaults, and static helpers."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"index.d.ts\"]"
+    },
+    {
+      "subsystem_id": "22",
+      "name": "Environment FormData",
+      "description": "This subsystem isolates the FormData implementation for the current runtime in lib/env/classes/FormData.js. It exists as a separate environment module because Node.js and browsers have different native FormData behaviors, and axios needs one import site that can be swapped or adapted without changing core serialization logic. Data and control flow occur when a request needs multipart encoding: the FormData class from this module is instantiated and used to build the payload that is then handed to the platform transport. Because the scan recorded no key symbols and no related files for this subsystem, its real connections are through the environment abstraction layer and the core helpers that import the class for FormData-based requests.",
+      "files": [
+        {
+          "path": "lib/env/classes/FormData.js",
+          "role": "Provides an environment-specific FormData class that axios can instantiate when building multipart payloads. It isolates platform differences so core serialization code does not need to know whether it is running in a browser or in Node.",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"lib/env/classes/FormData.js\"]"
+    },
+    {
+      "subsystem_id": "23",
+      "name": "Deprecated Method Helper",
+      "description": "This subsystem is a tiny helper that centralizes axios's deprecation warnings through the deprecatedMethod function in lib/helpers/deprecatedMethod.js. It exists as a separate unit so that every call site wanting to mark an old API as deprecated can share the same warning message format and emit behavior, rather than duplicating warning logic across the codebase. Control flow starts when legacy code paths invoke deprecatedMethod (lib/helpers/deprecatedMethod.js:15), and the helper carries out the warning behavior before the caller continues. The scan records no related files for this helper, so its neighbours are whichever modules import it at call sites; it is primarily connected to the helper layer and to deprecated axios entry points.",
+      "files": [
+        {
+          "path": "lib/helpers/deprecatedMethod.js",
+          "role": "Implements the deprecatedMethod helper used to warn about obsolete axios APIs. Keeping it in its own file lets any deprecated call site reuse identical warning behavior.",
+          "key_symbols": [
+            {
+              "name": "deprecatedMethod",
+              "line": 15,
+              "explanation": "Invoked by legacy code paths to emit a deprecation warning and then allow the caller to continue with the deprecated behavior."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"lib/helpers/deprecatedMethod.js\"]"
+    },
+    {
+      "subsystem_id": "24",
+      "name": "Null Helper",
+      "description": "This subsystem provides an explicit null value as a module export from lib/helpers/null.js. It exists as a separate unit because axios needs a stable, importable null sentinel to represent no value in places where undefined or an empty implementation could cause ambiguous behavior in defaults or transformation chains. Control flow is simple: when a module imports this file, it receives the same null value and can place it into arrays, objects, or option defaults. The scan lists no key symbols or related files, so no concrete neighbour connections can be named; it is a leaf module available to the rest of the helper layer.",
+      "files": [
+        {
+          "path": "lib/helpers/null.js",
+          "role": "Exports a standalone null sentinel for use as a no-op default value. Having null as an importable module makes it easy for other helper files to reference a consistent empty value without hard-coding null in multiple branches.",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"lib/helpers/null.js\"]"
+    },
+    {
+      "subsystem_id": "25",
+      "name": "Sandbox Server",
+      "description": "This subsystem is the Node HTTP server used by axios's sandbox test environment, implemented in sandbox/server.js. It exists separately from the library so developers can exercise axios against a local controlled server without shipping test infrastructure in the package. Control flow begins when the server receives an HTTP request: requestHandler (sandbox/server.js:75) decides whether the request targets an API route or a static file, delegates API calls to handleApiRequest (sandbox/server.js:33), and serves files through pipeFileToResponse (sandbox/server.js:14); the server listens on the PORT constant (sandbox/server.js:111). The scan records no related files for this subsystem, but the sandbox pages it serves are the neighbouring client code that connects to it during manual testing.",
+      "files": [
+        {
+          "path": "sandbox/server.js",
+          "role": "Runs the local sandbox HTTP server used for manually exercising axios against realistic requests. It serves static assets and exposes API endpoints that mirror common backend scenarios.",
+          "key_symbols": [
+            {
+              "name": "pipeFileToResponse",
+              "line": 14,
+              "explanation": "Reads a static file and writes it into the HTTP response, used for serving sandbox assets."
+            },
+            {
+              "name": "handleApiRequest",
+              "line": 33,
+              "explanation": "Handles API requests sent by the sandbox pages, returning data that axios clients can consume."
+            },
+            {
+              "name": "requestHandler",
+              "line": 75,
+              "explanation": "Main HTTP entry point that inspects each request and dispatches it to the API handler or the static file pipe."
+            },
+            {
+              "name": "PORT",
+              "line": 111,
+              "explanation": "Constant holding the port number on which the sandbox server listens."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"sandbox/server.js\"]"
+    },
+    {
+      "subsystem_id": "69",
+      "name": "Vitest Configuration",
+      "description": "The Vitest Configuration subsystem centralises settings for running the project's test suite with Vitest. It exists as its own unit so test-runner options, environment setup, and coverage rules do not leak into application or build code and can be changed without touching source files. When vitest is launched, it reads vitest.config.js at the project root and applies the options defined there to the test environment. Test discovery and execution then follow those settings, including which files are treated as tests and how they are transformed. The subsystem has no related_files, so it is a standalone configuration point rather than an importable module; its only consumer is the Vitest CLI.",
+      "files": [
+        {
+          "path": "vitest.config.js",
+          "role": "vitest.config.js is the single configuration entry point for the Vitest test runner. It is loaded by Vitest during startup and supplies the resolver, environment, and coverage settings used to execute the test suite.",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"vitest.config.js\"]"
+    },
+    {
+      "subsystem_id": "70",
+      "name": "Webpack Configuration",
+      "description": "The Webpack Configuration subsystem defines how the project is bundled for development and production builds. It exists separately to keep build tooling isolated from application logic, allowing bundle entry points, loaders, plugins, and output paths to be managed in one place. The generateConfig function in webpack.config.js produces the configuration object that webpack consumes; when the CLI starts a build, it invokes this function and uses the returned object to control module resolution and output. Because related_files is empty, the config does not import or get imported by other subsystems, functioning purely as the build-time instruction set for webpack.",
+      "files": [
+        {
+          "path": "webpack.config.js",
+          "role": "webpack.config.js holds the build configuration for webpack. Its generateConfig function assembles the options webpack needs to resolve modules, apply loaders, and write output bundles.",
+          "key_symbols": [
+            {
+              "name": "generateConfig",
+              "line": 3,
+              "explanation": "Creates and returns the webpack configuration object based on the current environment; it runs at build start so webpack can read the generated settings."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"webpack.config.js\"]"
+    }
+  ],
+  "overview": {
+    "description": "The system is an HTTP client library that routes user requests through a core pipeline, which merges configuration, normalizes headers, applies transforms, and dispatches to an environment-appropriate adapter. The request flow draws on shared utilities for interceptors, merging, and type checks; URL path utilities to build the final URL; form-data serialization to encode bodies; and progress event helpers to report upload/download progress uniformly across transports. The transport layer is realized by the Node HTTP networking adapter and the fetch adapter, both producing AxiosError-shaped outcomes, while environment-specific FormData is isolated and cancellation, header, and error logic is owned by the core. Around this runtime sit a TypeScript type surface and build/test subsystems such as Rollup, webpack, ESLint, Vitest, and a sandbox server that package, lint, and validate the code without shipping as runtime modules.",
+    "diagram_mermaid": "flowchart TD\n    C0[\"Core Request Pipeline\"]\n    C1[\"HTTP Networking Layer\"]\n    C2[\"Build and Test Infrastructure\"]\n    C3[\"Shared Utilities\"]\n    C4[\"Fetch Adapter and Errors\"]\n    C5[\"Form Data Serialization\"]\n    C6[\"URL Path Utilities\"]\n    C8[\"Progress Event Helpers\"]\n    C0 --> C1\n    C0 --> C2\n    C0 --> C3\n    C0 --> C4\n    C0 --> C5\n    C0 --> C6\n    C0 --> C8\n    C1 --> C0\n    C1 --> C2\n    C1 --> C3\n    C1 --> C4\n    C1 --> C5\n    C1 --> C6\n    C1 --> C8\n    C2 --> C0\n    C2 --> C1\n    C2 --> C3\n    C2 --> C4\n    C3 --> C4\n    C4 --> C0\n    C4 --> C1\n    C4 --> C2\n    C4 --> C3\n    C4 --> C5\n    C4 --> C8\n    C5 --> C1\n    C5 --> C3\n    C5 --> C4\n    C6 --> C4\n    C8 --> C3"
+  }
+}
