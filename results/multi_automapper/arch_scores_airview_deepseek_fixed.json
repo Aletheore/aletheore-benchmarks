@@ -1,0 +1,410 @@
+[
+  {
+    "id": "g01",
+    "q": "Explain the overall architecture of this codebase: what are the major components and how do they relate?",
+    "aletheore": 2.3333333333333335,
+    "repowise": 2.6666666666666665,
+    "aletheore_raw": [
+      3,
+      2,
+      3,
+      1,
+      3,
+      2
+    ],
+    "repowise_raw": [
+      2,
+      3,
+      3,
+      3,
+      2,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "repowise",
+      "tie",
+      "repowise",
+      "aletheore",
+      "repowise"
+    ],
+    "why_a": "It explicitly enumerates the major subsystems (core engine, registry, attribute configuration, licensing, assembly metadata) and explains their data flow and dependencies with specific file references.",
+    "why_r": "It gives a clear configuration/execution pipeline walkthrough and codebase map, but omits some major subsystems such as the mapper registry and attribute configuration as named components."
+  },
+  {
+    "id": "g02",
+    "q": "What is the main entry point, and what happens step by step when the primary operation runs?",
+    "aletheore": 2.1666666666666665,
+    "repowise": 2.5,
+    "aletheore_raw": [
+      2,
+      1,
+      3,
+      3,
+      3,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      2,
+      1,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 1.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "aletheore",
+      "aletheore",
+      "tie",
+      "repowise"
+    ],
+    "why_a": "The material includes a concise but sparse description of the core mapping flow (CreateMap -> MapperConfiguration -> MapCore -> ResolutionContext) but is buried among unrelated file summaries and leaves key runtime details like TypePair and expression-tree compilation mostly implicit.",
+    "why_r": "The material provides a clearly structured step-by-step for both the benchmark entry point (Program.Main) and the mapping engine's configuration/execution phases, explicitly naming TypePair, ResolutionContext, ExpressionBuilder, and the compiled plan cache."
+  },
+  {
+    "id": "g03",
+    "q": "How is this project's public API separated from its internal implementation, and why is it split that way?",
+    "aletheore": 1.0,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Provides a repository map with brief mentions of internal interfaces but lacks the mechanism and rationale for the public/internal API split, so a reader would struggle to answer precisely.",
+    "why_r": "Explains the InternalApi bridge, the downcast extension methods, the hidden internal interfaces, and the rationale for keeping the public surface clean, fully covering both how and why."
+  },
+  {
+    "id": "g04",
+    "q": "How does the codebase handle errors and exceptions, and where can a user intervene?",
+    "aletheore": 2.5,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      2,
+      2,
+      3,
+      2
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides the exception types, configuration validation, and licensing checks that reveal how errors are surfaced and where validation can be invoked.",
+    "why_r": "Describes regression tests and benchmarks but does not explain the exception model or user intervention points for error handling."
+  },
+  {
+    "id": "g05",
+    "q": "What is the configuration model, and how are settings resolved and layered?",
+    "aletheore": 2.3333333333333335,
+    "repowise": 0.8333333333333334,
+    "aletheore_raw": [
+      3,
+      1,
+      3,
+      2,
+      3,
+      2
+    ],
+    "repowise_raw": [
+      1,
+      0,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides detailed, specific coverage of configuration interfaces, attribute application, profile/global settings, and validation, enabling a correct answer.",
+    "why_r": "Mostly irrelevant GitHub workflow content, with only a brief null-coalescing note and high-level layer overview lacking specifics."
+  },
+  {
+    "id": "g06",
+    "q": "How is state managed across a single operation, and what keeps concurrent operations isolated?",
+    "aletheore": 3.0,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      0,
+      2,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Material directly explains per-operation mutable state in ResolutionContext and thread-safe caching via LockingConcurrentDictionary, providing the core mechanisms needed to answer.",
+    "why_r": "Material is dominated by unrelated circular-dependency analysis and license env-var tests, with only a truncated mention of the concurrency dictionary."
+  },
+  {
+    "id": "g07",
+    "q": "What are the main extension points a third-party package would hook into?",
+    "aletheore": 2.3333333333333335,
+    "repowise": 1.3333333333333333,
+    "aletheore_raw": [
+      3,
+      3,
+      1,
+      2,
+      2,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      2,
+      1,
+      1,
+      2
+    ],
+    "repeats": 3,
+    "spread": 1.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Covers the main plugin mechanism (Features), DI registration, configuration hooks, and queryable projection mappers with specific file/method names, sufficient to enumerate third-party extension points.",
+    "why_r": "Focuses almost entirely on ProjectTo and DI, omitting core extension points like Features, custom mappers, and configuration DSL, leaving major gaps for a general answer."
+  },
+  {
+    "id": "g08",
+    "q": "How does this project handle I/O, and what abstractions sit between the core logic and the outside world?",
+    "aletheore": 2.3333333333333335,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      2,
+      2,
+      2,
+      2
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Broadly covers the key abstractions\u2014public mapper facade, configuration DSL, ProjectTo for IQueryable, and internal pipeline\u2014with subsystem descriptions that show how core logic is isolated from user profiles and data sources.",
+    "why_r": "Material is dominated by integration-test specifics and usage recipes, not the architecture or abstractions that mediate between core logic and the outside world."
+  },
+  {
+    "id": "g09",
+    "q": "What are the most important data structures or types, and what invariants do they maintain?",
+    "aletheore": 1.8333333333333333,
+    "repowise": 1.6666666666666667,
+    "aletheore_raw": [
+      2,
+      1,
+      2,
+      1,
+      3,
+      2
+    ],
+    "repowise_raw": [
+      1,
+      3,
+      1,
+      3,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "repowise",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Covers several key types (TypeMap, TypePair, MapperRegistry) with some invariants but omits MapRequest and is diluted by irrelevant subsystems, leaving gaps a reader could partially bridge.",
+    "why_r": "Deeply details TypePair and MapRequest invariants but ignores TypeMap, PropertyMap, and MapperRegistry, missing most core data structures."
+  },
+  {
+    "id": "g10",
+    "q": "How is the codebase tested, and what does the test structure reveal about its design?",
+    "aletheore": 0.8333333333333334,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      0,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "The material mostly describes production subsystems and file roles, with only passing mentions of tests, leaving the testing approach and its design implications almost entirely unaddressed.",
+    "why_r": "It provides a detailed, layered account of the test suite, including entry points, edge connectors, unit/spec/integration stratification, and how the structure reflects the library's extensibility and integration guarantees."
+  },
+  {
+    "id": "g11",
+    "q": "Which parts of this codebase are most tightly coupled, and where are the clean boundaries?",
+    "aletheore": 3.0,
+    "repowise": 0.6666666666666666,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      0,
+      1,
+      0,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides subsystem summaries and explicitly describes relationships and boundaries, enabling inference of tight coupling between core engine and mapper registry and clean separation around licensing and attributes.",
+    "why_r": "Focuses on test scenarios for bidirectional relationship mapping rather than the overall architecture, offering little help in identifying coupling and boundaries across the codebase."
+  },
+  {
+    "id": "g12",
+    "q": "If I needed to add a new feature to the core, which files would I touch and in what order?",
+    "aletheore": 1.3333333333333333,
+    "repowise": 2.6666666666666665,
+    "aletheore_raw": [
+      1,
+      1,
+      2,
+      1,
+      1,
+      2
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "aletheore"
+    ],
+    "why_a": "Provides scattered file descriptions but no concrete sequence or mechanism for adding a new core feature.",
+    "why_r": "Explains the feature interfaces, registration via SetFeature, and the Configure/Reverse/Seal lifecycle, giving a clear order for implementing and wiring a new feature."
+  }
+]

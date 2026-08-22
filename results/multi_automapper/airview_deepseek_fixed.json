@@ -1,0 +1,1610 @@
+{
+  "subsystems": [
+    {
+      "subsystem_id": "0",
+      "name": "Core Mapping Engine",
+      "description": "AutoMapper's Core Mapping Engine is the heart of the library: it defines the public configuration DSL (CreateMap, ForMember, ForCtorParam), stores mapping metadata in TypeMap, compiles each TypeMap into an executable delegate via TypeMapPlanBuilder, and exposes the runtime IMapper facade. It also owns the exception model (AutoMapperMappingException and AutoMapperConfigurationException), the per-map ResolutionContext, the feature-extension mechanism in Features.cs, and the DI registration helpers in ServiceCollectionExtensions.cs. The subsystem exists as a separate unit because it separates the two fundamentally different phases of AutoMapper: declarative configuration can be validated and compiled up front, while the generated expression trees are then executed repeatedly at runtime; keeping these phases apart lets profiles be defined independently and lets the plan builder optimize mapping code. Data flows from user profiles through Profile's CreateMap (src/AutoMapper/Configuration/Profile.cs:149) into MapperConfiguration's constructor (src/AutoMapper/Configuration/MapperConfiguration.cs:67), which resolves TypeMaps via GetTypeMap (src/AutoMapper/Configuration/MapperConfiguration.cs:350) and compiles them with BuildExecutionPlan (src/AutoMapper/Configuration/MapperConfiguration.cs:210) and TypeMapPlanBuilder.CreateMapperLambda (src/AutoMapper/Execution/TypeMapPlanBuilder.cs:40); at runtime Mapper.MapCore (src/AutoMapper/Mapper.cs:192) uses ResolutionContext (src/AutoMapper/ResolutionContext.cs:12) to execute those delegates. It connects to the neighbouring Mapper Registry and Queryable Projection subsystems through related files such as the validator, conventions, ExpressionBuilder, and ProjectionBuilder, while its DI-facing surface is exercised by the AutoMapper.DI.Tests project and the licensing files validate editions before mapping is enabled.",
+      "files": [
+        {
+          "path": "src/AutoMapper/AssemblyInfo.cs",
+          "role": "Adds the IsExternalInit type needed for init-only setters on older target frameworks. It is a compile-time polyfill that keeps the rest of the mapping API free of runtime dependencies.",
+          "key_symbols": [
+            {
+              "name": "IsExternalInit",
+              "line": 8,
+              "explanation": "Provides the compiler-required IsExternalInit type so the configuration APIs can use init accessors."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/AutoMapperMappingException.cs",
+          "role": "Defines the exception types thrown when configuration or mapping fails. These exceptions wrap type-map errors and preserve a list of configuration errors, giving callers a stable failure surface.",
+          "key_symbols": [
+            {
+              "name": "AutoMapperMappingException",
+              "line": 8,
+              "explanation": "Top-level runtime exception that wraps any error raised while a mapping is being executed."
+            },
+            {
+              "name": "AutoMapperConfigurationException",
+              "line": 94,
+              "explanation": "Configuration-time exception used when type maps or profiles are invalid, carrying a list of TypeMapConfigErrors."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/CtorParamConfigurationExpression.cs",
+          "role": "Fluent configuration for mapping a destination constructor parameter to a source member or expression. It participates in the mapping-expression DSL and is applied when the TypeMap is built.",
+          "key_symbols": [
+            {
+              "name": "CtorParamConfigurationExpression",
+              "line": 37,
+              "explanation": "Implementation of ICtorParamConfigurationExpression that records the configured constructor parameter mapping."
+            },
+            {
+              "name": "Configure",
+              "line": 56,
+              "explanation": "Applies the captured configuration to the destination TypeMap's constructor maps."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/IMappingExpression.cs",
+          "role": "Public interface for the fluent per-map configuration returned by CreateMap. It exposes member mapping, path mapping, inclusion, reverse mapping, and projection configuration to profile authors.",
+          "key_symbols": [
+            {
+              "name": "IMappingExpression",
+              "line": 38,
+              "explanation": "Core generic mapping expression interface for configuring member mappings after CreateMap."
+            },
+            {
+              "name": "ForMember",
+              "line": 55,
+              "explanation": "Configures how a single destination member is mapped from the source."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/IMappingExpressionBase.cs",
+          "role": "Defines the configuration operations common to mapping expressions and projection expressions, such as MaxDepth, ConstructUsing, BeforeMap, AfterMap, and type-conversion hooks. Both mapping and projection config implementations inherit its contract.",
+          "key_symbols": [
+            {
+              "name": "IMappingExpressionBase",
+              "line": 56,
+              "explanation": "Shared interface for map and projection configuration options."
+            },
+            {
+              "name": "ForCtorParam",
+              "line": 43,
+              "explanation": "Configures a constructor parameter mapping in a type-agnostic way."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/IMappingOperationOptions.cs",
+          "role": "Defines per-operation options passed to a Map call, including service construction and before/after map callbacks. MappingOperationOptions provides the concrete implementation used by the runtime mapper.",
+          "key_symbols": [
+            {
+              "name": "IMappingOperationOptions",
+              "line": 7,
+              "explanation": "Interface describing options for a single Map operation."
+            },
+            {
+              "name": "ConstructServicesUsing",
+              "line": 58,
+              "explanation": "Allows callers to override the service constructor used during the mapping operation."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/IProfileExpression.cs",
+          "role": "Profile configuration surface where users declare CreateMap, CreateProjection, naming conventions, and global ignores. It is implemented by Profile and consumed by MapperConfiguration when assembling all maps.",
+          "key_symbols": [
+            {
+              "name": "IProfileExpression",
+              "line": 6,
+              "explanation": "Profile-level configuration interface for registering mappings and conventions."
+            },
+            {
+              "name": "CreateMap",
+              "line": 19,
+              "explanation": "Entry point that creates a mapping expression between two types."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/MapperConfiguration.cs",
+          "role": "Central configuration provider: collects profiles and type maps, resolves requests for a TypeMap, compiles mapping execution plans, and validates the configuration. It holds the IConfigurationProvider contract used by IMapper and ProjectTo.",
+          "key_symbols": [
+            {
+              "name": "MapperConfiguration",
+              "line": 67,
+              "explanation": "Constructor that processes all configured profiles and builds the initial set of type maps."
+            },
+            {
+              "name": "GetTypeMap",
+              "line": 350,
+              "explanation": "Resolves the TypeMap for a requested type pair, including closed generic and inheritance lookups."
+            },
+            {
+              "name": "BuildExecutionPlan",
+              "line": 210,
+              "explanation": "Compiles the executable mapping plan for a type pair."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/MappingExpression.cs",
+          "role": "Concrete implementation of IMappingExpression that accumulates member and path configurations and can produce a ReverseMap. It translates the fluent calls into additions on the underlying TypeMap.",
+          "key_symbols": [
+            {
+              "name": "MappingExpression",
+              "line": 53,
+              "explanation": "Generic mapping expression implementation that records configuration for a type pair."
+            },
+            {
+              "name": "ForPath",
+              "line": 58,
+              "explanation": "Registers a nested path mapping between source and destination members."
+            },
+            {
+              "name": "ReverseMap",
+              "line": 130,
+              "explanation": "Creates a reverse TypeMap configuration from the current destination back to the source."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/MemberConfigurationExpression.cs",
+          "role": "Implements per-member configuration: MapFrom expressions, conditions, ignore, value resolvers, and mapping order. Its Apply and Configure methods write the configured behavior into PropertyMap and TypeMap.",
+          "key_symbols": [
+            {
+              "name": "MemberConfigurationExpression",
+              "line": 22,
+              "explanation": "Stores and applies configuration for a single destination member."
+            },
+            {
+              "name": "MapFrom",
+              "line": 46,
+              "explanation": "Sets the source expression from which the destination member is populated."
+            },
+            {
+              "name": "Condition",
+              "line": 70,
+              "explanation": "Adds a condition that must be true for the member mapping to run."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/PathConfigurationExpression.cs",
+          "role": "Configures mappings that follow a nested member path rather than a single member. It is used by ForPath to support deeper destination chains with conditions and ignored segments.",
+          "key_symbols": [
+            {
+              "name": "PathConfigurationExpression",
+              "line": 24,
+              "explanation": "Holds configuration for a chain of source and destination member paths."
+            },
+            {
+              "name": "MapFromUntyped",
+              "line": 33,
+              "explanation": "Records the source expression for the path in an untyped manner."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/Profile.cs",
+          "role": "Base class for user-defined AutoMapper profiles. It exposes the profile configuration DSL and forwards those declarations to MapperConfiguration.",
+          "key_symbols": [
+            {
+              "name": "Profile",
+              "line": 57,
+              "explanation": "User-extensible profile base class that collects mapping definitions."
+            },
+            {
+              "name": "CreateMap",
+              "line": 149,
+              "explanation": "Creates a map between a source and destination type within the profile."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/SourceMappingExpression.cs",
+          "role": "Configures source members for validation or ignore behavior. SourceMemberConfig records whether a source member should be excluded from configuration validation.",
+          "key_symbols": [
+            {
+              "name": "SourceMappingExpression",
+              "line": 18,
+              "explanation": "Fluent configuration object for a source member."
+            },
+            {
+              "name": "Configure",
+              "line": 23,
+              "explanation": "Applies the source member configuration to a SourceMemberConfig."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/TypeMapConfiguration.cs",
+          "role": "Base configuration class shared by mapping expression implementations. It stores the source and destination types and core configuration logic such as reverse map setup and constructor parameter configurations.",
+          "key_symbols": [
+            {
+              "name": "TypeMapConfiguration",
+              "line": 4,
+              "explanation": "Abstract base for type map configurations."
+            },
+            {
+              "name": "MappingExpressionBase",
+              "line": 229,
+              "explanation": "Configures common mapping operations like As, AsProxy, and constructor validation."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/ConstructorMap.cs",
+          "role": "Represents how to construct a destination object using its constructor and how each constructor parameter is mapped from source members. It is consumed by the plan builder to emit constructor invocation expressions.",
+          "key_symbols": [
+            {
+              "name": "ConstructorMap",
+              "line": 3,
+              "explanation": "Maps a destination constructor to source values."
+            },
+            {
+              "name": "ApplyMap",
+              "line": 47,
+              "explanation": "Applies parameter maps to a constructor map."
+            },
+            {
+              "name": "ConstructorParameterMap",
+              "line": 68,
+              "explanation": "Configures the mapping for one constructor parameter."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Execution/TypeMapPlanBuilder.cs",
+          "role": "The expression-tree compiler for TypeMaps. It turns TypeMap, PropertyMap, constructor, before/after map, and value-resolver metadata into a single delegate that the runtime mapper invokes.",
+          "key_symbols": [
+            {
+              "name": "TypeMapPlanBuilder",
+              "line": 3,
+              "explanation": "Builds the executable expression tree for a type map."
+            },
+            {
+              "name": "CreateMapperLambda",
+              "line": 40,
+              "explanation": "Creates the compiled mapping function from a TypeMap."
+            },
+            {
+              "name": "CreatePropertyMapFunc",
+              "line": 425,
+              "explanation": "Builds the expression that maps a single property within the plan."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Features.cs",
+          "role": "A lightweight plugin system that lets mapping features be added, ordered, configured, and sealed as part of MapperConfiguration. Features are used to extend mapping behavior without changing the core engine.",
+          "key_symbols": [
+            {
+              "name": "Features",
+              "line": 16,
+              "explanation": "Container for ordered mapping features."
+            },
+            {
+              "name": "Set",
+              "line": 34,
+              "explanation": "Stores a feature in the feature list by type."
+            },
+            {
+              "name": "Configure",
+              "line": 67,
+              "explanation": "Applies a feature to a global configuration provider."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Internal/MemberPath.cs",
+          "role": "Value type representing a chain of member accesses. It is used by path maps and cycle detection to compare and combine member paths.",
+          "key_symbols": [
+            {
+              "name": "MemberPath",
+              "line": 3,
+              "explanation": "Immutable representation of a member path."
+            },
+            {
+              "name": "StartsWith",
+              "line": 22,
+              "explanation": "Determines whether one member path is a prefix of another."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Internal/Polyfill.cs",
+          "role": "Contains small collection helpers and polyfills for APIs not available on all target frameworks. It keeps the core engine code portable across target frameworks.",
+          "key_symbols": [
+            {
+              "name": "Polyfill",
+              "line": 8,
+              "explanation": "Static container for polyfilled collection extensions."
+            },
+            {
+              "name": "GetOrAdd",
+              "line": 28,
+              "explanation": "Adds a value to a concurrent dictionary if missing, returning the existing or new value."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Internal/ReflectionHelper.cs",
+          "role": "Utilities for walking members, safely getting and setting values, and resolving member paths via reflection. The plan builder and member resolution logic use these helpers to normalize reflection access.",
+          "key_symbols": [
+            {
+              "name": "ReflectionHelper",
+              "line": 3,
+              "explanation": "Static reflection utilities used throughout the engine."
+            },
+            {
+              "name": "GetMemberPath",
+              "line": 51,
+              "explanation": "Parses a dotted member chain into a MemberPath."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Licensing/BuildInfo.cs",
+          "role": "Provides build timestamp metadata. It is used by the licensing system to anchor license keys to a build date.",
+          "key_symbols": [
+            {
+              "name": "BuildInfo",
+              "line": 5,
+              "explanation": "Holds build metadata for the assembly."
+            },
+            {
+              "name": "GetBuildDate",
+              "line": 9,
+              "explanation": "Reads the build date from assembly metadata."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Licensing/Edition.cs",
+          "role": "Defines the AutoMapper edition identifier used by licensing. It keeps edition values separate from core engine types.",
+          "key_symbols": [
+            {
+              "name": "Edition",
+              "line": 3,
+              "explanation": "Identifies the product edition that a license can cover."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Licensing/License.cs",
+          "role": "Represents a parsed AutoMapper license extracted from a license key string. It holds expiry and edition details needed by the validator.",
+          "key_symbols": [
+            {
+              "name": "License",
+              "line": 5,
+              "explanation": "Stores license information extracted from a key."
+            },
+            {
+              "name": "License",
+              "line": 12,
+              "explanation": "Parses a license key into structured license data."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Licensing/LicenseAccessor.cs",
+          "role": "Resolves the license key from the environment and initializes validation. It is the entry point that decides whether a valid unrestricted AutoMapper license is present.",
+          "key_symbols": [
+            {
+              "name": "LicenseAccessor",
+              "line": 10,
+              "explanation": "Locates and initializes the current license."
+            },
+            {
+              "name": "Initialize",
+              "line": 29,
+              "explanation": "Loads the license key and prepares the validator."
+            },
+            {
+              "name": "ValidateKey",
+              "line": 61,
+              "explanation": "Runs the actual license-key validation."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Licensing/LicenseValidator.cs",
+          "role": "Validates license keys against the product and build info. It is called during configuration to ensure the installed edition is allowed.",
+          "key_symbols": [
+            {
+              "name": "LicenseValidator",
+              "line": 5,
+              "explanation": "Performs license-key validation."
+            },
+            {
+              "name": "Validate",
+              "line": 21,
+              "explanation": "Checks a key and returns the validation verdict."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mapper.cs",
+          "role": "Runtime mapper facade implementing IMapper. It accepts user Map and ProjectTo calls, routes to the configuration provider, and executes the compiled mapping delegates.",
+          "key_symbols": [
+            {
+              "name": "IMapper",
+              "line": 50,
+              "explanation": "Public mapping service contract."
+            },
+            {
+              "name": "Mapper",
+              "line": 140,
+              "explanation": "Concrete mapper that ties configuration to runtime execution."
+            },
+            {
+              "name": "MapCore",
+              "line": 192,
+              "explanation": "Internal implementation that performs a mapping using options and the resolved type map."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/MemberMap.cs",
+          "role": "Base metadata class for mapping one destination member. It holds the source expression, resolver, condition, and value transformer used by plan generation.",
+          "key_symbols": [
+            {
+              "name": "MemberMap",
+              "line": 5,
+              "explanation": "Common behavior for property and path member maps."
+            },
+            {
+              "name": "MapFrom",
+              "line": 43,
+              "explanation": "Sets the source expression used to produce the destination member's value."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/PathMap.cs",
+          "role": "Metadata for a nested member path mapping. It stores the source member chain and associated destination member configurations.",
+          "key_symbols": [
+            {
+              "name": "PathMap",
+              "line": 3,
+              "explanation": "Represents a mapping over a chain of members."
+            },
+            {
+              "name": "PathMap",
+              "line": 8,
+              "explanation": "Creates a path map for a given destination member."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/PropertyMap.cs",
+          "role": "Metadata for a single source-to-destination property mapping. It combines MemberMap details with property-specific inherited-map behavior.",
+          "key_symbols": [
+            {
+              "name": "PropertyMap",
+              "line": 3,
+              "explanation": "Maps one destination property from the source."
+            },
+            {
+              "name": "PropertyMap",
+              "line": 10,
+              "explanation": "Initializes a property map with a member map."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/QueryableExtensions/Extensions.cs",
+          "role": "Extension methods enabling ProjectTo on IQueryable. They are the entry point from LINQ providers into the projection builder.",
+          "key_symbols": [
+            {
+              "name": "Extensions",
+              "line": 8,
+              "explanation": "Queryable extension point for AutoMapper."
+            },
+            {
+              "name": "ProjectTo",
+              "line": 34,
+              "explanation": "Prepares an IQueryable projection expression for AutoMapper."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/ResolutionContext.cs",
+          "role": "Per-mapping execution context carrying source and destination types, options, service constructor, and depth tracking. It guards recursion and provides access to nested mapping calls.",
+          "key_symbols": [
+            {
+              "name": "ResolutionContext",
+              "line": 6,
+              "explanation": "Mutable context object for one mapping operation."
+            },
+            {
+              "name": "ResolutionContext",
+              "line": 12,
+              "explanation": "Initializes context with type pair, destination, options, and services."
+            },
+            {
+              "name": "Map",
+              "line": 73,
+              "explanation": "Performs a nested mapping using a runtime type pair."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/ServiceCollectionExtensions.cs",
+          "role": "Microsoft.Extensions.DependencyInjection integration that registers AutoMapper, scans assemblies for profiles, and wires the mapper into the container. It is the adaptation layer between DI and the core engine.",
+          "key_symbols": [
+            {
+              "name": "ServiceCollectionExtensions",
+              "line": 25,
+              "explanation": "DI extension methods for AutoMapper."
+            },
+            {
+              "name": "AddAutoMapper",
+              "line": 28,
+              "explanation": "Registers AutoMapper services in an IServiceCollection."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/TypeMap.cs",
+          "role": "Central metadata object for a source and destination mapping. It owns property maps, path maps, constructor maps, before and after actions, and inheritance and inclusion, and it is sealed before plan generation.",
+          "key_symbols": [
+            {
+              "name": "TypeMap",
+              "line": 11,
+              "explanation": "Stores all configuration for one type mapping."
+            },
+            {
+              "name": "TypeMap",
+              "line": 20,
+              "explanation": "Constructs a type map for a source and destination pair."
+            },
+            {
+              "name": "Seal",
+              "line": 335,
+              "explanation": "Finalizes type map configuration before use, applying inherited maps."
+            }
+          ]
+        },
+        {
+          "path": "src/Benchmark/BenchEngine.cs",
+          "role": "Benchmark harness that starts the mapping benchmark loop. It demonstrates the engine's use from a standalone executable.",
+          "key_symbols": [
+            {
+              "name": "BenchEngine",
+              "line": 3,
+              "explanation": "Runs benchmarks for mapping strategies."
+            },
+            {
+              "name": "Start",
+              "line": 14,
+              "explanation": "Starts the benchmark iterations."
+            }
+          ]
+        },
+        {
+          "path": "src/Benchmark/FlatteningMapper.cs",
+          "role": "Benchmark sample data models and manual and AutoMapper mapping strategies for flattening, deep, and complex type scenarios. It provides the scenarios used to compare engine performance.",
+          "key_symbols": [
+            {
+              "name": "Config",
+              "line": 6,
+              "explanation": "Configures AutoMapper profiles for the benchmarks."
+            },
+            {
+              "name": "ManualDeepTypeMapper",
+              "line": 124,
+              "explanation": "Hand-written deep mapping implementation used as a performance baseline."
+            },
+            {
+              "name": "ComplexTypesProfile",
+              "line": 18,
+              "explanation": "Profile registering complex type mapping benchmarks."
+            }
+          ]
+        },
+        {
+          "path": "src/Benchmark/IObjectToObjectMapper.cs",
+          "role": "Interface that all benchmark mapper implementations implement. It gives the harness a uniform Initialize and Map contract.",
+          "key_symbols": [
+            {
+              "name": "IObjectToObjectMapper",
+              "line": 3,
+              "explanation": "Benchmark mapper contract."
+            },
+            {
+              "name": "Initialize",
+              "line": 6,
+              "explanation": "Sets up the mapper before timing."
+            },
+            {
+              "name": "Map",
+              "line": 7,
+              "explanation": "Executes one mapping operation for timing."
+            }
+          ]
+        },
+        {
+          "path": "src/Benchmark/Program.cs",
+          "role": "Entry point for the benchmark project that selects and runs mapping benchmarks. It wires the benchmark harness to the configured mappers.",
+          "key_symbols": [
+            {
+              "name": "Program",
+              "line": 5,
+              "explanation": "Benchmark program entry point."
+            },
+            {
+              "name": "Main",
+              "line": 7,
+              "explanation": "Runs the configured benchmarks."
+            }
+          ]
+        },
+        {
+          "path": "src/TestApp/Program.cs",
+          "role": "Sample console application exercising profiles, DI resolution, and mappings. It serves as a minimal end-to-end demonstration of the core engine.",
+          "key_symbols": [
+            {
+              "name": "Source",
+              "line": 28,
+              "explanation": "Sample source DTO."
+            },
+            {
+              "name": "Dest",
+              "line": 32,
+              "explanation": "Sample destination DTO."
+            },
+            {
+              "name": "Profile1",
+              "line": 45,
+              "explanation": "Profile defining sample mappings."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/AutoMapper/AssemblyInfo.cs\"]\n    N1[\"src/AutoMapper/AutoMapperMappingException.cs\"]\n    N2[\"src/AutoMapper/Configuration/CtorParamConfigurationExpression.cs\"]\n    N3[\"src/AutoMapper/Configuration/IMappingExpression.cs\"]\n    N4[\"src/AutoMapper/Configuration/IMappingExpressionBase.cs\"]\n    N5[\"src/AutoMapper/Configuration/IMappingOperationOptions.cs\"]\n    N6[\"src/AutoMapper/Configuration/IProfileExpression.cs\"]\n    N7[\"src/AutoMapper/Configuration/MapperConfiguration.cs\"]\n    N8[\"src/AutoMapper/Configuration/MappingExpression.cs\"]\n    N9[\"src/AutoMapper/Configuration/MemberConfigurationExpression.cs\"]\n    N10[\"src/AutoMapper/Configuration/PathConfigurationExpression.cs\"]\n    N11[\"src/AutoMapper/Configuration/Profile.cs\"]\n    N12[\"src/AutoMapper/Configuration/SourceMappingExpression.cs\"]\n    N13[\"src/AutoMapper/Configuration/TypeMapConfiguration.cs\"]\n    N14[\"src/AutoMapper/ConstructorMap.cs\"]\n    N15[\"src/AutoMapper/Execution/TypeMapPlanBuilder.cs\"]\n    N16[\"src/AutoMapper/Features.cs\"]\n    N17[\"src/AutoMapper/Internal/MemberPath.cs\"]\n    N18[\"src/AutoMapper/Internal/Polyfill.cs\"]\n    N19[\"src/AutoMapper/Internal/ReflectionHelper.cs\"]\n    N20[\"src/AutoMapper/Licensing/BuildInfo.cs\"]\n    N21[\"src/AutoMapper/Licensing/Edition.cs\"]\n    N22[\"src/AutoMapper/Licensing/License.cs\"]\n    N23[\"src/AutoMapper/Licensing/LicenseAccessor.cs\"]\n    N24[\"src/AutoMapper/Licensing/LicenseValidator.cs\"]\n    N25[\"src/AutoMapper/Mapper.cs\"]\n    N26[\"src/AutoMapper/MemberMap.cs\"]\n    N27[\"src/AutoMapper/PathMap.cs\"]\n    N28[\"src/AutoMapper/PropertyMap.cs\"]\n    N29[\"src/AutoMapper/QueryableExtensions/Extensions.cs\"]\n    N30[\"src/AutoMapper/ResolutionContext.cs\"]\n    N31[\"src/AutoMapper/ServiceCollectionExtensions.cs\"]\n    N32[\"src/AutoMapper/TypeMap.cs\"]\n    N33[\"src/Benchmark/BenchEngine.cs\"]\n    N34[\"src/Benchmark/FlatteningMapper.cs\"]\n    N35[\"src/Benchmark/IObjectToObjectMapper.cs\"]\n    N36[\"src/Benchmark/Program.cs\"]\n    N37[\"src/TestApp/Program.cs\"]\n    N1 --> N32\n    N1 --> N26\n    N2 --> N30\n    N2 --> N32\n    N2 --> N14\n    N2 --> N15\n    N2 --> N19\n    N2 --> N1\n    N3 --> N4\n    N3 --> N10\n    N3 --> N12\n    N4 --> N16\n    N4 --> N26\n    N4 --> N6\n    N4 --> N2\n    N4 --> N30\n    N4 --> N12\n    N5 --> N4\n    N6 --> N3\n    N6 --> N26\n    N7 --> N29\n    N7 --> N16\n    N7 --> N1\n    N7 --> N25\n    N7 --> N32\n    N7 --> N23\n    N7 --> N11\n    N7 --> N22\n    N7 --> N24\n    N7 --> N26\n    N7 --> N30\n    N7 --> N13\n    N8 --> N6\n    N8 --> N13\n    N8 --> N3\n    N8 --> N32\n    N8 --> N9\n    N8 --> N10\n    N8 --> N17\n    N8 --> N19\n    N8 --> N12\n    N8 --> N26\n    N8 --> N4\n    N8 --> N2\n    N9 --> N32\n    N9 --> N28\n    N9 --> N15\n    N9 --> N30\n    N9 --> N19\n    N9 --> N26\n    N9 --> N10\n    N10 --> N30\n    N10 --> N9\n    N10 --> N27\n    N10 --> N17\n    N10 --> N18\n    N10 --> N32\n    N11 --> N32\n    N11 --> N3\n    N11 --> N13\n    N11 --> N26\n    N11 --> N6\n    N11 --> N28\n    N11 --> N8\n    N12 --> N32\n    N12 --> N6\n    N13 --> N16\n    N13 --> N6\n    N13 --> N26\n    N13 --> N12\n    N13 --> N2\n    N13 --> N9\n    N13 --> N32\n    N13 --> N14\n    N13 --> N11\n    N13 --> N17\n    N13 --> N4\n    N13 --> N30\n    N13 --> N15\n    N14 --> N32\n    N14 --> N26\n    N15 --> N32\n    N15 --> N30\n    N15 --> N1\n    N15 --> N26\n    N15 --> N11\n    N15 --> N27\n    N15 --> N17\n    N15 --> N14\n    N15 --> N19\n    N15 --> N18\n    N15 --> N13\n    N16 --> N32\n    N16 --> N3\n    N16 --> N7\n    N19 --> N32\n    N19 --> N30\n    N19 --> N26\n    N19 --> N18\n    N22 --> N21\n    N23 --> N29\n    N23 --> N22\n    N23 --> N7\n    N24 --> N29\n    N24 --> N20\n    N24 --> N22\n    N24 --> N21\n    N25 --> N5\n    N25 --> N7\n    N25 --> N30\n    N25 --> N26\n    N25 --> N18\n    N26 --> N32\n    N26 --> N15\n    N26 --> N19\n    N26 --> N11\n    N27 --> N17\n    N27 --> N32\n    N27 --> N26\n    N27 --> N19\n    N28 --> N26\n    N28 --> N32\n    N29 --> N25\n    N29 --> N7\n    N29 --> N19\n    N29 --> N17\n    N30 --> N25\n    N30 --> N5\n    N30 --> N26\n    N30 --> N1\n    N30 --> N32\n    N31 --> N0\n    N31 --> N1\n    N31 --> N14\n    N31 --> N16\n    N31 --> N25\n    N31 --> N26\n    N31 --> N27\n    N31 --> N28\n    N31 --> N30\n    N31 --> N32\n    N31 --> N29\n    N31 --> N11\n    N31 --> N7\n    N31 --> N4\n    N32 --> N16\n    N32 --> N28\n    N32 --> N13\n    N32 --> N11\n    N32 --> N14\n    N32 --> N1\n    N32 --> N15\n    N32 --> N6\n    N32 --> N26\n    N32 --> N27\n    N32 --> N17\n    N32 --> N30\n    N32 --> N4\n    N32 --> N12\n    N33 --> N35\n    N34 --> N0\n    N34 --> N1\n    N34 --> N14\n    N34 --> N16\n    N34 --> N25\n    N34 --> N26\n    N34 --> N27\n    N34 --> N28\n    N34 --> N30\n    N34 --> N31\n    N34 --> N32\n    N34 --> N29\n    N34 --> N11\n    N34 --> N7\n    N34 --> N35\n    N36 --> N35\n    N36 --> N34\n    N36 --> N33\n    N37 --> N0\n    N37 --> N1\n    N37 --> N14\n    N37 --> N16\n    N37 --> N25\n    N37 --> N26\n    N37 --> N27\n    N37 --> N28\n    N37 --> N30\n    N37 --> N31\n    N37 --> N32\n    N37 --> N29\n    N37 --> N11"
+    },
+    {
+      "subsystem_id": "1",
+      "name": "Mapper Registry",
+      "description": "Mapper Registry is the subsystem that collects, validates, and indexes all type maps and supplies the built-in object mappers used for primitive, collection, enum, nullable, string, and dynamic conversions. It exists as a distinct unit because mapping between arbitrary type pairs cannot be solved by user-declared TypeMaps alone: AutoMapper needs a deterministic ordering of built-in strategies that can decide whether a pair is assignable, enumerable, convertible, or parseable, and then generate an expression. The flow begins with MapperConfigurationExpression's AddMapsCore (src/AutoMapper/Configuration/MapperConfigurationExpression.cs:176), which registers profiles and maps; ProfileMap.Register (src/AutoMapper/ProfileMap.cs:124) and BuildTypeMap (src/AutoMapper/ProfileMap.cs:140) build the TypeMaps, and ConfigurationValidator.AssertConfigurationIsValid (src/AutoMapper/Configuration/ConfigurationValidator.cs:23) verifies them. At runtime, when no user type map applies, MapperConfiguration asks MapperRegistry's Mappers collection (src/AutoMapper/Mappers/MapperRegistry.cs:5) to find a mapper whose IsMatch and MapExpression contract (src/AutoMapper/Mappers/IObjectMapper.cs:12, src/AutoMapper/Mappers/IObjectMapper.cs:24) can produce the conversion. ExpressionBuilder.MapExpression (src/AutoMapper/Execution/ExpressionBuilder.cs:63) assembles sub-expressions for nested maps. This ties into the Core Mapping Engine via MapperConfiguration, TypeMapPlanBuilder, and TypeMap, and its related files show consumers in DI tests and attribute configuration that rely on the registry to create and validate maps.",
+      "files": [
+        {
+          "path": "src/AutoMapper/Configuration/ConfigurationValidator.cs",
+          "role": "Validates all TypeMaps after profiles are configured. It walks every map, checks unmapped members, and throws AutoMapperConfigurationException when the configuration is invalid.",
+          "key_symbols": [
+            {
+              "name": "ConfigurationValidator",
+              "line": 4,
+              "explanation": "Entry point for configuration validation."
+            },
+            {
+              "name": "AssertConfigurationIsValid",
+              "line": 23,
+              "explanation": "Validates all registered type maps and reports configuration errors."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/Conventions.cs",
+          "role": "Implements the naming-convention chain that AutoMapper uses to discover implicit source members for a destination member. It combines name splitting, prefix and postfix stripping, and replacement rules and exposes the sealed result through GetSourceMember.",
+          "key_symbols": [
+            {
+              "name": "MemberConfiguration",
+              "line": 8,
+              "explanation": "Combines multiple naming rules into one member-matching configuration."
+            },
+            {
+              "name": "DefaultNameSplitMember",
+              "line": 126,
+              "explanation": "Default match strategy for splitting member names."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/INamingConvention.cs",
+          "role": "Defines the abstraction used to split member names into words. The concrete conventions provide the naming rules used during member matching.",
+          "key_symbols": [
+            {
+              "name": "PascalCaseNamingConvention",
+              "line": 17,
+              "explanation": "Splits PascalCase member names into separate words."
+            },
+            {
+              "name": "ExactMatchNamingConvention",
+              "line": 11,
+              "explanation": "Matches member names without any splitting."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/MapperConfigurationExpression.cs",
+          "role": "Collects all profiles, maps, and global configuration options before MapperConfiguration is constructed. AddMapsCore and AddProfiles turn assemblies and profile types into configured maps.",
+          "key_symbols": [
+            {
+              "name": "MapperConfigurationExpression",
+              "line": 98,
+              "explanation": "Concrete global configuration expression used by MapperConfiguration."
+            },
+            {
+              "name": "AddMapsCore",
+              "line": 176,
+              "explanation": "Registers maps from assemblies and types into the configuration."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Execution/ExpressionBuilder.cs",
+          "role": "Shared helper for building the expression trees used both by runtime mapping and projection. It provides null checks, loops, and chain construction so that map expression makers do not duplicate tree-building code.",
+          "key_symbols": [
+            {
+              "name": "ExpressionBuilder",
+              "line": 7,
+              "explanation": "Static helper for constructing mapping expression trees."
+            },
+            {
+              "name": "MapExpression",
+              "line": 63,
+              "explanation": "Builds the expression that maps one type pair to another."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Internal/InternalApi.cs",
+          "role": "Defines internal interfaces that bridge the public configuration API and the runtime mapping engine. IGlobalConfiguration and IProfileExpressionInternal expose the operations that MapperConfiguration and ProfileMap need.",
+          "key_symbols": [
+            {
+              "name": "IGlobalConfiguration",
+              "line": 48,
+              "explanation": "Internal contract for the global configuration provider."
+            },
+            {
+              "name": "IProfileExpressionInternal",
+              "line": 161,
+              "explanation": "Internal profile expression interface used while registering maps."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Internal/PrimitiveHelper.cs",
+          "role": "Small internal helpers for adding to collections and checking type relationships. It keeps common primitives used by mappers in one place.",
+          "key_symbols": [
+            {
+              "name": "PrimitiveHelper",
+              "line": 5,
+              "explanation": "Static container of small utility methods."
+            },
+            {
+              "name": "Concat",
+              "line": 27,
+              "explanation": "Concatenates collections without mutating the originals."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Internal/TypeDetails.cs",
+          "role": "Caches reflection details about source and destination types, such as readable and writable members and constructors. It also computes PossibleNames for naming-convention matching.",
+          "key_symbols": [
+            {
+              "name": "TypeDetails",
+              "line": 5,
+              "explanation": "Cached reflection information for a type."
+            },
+            {
+              "name": "GetMember",
+              "line": 19,
+              "explanation": "Finds a member on the type using several naming rules."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Internal/TypeExtensions.cs",
+          "role": "Provides reflection extension methods for discovering base classes, interfaces, generic interfaces, and inherited members. These are used throughout the mapper registry and plan builder.",
+          "key_symbols": [
+            {
+              "name": "TypeExtensions",
+              "line": 5,
+              "explanation": "Static extensions for Type reflection."
+            },
+            {
+              "name": "GetGenericInterface",
+              "line": 71,
+              "explanation": "Finds the closed generic interface implemented by a type."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Internal/TypePair.cs",
+          "role": "Value type that pairs a source type and destination type for map resolution. It includes helpers for closing generic type pairs and reversing a pair.",
+          "key_symbols": [
+            {
+              "name": "TypePair",
+              "line": 10,
+              "explanation": "Immutable source and destination type pair."
+            },
+            {
+              "name": "CloseGenericTypes",
+              "line": 15,
+              "explanation": "Produces closed generic TypePairs from open generic definitions."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/AssignableMapper.cs",
+          "role": "Built-in mapper used when the destination type is directly assignable from the source type. It returns the source expression unchanged.",
+          "key_symbols": [
+            {
+              "name": "AssignableMapper",
+              "line": 3,
+              "explanation": "Maps by direct assignment."
+            },
+            {
+              "name": "MapExpression",
+              "line": 6,
+              "explanation": "Returns the source expression as the mapping expression."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/CollectionMapper.cs",
+          "role": "Handles collection-to-collection, array, and multidimensional array mappings. It generates expressions that create and fill destination collections.",
+          "key_symbols": [
+            {
+              "name": "CollectionMapper",
+              "line": 7,
+              "explanation": "Maps between collection types."
+            },
+            {
+              "name": "ArrayMapper",
+              "line": 150,
+              "explanation": "Maps to array destinations."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/ConstructorMapper.cs",
+          "role": "Maps to a destination class by selecting a constructor and mapping its parameters. It is used when no explicit TypeMap constructor map exists.",
+          "key_symbols": [
+            {
+              "name": "ConstructorMapper",
+              "line": 3,
+              "explanation": "Maps object types by invoking a constructor."
+            },
+            {
+              "name": "GetConstructor",
+              "line": 6,
+              "explanation": "Selects the destination constructor to use."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/ConversionOperatorMapper.cs",
+          "role": "Maps types that define user-defined implicit or explicit conversion operators. It looks up the operator and emits a conversion call.",
+          "key_symbols": [
+            {
+              "name": "ConversionOperatorMapper",
+              "line": 3,
+              "explanation": "Uses op_Implicit or op_Explicit to map one type to another."
+            },
+            {
+              "name": "GetConversionOperator",
+              "line": 8,
+              "explanation": "Finds the relevant conversion operator on either type."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/ConvertMapper.cs",
+          "role": "Maps between primitive types using Convert.ChangeType. It is selected when both source and destination are primitive.",
+          "key_symbols": [
+            {
+              "name": "ConvertMapper",
+              "line": 3,
+              "explanation": "Maps primitive types through Convert."
+            },
+            {
+              "name": "MapExpression",
+              "line": 8,
+              "explanation": "Emits a Convert.ChangeType expression."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/EnumToEnumMapper.cs",
+          "role": "Maps enum-to-enum by converting through the underlying numeric value. It emits a cast expression between the two enum types.",
+          "key_symbols": [
+            {
+              "name": "EnumToEnumMapper",
+              "line": 3,
+              "explanation": "Maps between two enum types."
+            },
+            {
+              "name": "MapExpression",
+              "line": 7,
+              "explanation": "Builds the enum conversion expression."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/FromDynamicMapper.cs",
+          "role": "Maps an ExpandoObject-like dynamic source to a typed destination by reading members dynamically. It generates a runtime callback rather than a pure expression for dynamic dispatch.",
+          "key_symbols": [
+            {
+              "name": "FromDynamicMapper",
+              "line": 6,
+              "explanation": "Maps dynamic sources to typed destinations."
+            },
+            {
+              "name": "GetDynamically",
+              "line": 29,
+              "explanation": "Reads a member value from a dynamic object."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/FromStringDictionaryMapper.cs",
+          "role": "Maps a string dictionary source onto destination properties by matching keys to member names. It builds member-assignment expressions for each destination member.",
+          "key_symbols": [
+            {
+              "name": "FromStringDictionaryMapper",
+              "line": 4,
+              "explanation": "Maps dictionaries of strings to objects."
+            },
+            {
+              "name": "MapDynamic",
+              "line": 11,
+              "explanation": "Constructs the mapping from dictionary entries to members."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/IObjectMapper.cs",
+          "role": "Defines the object-mapper contract, IsMatch and MapExpression, and an ObjectMapper base class. Every built-in mapper in the registry implements this contract so MapperConfiguration can ask which mapper applies.",
+          "key_symbols": [
+            {
+              "name": "IObjectMapper",
+              "line": 5,
+              "explanation": "Contract for all built-in object mappers."
+            },
+            {
+              "name": "ObjectMapper",
+              "line": 37,
+              "explanation": "Base class providing a typed wrapper around the mapper contract."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/KeyValueMapper.cs",
+          "role": "Maps KeyValuePair types by projecting the Key and Value members. It handles the simple flattening of key-value pairs.",
+          "key_symbols": [
+            {
+              "name": "KeyValueMapper",
+              "line": 3,
+              "explanation": "Maps KeyValuePair source and destination types."
+            },
+            {
+              "name": "MapExpression",
+              "line": 7,
+              "explanation": "Builds an expression that creates the destination KeyValuePair."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/MapperRegistry.cs",
+          "role": "Holds the ordered list of built-in object mappers. The list is what MapperConfiguration iterates when deciding how to map a type pair without an explicit user TypeMap.",
+          "key_symbols": [
+            {
+              "name": "MapperRegistry",
+              "line": 3,
+              "explanation": "Registry of built-in object mappers."
+            },
+            {
+              "name": "Mappers",
+              "line": 5,
+              "explanation": "Returns the ordered enumerable of registered object mappers."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/NullableDestinationMapper.cs",
+          "role": "Maps into a Nullable destination by wrapping the mapped value. It is selected when the destination type is Nullable<T>.",
+          "key_symbols": [
+            {
+              "name": "NullableDestinationMapper",
+              "line": 3,
+              "explanation": "Maps a non-nullable source into a nullable destination."
+            },
+            {
+              "name": "MapExpression",
+              "line": 6,
+              "explanation": "Wraps the source expression in a nullable conversion."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/NullableSourceMapper.cs",
+          "role": "Maps from Nullable<T> sources by unwrapping the value when it has one and using a default when null. It is a common leaf mapper for many conversions.",
+          "key_symbols": [
+            {
+              "name": "NullableSourceMapper",
+              "line": 3,
+              "explanation": "Maps from Nullable<T> to its underlying type."
+            },
+            {
+              "name": "MapExpression",
+              "line": 6,
+              "explanation": "Emits a conditional expression for the nullable value."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/ParseStringMapper.cs",
+          "role": "Maps a string to a destination type that exposes a Parse method. It emits a Parse call with culture-invariant settings.",
+          "key_symbols": [
+            {
+              "name": "ParseStringMapper",
+              "line": 3,
+              "explanation": "Maps strings by invoking a Parse method."
+            },
+            {
+              "name": "HasParse",
+              "line": 6,
+              "explanation": "Checks whether the destination type has a usable Parse method."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/StringToEnumMapper.cs",
+          "role": "Maps string values to enum members by name, ignoring case and honoring enum metadata. It has two implementations for different enum scenarios.",
+          "key_symbols": [
+            {
+              "name": "StringToEnumMapper",
+              "line": 49,
+              "explanation": "Second implementation for string-to-enum mapping."
+            },
+            {
+              "name": "MapExpression",
+              "line": 55,
+              "explanation": "Builds the expression that parses and converts the string to the enum value."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/ToDynamicMapper.cs",
+          "role": "Maps a typed source to an ExpandoObject-like dynamic destination by setting members dynamically. It calls a runtime assignment callback.",
+          "key_symbols": [
+            {
+              "name": "ToDynamicMapper",
+              "line": 6,
+              "explanation": "Maps typed sources to dynamic destinations."
+            },
+            {
+              "name": "SetDynamically",
+              "line": 29,
+              "explanation": "Sets a member value on a dynamic object."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/ToStringDictionaryMapper.cs",
+          "role": "Maps an object to a dictionary of strings by reading its members. It emits an expression that builds the dictionary from member values.",
+          "key_symbols": [
+            {
+              "name": "ToStringDictionaryMapper",
+              "line": 3,
+              "explanation": "Maps an object to a string dictionary."
+            },
+            {
+              "name": "MembersDictionary",
+              "line": 9,
+              "explanation": "Builds a dictionary from the object's members."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/ToStringMapper.cs",
+          "role": "Maps any non-null source to string by calling ToString on it. It is selected as a generic fallback for string destinations.",
+          "key_symbols": [
+            {
+              "name": "ToStringMapper",
+              "line": 3,
+              "explanation": "Maps objects to string via ToString."
+            },
+            {
+              "name": "MapExpression",
+              "line": 6,
+              "explanation": "Emits a call to ToString on the source."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Mappers/UnderlyingEnumTypeMapper.cs",
+          "role": "Maps enum values to their underlying numeric type or vice versa. It emits a cast between the enum and its underlying type.",
+          "key_symbols": [
+            {
+              "name": "UnderlyingTypeEnumMapper",
+              "line": 3,
+              "explanation": "Maps between an enum and its underlying numeric type."
+            },
+            {
+              "name": "MapExpression",
+              "line": 6,
+              "explanation": "Creates the underlying type conversion expression."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/ProfileMap.cs",
+          "role": "Represents an instantiated Profile inside MapperConfiguration and applies its settings to the global configuration. Register and BuildTypeMap create TypeMaps, while Configure and ApplyMemberMaps resolve included and derived maps.",
+          "key_symbols": [
+            {
+              "name": "ProfileMap",
+              "line": 5,
+              "explanation": "Wraps a profile instance and its configuration for the mapper."
+            },
+            {
+              "name": "Register",
+              "line": 124,
+              "explanation": "Registers the profile's type maps into the configuration provider."
+            },
+            {
+              "name": "BuildTypeMap",
+              "line": 140,
+              "explanation": "Constructs a TypeMap from a mapping expression."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/AutoMapper/Configuration/ConfigurationValidator.cs\"]\n    N1[\"src/AutoMapper/Configuration/Conventions.cs\"]\n    N2[\"src/AutoMapper/Configuration/INamingConvention.cs\"]\n    N3[\"src/AutoMapper/Configuration/MapperConfigurationExpression.cs\"]\n    N4[\"src/AutoMapper/Execution/ExpressionBuilder.cs\"]\n    N5[\"src/AutoMapper/Internal/InternalApi.cs\"]\n    N6[\"src/AutoMapper/Internal/PrimitiveHelper.cs\"]\n    N7[\"src/AutoMapper/Internal/TypeDetails.cs\"]\n    N8[\"src/AutoMapper/Internal/TypeExtensions.cs\"]\n    N9[\"src/AutoMapper/Internal/TypePair.cs\"]\n    N10[\"src/AutoMapper/Mappers/AssignableMapper.cs\"]\n    N11[\"src/AutoMapper/Mappers/CollectionMapper.cs\"]\n    N12[\"src/AutoMapper/Mappers/ConstructorMapper.cs\"]\n    N13[\"src/AutoMapper/Mappers/ConversionOperatorMapper.cs\"]\n    N14[\"src/AutoMapper/Mappers/ConvertMapper.cs\"]\n    N15[\"src/AutoMapper/Mappers/EnumToEnumMapper.cs\"]\n    N16[\"src/AutoMapper/Mappers/FromDynamicMapper.cs\"]\n    N17[\"src/AutoMapper/Mappers/FromStringDictionaryMapper.cs\"]\n    N18[\"src/AutoMapper/Mappers/IObjectMapper.cs\"]\n    N19[\"src/AutoMapper/Mappers/KeyValueMapper.cs\"]\n    N20[\"src/AutoMapper/Mappers/MapperRegistry.cs\"]\n    N21[\"src/AutoMapper/Mappers/NullableDestinationMapper.cs\"]\n    N22[\"src/AutoMapper/Mappers/NullableSourceMapper.cs\"]\n    N23[\"src/AutoMapper/Mappers/ParseStringMapper.cs\"]\n    N24[\"src/AutoMapper/Mappers/StringToEnumMapper.cs\"]\n    N25[\"src/AutoMapper/Mappers/ToDynamicMapper.cs\"]\n    N26[\"src/AutoMapper/Mappers/ToStringDictionaryMapper.cs\"]\n    N27[\"src/AutoMapper/Mappers/ToStringMapper.cs\"]\n    N28[\"src/AutoMapper/Mappers/UnderlyingEnumTypeMapper.cs\"]\n    N29[\"src/AutoMapper/ProfileMap.cs\"]\n    N0 --> N10\n    N0 --> N11\n    N0 --> N12\n    N0 --> N13\n    N0 --> N14\n    N0 --> N15\n    N0 --> N16\n    N0 --> N17\n    N0 --> N18\n    N0 --> N19\n    N0 --> N20\n    N0 --> N21\n    N0 --> N22\n    N0 --> N23\n    N0 --> N24\n    N0 --> N25\n    N0 --> N26\n    N0 --> N27\n    N0 --> N28\n    N0 --> N5\n    N0 --> N9\n    N1 --> N7\n    N1 --> N2\n    N1 --> N29\n    N3 --> N10\n    N3 --> N11\n    N3 --> N12\n    N3 --> N13\n    N3 --> N14\n    N3 --> N15\n    N3 --> N16\n    N3 --> N17\n    N3 --> N18\n    N3 --> N19\n    N3 --> N20\n    N3 --> N21\n    N3 --> N22\n    N3 --> N23\n    N3 --> N24\n    N3 --> N25\n    N3 --> N26\n    N3 --> N27\n    N3 --> N28\n    N3 --> N0\n    N3 --> N5\n    N4 --> N5\n    N4 --> N29\n    N4 --> N9\n    N5 --> N10\n    N5 --> N11\n    N5 --> N12\n    N5 --> N13\n    N5 --> N14\n    N5 --> N15\n    N5 --> N16\n    N5 --> N17\n    N5 --> N18\n    N5 --> N19\n    N5 --> N20\n    N5 --> N21\n    N5 --> N22\n    N5 --> N23\n    N5 --> N24\n    N5 --> N25\n    N5 --> N26\n    N5 --> N27\n    N5 --> N28\n    N5 --> N0\n    N5 --> N3\n    N5 --> N9\n    N5 --> N29\n    N5 --> N4\n    N5 --> N1\n    N6 --> N9\n    N7 --> N29\n    N7 --> N8\n    N10 --> N18\n    N10 --> N9\n    N10 --> N5\n    N10 --> N29\n    N11 --> N18\n    N11 --> N9\n    N11 --> N5\n    N11 --> N29\n    N11 --> N4\n    N12 --> N18\n    N12 --> N9\n    N12 --> N8\n    N12 --> N5\n    N12 --> N29\n    N13 --> N18\n    N13 --> N9\n    N13 --> N8\n    N13 --> N5\n    N13 --> N29\n    N14 --> N18\n    N14 --> N9\n    N14 --> N5\n    N14 --> N29\n    N15 --> N18\n    N15 --> N9\n    N15 --> N5\n    N15 --> N29\n    N16 --> N18\n    N16 --> N29\n    N16 --> N9\n    N16 --> N5\n    N17 --> N18\n    N17 --> N9\n    N17 --> N5\n    N17 --> N29\n    N18 --> N9\n    N18 --> N5\n    N18 --> N29\n    N19 --> N18\n    N19 --> N9\n    N19 --> N5\n    N19 --> N29\n    N19 --> N4\n    N20 --> N18\n    N20 --> N11\n    N20 --> N10\n    N20 --> N22\n    N20 --> N27\n    N20 --> N21\n    N20 --> N14\n    N20 --> N24\n    N20 --> N15\n    N20 --> N23\n    N20 --> N28\n    N20 --> N19\n    N20 --> N12\n    N20 --> N13\n    N20 --> N16\n    N20 --> N25\n    N20 --> N17\n    N20 --> N26\n    N21 --> N18\n    N21 --> N9\n    N21 --> N5\n    N21 --> N29\n    N22 --> N18\n    N22 --> N9\n    N22 --> N5\n    N22 --> N29\n    N22 --> N4\n    N23 --> N18\n    N23 --> N9\n    N23 --> N5\n    N23 --> N29\n    N24 --> N18\n    N24 --> N9\n    N24 --> N5\n    N24 --> N29\n    N24 --> N8\n    N24 --> N4\n    N25 --> N18\n    N25 --> N29\n    N25 --> N9\n    N25 --> N5\n    N26 --> N18\n    N26 --> N9\n    N26 --> N5\n    N26 --> N29\n    N27 --> N18\n    N27 --> N9\n    N27 --> N5\n    N27 --> N29\n    N27 --> N24\n    N28 --> N18\n    N28 --> N9\n    N28 --> N5\n    N28 --> N29\n    N29 --> N9\n    N29 --> N7\n    N29 --> N5\n    N29 --> N1\n    N29 --> N2"
+    },
+    {
+      "subsystem_id": "2",
+      "name": "Attribute Configuration",
+      "description": "Attribute Configuration lets mapping rules be declared as .NET attributes on the model types themselves rather than imperatively in a profile. It exists as a separate subsystem because AutoMapper's API intentionally offers two configuration styles, code-first profiles and metadata-driven attributes, and the attribute layer isolates the reflection and discovery logic behind a common IMemberConfigurationProvider contract. Each attribute's ApplyConfiguration method (e.g. src/AutoMapper/Configuration/Annotations/AutoMapAttribute.cs:48) receives the mapping or member configuration expression and mutates it; the member-level attributes such as IgnoreAttribute, MapAtRuntimeAttribute, MappingOrderAttribute, NullSubstituteAttribute, SourceMemberAttribute, UseExistingValueAttribute, ValueConverterAttribute, and ValueResolverAttribute all implement that same ApplyConfiguration hook. The entry point is IMemberConfigurationExpression (src/AutoMapper/Configuration/IMemberConfigurationExpression.cs:9), the interface through which attributes specify MapFrom, conditions, ordering, null substitution, value converters and resolvers, and destination-value behavior. This subsystem connects to the Core Mapping Engine through Profile, MappingExpression, and MemberConfigurationExpression, and to TypeMapPlanBuilder so that attribute-declared resolvers and converters end up in generated mapping plans; its tests live in UnitTests and integration test projects.",
+      "files": [
+        {
+          "path": "src/AutoMapper/Configuration/Annotations/AutoMapAttribute.cs",
+          "role": "Attribute that declares a map between the decorated type and another type. ApplyConfiguration creates or augments the corresponding mapping expression when profiles are processed.",
+          "key_symbols": [
+            {
+              "name": "AutoMapAttribute",
+              "line": 7,
+              "explanation": "Map-level attribute used to create a mapping from a type."
+            },
+            {
+              "name": "ApplyConfiguration",
+              "line": 48,
+              "explanation": "Applies this attribute's mapping to the configuration expression."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/Annotations/IMemberConfigurationProvider.cs",
+          "role": "Contract that all configuration attributes implement. It lets the mapping-expressions code uniformly invoke an attribute's ApplyConfiguration with the member configuration.",
+          "key_symbols": [
+            {
+              "name": "IMemberConfigurationProvider",
+              "line": 3,
+              "explanation": "Common interface implemented by all configuration attributes."
+            },
+            {
+              "name": "ApplyConfiguration",
+              "line": 5,
+              "explanation": "Applies the attribute to a member configuration expression."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/Annotations/IgnoreAttribute.cs",
+          "role": "Marks a destination member to be skipped during mapping. ApplyConfiguration calls Ignore on the member expression.",
+          "key_symbols": [
+            {
+              "name": "IgnoreAttribute",
+              "line": 9,
+              "explanation": "Attribute that ignores a destination member."
+            },
+            {
+              "name": "ApplyConfiguration",
+              "line": 12,
+              "explanation": "Calls Ignore on the member configuration."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/Annotations/MapAtRuntimeAttribute.cs",
+          "role": "Marks a member as runtime-mapped so its resolver is not expanded into the static expression. ApplyConfiguration calls MapAtRuntime on the member configuration.",
+          "key_symbols": [
+            {
+              "name": "MapAtRuntimeAttribute",
+              "line": 10,
+              "explanation": "Attribute that defers member mapping to runtime."
+            },
+            {
+              "name": "ApplyConfiguration",
+              "line": 13,
+              "explanation": "Calls MapAtRuntime on the member configuration."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/Annotations/MappingOrderAttribute.cs",
+          "role": "Sets the order in which a member is mapped. ApplyConfiguration calls SetMappingOrder on the member expression.",
+          "key_symbols": [
+            {
+              "name": "MappingOrderAttribute",
+              "line": 9,
+              "explanation": "Attribute that controls mapping order for a member."
+            },
+            {
+              "name": "ApplyConfiguration",
+              "line": 14,
+              "explanation": "Calls SetMappingOrder on the member configuration."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/Annotations/NullSubstituteAttribute.cs",
+          "role": "Provides a value to use when the source member is null. ApplyConfiguration calls MapFrom with a null-substituted expression.",
+          "key_symbols": [
+            {
+              "name": "NullSubstituteAttribute",
+              "line": 9,
+              "explanation": "Attribute that supplies a fallback value for null sources."
+            },
+            {
+              "name": "ApplyConfiguration",
+              "line": 17,
+              "explanation": "Configures the member to use the null-substitute expression."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/Annotations/SourceMemberAttribute.cs",
+          "role": "Configures the source member of a mapping, typically to exclude it from validation. ApplyConfiguration invokes the source-member configuration API.",
+          "key_symbols": [
+            {
+              "name": "SourceMemberAttribute",
+              "line": 9,
+              "explanation": "Attribute that configures a source member."
+            },
+            {
+              "name": "ApplyConfiguration",
+              "line": 14,
+              "explanation": "Applies source-member configuration such as DoNotValidate."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/Annotations/UseExistingValueAttribute.cs",
+          "role": "Tells the mapper to keep the destination value when no source value is available. ApplyConfiguration calls UseDestinationValue on the member expression.",
+          "key_symbols": [
+            {
+              "name": "UseExistingValueAttribute",
+              "line": 9,
+              "explanation": "Attribute that preserves the destination value."
+            },
+            {
+              "name": "ApplyConfiguration",
+              "line": 12,
+              "explanation": "Calls UseDestinationValue on the member configuration."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/Annotations/ValueConverterAttribute.cs",
+          "role": "Attaches an IValueConverter to a member mapping. ApplyConfiguration calls MapFrom with the converter's expression.",
+          "key_symbols": [
+            {
+              "name": "ValueConverterAttribute",
+              "line": 10,
+              "explanation": "Attribute that applies a value converter to a member."
+            },
+            {
+              "name": "ApplyConfiguration",
+              "line": 18,
+              "explanation": "Registers the value converter in the member mapping."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/Annotations/ValueResolverAttribute.cs",
+          "role": "Attaches an IValueResolver to a member mapping. ApplyConfiguration calls MapFrom with the resolver expression.",
+          "key_symbols": [
+            {
+              "name": "ValueResolverAttribute",
+              "line": 10,
+              "explanation": "Attribute that applies a value resolver to a member."
+            },
+            {
+              "name": "ApplyConfiguration",
+              "line": 18,
+              "explanation": "Registers the value resolver in the member mapping."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Configuration/IMemberConfigurationExpression.cs",
+          "role": "The central interface attributes mutate to configure individual members. It exposes MapFrom, conditions, mapping order, destination-value behavior, and converter and resolver hooks.",
+          "key_symbols": [
+            {
+              "name": "IMemberConfigurationExpression",
+              "line": 9,
+              "explanation": "Public interface for configuring one destination member."
+            },
+            {
+              "name": "MapFrom",
+              "line": 28,
+              "explanation": "Sets the source expression used for the member."
+            },
+            {
+              "name": "Condition",
+              "line": 93,
+              "explanation": "Adds a condition under which the member mapping runs."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/AutoMapper/Configuration/Annotations/AutoMapAttribute.cs\"]\n    N1[\"src/AutoMapper/Configuration/Annotations/IMemberConfigurationProvider.cs\"]\n    N2[\"src/AutoMapper/Configuration/Annotations/IgnoreAttribute.cs\"]\n    N3[\"src/AutoMapper/Configuration/Annotations/MapAtRuntimeAttribute.cs\"]\n    N4[\"src/AutoMapper/Configuration/Annotations/MappingOrderAttribute.cs\"]\n    N5[\"src/AutoMapper/Configuration/Annotations/NullSubstituteAttribute.cs\"]\n    N6[\"src/AutoMapper/Configuration/Annotations/SourceMemberAttribute.cs\"]\n    N7[\"src/AutoMapper/Configuration/Annotations/UseExistingValueAttribute.cs\"]\n    N8[\"src/AutoMapper/Configuration/Annotations/ValueConverterAttribute.cs\"]\n    N9[\"src/AutoMapper/Configuration/Annotations/ValueResolverAttribute.cs\"]\n    N10[\"src/AutoMapper/Configuration/IMemberConfigurationExpression.cs\"]\n    N1 --> N10\n    N2 --> N0\n    N2 --> N1\n    N2 --> N10\n    N3 --> N0\n    N3 --> N1\n    N3 --> N10\n    N4 --> N0\n    N4 --> N1\n    N4 --> N10\n    N5 --> N0\n    N5 --> N1\n    N5 --> N10\n    N6 --> N0\n    N6 --> N1\n    N6 --> N10\n    N6 --> N8\n    N6 --> N9\n    N7 --> N0\n    N7 --> N1\n    N7 --> N10\n    N8 --> N6\n    N8 --> N0\n    N8 --> N1\n    N8 --> N10\n    N9 --> N6\n    N9 --> N10\n    N9 --> N0\n    N9 --> N1"
+    },
+    {
+      "subsystem_id": "3",
+      "name": "Queryable Projection",
+      "description": "Queryable Projection translates AutoMapper mapping rules into LINQ expression trees that can execute in a query provider, typically producing a Select call for EF or LINQ to SQL. It exists as a separate subsystem because in-memory mapping can already be performed by compiled delegates, but translating to IQueryable requires building expression trees from TypeMaps, rewriting member accesses for null-safety, and avoiding client-side evaluation. The flow starts from Extensions.ProjectTo (src/AutoMapper/QueryableExtensions/Extensions.cs:34), which calls ProjectionBuilder.CreateProjection (src/AutoMapper/QueryableExtensions/ProjectionBuilder.cs:72); CreateProjection uses projection requests and let-property maps to manage subqueries and depth, and NullsafeQueryRewriter (src/AutoMapper/QueryableExtensions/NullsafeQueryRewriter.cs:36) rewrites potentially null chains into conditional expressions. Leaf conversions are delegated to projection mappers such as EnumerableProjectionMapper (src/AutoMapper/QueryableExtensions/ProjectionMappers/EnumerableProjectionMapper.cs:11) and StringProjectionMapper (src/AutoMapper/QueryableExtensions/ProjectionMappers/StringProjectionMapper.cs:7), while ObjectFactory (src/AutoMapper/Execution/ObjectFactory.cs:21) and ProxyGenerator (src/AutoMapper/Execution/ProxyGenerator.cs:20) create constructor and proxy expressions used by the results. LockingConcurrentDictionary (src/AutoMapper/Internal/LockingConcurrentDictionary.cs:4) caches compiled projections. It connects to the Core Mapping Engine via MapperConfiguration, TypeMap, ProfileMap, and MemberMap, and to ExpressionBuilder and TypeMapPlanBuilder for shared expression-building utilities.",
+      "files": [
+        {
+          "path": "src/AutoMapper/Execution/ObjectFactory.cs",
+          "role": "Generates constructor-call and interface-proxy expressions used when creating destination objects. It is invoked by plan and projection builders whenever a new destination instance must be constructed.",
+          "key_symbols": [
+            {
+              "name": "ObjectFactory",
+              "line": 4,
+              "explanation": "Static factory for destination creation expressions."
+            },
+            {
+              "name": "CallConstructor",
+              "line": 21,
+              "explanation": "Builds a new-expression for a destination constructor."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Execution/ProxyGenerator.cs",
+          "role": "Emits runtime proxy types for interface or abstract destination types. This lets AutoMapper map to interfaces without a concrete implementation.",
+          "key_symbols": [
+            {
+              "name": "ProxyGenerator",
+              "line": 5,
+              "explanation": "Generates dynamic proxy types."
+            },
+            {
+              "name": "EmitProxy",
+              "line": 20,
+              "explanation": "Emits a proxy type implementing the requested interface."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/Internal/LockingConcurrentDictionary.cs",
+          "role": "Thread-safe cache used for expensive lookups. It prevents duplicated computation when multiple threads build projections or maps concurrently.",
+          "key_symbols": [
+            {
+              "name": "LockingConcurrentDictionary",
+              "line": 4,
+              "explanation": "Concurrent dictionary with locking GetOrAdd semantics."
+            },
+            {
+              "name": "GetOrAdd",
+              "line": 8,
+              "explanation": "Returns an existing entry or atomically adds a new one."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/QueryableExtensions/NullsafeQueryRewriter.cs",
+          "role": "Rewrites member-access chains in projection expressions into null-conditional-safe expressions. It prevents null-reference exceptions in queries without changing query semantics.",
+          "key_symbols": [
+            {
+              "name": "NullsafeQueryRewriter",
+              "line": 36,
+              "explanation": "Expression visitor that makes member accesses null-safe."
+            },
+            {
+              "name": "VisitMember",
+              "line": 43,
+              "explanation": "Visits member accesses and replaces unsafe chains with conditionals."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/QueryableExtensions/ProjectionBuilder.cs",
+          "role": "Core builder that turns a TypeMap into an IQueryable Select expression. It handles expansion, subqueries, polymorphic maps, and let-property maps.",
+          "key_symbols": [
+            {
+              "name": "ProjectionBuilder",
+              "line": 18,
+              "explanation": "Builds projection expression trees for query providers."
+            },
+            {
+              "name": "CreateProjection",
+              "line": 72,
+              "explanation": "Creates the full projection expression from a type map."
+            },
+            {
+              "name": "GetSubQueryExpression",
+              "line": 263,
+              "explanation": "Builds a sub-query expression for nested projections."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/QueryableExtensions/ProjectionMappers/AssignableProjectionMapper.cs",
+          "role": "Projection leaf mapper used when the destination type is directly assignable from the source. It returns the source expression unchanged.",
+          "key_symbols": [
+            {
+              "name": "AssignableProjectionMapper",
+              "line": 3,
+              "explanation": "Handles direct assignment in projections."
+            },
+            {
+              "name": "Project",
+              "line": 7,
+              "explanation": "Returns the source expression for assignable types."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/QueryableExtensions/ProjectionMappers/EnumProjectionMapper.cs",
+          "role": "Projection leaf mapper for enum-to-enum or string-to-enum conversions. It produces the expression that converts between enum representations.",
+          "key_symbols": [
+            {
+              "name": "EnumProjectionMapper",
+              "line": 3,
+              "explanation": "Handles enum conversions inside projections."
+            },
+            {
+              "name": "Project",
+              "line": 6,
+              "explanation": "Builds the enum conversion expression."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/QueryableExtensions/ProjectionMappers/EnumerableProjectionMapper.cs",
+          "role": "Projection leaf mapper for enumerable-to-enumerable mappings. It builds a Select expression over the source collection.",
+          "key_symbols": [
+            {
+              "name": "EnumerableProjectionMapper",
+              "line": 4,
+              "explanation": "Handles enumerable projections."
+            },
+            {
+              "name": "Project",
+              "line": 11,
+              "explanation": "Builds the projected collection expression."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/QueryableExtensions/ProjectionMappers/NullableSourceProjectionMapper.cs",
+          "role": "Projection leaf mapper for Nullable<T> sources. It unwraps the nullable value or substitutes a default in the query expression.",
+          "key_symbols": [
+            {
+              "name": "NullableSourceProjectionMapper",
+              "line": 3,
+              "explanation": "Handles nullable source values in projections."
+            },
+            {
+              "name": "Project",
+              "line": 5,
+              "explanation": "Builds the conditional expression for a nullable source."
+            }
+          ]
+        },
+        {
+          "path": "src/AutoMapper/QueryableExtensions/ProjectionMappers/StringProjectionMapper.cs",
+          "role": "Projection leaf mapper for string destinations. It emits ToString calls or string conversion expressions.",
+          "key_symbols": [
+            {
+              "name": "StringProjectionMapper",
+              "line": 3,
+              "explanation": "Handles string destinations in projections."
+            },
+            {
+              "name": "Project",
+              "line": 7,
+              "explanation": "Builds the string conversion expression."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/AutoMapper/Execution/ObjectFactory.cs\"]\n    N1[\"src/AutoMapper/Execution/ProxyGenerator.cs\"]\n    N2[\"src/AutoMapper/Internal/LockingConcurrentDictionary.cs\"]\n    N3[\"src/AutoMapper/QueryableExtensions/NullsafeQueryRewriter.cs\"]\n    N4[\"src/AutoMapper/QueryableExtensions/ProjectionBuilder.cs\"]\n    N5[\"src/AutoMapper/QueryableExtensions/ProjectionMappers/AssignableProjectionMapper.cs\"]\n    N6[\"src/AutoMapper/QueryableExtensions/ProjectionMappers/EnumProjectionMapper.cs\"]\n    N7[\"src/AutoMapper/QueryableExtensions/ProjectionMappers/EnumerableProjectionMapper.cs\"]\n    N8[\"src/AutoMapper/QueryableExtensions/ProjectionMappers/NullableSourceProjectionMapper.cs\"]\n    N9[\"src/AutoMapper/QueryableExtensions/ProjectionMappers/StringProjectionMapper.cs\"]\n    N0 --> N2\n    N0 --> N1\n    N1 --> N2\n    N3 --> N2\n    N4 --> N5\n    N4 --> N7\n    N4 --> N8\n    N4 --> N9\n    N4 --> N6\n    N4 --> N2\n    N4 --> N1\n    N4 --> N3\n    N5 --> N4\n    N6 --> N4\n    N7 --> N4\n    N8 --> N4\n    N9 --> N4"
+    },
+    {
+      "subsystem_id": "5",
+      "name": "Licensing Types",
+      "description": "Licensing Types is the smallest subsystem in the repository and defines the ProductType type (src/AutoMapper/Licensing/ProductType.cs:3) that identifies which AutoMapper product edition a license key covers. It exists as a separate unit so the licensing product model is isolated from the mapping engine's core types; changing the set of editions or their public names should not ripple through mapping code. The type flows into the licensing pipeline through LicenseAccessor's initialization and validation (src/AutoMapper/Licensing/LicenseAccessor.cs:29) and LicenseValidator's checks (src/AutoMapper/Licensing/LicenseValidator.cs:21), which decide whether a valid unrestricted license is present before the mapper accepts the configuration. There are no captured related files for this cluster, but the sibling licensing files in src/AutoMapper/Licensing form the enclosing subsystem that consumes this type.",
+      "files": [
+        {
+          "path": "src/AutoMapper/Licensing/ProductType.cs",
+          "role": "Defines the product edition identifiers used by license validation. It is a standalone domain type whose values are interpreted by the license key validation pipeline.",
+          "key_symbols": [
+            {
+              "name": "ProductType",
+              "line": 3,
+              "explanation": "Represents the product editions a license key can be issued for."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/AutoMapper/Licensing/ProductType.cs\"]"
+    },
+    {
+      "subsystem_id": "6",
+      "name": "Benchmark Utilities",
+      "description": "This subsystem provides a dedicated high-resolution timer for benchmarking operations in the repository. It wraps the Windows performance-counter API so callers can measure elapsed time with sub-millisecond precision instead of relying on coarser wall-clock timers. It exists as its own unit because the P/Invoke declarations and the underlying counter plumbing are platform-specific and would otherwise clutter application code; isolating them in one class lets every benchmark share the same measurement path. Control flows from the caller through HiPerfTimer's constructor, which initializes the timing frequency, then Start() captures a starting performance-counter value, and Stop() captures the ending value. The difference between those two samples, combined with the frequency obtained by the constructor, yields the elapsed time. The class declares QueryPerformanceCounter at src/Benchmark/HiPerfTimer.cs:7 and QueryPerformanceFrequency at src/Benchmark/HiPerfTimer.cs:11, and uses them inside HiPerfTimer at src/Benchmark/HiPerfTimer.cs:19, Start at src/Benchmark/HiPerfTimer.cs:32, and Stop at src/Benchmark/HiPerfTimer.cs:41. It has no listed related files, so it currently connects only to whatever benchmark code instantiates HiPerfTimer rather than to another subsystem.",
+      "files": [
+        {
+          "path": "src/Benchmark/HiPerfTimer.cs",
+          "role": "This file defines the high-resolution timer used for measuring benchmarks. It encapsulates the Windows performance-counter API and exposes a minimal Start/Stop interface for callers.",
+          "key_symbols": [
+            {
+              "name": "HiPerfTimer",
+              "line": 5,
+              "explanation": "The public class that wraps the Win32 performance-counter functions and provides high-resolution timing to benchmark code."
+            },
+            {
+              "name": "HiPerfTimer",
+              "line": 19,
+              "explanation": "Constructor that initializes the timer state and obtains the performance-counter frequency used to interpret later counter samples."
+            },
+            {
+              "name": "Start",
+              "line": 32,
+              "explanation": "Captures a starting performance-counter sample; callers invoke it immediately before the code being benchmarked."
+            },
+            {
+              "name": "Stop",
+              "line": 41,
+              "explanation": "Captures an ending performance-counter sample; callers invoke it immediately after the code being benchmarked."
+            },
+            {
+              "name": "QueryPerformanceCounter",
+              "line": 7,
+              "explanation": "P/Invoke declaration for the Win32 function that reads the current high-resolution performance-counter value."
+            },
+            {
+              "name": "QueryPerformanceFrequency",
+              "line": 11,
+              "explanation": "P/Invoke declaration for the Win32 function that supplies how many counter ticks occur per second."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/Benchmark/HiPerfTimer.cs\"]"
+    },
+    {
+      "subsystem_id": "7",
+      "name": "Assembly Metadata",
+      "description": "This subsystem is the assembly metadata declaration for the TestApp project. Its single file contains the CLR attributes that describe the compiled assembly, such as version, title, product, and culture information. It exists as a separate unit because .NET tooling and project templates keep assembly-wide attributes in a dedicated Properties file, which prevents application entry-point code from being mixed with build metadata. There is no runtime control or data flow: the compiler reads the attributes during compilation and embeds them into the assembly manifest. In that sense the flow is build-time metadata from this file directly into TestApp's output, rather than through any function. Because this item's related_files list is empty, it does not call into or get imported by other subsystems; it stands as static input consumed only by the compiler.",
+      "files": [
+        {
+          "path": "src/TestApp/Properties/AssemblyInfo.cs",
+          "role": "This file stores assembly-level metadata attributes for TestApp. It is read by the compiler at build time and does not participate in application runtime behavior.",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/TestApp/Properties/AssemblyInfo.cs\"]"
+    }
+  ],
+  "overview": {
+    "description": "AutoMapper is a .NET object-object mapping library that separates declarative configuration from compiled runtime execution, with the Core Mapping Engine at its center managing profiles, type maps, validation, and the generated mapping delegates. The Mapper Registry supports that engine by supplying built-in object mappers for primitive, collection, enum, nullable, string, and dynamic conversions when no user-defined type map applies. Attribute Configuration offers an alternative configuration style by letting mapping rules be declared as metadata on model types and fed through the same mapping-expression pipeline into generated plans. Queryable Projection extends the system to IQueryable sources by translating mapping rules into expression trees suitable for query providers such as EF. The remaining pieces are peripheral: Licensing Types guards whether the mapper can be used, while Benchmark Utilities and Assembly Metadata exist only for repository tooling and test-app build metadata, not for mapping behavior.",
+    "diagram_mermaid": "flowchart TD\n    C0[\"Core Mapping Engine\"]\n    C1[\"Mapper Registry\"]\n    C2[\"Attribute Configuration\"]\n    C3[\"Queryable Projection\"]\n    C0 --> C1\n    C0 --> C2\n    C0 --> C3\n    C1 --> C0\n    C1 --> C2\n    C1 --> C3\n    C2 --> C0\n    C2 --> C1\n    C3 --> C0\n    C3 --> C1"
+  }
+}

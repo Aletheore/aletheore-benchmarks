@@ -44,31 +44,42 @@ questions) in place of Flask-specific wording:**
 | corpus | language | AIRview | RepoWise | verdict |
 |---|---|---|---|---|
 | flask | Python | 1.88 | 1.99 | tie (noise floor 0.50) |
-| automapper | C# | **0.38** | 2.29 | severe loss - see below, not a model issue |
+| automapper | C# | 0.38 -> **2.08 fixed** | 2.29 / 1.78 | fixed - see below, was never a model issue |
 | axios | JavaScript | **2.28** | 1.61 | clear win (noise floor 0.50) |
 | fmt | C++ | **2.04** | 1.64 | win (noise floor 0.46) |
 | jq | C | 1.93 | 1.76 | tie/lean win (noise floor 0.25) |
 
-**automapper is a real, separate bug, not evidence against the model
-choice.** Investigated directly: automapper's clustering produced **119
-subsystems for 512 files** (3.9 files/subsystem) against axios's 17
-subsystems for 154 files (9.1/subsystem) and flask's 5 for 65 (13.0/subsystem)
-- roughly 2-3x more fragmented than any other corpus measured, on the same
-clustering code every corpus shares. Each retrieval bundle for automapper's
-questions ends up stitching together many tiny, disconnected fragments
-instead of a few substantial ones, which plausibly explains the 72/72
-RepoWise sweep independent of which model wrote the prose - the
-architecture-clustering step over-fragmenting certain codebases (dense
-namespace/generic-heavy C# in this case) is a distinct, unfixed defect
-worth its own investigation, not a data point against deepseek-v4-flash.
+**automapper was a real, separate bug, not evidence against the model
+choice - confirmed by fixing it.** Investigated directly: automapper's
+clustering produced **119 subsystems for 512 files** (3.9 files/subsystem)
+against axios's 17 subsystems for 154 files (9.1/subsystem) and flask's 5
+for 65 (13.0/subsystem) - roughly 2-3x more fragmented than any other
+corpus measured, on the same clustering code every corpus shares. Root
+cause: 420 of 513 dependency-graph nodes (82%) were test files
+(`UnitTests`, `IntegrationTests`, `AutoMapper.DI.Tests`), and
+`build_clusters` had no notion of excluding them before clustering - every
+test file joined a community same as real source.
 
-**Excluding automapper as the confirmed outlier, the remaining 4 corpora
-average AIRview 2.03 vs RepoWise 1.75** across four different languages -
-a real lead, not a toss-up, and considerably stronger than the single-Flask
-tie above suggested on its own. Including automapper drags the average the
-other way (aggregate pref count: Aletheore 161/360, RepoWise 182/360,
-ties 17/360) - that number is real but attributable to one identified bug,
-not representative of the model comparison this benchmark set out to make.
+**Fixed** (Aletheore `fix/clustering-excludes-test-files`, PR #353):
+`build_clusters` now excludes test paths before clustering, the same way
+`search_index.py` already does for retrieval, for the identical reason.
+Confirmed on the real corpus: 119 clusters -> 8, with two substantial real
+subsystems (38 and 30 modules) instead of 119 near-singletons.
+
+**Re-judged after the fix, same RepoWise material, same rubric, same
+questions: AIRview 2.08 vs RepoWise 1.78** - reversed from 0.38 vs 2.29 (a
+72/72 RepoWise sweep) to a 44/72 AIRview lead. The 0.30 gap is inside this
+run's own noise floor (mean spread 0.67), so this isn't a statistically
+airtight win on its own - but going from catastrophic to competitive on
+the identical corpus, questions, and RepoWise material is strong direct
+confirmation that the clustering bug, not the model, was the real cause.
+
+**With automapper's fixed score, all 5 corpora average AIRview 2.04 vs
+RepoWise 1.76** - a real lead across five languages, not a toss-up, and
+considerably stronger than the single-Flask tie above suggested on its
+own. (Before the fix, excluding automapper as a known outlier gave 2.03 vs
+1.75 across the other four - nearly identical, which is itself a good
+sanity check that the fix didn't just move the number by construction.)
 
 Reproduce any corpus with `BENCH_CORPUS=<name>` (resolves via
 `corpora.json`, e.g. `automapper`/`axios`/`fmt`/`jq`) on
