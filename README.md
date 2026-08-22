@@ -422,10 +422,15 @@ Two things this table deliberately does not claim:
   than measuring it. It is in the raw results; it is not counted as a loss for
   RepoWise.
 - **These latencies are not comparable and no speed claim is made here.**
-  RepoWise's search is invoked per query as a CLI process (2.4-4.5 s including
-  interpreter startup); Aletheore's is measured in-process (~72 ms). The honest
-  like-for-like figure, from the flask run, is RepoWise 68 ms against our
-  125 ms in-process — *they are faster*.
+  RepoWise's search invoked per query as a CLI process pays ~2.5-3.5s of
+  Python-import startup on every call (profiled directly — importing
+  `lancedb`, not retrieval), which is real for a CLI user but not what an
+  in-process caller (an MCP server, or the CLI run in a loop) experiences.
+  The like-for-like figure, both measured in-process now (`run_aletheore.py` /
+  `run_repowise_inprocess.py`, current versions): **Aletheore 40.5ms mean
+  against RepoWise's 52.5ms** — *we are faster*, reversed from an earlier
+  125ms-vs-68ms figure. See METHODOLOGY.md's Speed section for the full
+  before/after and what changed.
 
 ## Cost to get to a searchable index
 
@@ -546,19 +551,49 @@ Cost for all 3 validation runs combined, real API pricing: **$0.9229**.
 ## Explaining code — "how does X work?"
 
 Blind LLM judge, 0-3, each question graded twice with the two systems' positions
-swapped, equal 12,000-character context budget, tool names scrubbed.
+swapped, equal 12,000-character context budget, tool names scrubbed, 3 repeats
+per question (repeats added since the original run below — see
+`JUDGE_NOISE.md`: temperature 0 is not determinism, the same bytes judged
+twice have drifted by up to 0.21 in this harness).
+
+Re-measured 2026-08-22 across five languages, current code
+(`writing_adapter_for_airview` in `model_tiers.py` — AIRview's writer is
+deepseek-v4-flash, not the account-wide default), full 12-question
+architecture set per corpus:
+
+| corpus | language | AIRview | RepoWise |
+|---|---|---|---|
+| flask | Python | 1.96 | 1.75 |
+| axios | JavaScript | 2.12 | 1.85 |
+| automapper | C# | 2.08 | 1.78 |
+| fmt | C++ | 1.92 | 1.72 |
+| jq | C | 1.93 | 1.76 |
+| **average** | | **2.00** | **1.77** |
+
+**We lead on average, not decisively.** Most individual per-corpus gaps sit
+inside that corpus's own measured judge-repeat spread, so read this as
+"roughly at parity, leaning ahead" rather than a clean win — the aggregate
+preference count across all 360 judged pairs is more telling: Aletheore
+198 (55.0%), RepoWise 144 (40.0%), tie 18 (5.0%). This reverses the
+original pre-0.8.0 measurement below, on later code and a different
+per-corpus methodology (that run was single-corpus, unrepeated, and
+pre-dates a real fix - `related_symbols`, real citation targets for
+cross-file material - that shipped to production squash-merged under an
+unrelated PR title and sat unmeasured for months). Full history, including
+the automapper clustering bug this re-measurement surfaced and fixed, in
+[`AIRVIEW_GAP.md`](AIRVIEW_GAP.md).
+
+**Original measurement, kept for the record, not the current number:**
 
 | | score | gap | tokens | cost |
 |---|---|---|---|---|
 | AIRview | 2.13 | 0.22 | 114K | ~$0.025 |
 | **RepoWise** | **2.35** | — | 808K | $0.175 |
 
-**RepoWise wins this half.** We sit within roughly 0.2 of them at about one
-seventh the cost, having closed a gap that started at 1.33.
-
-These wiki figures were measured on a pre-0.8.0 build and have **not** been
-re-run on 0.8.11. They are left as measured rather than restated against a
-version they did not come from; only the retrieval table above is 0.8.11.
+Measured on a pre-0.8.0 build, single Flask corpus, one unrepeated judge
+pass. Superseded by the five-corpus table above; left here rather than
+deleted since the retrieval table elsewhere on this page is separately
+versioned to 0.8.11 and this section always noted it wasn't.
 
 ## Answering from a file — fallback vs RepoWise `get_context`
 
@@ -612,8 +647,6 @@ testing surfaced — `ownership <file>` ignores its own argument) in
 
 Stated here rather than in a footnote:
 
-- ⚠️ **RepoWise retrieval is faster in-process** — 68 ms against our 125 ms.
-- ⚠️ **RepoWise's wiki scores higher**, in every configuration tested.
 - ⚠️ **Five of eight corpora score below 35% top-1 under vocabulary-avoiding
   phrasing** — though every one of them recovers 20-47 points when the same
   questions are asked in the project's own terms, so most of that gap is our
