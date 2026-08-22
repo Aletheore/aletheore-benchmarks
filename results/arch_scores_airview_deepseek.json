@@ -1,0 +1,410 @@
+[
+  {
+    "id": "a01",
+    "q": "Explain the overall architecture of this codebase: what are the major layers and how do they relate?",
+    "aletheore": 3.0,
+    "repowise": 1.1666666666666667,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      2,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "It clearly identifies the major subsystems (Core, CLI/Testing, JSON, Views/Helpers, Tests/Examples) with specific file references and explains how they connect to the core request-dispatch and context machinery, fully enabling a specific architectural answer.",
+    "why_r": "It focuses on the irrelevant Config/CI-CD layer and a truncated Application layer, and the codebase map only mentions layer names without explaining the major layers and their relationships."
+  },
+  {
+    "id": "a02",
+    "q": "How does a request flow through the system from the WSGI entry point to a returned response?",
+    "aletheore": 3.0,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "It directly outlines the WSGI entry point and the full request pipeline (contexts, dispatch, finalize, process_response, teardown) with specific function references.",
+    "why_r": "It focuses on request/response wrapper details and an unrelated test WSGI module, without explaining the actual flow from WSGI entry to response."
+  },
+  {
+    "id": "a03",
+    "q": "Why is there a 'sansio' package, and what design problem does splitting it out solve?",
+    "aletheore": 2.0,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      2,
+      2,
+      3,
+      2,
+      1,
+      2
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "It notes the sansio App is independent of WSGI and the Flask subclass adds server-specific behavior, but only briefly mentions testability and lacks a detailed explanation of the sans-I/O design seam.",
+    "why_r": "It explicitly describes the sans-I/O split, listing what lives in App versus the WSGI-specific Flask subclass and highlighting the NotImplementedError seam, which fully equips an engineer to answer the question."
+  },
+  {
+    "id": "a04",
+    "q": "How does the framework keep per-request state isolated when several requests are handled concurrently?",
+    "aletheore": 2.8333333333333335,
+    "repowise": 1.0,
+    "aletheore_raw": [
+      3,
+      2,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repowise_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Describes the thread-local proxies and the push/pop of request/app contexts, giving the engineer the essential mechanism for per-request isolation.",
+    "why_r": "Contains only tangential references to context resolution and teardown, lacking the core thread-local/context-stack mechanism needed to answer concurrency isolation."
+  },
+  {
+    "id": "a05",
+    "q": "What is the extension model \u2014 how do third-party packages hook into the framework's lifecycle?",
+    "aletheore": 1.8333333333333333,
+    "repowise": 0.5,
+    "aletheore_raw": [
+      2,
+      2,
+      1,
+      3,
+      2,
+      1
+    ],
+    "repowise_raw": [
+      0,
+      1,
+      0,
+      1,
+      1,
+      0
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Provides core lifecycle hook registration methods (before_request, teardown_request, errorhandler, etc.) but misses the standard extension pattern of init_app/app.extensions.",
+    "why_r": "Focuses on request/response wrapper customization and a tutorial blueprint, with no explanation of lifecycle hooks for third-party extensions."
+  },
+  {
+    "id": "a06",
+    "q": "How is configuration layered, and what is the order of precedence between the different sources?",
+    "aletheore": 1.1666666666666667,
+    "repowise": 0.0,
+    "aletheore_raw": [
+      2,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore",
+      "aletheore"
+    ],
+    "why_a": "Covers the main config sources and loading methods, but does not explicitly state the precedence order.",
+    "why_r": "Describes repository-level development/CI configuration, not Flask application config precedence."
+  },
+  {
+    "id": "a07",
+    "q": "Describe the error handling strategy: how do exceptions become HTTP responses, and where can users intervene?",
+    "aletheore": 1.5,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      3,
+      2,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 1.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "tie",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Lists relevant functions and tests but lacks a coherent explanation of the exception-to-response flow or user intervention points.",
+    "why_r": "Provides a detailed, behavior-focused explanation of error handler registration, resolution, scoping, and wrapping, enabling a specific answer."
+  },
+  {
+    "id": "a08",
+    "q": "How does the templating integration work, and how does it stay aware of modular components?",
+    "aletheore": 2.1666666666666665,
+    "repowise": 2.5,
+    "aletheore_raw": [
+      2,
+      3,
+      3,
+      1,
+      2,
+      2
+    ],
+    "repowise_raw": [
+      3,
+      2,
+      2,
+      2,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "repowise",
+      "aletheore",
+      "aletheore",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Lists the key source functions for templating and blueprint-aware loaders, but relies on terse one-line descriptions that omit behavioral specifics like dispatch order or context injection details.",
+    "why_r": "Provides detailed test-level behavior for rendering, context processors, autoescaping, and blueprint loader dispatch, along with a clear overview of the blueprint-aware environment, enabling a specific and correct answer."
+  },
+  {
+    "id": "a09",
+    "q": "What is the session architecture, and what are the security trade-offs of the default implementation?",
+    "aletheore": 1.0,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Provides only a list of function names and high-level subsystem context, lacking the detailed mechanics and security implications needed to write a specific answer.",
+    "why_r": "Thoroughly explains the session architecture, including the signing and timestamping mechanisms, null session behavior, and configurable cookie attributes, enabling an engineer to articulate the security trade-offs (e.g., client-side visibility, tamper detection, secret key reliance)."
+  },
+  {
+    "id": "a10",
+    "q": "How does the CLI discover and load the application, and why is it designed that way?",
+    "aletheore": 1.3333333333333333,
+    "repowise": 3.0,
+    "aletheore_raw": [
+      3,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "repeats": 3,
+    "spread": 1.0,
+    "pref": [
+      "tie",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "The material comprehensively covers the CLI's app discovery functions (locate_app, find_best_app, ScriptInfo.load_app) and explicitly states the design separation, enough for a competent engineer to write a specific answer.",
+    "why_r": "The material provides a detailed walkthrough and exact heuristics for app discovery and loading, along with an explicit design rationale, fully enabling an accurate answer."
+  },
+  {
+    "id": "a11",
+    "q": "How does the framework support async view functions on top of a synchronous WSGI core?",
+    "aletheore": 1.6666666666666667,
+    "repowise": 2.8333333333333335,
+    "aletheore_raw": [
+      2,
+      1,
+      2,
+      1,
+      2,
+      2
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      2
+    ],
+    "repeats": 3,
+    "spread": 0.5,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Provides the key async_to_sync wrapper and WSGI pipeline location but omits the optional asgiref dependency and lazy-import mechanism, leaving a minor gap.",
+    "why_r": "Explicitly details wrapping coroutine functions with asgiref.sync.async_to_sync, the optional lazy dependency, and WSGI/sans-IO separation, fully enabling a correct specific answer."
+  },
+  {
+    "id": "a12",
+    "q": "What are the main extension points for grouping and reusing sets of routes across projects?",
+    "aletheore": 1.0,
+    "repowise": 2.8333333333333335,
+    "aletheore_raw": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "repowise_raw": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      2
+    ],
+    "repeats": 3,
+    "spread": 0.0,
+    "pref": [
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise",
+      "repowise"
+    ],
+    "why_a": "Material is fragmented index referencing blueprints and scaffold but lacks a clear, direct explanation of how to group and reuse routes, so major gaps remain.",
+    "why_r": "Provides a concrete Blueprint-based route module example and registration instructions, directly enabling a correct answer about the main extension point for grouping/reusing routes."
+  }
+]

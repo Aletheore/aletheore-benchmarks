@@ -88,3 +88,13 @@ The RepoWise half needs an LLM key in `$BENCH_ENV_FILE` and — importantly —
 `REPOWISE_EMBEDDER=ollama`. Without it, `repowise search --mode semantic`
 silently degrades to full-text and you will benchmark the wrong thing. See
 METHODOLOGY.md; that defect invalidated our own first run.
+
+**Speed (in-process figures):** `python3 scripts/run_aletheore.py` and
+`python3 scripts/run_repowise_inprocess.py` (the latter needs RepoWise's own
+Python — the interpreter its console-script shebang points at, not
+whichever `python3` is first on `$PATH`) reproduce the "in-process" row of
+METHODOLOGY.md's Speed table. Both pin `allow_hosted=False`/force the local
+Ollama embedder explicitly, so the result is deterministic regardless of
+whether the machine running them happens to have a saved hosted credential
+— see METHODOLOGY.md's Speed section for why that pin exists and what it
+was silently masking before it did.

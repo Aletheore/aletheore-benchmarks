@@ -1,5 +1,51 @@
 # Why AIRview loses the comprehension benchmark
 
+**UPDATE 2026-08-22 — this title is now stale for the shipped product.** The
+fix this document's own "Cause 2" section calls for (`related_symbols`, real
+citation targets for cross-file material) was written, measured to work, and
+**shipped to production** — landed in commit `a2cac8a`, squash-merged under
+an unrelated PR title (`#246`, an app-server Docker fix), which is why it
+went unnoticed and this document was never updated. `AIRVIEW_PROMPT_VERSION
+= "5"` on current master confirms it.
+
+Re-run today against current master (deepseek-v4-flash writer, full
+12-question architecture set, 3 judge repeats per question - see
+`REPEATS`/`spread` in `judge_arch_arm.py`, not the single-pass measurement
+below): **AIRview 1.88 vs RepoWise 1.99** - a 0.11 gap, smaller than the
+judge's own measured noise floor on this run (mean spread 0.50, max 1.50).
+That is a statistical tie, not a loss. Reproduce with:
+
+```bash
+python3 scripts/build_repowise_arch_context.py                       # RepoWise side (once)
+AIRVIEW_MODEL=deepseek-v4-flash BENCH_AIRVIEW_FILE=airview_deepseek.json \
+  python3 scripts/build_airview.py
+BENCH_AIRVIEW_FILE=airview_deepseek.json BENCH_AIRVIEW_ARM=airview_deepseek \
+  python3 scripts/build_airview_ctx3.py
+ARM=airview_deepseek BENCH_REPO=Flask python3 scripts/judge_arch_arm.py
+```
+
+Also measured today, same corpus and rubric, AIRview written by
+`gpt-5.6-luna` (production's actual primary model, per
+`github-app/scan_worker/model_tiers.py`) instead of deepseek-v4-flash:
+**AIRview 1.53 vs RepoWise 2.08** - a 0.55 gap, well outside that run's own
+noise floor (mean spread 0.33, max 1.00). Luna wrote AIRview pages that lost
+to RepoWise more decisively than deepseek-v4-flash did on the same
+questions, same day, same corpus - the opposite of what generated Luna's
+own case for being the primary model on every other surface (real-world
+coding/PR-review benchmarks). Not yet root-caused; noted here rather than
+silently discarded. Swap `AIRVIEW_MODEL=deepseek-v4-flash` for
+`AIRVIEW_MODEL=gpt-5.6-luna` and `airview_deepseek` for `airview_luna`
+throughout the commands above to reproduce.
+
+Everything below this point is the original analysis that led to the fix
+above - kept for the reasoning, not as the current number. The README's
+"2.13 vs 2.35" figure is a different, later-stage number that predates
+today's re-verification and should not be read as reconciled with either
+of the above; re-deriving it hits the same single-run/no-repeats
+limitation "Cause 2"'s own original measurement had, addressed below.
+
+---
+
 AIRview scores **1.21 / 3** on architecture questions; RepoWise scores **2.54**.
 Our own raw code chunks score **1.67** — AIRview is worse than shipping no docs at
 all and just retrieving source.

@@ -13,7 +13,13 @@ BUDGET = 12000
 OLLAMA = "http://localhost:11434/api/embed"
 MODEL = "nomic-embed-text"
 
-av = json.load(open(os.path.join(_bench.OUT,"airview.json")))
+# Both env vars mirror build_airview.py's own BENCH_AIRVIEW_FILE, so a
+# deepseek run and a luna run can be built and scored side by side instead
+# of one clobbering the other's arch_context2.json key.
+AIRVIEW_FILE = os.environ.get("BENCH_AIRVIEW_FILE", "airview.json")
+ARM = os.environ.get("BENCH_AIRVIEW_ARM", "airview_full")
+
+av = json.load(open(os.path.join(_bench.OUT, AIRVIEW_FILE)))
 ovd = av["overview"].get("description", "")
 
 units = [f"# Repository overview\n{ovd}"]
@@ -54,8 +60,8 @@ for c, qv in zip(base, qvecs):
         if len(buf) >= BUDGET:
             break
         buf += units[i][: BUDGET - len(buf)] + "\n\n"
-    c["airview_full"] = buf[:BUDGET]
+    c[ARM] = buf[:BUDGET]
     out.append(c)
-    print(c["id"], len(c["airview_full"]))
+    print(c["id"], len(c[ARM]))
 
 json.dump(out, open(os.path.join(_bench.OUT,"arch_context2.json"), "w"), indent=2)

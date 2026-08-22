@@ -1,0 +1,1334 @@
+{
+  "subsystems": [
+    {
+      "subsystem_id": "0",
+      "name": "Application Testing",
+      "description": "Application Testing exercises Flask applications, request handling, blueprints, configuration, CLI behavior, templating, signals, sessions, and typing contracts through example applications and test suites. It exists as a separate unit to provide executable compatibility coverage across both small example projects and the framework\u2019s integration boundaries, catching regressions that isolated unit tests would miss. The flow starts with application fixtures such as `fixture_app`, `client`, and `app`, proceeds through test requests and CLI invocations, and is asserted by tests including `test_index`, `test_add`, `test_request_processing`, and `test_blueprint_specific_error_handling`. It connects to the neighboring Application Core, CLI And Testing, JSON Handling, and Views And Helpers subsystems through `src/flask/app.py`, `src/flask/cli.py`, `src/flask/json/__init__.py`, `src/flask/templating.py`, and `src/flask/views.py`.",
+      "files": [
+        {
+          "path": "examples/javascript/js_example/__init__.py",
+          "role": "Defines the JavaScript example application object used as a compact integration target. Its `app` value is imported by the example views and tests.",
+          "key_symbols": [
+            {
+              "name": "app",
+              "line": 3,
+              "explanation": "Creates the example Flask application at module import time."
+            }
+          ]
+        },
+        {
+          "path": "examples/javascript/js_example/views.py",
+          "role": "Contains the example endpoints used to demonstrate and test application behavior. The view functions provide the request targets exercised by the JavaScript example tests.",
+          "key_symbols": [
+            {
+              "name": "index",
+              "line": 10,
+              "explanation": "Handles the example index route when a test client requests it."
+            },
+            {
+              "name": "add",
+              "line": 15,
+              "explanation": "Handles the addition endpoint and returns the calculated result during tests."
+            }
+          ]
+        },
+        {
+          "path": "examples/javascript/tests/conftest.py",
+          "role": "Provides pytest fixtures for constructing the example application and its test client. It centralizes setup so individual tests focus on endpoint behavior.",
+          "key_symbols": [
+            {
+              "name": "fixture_app",
+              "line": 7,
+              "explanation": "Builds or exposes the application fixture before dependent tests run."
+            },
+            {
+              "name": "client",
+              "line": 14,
+              "explanation": "Creates a client bound to the fixture application for HTTP-style tests."
+            }
+          ]
+        },
+        {
+          "path": "examples/javascript/tests/test_js_example.py",
+          "role": "Verifies the example application\u2019s index and addition behavior. It is the consumer-facing test layer for the example package.",
+          "key_symbols": [
+            {
+              "name": "test_index",
+              "line": 14,
+              "explanation": "Requests the index endpoint and checks its response."
+            },
+            {
+              "name": "test_add",
+              "line": 25,
+              "explanation": "Exercises the addition endpoint and validates the returned value."
+            },
+            {
+              "name": "check",
+              "line": 15,
+              "explanation": "Performs the shared assertion used while checking the example response."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/__init__.py",
+          "role": "Exports the public Flask package API used by application and test code. It is the import boundary through which fixtures and examples obtain framework objects.",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/conftest.py",
+          "role": "Defines repository-wide fixtures and cleanup utilities for application, context, module, and environment isolation. These fixtures make the broad integration suite repeatable and prevent state leakage between tests.",
+          "key_symbols": [
+            {
+              "name": "app",
+              "line": 28,
+              "explanation": "Creates the default application fixture for framework tests."
+            },
+            {
+              "name": "client",
+              "line": 50,
+              "explanation": "Provides a test client backed by the application fixture."
+            },
+            {
+              "name": "leak_detector",
+              "line": 68,
+              "explanation": "Checks for leaked state after tests complete."
+            },
+            {
+              "name": "test_apps",
+              "line": 55,
+              "explanation": "Supplies paths or metadata for reusable test applications."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_apps/blueprintapp/__init__.py",
+          "role": "Defines the application used by blueprint integration tests. Its application object is configured with the admin and frontend blueprint packages.",
+          "key_symbols": [
+            {
+              "name": "app",
+              "line": 3,
+              "explanation": "Initializes the blueprint test application when imported."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_apps/blueprintapp/apps/admin/__init__.py",
+          "role": "Implements the administrative blueprint and its routes. It supplies nested or blueprint-specific endpoint behavior for integration tests.",
+          "key_symbols": [
+            {
+              "name": "admin",
+              "line": 4,
+              "explanation": "Declares the admin blueprint."
+            },
+            {
+              "name": "index",
+              "line": 14,
+              "explanation": "Handles the primary admin endpoint."
+            },
+            {
+              "name": "index2",
+              "line": 19,
+              "explanation": "Handles the secondary admin endpoint."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_apps/blueprintapp/apps/frontend/__init__.py",
+          "role": "Implements the frontend blueprint used to test template and error behavior. Its routes represent a separate application area from the admin package.",
+          "key_symbols": [
+            {
+              "name": "frontend",
+              "line": 4,
+              "explanation": "Declares the frontend blueprint."
+            },
+            {
+              "name": "index",
+              "line": 8,
+              "explanation": "Handles the frontend index route."
+            },
+            {
+              "name": "missing_template",
+              "line": 13,
+              "explanation": "Triggers the missing-template path used by error tests."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_apps/cliapp/app.py",
+          "role": "Defines a simple CLI test application used when discovery targets a module-level object.",
+          "key_symbols": [
+            {
+              "name": "testapp",
+              "line": 3,
+              "explanation": "Provides the application object discovered by CLI tests."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_apps/cliapp/factory.py",
+          "role": "Provides application-factory variants for CLI discovery tests. The functions cover successful, alternate, and unsuccessful factory loading paths.",
+          "key_symbols": [
+            {
+              "name": "create_app",
+              "line": 4,
+              "explanation": "Returns the standard CLI-discoverable application."
+            },
+            {
+              "name": "create_app2",
+              "line": 8,
+              "explanation": "Returns an alternate application factory result."
+            },
+            {
+              "name": "no_app",
+              "line": 12,
+              "explanation": "Represents a factory path that does not provide an application."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_apps/cliapp/importerrorapp.py",
+          "role": "Provides a deliberately problematic CLI application module. It supports tests for import errors during application discovery.",
+          "key_symbols": [
+            {
+              "name": "testapp",
+              "line": 5,
+              "explanation": "Defines the candidate application reached before the import-error scenario is asserted."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_apps/cliapp/inner1/__init__.py",
+          "role": "Supplies a nested application object for dotted import-path discovery tests.",
+          "key_symbols": [
+            {
+              "name": "application",
+              "line": 3,
+              "explanation": "Defines the nested application candidate."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_apps/cliapp/inner1/inner2/flask.py",
+          "role": "Provides a module named `flask` inside a nested test package to exercise import resolution edge cases.",
+          "key_symbols": [
+            {
+              "name": "app",
+              "line": 3,
+              "explanation": "Defines the nested candidate application."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_apps/cliapp/multiapp.py",
+          "role": "Contains multiple application objects for CLI selection and ambiguity tests.",
+          "key_symbols": [
+            {
+              "name": "app1",
+              "line": 3,
+              "explanation": "Defines the first discoverable application."
+            },
+            {
+              "name": "app2",
+              "line": 4,
+              "explanation": "Defines the second discoverable application."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_apps/helloworld/hello.py",
+          "role": "Implements the minimal hello-world application used by discovery and request tests.",
+          "key_symbols": [
+            {
+              "name": "app",
+              "line": 3,
+              "explanation": "Creates the hello-world application."
+            },
+            {
+              "name": "hello",
+              "line": 7,
+              "explanation": "Handles the hello-world route."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_apps/subdomaintestmodule/__init__.py",
+          "role": "Defines an application module for subdomain routing tests.",
+          "key_symbols": [
+            {
+              "name": "mod",
+              "line": 3,
+              "explanation": "Provides the subdomain test application object."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_blueprints.py",
+          "role": "Covers blueprint registration, nesting, routing, templates, processors, and error handling. It validates how blueprint-local behavior integrates with the application dispatcher.",
+          "key_symbols": [
+            {
+              "name": "test_nested_blueprint",
+              "line": 862,
+              "explanation": "Checks registration and routing of nested blueprints."
+            },
+            {
+              "name": "test_context_processing",
+              "line": 670,
+              "explanation": "Verifies blueprint and application context processors."
+            },
+            {
+              "name": "test_blueprint_specific_error_handling",
+              "line": 7,
+              "explanation": "Checks blueprint-scoped exception handling."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_cli.py",
+          "role": "Exercises application discovery, command groups, dotenv handling, routes, server options, and CLI contexts. It verifies the command-line neighbor of application execution.",
+          "key_symbols": [
+            {
+              "name": "test_find_best_app",
+              "line": 47,
+              "explanation": "Checks selection of the best application candidate."
+            },
+            {
+              "name": "test_cli_blueprints",
+              "line": 649,
+              "explanation": "Verifies CLI route visibility for blueprints."
+            },
+            {
+              "name": "test_scriptinfo",
+              "line": 246,
+              "explanation": "Checks lazy CLI application loading metadata."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_config.py",
+          "role": "Tests configuration loading from objects, files, mappings, and environment variables. It establishes expected configuration behavior for application fixtures.",
+          "key_symbols": [
+            {
+              "name": "test_from_prefixed_env",
+              "line": 48,
+              "explanation": "Checks loading configuration from prefixed environment variables."
+            },
+            {
+              "name": "test_config_from_file_json",
+              "line": 31,
+              "explanation": "Checks JSON configuration-file loading."
+            },
+            {
+              "name": "test_get_namespace",
+              "line": 217,
+              "explanation": "Checks extraction of a namespaced configuration view."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_converters.py",
+          "role": "Tests custom URL converters and their access to request context. It validates the routing extension points used by application tests.",
+          "key_symbols": [
+            {
+              "name": "test_custom_converters",
+              "line": 8,
+              "explanation": "Registers and exercises a custom converter."
+            },
+            {
+              "name": "ListConverter",
+              "line": 9,
+              "explanation": "Converts list-shaped route values to and from URLs."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_instance_config.py",
+          "role": "Checks instance-path calculation across installed and uninstalled package layouts. These tests protect application resource and configuration discovery.",
+          "key_symbols": [
+            {
+              "name": "test_explicit_instance_paths",
+              "line": 8,
+              "explanation": "Checks explicitly supplied instance paths."
+            },
+            {
+              "name": "create_namespace",
+              "line": 47,
+              "explanation": "Creates a temporary package namespace for path tests."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_regression.py",
+          "role": "Contains focused regression coverage for aborting and exception handling.",
+          "key_symbols": [
+            {
+              "name": "test_aborting",
+              "line": 4,
+              "explanation": "Reproduces and verifies the aborting regression scenario."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_signals.py",
+          "role": "Verifies request, application-context, template, flash, and teardown signals. It checks event ordering and payload propagation across the request lifecycle.",
+          "key_symbols": [
+            {
+              "name": "test_request_signals",
+              "line": 50,
+              "explanation": "Checks request-start, finish, and teardown signal behavior."
+            },
+            {
+              "name": "test_template_rendered",
+              "line": 4,
+              "explanation": "Checks the template-rendered signal."
+            },
+            {
+              "name": "test_appcontext_signals",
+              "line": 115,
+              "explanation": "Checks application-context push and pop notifications."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_subclassing.py",
+          "role": "Ensures Flask subclasses can customize exception logging without breaking dispatch.",
+          "key_symbols": [
+            {
+              "name": "test_suppressed_exception_logging",
+              "line": 6,
+              "explanation": "Checks logging behavior for a customized Flask subclass."
+            },
+            {
+              "name": "SuppressedFlask",
+              "line": 7,
+              "explanation": "Defines the subclass under test."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_templating.py",
+          "role": "Tests rendering, streaming, escaping, loaders, auto-reload, and template extensions. It validates the templating portion of application integration.",
+          "key_symbols": [
+            {
+              "name": "test_context_processing",
+              "line": 11,
+              "explanation": "Checks context injection during template rendering."
+            },
+            {
+              "name": "test_custom_template_loader",
+              "line": 405,
+              "explanation": "Checks integration with a custom loader."
+            },
+            {
+              "name": "test_templates_auto_reload",
+              "line": 443,
+              "explanation": "Checks template reload behavior."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_user_error_handler.py",
+          "role": "Covers class- and code-based error handlers, inheritance, blueprints, and generic exceptions.",
+          "key_symbols": [
+            {
+              "name": "test_error_handler_no_match",
+              "line": 10,
+              "explanation": "Checks behavior when no registered handler matches."
+            },
+            {
+              "name": "TestGenericHandlers",
+              "line": 217,
+              "explanation": "Groups tests for generic exception handler behavior."
+            }
+          ]
+        },
+        {
+          "path": "tests/type_check/typing_app_decorators.py",
+          "role": "Checks typing of synchronous and asynchronous application decorators.",
+          "key_symbols": [
+            {
+              "name": "app",
+              "line": 6,
+              "explanation": "Provides the typed application used by decorator examples."
+            },
+            {
+              "name": "before_async",
+              "line": 24,
+              "explanation": "Exercises the asynchronous before-request decorator type."
+            }
+          ]
+        },
+        {
+          "path": "tests/type_check/typing_error_handler.py",
+          "role": "Checks static typing for HTTP, custom, base-class, and multiple error handlers.",
+          "key_symbols": [
+            {
+              "name": "app",
+              "line": 10,
+              "explanation": "Provides the typed application for handler registrations."
+            },
+            {
+              "name": "handle_400",
+              "line": 16,
+              "explanation": "Exercises the typed HTTP 400 handler signature."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"examples/javascript/js_example/__init__.py\"]\n    N1[\"examples/javascript/js_example/views.py\"]\n    N2[\"examples/javascript/tests/conftest.py\"]\n    N3[\"examples/javascript/tests/test_js_example.py\"]\n    N4[\"src/flask/__init__.py\"]\n    N5[\"tests/conftest.py\"]\n    N6[\"tests/test_apps/blueprintapp/__init__.py\"]\n    N7[\"tests/test_apps/blueprintapp/apps/admin/__init__.py\"]\n    N8[\"tests/test_apps/blueprintapp/apps/frontend/__init__.py\"]\n    N9[\"tests/test_apps/cliapp/app.py\"]\n    N10[\"tests/test_apps/cliapp/factory.py\"]\n    N11[\"tests/test_apps/cliapp/importerrorapp.py\"]\n    N12[\"tests/test_apps/cliapp/inner1/__init__.py\"]\n    N13[\"tests/test_apps/cliapp/inner1/inner2/flask.py\"]\n    N14[\"tests/test_apps/cliapp/multiapp.py\"]\n    N15[\"tests/test_apps/helloworld/hello.py\"]\n    N16[\"tests/test_apps/subdomaintestmodule/__init__.py\"]\n    N17[\"tests/test_blueprints.py\"]\n    N18[\"tests/test_cli.py\"]\n    N19[\"tests/test_config.py\"]\n    N20[\"tests/test_converters.py\"]\n    N21[\"tests/test_instance_config.py\"]\n    N22[\"tests/test_regression.py\"]\n    N23[\"tests/test_signals.py\"]\n    N24[\"tests/test_subclassing.py\"]\n    N25[\"tests/test_templating.py\"]\n    N26[\"tests/test_user_error_handler.py\"]\n    N27[\"tests/type_check/typing_app_decorators.py\"]\n    N28[\"tests/type_check/typing_error_handler.py\"]\n    N0 --> N4\n    N0 --> N1\n    N1 --> N4\n    N1 --> N0\n    N2 --> N0\n    N3 --> N4\n    N5 --> N4\n    N6 --> N4\n    N6 --> N7\n    N6 --> N8\n    N7 --> N4\n    N8 --> N4\n    N9 --> N4\n    N10 --> N4\n    N11 --> N4\n    N12 --> N4\n    N13 --> N4\n    N14 --> N4\n    N15 --> N4\n    N16 --> N4\n    N17 --> N4\n    N17 --> N6\n    N18 --> N4\n    N18 --> N9\n    N19 --> N4\n    N20 --> N4\n    N21 --> N4\n    N22 --> N4\n    N23 --> N4\n    N24 --> N4\n    N25 --> N4\n    N25 --> N6\n    N26 --> N4\n    N27 --> N4\n    N28 --> N4"
+    },
+    {
+      "subsystem_id": "1",
+      "name": "Application Core",
+      "description": "Application Core is the central runtime of Flask: it owns application construction, routing, request dispatch, response finalization, contexts, errors, configuration, sessions, templates, and WSGI entry. It exists separately to concentrate lifecycle orchestration in one framework boundary while allowing reusable sans-I/O scaffolding, blueprints, wrappers, and services to remain independently testable and replaceable. A request enters through `wsgi_app`, is matched and processed by `full_dispatch_request`, `preprocess_request`, `dispatch_request`, and `finalize_request`, while `Flask` delegates configuration, context, template, session, and response concerns to symbols such as `Config`, `AppContext`, `DispatchingJinjaLoader`, `SessionInterface`, and `Response`. It connects to CLI and testing through `src/flask/cli.py` and `src/flask/testing.py`, to JSON through `src/flask/json/provider.py`, and to neighboring routing, context, helper, signal, templating, session, and wrapper modules listed in the related files.",
+      "files": [
+        {
+          "path": "src/flask/app.py",
+          "role": "Implements the concrete Flask application and its full request, response, error, context, resource, and server lifecycle. It is the primary integration point that combines the lower-level sans-I/O application with WSGI and Flask-specific services.",
+          "key_symbols": [
+            {
+              "name": "Flask",
+              "line": 110,
+              "explanation": "Defines the concrete application class and its configuration and lifecycle state."
+            },
+            {
+              "name": "wsgi_app",
+              "line": 1569,
+              "explanation": "Receives WSGI requests, establishes contexts, dispatches them, and performs teardown."
+            },
+            {
+              "name": "full_dispatch_request",
+              "line": 995,
+              "explanation": "Runs preprocessing, request dispatch, error handling, and response finalization."
+            },
+            {
+              "name": "dispatch_request",
+              "line": 969,
+              "explanation": "Invokes the endpoint selected by URL matching."
+            },
+            {
+              "name": "make_response",
+              "line": 1227,
+              "explanation": "Normalizes view return values into a Flask response."
+            },
+            {
+              "name": "handle_exception",
+              "line": 900,
+              "explanation": "Converts unhandled exceptions into logged and dispatched responses."
+            },
+            {
+              "name": "url_for",
+              "line": 1105,
+              "explanation": "Builds URLs using the active application and request context."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/blueprints.py",
+          "role": "Provides Flask-specific blueprint resource and static-file behavior on top of blueprint registration. It lets modular applications expose package-relative resources without becoming full applications.",
+          "key_symbols": [
+            {
+              "name": "Blueprint",
+              "line": 18,
+              "explanation": "Defines the Flask blueprint facade used to package routes and resources."
+            },
+            {
+              "name": "__init__",
+              "line": 19,
+              "explanation": "Initializes blueprint metadata, resource paths, and static/template configuration."
+            },
+            {
+              "name": "open_resource",
+              "line": 104,
+              "explanation": "Opens a resource relative to the blueprint package."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/config.py",
+          "role": "Implements application configuration storage and loading adapters. It isolates configuration-source formats and attribute access from the application lifecycle.",
+          "key_symbols": [
+            {
+              "name": "Config",
+              "line": 50,
+              "explanation": "Stores configuration values and provides loading and namespace operations."
+            },
+            {
+              "name": "from_prefixed_env",
+              "line": 126,
+              "explanation": "Loads configuration values from prefixed environment variables."
+            },
+            {
+              "name": "from_file",
+              "line": 256,
+              "explanation": "Loads configuration using a caller-provided file loader."
+            },
+            {
+              "name": "get_namespace",
+              "line": 323,
+              "explanation": "Returns a filtered namespace of configuration keys."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/ctx.py",
+          "role": "Owns application and request context objects plus context-local access and lifecycle management. It provides the scoped state required by globals, sessions, URL generation, and teardown callbacks.",
+          "key_symbols": [
+            {
+              "name": "AppContext",
+              "line": 260,
+              "explanation": "Represents an active application context and its context-local globals."
+            },
+            {
+              "name": "push",
+              "line": 416,
+              "explanation": "Binds an application context for the current execution flow."
+            },
+            {
+              "name": "pop",
+              "line": 446,
+              "explanation": "Unbinds the context and runs teardown behavior."
+            },
+            {
+              "name": "copy_current_request_context",
+              "line": 154,
+              "explanation": "Captures the current request context for deferred execution."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/debughelpers.py",
+          "role": "Contains diagnostic exceptions and helpers for routing, form encoding, and template loading failures. It keeps developer-facing explanations out of the core dispatch implementation.",
+          "key_symbols": [
+            {
+              "name": "explain_template_loading_attempts",
+              "line": 124,
+              "explanation": "Builds a detailed explanation of template loader attempts when lookup fails."
+            },
+            {
+              "name": "DebugFilesKeyError",
+              "line": 23,
+              "explanation": "Provides a debug-friendly key error for file-serving failures."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/globals.py",
+          "role": "Exports context-local proxies such as `current_app`, `request`, `session`, and `g`. These proxies provide the public global access surface while deferring storage to context management.",
+          "key_symbols": [
+            {
+              "name": "current_app",
+              "line": 44,
+              "explanation": "Resolves the application associated with the active app context."
+            },
+            {
+              "name": "request",
+              "line": 57,
+              "explanation": "Resolves the active request object."
+            },
+            {
+              "name": "session",
+              "line": 60,
+              "explanation": "Resolves the active session object."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/helpers.py",
+          "role": "Provides public convenience APIs for responses, URLs, redirects, flashing, file sending, streaming, and environment behavior. It keeps common application-facing operations independent from the main application class.",
+          "key_symbols": [
+            {
+              "name": "make_response",
+              "line": 151,
+              "explanation": "Creates a response using the current application when needed."
+            },
+            {
+              "name": "url_for",
+              "line": 200,
+              "explanation": "Builds an application URL from endpoint and values."
+            },
+            {
+              "name": "send_file",
+              "line": 417,
+              "explanation": "Creates a response that serves file content."
+            },
+            {
+              "name": "stream_with_context",
+              "line": 63,
+              "explanation": "Keeps request context active while a generator streams data."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/logging.py",
+          "role": "Configures Flask\u2019s logger and WSGI error stream behavior. It supplies the logging policy used when the application reports exceptions.",
+          "key_symbols": [
+            {
+              "name": "create_logger",
+              "line": 58,
+              "explanation": "Creates and configures the application logger."
+            },
+            {
+              "name": "has_level_handler",
+              "line": 31,
+              "explanation": "Checks whether a logger already has a suitable level handler."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/sansio/app.py",
+          "role": "Defines the reusable, protocol-independent application base for configuration, routing registration, templates, processors, handlers, and blueprints. The concrete Flask class extends this layer with request and WSGI behavior.",
+          "key_symbols": [
+            {
+              "name": "App",
+              "line": 59,
+              "explanation": "Provides the core application state and registration APIs."
+            },
+            {
+              "name": "add_url_rule",
+              "line": 605,
+              "explanation": "Adds a route rule and associates it with a view endpoint."
+            },
+            {
+              "name": "register_blueprint",
+              "line": 570,
+              "explanation": "Registers a blueprint and applies its deferred setup operations."
+            },
+            {
+              "name": "template_filter",
+              "line": 670,
+              "explanation": "Registers a Jinja template filter on the application."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/sansio/blueprints.py",
+          "role": "Implements protocol-independent blueprint declaration and deferred registration. It records routes, callbacks, processors, handlers, and nested blueprints until an application registers the blueprint.",
+          "key_symbols": [
+            {
+              "name": "Blueprint",
+              "line": 119,
+              "explanation": "Defines the reusable blueprint declaration object."
+            },
+            {
+              "name": "BlueprintSetupState",
+              "line": 34,
+              "explanation": "Carries application-specific state while a blueprint is registered."
+            },
+            {
+              "name": "register",
+              "line": 273,
+              "explanation": "Replays deferred blueprint operations against an application."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/sansio/scaffold.py",
+          "role": "Provides shared decorators and registration structures for applications and blueprints. It centralizes route, request-hook, error-handler, URL-processor, and resource metadata.",
+          "key_symbols": [
+            {
+              "name": "Scaffold",
+              "line": 52,
+              "explanation": "Defines the common registration behavior inherited by app and blueprint objects."
+            },
+            {
+              "name": "route",
+              "line": 344,
+              "explanation": "Registers a view function against a URL rule."
+            },
+            {
+              "name": "errorhandler",
+              "line": 606,
+              "explanation": "Registers a handler for an exception class or HTTP code."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/sessions.py",
+          "role": "Defines session interfaces, secure-cookie sessions, null sessions, and cookie policy helpers. It isolates persistence and serialization policy from request dispatch.",
+          "key_symbols": [
+            {
+              "name": "SessionInterface",
+              "line": 100,
+              "explanation": "Defines the extension point for opening and saving sessions."
+            },
+            {
+              "name": "SecureCookieSessionInterface",
+              "line": 284,
+              "explanation": "Implements Flask\u2019s signed cookie-backed session policy."
+            },
+            {
+              "name": "open_session",
+              "line": 249,
+              "explanation": "Loads or creates a session at request start."
+            },
+            {
+              "name": "save_session",
+              "line": 263,
+              "explanation": "Persists the session into the response at request completion."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/signals.py",
+          "role": "Declares lifecycle signals emitted around requests, templates, flashes, and application contexts. It provides an optional observer interface without coupling observers to dispatch callbacks.",
+          "key_symbols": [
+            {
+              "name": "request_started",
+              "line": 10,
+              "explanation": "Signals that request processing has begun."
+            },
+            {
+              "name": "request_finished",
+              "line": 11,
+              "explanation": "Signals that a response has been produced."
+            },
+            {
+              "name": "template_rendered",
+              "line": 8,
+              "explanation": "Signals completion of template rendering."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/templating.py",
+          "role": "Integrates Jinja rendering and streaming with application and blueprint loaders. It translates application template operations into context-aware rendering behavior.",
+          "key_symbols": [
+            {
+              "name": "DispatchingJinjaLoader",
+              "line": 49,
+              "explanation": "Searches application and blueprint loaders for templates."
+            },
+            {
+              "name": "render_template",
+              "line": 136,
+              "explanation": "Renders a named template using the active application context."
+            },
+            {
+              "name": "stream_template",
+              "line": 181,
+              "explanation": "Streams rendered template output while preserving context."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/typing.py",
+          "role": "Defines public type aliases for routes, responses, hooks, handlers, processors, and URL callbacks. It gives the application API a shared static typing vocabulary.",
+          "key_symbols": [
+            {
+              "name": "ResponseReturnValue",
+              "line": 36,
+              "explanation": "Describes the range of values a view may return."
+            },
+            {
+              "name": "RouteCallable",
+              "line": 84,
+              "explanation": "Describes the callable shape accepted as a route."
+            },
+            {
+              "name": "ErrorHandlerCallable",
+              "line": 79,
+              "explanation": "Describes registered error-handler callables."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/wrappers.py",
+          "role": "Specializes Werkzeug request and response wrappers with Flask configuration, endpoint, blueprint, JSON, and size-limit behavior. These objects are the data containers passed through core dispatch.",
+          "key_symbols": [
+            {
+              "name": "Request",
+              "line": 18,
+              "explanation": "Defines Flask\u2019s request wrapper and request-specific properties."
+            },
+            {
+              "name": "Response",
+              "line": 222,
+              "explanation": "Defines Flask\u2019s response wrapper and cookie-size behavior."
+            },
+            {
+              "name": "endpoint",
+              "line": 147,
+              "explanation": "Exposes the matched endpoint from the request environment."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_logging.py",
+          "role": "",
+          "key_symbols": []
+        },
+        {
+          "path": "tests/test_session_interface.py",
+          "role": "",
+          "key_symbols": []
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/flask/app.py\"]\n    N1[\"src/flask/blueprints.py\"]\n    N2[\"src/flask/config.py\"]\n    N3[\"src/flask/ctx.py\"]\n    N4[\"src/flask/debughelpers.py\"]\n    N5[\"src/flask/globals.py\"]\n    N6[\"src/flask/helpers.py\"]\n    N7[\"src/flask/logging.py\"]\n    N8[\"src/flask/sansio/app.py\"]\n    N9[\"src/flask/sansio/blueprints.py\"]\n    N10[\"src/flask/sansio/scaffold.py\"]\n    N11[\"src/flask/sessions.py\"]\n    N12[\"src/flask/signals.py\"]\n    N13[\"src/flask/templating.py\"]\n    N14[\"src/flask/typing.py\"]\n    N15[\"src/flask/wrappers.py\"]\n    N16[\"tests/test_logging.py\"]\n    N17[\"tests/test_session_interface.py\"]\n    N0 --> N14\n    N0 --> N3\n    N0 --> N5\n    N0 --> N6\n    N0 --> N8\n    N0 --> N11\n    N0 --> N12\n    N0 --> N13\n    N0 --> N15\n    N0 --> N4\n    N1 --> N5\n    N1 --> N6\n    N1 --> N9\n    N1 --> N10\n    N1 --> N15\n    N2 --> N8\n    N3 --> N14\n    N3 --> N5\n    N3 --> N6\n    N3 --> N12\n    N3 --> N0\n    N3 --> N11\n    N3 --> N15\n    N4 --> N1\n    N4 --> N5\n    N4 --> N8\n    N4 --> N10\n    N4 --> N15\n    N5 --> N0\n    N5 --> N3\n    N5 --> N11\n    N5 --> N15\n    N6 --> N5\n    N6 --> N12\n    N6 --> N15\n    N7 --> N5\n    N7 --> N8\n    N8 --> N14\n    N8 --> N2\n    N8 --> N3\n    N8 --> N6\n    N8 --> N7\n    N8 --> N13\n    N8 --> N10\n    N8 --> N9\n    N9 --> N14\n    N9 --> N10\n    N9 --> N8\n    N10 --> N14\n    N10 --> N6\n    N10 --> N13\n    N11 --> N0\n    N11 --> N15\n    N13 --> N3\n    N13 --> N5\n    N13 --> N6\n    N13 --> N12\n    N13 --> N8\n    N13 --> N10\n    N13 --> N4\n    N15 --> N5\n    N15 --> N6\n    N15 --> N4\n    N16 --> N7\n    N17 --> N5\n    N17 --> N11"
+    },
+    {
+      "subsystem_id": "3",
+      "name": "CLI And Testing",
+      "description": "CLI And Testing provides the command-line entry point, application discovery, command groups, dotenv loading, server commands, test clients, request builders, session transactions, and CLI runners. It exists separately to adapt Flask\u2019s application lifecycle to interactive and automated harnesses without embedding Click or Werkzeug test mechanics into request dispatch. CLI control flows through `cli`, `FlaskGroup`, `ScriptInfo`, `locate_app`, and `load_app`, while test data flows through `EnvironBuilder`, `FlaskClient`, `session_transaction`, and `FlaskCliRunner.invoke`. It connects directly to Application Core through `src/flask/app.py`, `src/flask/ctx.py`, and `src/flask/sansio/app.py`, and is validated by `tests/test_cli.py`, `tests/test_testing.py`, and the shared fixtures in `tests/conftest.py`.",
+      "files": [
+        {
+          "path": "src/flask/__main__.py",
+          "role": "Provides the module execution entry point for invoking Flask as a Python module. It delegates command execution to the package CLI.",
+          "key_symbols": []
+        },
+        {
+          "path": "src/flask/cli.py",
+          "role": "Implements Click-based command-line application discovery, command grouping, dotenv support, development-server commands, route listing, shell access, and version reporting.",
+          "key_symbols": [
+            {
+              "name": "FlaskGroup",
+              "line": 531,
+              "explanation": "Defines the top-level Click group that discovers and loads an application."
+            },
+            {
+              "name": "ScriptInfo",
+              "line": 293,
+              "explanation": "Stores lazy application-loading configuration for CLI commands."
+            },
+            {
+              "name": "find_best_app",
+              "line": 41,
+              "explanation": "Finds a conventional application object in an imported module."
+            },
+            {
+              "name": "locate_app",
+              "line": 241,
+              "explanation": "Imports and resolves an application from a module specification."
+            },
+            {
+              "name": "load_dotenv",
+              "line": 698,
+              "explanation": "Loads dotenv files into the CLI process environment."
+            },
+            {
+              "name": "run_command",
+              "line": 935,
+              "explanation": "Runs the development server command."
+            },
+            {
+              "name": "routes_command",
+              "line": 1061,
+              "explanation": "Lists the routes registered by the loaded application."
+            },
+            {
+              "name": "cli",
+              "line": 1110,
+              "explanation": "Exposes the configured command-line group."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/testing.py",
+          "role": "Implements Flask\u2019s request builder, test client, session transaction helper, and CLI runner. It converts test intentions into realistic request and application-context lifecycles.",
+          "key_symbols": [
+            {
+              "name": "EnvironBuilder",
+              "line": 27,
+              "explanation": "Builds WSGI environments from Flask-friendly request arguments."
+            },
+            {
+              "name": "FlaskClient",
+              "line": 109,
+              "explanation": "Sends requests to an application without a live server."
+            },
+            {
+              "name": "session_transaction",
+              "line": 136,
+              "explanation": "Opens a temporary client-side session transaction for test mutation."
+            },
+            {
+              "name": "FlaskCliRunner",
+              "line": 265,
+              "explanation": "Runs Click commands with Flask-specific application context behavior."
+            },
+            {
+              "name": "invoke",
+              "line": 275,
+              "explanation": "Executes a CLI command through the runner."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_appctx.py",
+          "role": "Verifies application-context binding, teardown ordering, reference counts, signals, and cleanup. It ensures CLI and test helpers can safely establish and remove contexts.",
+          "key_symbols": [
+            {
+              "name": "test_context_refcounts",
+              "line": 172,
+              "explanation": "Checks nested application-context reference counting."
+            },
+            {
+              "name": "test_robust_teardown",
+              "line": 216,
+              "explanation": "Checks teardown behavior when cleanup itself encounters errors."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_basic.py",
+          "role": "Provides broad integration tests for routing, responses, sessions, hooks, errors, URL processors, and request processing. It is a major compatibility suite for the core runtime exercised by testing tools.",
+          "key_symbols": [
+            {
+              "name": "test_request_dispatching",
+              "line": 132,
+              "explanation": "Checks route matching and view dispatch."
+            },
+            {
+              "name": "test_response_types",
+              "line": 1144,
+              "explanation": "Checks supported view return values and response conversion."
+            },
+            {
+              "name": "test_error_handling",
+              "line": 889,
+              "explanation": "Checks application exception handling behavior."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_reqctx.py",
+          "role": "Tests request-context binding, teardown, copying, session failures, and dynamic cookie behavior. It validates the context assumptions used by `FlaskClient` and application requests.",
+          "key_symbols": [
+            {
+              "name": "test_proper_test_request_context",
+              "line": 62,
+              "explanation": "Checks manually constructed request contexts."
+            },
+            {
+              "name": "test_copy_context_thread",
+              "line": 147,
+              "explanation": "Checks request-context copying into another execution flow."
+            },
+            {
+              "name": "test_session_dynamic_cookie_name",
+              "line": 201,
+              "explanation": "Checks session behavior with dynamically selected cookie names."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_request.py",
+          "role": "Checks request size limits and trusted-host configuration through the Flask request wrapper.",
+          "key_symbols": [
+            {
+              "name": "test_limit_config",
+              "line": 25,
+              "explanation": "Checks configured content and form limits."
+            },
+            {
+              "name": "test_trusted_hosts_config",
+              "line": 57,
+              "explanation": "Checks trusted-host enforcement."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_testing.py",
+          "role": "Validates the test client, environment builder, JSON requests, redirects, session transactions, context preservation, and CLI runner.",
+          "key_symbols": [
+            {
+              "name": "test_json_request_and_response",
+              "line": 265,
+              "explanation": "Checks JSON request construction and response decoding."
+            },
+            {
+              "name": "test_session_transactions",
+              "line": 157,
+              "explanation": "Checks mutation of sessions through the client transaction helper."
+            },
+            {
+              "name": "test_cli_invoke",
+              "line": 352,
+              "explanation": "Checks invocation through the Flask CLI runner."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/flask/__main__.py\"]\n    N1[\"src/flask/cli.py\"]\n    N2[\"src/flask/testing.py\"]\n    N3[\"tests/test_appctx.py\"]\n    N4[\"tests/test_basic.py\"]\n    N5[\"tests/test_reqctx.py\"]\n    N6[\"tests/test_request.py\"]\n    N7[\"tests/test_testing.py\"]\n    N0 --> N1\n    N2 --> N1\n    N3 --> N2\n    N4 --> N2\n    N5 --> N2\n    N6 --> N2\n    N7 --> N1\n    N7 --> N2"
+    },
+    {
+      "subsystem_id": "4",
+      "name": "JSON Handling",
+      "description": "JSON Handling provides Flask\u2019s JSON convenience functions, provider abstraction, default serialization policy, response construction, and tagged serialization for values that plain JSON cannot represent. It exists separately to isolate encoding policy from request dispatch and to let applications replace or customize JSON behavior without changing the public helper API. Calls enter through `dumps`, `loads`, `dump`, `load`, or `jsonify`, delegate to `JSONProvider` and `DefaultJSONProvider`, and use `TaggedJSONSerializer.tag` and `untag` where session-compatible extended types are needed. It connects to Application Core through `src/flask/sansio/app.py`, to sessions through `src/flask/sessions.py`, to request and response wrappers through `src/flask/wrappers.py`, and to CLI/testing consumers through `tests/test_testing.py`.",
+      "files": [
+        {
+          "path": "src/flask/json/__init__.py",
+          "role": "Exports the public JSON helper functions and routes them through the current application\u2019s JSON provider. It is the compatibility-facing API used by views, tests, and application code.",
+          "key_symbols": [
+            {
+              "name": "dumps",
+              "line": 13,
+              "explanation": "Serializes an object through the active JSON provider."
+            },
+            {
+              "name": "loads",
+              "line": 77,
+              "explanation": "Deserializes JSON text or bytes through the active provider."
+            },
+            {
+              "name": "jsonify",
+              "line": 138,
+              "explanation": "Creates a JSON response from positional or keyword data."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/json/provider.py",
+          "role": "Defines the provider interface and Flask\u2019s default JSON implementation, including formatting, default conversions, file operations, and response creation. Applications can subclass or replace this component to customize JSON policy.",
+          "key_symbols": [
+            {
+              "name": "JSONProvider",
+              "line": 19,
+              "explanation": "Defines the interface applications use for JSON serialization and responses."
+            },
+            {
+              "name": "DefaultJSONProvider",
+              "line": 124,
+              "explanation": "Implements Flask\u2019s standard JSON behavior."
+            },
+            {
+              "name": "dumps",
+              "line": 166,
+              "explanation": "Serializes values using the configured encoder options."
+            },
+            {
+              "name": "loads",
+              "line": 181,
+              "explanation": "Deserializes JSON input using configured decoder options."
+            },
+            {
+              "name": "response",
+              "line": 189,
+              "explanation": "Builds a JSON response with the correct content type."
+            }
+          ]
+        },
+        {
+          "path": "src/flask/json/tag.py",
+          "role": "Implements tagged JSON encoding for tuples, bytes, UUIDs, datetimes, markup, and other extended values. The registry-based design allows custom tags while preserving reversible serialization.",
+          "key_symbols": [
+            {
+              "name": "JSONTag",
+              "line": 60,
+              "explanation": "Defines the interface for one tagged value type."
+            },
+            {
+              "name": "TaggedJSONSerializer",
+              "line": 219,
+              "explanation": "Maintains tag ordering and performs tagged serialization and deserialization."
+            },
+            {
+              "name": "register",
+              "line": 256,
+              "explanation": "Adds a custom tag handler to the serializer."
+            },
+            {
+              "name": "tag",
+              "line": 289,
+              "explanation": "Encodes a Python value using the first applicable tag."
+            },
+            {
+              "name": "untag",
+              "line": 297,
+              "explanation": "Restores a tagged JSON value to its Python representation."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_json.py",
+          "role": "Tests public JSON helpers, providers, response MIME types, custom encoders, dates, UUIDs, sorting, and bad-request behavior.",
+          "key_symbols": [
+            {
+              "name": "test_json_customization",
+              "line": 223,
+              "explanation": "Checks replacement or customization of the JSON provider."
+            },
+            {
+              "name": "test_jsonify_dicts",
+              "line": 78,
+              "explanation": "Checks JSON response creation from dictionaries."
+            },
+            {
+              "name": "test_jsonify_arrays",
+              "line": 105,
+              "explanation": "Checks JSON response creation from arrays."
+            },
+            {
+              "name": "test_json_key_sorting",
+              "line": 270,
+              "explanation": "Checks deterministic key ordering."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_json_tag.py",
+          "role": "Tests built-in and custom tagged JSON handlers, duplicate registration, ordering, and round trips.",
+          "key_symbols": [
+            {
+              "name": "test_custom_tag",
+              "line": 43,
+              "explanation": "Checks registration and round-trip behavior for a custom tag."
+            },
+            {
+              "name": "test_tag_order",
+              "line": 73,
+              "explanation": "Checks that tag precedence is preserved."
+            },
+            {
+              "name": "test_dump_load_unchanged",
+              "line": 27,
+              "explanation": "Checks that serialization and deserialization preserve supported values."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/flask/json/__init__.py\"]\n    N1[\"src/flask/json/provider.py\"]\n    N2[\"src/flask/json/tag.py\"]\n    N3[\"tests/test_json.py\"]\n    N4[\"tests/test_json_tag.py\"]\n    N0 --> N1\n    N2 --> N0\n    N3 --> N0\n    N3 --> N1\n    N4 --> N2"
+    },
+    {
+      "subsystem_id": "5",
+      "name": "Views And Helpers",
+      "description": "Views And Helpers provides class-based view dispatch plus public helpers for URL generation, responses, redirects, aborts, file serving, flashing, and context-preserving streaming. It exists separately to keep reusable view adaptation and ergonomic endpoint utilities independent from the application\u2019s central lifecycle and routing registry. A registered class view is produced by `View.as_view` or `MethodView.dispatch_request`, while endpoint code uses helpers such as `url_for`, `make_response`, `send_file`, and `stream_with_context` to produce or control responses. It connects to Application Core through `src/flask/app.py`, to rendering through `src/flask/templating.py`, to request data through `src/flask/wrappers.py` and `src/flask/globals.py`, and to the testing surface through `src/flask/testing.py` and `tests/test_views.py`.",
+      "files": [
+        {
+          "path": "src/flask/views.py",
+          "role": "Implements reusable class-based views and method-based HTTP dispatch. It adapts classes into route callables that the application can register like ordinary view functions.",
+          "key_symbols": [
+            {
+              "name": "View",
+              "line": 16,
+              "explanation": "Defines the base class for configurable class-based views."
+            },
+            {
+              "name": "as_view",
+              "line": 86,
+              "explanation": "Creates the callable endpoint registered with the application router."
+            },
+            {
+              "name": "MethodView",
+              "line": 138,
+              "explanation": "Maps HTTP methods to corresponding class methods."
+            },
+            {
+              "name": "dispatch_request",
+              "line": 182,
+              "explanation": "Selects and invokes the method handler for the incoming request."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_async.py",
+          "role": "Checks asynchronous routes, class-based views, hooks, and error handlers. It confirms that view adaptation works across synchronous and asynchronous callables.",
+          "key_symbols": [
+            {
+              "name": "AsyncView",
+              "line": 22,
+              "explanation": "Defines an asynchronous class-based view fixture."
+            },
+            {
+              "name": "AsyncMethodView",
+              "line": 30,
+              "explanation": "Defines an asynchronous method-dispatch view fixture."
+            },
+            {
+              "name": "test_async_route",
+              "line": 82,
+              "explanation": "Checks an asynchronous route invocation."
+            },
+            {
+              "name": "test_async_error_handler",
+              "line": 91,
+              "explanation": "Checks asynchronous exception handling."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_helpers.py",
+          "role": "Tests URL generation, response construction, file serving, redirects, aborts, resource access, and context-preserving streaming.",
+          "key_symbols": [
+            {
+              "name": "TestUrlFor",
+              "line": 94,
+              "explanation": "Groups URL-building helper tests."
+            },
+            {
+              "name": "TestSendfile",
+              "line": 33,
+              "explanation": "Groups file-serving helper tests."
+            },
+            {
+              "name": "TestStreaming",
+              "line": 228,
+              "explanation": "Groups streaming and context-preservation tests."
+            },
+            {
+              "name": "test_make_response",
+              "line": 342,
+              "explanation": "Checks helper response normalization."
+            }
+          ]
+        },
+        {
+          "path": "tests/test_views.py",
+          "role": "Verifies class-based view registration, inheritance, decorators, method selection, endpoint naming, and automatic HEAD/OPTIONS behavior.",
+          "key_symbols": [
+            {
+              "name": "test_basic_view",
+              "line": 17,
+              "explanation": "Checks the minimal class-based view path."
+            },
+            {
+              "name": "test_method_based_view",
+              "line": 28,
+              "explanation": "Checks dispatch based on HTTP methods."
+            },
+            {
+              "name": "test_view_inheritance",
+              "line": 62,
+              "explanation": "Checks inherited view configuration."
+            },
+            {
+              "name": "test_endpoint_override",
+              "line": 182,
+              "explanation": "Checks explicit endpoint naming."
+            }
+          ]
+        },
+        {
+          "path": "tests/type_check/typing_route.py",
+          "role": "Exercises static typing for route return values, generators, templates, JSON, asynchronous handlers, and class-based views.",
+          "key_symbols": [
+            {
+              "name": "app",
+              "line": 13,
+              "explanation": "Provides the typed application used for route declarations."
+            },
+            {
+              "name": "hello_str",
+              "line": 17,
+              "explanation": "Checks a string route return type."
+            },
+            {
+              "name": "hello_json",
+              "line": 27,
+              "explanation": "Checks a JSON-compatible route return type."
+            },
+            {
+              "name": "RenderTemplateView",
+              "line": 101,
+              "explanation": "Checks typing for a template-rendering class-based view."
+            }
+          ]
+        }
+      ],
+      "diagram_mermaid": "flowchart TD\n    N0[\"src/flask/views.py\"]\n    N1[\"tests/test_async.py\"]\n    N2[\"tests/test_helpers.py\"]\n    N3[\"tests/test_views.py\"]\n    N4[\"tests/type_check/typing_route.py\"]\n    N1 --> N0\n    N2 --> N0\n    N3 --> N0\n    N4 --> N0"
+    }
+  ],
+  "overview": {
+    "description": "This system is Flask, a web framework whose Application Core orchestrates application construction, routing, request dispatch, response handling, contexts, configuration, sessions, templates, errors, and WSGI execution. CLI And Testing adapts that lifecycle for command-line use and automated test clients, while Application Testing exercises the resulting behavior across applications, requests, blueprints, configuration, templates, signals, sessions, and CLI flows. JSON Handling provides customizable serialization, response construction, and tagged values for framework helpers and sessions, while Views And Helpers supplies class-based dispatch and endpoint utilities for URLs, responses, redirects, files, flashing, and streaming. Together, these subsystems separate central lifecycle coordination from reusable interfaces and compatibility coverage while connecting through the application, context, wrapper, templating, session, and testing modules.",
+    "diagram_mermaid": "flowchart TD\n    C0[\"Application Testing\"]\n    C1[\"Application Core\"]\n    C2[\"Cluster 2\"]\n    C3[\"CLI And Testing\"]\n    C4[\"JSON Handling\"]\n    C5[\"Views And Helpers\"]\n    C6[\"Cluster 6\"]\n    C0 --> C1\n    C0 --> C3\n    C0 --> C4\n    C1 --> C0\n    C1 --> C3\n    C1 --> C4\n    C2 --> C0\n    C3 --> C0\n    C3 --> C1\n    C3 --> C4\n    C4 --> C0\n    C4 --> C1\n    C5 --> C0\n    C5 --> C1\n    C5 --> C3\n    C6 --> C0"
+  }
+}

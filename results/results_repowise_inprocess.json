@@ -1,0 +1,582 @@
+[
+  {
+    "id": "q01",
+    "q": "How does a session dictionary get turned into a signed cookie that is safe to send to the browser?",
+    "gt": [
+      "src/flask/sessions.py"
+    ],
+    "ranked_files": [
+      "src/flask/sessions.py",
+      "tests/test_reqctx.py",
+      "examples/tutorial/flaskr/auth.py",
+      "src/flask/ctx.py",
+      "src/flask/wrappers.py",
+      "src/flask/helpers.py",
+      "src/flask/testing.py",
+      "src/flask/json/tag.py"
+    ],
+    "latency_s": 0.053251000004820526
+  },
+  {
+    "id": "q02",
+    "q": "Where does the framework decide whether to restart the server when a source file changes?",
+    "gt": [
+      "src/flask/cli.py"
+    ],
+    "ranked_files": [
+      "src/flask/debughelpers.py",
+      "src/flask/app.py",
+      "src/flask/helpers.py",
+      "src/flask/sessions.py",
+      "tests/test_basic.py",
+      "src/flask/ctx.py",
+      "src/flask/cli.py",
+      "docs/conf.py",
+      "layer:config"
+    ],
+    "latency_s": 0.051422541990177706
+  },
+  {
+    "id": "q03",
+    "q": "How is a URL built from an endpoint name and some keyword arguments?",
+    "gt": [
+      "src/flask/helpers.py"
+    ],
+    "ranked_files": [
+      "src/flask/wrappers.py",
+      "src/flask/sansio/app.py",
+      "examples/tutorial/flaskr/__init__.py",
+      "onboarding/key_concepts",
+      "src/flask/ctx.py",
+      "examples/tutorial/flaskr/blog.py",
+      "examples/tutorial/flaskr/auth.py",
+      "src/flask/sansio/scaffold.py"
+    ],
+    "latency_s": 0.04996787499112543
+  },
+  {
+    "id": "q04",
+    "q": "What code sends a file from disk back to the client, handling range requests and caching headers?",
+    "gt": [
+      "src/flask/helpers.py"
+    ],
+    "ranked_files": [
+      "src/flask/debughelpers.py",
+      "onboarding/key_concepts",
+      "src/flask/helpers.py",
+      "src/flask/wrappers.py",
+      "examples/celery/src/task_app/views.py",
+      "examples/tutorial/flaskr/db.py"
+    ],
+    "latency_s": 0.0505703750095563
+  },
+  {
+    "id": "q05",
+    "q": "How are one-time messages queued for display on the next page load?",
+    "gt": [
+      "src/flask/helpers.py"
+    ],
+    "ranked_files": [
+      "src/flask/ctx.py",
+      "src/flask/app.py",
+      "examples/celery/src/task_app/views.py",
+      "src/flask/cli.py",
+      "tests/test_session_interface.py",
+      "onboarding/key_concepts",
+      "src/flask/views.py",
+      "src/flask/testing.py",
+      "examples/javascript/tests/test_js_example.py"
+    ],
+    "latency_s": 0.05679941699781921
+  },
+  {
+    "id": "q06",
+    "q": "Where is the object that holds per-request state pushed onto and popped off a stack?",
+    "gt": [
+      "src/flask/ctx.py"
+    ],
+    "ranked_files": [
+      "src/flask/views.py",
+      "src/flask/testing.py",
+      "onboarding/key_concepts",
+      "src/flask/wrappers.py",
+      "src/flask/ctx.py",
+      "examples/celery/src/task_app/views.py"
+    ],
+    "latency_s": 0.051322167011676356
+  },
+  {
+    "id": "q07",
+    "q": "How can a function be scheduled to run after the current request has been handled?",
+    "gt": [
+      "src/flask/ctx.py"
+    ],
+    "ranked_files": [
+      "src/flask/app.py",
+      "src/flask/ctx.py",
+      "tests/test_session_interface.py",
+      "src/flask/views.py",
+      "examples/celery/src/task_app/views.py",
+      "src/flask/cli.py",
+      ".github/workflows/lock.yaml",
+      "examples/celery/src/task_app/tasks.py",
+      "src/flask/helpers.py"
+    ],
+    "latency_s": 0.054132917008246295
+  },
+  {
+    "id": "q08",
+    "q": "How does configuration get loaded from environment variables with a common prefix?",
+    "gt": [
+      "src/flask/config.py"
+    ],
+    "ranked_files": [
+      "src/flask/config.py",
+      "src/flask/cli.py",
+      "src/flask/sansio/app.py",
+      "tests/test_instance_config.py",
+      "tests/test_config.py",
+      ".devcontainer/on-create-command.sh",
+      "tests/conftest.py",
+      "examples/javascript/tests/conftest.py",
+      "layer:config"
+    ],
+    "latency_s": 0.05767083300452214
+  },
+  {
+    "id": "q09",
+    "q": "Where is configuration read out of a Python file at a given path?",
+    "gt": [
+      "src/flask/config.py"
+    ],
+    "ranked_files": [
+      "tests/test_converters.py",
+      "tests/test_config.py",
+      "tests/test_instance_config.py",
+      "src/flask/config.py",
+      "examples/tutorial/flaskr/__init__.py",
+      "tests/test_apps/cliapp/factory.py",
+      "src/flask/logging.py",
+      "examples/tutorial/tests/test_factory.py",
+      "tests/test_apps/subdomaintestmodule/__init__.py",
+      "tests/test_helpers.py"
+    ],
+    "latency_s": 0.05737191700609401
+  },
+  {
+    "id": "q10",
+    "q": "How does the framework serialize objects that JSON does not natively support, like dates and UUIDs?",
+    "gt": [
+      "src/flask/json/provider.py"
+    ],
+    "ranked_files": [
+      "src/flask/json/tag.py",
+      "src/flask/json/provider.py",
+      "src/flask/json/__init__.py",
+      "tests/test_json_tag.py",
+      "src/flask/helpers.py",
+      "onboarding/key_concepts",
+      "tests/test_json.py",
+      "examples/celery/src/task_app/views.py",
+      "src/flask/sessions.py",
+      "src/flask/wrappers.py"
+    ],
+    "latency_s": 0.06067908300610725
+  },
+  {
+    "id": "q11",
+    "q": "How are Python types round-tripped through JSON with a type tag so they survive serialization?",
+    "gt": [
+      "src/flask/json/tag.py"
+    ],
+    "ranked_files": [
+      "src/flask/json/tag.py",
+      "tests/test_json_tag.py",
+      "tests/type_check/typing_route.py",
+      "src/flask/typing.py",
+      "src/flask/json/provider.py",
+      "tests/test_json.py",
+      "tests/type_check/typing_app_decorators.py",
+      "tests/type_check/typing_error_handler.py",
+      "src/flask/json/__init__.py",
+      "src/flask/wrappers.py"
+    ],
+    "latency_s": 0.050605917000211775
+  },
+  {
+    "id": "q12",
+    "q": "What turns a dict into a JSON HTTP response with the right content type?",
+    "gt": [
+      "src/flask/json/__init__.py"
+    ],
+    "ranked_files": [
+      "src/flask/wrappers.py",
+      "onboarding/key_concepts",
+      "tests/test_json.py",
+      "src/flask/json/__init__.py",
+      "src/flask/json/provider.py",
+      "src/flask/typing.py",
+      "src/flask/json/tag.py"
+    ],
+    "latency_s": 0.04662937500688713
+  },
+  {
+    "id": "q13",
+    "q": "How does a class-based view get converted into something that can be registered as a URL rule?",
+    "gt": [
+      "src/flask/views.py"
+    ],
+    "ranked_files": [
+      "src/flask/wrappers.py",
+      "src/flask/ctx.py",
+      "src/flask/views.py",
+      "examples/javascript/js_example/views.py",
+      "src/flask/sansio/app.py",
+      "tests/test_converters.py",
+      "onboarding/key_concepts",
+      "examples/tutorial/flaskr/auth.py"
+    ],
+    "latency_s": 0.044826708995969966
+  },
+  {
+    "id": "q14",
+    "q": "Where does dispatching to a method based on the HTTP verb happen?",
+    "gt": [
+      "src/flask/views.py"
+    ],
+    "ranked_files": [
+      "src/flask/app.py",
+      "src/flask/views.py",
+      "examples/celery/src/task_app/views.py",
+      "src/flask/wrappers.py",
+      "src/flask/sansio/app.py",
+      "onboarding/key_concepts",
+      "tests/test_user_error_handler.py",
+      "src/flask/typing.py"
+    ],
+    "latency_s": 0.06127487499907147
+  },
+  {
+    "id": "q15",
+    "q": "How does a test client simulate a request without running a real server?",
+    "gt": [
+      "src/flask/testing.py"
+    ],
+    "ranked_files": [
+      "tests/test_reqctx.py",
+      "tests/test_request.py",
+      "tests/test_testing.py",
+      "tests/test_session_interface.py",
+      "examples/tutorial/tests/test_factory.py",
+      "examples/tutorial/tests/test_blog.py",
+      "layer:test",
+      "examples/tutorial/tests/test_auth.py",
+      "tests/test_signals.py",
+      "examples/tutorial/tests/conftest.py"
+    ],
+    "latency_s": 0.048656874991138466
+  },
+  {
+    "id": "q16",
+    "q": "How can command line commands be invoked in tests?",
+    "gt": [
+      "src/flask/testing.py"
+    ],
+    "ranked_files": [
+      "tests/test_cli.py",
+      "tests/test_reqctx.py",
+      "tests/test_testing.py",
+      "tests/test_request.py",
+      "tests/test_appctx.py",
+      "examples/tutorial/tests/test_db.py",
+      "tests/test_signals.py",
+      "tests/test_helpers.py",
+      "tests/test_session_interface.py",
+      "tests/test_logging.py"
+    ],
+    "latency_s": 0.044829792008385994
+  },
+  {
+    "id": "q17",
+    "q": "Where are template files looked up across the application and its modular components?",
+    "gt": [
+      "src/flask/templating.py"
+    ],
+    "ranked_files": [
+      "tests/test_apps/blueprintapp/apps/frontend/__init__.py",
+      "examples/javascript/tests/test_js_example.py",
+      "src/flask/templating.py",
+      "tests/test_templating.py",
+      "tests/test_apps/blueprintapp/apps/admin/__init__.py",
+      "src/flask/sansio/blueprints.py",
+      "src/flask/sansio/scaffold.py",
+      "tests/test_apps/cliapp/inner1/inner2/flask.py",
+      "src/flask/signals.py",
+      "tests/test_signals.py"
+    ],
+    "latency_s": 0.04664841599878855
+  },
+  {
+    "id": "q18",
+    "q": "How is a template rendered to a string with the application's context injected?",
+    "gt": [
+      "src/flask/templating.py"
+    ],
+    "ranked_files": [
+      "examples/javascript/tests/test_js_example.py",
+      "src/flask/ctx.py",
+      "src/flask/templating.py",
+      "tests/test_templating.py",
+      "src/flask/globals.py",
+      "tests/test_apps/blueprintapp/apps/frontend/__init__.py",
+      "src/flask/helpers.py",
+      "examples/celery/src/task_app/__init__.py"
+    ],
+    "latency_s": 0.04682891700940672
+  },
+  {
+    "id": "q19",
+    "q": "Where is the default logger created and attached?",
+    "gt": [
+      "src/flask/logging.py"
+    ],
+    "ranked_files": [
+      "src/flask/logging.py",
+      "examples/tutorial/flaskr/auth.py",
+      "tests/test_logging.py",
+      "tests/test_basic.py",
+      "layer:config",
+      "src/flask/ctx.py",
+      "examples/tutorial/flaskr/db.py",
+      "examples/tutorial/flaskr/blog.py"
+    ],
+    "latency_s": 0.04957970899704378
+  },
+  {
+    "id": "q20",
+    "q": "How are the proxy objects that let you access the current request from anywhere defined?",
+    "gt": [
+      "src/flask/globals.py"
+    ],
+    "ranked_files": [
+      "src/flask/globals.py",
+      "onboarding/key_concepts",
+      "src/flask/wrappers.py",
+      "examples/celery/src/task_app/views.py"
+    ],
+    "latency_s": 0.04538008300005458
+  },
+  {
+    "id": "q21",
+    "q": "Where is the group of routes with a shared URL prefix attached to the main application?",
+    "gt": [
+      "src/flask/sansio/blueprints.py",
+      "src/flask/blueprints.py"
+    ],
+    "ranked_files": [
+      "examples/tutorial/flaskr/__init__.py",
+      "src/flask/sansio/app.py",
+      "src/flask/wrappers.py",
+      "tests/test_instance_config.py",
+      "examples/tutorial/flaskr/blog.py",
+      "layer:application",
+      "onboarding/guided_tour",
+      "src/flask/logging.py"
+    ],
+    "latency_s": 0.04620266599522438
+  },
+  {
+    "id": "q22",
+    "q": "How does an incoming request get matched to a view function and turned into a response?",
+    "gt": [
+      "src/flask/app.py"
+    ],
+    "ranked_files": [
+      "src/flask/views.py",
+      "onboarding/key_concepts",
+      "examples/celery/src/task_app/views.py",
+      "src/flask/ctx.py",
+      "src/flask/wrappers.py",
+      "examples/javascript/js_example/views.py",
+      "src/flask/app.py",
+      "src/flask/typing.py"
+    ],
+    "latency_s": 0.047563458007061854
+  },
+  {
+    "id": "q23",
+    "q": "Where are uncaught exceptions turned into a 500 response?",
+    "gt": [
+      "src/flask/app.py"
+    ],
+    "ranked_files": [
+      "src/flask/wrappers.py",
+      "tests/test_subclassing.py",
+      "tests/test_user_error_handler.py"
+    ],
+    "latency_s": 0.056064708987833
+  },
+  {
+    "id": "q24",
+    "q": "How does the framework find the user-registered handler for a specific HTTP error code?",
+    "gt": [
+      "src/flask/sansio/app.py",
+      "src/flask/app.py"
+    ],
+    "ranked_files": [
+      "tests/test_user_error_handler.py",
+      "src/flask/wrappers.py",
+      "tests/type_check/typing_error_handler.py",
+      "src/flask/sansio/app.py",
+      "src/flask/logging.py",
+      "src/flask/views.py",
+      "onboarding/key_concepts",
+      "examples/tutorial/flaskr/auth.py"
+    ],
+    "latency_s": 0.06144758399750572
+  },
+  {
+    "id": "q25",
+    "q": "How is a coroutine returned by an async view function actually awaited?",
+    "gt": [
+      "src/flask/app.py"
+    ],
+    "ranked_files": [
+      "src/flask/app.py",
+      "tests/test_async.py",
+      "examples/celery/src/task_app/views.py",
+      "src/flask/views.py",
+      "examples/celery/src/task_app/tasks.py",
+      "tests/test_views.py"
+    ],
+    "latency_s": 0.05739670799812302
+  },
+  {
+    "id": "q26",
+    "q": "Where is the decorator that associates a URL pattern with a function defined?",
+    "gt": [
+      "src/flask/sansio/scaffold.py"
+    ],
+    "ranked_files": [
+      "src/flask/sansio/app.py",
+      "src/flask/wrappers.py",
+      "src/flask/ctx.py",
+      "src/flask/sansio/scaffold.py",
+      "src/flask/app.py",
+      "tests/type_check/typing_app_decorators.py",
+      "src/flask/sansio/blueprints.py"
+    ],
+    "latency_s": 0.053614000004017726
+  },
+  {
+    "id": "q27",
+    "q": "How does the framework guess the root directory of the package it was created in?",
+    "gt": [
+      "src/flask/helpers.py"
+    ],
+    "ranked_files": [
+      "src/flask/helpers.py",
+      "onboarding/codebase_map",
+      "tests/test_apps/cliapp/inner1/inner2/flask.py",
+      "layer:config",
+      "tests/test_apps/cliapp/inner1/__init__.py",
+      "examples/tutorial/flaskr/__init__.py",
+      "tests/test_apps/subdomaintestmodule/__init__.py",
+      "tests/test_instance_config.py",
+      "examples/tutorial/tests/test_factory.py"
+    ],
+    "latency_s": 0.050763500010361895
+  },
+  {
+    "id": "q28",
+    "q": "Where is the request object subclassed to add framework-specific properties?",
+    "gt": [
+      "src/flask/wrappers.py"
+    ],
+    "ranked_files": [
+      "src/flask/wrappers.py",
+      "src/flask/sansio/app.py",
+      "onboarding/key_concepts",
+      "src/flask/config.py",
+      "src/flask/debughelpers.py",
+      "src/flask/views.py"
+    ],
+    "latency_s": 0.04892670900153462
+  },
+  {
+    "id": "q29",
+    "q": "How does the shell command preload the application context for interactive use?",
+    "gt": [
+      "src/flask/cli.py"
+    ],
+    "ranked_files": [
+      "src/flask/ctx.py",
+      "src/flask/globals.py",
+      "src/flask/cli.py",
+      "layer:application",
+      "src/flask/json/__init__.py",
+      ".devcontainer/on-create-command.sh",
+      "examples/celery/src/task_app/__init__.py",
+      "examples/celery/make_celery.py"
+    ],
+    "latency_s": 0.05416499999410007
+  },
+  {
+    "id": "q30",
+    "q": "Where does the application get discovered automatically from a module or factory function?",
+    "gt": [
+      "src/flask/cli.py"
+    ],
+    "ranked_files": [
+      "tests/test_apps/cliapp/factory.py",
+      "tests/test_apps/cliapp/inner1/inner2/flask.py",
+      "examples/celery/src/task_app/__init__.py",
+      "examples/tutorial/tests/test_factory.py",
+      "tests/test_apps/helloworld/wsgi.py",
+      "src/flask/cli.py",
+      "tests/test_apps/cliapp/multiapp.py",
+      "examples/celery/make_celery.py",
+      "src/flask/views.py",
+      "tests/test_apps/cliapp/inner1/__init__.py"
+    ],
+    "latency_s": 0.054419874999439344
+  },
+  {
+    "id": "q31",
+    "q": "What produces the helpful error message when a template or static folder is misconfigured?",
+    "gt": [
+      "src/flask/debughelpers.py"
+    ],
+    "ranked_files": [
+      "src/flask/debughelpers.py",
+      "src/flask/sansio/scaffold.py",
+      "tests/test_apps/blueprintapp/apps/frontend/__init__.py",
+      "src/flask/helpers.py",
+      "src/flask/templating.py",
+      "src/flask/app.py",
+      "src/flask/sansio/blueprints.py",
+      "tests/test_apps/blueprintapp/apps/admin/__init__.py",
+      "examples/javascript/tests/test_js_example.py"
+    ],
+    "latency_s": 0.05341729200154077
+  },
+  {
+    "id": "q32",
+    "q": "Where are the notification hooks that extensions can subscribe to declared?",
+    "gt": [
+      "src/flask/signals.py"
+    ],
+    "ranked_files": [
+      "src/flask/sansio/blueprints.py",
+      "src/flask/logging.py",
+      "tests/test_signals.py",
+      "src/flask/wrappers.py",
+      "tests/test_reqctx.py",
+      "src/flask/debughelpers.py",
+      "src/flask/app.py",
+      "src/flask/signals.py",
+      "src/flask/blueprints.py"
+    ],
+    "latency_s": 0.06809616599639412
+  }
+]

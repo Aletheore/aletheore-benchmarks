@@ -10,10 +10,10 @@
       "src/flask/testing.py",
       "src/flask/helpers.py",
       "src/flask/ctx.py",
-      "src/flask/debughelpers.py",
-      "src/flask/app.py"
+      "src/flask/wrappers.py",
+      "src/flask/json/tag.py"
     ],
-    "latency_s": 0.27661000000080094
+    "latency_s": 0.03869095900154207
   },
   {
     "id": "q02",
@@ -23,14 +23,14 @@
     ],
     "ranked_files": [
       "src/flask/app.py",
-      "src/flask/sansio/app.py",
       "src/flask/helpers.py",
+      "src/flask/sansio/app.py",
       "src/flask/cli.py",
-      "src/flask/sessions.py",
       "src/flask/templating.py",
+      "src/flask/sessions.py",
       "src/flask/ctx.py"
     ],
-    "latency_s": 0.12060512500465848
+    "latency_s": 0.0390642919956008
   },
   {
     "id": "q03",
@@ -41,12 +41,12 @@
     "ranked_files": [
       "src/flask/app.py",
       "src/flask/sansio/app.py",
-      "src/flask/sansio/scaffold.py",
       "src/flask/helpers.py",
+      "src/flask/sansio/scaffold.py",
       "src/flask/sansio/blueprints.py",
       "src/flask/wrappers.py"
     ],
-    "latency_s": 0.12455166701693088
+    "latency_s": 0.037848833002499305
   },
   {
     "id": "q04",
@@ -56,14 +56,14 @@
     ],
     "ranked_files": [
       "src/flask/helpers.py",
-      "src/flask/blueprints.py",
       "src/flask/app.py",
+      "src/flask/blueprints.py",
       "src/flask/testing.py",
       "src/flask/ctx.py",
-      "src/flask/config.py",
-      "src/flask/sessions.py"
+      "src/flask/sessions.py",
+      "src/flask/config.py"
     ],
-    "latency_s": 0.10137699998449534
+    "latency_s": 0.03726720799750183
   },
   {
     "id": "q05",
@@ -74,13 +74,13 @@
     "ranked_files": [
       "src/flask/helpers.py",
       "src/flask/cli.py",
+      "src/flask/signals.py",
       "src/flask/ctx.py",
       "examples/celery/src/task_app/tasks.py",
-      "src/flask/app.py",
-      "src/flask/sansio/blueprints.py",
-      "src/flask/sansio/scaffold.py"
+      "src/flask/sansio/app.py",
+      "src/flask/sansio/blueprints.py"
     ],
-    "latency_s": 0.108528041979298
+    "latency_s": 0.04100541700609028
   },
   {
     "id": "q06",
@@ -89,14 +89,15 @@
       "src/flask/ctx.py"
     ],
     "ranked_files": [
+      "src/flask/signals.py",
       "src/flask/ctx.py",
       "src/flask/testing.py",
       "src/flask/sansio/scaffold.py",
-      "src/flask/app.py",
       "src/flask/sansio/blueprints.py",
-      "src/flask/wrappers.py"
+      "src/flask/wrappers.py",
+      "src/flask/app.py"
     ],
-    "latency_s": 0.09961924998788163
+    "latency_s": 0.03861470799893141
   },
   {
     "id": "q07",
@@ -107,13 +108,12 @@
     "ranked_files": [
       "src/flask/ctx.py",
       "src/flask/sansio/scaffold.py",
-      "src/flask/app.py",
       "src/flask/sansio/app.py",
-      "src/flask/sansio/blueprints.py",
       "src/flask/helpers.py",
-      "src/flask/sessions.py"
+      "src/flask/app.py",
+      "src/flask/sansio/blueprints.py"
     ],
-    "latency_s": 0.1843654160038568
+    "latency_s": 0.04115008300868794
   },
   {
     "id": "q08",
@@ -125,12 +125,11 @@
       "src/flask/config.py",
       "src/flask/cli.py",
       "src/flask/helpers.py",
-      "src/flask/templating.py",
-      "src/flask/sansio/scaffold.py",
       "src/flask/app.py",
+      "src/flask/sansio/scaffold.py",
       "src/flask/sansio/app.py"
     ],
-    "latency_s": 0.18537062499672174
+    "latency_s": 0.04664354199485388
   },
   {
     "id": "q09",
@@ -146,7 +145,7 @@
       "src/flask/blueprints.py",
       "src/flask/sansio/app.py"
     ],
-    "latency_s": 0.12703795899869874
+    "latency_s": 0.04505879199132323
   },
   {
     "id": "q10",
@@ -160,10 +159,10 @@
       "src/flask/json/__init__.py",
       "src/flask/testing.py",
       "src/flask/wrappers.py",
-      "src/flask/helpers.py",
-      "src/flask/sessions.py"
+      "src/flask/app.py",
+      "src/flask/helpers.py"
     ],
-    "latency_s": 0.09690420801052824
+    "latency_s": 0.03568154099048115
   },
   {
     "id": "q11",
@@ -173,14 +172,12 @@
     ],
     "ranked_files": [
       "src/flask/json/tag.py",
-      "src/flask/json/provider.py",
       "src/flask/json/__init__.py",
+      "src/flask/json/provider.py",
       "src/flask/testing.py",
-      "src/flask/sessions.py",
-      "src/flask/templating.py",
-      "src/flask/typing.py"
+      "src/flask/sessions.py"
     ],
-    "latency_s": 0.1018953749735374
+    "latency_s": 0.035805041989078745
   },
   {
     "id": "q12",
@@ -195,7 +192,7 @@
       "src/flask/wrappers.py",
       "src/flask/json/tag.py"
     ],
-    "latency_s": 0.10525883399532177
+    "latency_s": 0.040770749998046085
   },
   {
     "id": "q13",
@@ -205,13 +202,13 @@
     ],
     "ranked_files": [
       "src/flask/views.py",
-      "src/flask/sansio/scaffold.py",
       "src/flask/sansio/blueprints.py",
+      "src/flask/sansio/scaffold.py",
       "src/flask/sansio/app.py",
-      "src/flask/wrappers.py",
-      "src/flask/app.py"
+      "src/flask/app.py",
+      "src/flask/wrappers.py"
     ],
-    "latency_s": 0.10985991600318812
+    "latency_s": 0.05154204199789092
   },
   {
     "id": "q14",
@@ -223,12 +220,11 @@
       "src/flask/views.py",
       "src/flask/app.py",
       "src/flask/debughelpers.py",
-      "src/flask/sansio/app.py",
       "src/flask/testing.py",
-      "src/flask/wrappers.py",
-      "src/flask/helpers.py"
+      "src/flask/sansio/app.py",
+      "src/flask/wrappers.py"
     ],
-    "latency_s": 0.11302291601896286
+    "latency_s": 0.03808299999218434
   },
   {
     "id": "q15",
@@ -237,14 +233,14 @@
       "src/flask/testing.py"
     ],
     "ranked_files": [
-      "src/flask/testing.py",
       "src/flask/app.py",
+      "src/flask/testing.py",
       "src/flask/cli.py",
       "src/flask/ctx.py",
       "src/flask/sansio/scaffold.py",
       "src/flask/sessions.py"
     ],
-    "latency_s": 0.12573620901093818
+    "latency_s": 0.038688458007527515
   },
   {
     "id": "q16",
@@ -254,13 +250,13 @@
     ],
     "ranked_files": [
       "src/flask/testing.py",
-      "src/flask/ctx.py",
       "src/flask/app.py",
-      "src/flask/sansio/app.py",
       "src/flask/cli.py",
+      "src/flask/ctx.py",
+      "src/flask/sansio/app.py",
       "src/flask/sansio/blueprints.py"
     ],
-    "latency_s": 0.12398462498094887
+    "latency_s": 0.040323667009943165
   },
   {
     "id": "q17",
@@ -269,16 +265,16 @@
       "src/flask/templating.py"
     ],
     "ranked_files": [
-      "src/flask/debughelpers.py",
       "src/flask/helpers.py",
       "src/flask/templating.py",
+      "src/flask/debughelpers.py",
+      "src/flask/sansio/blueprints.py",
       "src/flask/app.py",
       "src/flask/sansio/scaffold.py",
       "src/flask/sansio/app.py",
-      "src/flask/sansio/blueprints.py",
-      "src/flask/cli.py"
+      "src/flask/signals.py"
     ],
-    "latency_s": 0.11590999999316409
+    "latency_s": 0.03916966600809246
   },
   {
     "id": "q18",
@@ -292,10 +288,10 @@
       "src/flask/sansio/scaffold.py",
       "src/flask/__init__.py",
       "src/flask/sansio/blueprints.py",
-      "examples/celery/src/task_app/__init__.py",
-      "src/flask/cli.py"
+      "src/flask/signals.py",
+      "examples/celery/src/task_app/__init__.py"
     ],
-    "latency_s": 0.1412927920173388
+    "latency_s": 0.04309708300570492
   },
   {
     "id": "q19",
@@ -308,11 +304,11 @@
       "src/flask/logging.py",
       "src/flask/app.py",
       "src/flask/cli.py",
-      "examples/tutorial/flaskr/auth.py",
       "src/flask/__main__.py",
-      "src/flask/sansio/blueprints.py"
+      "src/flask/sansio/blueprints.py",
+      "src/flask/helpers.py"
     ],
-    "latency_s": 0.15686795898363926
+    "latency_s": 0.05070579200400971
   },
   {
     "id": "q20",
@@ -324,13 +320,11 @@
       "src/flask/ctx.py",
       "src/flask/templating.py",
       "src/flask/globals.py",
+      "src/flask/json/provider.py",
       "src/flask/wrappers.py",
-      "src/flask/debughelpers.py",
-      "examples/javascript/js_example/views.py",
-      "src/flask/app.py",
-      "src/flask/json/provider.py"
+      "src/flask/debughelpers.py"
     ],
-    "latency_s": 0.12052450000192039
+    "latency_s": 0.037073499988764524
   },
   {
     "id": "q21",
@@ -346,7 +340,7 @@
       "src/flask/app.py",
       "src/flask/debughelpers.py"
     ],
-    "latency_s": 0.10194420898915268
+    "latency_s": 0.03529595799045637
   },
   {
     "id": "q22",
@@ -362,7 +356,7 @@
       "src/flask/sansio/scaffold.py",
       "src/flask/wrappers.py"
     ],
-    "latency_s": 0.10056312501546927
+    "latency_s": 0.03613408400269691
   },
   {
     "id": "q23",
@@ -373,13 +367,13 @@
     "ranked_files": [
       "src/flask/app.py",
       "src/flask/wrappers.py",
-      "src/flask/debughelpers.py",
       "src/flask/sansio/scaffold.py",
       "src/flask/helpers.py",
+      "src/flask/sansio/app.py",
       "src/flask/json/provider.py",
-      "src/flask/typing.py"
+      "src/flask/ctx.py"
     ],
-    "latency_s": 0.12453066601301543
+    "latency_s": 0.03674825000052806
   },
   {
     "id": "q24",
@@ -393,10 +387,10 @@
       "src/flask/app.py",
       "src/flask/sansio/scaffold.py",
       "src/flask/sansio/blueprints.py",
-      "examples/tutorial/flaskr/auth.py",
-      "src/flask/wrappers.py"
+      "src/flask/wrappers.py",
+      "examples/tutorial/flaskr/auth.py"
     ],
-    "latency_s": 0.11361775000113994
+    "latency_s": 0.03996520799410064
   },
   {
     "id": "q25",
@@ -410,10 +404,10 @@
       "src/flask/helpers.py",
       "src/flask/sansio/scaffold.py",
       "src/flask/ctx.py",
-      "examples/celery/src/task_app/views.py",
+      "examples/tutorial/flaskr/auth.py",
       "src/flask/typing.py"
     ],
-    "latency_s": 0.12696349999168888
+    "latency_s": 0.039671499995165505
   },
   {
     "id": "q26",
@@ -424,12 +418,12 @@
     "ranked_files": [
       "src/flask/sansio/scaffold.py",
       "src/flask/app.py",
-      "src/flask/helpers.py",
       "src/flask/sansio/app.py",
+      "src/flask/helpers.py",
       "src/flask/sansio/blueprints.py",
       "src/flask/debughelpers.py"
     ],
-    "latency_s": 0.09536545799346641
+    "latency_s": 0.04196645799675025
   },
   {
     "id": "q27",
@@ -442,12 +436,11 @@
       "src/flask/sansio/scaffold.py",
       "src/flask/sansio/app.py",
       "src/flask/app.py",
-      "src/flask/templating.py",
       "src/flask/cli.py",
       "src/flask/sansio/blueprints.py",
       "src/flask/config.py"
     ],
-    "latency_s": 0.10123075000592507
+    "latency_s": 0.04307229199912399
   },
   {
     "id": "q28",
@@ -457,15 +450,14 @@
     ],
     "ranked_files": [
       "src/flask/wrappers.py",
-      "examples/celery/src/task_app/views.py",
-      "src/flask/app.py",
       "src/flask/views.py",
       "src/flask/ctx.py",
-      "src/flask/debughelpers.py",
+      "examples/celery/src/task_app/views.py",
+      "src/flask/app.py",
       "src/flask/json/provider.py",
-      "examples/javascript/js_example/views.py"
+      "src/flask/sansio/scaffold.py"
     ],
-    "latency_s": 0.1332521669974085
+    "latency_s": 0.0475142500072252
   },
   {
     "id": "q29",
@@ -479,9 +471,10 @@
       "src/flask/sansio/app.py",
       "src/flask/ctx.py",
       "examples/tutorial/flaskr/db.py",
-      "src/flask/testing.py"
+      "src/flask/testing.py",
+      "src/flask/sansio/scaffold.py"
     ],
-    "latency_s": 0.14563770798849873
+    "latency_s": 0.03717054199660197
   },
   {
     "id": "q30",
@@ -491,15 +484,14 @@
     ],
     "ranked_files": [
       "src/flask/cli.py",
-      "src/flask/sansio/app.py",
       "src/flask/app.py",
-      "examples/tutorial/flaskr/db.py",
-      "src/flask/ctx.py",
+      "src/flask/sansio/app.py",
       "src/flask/sansio/blueprints.py",
-      "src/flask/testing.py",
-      "src/flask/config.py"
+      "src/flask/ctx.py",
+      "src/flask/sansio/scaffold.py",
+      "examples/tutorial/flaskr/db.py"
     ],
-    "latency_s": 0.10566254198784009
+    "latency_s": 0.04702358299982734
   },
   {
     "id": "q31",
@@ -509,13 +501,13 @@
     ],
     "ranked_files": [
       "src/flask/sansio/scaffold.py",
-      "src/flask/sansio/app.py",
-      "src/flask/debughelpers.py",
       "src/flask/app.py",
       "src/flask/sansio/blueprints.py",
+      "src/flask/sansio/app.py",
+      "src/flask/debughelpers.py",
       "src/flask/blueprints.py"
     ],
-    "latency_s": 0.11458304201369174
+    "latency_s": 0.03864883299684152
   },
   {
     "id": "q32",
@@ -524,16 +516,16 @@
       "src/flask/signals.py"
     ],
     "ranked_files": [
+      "src/flask/signals.py",
       "examples/celery/make_celery.py",
-      "src/flask/debughelpers.py",
-      "src/flask/sansio/app.py",
-      "src/flask/app.py",
       "src/flask/ctx.py",
       "src/flask/sessions.py",
-      "docs/conf.py",
+      "examples/javascript/js_example/__init__.py",
+      "src/flask/sansio/app.py",
+      "src/flask/app.py",
       "src/flask/config.py",
-      "src/flask/cli.py"
+      "docs/conf.py"
     ],
-    "latency_s": 0.10193437497946434
+    "latency_s": 0.03784891701070592
   }
 ]

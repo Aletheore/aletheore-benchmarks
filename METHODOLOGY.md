@@ -24,12 +24,57 @@ Measured two ways, because the first way was misleading.
 
 | | in-process (library) | via CLI (user-experienced) |
 |---|---|---|
-| Aletheore | 125 ms mean / 115 median / 184 p95 | 2853 ms mean |
+| Aletheore | 125 ms mean / 115 median / 184 p95 (0.8.11) | 2853 ms mean |
 | RepoWise | **68 ms** mean / 67 median / 80 p95 | 3025 ms mean |
 
-**RepoWise's retrieval is ~1.8x faster than ours in-process.** Via CLI the two are
-within ~6% of each other; most of that number is Python interpreter + import
-startup (~709 ms floor for RepoWise's CLI), not retrieval.
+**Re-verified 2026-08-22 against current versions (Aletheore 0.9.0, RepoWise
+0.27.0)**, using `scripts/run_aletheore.py` and the now-committed
+`scripts/run_repowise_inprocess.py` (previously this row had no backing
+script - see below):
+
+| | in-process (library) |
+|---|---|
+| Aletheore | 40.5 ms mean / 39.1 median / 47.5 p95 |
+| RepoWise | 52.5 ms mean / 51.4 median / 61.3 p95 |
+
+Aletheore is now faster in-process, not slower - reversed from the 0.8.11
+figures above, not just closed. Two things changed to get a trustworthy
+number here, both real bugs this repo had been carrying silently:
+
+1. **`run_aletheore.py` didn't pin `allow_hosted=False`.** `search_index()`
+   prefers Aletheore's hosted embedding endpoint whenever a saved
+   `ALETHEORE_API_TOKEN`/credential is available - correct product
+   behavior, wrong benchmark behavior, since this "in-process" number is
+   supposed to isolate local compute. An unpinned re-run on a machine with
+   a stale saved credential measured ~205ms instead of ~40-53ms for the
+   identical corpus and questions - indistinguishable from a real
+   regression without the pin. `run_aletheore.py` now passes
+   `allow_hosted=False` explicitly and prints when it declines an
+   available hosted path, so the number is deterministic regardless of the
+   runner's login state.
+2. **RepoWise's "68 ms" figure was never backed by a committed script.**
+   The only script that measured RepoWise (`run_repowise.py`) always
+   subprocesses `repowise search` per query, which pays the cost of
+   importing the `lancedb` package (~2.5-3.5s, measured via cProfile) on
+   *every single query* - not retrieval, Python import machinery. That is
+   the real, correct number for what a user experiences invoking the CLI
+   once per query (see the "via CLI" column), but it cannot reproduce
+   "68 ms in-process" - that figure was asserted in prose with nothing to
+   re-derive it from, unlike every other number in this file.
+   `scripts/run_repowise_inprocess.py` (new) calls RepoWise's
+   `LanceDBVectorStore.search()` directly in one long-lived process, the
+   same way `run_aletheore.py` calls `search_index()` - simulating a
+   long-lived caller (an MCP server, or the CLI run in a loop) that pays
+   the import cost once instead of per query. Its result, 52.5ms, closely
+   matches the original 68ms claim - the claim itself was directionally
+   right, just unreproducible from what was committed.
+
+**RepoWise's retrieval is ~1.8x faster than ours in-process, as measured at
+0.8.11.** Via CLI the two are within ~6% of each other; most of that number
+is Python interpreter + import startup (~709 ms floor for RepoWise's CLI),
+not retrieval. **As of 0.9.0, re-measured with both gaps above closed,
+Aletheore is faster in-process instead** - re-run both scripts before
+citing either figure, since the 0.8.11 row is no longer current.
 
 ## Setup cost (one-time)
 

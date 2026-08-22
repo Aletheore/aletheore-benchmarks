@@ -19,13 +19,22 @@ _bench.check_corpus_commit()
 REPO = Path(_bench.FLASK)
 questions = _bench.load_questions("location")
 
-# Warm-up so the first query does not absorb one-time model/table load cost.
-search_index(REPO, "warm up the index and embedder", k=10)
+# allow_hosted=False, always: search_index() prefers Aletheore's hosted
+# embedding endpoint whenever a saved token/ALETHEORE_API_TOKEN is present -
+# correct product behavior, wrong benchmark behavior. This "in-process"
+# number is supposed to measure local compute only; without pinning this,
+# the exact same script silently measures a real network round-trip instead
+# whenever it happens to run on a machine that's logged in, with no signal
+# that anything changed. Reproduced directly: an unpinned run on a machine
+# with a stale saved credential returned ~205ms instead of ~53ms for the
+# identical corpus and questions - indistinguishable from a real regression
+# without this pin.
+search_index(REPO, "warm up the index and embedder", k=10, allow_hosted=False)
 
 out, latencies = [], []
 for q in questions:
     started = time.perf_counter()
-    hits = search_index(REPO, q["q"], k=10)
+    hits = search_index(REPO, q["q"], k=10, allow_hosted=False)
     elapsed = time.perf_counter() - started
     latencies.append(elapsed)
 
