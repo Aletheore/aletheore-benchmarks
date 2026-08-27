@@ -76,59 +76,43 @@ supports. On tokens, Aletheore costs more than the grep/read/list baseline
 (as expected — a real tool adds real tokens) but meaningfully less than
 Graphify.
 
-## Setup time: an honest loss, only partially addressed
+## Setup time: closed the scan gap, indexing is now the real one
 
 Graphify's `graphify extract . --code-only` builds its full graph — including
-its own local embeddings — on ERPNext in **~1 minute**. Aletheore's
-equivalent is two separate steps: `aletheore scan .` (~4 minutes) plus a
-separate `aletheore index .` semantic-embedding pass (~19 minutes on this
-machine, local Ollama `nomic-embed-text`, zero hosted calls) — **~23 minutes
-total**, a real and significant gap in the other tool's favor.
+its own local embeddings — on ERPNext in **~1 minute**. When we first wrote
+this section, Aletheore's equivalent was two separate steps totaling **~23
+minutes**: `aletheore scan .` (~4 minutes) plus a separate `aletheore index .`
+semantic-embedding pass (~19 minutes, local Ollama `nomic-embed-text`, zero
+hosted calls) — a real, significant gap.
 
-We looked into closing it before publishing rather than after. A known,
-previously-deferred fix — parallelizing `build_module_graph`'s tree-sitter
-parsing with `ProcessPoolExecutor` (`ThreadPoolExecutor` doesn't help there;
-tree-sitter's Python binding holds the GIL) — shipped and is live on master.
-Measured with real, fresh (no-cache) full `aletheore scan .` wall-clock runs
-on this same pinned ERPNext checkout:
+We investigated rather than shipped that gap as-is. Profiling the ~4-minute
+scan found dead-code detection's dotted-string reference check was **77% of
+total scan wall-clock** (181.92s) — an O(candidates × files) regex scan, not
+the tree-sitter parsing step a first guess would suspect (7-10s, 3% of
+total). Fixed both: parsing parallelized (`ProcessPoolExecutor`) and, the
+real lever, dead-code detection's check replaced with an O(files) index —
+same matching semantics, verified via parity tests against the original
+algorithm plus exact set-equality on real ERPNext output. **Shipped in
+aletheore 0.9.5**, verified live against the actual PyPI-installed release,
+not the dev branch:
 
-| | total wall-clock | parsing phase alone |
-|---|---|---|
-| sequential (pre-fix) | 239.03s | 10.47s |
-| parallel (current, merged) | 236.02s | 7.18s |
+| | total wall-clock |
+|---|---|
+| before (0.9.4) | 236.02s |
+| after (0.9.5, installed from PyPI, re-verified) | 53.23s |
 
-The fix is real: parsing itself got **~30% faster** (10.47s → 7.18s). But
-it only moves the total by **~3 seconds — about 1.3%** — because parsing was
-never the dominant cost. A full per-phase breakdown of the parallel run
-shows why:
+**4.4x faster, real and confirmed** — `aletheore scan .` now costs about the
+same order of magnitude as Graphify's entire extract step, not 4 minutes
+against their 1.
 
-| phase | time | share |
-|---|---|---|
-| **dead-code detection** | **181.92s** | **77%** |
-| secrets scan (working tree) | 14.75s | 6% |
-| secrets scan (git history) | 12.19s | 5% |
-| endpoint mapping | 11.90s | 5% |
-| module parsing (parallel) | 7.18s | 3% |
-| clustering / layer analysis | 1.79s | <1% |
-| wrap-up | 2.11s | <1% |
-| git hotspots | 0.53s | <1% |
-| git history / ownership | 0.41s | <1% |
-| OSV.dev dependency lookup | 0.15s | <1% |
-| license detection | ~0.1s | <1% |
-
-Dead-code detection alone is three-quarters of the scan's wall-clock time on
-this corpus — not parsing, and not OSV.dev's network calls (0.15s here, a
-non-issue for this corpus at least). That's the honest answer to "why is
-Aletheore's scan slower than Graphify's extract": we haven't investigated
-*why* dead-code detection costs what it does yet, so we're not claiming a
-fix, just reporting where the time actually goes. It's the next real lever
-if closing this gap further matters, not the parsing step this fix already
-addressed.
-
-The separate `aletheore index` step (embedding, not parsing) is a different,
-I/O-bound bottleneck — waiting on local Ollama calls, not CPU-bound like the
-scan — and is unaddressed by this fix. It's a queued follow-up, not yet
-started.
+That leaves indexing as the honest remaining gap. `aletheore index .`
+(semantic embedding, a separate step Graphify's extract doesn't need since
+its embedding is folded into the same pass) is still **~19 minutes** on this
+machine — I/O-bound waiting on local Ollama calls, unaddressed by the
+scan fix above since it's a different bottleneck (I/O-bound, not CPU-bound
+like parsing). Total local setup is now **~20 minutes**, down from ~23, with
+indexing now the dominant piece rather than scan. A follow-up for this is
+queued, not yet started.
 
 ## Total real cost
 
