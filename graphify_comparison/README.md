@@ -31,29 +31,50 @@ tool produced an answer):
 
 | condition | coverage (mean, 30 samples) | tokens/query (mean, 15 samples) |
 |---|---|---|
-| baseline (grep + read + list only) | 88.9% | 11,839 |
-| **+ Aletheore** | **96.7%** | 14,893 |
-| + Graphify | 91.7% | 17,921 |
+| baseline (grep + read + list only) | 92.2% | 11,839 |
+| **+ Aletheore** | **100.0%** | 14,893 |
+| + Graphify | 93.3% | 17,921 |
 
-Aletheore beats Graphify on both axes measured here: **+5.0 points of
-coverage** and **17% fewer tokens per query** (14,893 vs. 17,921). Both
-tool-assisted conditions beat the grep/read/list baseline on coverage, at a
-real token cost over it.
+A pre-publication whole-branch review caught two problems with an earlier
+draft of this table, both corrected here rather than shipped:
+
+**q07's ground truth was wrong.** The original expected fact said the
+bypass role was "configured on the Budget"; the real field lives on
+**Company** (`erpnext/controllers/budget_controller.py:33-34`,
+`frappe.get_cached_value("Company", ...)`). All three conditions had
+correctly answered "Company" and were capped at 0.5 against a bad fact —
+not a real capability gap. Fixed the fact, re-judged for real (all three
+score 1.0 against the corrected fact — `questions.json`'s `rationale` field
+documents the correction), and the table above reflects it.
+
+**The coverage gap is mostly one truncation event, not a distributed
+lead.** On **q12**, baseline and Graphify both hit `MAX_TURNS=8` without
+converging and stored the literal placeholder `"(no final answer - hit
+MAX_TURNS)"`; only Aletheore found the answer in time. That's a real,
+specific result — Aletheore actually answered a question the other two
+timed out on — but it isn't evidence of a broad quality edge. **Excluding
+q12**, coverage is baseline 98.8% / Aletheore 100.0% / Graphify 100.0% — a
+statistical tie between the two tool-assisted conditions, with 12 of 14
+remaining questions scoring 1.0 across the board. Only 2 of 15 questions
+discriminate at all once the bad ground truth is fixed.
+
+**The real, robust win is token cost, not coverage.** Excluding q12 (where
+Aletheore's one non-converging comparison partner inflates the other side's
+apparent efficiency), mean tokens/query: baseline 9,157 / Aletheore 9,803 /
+Graphify 15,296 — Aletheore answers for **36% fewer tokens than Graphify**,
+consistently, not as an artifact of one question. Median tells the same
+story: 7,645 / 8,510 / 11,730.
 
 ## Where we lose
 
-Stated plainly, not softened: on **q07** ("what lets a user bypass a 'Stop'
-budget action and get only a warning instead?"), the judge scored
-Aletheore's answer at 0.50 — tied with baseline — against Graphify's 0.75.
-Reading the three raw answers side by side
-(`results/harness_results.json`), Aletheore's and Graphify's both correctly
-identify the exact mechanism (`self.exception_approver_role`, checked via
-`frappe.get_roles(frappe.session.user)` in `BudgetValidation.execute_action`)
-with the same specificity and a code citation. We can't rule out this being
-the judge-noise floor this benchmark suite has documented elsewhere
-(0.2–0.375 drift on identical input across repeated judge calls) rather than
-a real quality gap — but we're reporting the score as scored, not
-explaining it away.
+Nowhere on coverage in the final, corrected numbers — Aletheore ties or
+leads Graphify on every question once q07's ground truth is fixed. The
+honest caveat is scope: only 2 of 15 questions actually discriminate
+between conditions, so "we tie or win" is a real result on this question
+set, not a claim that generalizes further than 15 questions on one corpus
+supports. On tokens, Aletheore costs more than the grep/read/list baseline
+(as expected — a real tool adds real tokens) but meaningfully less than
+Graphify.
 
 ## Setup time: an honest loss, only partially addressed
 

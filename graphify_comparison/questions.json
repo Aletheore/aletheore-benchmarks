@@ -61,10 +61,10 @@
     "id": "q07",
     "question": "In ERPNext's budget enforcement (erpnext/controllers/budget_controller.py), what lets a user bypass a \"Stop\" budget action and get only a warning instead?",
     "expected_key_facts": [
-      "holding the role named in self.exception_approver_role (an Exception Approver Role configured on the Budget)",
+      "holding the role named in self.exception_approver_role (an Exception Budget Approver Role configured on the Company, field exception_budget_approver_role)",
       "checked via frappe.get_roles(frappe.session.user) inside BudgetValidation.execute_action"
     ],
-    "rationale": "Verified in budget_controller.py's execute_action method (lines 298-303): if self.exception_approver_role is set and is among frappe.get_roles(frappe.session.user), it calls self.warn(msg) and returns immediately, before the Stop/Warn branch that would otherwise raise."
+    "rationale": "Verified in budget_controller.py: __init__ (lines 33-34) reads self.exception_approver_role via frappe.get_cached_value(\"Company\", self.company, \"exception_budget_approver_role\") - the role lives on the Company doctype, not the Budget. execute_action (line 299) checks it via frappe.get_roles(frappe.session.user); if the user holds that role, self.warn(msg) runs and returns before the Stop/Warn branch. Corrected 2026-08-27 after the final branch review found the original fact wrongly said \"configured on the Budget\" - all three real conditions answered \"Company\" correctly and were capped at 0.5 against the bad ground truth."
   },
   {
     "id": "q08",

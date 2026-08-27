@@ -111,13 +111,13 @@
     "run": 0,
     "question_id": "q07",
     "condition": "baseline",
-    "coverage": 0.5
+    "coverage": 1.0
   },
   {
     "run": 0,
     "question_id": "q07",
     "condition": "aletheore",
-    "coverage": 0.5
+    "coverage": 1.0
   },
   {
     "run": 0,
@@ -381,19 +381,19 @@
     "run": 1,
     "question_id": "q07",
     "condition": "baseline",
-    "coverage": 0.5
+    "coverage": 1.0
   },
   {
     "run": 1,
     "question_id": "q07",
     "condition": "aletheore",
-    "coverage": 0.5
+    "coverage": 1.0
   },
   {
     "run": 1,
     "question_id": "q07",
     "condition": "graphify",
-    "coverage": 0.5
+    "coverage": 1.0
   },
   {
     "run": 1,

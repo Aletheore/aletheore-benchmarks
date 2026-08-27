@@ -16,6 +16,11 @@ def set_aletheore_root(root: str) -> None:
 def aletheore_query_tool(kind: str, target: str = "", symbol: str = "") -> str:
     if kind not in _ALLOWED_KINDS:
         return f"error: kind must be one of {sorted(_ALLOWED_KINDS)}, got {kind!r}"
+    if symbol and not target:
+        # CLI positional order is `query KIND TARGET SYMBOL` - without a
+        # target, appending symbol alone would silently land it in the
+        # target slot instead.
+        return "error: symbol requires target to also be set (target is the file path)"
     cmd = ["aletheore", "query", kind]
     if target:
         cmd.append(target)

@@ -15,10 +15,13 @@ def set_root(root: str) -> None:
 
 def grep_tool(pattern: str, path: str = ".") -> str:
     full_path = os.path.join(_ROOT, path)
-    result = subprocess.run(
-        ["grep", "-rn", "--include=*.py", "--include=*.js", pattern, full_path],
-        capture_output=True, text=True, timeout=30,
-    )
+    try:
+        result = subprocess.run(
+            ["grep", "-rn", "--include=*.py", "--include=*.js", pattern, full_path],
+            capture_output=True, text=True, timeout=30,
+        )
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as exc:
+        return f"error: {exc}"
     lines = result.stdout.splitlines()[:50]
     return "\n".join(lines) if lines else "(no matches)"
 

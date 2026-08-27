@@ -13,10 +13,16 @@ def set_graphify_root(root: str) -> None:
 
 def graphify_query_tool(mode: str, query: str = "", a: str = "", b: str = "", x: str = "") -> str:
     if mode == "query":
+        if not query:
+            return "error: mode='query' requires query to be set"
         cmd = ["graphify", "query", query]
     elif mode == "path":
+        if not a or not b:
+            return "error: mode='path' requires both a and b to be set"
         cmd = ["graphify", "path", a, b]
     elif mode == "explain":
+        if not x:
+            return "error: mode='explain' requires x to be set"
         cmd = ["graphify", "explain", x]
     else:
         return f"error: mode must be one of query/path/explain, got {mode!r}"
