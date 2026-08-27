@@ -30,9 +30,16 @@ def smoke_test() -> None:
             f"no Graphify graph at {checkout}/graphify-out/graph.json - "
             f"run `graphify extract . --code-only` inside {checkout} first"
         )
+    if not os.path.exists(os.path.join(checkout, ".aletheore", "index.lancedb")):
+        raise SystemExit(
+            f"no Aletheore semantic index at {checkout}/.aletheore/index.lancedb - "
+            f"run `aletheore index .` inside {checkout} first (needs a local Ollama "
+            f"embedding model - falls back to OpenAI otherwise, which costs real money "
+            f"and needs a key outside this benchmark's budget)"
+        )
 
     result = subprocess.run(
-        ["aletheore", "query", "symbols", "--path", checkout],
+        ["aletheore", "query", "search-codebase", "sales invoice validation", "--path", checkout],
         capture_output=True, text=True, timeout=60,
     )
     if result.returncode != 0:
