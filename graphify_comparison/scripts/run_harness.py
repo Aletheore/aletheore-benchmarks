@@ -1,5 +1,5 @@
 """Drives agent_loop.run_one across every (question, condition) pair,
-writing raw results for judge.py to score. Real-money script (每 call costs
+writing raw results for judge.py to score. Real-money script (every call costs
 real tokens) - run once deliberately, not repeatedly while iterating."""
 import json
 import os
