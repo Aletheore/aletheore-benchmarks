@@ -31,3 +31,19 @@ def test_list_dir_tool_lists_real_entries():
         out = list_dir_tool(".")
         assert "sub" in out
         assert "file.txt" in out
+
+
+def test_read_file_tool_handles_nonexistent_file():
+    with tempfile.TemporaryDirectory() as tmp:
+        set_root(tmp)
+        out = read_file_tool("nonexistent.py")
+        assert "error:" in out
+        assert not out.startswith("Traceback")
+
+
+def test_list_dir_tool_handles_nonexistent_directory():
+    with tempfile.TemporaryDirectory() as tmp:
+        set_root(tmp)
+        out = list_dir_tool("nonexistent_dir")
+        assert "error:" in out
+        assert not out.startswith("Traceback")
