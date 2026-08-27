@@ -20,6 +20,21 @@ def test_parse_judge_response_extracts_coverage_float():
     assert parse_judge_response(raw) == 0.5
 
 
+def test_parse_judge_response_returns_none_on_malformed_json():
+    raw = "not json at all"
+    assert parse_judge_response(raw) is None
+
+
+def test_parse_judge_response_returns_none_on_missing_coverage_key():
+    raw = '{"facts_matched": [true]}'
+    assert parse_judge_response(raw) is None
+
+
+def test_parse_judge_response_returns_none_on_non_numeric_coverage():
+    raw = '{"coverage": "not a number", "facts_matched": [true]}'
+    assert parse_judge_response(raw) is None
+
+
 def test_score_one_calls_client_and_returns_coverage():
     client = MagicMock()
     response = MagicMock()
