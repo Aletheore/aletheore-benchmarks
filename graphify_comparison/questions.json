@@ -1,0 +1,149 @@
+[
+  {
+    "id": "q01",
+    "question": "Which three functions run on ERPNext's wildcard \"*\" validate hook, meaning they fire on every single doctype's validate event, and where are they registered?",
+    "expected_key_facts": [
+      "erpnext/hooks.py, the doc_events dict, under the \"*\" key's \"validate\" list",
+      "erpnext.support.doctype.service_level_agreement.service_level_agreement.apply",
+      "erpnext.setup.doctype.transaction_deletion_record.transaction_deletion_record.check_for_running_deletion_job",
+      "erpnext.stock.doctype.company_restriction.company_restriction.validate_transaction_company"
+    ],
+    "rationale": "Verified by reading erpnext/hooks.py directly: doc_events[\"*\"][\"validate\"] lists exactly these three dotted paths (lines 369-374 of the pinned commit)."
+  },
+  {
+    "id": "q02",
+    "question": "Which function validates that a User's role assignment is consistent with their linked Employee record, and which hooks.py event triggers it?",
+    "expected_key_facts": [
+      "erpnext.setup.doctype.employee.employee.validate_employee_role",
+      "wired to the \"User\" doctype's \"validate\" event in erpnext/hooks.py's doc_events dict"
+    ],
+    "rationale": "Verified in erpnext/hooks.py: doc_events[\"User\"][\"validate\"] = \"erpnext.setup.doctype.employee.employee.validate_employee_role\" (line 391)."
+  },
+  {
+    "id": "q03",
+    "question": "On the Sales Invoice doctype, what functions does hooks.py's doc_events dict wire to on_submit, on_cancel, and on_trash (i.e. logic added outside the SalesInvoice class itself)?",
+    "expected_key_facts": [
+      "on_submit -> erpnext.regional.italy.utils.sales_invoice_on_submit",
+      "on_cancel -> erpnext.regional.italy.utils.sales_invoice_on_cancel",
+      "on_trash -> erpnext.regional.check_deletion_permission"
+    ],
+    "rationale": "Verified in erpnext/hooks.py's doc_events[\"Sales Invoice\"] entry (lines 410-417) - all three are regional/Italy-specific or generic deletion-permission hooks, separate from the class's own validate()/on_submit() methods in sales_invoice.py."
+  },
+  {
+    "id": "q04",
+    "question": "Which five doctypes are in ERPNext's pre_submit_validation_doctypes list in hooks.py, and what single function do they all invoke on validate?",
+    "expected_key_facts": [
+      "Sales Invoice, Purchase Invoice, Delivery Note, Purchase Receipt, Sales Order",
+      "erpnext.accounts.utils.pre_submit_validation"
+    ],
+    "rationale": "Verified in erpnext/hooks.py: pre_submit_validation_doctypes (lines 360-366) lists exactly these five, and doc_events wires tuple(pre_submit_validation_doctypes) -> validate -> erpnext.accounts.utils.pre_submit_validation (line 380)."
+  },
+  {
+    "id": "q05",
+    "question": "How many doctypes are listed in ERPNext's period_closing_doctypes in hooks.py, and what function does hooks.py wire all of them to on validate?",
+    "expected_key_facts": [
+      "18 doctypes",
+      "erpnext.accounts.doctype.accounting_period.accounting_period.validate_accounting_period_on_doc_save"
+    ],
+    "rationale": "Verified by reading and counting erpnext/hooks.py's period_closing_doctypes list (lines 339-358): Sales Invoice, Purchase Invoice, Journal Entry, Bank Clearance, Stock Entry, Dunning, Invoice Discounting, Payment Entry, Period Closing Voucher, Process Deferred Accounting, Asset, Asset Capitalization, Asset Repair, Delivery Note, Landed Cost Voucher, Purchase Receipt, Stock Reconciliation, Subcontracting Receipt = 18. Wired to validate_accounting_period_on_doc_save via doc_events (line 377)."
+  },
+  {
+    "id": "q06",
+    "question": "In erpnext/controllers/budget_controller.py, what is the difference in behavior between BudgetValidation's \"Stop\" and \"Warn\" budget actions?",
+    "expected_key_facts": [
+      "erpnext/controllers/budget_controller.py, the BudgetValidation.execute_action method",
+      "\"Stop\" calls self.stop(), which raises a BudgetError via frappe.throw - blocks the transaction",
+      "\"Warn\" calls self.warn(), which shows a frappe.msgprint message - does not block"
+    ],
+    "rationale": "Verified by reading budget_controller.py directly: stop() (line 292) calls frappe.throw(msg, BudgetError, ...); warn() (line 295) calls frappe.msgprint(...); execute_action() (line 298) branches on the action string to call one or the other."
+  },
+  {
+    "id": "q07",
+    "question": "In ERPNext's budget enforcement (erpnext/controllers/budget_controller.py), what lets a user bypass a \"Stop\" budget action and get only a warning instead?",
+    "expected_key_facts": [
+      "holding the role named in self.exception_approver_role (an Exception Budget Approver Role configured on the Company, field exception_budget_approver_role)",
+      "checked via frappe.get_roles(frappe.session.user) inside BudgetValidation.execute_action"
+    ],
+    "rationale": "Verified in budget_controller.py: __init__ (lines 33-34) reads self.exception_approver_role via frappe.get_cached_value(\"Company\", self.company, \"exception_budget_approver_role\") - the role lives on the Company doctype, not the Budget. execute_action (line 299) checks it via frappe.get_roles(frappe.session.user); if the user holds that role, self.warn(msg) runs and returns before the Stop/Warn branch. Corrected 2026-08-27 after the final branch review found the original fact wrongly said \"configured on the Budget\" - all three real conditions answered \"Company\" correctly and were capped at 0.5 against the bad ground truth."
+  },
+  {
+    "id": "q08",
+    "question": "What does SalesInvoice.on_submit() do in erpnext/accounts/doctype/sales_invoice/sales_invoice.py, and under what condition is its approving-authority check skipped?",
+    "expected_key_facts": [
+      "erpnext/accounts/doctype/sales_invoice/sales_invoice.py, SalesInvoice.on_submit (around line 426)",
+      "calls POSService(self).validate_pos_paid_amount()",
+      "checks approving authority via frappe.get_cached_doc(\"Authorization Control\").validate_approving_authority(...) against base_grand_total",
+      "the approving-authority check is skipped when self.auto_repeat is set (i.e. the invoice came from an Auto Repeat subscription)"
+    ],
+    "rationale": "Verified by reading sales_invoice.py directly (lines 426-432): on_submit calls POSService validation unconditionally, then only runs the Authorization Control check `if not self.auto_repeat`."
+  },
+  {
+    "id": "q09",
+    "question": "In erpnext/accounts/doctype/payment_entry/payment_entry.py, under what condition does PaymentEntry.validate_received_amount() raise an error, and when is the check skipped entirely?",
+    "expected_key_facts": [
+      "erpnext/accounts/doctype/payment_entry/payment_entry.py, PaymentEntry.validate_received_amount (around line 966)",
+      "throws \"Received Amount cannot be greater than Paid Amount\" when paid_amount < received_amount",
+      "the check only runs when paid_from_account_currency == paid_to_account_currency - it is skipped entirely for cross-currency payments"
+    ],
+    "rationale": "Verified by reading payment_entry.py directly (lines 966-969): the whole body is nested inside `if self.paid_from_account_currency == self.paid_to_account_currency:`."
+  },
+  {
+    "id": "q10",
+    "question": "How does Company.validate_abbr() in erpnext/setup/doctype/company/company.py generate a missing company abbreviation, and what uniqueness rule does it enforce?",
+    "expected_key_facts": [
+      "erpnext/setup/doctype/company/company.py, Company.validate_abbr (around line 344)",
+      "if no abbreviation is set, it builds one from the first letter of each word in company_name, uppercased",
+      "throws \"Abbreviation already used for another company\" if another Company document already has the same abbr"
+    ],
+    "rationale": "Verified by reading company.py directly (lines 344-354): `self.abbr = \"\".join(c[0] for c in self.company_name.split()).upper()` when abbr is falsy, then a frappe.db.exists check against other Company rows with the same abbr."
+  },
+  {
+    "id": "q11",
+    "question": "What setting controls whether ERPNext's auto_close_tickets scheduled job actually closes any Support Issues, and what status must an Issue be in to be eligible?",
+    "expected_key_facts": [
+      "erpnext/support/doctype/issue/issue.py, auto_close_tickets function (around line 231)",
+      "controlled by Support Settings.close_issue_after_days - the job returns immediately (feature disabled) if that value is 0/falsy",
+      "eligible issues must be in \"Replied\" status and have gone unmodified longer than that many days"
+    ],
+    "rationale": "Verified by reading issue.py directly (lines 231-246): reads close_issue_after_days via frappe.db.get_single_value, returns early if falsy, otherwise queries Issues where modified is older than that interval and status == \"Replied\"."
+  },
+  {
+    "id": "q12",
+    "question": "In erpnext/stock/doctype/repost_item_valuation/repost_item_valuation.py, which two scheduled stock-reposting functions are mutually exclusive, and what single setting decides which one actually runs?",
+    "expected_key_facts": [
+      "run_parallel_reposting() (registered as a 15-minute cron job) and repost_entries() (registered as an hourly_maintenance job)",
+      "both in erpnext/stock/doctype/repost_item_valuation/repost_item_valuation.py",
+      "controlled by Stock Reposting Settings.enable_parallel_reposting - run_parallel_reposting only proceeds when it's enabled, repost_entries only proceeds when it's NOT enabled"
+    ],
+    "rationale": "Verified by reading repost_item_valuation.py directly: run_parallel_reposting (line 791) returns early `if not ...enable_parallel_reposting`; repost_entries (line 873) returns early `if ...enable_parallel_reposting` (the opposite check) - and both are cross-referenced in erpnext/hooks.py's scheduler_events (cron \"0/15 * * * *\" and hourly_maintenance respectively)."
+  },
+  {
+    "id": "q13",
+    "question": "What base class does ERPNext's WorkOrder doctype (erpnext/manufacturing/doctype/work_order/work_order.py) inherit from, and how many custom ValidationError subclasses does that module define immediately above the class?",
+    "expected_key_facts": [
+      "erpnext/manufacturing/doctype/work_order/work_order.py",
+      "WorkOrder inherits directly from Document (frappe's base Document class), not from a shared accounts/selling/buying controller",
+      "6 custom exception classes defined just above it, all subclassing frappe.ValidationError: OverProductionError, CapacityError, StockOverProductionError, OperationTooLongError, ItemHasVariantError, SerialNoQtyError"
+    ],
+    "rationale": "Verified by reading work_order.py directly (lines 71-95): six `class X(frappe.ValidationError):` definitions immediately precede `class WorkOrder(Document):`."
+  },
+  {
+    "id": "q14",
+    "question": "What does WorkOrder.validate_dates() check about planned and actual start/end dates?",
+    "expected_key_facts": [
+      "erpnext/manufacturing/doctype/work_order/work_order.py, WorkOrder.validate_dates (around line 322)",
+      "throws \"Planned End Date cannot be before Planned Start Date\" if planned_end_date < planned_start_date (only when both are set)",
+      "throws \"Actual End Date cannot be before Actual Start Date\" if actual_end_date < actual_start_date (only when both are set)"
+    ],
+    "rationale": "Verified by reading work_order.py directly (lines 322-329): two independent `if` blocks, each guarded on both dates being present before comparing them."
+  },
+  {
+    "id": "q15",
+    "question": "In erpnext/hooks.py, which single function handles every one of ERPNext's naming-series variable substitutions (e.g. FY, TFY, ABBR, MM, DD, YY, YYYY, JJJ, WW)?",
+    "expected_key_facts": [
+      "erpnext.accounts.utils.parse_naming_series_variable",
+      "erpnext/hooks.py's naming_series_variables dict maps every variable in naming_series_variables_list to this same one function"
+    ],
+    "rationale": "Verified by reading erpnext/hooks.py directly (lines 447-451): naming_series_variables is a dict comprehension over naming_series_variables_list = [\"FY\", \"TFY\", \"ABBR\", \"MM\", \"DD\", \"YY\", \"YYYY\", \"JJJ\", \"WW\"], every one mapped to the same string \"erpnext.accounts.utils.parse_naming_series_variable\"."
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "repo": "https://github.com/frappe/erpnext",
+  "commit": "d6956790d8f8940696783bc7ca85438ecd7d4b6e",
+  "license": "GPL-3.0",
+  "checkout_env_var": "ERPNEXT_CHECKOUT",
+  "checkout_default": "~/.aletheore-bench/erpnext"
+}
