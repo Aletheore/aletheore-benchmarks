@@ -1,0 +1,317 @@
+[
+  {
+    "question_id": "q01",
+    "condition": "baseline",
+    "answer": "The three functions are registered in `erpnext/hooks.py` (line 368, inside `doc_events = { \"*\": { \"validate\": [...] } }`):\n\n1. `erpnext.support.doctype.service_level_agreement.service_level_agreement.apply`\n2. `erpnext.setup.doctype.transaction_deletion_record.transaction_deletion_record.check_for_running_deletion_job`\n3. `erpnext.stock.doctype.company_restriction.company_restriction.validate_transaction_company`\n\nThey are registered under the `\"*\"` wildcard key of the `doc_events` dict in `erpnext/hooks.py`, so they fire on every doctype's `validate` event.",
+    "total_tokens": 7645,
+    "turns": 5
+  },
+  {
+    "question_id": "q01",
+    "condition": "aletheore",
+    "answer": "The three functions registered on ERPNext's wildcard `\"*\"` validate hook are:\n\n1. **`erpnext.support.doctype.service_level_agreement.service_level_agreement.apply`**\n2. **`erpnext.setup.doctype.transaction_deletion_record.transaction_deletion_record.check_for_running_deletion_job`**\n3. **`erpnext.stock.doctype.company_restriction.company_restriction.validate_transaction_company`**\n\nThey are registered in **`erpnext/hooks.py`** in the `doc_events` dictionary, under the `\"*\"` doctype key with a `\"validate\"` event (lines 369\u2013376):\n\n```python\ndoc_events = {\n\t\"*\": {\n\t\t\"validate\": [\n\t\t\t\"erpnext.support.doctype.service_level_agreement.service_level_agreement.apply\",\n\t\t\t\"erpnext.setup.doctype.transaction_deletion_record.transaction_deletion_record.check_for_running_deletion_job\",\n\t\t\t\"erpnext.stock.doctype.company_restriction.company_restriction.validate_transaction_company\",\n\t\t],\n\t},\n\t...\n```\n\nBecause of the `\"*\"` key, these fire on the `validate` event of every doctype.",
+    "total_tokens": 13911,
+    "turns": 6
+  },
+  {
+    "question_id": "q01",
+    "condition": "graphify",
+    "answer": "The three functions are registered in the `doc_events` dictionary in **`erpnext/hooks.py`** (around lines 368\u2013376), under the wildcard key `\"*\"` \u2192 `\"validate\"`:\n\n```python\ndoc_events = {\n    \"*\": {\n        \"validate\": [\n            \"erpnext.support.doctype.service_level_agreement.service_level_agreement.apply\",\n            \"erpnext.setup.doctype.transaction_deletion_record.transaction_deletion_record.check_for_running_deletion_job\",\n            \"erpnext.stock.doctype.company_restriction.company_restriction.validate_transaction_company\",\n        ],\n    },\n    ...\n```\n\nSo the three functions are:\n\n1. **`erpnext.support.doctype.service_level_agreement.service_level_agreement.apply`** \u2014 defined in `erpnext/support/doctype/service_level_agreement/service_level_agreement.py:503` (`def apply(doc, method=None)`)\n2. **`erpnext.setup.doctype.transaction_deletion_record.transaction_deletion_record.check_for_running_deletion_job`** \u2014 defined in `erpnext/setup/doctype/transaction_deletion_record/transaction_deletion_record.py:1125` (`def check_for_running_deletion_job(doc, method=None)`)\n3. **`erpnext.stock.doctype.company_restriction.company_restriction.validate_transaction_company`** \u2014 defined in `erpnext/stock/doctype/company_restriction/company_restriction.py:130` (`def validate_transaction_company(doc, method=None)`)\n\nRegistration location: **`erpnext/hooks.py`**, in the `doc_events` dict under the `\"*\"` doctype key's `\"validate\"` event.",
+    "total_tokens": 32001,
+    "turns": 8
+  },
+  {
+    "question_id": "q02",
+    "condition": "baseline",
+    "answer": "The function is **`validate_employee_role`**, defined in **`erpnext/setup/doctype/employee/employee.py`** (line 352). It checks whether a User has a linked Employee record; if no Employee is mapped to the user, it removes the \"Employee\" and \"Employee Self Service\" roles from that user.\n\nIt is triggered by the **`validate`** event on the **`User`** doctype in the `doc_events` dictionary in **`erpnext/hooks.py`** (line 391):\n\n```python\n\"User\": {\n    \"after_insert\": \"frappe.contacts.doctype.contact.contact.update_contact\",\n    \"validate\": \"erpnext.setup.doctype.employee.employee.validate_employee_role\",\n    \"on_update\": \"erpnext.portal.utils.set_default_role\",\n},\n```",
+    "total_tokens": 9663,
+    "turns": 4
+  },
+  {
+    "question_id": "q02",
+    "condition": "aletheore",
+    "answer": "The function is **`validate_employee_role`** in `erpnext/setup/doctype/employee/employee.py` (line 352). It removes the \"Employee\" and \"Employee Self Service\" roles from a User if there is no Employee record linked to that user.\n\nIt is triggered by the **`validate` doc event on the `User` doctype** in `erpnext/hooks.py` (line 391):\n\n```python\n\"User\": {\n    \"after_insert\": \"frappe.contacts.doctype.contact.contact.update_contact\",\n    \"validate\": \"erpnext.setup.doctype.employee.employee.validate_employee_role\",\n    \"on_update\": \"erpnext.portal.utils.set_default_role\",\n},\n```\n\nSo: `validate_employee_role` (in `erpnext/setup/doctype/employee/employee.py`), triggered by the `User.validate` hook in `erpnext/hooks.py`.",
+    "total_tokens": 10568,
+    "turns": 5
+  },
+  {
+    "question_id": "q02",
+    "condition": "graphify",
+    "answer": "The function is **`validate_employee_role`** in **`erpnext/setup/doctype/employee/employee.py`** (defined at line 352).\n\nIt is triggered by the **`validate`** event on the **`User`** doctype in **`erpnext/hooks.py`** (line 391):\n\n```python\n\"User\": {\n    \"after_insert\": \"frappe.contacts.doctype.contact.contact.update_contact\",\n    \"validate\": \"erpnext.setup.doctype.employee.employee.validate_employee_role\",\n    \"on_update\": \"erpnext.portal.utils.set_default_role\",\n},\n```\n\n**How it works:** When a User is saved, `validate_employee_role` checks (via `frappe.db.get_value(\"Employee\", {\"user_id\": doc.name})`) whether the User has a linked Employee record. If not, it removes the \"Employee\" and \"Employee Self Service\" roles from the User, since those roles require a mapped Employee. It is also called directly from `Employee.validate` (employee.py line 140) with `ignore_emp_check=True` when an Employee's `user_id` is cleared, so the User doc gets re-saved and the hook fires.",
+    "total_tokens": 9175,
+    "turns": 4
+  },
+  {
+    "question_id": "q03",
+    "condition": "baseline",
+    "answer": "The `doc_events` dict in `erpnext/hooks.py` (around line 404\u2013411) wires the following to the Sales Invoice doctype:\n\n- **on_submit**: `erpnext.regional.italy.utils.sales_invoice_on_submit`\n- **on_cancel**: `erpnext.regional.italy.utils.sales_invoice_on_cancel`\n- **on_trash**: `erpnext.regional.check_deletion_permission`\n\nSource: `erpnext/hooks.py`, `doc_events` dict, `\"Sales Invoice\"` key.",
+    "total_tokens": 4230,
+    "turns": 3
+  },
+  {
+    "question_id": "q03",
+    "condition": "aletheore",
+    "answer": "The `doc_events` dict in `erpnext/hooks.py` (lines 397\u2013404) wires the following for the **Sales Invoice** doctype:\n\n- **on_submit** \u2192 `erpnext.regional.italy.utils.sales_invoice_on_submit`\n- **on_cancel** \u2192 `erpnext.regional.italy.utils.sales_invoice_on_cancel`\n- **on_trash** \u2192 `erpnext.regional.check_deletion_permission`\n\nSource: `erpnext/hooks.py`, `doc_events` under `\"Sales Invoice\":`",
+    "total_tokens": 6432,
+    "turns": 4
+  },
+  {
+    "question_id": "q03",
+    "condition": "graphify",
+    "answer": "In `erpnext/hooks.py` (lines 409\u2013418), the `doc_events` dict wires the following to the Sales Invoice doctype, all defined outside the `SalesInvoice` class:\n\n- **on_submit** \u2192 `erpnext.regional.italy.utils.sales_invoice_on_submit`\n- **on_cancel** \u2192 `erpnext.regional.italy.utils.sales_invoice_on_cancel`\n- **on_trash** \u2192 `erpnext.regional.check_deletion_permission`\n\nWhat each does:\n\n1. **`sales_invoice_on_submit`** (`erpnext/regional/italy/utils.py:304`) \u2014 For Italian e-invoicing: returns early for opening invoices or non-Italian companies; otherwise validates that every Payment Schedule row has a Mode of Payment with a `mode_of_payment_code`, then calls `prepare_and_attach_invoice(doc)`.\n\n2. **`sales_invoice_on_cancel`** (`erpnext/regional/italy/utils.py:371`) \u2014 For Italian companies (skips opening invoices/non-Italian), iterates over the invoice's e-invoice attachments and removes them via `remove_file(...)`.\n\n3. **`check_deletion_permission`** (`erpnext/regional/__init__.py:11`) \u2014 Looks up the company's region; if it is `\"Nepal\"` and the doc is submitted (`doc.docstatus != 0`), it throws `\"Deletion is not permitted for country {0}\"`. (This same function is also wired to Payment Entry's `on_trash`.)",
+    "total_tokens": 20255,
+    "turns": 7
+  },
+  {
+    "question_id": "q04",
+    "condition": "baseline",
+    "answer": "The five doctypes in `pre_submit_validation_doctypes` in `erpnext/hooks.py` (lines 360\u2013365) are:\n\n1. **Sales Invoice**\n2. **Purchase Invoice**\n3. **Delivery Note**\n4. **Purchase Receipt**\n5. **Sales Order**\n\nOn `validate`, they all invoke the single function **`erpnext.accounts.utils.pre_submit_validation`** (defined in `erpnext/accounts/utils.py`). This is wired up in `doc_events` in the same `hooks.py` file (lines 379\u2013380).",
+    "total_tokens": 3657,
+    "turns": 3
+  },
+  {
+    "question_id": "q04",
+    "condition": "aletheore",
+    "answer": "The five doctypes in `pre_submit_validation_doctypes` in `erpnext/hooks.py` (line 360) are:\n\n1. **Sales Invoice**\n2. **Purchase Invoice**\n3. **Delivery Note**\n4. **Purchase Receipt**\n5. **Sales Order**\n\nThey all invoke the single function **`erpnext.accounts.utils.pre_submit_validation`** on `validate` (hooks.py line 379\u2013380, defined in `erpnext/accounts/utils.py` line 2799).",
+    "total_tokens": 4268,
+    "turns": 3
+  },
+  {
+    "question_id": "q04",
+    "condition": "graphify",
+    "answer": "The five doctypes in ERPNext's `pre_submit_validation_doctypes` list in `erpnext/hooks.py` (line 360) are:\n\n1. **Sales Invoice**\n2. **Purchase Invoice**\n3. **Delivery Note**\n4. **Purchase Receipt**\n5. **Sales Order**\n\nThey all invoke the single function **`erpnext.accounts.utils.pre_submit_validation`** on `validate` (defined in `erpnext/hooks.py` lines 379\u2013380, implemented in `erpnext/accounts/utils.py` line 2799).",
+    "total_tokens": 4508,
+    "turns": 3
+  },
+  {
+    "question_id": "q05",
+    "condition": "baseline",
+    "answer": "There are **18 doctypes** listed in `period_closing_doctypes` in `erpnext/hooks.py` (lines 339\u2013358):\n\n1. Sales Invoice\n2. Purchase Invoice\n3. Journal Entry\n4. Bank Clearance\n5. Stock Entry\n6. Dunning\n7. Invoice Discounting\n8. Payment Entry\n9. Period Closing Voucher\n10. Process Deferred Accounting\n11. Asset\n12. Asset Capitalization\n13. Asset Repair\n14. Delivery Note\n15. Landed Cost Voucher\n16. Purchase Receipt\n17. Stock Reconciliation\n18. Subcontracting Receipt\n\nhooks.py wires all of them to the validate event via:\n\n```python\ntuple(period_closing_doctypes): {\n    \"validate\": \"erpnext.accounts.doctype.accounting_period.accounting_period.validate_accounting_period_on_doc_save\",\n},\n```\n\nSo the function is **`erpnext.accounts.doctype.accounting_period.accounting_period.validate_accounting_period_on_doc_save`** (defined in `erpnext/accounts/doctype/accounting_period/accounting_period.py`).",
+    "total_tokens": 3991,
+    "turns": 3
+  },
+  {
+    "question_id": "q05",
+    "condition": "aletheore",
+    "answer": "There are **18 doctypes** listed in `period_closing_doctypes` in `erpnext/hooks.py` (lines 339\u2013358):\n\n1. Sales Invoice\n2. Purchase Invoice\n3. Journal Entry\n4. Bank Clearance\n5. Stock Entry\n6. Dunning\n7. Invoice Discounting\n8. Payment Entry\n9. Period Closing Voucher\n10. Process Deferred Accounting\n11. Asset\n12. Asset Capitalization\n13. Asset Repair\n14. Delivery Note\n15. Landed Cost Voucher\n16. Purchase Receipt\n17. Stock Reconciliation\n18. Subcontracting Receipt\n\nIn `doc_events`, hooks.py wires all of them (via `tuple(period_closing_doctypes)`) on **validate** to the function:\n\n`erpnext.accounts.doctype.accounting_period.accounting_period.validate_accounting_period_on_doc_save`\n\n(Source: `erpnext/hooks.py`, lines 339\u2013358 for the list and line 376\u2013378 for the `doc_events` wiring.)",
+    "total_tokens": 4375,
+    "turns": 3
+  },
+  {
+    "question_id": "q05",
+    "condition": "graphify",
+    "answer": "There are **18 doctypes** listed in `period_closing_doctypes` in `erpnext/hooks.py` (lines 339\u2013357):\n\n1. Sales Invoice\n2. Purchase Invoice\n3. Journal Entry\n4. Bank Clearance\n5. Stock Entry\n6. Dunning\n7. Invoice Discounting\n8. Payment Entry\n9. Period Closing Voucher\n10. Process Deferred Accounting\n11. Asset\n12. Asset Capitalization\n13. Asset Repair\n14. Delivery Note\n15. Landed Cost Voucher\n16. Purchase Receipt\n17. Stock Reconciliation\n18. Subcontracting Receipt\n\nIn the `doc_events` section of `hooks.py` (line 376), all of them are wired via `tuple(period_closing_doctypes)` to the `validate` hook:\n\n```\n\"validate\": \"erpnext.accounts.doctype.accounting_period.accounting_period.validate_accounting_period_on_doc_save\"\n```\n\nSo the function is **`validate_accounting_period_on_doc_save`** in `erpnext/accounts/doctype/accounting_period/accounting_period.py`.\n\n(Source: `erpnext/hooks.py`, lines 339\u2013357 and 376\u2013378)",
+    "total_tokens": 4813,
+    "turns": 3
+  },
+  {
+    "question_id": "q06",
+    "condition": "baseline",
+    "answer": "The key difference is in the `execute_action` method of the `BudgetValidation` class in `erpnext/controllers/budget_controller.py`:\n\n- **\"Stop\"** calls `self.stop(msg)`, which executes `frappe.throw(msg, BudgetError, title=_(\"Budget Exceeded\"))`. This raises a `BudgetError` exception, so validation **fails** and the document/transaction is **blocked** (cannot be saved, submitted, or posted).\n- **\"Warn\"** calls `self.warn(msg)`, which executes `frappe.msgprint(msg, _(\"Budget Exceeded\"))`. This only **displays a warning message** to the user, and the document/transaction is **allowed to proceed** (validation passes).\n\nAdditionally, `execute_action` contains a bypass: if the current user holds the company's `exception_budget_approver_role` (from the `Company` doctype field `exception_budget_approver_role`), even a \"Stop\" action is downgraded to a warning (`self.warn(msg)` and return), so approvers can exceed budgets without the validation throwing.\n\nRelevant code (erpnext/controllers/budget_controller.py):\n\n```python\ndef stop(self, msg):\n    frappe.throw(msg, BudgetError, title=_(\"Budget Exceeded\"))\n\ndef warn(self, msg):\n    frappe.msgprint(msg, _(\"Budget Exceeded\"))\n\ndef execute_action(self, action, msg):\n    if self.exception_approver_role and self.exception_approver_role in frappe.get_roles(\n        frappe.session.user\n    ):\n        self.warn(msg)\n        return\n\n    if action == \"Warn\":\n        self.warn(msg)\n\n    if action == \"Stop\":\n        self.stop(msg)\n```",
+    "total_tokens": 15261,
+    "turns": 4
+  },
+  {
+    "question_id": "q06",
+    "condition": "aletheore",
+    "answer": "The difference is in the `execute_action` method (and its `stop`/`warn` helpers) of the `BudgetValidation` class in `erpnext/controllers/budget_controller.py`:\n\n- **\"Stop\"** calls `stop()`, which does `frappe.throw(msg, BudgetError, title=_(\"Budget Exceeded\"))`. Since `BudgetError` subclasses `frappe.ValidationError` (defined in `erpnext/accounts/doctype/budget/budget.py`), this **raises an exception that aborts the transaction** \u2014 the document (Material Request, Purchase Order, GL Entry, etc.) cannot be saved/submitted when the budget would be exceeded.\n\n- **\"Warn\"** calls `warn()`, which does `frappe.msgprint(msg, _(\"Budget Exceeded\"))`. This **only displays a warning message to the user** and **allows the transaction to proceed** \u2014 no exception is raised.\n\nAdditionally, there's an override in `execute_action`: if the company's `exception_budget_approver_role` is set and the current user holds that role, **both** actions are downgraded to `warn`, so even a \"Stop\" budget will only produce a warning and let the document go through.\n\nRelevant code (`erpnext/controllers/budget_controller.py`):\n\n```python\ndef stop(self, msg):\n    frappe.throw(msg, BudgetError, title=_(\"Budget Exceeded\"))\n\ndef warn(self, msg):\n    frappe.msgprint(msg, _(\"Budget Exceeded\"))\n\ndef execute_action(self, action, msg):\n    if self.exception_approver_role and self.exception_approver_role in frappe.get_roles(\n        frappe.session.user\n    ):\n        self.warn(msg)\n        return\n\n    if action == \"Warn\":\n        self.warn(msg)\n\n    if action == \"Stop\":\n        self.stop(msg)\n```",
+    "total_tokens": 17813,
+    "turns": 4
+  },
+  {
+    "question_id": "q06",
+    "condition": "graphify",
+    "answer": "The difference is in how each action terminates validation, handled by the `stop` and `warn` methods in `erpnext/controllers/budget_controller.py` (class `BudgetValidation`):\n\n- **\"Stop\"** \u2014 calls `self.stop(msg)`, which executes `frappe.throw(msg, BudgetError, title=_(\"Budget Exceeded\"))`. This raises a `BudgetError` (a subclass of `frappe.ValidationError` defined in `erpnext/accounts/doctype/budget/budget.py`), aborting the validation and preventing the document (Purchase Order, Material Request, GL Entry, etc.) from being submitted/saved.\n\n- **\"Warn\"** \u2014 calls `self.warn(msg)`, which executes `frappe.msgprint(msg, _(\"Budget Exceeded\"))`. This only displays an informational message to the user and lets the transaction proceed.\n\nBoth are dispatched from `execute_action(action, msg)` in the same file, which also adds one more nuance: if the current user holds the company's `exception_budget_approver_role` (`exception_budget_approver_role` on the Company doctype), even a configured \"Stop\" is downgraded to a warning (`self.warn(msg)` and return), allowing the budget-exceeding transaction to go through.",
+    "total_tokens": 26600,
+    "turns": 5
+  },
+  {
+    "question_id": "q07",
+    "condition": "baseline",
+    "answer": "The bypass is the **Company's `exception_budget_approver_role`**.\n\nIn `erpnext/controllers/budget_controller.py`, the `BudgetValidation.execute_action` method checks whether the current user holds the role configured in the Company doctype field `exception_budget_approver_role` (loaded in `__init__` via `frappe.get_cached_value(\"Company\", self.company, \"exception_budget_approver_role\")`):\n\n```python\ndef execute_action(self, action, msg):\n    if self.exception_approver_role and self.exception_approver_role in frappe.get_roles(\n        frappe.session.user\n    ):\n        self.warn(msg)\n        return\n\n    if action == \"Warn\":\n        self.warn(msg)\n\n    if action == \"Stop\":\n        self.stop(msg)\n```\n\nIf the user has that role, a \"Stop\" action is downgraded to `self.warn(msg)` (a `frappe.msgprint` warning) instead of `self.stop(msg)` (which throws `BudgetError` via `frappe.throw`). This is verified by `test_exception_approver_role` in `erpnext/accounts/doctype/budget/test_budget.py`, which sets the Company's `exception_budget_approver_role` to \"Accounts User\" and shows a journal entry that previously raised `BudgetError` now submits successfully with only a warning.",
+    "total_tokens": 33840,
+    "turns": 7
+  },
+  {
+    "question_id": "q07",
+    "condition": "aletheore",
+    "answer": "The bypass is in `BudgetValidation.execute_action()` in `erpnext/controllers/budget_controller.py`:\n\n```python\ndef execute_action(self, action, msg):\n    if self.exception_approver_role and self.exception_approver_role in frappe.get_roles(\n        frappe.session.user\n    ):\n        self.warn(msg)\n        return\n\n    if action == \"Warn\":\n        self.warn(msg)\n\n    if action == \"Stop\":\n        self.stop(msg)\n```\n\nIf the current user holds the role configured in the Company's **`exception_budget_approver_role`** field (loaded in `__init__` as `self.exception_approver_role` from `Company.exception_budget_approver_role`), any budget action \u2014 including **\"Stop\"** \u2014 is downgraded to a `warn()` (message printed, transaction proceeds) instead of `stop()` (throws `BudgetError`). So a user with the \"Exception Budget Approver\" role can submit a transaction that exceeds the budget and only get a warning.",
+    "total_tokens": 25155,
+    "turns": 5
+  },
+  {
+    "question_id": "q07",
+    "condition": "graphify",
+    "answer": "The bypass is the **\"Exception Budget Approver Role\"** setting on the Company doctype (`exception_budget_approver_role`).\n\nIn `erpnext/controllers/budget_controller.py`, the `BudgetValidation.__init__` reads this role from the Company:\n\n```python\nself.exception_approver_role = frappe.get_cached_value(\n    \"Company\", self.company, \"exception_budget_approver_role\"\n)\n```\n\nAnd in `BudgetValidation.execute_action`, if the logged-in user has that role, the \"Stop\" action is downgraded to a warning before the stop logic runs:\n\n```python\ndef execute_action(self, action, msg):\n    if self.exception_approver_role and self.exception_approver_role in frappe.get_roles(\n        frappe.session.user\n    ):\n        self.warn(msg)\n        return\n\n    if action == \"Warn\":\n        self.warn(msg)\n\n    if action == \"Stop\":\n        self.stop(msg)\n```\n\nSo any user holding the role configured as the Company's \"Exception Budget Approver Role\" will only get a warning (`frappe.msgprint`) instead of a `BudgetError` thrown by `self.stop(msg)` \u2014 even when the budget action is set to \"Stop\". This is verified by the test in `erpnext/accounts/doctype/budget/test_budget.py` (`test_exception_budget_approver_role`), which sets `exception_budget_approver_role` to \"Accounts User\" and confirms the Journal Entry submits successfully instead of raising `BudgetError`.",
+    "total_tokens": 34323,
+    "turns": 7
+  },
+  {
+    "question_id": "q08",
+    "condition": "baseline",
+    "answer": "`SalesInvoice.on_submit()` is defined at `erpnext/accounts/doctype/sales_invoice/sales_invoice.py:426`. It performs, in order:\n\n1. `POSService(self).validate_pos_paid_amount()` \u2014 validates POS paid amounts.\n2. **Approving-authority check** (line 429\u2013431):\n   ```python\n   if not self.auto_repeat:\n       frappe.get_cached_doc(\"Authorization Control\").validate_approving_authority(\n           self.doctype, self.company, self.base_grand_total, self\n       )\n   ```\n   This calls `Authorization Control.validate_approving_authority()` (in `erpnext/setup/doctype/authorization_control/authorization_control.py:154`), which enforces Authorization Rule limits (e.g., Grand Total / discount thresholds) unless no Authorization Rule exists.\n3. Then it continues with `check_prev_docstatus()`, handling of `is_return` status updater, `SalesTaxWithholding(self).on_submit()`, `update_status_updater_args()` / `update_prevdoc_status()`, `update_billing_status_in_dn()`, `clear_unallocated_mode_of_payments()`, stock-related updates (bundles for returns, serial/batch fields, stock reservation, stock ledger), `FixedAssetService` split/depreciation, `make_gl_entries()`, reposting future SLE/GLE, pick-list status, and zero-amount refdoc billing status.\n\n**Condition under which the approving-authority check is skipped:** it is skipped when `self.auto_repeat` is truthy \u2014 i.e., when the Sales Invoice is a recurring document generated by an Auto Repeat (`DF.Link` to Auto Repeat, line 99). In that case the `if not self.auto_repeat:` guard prevents the `validate_approving_authority` call.",
+    "total_tokens": 9617,
+    "turns": 5
+  },
+  {
+    "question_id": "q08",
+    "condition": "aletheore",
+    "answer": "`SalesInvoice.on_submit()` is defined at line 426 of `erpnext/accounts/doctype/sales_invoice/sales_invoice.py`. It performs, in order:\n\n1. `POSService(self).validate_pos_paid_amount()` \u2014 validates the POS-paid amount for POS invoices.\n2. **Approving-authority check** (unless skipped, see below): `frappe.get_cached_doc(\"Authorization Control\").validate_approving_authority(self.doctype, self.company, self.base_grand_total, self)` \u2014 checks that the submitting user has the required approving authority per the \"Authorization Rule\" doctype, based on transaction grand total, average discount, and customer/item/item-group-wise discount.\n3. `self.check_prev_docstatus()`, return-handling/status-updater setup, `SalesTaxWithholding(self).on_submit()`, status/billing updates (`update_prevdoc_status`, `update_billing_status_in_dn`), `clear_unallocated_mode_of_payments()`.\n4. Stock handling when `update_stock == 1` (bundles, serial/batch handling, stock reservation, stock ledger), fixed-asset split/depreciation, GL entries, pick-list status, credit-limit and overdue-billing-threshold checks (for non-returns), JV updates, and timesheet billing.\n\n**Skipping condition:** The approving-authority check is wrapped in `if not self.auto_repeat:` \u2014 i.e., it is **skipped when the Sales Invoice is an auto-repeated (recurring) document** (`self.auto_repeat` is truthy), since those are generated automatically rather than by a user needing manual approval.",
+    "total_tokens": 14214,
+    "turns": 6
+  },
+  {
+    "question_id": "q08",
+    "condition": "graphify",
+    "answer": "## `SalesInvoice.on_submit()` \u2014 `erpnext/accounts/doctype/sales_invoice/sales_invoice.py` (line 426)\n\nThe method performs all post-submission processing for a Sales Invoice:\n\n1. **`POSService(self).validate_pos_paid_amount()`** \u2013 validates that the POS paid amount is correct.\n2. **Approving-authority check** \u2013 calls `frappe.get_cached_doc(\"Authorization Control\").validate_approving_authority(self.doctype, self.company, self.base_grand_total, self)` (which checks configured **Authorization Rules** for grand total/discount-based approvals \u2014 see `erpnext/setup/doctype/authorization_control/authorization_control.py:154`).\n3. **`self.check_prev_docstatus()`** \u2013 checks the docstatus of referenced documents (e.g., Delivery Note / Sales Order).\n4. For **returns**, bypasses status-updating via `self.status_updater = []` (unless `update_billed_amount_in_sales_order` is set).\n5. Runs `SalesTaxWithholding(self).on_submit()`, then updates prev-doc status, billing status in Delivery Notes, and clears unallocated mode-of-payment rows.\n6. If `update_stock == 1`: makes bundles for sales/purchase returns, validates standalone serial nos, updates stock reservation entries and stock ledger, then reposts future SLE/GLE and updates pick-list status.\n7. Splits assets / processes asset depreciation via `FixedAssetService`.\n8. Makes GL entries (`self.make_gl_entries()`).\n9. If **not a return**: updates billing status for zero-amount ref docs (Delivery Note/Sales Order), checks credit limit and overdue billing threshold.\n10. If **not POS and not return**: updates \"against document\" in Journal Vouchers.\n11. Updates Timesheet billing, company current-month sales/project (if `Selling Settings` frequency is \"Each Transaction\"), linked inter-company doc, and coupon-code usage.\n12. Handles loyalty points (creates/deletes/redemption entries) and `process_common_party_accounting()`, updates billed qty in subcontracting, and refreshes subscription status for returns.\n\n### When is the approving-authority check skipped?\n\nThe check is wrapped in `if not self.auto_repeat:` (lines 428\u2013432), so it is **skipped when `self.auto_repeat` is set** \u2014 i.e., when the Sales Invoice was generated automatically by an **Auto Repeat** (recurring) document. (In contrast, a manually-created invoice with no `auto_repeat` link always goes through the Authorization Control approval check.)",
+    "total_tokens": 28344,
+    "turns": 6
+  },
+  {
+    "question_id": "q09",
+    "condition": "baseline",
+    "answer": "The answer is in `PaymentEntry.validate_received_amount()` at lines 966\u2013970 of `erpnext/accounts/doctype/payment_entry/payment_entry.py`.\n\n**When it raises an error:** It throws `_(\"Received Amount cannot be greater than Paid Amount\")` when **both** conditions hold:\n1. `self.paid_from_account_currency == self.paid_to_account_currency` (the payment is in a single currency, i.e., not a multi-currency payment), **and**\n2. `self.paid_amount < self.received_amount` (the received amount exceeds the paid amount).\n\n**When the check is skipped entirely:** If `paid_from_account_currency != paid_to_account_currency` (i.e., the payment is made in different source and target currencies), the entire check is skipped \u2014 no comparison or throw occurs.\n\nIt's invoked from `validate_amounts()` (line 964), which is called during `validate()` (line ~219).",
+    "total_tokens": 8662,
+    "turns": 3
+  },
+  {
+    "question_id": "q09",
+    "condition": "aletheore",
+    "answer": "`PaymentEntry.validate_received_amount()` is defined at `erpnext/accounts/doctype/payment_entry/payment_entry.py:966-969`:\n\n```python\ndef validate_received_amount(self):\n    if self.paid_from_account_currency == self.paid_to_account_currency:\n        if self.paid_amount < self.received_amount:\n            frappe.throw(_(\"Received Amount cannot be greater than Paid Amount\"))\n```\n\n**It raises an error only when:**\n1. `paid_from_account_currency == paid_to_account_currency` (same currency on both sides), **and**\n2. `paid_amount < received_amount`\n\nIn that case it throws `frappe.throw(_(\"Received Amount cannot be greater than Paid Amount\"))`.\n\n**The check is skipped entirely (no error raised) when:**\n- The currencies differ (`paid_from_account_currency != paid_to_account_currency`) \u2014 i.e., for cross-currency payments the outer `if` is false, so the comparison never happens. (This makes sense because in a multi-currency payment the paid and received amounts are in different currencies and not directly comparable.)\n- Also, even in the same-currency case, no error is raised when `paid_amount >= received_amount`.\n\nThe method is reached through the validation chain: `validate()` (line 184) \u2192 `validate_amounts()` (line 963) \u2192 `validate_received_amount()` (line 964).",
+    "total_tokens": 8510,
+    "turns": 5
+  },
+  {
+    "question_id": "q09",
+    "condition": "graphify",
+    "answer": "The method is defined at `erpnext/accounts/doctype/payment_entry/payment_entry.py:966-970`:\n\n```python\ndef validate_received_amount(self):\n    if self.paid_from_account_currency == self.paid_to_account_currency:\n        if self.paid_amount < self.received_amount:\n            frappe.throw(_(\"Received Amount cannot be greater than Paid Amount\"))\n```\n\n**When it raises an error:** only when **both** of these hold:\n1. `self.paid_from_account_currency == self.paid_to_account_currency` (the paid-from and paid-to accounts are in the same currency), and\n2. `self.paid_amount < self.received_amount` (the received amount is strictly greater than the paid amount).\n\nIn that case it throws a `ValidationError` with the message \"Received Amount cannot be greater than Paid Amount\".\n\n**When the check is skipped entirely:** whenever the two account currencies differ (`self.paid_from_account_currency != self.paid_to_account_currency`) \u2014 i.e. multi-currency payment entries where an exchange rate applies \u2014 the outer `if` is false and no validation is performed. It also passes silently when `paid_amount >= received_amount` in the same currency.\n\nThe method is invoked during document validation via `validate_amounts()` (called from `PaymentEntry.validate()` at line 184, through `validate_amounts()` at line 963 \u2192 `self.validate_received_amount()` at line 964).",
+    "total_tokens": 13561,
+    "turns": 5
+  },
+  {
+    "question_id": "q10",
+    "condition": "baseline",
+    "answer": "`Company.validate_abbr()` is defined at `erpnext/setup/doctype/company/company.py:344`.\n\n**Generation of a missing abbreviation:**\n\n```python\nif not self.abbr:\n    self.abbr = \"\".join(c[0] for c in self.company_name.split()).upper()\n```\n\nIf `abbr` is empty, it takes the first character of each whitespace-separated word in `company_name`, joins them, and uppercases the result (e.g., \"Acme Corporation\" \u2192 \"AC\"). It then runs `self.abbr = self.abbr.strip()`, and if the stripped abbreviation is empty, it throws `_(\"Abbreviation is mandatory\")`.\n\n**Uniqueness rule:**\n\n```python\nif frappe.db.exists(\"Company\", {\"name\": [\"!=\", self.name], \"abbr\": self.abbr}):\n    frappe.throw(_(\"Abbreviation already used for another company\"))\n```\n\nThe abbreviation must be unique across all other `Company` documents: it checks for any Company whose `name` differs from the current doc and whose `abbr` exactly equals the (stripped) abbreviation, throwing \"Abbreviation already used for another company\" if one exists.",
+    "total_tokens": 8674,
+    "turns": 3
+  },
+  {
+    "question_id": "q10",
+    "condition": "aletheore",
+    "answer": "The method `validate_abbr()` is in `erpnext/setup/doctype/company/company.py` (lines 344\u2013353).\n\n**Generation of a missing abbreviation:**\n```python\nif not self.abbr:\n    self.abbr = \"\".join(c[0] for c in self.company_name.split()).upper()\n```\nIt takes the first character of each whitespace-separated word in the company name and concatenates them, uppercased (an acronym-style abbreviation). For example, \"Acme Widgets Pvt Ltd\" \u2192 \"AWPL\".\n\n**Other behavior:**\n- It then strips surrounding whitespace from `self.abbr`.\n- If the stripped abbreviation is empty, it throws `\"Abbreviation is mandatory\"`.\n\n**Uniqueness rule:**\n```python\nif frappe.db.exists(\"Company\", {\"name\": [\"!=\", self.name], \"abbr\": self.abbr}):\n    frappe.throw(_(\"Abbreviation already used for another company\"))\n```\nIt checks whether any other `Company` doc (any company whose `name` is not `self.name`) has the same `abbr`; if so, it throws `\"Abbreviation already used for another company\"`. So the abbreviation must be unique across all companies (excluding the current doc itself).",
+    "total_tokens": 9164,
+    "turns": 3
+  },
+  {
+    "question_id": "q10",
+    "condition": "graphify",
+    "answer": "`Company.validate_abbr()` is defined at `erpnext/setup/doctype/company/company.py:344`.\n\n**Generation of a missing abbreviation:**\n```python\nif not self.abbr:\n    self.abbr = \"\".join(c[0] for c in self.company_name.split()).upper()\n```\nIf the `abbr` field is empty, it takes the first character of each whitespace-separated word in `company_name`, joins them, and uppercases the result (e.g., \"Frappe Technologies Pvt Ltd\" \u2192 \"FTPPL\"). It then strips surrounding whitespace with `self.abbr = self.abbr.strip()`, and if the result is still empty, it throws `_(\"Abbreviation is mandatory\")`.\n\n**Uniqueness rule:**\n```python\nif frappe.db.exists(\"Company\", {\"name\": [\"!=\", self.name], \"abbr\": self.abbr}):\n    frappe.throw(_(\"Abbreviation already used for another company\"))\n```\nIt enforces that the abbreviation must be unique across all companies: it checks for any other `Company` record whose `name` differs from the current document's `name` (i.e., excluding the doc being saved/updated) and whose `abbr` equals this one. If such a record exists, it throws \"Abbreviation already used for another company\".",
+    "total_tokens": 9280,
+    "turns": 3
+  },
+  {
+    "question_id": "q11",
+    "condition": "baseline",
+    "answer": "The setting is **`close_issue_after_days`** in the **Support Settings** doctype (`erpnext/support/doctype/support_settings/support_settings.py`, field `DF.Int`).\n\nIn `erpnext/support/doctype/issue/issue.py`, the `auto_close_tickets()` function:\n\n- Reads `close_issue_after_days` via `frappe.db.get_single_value(\"Support Settings\", \"close_issue_after_days\")`.\n- **If the value is 0 (or falsy), it returns immediately and closes nothing** \u2014 the feature is disabled.\n- Otherwise, it selects Issues where `status == \"Replied\"` and `modified` is older than `close_issue_after_days` days, then sets their status to `\"Closed\"`.\n\nSo an Issue must be in **\"Replied\"** status (and last modified more than `close_issue_after_days` days ago) to be eligible. The job is registered as a `daily_maintenance` scheduled task in `erpnext/hooks.py` (line 498).",
+    "total_tokens": 6791,
+    "turns": 4
+  },
+  {
+    "question_id": "q11",
+    "condition": "aletheore",
+    "answer": "The relevant code is in `erpnext/support/doctype/issue/issue.py`, function `auto_close_tickets()` (registered as a daily maintenance job in `erpnext/hooks.py`):\n\n```python\ndef auto_close_tickets():\n\t\"\"\"\n\tAuto-close replied support tickets as defined on `close_issue_after_days` in Support Settings.\n\tDisables the feature if `close_issue_after_days` is set to 0.\n\t\"\"\"\n\tauto_close_after_days = frappe.db.get_single_value(\"Support Settings\", \"close_issue_after_days\")\n\n\tif not auto_close_after_days:\n\t\treturn\n\t...\n\t.where(\n\t\t(table.modified < (Now() - Interval(days=auto_close_after_days))) & (table.status == \"Replied\")\n\t)\n```\n\n- **Setting:** `close_issue_after_days` in the **Support Settings** doctype. If it is `0` (or otherwise falsy), the job returns immediately and closes nothing.\n- **Eligible status:** the Issue must be in status **\"Replied\"** (and have `modified` older than `close_issue_after_days` days). Eligible issues are then set to **\"Closed\"**.",
+    "total_tokens": 8057,
+    "turns": 4
+  },
+  {
+    "question_id": "q11",
+    "condition": "graphify",
+    "answer": "The setting is **`close_issue_after_days`** in **Support Settings** (DocType `Support Settings`).\n\nFrom `erpnext/support/doctype/issue/issue.py`, the `auto_close_tickets()` function (registered as a `daily_maintenance` scheduled job in `erpnext/hooks.py:498`):\n\n- It reads `frappe.db.get_single_value(\"Support Settings\", \"close_issue_after_days\")` and returns immediately (disabling the feature) if that value is `0`/falsy.\n- To be eligible, an Issue must have **status = \"Replied\"** and its `modified` timestamp must be older than `close_issue_after_days` days (i.e., `modified < now - Interval(days=auto_close_after_days)`).\n\nEligible Issues are then set to `\"Closed\"` with `ignore_permissions` and `ignore_mandatory` flags.",
+    "total_tokens": 11730,
+    "turns": 5
+  },
+  {
+    "question_id": "q12",
+    "condition": "baseline",
+    "answer": "(no final answer - hit MAX_TURNS)",
+    "total_tokens": 49386,
+    "turns": 8
+  },
+  {
+    "question_id": "q12",
+    "condition": "aletheore",
+    "answer": "The two scheduled functions are **`run_parallel_reposting()`** and **`repost_entries()`** in `erpnext/stock/doctype/repost_item_valuation/repost_item_valuation.py`.\n\n- `run_parallel_reposting()` is registered in `erpnext/hooks.py` under the cron schedule `\"0/15 * * * *\"` (every 15 minutes), while `repost_entries()` is registered under `hourly_maintenance` (hourly).\n- They are mutually exclusive by guard clauses: `run_parallel_reposting()` returns immediately if the setting is off (line ~796: `if not frappe.db.get_single_value(\"Stock Reposting Settings\", \"enable_parallel_reposting\"): return`), and `repost_entries()` returns immediately if the setting is on (line ~876: `if frappe.db.get_single_value(\"Stock Reposting Settings\", \"enable_parallel_reposting\"): return`).\n\nThe single deciding setting is **`enable_parallel_reposting`** in the **Stock Reposting Settings** doctype:\n\n- **Enabled** \u2192 `run_parallel_reposting()` runs (parallel, item/warehouse-based reposting, every 15 min).\n- **Disabled** \u2192 `repost_entries()` runs (the traditional hourly sequential reposting).\n\n(Note: `enable_parallel_reposting` itself can only be enabled if `item_based_reposting` is also on, per `stock_reposting_settings.py`'s `reset_parallel_reposting_settings`.)",
+    "total_tokens": 86146,
+    "turns": 8
+  },
+  {
+    "question_id": "q12",
+    "condition": "graphify",
+    "answer": "(no final answer - hit MAX_TURNS)",
+    "total_tokens": 54680,
+    "turns": 8
+  },
+  {
+    "question_id": "q13",
+    "condition": "baseline",
+    "answer": "The file shows:\n\n- `class WorkOrder(Document):` \u2014 inherits from `Document` (imported from `frappe.model.document`).\n- Immediately above it, six custom `frappe.ValidationError` subclasses are defined:\n  1. `OverProductionError`\n  2. `CapacityError`\n  3. `StockOverProductionError`\n  4. `OperationTooLongError`\n  5. `ItemHasVariantError`\n  6. `SerialNoQtyError`\n\n**Answer:** `WorkOrder` inherits from `Document` (the base class in `frappe.model.document`), and the module defines **6** custom `ValidationError` subclasses immediately above the class.",
+    "total_tokens": 2676,
+    "turns": 2
+  },
+  {
+    "question_id": "q13",
+    "condition": "aletheore",
+    "answer": "The `WorkOrder` class (defined at line 95) inherits from **`Document`** (`frappe.model.document.Document`).\n\nImmediately above the class, the module defines **6 custom `ValidationError` subclasses**:\n\n1. `OverProductionError`\n2. `CapacityError`\n3. `StockOverProductionError`\n4. `OperationTooLongError`\n5. `ItemHasVariantError`\n6. `SerialNoQtyError`\n\nSource: `erpnext/manufacturing/doctype/work_order/work_order.py`, lines 79\u201394 (the error classes), with `class WorkOrder(Document):` at line 95.",
+    "total_tokens": 3239,
+    "turns": 2
+  },
+  {
+    "question_id": "q13",
+    "condition": "graphify",
+    "answer": "The file `erpnext/manufacturing/doctype/work_order/work_order.py` shows:\n\n- The `WorkOrder` class inherits from **`Document`** (imported from `frappe.model.document`).\n- Immediately above the class, the module defines exactly **6** custom `frappe.ValidationError` subclasses:\n  1. `OverProductionError`\n  2. `CapacityError`\n  3. `StockOverProductionError`\n  4. `OperationTooLongError`\n  5. `ItemHasVariantError`\n  6. `SerialNoQtyError`\n\n(lines 50\u201376, with `class WorkOrder(Document):` at line 78).",
+    "total_tokens": 3071,
+    "turns": 2
+  },
+  {
+    "question_id": "q14",
+    "condition": "baseline",
+    "answer": "`WorkOrder.validate_dates()` (in `erpnext/manufacturing/doctype/work_order/work_order.py`, around line 322) checks two things:\n\n1. **Planned dates**: If both `planned_start_date` and `planned_end_date` are set, it throws a `ValidationError` if `planned_end_date` is earlier than `planned_start_date` (message: *\"Planned End Date cannot be before Planned Start Date\"*), comparing via `get_datetime()`.\n\n2. **Actual dates**: If both `actual_start_date` and `actual_end_date` are set, it throws a `ValidationError` if `actual_end_date` is earlier than `actual_start_date` (message: *\"Actual End Date cannot be before Actual Start Date\"*), comparing the date values directly.\n\nIn short, it ensures that for each pair (planned and actual), the end date is not before the start date; it does not cross-check planned vs. actual dates against each other.",
+    "total_tokens": 7431,
+    "turns": 3
+  },
+  {
+    "question_id": "q14",
+    "condition": "aletheore",
+    "answer": "`WorkOrder.validate_dates()` is defined in `erpnext/manufacturing/doctype/work_order/work_order.py` (lines 322\u2013329). It performs two checks:\n\n1. **Planned dates**: If both `planned_start_date` and `planned_end_date` are set, it throws `\"Planned End Date cannot be before Planned Start Date\"` when `get_datetime(planned_end_date) < get_datetime(planned_start_date)`.\n2. **Actual dates**: If both `actual_start_date` and `actual_end_date` are set, it throws `\"Actual End Date cannot be before Actual Start Date\"` when `actual_end_date < actual_start_date` (compared directly, without `get_datetime`).\n\nIn both cases, it only validates when both corresponding dates are present, and it ensures the end date is not earlier than the start date.",
+    "total_tokens": 5580,
+    "turns": 3
+  },
+  {
+    "question_id": "q14",
+    "condition": "graphify",
+    "answer": "`WorkOrder.validate_dates()` (in `erpnext/manufacturing/doctype/work_order/work_order.py`, lines 322\u2013330) performs two checks:\n\n1. **Planned dates**: If both `planned_start_date` and `planned_end_date` are set, it compares them with `get_datetime(...)` and throws `\"Planned End Date cannot be before Planned Start Date\"` if `planned_end_date < planned_start_date`.\n2. **Actual dates**: If both `actual_start_date` and `actual_end_date` are set, it compares them directly and throws `\"Actual End Date cannot be before Actual Start Date\"` if `actual_end_date < actual_start_date`.\n\nIn short, it ensures the end date is not earlier than the start date, for both the planned and actual date pairs.",
+    "total_tokens": 7748,
+    "turns": 3
+  },
+  {
+    "question_id": "q15",
+    "condition": "baseline",
+    "answer": "The function is **`parse_naming_series_variable`** in `erpnext/accounts/utils.py` (line 1602).\n\nIn `erpnext/hooks.py`, every variable in `naming_series_variables_list` (`[\"FY\", \"TFY\", \"ABBR\", \"MM\", \"DD\", \"YY\", \"YYYY\", \"JJJ\", \"WW\"]`) is mapped to the same dotted path:\n\n```python\nnaming_series_variables = {\n\tvariable: \"erpnext.accounts.utils.parse_naming_series_variable\"\n\tfor variable in naming_series_variables_list\n}\n```\n\nThat single function handles all the substitutions: FY/TFY via `get_fiscal_year(...)`, ABBR via the company's abbreviation, and the rest via `date.strftime(...)` (with WW falling through to `determine_consecutive_week_number(date)`).",
+    "total_tokens": 6063,
+    "turns": 4
+  },
+  {
+    "question_id": "q15",
+    "condition": "aletheore",
+    "answer": "The function is **`erpnext.accounts.utils.parse_naming_series_variable`**.\n\nIn `erpnext/hooks.py` (lines 447\u2013451), every variable in `naming_series_variables_list = [\"FY\", \"TFY\", \"ABBR\", \"MM\", \"DD\", \"YY\", \"YYYY\", \"JJJ\", \"WW\"]` is mapped to the same handler:\n\n```python\nnaming_series_variables = {\n\tvariable: \"erpnext.accounts.utils.parse_naming_series_variable\"\n\tfor variable in naming_series_variables_list\n}\n```\n\nThe function itself is defined at `erpnext/accounts/utils.py:1602` (`def parse_naming_series_variable(doc, variable):`).",
+    "total_tokens": 5960,
+    "turns": 4
+  },
+  {
+    "question_id": "q15",
+    "condition": "graphify",
+    "answer": "The function is **`erpnext.accounts.utils.parse_naming_series_variable`**.\n\nIn `erpnext/hooks.py` (lines 447\u2013451), all nine variables (`FY`, `TFY`, `ABBR`, `MM`, `DD`, `YY`, `YYYY`, `JJJ`, `WW`) are mapped to that single function via a dict comprehension:\n\n```python\nnaming_series_variables_list = [\"FY\", \"TFY\", \"ABBR\", \"MM\", \"DD\", \"YY\", \"YYYY\", \"JJJ\", \"WW\"]\nnaming_series_variables = {\n    variable: \"erpnext.accounts.utils.parse_naming_series_variable\"\n    for variable in naming_series_variables_list\n}\n```\n\nThe function itself is defined at `erpnext/accounts/utils.py:1602` (`def parse_naming_series_variable(doc, variable)`), handling FY/TFY via `get_fiscal_year`, ABBR from the Company abbreviation, MM/DD/YY/YYYY/JJJ via `strftime` codes, and WW via `determine_consecutive_week_number`.",
+    "total_tokens": 8730,
+    "turns": 5
+  }
+]

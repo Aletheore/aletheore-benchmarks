@@ -1,0 +1,20 @@
+{
+  "aletheore": {
+    "coverage_mean": 0.9666666666666667,
+    "tokens_mean": 14892.8,
+    "n_coverage_samples": 30,
+    "n_token_samples": 15
+  },
+  "baseline": {
+    "coverage_mean": 0.888888888888889,
+    "tokens_mean": 11839.133333333333,
+    "n_coverage_samples": 30,
+    "n_token_samples": 15
+  },
+  "graphify": {
+    "coverage_mean": 0.9166666666666666,
+    "tokens_mean": 17921.266666666666,
+    "n_coverage_samples": 30,
+    "n_token_samples": 15
+  }
+}
