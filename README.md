@@ -23,7 +23,7 @@
   <a href="#pr-review--compact-evidence-vs-full-file-context">PR review</a> ·
   <a href="#explaining-code--how-does-x-work">Explaining code</a> ·
   <a href="#deterministic-analysis-vs-bare-llm">Deterministic vs. LLM</a> ·
-  <a href="graphify_comparison/README.md">Graphify comparison</a> ·
+  <a href="#head-to-head-against-graphify-erpnext">Graphify comparison</a> ·
   <a href="#where-we-lose">Where we lose</a> ·
   <a href="#reproducing">Reproducing</a> ·
   <a href="#contents">Contents</a>
@@ -643,6 +643,35 @@ statements Aletheore's scanner consumes:
 Full write-up, methodology, and known limitations (including a real bug this
 testing surfaced — `ownership <file>` ignores its own argument) in
 [`DETERMINISTIC_VS_LLM.md`](DETERMINISTIC_VS_LLM.md).
+
+## Head-to-head against Graphify (ERPNext)
+
+[Graphify](https://github.com/Graphify-Labs/graphify) is a tree-sitter-based
+code-knowledge-graph tool with its own primary-source benchmark on
+[frappe/erpnext](https://github.com/frappe/erpnext) (~1M LOC). Rather than
+cite either tool's own published numbers, we ran **both tools ourselves**
+under one shared agent loop and one anonymized judge, on the same pinned
+ERPNext commit — 15 independently-authored questions, each run three times
+(baseline grep/read/list, +Aletheore, +Graphify), scored by a judge never
+told which tool produced which answer:
+
+| condition | coverage (mean, 30 samples) | tokens/query (mean, 15 samples) |
+|---|---|---|
+| baseline (grep + read + list only) | 92.2% | 11,839 |
+| **+ Aletheore** | **100.0%** | 14,893 |
+| + Graphify | 93.3% | 17,921 |
+
+**Aletheore ties or leads Graphify on every question** once a ground-truth
+error found in pre-publication review was corrected. The honest caveat: only
+2 of 15 questions actually discriminate between conditions, so this is a real
+result on this question set, not a claim that generalizes past 15 questions
+on one corpus. The more robust win is cost — excluding the one question both
+comparison tools timed out on, Aletheore answers for **36% fewer tokens than
+Graphify** (9,803 vs. 15,296 mean), not as an artifact of one question.
+
+Full methodology, the two corrections made before publishing, the setup-time
+comparison, and total real cost ($0.19) in
+[`graphify_comparison/README.md`](graphify_comparison/README.md).
 
 ## Where we lose
 
