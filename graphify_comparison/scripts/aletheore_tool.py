@@ -22,10 +22,13 @@ def aletheore_query_tool(kind: str, target: str = "", symbol: str = "") -> str:
     if symbol:
         cmd.append(symbol)
     cmd += ["--path", _ROOT]
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-    if result.returncode != 0:
-        return f"error: {result.stderr.strip()}"
-    return result.stdout[:8000]
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        if result.returncode != 0:
+            return f"error: {result.stderr.strip()}"
+        return result.stdout[:8000]
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as exc:
+        return f"error: {exc}"
 
 
 ALETHEORE_TOOL_SCHEMA = {
