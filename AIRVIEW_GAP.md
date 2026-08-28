@@ -15,6 +15,41 @@ below): **AIRview 1.88 vs RepoWise 1.99** - a 0.11 gap, smaller than the
 judge's own measured noise floor on this run (mean spread 0.50, max 1.50).
 That is a statistical tie, not a loss. Reproduce with:
 
+**UPDATE 2026-08-27 — the "what would actually move the number" list further
+down (cap/floor retuning, frontend rendering) is also stale, checked directly
+against current `master` rather than assumed:**
+
+- **"Raising `DEFAULT_MAX_FILE_PAGES` / lowering `FILE_PAGE_SCORE_FLOOR`" is
+  the *next lever* text below itself already documents as tested and mostly
+  exhausted** (see "Is 'more pages' the next lever? Measured: no", further
+  down this file) - re-verified 2026-08-27 that the anchoring fix described
+  there (median non-demoted score, not top-scoring file) is what's on
+  `master` today. Retuning further wasn't attempted again since the file's
+  own prior measurement already found "below the cut, exactly one
+  substantive file sits above the tests" - i.e. the budget genuinely isn't
+  the binding constraint anymore for a Flask-sized corpus.
+- **"The frontend does not render `detail`" is fixed, not open.** Checked
+  `github-app/app_server/frontend.py` directly: `showSubsystem()` renders
+  `f.detail` per file as a collapsible `<details class="wiki-md">` "Reference"
+  section (`renderWikiMarkdown(f.detail)`), wired to the same
+  `GET /app/{org}/{repo}/wiki/{subsystem_id}` payload this document assumed
+  went nowhere. A code comment there references `AIRVIEW_PROMPT_VERSION 5`
+  directly, consistent with the "shipped to production" note above.
+- **Citation-rejection "all-or-nothing" is also no longer accurate as
+  written.** `live_wiki.py` has `_SALVAGE_MIN_RETAINED = 0.6` - a page whose
+  citations don't fully verify keeps its verified lines rather than being
+  discarded outright, provided at least 60% of lines survive. Not
+  re-measured end-to-end this pass, but the all-or-nothing framing itself is
+  incorrect against current code.
+
+Net: of this document's four "actual next levers, in value order," levers 3
+(module-level declarations) and 4 (frontend rendering) have shipped, and
+lever 1's premise (raising the page budget) was already tested and found not
+to move the number on this corpus. Lever 2 (citation rejection strip-not-
+discard) is partially addressed via the salvage threshold above, though not
+confirmed identical in mechanism to what this document originally proposed.
+Reproduce the pre-existing measurements with:
+
 ```bash
 python3 scripts/build_repowise_arch_context.py                       # RepoWise side (once)
 AIRVIEW_MODEL=deepseek-v4-flash BENCH_AIRVIEW_FILE=airview_deepseek.json \
