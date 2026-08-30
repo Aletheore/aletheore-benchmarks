@@ -6,7 +6,11 @@ importing across files) plus eight real repositories. Deterministic — no LLM.
 
 Reproduce: `python3 scripts/lang_coverage_matrix.py`
 
-## Current state — all 11 languages
+## Current state — all 13 languages
+
+Re-run in full for this update (2026-08-30), not hand-edited from the 11-language
+table below it - every row reflects the real script output as of Kotlin and
+Swift landing.
 
 | language | imports | functions | classes | constants |
 |---|---|---|---|---|
@@ -21,7 +25,21 @@ Reproduce: `python3 scripts/lang_coverage_matrix.py`
 | php | ✅ | ✅ | ✅ | ✅ |
 | c | ✅ | ✅ | n/a | ✅ |
 | cpp | ✅ | ✅ | ✅ | ✅ |
-| csharp | ✅ | ✅ | ✅ | ✅ |
+| csharp | ⚠️ see note | ✅ | ✅ | ✅ |
+| kotlin | ✅ | ✅ | ✅ | ✅ |
+| swift | ✅ | ✅ | ✅ | ✅ |
+
+**csharp note, found while re-running this for Kotlin/Swift, not caused by
+either:** this table's own shared fixture convention names the imported
+type `Mod` (3 characters) in every language - `_CSHARP_MIN_TYPE_NAME = 4` in
+`graph.py`'s same-namespace type-reference fallback (the mechanism that
+resolves C#'s `using`-free same-namespace references, see the "C#: flat
+projects resolved nothing" section below) filters it out as noise before it
+can ever produce an edge. Real, reproducible, and pre-existing - unrelated to
+this session's Kotlin/Swift work, which touched no C# code. Not fixed here:
+either the fixture's `Mod` needs a longer name, or the threshold needs a real
+look, and conflating that with an unrelated language-support PR isn't the
+right place to decide which.
 
 Before this work three languages resolved **no imports at all** and ten
 recorded **no constants**. Everything downstream — clustering, subsystem
