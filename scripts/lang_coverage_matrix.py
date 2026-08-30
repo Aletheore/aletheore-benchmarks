@@ -50,6 +50,29 @@ FIXTURES = {
     "csharp": {"dir": "cs", "files": {
         "Mod.cs": "namespace App.Lib;\n\npublic class Mod {\n    public const int ConstValue = 42;\n    public static int Helper() { return ConstValue; }\n}\n",
         "Main.cs": "using App.Lib;\n\nnamespace App.Run;\n\npublic class Main {\n    public const int MainConst = 1;\n    public static int Run() { return Mod.Helper(); }\n}\n"}},
+    "kotlin": {"dir": "kt", "files": {
+        "src/com/example/mod/Mod.kt": "package com.example.mod\n\nconst val CONST_VALUE = 42\n\nclass Widget\n\nfun helper(): Int = CONST_VALUE\n",
+        "src/com/example/main/Main.kt": "package com.example.main\n\nimport com.example.mod.helper\nimport com.example.mod.Widget\n\nconst val MAIN_CONST = 1\n\nclass App\n\nfun run(): Int = helper()\n"}},
+    # Swift resolves imports per-target, not per-file - a SwiftPM package
+    # with two real targets (Mod, Main) is the only fixture shape that
+    # actually exercises that, unlike every other language's single flat
+    # source root above.
+    "swift": {"dir": "sw", "files": {
+        "Package.swift": (
+            "// swift-tools-version:5.9\nimport PackageDescription\n\n"
+            "let package = Package(\n    name: \"Demo\",\n    targets: [\n"
+            "        .target(name: \"Mod\"),\n"
+            "        .target(name: \"Main\", dependencies: [\"Mod\"]),\n    ]\n)\n"
+        ),
+        "Sources/Mod/Mod.swift": (
+            "public let CONST_VALUE = 42\n\npublic class Widget {}\n\n"
+            "public func helper() -> Int { return CONST_VALUE }\n"
+        ),
+        "Sources/Main/Main.swift": (
+            "import Mod\n\npublic let MAIN_CONST = 1\n\npublic class App {}\n\n"
+            "public func run() -> Int { return helper() }\n"
+        ),
+    }},
 }
 
 shutil.rmtree(ROOT, ignore_errors=True)
