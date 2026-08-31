@@ -87,10 +87,10 @@ comparison rather than trusting an earlier pass:
 
 (`Aletheore#484`, `Aletheore#486`)
 
-**Kotlin: close, not a win - and the gap is now well understood.** On
-android/architecture-samples (268 files), RepoWise flags 7 files unreachable
-(all build-config files - it correctly leaves every real `.kt` file alone).
-Aletheore flags 11, down from an initial 31 across four real fixes:
+**Kotlin: an exact match.** On android/architecture-samples (268 files),
+RepoWise flags 7 files unreachable - all build-config files, no real `.kt`
+file on either side. Aletheore now flags the same 7, down from an initial 31
+across five real fixes:
 
 | finding | before | after | fix |
 |---|---|---|---|
@@ -98,23 +98,15 @@ Aletheore flags 11, down from an initial 31 across four real fixes:
 | AndroidManifest.xml entry points + Hilt/Dagger DI annotations | 24 | 15 | `Aletheore#484` (2nd commit) |
 | top-level Kotlin function imports (`fun LoadingContent(...)`, not just class/interface/object) | 15 | 12 | `Aletheore#487` |
 | top-level Kotlin val/var imports | 12 | 11 | `Aletheore#490` |
+| Kotlin same-package implicit visibility (files in one package see each other's declarations with no import at all, same as Java) | 11 | 7 | `Aletheore#489` |
 
-Of the 11 remaining, 7 are the exact same build-config files RepoWise also
-flags (parity, not a gap), 1 (`CustomTestRunner.kt`) is a disclosed blind
-spot **both tools share** - it's referenced only via Gradle's
-`testInstrumentationRunner = "..."` string config, invisible to any
-import-graph analysis - and 1 (`SimpleCountingIdlingResource.kt`) RepoWise
-itself independently flags as an unused export at the symbol level, so it
-isn't really a disagreement either.
-
-The genuinely open gap is 2 files (`ModelMappingExt.kt`, `StatisticsUtils.kt`)
-hit by a third, distinct mechanism: Kotlin's same-package implicit
-visibility - files in one package see each other's top-level declarations
-with no import statement at all, the same way Java does. Confirmed real:
-`DefaultTaskRepository.kt` calls `ModelMappingExt.kt`'s `toExternal()` with
-zero import between them, same package. Not fixed here - the natural next
-piece, same shape as Swift's same-target fix above (treat same-package as an
-implicit reachability edge).
+The last fix closed what had briefly been documented here as a genuinely
+open gap (`ModelMappingExt.kt`, `StatisticsUtils.kt`, both real cases of
+same-package implicit visibility - e.g. `DefaultTaskRepository.kt` calling
+`ModelMappingExt.kt`'s `toExternal()` with zero import between them). It also
+picked up 6 files beyond the 2 that motivated it (package-mates of files
+independently reachable some other way), landing on file-list parity with
+RepoWise, not just a matching count.
 
 ## What was broken, measured on real repositories
 
