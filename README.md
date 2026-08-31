@@ -21,6 +21,7 @@
   <a href="#cost-to-get-to-a-searchable-index">Cost</a> ·
   <a href="#covering-the-files-a-pr-touches">PR coverage</a> ·
   <a href="#pr-review--compact-evidence-vs-full-file-context">PR review</a> ·
+  <a href="#head-to-head-against-pr-agent">PR-Agent comparison</a> ·
   <a href="#explaining-code--how-does-x-work">Explaining code</a> ·
   <a href="#deterministic-analysis-vs-bare-llm">Deterministic vs. LLM</a> ·
   <a href="#head-to-head-against-graphify-erpnext">Graphify comparison</a> ·
@@ -549,6 +550,29 @@ experiment behind a flag — `scan_worker/jobs.py`'s `_run_flash_review` now
 deliberately never includes the raw file-content blob in the prompt.
 Cost for all 3 validation runs combined, real API pricing: **$0.9229**.
 
+## Head-to-head against PR-Agent
+
+A different question from the compact-vs-context experiments above: how does
+Aletheore's actual hosted product compare against a real, named, external
+competitor (Qodo's PR-Agent), held to the same model, same 24-case corpus,
+production Aletheore (deployed at `35e18f8`)?
+
+| Tool | Hit | Partial | Miss | False Positives |
+|---|---|---|---|---|
+| Aletheore AIR (Luna + DeepSeek verify) | 15 | 1 | 4 | 0 |
+| Aletheore Flash (Luna only, no verify) | 15 | 0 | 5 | 0 |
+| PR-Agent / Qodo (Luna) | 6 | 0 | 14 | 8 |
+
+Both Aletheore tiers hold a clean false-positive record against PR-Agent's 8,
+and roughly double its recall, on identical footing, not a model-budget
+mismatch (both tools run `gpt-5.6-luna`, PR-Agent's own real default is the
+pricier `gpt-5.5`, deliberately not used here). Aletheore Flash matches AIR's
+recall while running ~2x faster, giving up only the false-positive
+suppression the verification pass provides. Full setup, timing, real cost,
+and disclosed limitations (no blind-judge pass this cycle, AIR measured via
+direct invocation rather than a live webhook) in
+[`pr_review/README.md`](pr_review/README.md), Experiment 5.
+
 ## Explaining code — "how does X work?"
 
 Blind LLM judge, 0-3, each question graded twice with the two systems' positions
@@ -759,7 +783,7 @@ paid plan.
 | `scripts/score_retrieval_matrix.py` | re-derives the "Locating code" and "Hosted embeddings" tables from `results/`, no API key |
 | `results/` | raw per-query output — recompute any number without an API key |
 | `results/det_vs_llm_*` | inputs, model outputs, and ground truth for the deterministic-analysis-vs-bare-LLM benchmark |
-| `pr_review/` | the Flash Review compact-vs-full-context A/B — 4 experiments, 3 models, full writeup in `pr_review/README.md` |
+| `pr_review/` | the Flash Review compact-vs-full-context A/B (4 experiments, 3 models) plus a named head-to-head against PR-Agent (Experiment 5) — full writeup in `pr_review/README.md` |
 | `pr_review/results/` | raw generation and verification output for every PR-review experiment run |
 | `graphify_comparison/` | head-to-head against Graphify on ERPNext, both tools run ourselves under one harness and judge, full writeup in `graphify_comparison/README.md` |
 | `scripts/det_vs_llm_*` | its runners — `det_vs_llm_exact_ground_truth.py` needs no API key |
