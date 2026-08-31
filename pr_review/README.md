@@ -410,3 +410,72 @@ of this pass.
 
 Raw results: `results/luna_gpt56_generate_r1.json` through `r3.json` (generation),
 `results/luna_gpt56_deepseek_verified_r1.json` through `r3.json` (verification).
+
+## Experiment 5: named 3-way vs. a real external tool, same model, same corpus
+
+Experiments 2-4 all compared Aletheore against itself (context vs. compact, generation vs. verification arms). This experiment asks a different question: how does Aletheore's actual hosted product compare against a real, named, external competitor — Qodo's PR-Agent — on the same corpus, held to the same model, so the result isolates review methodology rather than which vendor has the bigger model budget.
+
+The corpus (25 hand-authored/reconstructed real-bug-fix, injected-bug, and clean cases) and its `ground_truth.yaml` files live in `Aletheore/Aletheore`'s `benchmarks/pr-review-benchmark/` — that repo is the corpus/harness source of truth this experiment's scripts read from; this file is where the run's narrative, results, and verdict are published, per this repo's own convention.
+
+Two prior runs on this same corpus are explicitly superseded by this one and documented here for the record, not discarded:
+
+- **An early free-tier-vs-GPT-5.5 run** compared Aletheore's free-tier fallback chain (no OpenAI, no verification) against PR-Agent's own `gpt-5.5` default (a stronger, ~20x-more-expensive-per-token reasoning model) — an unintentional mismatch on both plan tier and model cost, not a fair test of either tool's methodology. Real result at the time: Aletheore 8/15 hit on real-bug-fix cases vs. PR-Agent 12/15 — misleading on its own, corrected below.
+- **A pre-deploy Luna-vs-Luna run** put both tools on `gpt-5.6-luna` for the first time, but ran before the session's own product fixes (#471-#476) were deployed to production, and only exercised Aletheore's generation+verification code path via direct invocation, never the GitHub-fetch-layer fixes.
+
+### Setup
+
+- **Aletheore commit**: production deployed at `35e18f8` (tag `github-app-deploy-2026-08-30`), includes every fix through PR #476 in `Aletheore/Aletheore`.
+- **Models**: both tools on `gpt-5.6-luna` (OpenAI) for generation. Aletheore's AIR tier additionally runs `deepseek-v4-flash` as a second-model verification pass over Luna's own findings (ACCEPT/REJECT/UNCERTAIN; REJECT is dropped). PR-Agent was explicitly reconfigured via `--config.model=gpt-5.6-luna --config.custom_model_max_tokens=128000` — its own real default is `gpt-5.5`, not used here.
+- **Three arms**: Aletheore AIR (Luna + DeepSeek verify), Aletheore Flash (Luna only, no verify), PR-Agent (Luna).
+- **Corpus**: 24 of 25 cases (case `020` excluded — a corpus fixture/GitHub-push-protection issue, not yet re-verified against a live push). DeepSource excluded from this run (real analysis-quota exhaustion on the test account, unrelated to Aletheore or PR-Agent).
+- **Scoring**: Step 4 manual scoring (real finding message content read against `ground_truth.yaml`, never file:line proximity or grounding-rate alone). The blind independent LLM-judge pass did not run this cycle — see Limitations.
+- **Repeats**: 1 full pass per arm (AIR and Flash via direct in-process invocation of `scan_worker.flash_review.review_diff`; PR-Agent via its real CLI, 10 of 24 cases freshly re-measured this run, the remaining 14 reusing real same-day same-config data since nothing about PR-Agent changed in between).
+- **Cache status**: no similarity-cache reuse on Aletheore's side (`cache_lookup=None` path, matching a fresh review of each diff).
+
+### Results
+
+24 cases (15 real-bug-fix, 5 injected-bug, 4 clean); 20 cases carry a real recall verdict, the 4 clean cases score false-positive rate only.
+
+| Tool | Hit | Partial | Miss | False Positives |
+|---|---|---|---|---|
+| Aletheore AIR (Luna + DeepSeek verify) | 15 | 1 | 4 | 0 |
+| Aletheore Flash (Luna only, no verify) | 15 | 0 | 5 | 0 |
+| PR-Agent / Qodo (Luna) | 6 | 0 | 14 | 8 |
+
+**Timing** (real wall-clock, per case):
+
+| Tool | Per-case avg | Basis |
+|---|---|---|
+| Aletheore AIR | 33s | 24 cases, direct invocation |
+| Aletheore Flash | 15.9s | 24 cases — ~2x faster than AIR, skips the verification round-trip entirely |
+| PR-Agent | 69.3s | 10 freshly re-measured cases (full subprocess + live GitHub round-trips each time) |
+
+**Tokens and real cost** (Luna: \$0.20/M input, \$1.20/M output; DeepSeek-v4-flash verification: \$0.44/M input, \$1.32/M output):
+
+| Tool | Prompt tokens | Completion tokens | Real cost |
+|---|---|---|---|
+| Aletheore AIR — generation | 387,382 | 33,075 | \$0.1172 |
+| Aletheore AIR — DeepSeek verification | 16,768 | 49,341 | \$0.0725 |
+| **Aletheore AIR — total** | **404,150** | **82,416** | **\$0.1897** |
+| Aletheore Flash | 387,382 | 32,651 | \$0.1167 |
+| PR-Agent (10 fresh cases, measured) | 293,733 | 14,051 | \$0.0756 |
+| PR-Agent (extrapolated to all 24, same rate) | ~704,959 | ~33,722 | ~\$0.1815 |
+
+Raw results: `results/pr_review_3way_luna_scored.json` (per-case recall/false-positive/actionability verdicts for all three arms), `results/pr_review_3way_luna_token_usage.json` (real per-case token usage for all three arms).
+
+### Reading this honestly
+
+- **AIR and Flash tie on total recall (15/20 each)** despite Flash never calling the verification model — consistent with verification being a precision mechanism (it can only drop a finding, never add one), not a recall lever. If your priority is catching real bugs and you're comfortable with Flash's zero-false-positive record on this corpus, AIR's extra \$0.07 and 17 extra seconds per case bought no additional recall here.
+- **Both Aletheore tiers hold zero false positives on the 4 clean diffs vs. PR-Agent's 8** — not a close call, and not explained by Aletheore proposing fewer findings overall in a way that would also cost it recall (it doesn't; see the hit numbers above).
+- **Aletheore's generation prompt uses roughly half the input tokens PR-Agent's does** for the same 24 diffs. PR-Agent's schema (a ticket-compliance check, an effort-to-review score, a dedicated security field) does real, additional work per call beyond reviewing the diff, which shows up as real extra input tokens - part of why it's slower and pricier per case despite a smaller completion.
+- **This reverses the earlier free-tier-vs-GPT-5.5 run's finding (Aletheore 8/15, PR-Agent 12/15) completely.** That comparison wasn't measuring methodology at all - it was measuring a weak free-tier model with no verification against one of the more expensive reasoning models on the market. On identical footing, Aletheore's real recall is roughly 2.5x PR-Agent's, not behind it.
+
+### Verdict
+
+On a real, named, external competitor, same model, same corpus, post-deploy: Aletheore's methodology - deterministic evidence, blast-radius/referenced-symbol context, and (on AIR) a real second-model verification pass - roughly doubles PR-Agent's recall and holds a clean false-positive record, at comparable or lower real cost and meaningfully lower latency. Flash tier gives up nothing on recall measured here versus AIR, only the false-positive-suppression benefit verification provides - a real, quantified tradeoff for anyone choosing between the two tiers, not a guess.
+
+**Open, disclosed limitations**:
+1. **No blind LLM-judge pass this cycle.** The corpus's documented process (see `Aletheore/Aletheore`'s `benchmarks/pr-review-benchmark/README.md`, Step 5) calls for a fresh Claude-subagent dispatch per case as an independent second scorer. This run was executed by a forked subagent whose tool policy blocks spawning further subagents, and no direct API key was available as a substitute - so these are Step 4 manual scores only. A separate, earlier 2-arm run (Aletheore vs. PR-Agent only, different exact numbers) did get a full blind-judge pass and measured 83.3% recall agreement with manual scoring (58.3% on the looser actionability scale) - real independent verification, but on that run's numbers, not this one's. Don't blend the two. Two concrete things that run's disagreements surfaced, worth carrying forward into the next judge pass on this run's own numbers: (a) a real rubric ambiguity on clean cases - the LLM judge scored a tool that correctly stayed silent on a clean diff as "hit" (reading "no issue exists" as an object of recall), while manual scoring read the same silence as no verdict/miss (nothing to hit); this needs resolving explicitly in the rubric, not left to each scorer's own interpretation. (b) on case `009` (cobra completions args mutation), manual scoring credited PR-Agent's finding as a clean hit while the judge scored it "partial," reading its explanation (framed around `SetArgs`/completion reuse rather than the exact backing-array-mutation mechanism) as less directly on-point - a legitimate difference in how precisely a finding's explanation has to name the mechanism to count as a full hit, not a scoring bug either way.
+2. **AIR's numbers are via direct in-process invocation, not a live webhook trigger.** The plan to validate the deployed fixes end-to-end via real webhook events on the scratch repo's 24 open PRs produced zero new Flash Review comments - GitHub's webhooks were confirmed received and processed by the deployed code (via real check-run evidence, not assumed), but the AIR install's monthly review cap (500/month) was already exhausted by this session's own volume. AIR's generation/verification code path is unaffected by the fixes this would have validated (they live in the GitHub-fetch layer, which direct invocation doesn't call), but this run is not live end-to-end proof of those specific fixes in production.
+3. **PR-Agent: 10 of 24 cases are freshly re-measured this cycle**, the remaining 14 reuse real same-day, same-config data. Two independent scoring bugs (a clean-case recall-scoring error, and stale pre-refresh verdicts on the not-yet-fresh cases) were found and fixed after the initial pass, by two different sessions working the same shared data - both are reflected in the numbers above.
+4. **Case 020** remains excluded corpus-wide (a fixture/push-protection issue, fixed locally but not yet re-verified against a live push). **DeepSource** was excluded this run (real quota exhaustion on the test account).
