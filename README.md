@@ -4,7 +4,7 @@
 
 <p>
   <img src="https://img.shields.io/badge/License-MIT-059669?style=for-the-badge&labelColor=0A0A0A" alt="License: MIT" />
-  <img src="https://img.shields.io/badge/Languages-11-1E293B?style=for-the-badge&labelColor=0A0A0A" alt="11 languages" />
+  <img src="https://img.shields.io/badge/Languages-13-1E293B?style=for-the-badge&labelColor=0A0A0A" alt="13 languages" />
   <img src="https://img.shields.io/badge/Corpora-12-1E293B?style=for-the-badge&labelColor=0A0A0A" alt="12 corpora" />
   <img src="https://img.shields.io/badge/Questions-418-1E293B?style=for-the-badge&labelColor=0A0A0A" alt="418 questions" />
   <img src="https://img.shields.io/badge/API_key-not_required-1E293B?style=for-the-badge&labelColor=0A0A0A" alt="No API key required" />
@@ -767,7 +767,7 @@ paid plan.
 | `CORPUS_PLAN.md` | the 11-language programme: repos, procedure, cost, and what was rejected |
 | `METHODOLOGY.md` | full method, every adjustment made in RepoWise's favour, errors caught in our own runs |
 | `REPRODUCIBILITY.md` | versions; what reproduces bit-for-bit and what does not |
-| `LANGUAGE_COVERAGE.md` | scanner coverage across all 11 supported languages |
+| `LANGUAGE_COVERAGE.md` | scanner coverage across all 13 supported languages, plus a RepoWise dead-code comparison for Kotlin and Swift |
 | `AIRVIEW_GAP.md` | why our generated wiki lost, what changed, and what did not work |
 | `DETERMINISTIC_VS_LLM.md` | hotspots/ownership/dead-code: can a bare LLM reproduce the scanner's answer given the same data? |
 
