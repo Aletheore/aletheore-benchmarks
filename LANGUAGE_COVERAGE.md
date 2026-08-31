@@ -87,18 +87,34 @@ comparison rather than trusting an earlier pass:
 
 (`Aletheore#484`, `Aletheore#486`)
 
-**Kotlin: in progress, not yet competitive.** On android/architecture-samples
-(268 files), RepoWise flags 7 files unreachable (all build-config files - it
-correctly leaves every real `.kt` file alone). Aletheore currently flags 24,
-even after fixing the most obvious gap (zero JVM test-file patterns, which
-alone had it flagging all 7 `androidTest` instrumentation files as dead -
-`Aletheore#484`). The remaining 24 are real application code invisible to a
-plain import graph for two different reasons: AndroidManifest.xml entry
-points (`TodoActivity`, referenced by `<activity android:name="...">`, never
-imported) and Hilt/Dagger dependency injection (`@HiltViewModel`, `@Module` +
-`@InstallIn` - wired by annotation processing, not a plain import). Both are
-real, scoped fixes, not attempted yet. This table will be updated once they
-land; until then, don't quote a Kotlin dead-code win.
+**Kotlin: close, not a win - and the gap is now well understood.** On
+android/architecture-samples (268 files), RepoWise flags 7 files unreachable
+(all build-config files - it correctly leaves every real `.kt` file alone).
+Aletheore flags 11, down from an initial 31 across four real fixes:
+
+| finding | before | after | fix |
+|---|---|---|---|
+| `androidTest`/`test` files (zero JVM test-file patterns at all) | 31 | 24 | `Aletheore#484` |
+| AndroidManifest.xml entry points + Hilt/Dagger DI annotations | 24 | 15 | `Aletheore#484` (2nd commit) |
+| top-level Kotlin function imports (`fun LoadingContent(...)`, not just class/interface/object) | 15 | 12 | `Aletheore#487` |
+| top-level Kotlin val/var imports | 12 | 11 | `Aletheore#490` |
+
+Of the 11 remaining, 7 are the exact same build-config files RepoWise also
+flags (parity, not a gap), 1 (`CustomTestRunner.kt`) is a disclosed blind
+spot **both tools share** - it's referenced only via Gradle's
+`testInstrumentationRunner = "..."` string config, invisible to any
+import-graph analysis - and 1 (`SimpleCountingIdlingResource.kt`) RepoWise
+itself independently flags as an unused export at the symbol level, so it
+isn't really a disagreement either.
+
+The genuinely open gap is 2 files (`ModelMappingExt.kt`, `StatisticsUtils.kt`)
+hit by a third, distinct mechanism: Kotlin's same-package implicit
+visibility - files in one package see each other's top-level declarations
+with no import statement at all, the same way Java does. Confirmed real:
+`DefaultTaskRepository.kt` calls `ModelMappingExt.kt`'s `toExternal()` with
+zero import between them, same package. Not fixed here - the natural next
+piece, same shape as Swift's same-target fix above (treat same-package as an
+implicit reachability edge).
 
 ## What was broken, measured on real repositories
 
