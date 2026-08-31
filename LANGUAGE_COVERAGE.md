@@ -47,6 +47,59 @@ naming, importance ranking, AIRview, layer violations — consumes the import
 graph, so those languages produced output that was structurally wrong while
 looking normal.
 
+## RepoWise comparison: dead-code detection
+
+Both tools ship dead-code/unreachable-file detection. Measured head-to-head on
+real repos, file-level findings only (RepoWise also flags unused-export
+symbols; Aletheore's dead-code module doesn't attempt that granularity, so
+symbol-level findings are excluded from both sides for a fair comparison).
+
+**Swift: a clear, verified win.**
+
+| repo | files | RepoWise false positives | Aletheore false positives |
+|---|---|---|---|
+| vapor/penny-bot | 168 | 60 (36%) | 0 |
+| vapor/api-template | 10 | 6 (60%) | 0 |
+| apple/swift-algorithms | - | 0 | 0 |
+
+RepoWise's Swift support doesn't understand whole-module imports - a Swift
+`import Foo` names a compiled target, not a file, so files within a target
+that only ever get referenced from *outside* Swift's import syntax (a Lambda
+handler invoked by the AWS runtime, `main.swift`'s classic top-level-code
+entry point) look completely unreachable to it.
+
+Getting Aletheore to 0 took two real fixes, both found by re-running this
+comparison rather than trusting an earlier pass:
+
+- Swift files within *one target* see each other with no import statement at
+  all (unlike every other language this scanner supports) - the per-file
+  import graph could never show those edges, so a target's own entry point
+  and every sibling file it referenced looked equally unreachable. Fixed by
+  treating a target as one reachability unit: if any file in it is reachable,
+  every file in it is.
+- `Package.swift` can be genuinely executable Swift - a factory function
+  building several targets from one call site with `name:`/`path:` built via
+  string interpolation. The manifest parser was silently extracting a
+  truncated literal fragment from an interpolated string instead of
+  recognizing it wasn't a plain literal - on penny-bot this merged eight
+  distinct Lambda targets into one fictitious target spanning their shared
+  parent directory. Now skipped entirely when interpolation is present.
+
+(`Aletheore#484`, `Aletheore#486`)
+
+**Kotlin: in progress, not yet competitive.** On android/architecture-samples
+(268 files), RepoWise flags 7 files unreachable (all build-config files - it
+correctly leaves every real `.kt` file alone). Aletheore currently flags 24,
+even after fixing the most obvious gap (zero JVM test-file patterns, which
+alone had it flagging all 7 `androidTest` instrumentation files as dead -
+`Aletheore#484`). The remaining 24 are real application code invisible to a
+plain import graph for two different reasons: AndroidManifest.xml entry
+points (`TodoActivity`, referenced by `<activity android:name="...">`, never
+imported) and Hilt/Dagger dependency injection (`@HiltViewModel`, `@Module` +
+`@InstallIn` - wired by annotation processing, not a plain import). Both are
+real, scoped fixes, not attempted yet. This table will be updated once they
+land; until then, don't quote a Kotlin dead-code win.
+
 ## What was broken, measured on real repositories
 
 ### CommonJS: empty dependency graph
