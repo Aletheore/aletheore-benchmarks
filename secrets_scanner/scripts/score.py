@@ -33,14 +33,21 @@ def score(result_path: Path, truth: dict) -> dict:
         # (RepoWise) as reported - the fair comparison, since both tools'
         # findings are being asked the same question: "does this show up
         # as a live result a user would see?"
+        expected_location = (gt["expected_path"], gt["expected_line"])
         hit = any(
-            f["path"] == gt["expected_path"] and f["line"] == gt["expected_line"] and f.get("reported", True)
-            for f in findings
+            (f["path"], f["line"]) == expected_location and f.get("reported", True) for f in findings
+        )
+        # Same fix Aletheore/Aletheore#527 applied to its own scorer after
+        # Flash Review caught it there: checking only the expected location
+        # would let a true-negative case's fixture have a real reported
+        # finding elsewhere in its tree and still score a clean TN.
+        unexpected_reported = any(
+            (f["path"], f["line"]) != expected_location and f.get("reported", True) for f in findings
         )
         if gt["category"] == "true_positive":
             verdicts[case_id] = "TP" if hit else "FN"
         else:
-            verdicts[case_id] = "FP" if hit else "TN"
+            verdicts[case_id] = "FP" if (hit or unexpected_reported) else "TN"
     return {"tool": data["tool"], "version": data["version"], "verdicts": verdicts}
 
 
