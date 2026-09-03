@@ -25,6 +25,7 @@
   <a href="#explaining-code--how-does-x-work">Explaining code</a> ·
   <a href="#deterministic-analysis-vs-bare-llm">Deterministic vs. LLM</a> ·
   <a href="#head-to-head-against-graphify-erpnext">Graphify comparison</a> ·
+  <a href="secrets_scanner/README.md">Secrets detection vs. RepoWise</a> ·
   <a href="#where-we-lose">Where we lose</a> ·
   <a href="#reproducing">Reproducing</a> ·
   <a href="#contents">Contents</a>
@@ -786,6 +787,7 @@ paid plan.
 | `pr_review/` | the Flash Review compact-vs-full-context A/B (4 experiments, 3 models) plus a named head-to-head against PR-Agent (Experiment 5) — full writeup in `pr_review/README.md` |
 | `pr_review/results/` | raw generation and verification output for every PR-review experiment run |
 | `graphify_comparison/` | head-to-head against Graphify on ERPNext, both tools run ourselves under one harness and judge, full writeup in `graphify_comparison/README.md` |
+| `secrets_scanner/` | head-to-head against RepoWise's hardcoded-credential detection — a synthetic pilot corpus plus 20 real repos (21,430 files), both scanners called in-process, no API key, full writeup in `secrets_scanner/README.md` |
 | `scripts/det_vs_llm_*` | its runners — `det_vs_llm_exact_ground_truth.py` needs no API key |
 | `corpora.json` | pinned commits for all corpora |
 | `CORPUS_PLAN.md` | the 11-language programme: repos, procedure, cost, and what was rejected |

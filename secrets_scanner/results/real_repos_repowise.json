@@ -1,0 +1,1907 @@
+{
+  "tool": "repowise",
+  "version": "0.27.0",
+  "repos": {
+    "axios": [
+      {
+        "path": "lib/adapters/fetch.js",
+        "line": 279,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/unit/core/AxiosError.test.js",
+        "line": 341,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/unit/prototypePollution.test.js",
+        "line": 616,
+        "kind": "hardcoded_password"
+      }
+    ],
+    "clap": [],
+    "click": [],
+    "client-go": [],
+    "cobra": [],
+    "django": [
+      {
+        "path": "django/db/backends/oracle/creation.py",
+        "line": 292,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "docs/howto/mailers-migration.txt",
+        "line": 378,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "docs/releases/1.0-porting-guide.txt",
+        "line": 665,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "docs/topics/auth/default.txt",
+        "line": 138,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "docs/topics/testing/advanced.txt",
+        "line": 51,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "docs/topics/testing/tools.txt",
+        "line": 448,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/test_date_hierarchy.py",
+        "line": 20,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 99,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 104,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 2006,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 2047,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 2053,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 2092,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 2109,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 2137,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 2189,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 2208,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 2228,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 2246,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 2286,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_changelist/tests.py",
+        "line": 2307,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_custom_urls/tests.py",
+        "line": 25,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_docs/test_views.py",
+        "line": 495,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_docs/test_views.py",
+        "line": 544,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_docs/tests.py",
+        "line": 9,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 63,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 83,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 1474,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 1963,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 1971,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 1986,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2007,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2060,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2117,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2198,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2211,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2220,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2290,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2313,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2355,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2395,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2435,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2474,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2513,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2522,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2540,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2550,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_inlines/tests.py",
+        "line": 2561,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_utils/test_logentry.py",
+        "line": 22,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_actions.py",
+        "line": 40,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_actions.py",
+        "line": 533,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_actions.py",
+        "line": 610,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_actions.py",
+        "line": 614,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_adminsite.py",
+        "line": 42,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_autocomplete_view.py",
+        "line": 94,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_autocomplete_view.py",
+        "line": 404,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_autocomplete_view.py",
+        "line": 409,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_breadcrumbs.py",
+        "line": 12,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_csp.py",
+        "line": 29,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_forms.py",
+        "line": 18,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_history_view.py",
+        "line": 20,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_history_view.py",
+        "line": 63,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_history_view.py",
+        "line": 75,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_multidb.py",
+        "line": 54,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_multidb.py",
+        "line": 206,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_nav_sidebar.py",
+        "line": 37,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_nav_sidebar.py",
+        "line": 128,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_nav_sidebar.py",
+        "line": 133,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_password_form.py",
+        "line": 15,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_password_form.py",
+        "line": 26,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_password_form.py",
+        "line": 65,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_password_form.py",
+        "line": 68,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_password_form.py",
+        "line": 128,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_related_object_lookups.py",
+        "line": 16,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_related_object_lookups.py",
+        "line": 19,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_skip_link_to_content.py",
+        "line": 19,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_skip_link_to_content.py",
+        "line": 26,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_skip_link_to_content.py",
+        "line": 71,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_skip_link_to_content.py",
+        "line": 95,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_skip_link_to_content.py",
+        "line": 119,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_templatetags.py",
+        "line": 159,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_templatetags.py",
+        "line": 175,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/test_templatetags.py",
+        "line": 278,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 200,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 1709,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 2074,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 2135,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 2167,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 2381,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 2384,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 2387,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 2390,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 2393,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 2396,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 2399,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 2526,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 3763,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 3825,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 3954,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 3957,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 3960,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 3963,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 3981,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 4041,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 4065,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 4068,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 4368,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 4394,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 4663,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 4758,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 5270,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 5273,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 5446,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 5537,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 5563,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 5582,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 5905,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 5958,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6289,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6370,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6447,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6475,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6702,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6747,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6760,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6777,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6794,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6797,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6834,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6853,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6876,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6900,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6943,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6961,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 6982,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7004,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7024,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7074,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7089,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7147,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7183,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7201,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7328,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7351,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7367,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7396,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7415,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7437,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7452,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7472,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7499,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7516,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7529,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7549,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7827,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7855,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7951,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7954,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 7957,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 8178,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 8213,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 8361,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 8450,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 8468,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 8626,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 8702,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 8737,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 8803,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 8806,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 9010,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 9110,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 9164,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 9366,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 9433,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 9484,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 9490,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 60,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 62,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1003,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1013,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1065,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1088,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1113,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1131,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1171,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1188,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1223,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1578,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1612,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1732,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1763,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1783,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1815,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1834,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1870,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1913,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/admin_widgets/tests.py",
+        "line": 1977,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/async/test_async_auth.py",
+        "line": 21,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/async/test_async_auth.py",
+        "line": 26,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/async/test_async_auth.py",
+        "line": 73,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/async/test_async_auth.py",
+        "line": 81,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/async/test_async_auth.py",
+        "line": 89,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/async/test_async_auth.py",
+        "line": 103,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_admin_multidb.py",
+        "line": 42,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 476,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 480,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 494,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 498,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 507,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 514,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 548,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 577,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 579,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 589,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 591,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 618,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 624,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 643,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 646,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 659,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 661,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 666,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 669,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 680,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 681,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 688,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 689,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 953,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 962,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 971,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 976,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1113,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1121,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1336,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1345,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1368,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1382,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1421,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1433,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_basic.py",
+        "line": 160,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_basic.py",
+        "line": 171,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_basic.py",
+        "line": 194,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_context_processors.py",
+        "line": 78,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_context_processors.py",
+        "line": 100,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_context_processors.py",
+        "line": 114,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_context_processors.py",
+        "line": 121,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_context_processors.py",
+        "line": 139,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_context_processors.py",
+        "line": 140,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_decorators.py",
+        "line": 158,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_decorators.py",
+        "line": 323,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_decorators.py",
+        "line": 324,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_forms.py",
+        "line": 56,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_forms.py",
+        "line": 59,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_forms.py",
+        "line": 61,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_forms.py",
+        "line": 62,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_forms.py",
+        "line": 63,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_forms.py",
+        "line": 64,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_forms.py",
+        "line": 208,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_forms.py",
+        "line": 467,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_forms.py",
+        "line": 629,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_forms.py",
+        "line": 709,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_hashers.py",
+        "line": 488,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_hashers.py",
+        "line": 501,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_login.py",
+        "line": 10,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 176,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 198,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 262,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 277,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_middleware.py",
+        "line": 190,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_mixins.py",
+        "line": 57,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_mixins.py",
+        "line": 74,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_mixins.py",
+        "line": 89,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_mixins.py",
+        "line": 118,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_mixins.py",
+        "line": 218,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_mixins.py",
+        "line": 247,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_models.py",
+        "line": 163,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_models.py",
+        "line": 174,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_models.py",
+        "line": 183,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_models.py",
+        "line": 192,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_models.py",
+        "line": 199,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_models.py",
+        "line": 227,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_models.py",
+        "line": 291,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_models.py",
+        "line": 299,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_models.py",
+        "line": 315,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_models.py",
+        "line": 336,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_remote_user.py",
+        "line": 272,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_remote_user.py",
+        "line": 273,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_remote_user.py",
+        "line": 274,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_remote_user.py",
+        "line": 292,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_remote_user.py",
+        "line": 293,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_remote_user.py",
+        "line": 294,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_signals.py",
+        "line": 15,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_signals.py",
+        "line": 16,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_signals.py",
+        "line": 43,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_signals.py",
+        "line": 52,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_signals.py",
+        "line": 67,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_signals.py",
+        "line": 85,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_templates.py",
+        "line": 28,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_tokens.py",
+        "line": 53,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_tokens.py",
+        "line": 101,
+        "kind": "hardcoded_secret"
+      },
+      {
+        "path": "tests/auth_tests/test_tokens.py",
+        "line": 118,
+        "kind": "hardcoded_secret"
+      },
+      {
+        "path": "tests/auth_tests/test_tokens.py",
+        "line": 146,
+        "kind": "hardcoded_secret"
+      },
+      {
+        "path": "tests/auth_tests/test_tokens.py",
+        "line": 149,
+        "kind": "hardcoded_secret"
+      },
+      {
+        "path": "tests/auth_tests/test_tokens.py",
+        "line": 161,
+        "kind": "hardcoded_secret"
+      },
+      {
+        "path": "tests/auth_tests/test_tokens.py",
+        "line": 173,
+        "kind": "hardcoded_secret"
+      },
+      {
+        "path": "tests/auth_tests/test_validators.py",
+        "line": 200,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_validators.py",
+        "line": 269,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_validators.py",
+        "line": 287,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_views.py",
+        "line": 74,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_views.py",
+        "line": 77,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_views.py",
+        "line": 80,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_views.py",
+        "line": 566,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_views.py",
+        "line": 638,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_views.py",
+        "line": 933,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_views.py",
+        "line": 1581,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_views.py",
+        "line": 1603,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_views.py",
+        "line": 1625,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_views.py",
+        "line": 1755,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/auth_tests/test_views.py",
+        "line": 1757,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/composite_pk/test_update.py",
+        "line": 164,
+        "kind": "hardcoded_secret"
+      },
+      {
+        "path": "tests/dbshell/test_postgresql.py",
+        "line": 138,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/extra_regress/tests.py",
+        "line": 13,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/generic_inline_admin/tests.py",
+        "line": 20,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/gis_tests/geoadmin/tests.py",
+        "line": 16,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/gis_tests/inspectapp/tests.py",
+        "line": 253,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/mail/test_backends.py",
+        "line": 776,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/mail/test_backends.py",
+        "line": 786,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/mail/test_backends.py",
+        "line": 796,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/mail/test_backends.py",
+        "line": 826,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/mail/tests.py",
+        "line": 2063,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/mail/tests.py",
+        "line": 2273,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/modeladmin/test_actions.py",
+        "line": 13,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/modeladmin/test_actions.py",
+        "line": 22,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/modeladmin/tests.py",
+        "line": 982,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/modeladmin/tests.py",
+        "line": 1004,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/modeladmin/tests.py",
+        "line": 1073,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/multiple_database/tests.py",
+        "line": 2589,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/template_backends/test_jinja2.py",
+        "line": 161,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/template_tests/filter_tests/test_dictsort.py",
+        "line": 6,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client/tests.py",
+        "line": 73,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client/tests.py",
+        "line": 75,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client/tests.py",
+        "line": 559,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client/tests.py",
+        "line": 598,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client/tests.py",
+        "line": 636,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client/tests.py",
+        "line": 667,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client/tests.py",
+        "line": 712,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client/tests.py",
+        "line": 832,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client/tests.py",
+        "line": 862,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client/tests.py",
+        "line": 879,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 32,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 34,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 719,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 737,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 780,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 789,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 933,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 952,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 967,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 988,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 1012,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 1027,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 1043,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/test_client_regress/tests.py",
+        "line": 1057,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/timezones/tests.py",
+        "line": 1345,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "tests/urlpatterns_reverse/tests.py",
+        "line": 778,
+        "kind": "hardcoded_password"
+      }
+    ],
+    "express": [],
+    "flask": [
+      {
+        "path": "docs/tutorial/tests.rst",
+        "line": 233,
+        "kind": "hardcoded_password"
+      },
+      {
+        "path": "examples/tutorial/tests/conftest.py",
+        "line": 51,
+        "kind": "hardcoded_password"
+      }
+    ],
+    "gin": [],
+    "gorilla-mux": [],
+    "gson": [],
+    "junit4": [],
+    "laravel": [],
+    "lodash": [],
+    "okhttp": [
+      {
+        "path": "okhttp-tls/src/main/kotlin/okhttp3/tls/internal/TlsUtil.kt",
+        "line": 33,
+        "kind": "hardcoded_password"
+      }
+    ],
+    "penny-bot": [
+      {
+        "path": "infra/modules/constants/main.tf",
+        "line": 34,
+        "kind": "hardcoded_secret"
+      },
+      {
+        "path": "infra/modules/constants/main.tf",
+        "line": 35,
+        "kind": "hardcoded_secret"
+      },
+      {
+        "path": "infra/modules/constants/main.tf",
+        "line": 38,
+        "kind": "hardcoded_secret"
+      }
+    ],
+    "react": [],
+    "requests": [],
+    "restsharp": [
+      {
+        "path": "test/RestSharp.Tests.Integrated/Authentication/AuthenticationTests.cs",
+        "line": 11,
+        "kind": "hardcoded_password"
+      }
+    ],
+    "sinatra": []
+  }
+}

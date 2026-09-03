@@ -1,0 +1,23 @@
+{
+  "tool": "repowise",
+  "version": "0.27.0",
+  "cases": {
+    "001-aws-access-key": [],
+    "002-github-token": [],
+    "003-stripe-key": [
+      {
+        "path": "src/billing/client.py",
+        "line": 3,
+        "kind": "hardcoded_secret"
+      }
+    ],
+    "004-slack-token": [],
+    "005-google-api-key": [],
+    "006-uuid-not-a-secret": [],
+    "007-private-key-header": [],
+    "008-test-tls-certificate": [],
+    "009-property-reference-not-a-secret": [],
+    "010-truncated-example-not-a-secret": [],
+    "011-pem-header-boilerplate-no-body": []
+  }
+}

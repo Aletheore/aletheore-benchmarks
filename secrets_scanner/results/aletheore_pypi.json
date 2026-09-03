@@ -1,0 +1,87 @@
+{
+  "tool": "aletheore",
+  "version": "0.9.10",
+  "cases": {
+    "001-aws-access-key": [
+      {
+        "path": "src/config/settings.py",
+        "line": 1,
+        "reported": true
+      }
+    ],
+    "002-github-token": [
+      {
+        "path": "src/scripts/deploy.py",
+        "line": 3,
+        "reported": true
+      }
+    ],
+    "003-stripe-key": [
+      {
+        "path": "src/billing/client.py",
+        "line": 3,
+        "reported": true
+      },
+      {
+        "path": "src/billing/client.py",
+        "line": 3,
+        "reported": true
+      }
+    ],
+    "004-slack-token": [
+      {
+        "path": "src/integrations/slack_notifier.py",
+        "line": 3,
+        "reported": true
+      }
+    ],
+    "005-google-api-key": [
+      {
+        "path": "src/maps/client.py",
+        "line": 1,
+        "reported": true
+      },
+      {
+        "path": "src/maps/client.py",
+        "line": 1,
+        "reported": true
+      }
+    ],
+    "006-uuid-not-a-secret": [],
+    "007-private-key-header": [
+      {
+        "path": "src/tls/id_rsa",
+        "line": 1,
+        "reported": true
+      }
+    ],
+    "008-test-tls-certificate": [
+      {
+        "path": "tests/fixtures/key.pem",
+        "line": 1,
+        "reported": true
+      }
+    ],
+    "009-property-reference-not-a-secret": [
+      {
+        "path": "src/auth/oauth2.py",
+        "line": 5,
+        "reported": true
+      }
+    ],
+    "010-truncated-example-not-a-secret": [
+      {
+        "path": "README.md",
+        "line": 4,
+        "reported": true
+      }
+    ],
+    "011-pem-header-boilerplate-no-body": [
+      {
+        "path": "src/tls/HeldCertificate.kt",
+        "line": 2,
+        "reported": true
+      }
+    ]
+  }
+}
