@@ -1,0 +1,15 @@
+# Repos used by this benchmark, pinned at whatever HEAD resolved to on
+# 2026-09-04. Not vendored here (third-party sources) - clone at these exact
+# commits to reproduce:
+#
+#   git clone --depth 1 --filter=blob:none --sparse <url> <dir>
+#   cd <dir> && git sparse-checkout set --no-cone '/*'
+#
+# (depth 1 gets HEAD only, not these exact SHAs - if HEAD has since moved,
+# use `git fetch --depth 1 origin <sha> && git checkout <sha>` instead.)
+
+cal.com|https://github.com/calcom/cal.com.git|abffde336e744e15cf69626c10e436d6172bc406
+supabase|https://github.com/supabase/supabase.git|c6cdf4bd5343f8f00a59667f222cde434765e810
+coder|https://github.com/coder/coder.git|9008b7881a5a457092794a3bd3a1b0c48447b866
+windmill|https://github.com/windmill-labs/windmill.git|f037c73d104fffe7bb2640a5b1f2a92154c85e06
+trigger.dev|https://github.com/triggerdotdev/trigger.dev.git|b6da0344caca185aa5433acd8162ac0fe36f1456
