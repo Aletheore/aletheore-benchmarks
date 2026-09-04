@@ -3,7 +3,13 @@
 Run date: 2026-09-04. First systematic real-repo validation of
 `aletheore_database`'s schema extraction since it moved off a hand-written
 Postgres tokenizer onto sqlglot, plus the first head-to-head against
-Repowise's SQL handling.
+Repowise's SQL handling. Extended the same day with a second round: four
+more real repos (Apache Superset, Discourse, Mastodon, Sentry), chosen
+specifically because none of them have raw `.sql` migrations at all —
+Alembic, Rails, and Django source only — to stress the ORM-native
+migration parsing (`aletheore/orm_migrations.py`) the same way Part 1
+stressed the raw-SQL path, and to see what Repowise does with a migration
+convention that isn't SQL text.
 
 ## Part 1: real-repo stress test (Aletheore's own parser)
 
@@ -68,7 +74,91 @@ version. 3 occurrences total across all 2,677 files — rare, and already
 degrades honestly to one `unsupported` entry with the real text rather
 than losing data silently.
 
-## Part 2: Aletheore vs. Repowise
+## Part 1b: real-repo stress test, ORM-native migrations (Aletheore's own parser)
+
+Same methodology as Part 1, but these four repos have zero raw `.sql`
+migration files — Alembic (`.py`), Rails (`.rb`), and Django (`.py`)
+source only, exercising `orm_migrations.py` instead of the SQL tokenizer.
+
+| Repo | Migration files (real, content-verified) | Convention | Crashes | Real bugs found |
+|---|---|---|---|---|
+| Apache Superset | 383 | Alembic | 0 | 1 |
+| Discourse | 1,746 | Rails | 0 | 2 |
+| Mastodon | 535 | Rails | 0 | 0 (confirms round-6 Rails fixes generalize) |
+| Sentry | 37 | Django | 0 | 2 |
+| **Total** | **2,701** | | **0** | **5** |
+
+Final extracted schema, current code:
+
+| Repo | Tables | Relations | Indexes | Unsupported entries |
+|---|---|---|---|---|
+| Apache Superset | 12 | 29 | 23 | 115 |
+| Discourse | 211 | 59 | 257 | 758 |
+| Mastodon | 118 | 67 | 158 | 42 |
+| Sentry | 229 | 235 | 76 | 113 |
+
+Five real bugs found and fixed, none a false positive on re-verification:
+
+1. **Alembic's `alembic/versions` directory hardcoded too narrow** (Superset).
+   Superset renames the top-level directory to `superset/migrations` but
+   keeps a subdirectory literally named `versions`, per Alembic's own
+   convention — real and common enough that many large real projects do
+   this. Generalized the match to any `versions`-named directory,
+   content-verified via a `down_revision` substring check to avoid a false
+   positive on an unrelated directory of the same name.
+2. **Crash: `CREATE INDEX` built from a truncated dynamic string** (Discourse).
+   A real Rails migration builds its index SQL via string interpolation
+   (`execute "CREATE INDEX #{...} name ON table (col)"`); the static
+   extractor only captured the literal prefix `"CREATE INDEX "`. sqlglot
+   parsed the keywords but left the Index node `None`, which crashed the
+   index-event builder instead of degrading to `unsupported` like every
+   other unparseable statement.
+3. **Crash: `add_index` with a constant-referenced name** (Discourse).
+   `add_index :table, :col, name: INDEX_NAME` (a Ruby constant, not a
+   string/symbol literal) couldn't be resolved, and the fallback to
+   Rails' auto-generated index name only applied when `name:` was absent
+   entirely — not when present but unresolvable — so the index event's
+   name stayed `None` and crashed the final sort.
+4. **Custom FK field subclass not recognized** (Sentry). Sentry's own
+   `FlexibleForeignKey` (249 real usages in one squashed migration file
+   alone) is a verified, real `django.db.models.ForeignKey` subclass —
+   confirmed by reading its source — but the field-type check only
+   matched the literal names `ForeignKey`/`OneToOneField`, so every one
+   of these was silently modeled as a plain column with no relation.
+   Deliberately did *not* extend this to Sentry's similarly-named
+   `HybridCloudForeignKey`: its own docstring states it is "just a dumb
+   BigIntegerField" with no real integrity constraint — modeling it as a
+   relation would have fabricated a constraint that doesn't exist in the
+   real schema.
+5. **Unresolvable FK target silently emitted a broken relation** (Sentry).
+   `to=settings.AUTH_USER_MODEL` (a real, common Django idiom, not a
+   string literal) can't be resolved without loading Django settings — 28
+   real occurrences. This used to still emit a `relation` with
+   `to_table: None` instead of recording the gap; now routes to
+   `unsupported` with the real field and target text.
+
+Fixing #4 alone took Sentry's extracted relations from 8 (one of which had
+a `None` target) to 235.
+
+### What's left in `unsupported`, and why
+
+Discourse's 758 and Sentry's 113 look large in isolation but are
+overwhelmingly legitimate, already-understood scope boundaries: real DML
+data migrations (`UPDATE`/`DELETE`/`INSERT`/`SELECT`, not schema DDL),
+`DROP VIEW`/`ALTER SEQUENCE`, and — the one genuine, non-fixable
+limitation, previously found on Superset and confirmed again here on
+Discourse — `ADD COLUMN` on a table whose true genesis predates the
+migration history itself (created directly from ORM model classes before
+the project adopted Alembic/ActiveRecord migrations for schema changes,
+never captured in any migration file). No signal exists to recover this
+from the migration history alone. 79 of Sentry's 113 come from a single
+outlier: one squashed migration file replaying years of legacy
+`AlterUniqueTogether` calls (an already-deliberately-unmodeled legacy
+Django <2.2 API) — checked the distribution before treating it as a
+finding, and it does not generalize to normal migration files (6 more
+files each have exactly one).
+
+## Part 2a: Aletheore vs. Repowise, raw `.sql` migrations
 
 `repowise init --index-only -y` (no LLM cost) was run against the full
 checkout of each repo, then `.repowise/wiki.db`'s `wiki_symbols` table was
@@ -121,15 +211,78 @@ and independently matches coder's own maintained ground truth.
 - **Table renames**: never processed, as the `queue`/`v2_job_queue` case
   shows directly
 
+## Part 2b: Aletheore vs. Repowise, ORM-native migrations
+
+Same `repowise init --index-only -y` + direct `wiki_symbols` query
+methodology, run against the four Part 1b repos. These repos have zero
+raw `.sql` migration files, so this is a different question from Part 2a:
+not "how much schema detail does Repowise's SQL parsing lose," but
+"does Repowise understand ORM migration files as schema-defining code at
+all."
+
+First, the full, repo-wide symbol-kind vocabulary Repowise stored for
+each repo — not just within migration directories:
+
+| Repo | Every distinct `kind` Repowise stored, anywhere in the repo |
+|---|---|
+| Apache Superset | class, method, function, variable, constant, interface, type_alias, enum |
+| Discourse | class, method, function, variable, constant, module, interface, type_alias |
+| Mastodon | class, method, function, variable, constant, module, interface, type_alias, enum |
+| Sentry | class, method, function, variable, constant, interface, type_alias, enum |
+
+No `table`, `model`, `migration`, `column`, `relation`, or `index` kind
+exists anywhere — Repowise's symbol vocabulary is generic
+programming-language constructs, full stop. This holds regardless of
+migration convention (Alembic/Rails/Django) because none of it is
+SQL-parsing-related at all; it's the same general-purpose class/method/
+function extraction Repowise applies to any other Python or Ruby file in
+the repo.
+
+Concretely, on Sentry's `0001_squashed_1118_add_group_derived_data.py` —
+a single real (squashed-history) migration file that Aletheore replays
+into 217 real tables with 211 real relations (the large majority of the
+repo's 229 tables / 235 relations overall) — **Repowise's entire stored
+index for that file is one symbol**: `class Migration`. Every
+`CreateModel(...)` call inside it — each one a real table, with a real
+field list, real types, real FK targets — is an anonymous call expression
+inside a Python list literal, not a named class or function, so it
+produces no symbol at all under generic AST-based indexing.
+
+| Repo | Migration files Repowise touched | Symbols extracted (all generic: class/method/function/variable/constant) | Schema-relevant symbols (table/column/relation/index) |
+|---|---|---|---|
+| Apache Superset | 383 | 2,190 | **0** |
+| Discourse | 2,443 | 6,315 | **0** |
+| Mastodon | 535 | 1,321 | **0** |
+| Sentry | 54 | 103 | **0** |
+
+(Discourse's 2,443 vs. Aletheore's own 1,746 root-`db/migrate` sources
+reflects scope, not a discrepancy in either tool's correctness — Repowise
+indexes the whole checkout including plugin-local `db/migrate`
+directories elsewhere in the tree; this benchmark's Part 1b numbers are
+scoped to the root migration directory only, matching `detect_database`'s
+default.)
+
 ## Bottom line
 
-Repowise's SQL "support" is real in the sense that it doesn't crash and
-extracts *something* — but it's a single-statement, single-file
-`CREATE TABLE` name/column-list dump with no cross-migration replay, no
-type information, no constraints, and no relations, indexes, renames, or
-drops. On every repo tested it reported stale, sometimes years-out-of-date
-schemas as current, with no signal that anything was missing. Aletheore
-replays the full migration history to reconstruct the actual current
-schema — verified directly against a real project's own maintained ground
-truth (coder's `dump.sql`) — with types, primary keys, foreign keys
-(`ON DELETE` included), indexes, and renames all correctly tracked.
+**Raw `.sql` migrations (Part 2a):** Repowise's SQL "support" is real in
+the sense that it doesn't crash and extracts *something* — but it's a
+single-statement, single-file `CREATE TABLE` name/column-list dump with
+no cross-migration replay, no type information, no constraints, and no
+relations, indexes, renames, or drops. On every repo tested it reported
+stale, sometimes years-out-of-date schemas as current, with no signal
+that anything was missing.
+
+**ORM-native migrations (Part 2b):** Repowise has no schema-extraction
+concept here at all — it indexes Django/Rails/Alembic migration files
+exactly like any other source file (class and method names only), never
+recovering a single table, column, type, or relation from any of the four
+repos tested, 2,701 real migration files between them.
+
+Aletheore replays the full migration history — SQL or ORM-native — to
+reconstruct the actual current schema, verified directly against a real
+project's own maintained ground truth where one exists (coder's
+`dump.sql`) and against real field/type declarations read straight from
+source otherwise (Sentry's `FlexibleForeignKey`), with types, primary
+keys, foreign keys (`ON DELETE` included), indexes, and renames all
+correctly tracked across nine real repos and four different migration
+conventions (raw SQL, Alembic, Rails, Django).
