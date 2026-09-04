@@ -51,36 +51,34 @@ this codebase's own comments say were tried and failed (`del` each
 iteration, `gc.disable()`/forced `gc.collect()`) evidently only ever got
 verified at the ~116-file scale where the crash doesn't yet manifest.
 
-## What's fixed here, what isn't
+## Update: fixed (2026-09-04, Aletheore/Aletheore#537)
 
-**Fixed**: the false "runs clean on 3.12" documentation claim, in both
-`pyproject.toml`'s `requires-python` comment and
-`src/aletheore/ast_pattern.py`'s module docstring — corrected to
-describe the real, file-count-correlated trigger, with full repro
-details, so the next person doesn't trust a claim that was never
-actually stress-tested. Pure documentation change, zero behavior
-change — all 12 existing tests still pass.
+The crash itself is now fixed, not just documented. Each batch of files
+runs in its own fresh worker process
+(`ProcessPoolExecutor(max_workers=1, max_tasks_per_child=1)`), so no
+batch's process ever accumulates enough of an object graph to trigger
+the GC-driven segfault. A batch's crash is caught as `BrokenProcessPool`
+and marks the result `truncated`, keeping every earlier batch's real
+matches rather than losing the whole call — same honest-truncation
+contract the match-cap/char-budget already used.
 
-**Not fixed**: the crash itself. The two most obvious untried
-mitigations both carry real design trade-offs that deserve human
-sign-off rather than a speculative overnight change to already-fragile
-code that two prior fix attempts already failed on:
+Verified: 20/20 clean runs on the original 3.12 crash case (was 3/4
+crashed before). Also tested directly on Python 3.14 itself (previously
+assumed to be the *only* affected version, and never actually tested
+here) — single large calls didn't crash there (16/16 clean), but
+**repeated calls within one long-lived process did**, segfaulting on the
+3rd call: the realistic shape of a long-lived MCP server session, not a
+one-shot script. The fix held under that harder scenario too — 20/20
+clean. Both real callers (`aletheore query ast-pattern` and the
+`aletheore_ast_pattern` MCP tool, including from the MCP SDK's actual
+background-thread execution context) verified end-to-end, plus the fix
+generalizes to a second language/repo (Go / `kubernetes/client-go`,
+2,453 files). Full history in
+[Aletheore/Aletheore#537](https://github.com/Aletheore/Aletheore/pull/537).
 
-- **Subprocess isolation** (explicitly named as a possible fix in the
-  existing `pyproject.toml` comment) — contains the blast radius (a
-  crash kills a child process, not the caller), but every call now pays
-  process-spawn overhead to protect the rare large/low-match-density
-  case, and a mid-run crash still loses whatever wasn't returned yet
-  unless results are streamed back incrementally (a bigger design than
-  "just wrap it in a subprocess").
-- **A file-count-based pre-emptive truncation** — cap files processed,
-  not just matches/chars — needs a threshold chosen without a clean way
-  to predict where the real crash boundary sits for an arbitrary query/
-  language/repo combination.
-
-Recommend: the user picks a direction (or accepts the documented risk
-for now) before this is attempted — flagged here as this benchmark's
-one open, unresolved finding, not shipped speculatively.
+The `pyproject.toml` `requires-python = "<3.14"` upper bound was left
+in place — whether to lift it now that a real fix exists is a separate,
+not-yet-made call.
 
 ## Reproducing
 
