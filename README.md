@@ -24,8 +24,8 @@
   <a href="#head-to-head-against-pr-agent">PR-Agent comparison</a> ·
   <a href="#explaining-code--how-does-x-work">Explaining code</a> ·
   <a href="#deterministic-analysis-vs-bare-llm">Deterministic vs. LLM</a> ·
+  <a href="#deterministic-scanner-accuracy">Scanner accuracy</a> ·
   <a href="#head-to-head-against-graphify-erpnext">Graphify comparison</a> ·
-  <a href="secrets_scanner/README.md">Secrets detection vs. RepoWise</a> ·
   <a href="#where-we-lose">Where we lose</a> ·
   <a href="#reproducing">Reproducing</a> ·
   <a href="#contents">Contents</a>
@@ -669,6 +669,35 @@ Full write-up, methodology, and known limitations (including a real bug this
 testing surfaced — `ownership <file>` ignores its own argument) in
 [`DETERMINISTIC_VS_LLM.md`](DETERMINISTIC_VS_LLM.md).
 
+## Deterministic scanner accuracy
+
+A different axis again: Aletheore's five fully-deterministic scanners
+(no LLM, no judge) — `aletheore_secrets`, `aletheore_vulnerabilities`,
+`aletheore_dead_code`, `aletheore_licenses`, `aletheore_database` — plus
+`aletheore_ast_pattern` (structural code search), none of which had a
+systematic accuracy measurement before this pass. Each corpus's own
+README/REPORT has the full case tables, root-cause writeups, and fix
+details; the headline numbers:
+
+| benchmark | pilot result | real-repo finding |
+|---|---|---|
+| **secrets + vulnerabilities** | secrets 6/6 recall, 0/5 false positives · vulnerabilities 10/10 recall, 0/7 false positives, all 10 manifest ecosystems covered | 21,430 files across 20 real repos, 96 secrets + 231 vulnerability findings manually reviewed — **6 real product gaps found and fixed**, all now shipped with regression tests. Head-to-head against RepoWise on secrets, same 20 repos: RepoWise misses 5 of 6 real credential formats outright (case-sensitive patterns, no vendor-format detection) and **every one of its 375 real-repo findings was noise** — mostly Django's own test-suite fake passwords, zero real secrets found |
+| **dead code** | 10/10 recall, 0/7 false positives | Flask reported **all six of its real runtime dependencies as unused** — a severe bug (the unused-dependency check was reading a graph field that structurally excludes external packages) found and fixed |
+| **AST-pattern search** | all 12 existing unit tests pass | a real, reproducible `tree-sitter` segfault on large repos — **not 3.14-only as previously documented**, reproduces on 3.12 too, and on 3.14 specifically only under repeated calls within one long-lived process (the real MCP-server shape). Now fixed via batched subprocess isolation, verified 20/20 clean on both versions |
+| **license detection** | 46 pre-existing unit tests, all passing | **3 real gaps found and fixed**: BSD license bodies contain no "BSD" keyword at all, `LICENSE.rst` wasn't a recognized filename, and Maven license lookups never followed `<parent>` POM references (silently returned "unknown" for Guava, Guava-testlib, and Protobuf-java) |
+| **SQL schema extraction** | zero crashes across 5,378 real migration files, 9 real repos, both raw-SQL and ORM-native (Django/Rails/Alembic) conventions | **8 real gaps found and fixed** across two rounds (parser + ORM); one alone — a Django FK field subclass Sentry uses 249 times — took Sentry's extracted relations from 8 to 235. Head-to-head against Repowise on the same repos: Repowise never replays `ALTER`/`RENAME`/`DROP`, extracted zero foreign keys or indexes across 622 files, and has no ORM-migration concept at all |
+
+All five ran the real production functions against real, large open-source
+repos (Django, Flask, react, client-go, gson, cal.com, Sentry, and more) —
+not mocks, not hand-built fixtures alone. Full writeups:
+[`security-scanner-benchmark/`](security-scanner-benchmark/README.md)
+([results](security-scanner-benchmark/REPORT.md)) ·
+[`dead-code-benchmark/`](dead-code-benchmark/README.md) ·
+[`ast-pattern-benchmark/`](ast-pattern-benchmark/README.md) ·
+[`license-detection-benchmark/`](license-detection-benchmark/README.md) ·
+[`sql-schema-benchmark/`](sql-schema-benchmark/README.md)
+([results](sql-schema-benchmark/REPORT.md)).
+
 ## Head-to-head against Graphify (ERPNext)
 
 [Graphify](https://github.com/Graphify-Labs/graphify) is a tree-sitter-based
@@ -787,6 +816,11 @@ paid plan.
 | `pr_review/` | the Flash Review compact-vs-full-context A/B (4 experiments, 3 models) plus a named head-to-head against PR-Agent (Experiment 5) — full writeup in `pr_review/README.md` |
 | `pr_review/results/` | raw generation and verification output for every PR-review experiment run |
 | `graphify_comparison/` | head-to-head against Graphify on ERPNext, both tools run ourselves under one harness and judge, full writeup in `graphify_comparison/README.md` |
+| `security-scanner-benchmark/` | `aletheore_secrets` + `aletheore_vulnerabilities` accuracy — synthetic pilot corpus + 20-real-repo validation, full writeup in `security-scanner-benchmark/README.md` and `REPORT.md` |
+| `dead-code-benchmark/` | `aletheore_dead_code` accuracy — 10-case pilot corpus, full writeup in `dead-code-benchmark/README.md` |
+| `ast-pattern-benchmark/` | `aletheore_ast_pattern` real-repo stress test — found and fixed a real tree-sitter segfault, full writeup in `ast-pattern-benchmark/README.md` |
+| `license-detection-benchmark/` | `aletheore_licenses` real-repo validation — 3 real gaps found and fixed, full writeup in `license-detection-benchmark/README.md` |
+| `sql-schema-benchmark/` | `aletheore_database` real-repo validation + head-to-head against Repowise, 8 real gaps found and fixed across 5,378 migration files, full writeup in `sql-schema-benchmark/README.md` and `REPORT.md` |
 | `secrets_scanner/` | head-to-head against RepoWise's hardcoded-credential detection — a synthetic pilot corpus plus 20 real repos (21,430 files), both scanners called in-process, no API key, full writeup in `secrets_scanner/README.md` |
 | `scripts/det_vs_llm_*` | its runners — `det_vs_llm_exact_ground_truth.py` needs no API key |
 | `corpora.json` | pinned commits for all corpora |
