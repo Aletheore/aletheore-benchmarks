@@ -681,7 +681,7 @@ details; the headline numbers:
 
 | benchmark | pilot result | real-repo finding |
 |---|---|---|
-| **secrets + vulnerabilities** | secrets 6/6 recall, 0/5 false positives · vulnerabilities 10/10 recall, 0/7 false positives, all 10 manifest ecosystems covered | 21,430 files across 20 real repos, 96 secrets + 231 vulnerability findings manually reviewed — **6 real product gaps found and fixed**, all now shipped with regression tests |
+| **secrets + vulnerabilities** | secrets 6/6 recall, 0/5 false positives · vulnerabilities 10/10 recall, 0/7 false positives, all 10 manifest ecosystems covered | 21,430 files across 20 real repos, 96 secrets + 231 vulnerability findings manually reviewed — **6 real product gaps found and fixed**, all now shipped with regression tests. Head-to-head against RepoWise on secrets, same 20 repos: RepoWise misses 5 of 6 real credential formats outright (case-sensitive patterns, no vendor-format detection) and **every one of its 375 real-repo findings was noise** — mostly Django's own test-suite fake passwords, zero real secrets found |
 | **dead code** | 10/10 recall, 0/7 false positives | Flask reported **all six of its real runtime dependencies as unused** — a severe bug (the unused-dependency check was reading a graph field that structurally excludes external packages) found and fixed |
 | **AST-pattern search** | all 12 existing unit tests pass | a real, reproducible `tree-sitter` segfault on large repos — **not 3.14-only as previously documented**, reproduces on 3.12 too, and on 3.14 specifically only under repeated calls within one long-lived process (the real MCP-server shape). Now fixed via batched subprocess isolation, verified 20/20 clean on both versions |
 | **license detection** | 46 pre-existing unit tests, all passing | **3 real gaps found and fixed**: BSD license bodies contain no "BSD" keyword at all, `LICENSE.rst` wasn't a recognized filename, and Maven license lookups never followed `<parent>` POM references (silently returned "unknown" for Guava, Guava-testlib, and Protobuf-java) |
@@ -821,6 +821,7 @@ paid plan.
 | `ast-pattern-benchmark/` | `aletheore_ast_pattern` real-repo stress test — found and fixed a real tree-sitter segfault, full writeup in `ast-pattern-benchmark/README.md` |
 | `license-detection-benchmark/` | `aletheore_licenses` real-repo validation — 3 real gaps found and fixed, full writeup in `license-detection-benchmark/README.md` |
 | `sql-schema-benchmark/` | `aletheore_database` real-repo validation + head-to-head against Repowise, 8 real gaps found and fixed across 5,378 migration files, full writeup in `sql-schema-benchmark/README.md` and `REPORT.md` |
+| `secrets_scanner/` | head-to-head against RepoWise's hardcoded-credential detection — a synthetic pilot corpus plus 20 real repos (21,430 files), both scanners called in-process, no API key, full writeup in `secrets_scanner/README.md` |
 | `scripts/det_vs_llm_*` | its runners — `det_vs_llm_exact_ground_truth.py` needs no API key |
 | `corpora.json` | pinned commits for all corpora |
 | `CORPUS_PLAN.md` | the 11-language programme: repos, procedure, cost, and what was rejected |

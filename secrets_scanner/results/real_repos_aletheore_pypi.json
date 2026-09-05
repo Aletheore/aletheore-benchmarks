@@ -1,0 +1,586 @@
+{
+  "tool": "aletheore",
+  "version": "0.9.10",
+  "repos": {
+    "axios": [
+      {
+        "path": "tests/unit/adapters/key.pem",
+        "line": 1,
+        "pattern": "private_key_header",
+        "reported": true
+      }
+    ],
+    "clap": [],
+    "click": [],
+    "client-go": [
+      {
+        "path": "tools/clientcmd/client_config.go",
+        "line": 304,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tools/clientcmd/client_config.go",
+        "line": 320,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tools/clientcmd/client_config.go",
+        "line": 338,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tools/remotecommand/fallback_test.go",
+        "line": 333,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "transport/transport_test.go",
+        "line": 72,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/certificate/certificate_manager_test.go",
+        "line": 67,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/certificate/certificate_manager_test.go",
+        "line": 112,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/certificate/certificate_manager_test.go",
+        "line": 146,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/certificate/certificate_manager_test.go",
+        "line": 171,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/certificate/certificate_manager_test.go",
+        "line": 196,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/certificate/certificate_manager_test.go",
+        "line": 1193,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/certificate/certificate_manager_test.go",
+        "line": 1202,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/certificate/certificate_manager_test.go",
+        "line": 1211,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/certificate/certificate_manager_test.go",
+        "line": 1243,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/certificate/certificate_manager_test.go",
+        "line": 1263,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/keyutil/key_test.go",
+        "line": 27,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/keyutil/key_test.go",
+        "line": 94,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/keyutil/key_test.go",
+        "line": 102,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "util/cert/testdata/dontUseThisKey.pem",
+        "line": 1,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "plugin/pkg/client/auth/exec/exec_test.go",
+        "line": 71,
+        "pattern": "private_key_header",
+        "reported": true
+      }
+    ],
+    "cobra": [],
+    "django": [
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 829,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 857,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 904,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 952,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 1002,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 1125,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 1172,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 1208,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 1251,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 1288,
+        "pattern": "generic_credential_assignment",
+        "reported": false
+      },
+      {
+        "path": "tests/auth_tests/test_management.py",
+        "line": 1324,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1053,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1128,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1149,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1168,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1186,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1226,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1306,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/auth_tests/test_auth_backends.py",
+        "line": 1361,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/forms_tests/tests/test_forms.py",
+        "line": 4732,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/view_tests/tests/test_debug.py",
+        "line": 1903,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/view_tests/tests/test_debug.py",
+        "line": 1914,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/view_tests/tests/test_debug.py",
+        "line": 1926,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/view_tests/tests/test_debug.py",
+        "line": 1927,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/view_tests/tests/test_debug.py",
+        "line": 1936,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/view_tests/tests/test_debug.py",
+        "line": 1938,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/view_tests/tests/test_debug.py",
+        "line": 1939,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/admin_views/tests.py",
+        "line": 4010,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "tests/utils_tests/test_crypto.py",
+        "line": 131,
+        "pattern": "generic_credential_assignment",
+        "reported": false
+      },
+      {
+        "path": "tests/csrf_tests/tests.py",
+        "line": 40,
+        "pattern": "generic_credential_assignment",
+        "reported": false
+      },
+      {
+        "path": "docs/howto/mailers-migration.txt",
+        "line": 388,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "django/utils/crypto.py",
+        "line": 44,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      }
+    ],
+    "express": [],
+    "flask": [],
+    "gin": [
+      {
+        "path": "testdata/certificate/key.pem",
+        "line": 1,
+        "pattern": "private_key_header",
+        "reported": true
+      }
+    ],
+    "gorilla-mux": [],
+    "gson": [],
+    "junit4": [],
+    "laravel": [],
+    "lodash": [],
+    "okhttp": [
+      {
+        "path": "docs/changelogs/changelog_4x.md",
+        "line": 460,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "samples/guide/src/main/java/okhttp3/recipes/RequestBodyCompression.java",
+        "line": 38,
+        "pattern": "google_api_key",
+        "reported": true
+      },
+      {
+        "path": "samples/guide/src/main/java/okhttp3/recipes/RequestBodyCompression.java",
+        "line": 38,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "samples/slack/src/main/java/okhttp3/slack/SlackClient.java",
+        "line": 91,
+        "pattern": "slack_token",
+        "reported": false
+      },
+      {
+        "path": "okhttp-tls/README.md",
+        "line": 196,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/test/java/okhttp3/tls/HeldCertificateTest.kt",
+        "line": 186,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/test/java/okhttp3/tls/HeldCertificateTest.kt",
+        "line": 206,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/test/java/okhttp3/tls/HeldCertificateTest.kt",
+        "line": 294,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/test/java/okhttp3/tls/HeldCertificateTest.kt",
+        "line": 302,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/test/java/okhttp3/tls/HeldCertificateTest.kt",
+        "line": 355,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/test/java/okhttp3/tls/HeldCertificateTest.kt",
+        "line": 412,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/test/java/okhttp3/tls/HeldCertificateTest.kt",
+        "line": 474,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/test/java/okhttp3/tls/HeldCertificateTest.kt",
+        "line": 514,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/test/java/okhttp3/tls/HeldCertificateTest.kt",
+        "line": 534,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/test/java/okhttp3/tls/HeldCertificateTest.kt",
+        "line": 560,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/main/kotlin/okhttp3/tls/HeldCertificate.kt",
+        "line": 164,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/main/kotlin/okhttp3/tls/HeldCertificate.kt",
+        "line": 178,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "okhttp-tls/src/main/kotlin/okhttp3/tls/HeldCertificate.kt",
+        "line": 529,
+        "pattern": "private_key_header",
+        "reported": true
+      }
+    ],
+    "penny-bot": [
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 4041,
+        "pattern": "github_token",
+        "reported": false
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 4042,
+        "pattern": "github_token",
+        "reported": false
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 4043,
+        "pattern": "github_token",
+        "reported": false
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 4044,
+        "pattern": "github_token",
+        "reported": false
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 4045,
+        "pattern": "github_token",
+        "reported": false
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 227276,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 227277,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 227279,
+        "pattern": "private_key_header",
+        "reported": true
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 227511,
+        "pattern": "github_token",
+        "reported": true
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 227642,
+        "pattern": "github_token",
+        "reported": true
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 227679,
+        "pattern": "github_token",
+        "reported": true
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 237854,
+        "pattern": "generic_credential_assignment",
+        "reported": false
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 250376,
+        "pattern": "generic_credential_assignment",
+        "reported": false
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 250468,
+        "pattern": "generic_credential_assignment",
+        "reported": false
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 250514,
+        "pattern": "generic_credential_assignment",
+        "reported": false
+      },
+      {
+        "path": "Lambdas/GitHubAPI/openapi.yaml",
+        "line": 256363,
+        "pattern": "generic_credential_assignment",
+        "reported": false
+      },
+      {
+        "path": "Lambdas/LambdasShared/SecretsRetriever.swift",
+        "line": 82,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      }
+    ],
+    "react": [
+      {
+        "path": "packages/react-client/src/__tests__/ReactFlight-test.js",
+        "line": 2427,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      }
+    ],
+    "requests": [],
+    "restsharp": [],
+    "sinatra": [
+      {
+        "path": "README.md",
+        "line": 1215,
+        "pattern": "generic_credential_assignment",
+        "reported": true
+      },
+      {
+        "path": "rack-protection/lib/rack/protection/authenticity_token.rb",
+        "line": 61,
+        "pattern": "generic_credential_assignment",
+        "reported": false
+      }
+    ]
+  }
+}
