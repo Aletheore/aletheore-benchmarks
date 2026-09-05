@@ -671,13 +671,13 @@ testing surfaced — `ownership <file>` ignores its own argument) in
 
 ## Deterministic scanner accuracy
 
-A different axis again: Aletheore's four fully-deterministic scanners
+A different axis again: Aletheore's five fully-deterministic scanners
 (no LLM, no judge) — `aletheore_secrets`, `aletheore_vulnerabilities`,
-`aletheore_dead_code`, `aletheore_licenses` — plus `aletheore_ast_pattern`
-(structural code search), none of which had a systematic accuracy
-measurement before this pass. Each corpus's own README/REPORT has the
-full case tables, root-cause writeups, and fix details; the headline
-numbers:
+`aletheore_dead_code`, `aletheore_licenses`, `aletheore_database` — plus
+`aletheore_ast_pattern` (structural code search), none of which had a
+systematic accuracy measurement before this pass. Each corpus's own
+README/REPORT has the full case tables, root-cause writeups, and fix
+details; the headline numbers:
 
 | benchmark | pilot result | real-repo finding |
 |---|---|---|
@@ -685,15 +685,18 @@ numbers:
 | **dead code** | 10/10 recall, 0/7 false positives | Flask reported **all six of its real runtime dependencies as unused** — a severe bug (the unused-dependency check was reading a graph field that structurally excludes external packages) found and fixed |
 | **AST-pattern search** | all 12 existing unit tests pass | a real, reproducible `tree-sitter` segfault on large repos — **not 3.14-only as previously documented**, reproduces on 3.12 too, and on 3.14 specifically only under repeated calls within one long-lived process (the real MCP-server shape). Now fixed via batched subprocess isolation, verified 20/20 clean on both versions |
 | **license detection** | 46 pre-existing unit tests, all passing | **3 real gaps found and fixed**: BSD license bodies contain no "BSD" keyword at all, `LICENSE.rst` wasn't a recognized filename, and Maven license lookups never followed `<parent>` POM references (silently returned "unknown" for Guava, Guava-testlib, and Protobuf-java) |
+| **SQL schema extraction** | zero crashes across 5,378 real migration files, 9 real repos, both raw-SQL and ORM-native (Django/Rails/Alembic) conventions | **8 real gaps found and fixed** across two rounds (parser + ORM); one alone — a Django FK field subclass Sentry uses 249 times — took Sentry's extracted relations from 8 to 235. Head-to-head against Repowise on the same repos: Repowise never replays `ALTER`/`RENAME`/`DROP`, extracted zero foreign keys or indexes across 622 files, and has no ORM-migration concept at all |
 
-All four ran the real production functions against real, large open-source
-repos (Django, Flask, react, client-go, gson, and 16 more) — not mocks,
-not hand-built fixtures alone. Full writeups:
+All five ran the real production functions against real, large open-source
+repos (Django, Flask, react, client-go, gson, cal.com, Sentry, and more) —
+not mocks, not hand-built fixtures alone. Full writeups:
 [`security-scanner-benchmark/`](security-scanner-benchmark/README.md)
 ([results](security-scanner-benchmark/REPORT.md)) ·
 [`dead-code-benchmark/`](dead-code-benchmark/README.md) ·
 [`ast-pattern-benchmark/`](ast-pattern-benchmark/README.md) ·
-[`license-detection-benchmark/`](license-detection-benchmark/README.md).
+[`license-detection-benchmark/`](license-detection-benchmark/README.md) ·
+[`sql-schema-benchmark/`](sql-schema-benchmark/README.md)
+([results](sql-schema-benchmark/REPORT.md)).
 
 ## Head-to-head against Graphify (ERPNext)
 
@@ -817,6 +820,7 @@ paid plan.
 | `dead-code-benchmark/` | `aletheore_dead_code` accuracy — 10-case pilot corpus, full writeup in `dead-code-benchmark/README.md` |
 | `ast-pattern-benchmark/` | `aletheore_ast_pattern` real-repo stress test — found and fixed a real tree-sitter segfault, full writeup in `ast-pattern-benchmark/README.md` |
 | `license-detection-benchmark/` | `aletheore_licenses` real-repo validation — 3 real gaps found and fixed, full writeup in `license-detection-benchmark/README.md` |
+| `sql-schema-benchmark/` | `aletheore_database` real-repo validation + head-to-head against Repowise, 8 real gaps found and fixed across 5,378 migration files, full writeup in `sql-schema-benchmark/README.md` and `REPORT.md` |
 | `scripts/det_vs_llm_*` | its runners — `det_vs_llm_exact_ground_truth.py` needs no API key |
 | `corpora.json` | pinned commits for all corpora |
 | `CORPUS_PLAN.md` | the 11-language programme: repos, procedure, cost, and what was rejected |
