@@ -1,5 +1,60 @@
 # Why AIRview loses the comprehension benchmark
 
+**UPDATE 2026-09-06 — scanner-context file pages (PR #545, merged to
+master), re-judged: no regression on a schema-less corpus, real cost
+increase, no statistically significant score change on Flask specifically.**
+
+PR #545 added an opt-in `include_repo_context` flag to `generate_file_pages`
+that attaches a compact summary of the other scanners (database schema, API
+endpoints, dependency vulnerabilities/licenses, dead code, infrastructure,
+environment variables) to each file page's prompt, wired into real
+production usage via `jobs.py`. Re-ran this file's exact methodology
+(Flask, `architecture_generic.json`, deepseek-v4-flash writer, 3 judge
+repeats, same cached RepoWise material both times) to check it didn't
+regress the existing AIRview-vs-RepoWise result:
+
+| | baseline (flag off) | enriched (flag on) | Δ |
+|---|---|---|---|
+| AIRview score (0-3) | 2.17 | 2.22 | +0.05 |
+| RepoWise score (identical material both runs) | 1.71 | 1.74 | +0.03 (judge noise, not a real change) |
+| Judge preference (of 72) | 43 aletheore / 23 repowise / 6 tie | 45 / 22 / 5 | +2 |
+| Judge noise floor (mean spread) | 0.46 | 0.25 | — |
+| File pages kept | 21/23 | 22/23 | +1 |
+| Generation prompt tokens | 81,709 | 173,052 | +112% |
+| Generation completion tokens | 188,988 | 190,081 | +0.6% |
+| Generation cost (deepseek-v4-flash) | $0.2854 | $0.3271 | +14.6% |
+
+**+0.05 is not a real result** — it is smaller than this run's own measured
+judge noise floor (0.25-0.46), and RepoWise's score moved +0.03 on
+byte-identical material between the two judge passes, which is the same
+order of magnitude of noise, not signal. Net: no measurable quality change
+on this corpus, for a real 14.6% generation-cost increase.
+
+**Flask is a bad corpus for measuring this specific fix's value**: it has no
+database schema at all (`repository.database.schema.checked: false` - it's
+a routing library, not a database-backed application), so the enrichment's
+primary lever (real tables/relations with citable `file:line`) never
+activates here. Only `api_endpoints` (311 real Flask-internal routes) and
+dependency data got attached. The real, positive evidence for this fix is a
+separate, non-RepoWise measurement against Aletheore's own repository (which
+has 50 real tables / 45 relations / 70 endpoints): file pages citing real
+schema/endpoint facts rose from 16/40 to 24/40 (+50%) for a 9.6% cost
+increase, with zero regression in file-page success rate. That comparison
+has no RepoWise arm - building one requires RepoWise's own full (paid) wiki
+generation from scratch on a schema-having corpus, which this pass
+deliberately did not do, to avoid an unbounded new cost for a result this
+document doesn't need in order to make its actual claim: **the fix does not
+degrade the existing, published AIRview-vs-RepoWise numbers.**
+
+Reproduce with `scripts/build_airview_scanner_ctx_ab.py` (`MODE=baseline` /
+`MODE=enriched`, needs `GITHUB_APP_PATH` pointed at an Aletheore checkout
+with PR #545) → `scripts/build_airview_scanner_ctx_ab_retrieval.py` (same
+`MODE`, needs local Ollama with `nomic-embed-text`) →
+`ARM=airview_scanner_ctx_<mode> python3 scripts/judge_arch_arm.py`. Both
+new arms were written into `results/arch_context2.json` under their own
+keys (`airview_scanner_ctx_baseline`/`airview_scanner_ctx_enriched`) -
+every pre-existing arm in that file is untouched.
+
 **UPDATE 2026-08-22 — this title is now stale for the shipped product.** The
 fix this document's own "Cause 2" section calls for (`related_symbols`, real
 citation targets for cross-file material) was written, measured to work, and
