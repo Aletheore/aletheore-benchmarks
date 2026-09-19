@@ -1,0 +1,840 @@
+{
+  "model": "glm-5.3-flash",
+  "corpus": "24 of 25 cases (020 excluded)",
+  "variants": {
+    "enriched_both_run1": {
+      "recall_pct": 65.0,
+      "clean_false_positives": "1/4",
+      "total_findings": 16,
+      "precision_pct": 93.8,
+      "per_case": {
+        "001-flask-cli-key-quote": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "002-requests-json-decode-pickle": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "003-requests-proxy-bypass-registry": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "004-click-version-package-name": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "005-axios-progress-negative-clamp": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "006-express-content-length-transfer-encoding": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "007-lodash-omit-array-clone": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "008-axios-headers-set-cookie": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "009-cobra-completions-args-mutation": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "010-gin-runfd-file-leak": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "011-gorilla-mux-query-match": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "012-urfave-cli-empty-positional-arg": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "013-gson-jsonprimitive-hashcode": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "014-junit4-assumption-serialization": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "015-commons-lang-bitfield-sign-extension": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "016-flask-sql-injection-user-lookup": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "017-commons-lang-arrayutils-off-by-one": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "018-axios-missing-null-check-charset": {
+          "finding_count": 1,
+          "outcome": "miss",
+          "note": "a real finding was present but addresses a different bug (quoted-charset parsing) than the ground-truth missing-null-check issue; scored miss on manual content review, not mechanical presence-of-finding"
+        },
+        "019-gin-request-counter-race": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "021-requests-swallowed-close-exception": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "022-flask-docs-mongoengine-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "023-cobra-test-name-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "024-lodash-test-description-fix": {
+          "finding_count": 1,
+          "outcome": "false_positive"
+        },
+        "025-gson-javadoc-getaschar-fix": {
+          "finding_count": 0,
+          "outcome": "clean"
+        }
+      },
+      "scoring_note": "recall_pct here is manual content-verified scoring (was this finding actually about the real bug), not mechanical presence-of-any-finding - see per_case for the one case where those two methods disagree"
+    },
+    "bare_run1": {
+      "recall_pct": 90.0,
+      "clean_false_positives": "0/4",
+      "total_findings": 21,
+      "precision_pct": 100.0,
+      "per_case": {
+        "001-flask-cli-key-quote": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "002-requests-json-decode-pickle": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "003-requests-proxy-bypass-registry": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "004-click-version-package-name": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "005-axios-progress-negative-clamp": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "006-express-content-length-transfer-encoding": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "007-lodash-omit-array-clone": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "008-axios-headers-set-cookie": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "009-cobra-completions-args-mutation": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "010-gin-runfd-file-leak": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "011-gorilla-mux-query-match": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "012-urfave-cli-empty-positional-arg": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "013-gson-jsonprimitive-hashcode": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "014-junit4-assumption-serialization": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "015-commons-lang-bitfield-sign-extension": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "016-flask-sql-injection-user-lookup": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "017-commons-lang-arrayutils-off-by-one": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "018-axios-missing-null-check-charset": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "019-gin-request-counter-race": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "021-requests-swallowed-close-exception": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "022-flask-docs-mongoengine-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "023-cobra-test-name-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "024-lodash-test-description-fix": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "025-gson-javadoc-getaschar-fix": {
+          "finding_count": 0,
+          "outcome": "clean"
+        }
+      }
+    },
+    "bare_run2": {
+      "recall_pct": 85.0,
+      "clean_false_positives": "1/4",
+      "total_findings": 19,
+      "precision_pct": 94.7,
+      "per_case": {
+        "001-flask-cli-key-quote": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "002-requests-json-decode-pickle": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "003-requests-proxy-bypass-registry": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "004-click-version-package-name": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "005-axios-progress-negative-clamp": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "006-express-content-length-transfer-encoding": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "007-lodash-omit-array-clone": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "008-axios-headers-set-cookie": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "009-cobra-completions-args-mutation": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "010-gin-runfd-file-leak": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "011-gorilla-mux-query-match": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "012-urfave-cli-empty-positional-arg": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "013-gson-jsonprimitive-hashcode": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "014-junit4-assumption-serialization": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "015-commons-lang-bitfield-sign-extension": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "016-flask-sql-injection-user-lookup": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "017-commons-lang-arrayutils-off-by-one": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "018-axios-missing-null-check-charset": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "019-gin-request-counter-race": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "021-requests-swallowed-close-exception": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "022-flask-docs-mongoengine-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "023-cobra-test-name-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "024-lodash-test-description-fix": {
+          "finding_count": 1,
+          "outcome": "false_positive"
+        },
+        "025-gson-javadoc-getaschar-fix": {
+          "finding_count": 0,
+          "outcome": "clean"
+        }
+      }
+    },
+    "referenced_symbol_context_only_run1": {
+      "recall_pct": 90.0,
+      "clean_false_positives": "0/4",
+      "total_findings": 22,
+      "precision_pct": 100.0,
+      "per_case": {
+        "001-flask-cli-key-quote": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "002-requests-json-decode-pickle": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "003-requests-proxy-bypass-registry": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "004-click-version-package-name": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "005-axios-progress-negative-clamp": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "006-express-content-length-transfer-encoding": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "007-lodash-omit-array-clone": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "008-axios-headers-set-cookie": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "009-cobra-completions-args-mutation": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "010-gin-runfd-file-leak": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "011-gorilla-mux-query-match": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "012-urfave-cli-empty-positional-arg": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "013-gson-jsonprimitive-hashcode": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "014-junit4-assumption-serialization": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "015-commons-lang-bitfield-sign-extension": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "016-flask-sql-injection-user-lookup": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "017-commons-lang-arrayutils-off-by-one": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "018-axios-missing-null-check-charset": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "019-gin-request-counter-race": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "021-requests-swallowed-close-exception": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "022-flask-docs-mongoengine-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "023-cobra-test-name-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "024-lodash-test-description-fix": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "025-gson-javadoc-getaschar-fix": {
+          "finding_count": 0,
+          "outcome": "clean"
+        }
+      }
+    },
+    "referenced_symbol_context_only_run2": {
+      "recall_pct": 95.0,
+      "clean_false_positives": "1/4",
+      "total_findings": 24,
+      "precision_pct": 95.8,
+      "per_case": {
+        "001-flask-cli-key-quote": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "002-requests-json-decode-pickle": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "003-requests-proxy-bypass-registry": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "004-click-version-package-name": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "005-axios-progress-negative-clamp": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "006-express-content-length-transfer-encoding": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "007-lodash-omit-array-clone": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "008-axios-headers-set-cookie": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "009-cobra-completions-args-mutation": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "010-gin-runfd-file-leak": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "011-gorilla-mux-query-match": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "012-urfave-cli-empty-positional-arg": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "013-gson-jsonprimitive-hashcode": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "014-junit4-assumption-serialization": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "015-commons-lang-bitfield-sign-extension": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "016-flask-sql-injection-user-lookup": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "017-commons-lang-arrayutils-off-by-one": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "018-axios-missing-null-check-charset": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "019-gin-request-counter-race": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "021-requests-swallowed-close-exception": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "022-flask-docs-mongoengine-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "023-cobra-test-name-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "024-lodash-test-description-fix": {
+          "finding_count": 1,
+          "outcome": "false_positive"
+        },
+        "025-gson-javadoc-getaschar-fix": {
+          "finding_count": 0,
+          "outcome": "clean"
+        }
+      }
+    },
+    "sibling_file_context_only_run1": {
+      "recall_pct": 75.0,
+      "clean_false_positives": "1/4",
+      "total_findings": 19,
+      "precision_pct": 94.7,
+      "per_case": {
+        "001-flask-cli-key-quote": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "002-requests-json-decode-pickle": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "003-requests-proxy-bypass-registry": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "004-click-version-package-name": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "005-axios-progress-negative-clamp": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "006-express-content-length-transfer-encoding": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "007-lodash-omit-array-clone": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "008-axios-headers-set-cookie": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "009-cobra-completions-args-mutation": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "010-gin-runfd-file-leak": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "011-gorilla-mux-query-match": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "012-urfave-cli-empty-positional-arg": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "013-gson-jsonprimitive-hashcode": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "014-junit4-assumption-serialization": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "015-commons-lang-bitfield-sign-extension": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "016-flask-sql-injection-user-lookup": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "017-commons-lang-arrayutils-off-by-one": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "018-axios-missing-null-check-charset": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "019-gin-request-counter-race": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "021-requests-swallowed-close-exception": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "022-flask-docs-mongoengine-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "023-cobra-test-name-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "024-lodash-test-description-fix": {
+          "finding_count": 1,
+          "outcome": "false_positive"
+        },
+        "025-gson-javadoc-getaschar-fix": {
+          "finding_count": 0,
+          "outcome": "clean"
+        }
+      }
+    },
+    "sibling_file_context_only_run2": {
+      "recall_pct": 75.0,
+      "clean_false_positives": "1/4",
+      "total_findings": 19,
+      "precision_pct": 94.7,
+      "per_case": {
+        "001-flask-cli-key-quote": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "002-requests-json-decode-pickle": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "003-requests-proxy-bypass-registry": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "004-click-version-package-name": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "005-axios-progress-negative-clamp": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "006-express-content-length-transfer-encoding": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "007-lodash-omit-array-clone": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "008-axios-headers-set-cookie": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "009-cobra-completions-args-mutation": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "010-gin-runfd-file-leak": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "011-gorilla-mux-query-match": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "012-urfave-cli-empty-positional-arg": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "013-gson-jsonprimitive-hashcode": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "014-junit4-assumption-serialization": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "015-commons-lang-bitfield-sign-extension": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "016-flask-sql-injection-user-lookup": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "017-commons-lang-arrayutils-off-by-one": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "018-axios-missing-null-check-charset": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "019-gin-request-counter-race": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "021-requests-swallowed-close-exception": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "022-flask-docs-mongoengine-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "023-cobra-test-name-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "024-lodash-test-description-fix": {
+          "finding_count": 1,
+          "outcome": "false_positive"
+        },
+        "025-gson-javadoc-getaschar-fix": {
+          "finding_count": 0,
+          "outcome": "clean"
+        }
+      }
+    },
+    "live_verify_post_pr748_deploy": {
+      "recall_pct": 95.0,
+      "clean_false_positives": "1/4",
+      "total_findings": 24,
+      "precision_pct": 95.8,
+      "per_case": {
+        "001-flask-cli-key-quote": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "002-requests-json-decode-pickle": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "003-requests-proxy-bypass-registry": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "004-click-version-package-name": {
+          "finding_count": 0,
+          "outcome": "miss"
+        },
+        "005-axios-progress-negative-clamp": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "006-express-content-length-transfer-encoding": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "007-lodash-omit-array-clone": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "008-axios-headers-set-cookie": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "009-cobra-completions-args-mutation": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "010-gin-runfd-file-leak": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "011-gorilla-mux-query-match": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "012-urfave-cli-empty-positional-arg": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "013-gson-jsonprimitive-hashcode": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "014-junit4-assumption-serialization": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "015-commons-lang-bitfield-sign-extension": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "016-flask-sql-injection-user-lookup": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "017-commons-lang-arrayutils-off-by-one": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "018-axios-missing-null-check-charset": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "019-gin-request-counter-race": {
+          "finding_count": 1,
+          "outcome": "hit"
+        },
+        "021-requests-swallowed-close-exception": {
+          "finding_count": 2,
+          "outcome": "hit"
+        },
+        "022-flask-docs-mongoengine-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "023-cobra-test-name-typo": {
+          "finding_count": 0,
+          "outcome": "clean"
+        },
+        "024-lodash-test-description-fix": {
+          "finding_count": 1,
+          "outcome": "false_positive"
+        },
+        "025-gson-javadoc-getaschar-fix": {
+          "finding_count": 0,
+          "outcome": "clean"
+        }
+      }
+    }
+  }
+}

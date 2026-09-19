@@ -1,0 +1,654 @@
+{
+  "001-flask-cli-key-quote": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "002-requests-json-decode-pickle": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "greptile": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "003-requests-proxy-bypass-registry": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "004-click-version-package-name": {
+    "aletheore": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "005-axios-progress-negative-clamp": {
+    "aletheore": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "006-express-content-length-transfer-encoding": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "007-lodash-omit-array-clone": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "008-axios-headers-set-cookie": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "009-cobra-completions-args-mutation": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "010-gin-runfd-file-leak": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "011-gorilla-mux-query-match": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "012-urfave-cli-empty-positional-arg": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "013-gson-jsonprimitive-hashcode": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "014-junit4-assumption-serialization": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 3
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "015-commons-lang-bitfield-sign-extension": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "016-flask-sql-injection-user-lookup": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 3
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "017-commons-lang-arrayutils-off-by-one": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "018-axios-missing-null-check-charset": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "019-gin-request-counter-race": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "021-requests-swallowed-close-exception": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    },
+    "deepsource": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "022-flask-docs-mongoengine-typo": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "deepsource": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "023-cobra-test-name-typo": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "deepsource": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "024-lodash-test-description-fix": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "deepsource": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "greptile": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "025-gson-javadoc-getaschar-fix": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [
+        "\"Inaccurate Javadoc\" - re-critiques a Javadoc comment the PR correctly fixed (short->character); over-reads the fix as still wrong"
+      ],
+      "actionability": 2
+    },
+    "deepsource": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "sourcery": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": null
+    },
+    "greptile": {
+      "recall": "miss",
+      "false_positives": [
+        "\"Return description remains inaccurate\" - same over-read of a correctly fixed Javadoc comment as case for pr_agent"
+      ],
+      "actionability": 2
+    }
+  }
+}
