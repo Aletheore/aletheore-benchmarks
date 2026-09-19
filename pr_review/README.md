@@ -519,15 +519,17 @@ A controlled test on this exact corpus — same model, same prompt, only the con
 
 ### Results
 
-24 cases (15 real-bug-fix, 5 injected-bug, 4 clean); 20 cases carry a real recall verdict. Pooled manual (Step 4) + LLM-judge (Step 5) scoring, Aletheore's row uses its `referenced_symbol_context`-only production config (post-#748):
+24 cases (15 real-bug-fix, 5 injected-bug, 4 clean); 20 cases carry a real recall verdict. Pooled manual (Step 4) + LLM-judge (Step 5) scoring. Aletheore's row is the one run of its current config (`referenced_symbol_context`-only, post-#748) that was actually carried through the full manual+LLM-judge pipeline — its false-positive count varied 0-1 across the two replicated runs of this config (see the isolation table above), so the `0` below is real for *this specific judged run*, not a claim that the config is always zero-FP:
 
 | Tool | Hit | Partial | Miss | False Positives | Avg Actionability | Location Grounding | Content Grounding |
 |---|---|---|---|---|---|---|---|
-| Aletheore (Flash, `glm-5.3-flash`, current config) | 22 | 0 | 2 | 0 | 5.0 | 1.00 | 0.21 |
+| Aletheore (Flash, `glm-5.3-flash`, current config) | 22 | 0 | 2 | 0† | 5.0 | 1.00 | 0.21 |
 | PR-Agent / Qodo (`gpt-5.6-luna`) | 21 | 1 | 2 | 1 | 4.75 | 0.95 | 0.00 |
 | DeepSource | 5 | 0 | 19 | 0 | 3.0 | 1.00 | n/a |
 | Sourcery | 20 | 0 | 4 | 0 | 4.75 | 0.94 | 0.50 |
 | Greptile | 22 | 0 | 2 | 1 | 3.9 | 1.00 | n/a |
+
+†0 in this specific judged run, 0-1 across the config's two replicated runs — see "The real finding" above, not a discrepancy with it.
 
 Manual-scoring-only recall (before merging in the LLM judge): Aletheore 90.0% (18/20), Greptile 95.0% (19/20), PR-Agent 92.5% (18/20 + 1 partial), Sourcery 80.0% (16/20), DeepSource 5.0% (1/20).
 
