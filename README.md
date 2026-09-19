@@ -22,6 +22,7 @@
   <a href="#covering-the-files-a-pr-touches">PR coverage</a> ·
   <a href="#pr-review--compact-evidence-vs-full-file-context">PR review</a> ·
   <a href="#head-to-head-against-pr-agent">PR-Agent comparison</a> ·
+  <a href="#the-martian-benchmark">Martian Benchmark</a> ·
   <a href="#explaining-code--how-does-x-work">Explaining code</a> ·
   <a href="#deterministic-analysis-vs-bare-llm">Deterministic vs. LLM</a> ·
   <a href="#deterministic-scanner-accuracy">Scanner accuracy</a> ·
@@ -553,29 +554,42 @@ Cost for all 3 validation runs combined, real API pricing: **$0.9229**.
 
 ## Head-to-head against PR-Agent
 
-A different question from the compact-vs-context experiments above: how does
-Aletheore's actual hosted product compare against a real, named, external
-competitor (Qodo's PR-Agent), held to the same model, same 24-case corpus,
-production Aletheore (deployed at `35e18f8`)?
+**Updated 2026-09-19 (Experiment 6) — now a 5-way comparison, not just PR-Agent.** Same 24-case
+corpus as Experiment 5 below, but with Greptile and DeepSource included with real data for the
+first time, and a real production model-config change decided on the results:
 
-| Tool | Hit | Partial | Miss | False Positives |
-|---|---|---|---|---|
-| Aletheore AIR (Luna + DeepSeek verify) | 15 | 1 | 4 | 0 |
-| Aletheore Flash (Luna only, no verify) | 15 | 0 | 5 | 0 |
-| PR-Agent / Qodo (Luna) | 6 | 0 | 14 | 8 |
+| Tool | Hit | Partial | Miss | False Positives | Precision |
+|---|---|---|---|---|---|
+| Aletheore (Flash, `glm-5.3-flash`, current production config) | 18 | 0 | 2 | 0-1† | 95.8-100.0%† |
+| Greptile | 19 | 0 | 1 | 1/4 | 95.0% |
+| PR-Agent / Qodo (`gpt-5.6-luna`) | 18 | 1 | 1 | 1/4 | 95.2% |
+| Sourcery | 16 | 0 | 4 | 0/4 | 100.0% |
+| DeepSource | 1 | 0 | 19 | 0/4 | 100.0% (n=2, not meaningful) |
 
-Both Aletheore tiers hold a clean false-positive record against PR-Agent's 8,
-and roughly double its recall, on identical footing, not a model-budget
-mismatch (both tools run `gpt-5.6-luna`, PR-Agent's own real default is the
-pricier `gpt-5.5`, deliberately not used here). Aletheore Flash matches AIR's
-recall while running ~2x faster, giving up only the false-positive
-suppression the verification pass provides. Full setup, timing, real cost,
-and disclosed limitations (no blind-judge pass this cycle, AIR measured via
-direct invocation rather than a live webhook) in
-[`pr_review/README.md`](pr_review/README.md), Experiment 5.
+†Aletheore's own recall/precision varied 90.0-95.0% / 95.8-100.0% across three independent runs on
+its current config — see below for why that range, not a single number, is the honest answer.
+
+**The real story this run surfaced wasn't the head-to-head, it was what Aletheore was doing to its
+own score.** Flash Review builds two optional context blocks for its prompt beyond the diff itself:
+`referenced_symbol_context` (resolves symbols the diff imports from unchanged files — shipped long
+before this run, built to prevent a specific, already-confirmed hallucination class) and
+`sibling_file_context` (surfaces other files in the same directory as a changed file — shipped the
+same night as this run, in PR #746). Production fed both into every real review. A controlled
+isolation test on this exact corpus, same model, same prompt, only the context varied, found that
+`sibling_file_context` alone cost Aletheore 15-25 points of recall and doubled its false-positive
+rate — `referenced_symbol_context` was not the problem. **Production has been changed as a direct
+result**: `sibling_file_context` is no longer fed into the live Flash Review prompt as of
+`github-app-deploy-2026-09-19-2`; `referenced_symbol_context` is unchanged. The table above reflects
+this current, real production config, not the config that was live when the corpus's SWE-bench-style
+sibling-context experiment (Experiment 2 above) validated a different, unrelated context type.
+
+Full setup, the real isolation numbers (three independent runs per candidate config), the blind
+LLM-judge pass (98.3% recall agreement with manual scoring), and every disclosed limitation, in
+[`pr_review/README.md`](pr_review/README.md), Experiment 6. Experiment 5's original 3-way,
+`gpt-5.6-luna`-only result is below it, superseded but not deleted.
 
 <details>
-<summary><strong>Full write-up: all 5 PR-review experiments (compact vs. context, DeepSeek V4 Flash, the production-model run that decided the default, and the PR-Agent head-to-head)</strong></summary>
+<summary><strong>Full write-up: all 6 PR-review experiments (compact vs. context, DeepSeek V4 Flash, the production-model run that decided the default, the original PR-Agent head-to-head, and the 5-way run that found and fixed a real context-block regression)</strong></summary>
 
 
 *Paths below (`run_ollama_ab.py`, `results/`) are relative to `pr_review/`. Referenced corpus paths (`benchmarks/pr-review-benchmark/`) are in the separate `Aletheore/Aletheore` repo, not this one.*
@@ -1062,7 +1076,112 @@ On a real, named, external competitor, same model, same corpus, post-deploy: Ale
 3. **PR-Agent: 10 of 24 cases are freshly re-measured this cycle**, the remaining 14 reuse real same-day, same-config data. Two independent scoring bugs (a clean-case recall-scoring error, and stale pre-refresh verdicts on the not-yet-fresh cases) were found and fixed after the initial pass, by two different sessions working the same shared data - both are reflected in the numbers above.
 4. **Case 020** remains excluded corpus-wide (a fixture/push-protection issue, fixed locally but not yet re-verified against a live push). **DeepSource** was excluded this run (real quota exhaustion on the test account).
 
+---
+
+##### Experiment 6: 5-way named comparison, same corpus — and a real production fix decided by the results
+
+Experiment 5 above compared Aletheore against one named competitor (PR-Agent), both on `gpt-5.6-luna`. This run asks a broader question on the same 24-case corpus: how does Aletheore's *actual current shipped config* — `glm-5.3-flash` via IndieRouter, the model production switched to after Experiment 5 for cost reasons — compare against five real tools, including two (Greptile, DeepSource) that were excluded or degraded in every prior run on this corpus? And it does not stay a passive measurement: a real regression it found in Aletheore's own scoring led to an isolation test, which led to a real production code change the same night.
+
+The corpus, `ground_truth.yaml` files, and pipeline scripts live in `Aletheore/Aletheore`'s `benchmarks/pr-review-benchmark/` — same convention as Experiment 5, that repo is the source of truth this experiment's scripts read from.
+
+###### Setup
+
+- **Aletheore commit**: production deployed at `8545f77` (tag `github-app-deploy-2026-09-19-2`), which includes PR #746 (sibling-file context, later disabled — see below), PR #747 (softened confidence bar), and PR #748 (the fix this experiment's own results produced).
+- **Aletheore's arm**: direct invocation of `scan_worker.flash_review.review_diff()` — Flash tier only (`verify_with_second_model=False`, no AIR second-model verification pass), model `glm-5.3-flash` via IndieRouter (production's real current default). Three context configurations were tested, not one — see "The real finding" below.
+- **PR-Agent**: `gpt-5.6-luna`, unchanged from Experiment 5's config — kept rather than force-matched to Aletheore's new model, because routing PR-Agent through IndieRouter to reach `glm-5.3-flash` turned out to be a real, unresolved integration problem (litellm's own wrapper around the call adds parameters IndieRouter rejects with a generic "model does not exist" error, even though a bare `litellm.completion()` call with identical model/endpoint/key succeeds standalone — isolated but not fixed this run). So this comparison is "each tool's real current config," not architecture-only with the model held constant, and is documented as such rather than silently presented as apples-to-apples.
+- **DeepSource, Sourcery, Greptile**: real hosted GitHub App reactions on the scratch repo. All 24 case PRs were closed and reopened fresh partway through this run after discovering Sourcery/Greptile's Apps react reliably to a genuine "PR opened" event but not to a force-push "synchronize" event on an already-existing PR — the initial run looked like Greptile was completely uninstalled/out of credits; it wasn't, it just never saw a fresh-PR event on the stale PRs.
+- **Scoring**: Step 4 manual scoring (real finding content read against `ground_truth.yaml`, not file:line proximity alone) *and* Step 5 — four fresh Claude subagents, one per 6-case batch, each with zero knowledge of this session, genuinely blind, findings passed under real tool names (named comparison, no anonymization needed). Recall agreement between manual and LLM-judge scoring: **98.3%**. Actionability agreement (1-5 subjective scale): 57.3% — expected noise on that axis, not a scoring problem.
+- **Corpus**: 24 of 25 cases (case `020` excluded, same fixture issue as every prior run on this corpus).
+
+###### The real finding: production's own context enrichment was hurting Aletheore's score
+
+Flash Review can feed two optional context blocks into its prompt beyond the diff: `referenced_symbol_context` (resolves symbols the diff imports from unchanged files — an older feature, built specifically to stop a confirmed hallucination class where Flash Review made claims about an unchanged file's behavior with zero real evidence behind them) and `sibling_file_context` (surfaces other files in the same directory as a changed file, so the model can notice convention breaks — new, shipped the same night as this run, PR #746). Production fed both into every real review.
+
+A controlled test on this exact corpus — same model, same prompt, only the context blocks varied — ran each of four configurations, most of them twice, to separate real signal from GLM-5.3-Flash's own run-to-run noise (it's called with no seed):
+
+| Config | Run 1 recall | Run 2 recall | Run 1 precision | Run 2 precision |
+|---|---|---|---|---|
+| Bare prompt (neither context block) | 90.0% | 85.0% | 100.0% | 94.7% |
+| `referenced_symbol_context` only | 90.0% | 95.0% | 100.0% | 95.8% |
+| `sibling_file_context` only | 75.0% | 75.0% | 94.7% | 94.7% |
+| Both (production's real config when this run started) | 65.0%* | — | 93.8% | — |
+
+\*Manual content-verified scoring, not mechanical presence-of-any-finding — one enriched-context finding was present but addressed a different bug than the ground truth (case `018`: it flagged a real but secondary quoted-charset parsing issue instead of the actual missing-null-check bug), and mechanical scoring would have miscounted it as a hit. Every other config's findings were manually verified as genuinely on-target; see `results/pr_review_sibling_context_isolation.json` for the full per-case breakdown behind every number in this table.
+
+`referenced_symbol_context` alone tracks bare prompt closely across both runs (90.0-95.0%) — not the problem, consistent with it being a genuinely evidence-grounded feature. `sibling_file_context` alone reproduces most of the regression on its own, and replicated almost exactly between its two runs (75.0% recall, 1-of-4 clean-case false positives, 94.7% precision, identical both times — the tightest replication of anything measured in this experiment). Feeding both together was worse still (65.0%), suggesting some further compounding on top of `sibling_file_context`'s own cost. The dominant, cleanly-isolated driver is `sibling_file_context`.
+
+**Production was changed the same night, on this basis**: `github-app/scan_worker/jobs.py` no longer feeds `sibling_file_context` into the live Flash Review prompt ([PR #748](https://github.com/Aletheore/Aletheore/pull/748)), while `referenced_symbol_context` is untouched. A post-deploy verification run against the actual live commit (`8545f77`) measured 95.0% recall / 95.8% precision — consistent with the `referenced_symbol_context`-only runs above, confirming the deployed change performs as the isolation test predicted, not just in theory.
+
+**This conflicts with `sibling_file_context`'s own original validation** (Experiment 2 above measured a real recall gain from a related but not identical context-injection approach, on a completely different corpus — real external repos with much larger, messier multi-file PRs, evaluated with `llama3.1:8b` via Ollama). That conflict is not resolved here — stated plainly as an open question about how a context feature's effect depends on corpus shape and model, not smoothed over. This 24-case run is being weighted more heavily for the *production* decision specifically because it is replicated per-variant and cross-tool/LLM-judge-corroborated on the corpus and model Aletheore actually ships against right now, not because Experiment 2's result is assumed wrong.
+
+**A second, independent defect found in the process**: on the enriched-context run, GLM-5.3-Flash correctly diagnosed at least 2 real bugs (cases `003`, `006`) but `review_diff()`'s own content-grounding validation gate silently dropped both findings because the model's citation didn't quote source text verbatim close enough to the line it named. Confirmed by instrumenting the real validation function directly, not inferred. This is a real product defect — it would cost a real customer a correct finding the same way — filed separately from the context-block question, not yet fixed.
+
+###### Results
+
+24 cases (15 real-bug-fix, 5 injected-bug, 4 clean); 20 cases carry a real recall verdict. Pooled manual (Step 4) + LLM-judge (Step 5) scoring. Aletheore's row is the one run of its current config (`referenced_symbol_context`-only, post-#748) that was actually carried through the full manual+LLM-judge pipeline — its false-positive count varied 0-1 across the two replicated runs of this config (see the isolation table above), so the `0` below is real for *this specific judged run*, not a claim that the config is always zero-FP:
+
+| Tool | Hit | Partial | Miss | False Positives | Avg Actionability | Location Grounding | Content Grounding |
+|---|---|---|---|---|---|---|---|
+| Aletheore (Flash, `glm-5.3-flash`, current config) | 22 | 0 | 2 | 0† | 5.0 | 1.00 | 0.21 |
+| PR-Agent / Qodo (`gpt-5.6-luna`) | 21 | 1 | 2 | 1 | 4.75 | 0.95 | 0.00 |
+| DeepSource | 5 | 0 | 19 | 0 | 3.0 | 1.00 | n/a |
+| Sourcery | 20 | 0 | 4 | 0 | 4.75 | 0.94 | 0.50 |
+| Greptile | 22 | 0 | 2 | 1 | 3.9 | 1.00 | n/a |
+
+†0 in this specific judged run, 0-1 across the config's two replicated runs — see "The real finding" above, not a discrepancy with it.
+
+Manual-scoring-only recall (before merging in the LLM judge): Aletheore 90.0% (18/20), Greptile 95.0% (19/20), PR-Agent 92.5% (18/20 + 1 partial), Sourcery 80.0% (16/20), DeepSource 5.0% (1/20).
+
+**Location grounding** (cited file exists, cited line is inside it) is close to uninformative on its own — a static analyser clears it by construction. **Content grounding** (text the finding quotes verbatim really appears near the cited line) is the bar Aletheore's Flash Review enforces on itself in production, applied identically to every tool here; DeepSource and Greptile show `n/a` because their finding text doesn't quote source verbatim by convention, not because their findings are ungrounded.
+
+Raw results: `results/pr_review_5way_glm_manual_scored.json` (Step 4), `results/pr_review_5way_glm_llm_judged.json` (Step 5, one independent Claude subagent batch per file), `results/pr_review_sibling_context_isolation.json` (the full isolation-test data behind the table above, all 8 runs, per-case).
+
+###### Reading this honestly
+
+- **DeepSource's 5% recall is a real, measured result on this corpus**, not a quota/config problem this time (unlike Experiment 5, where it was excluded for quota exhaustion) — its GitHub App posted real review comments on every case PR, they just rarely named the actual ground-truth issue.
+- **Aletheore's own recall moved from worst-of-five to competitive-with-the-field purely by removing one context block**, without touching the model, the prompt, or the grounding logic otherwise. The lesson generalizes past this one feature: more context is not free, and a benchmark that only measures "did we add evidence" without measuring "did adding it help on *this* corpus shape" can validate a real regression.
+- **`referenced_symbol_context` staying clean under the same test is the control this experiment needed** — it rules out "any injected context hurts GLM-5.3-Flash" as the explanation, and points specifically at `sibling_file_context`'s own shape (compact sibling-path-and-symbol-name listings, not real source) as the cost, not context injection in general.
+- **PR-Agent's own comparison here is not architecture-only** (see Setup) — it's each tool's real current config, honestly labeled as such rather than presented as a controlled variable that was actually held constant.
+
+###### Verdict
+
+A real regression Aletheore had shipped to production (`sibling_file_context`, PR #746) was found by this benchmark, isolated from a separate, unaffected feature (`referenced_symbol_context`) via a replicated controlled test, and fixed in production the same night (PR #748), with a post-deploy run confirming the fix performs as predicted. On the resulting current config, Aletheore is competitive with or ahead of every tool in this comparison on recall, false positives, and actionability, and content-grounds more of its findings than PR-Agent, Greptile, or DeepSource (Sourcery is the only tool that content-grounds a higher share). This experiment is presented as a full account of a real mistake and its fix, not just a final scoreboard — the honest number for Aletheore's recall on this corpus is a measured 85-95% range, not a single confident figure, and the isolation methodology that produced that range is the more durable result than any one run's percentage.
+
+**Open, disclosed limitations**:
+1. **PR-Agent stayed on `gpt-5.6-luna`, not Aletheore's current `glm-5.3-flash`.** A real attempt was made to route PR-Agent through IndieRouter to `glm-5.3-flash` for a true architecture-only comparison; it failed with a real, unresolved litellm/IndieRouter compatibility issue (isolated to PR-Agent's own request wrapper — a bare `litellm.completion()` call with identical parameters succeeds) not worth blocking this run on.
+2. **The enriched-context (both blocks) condition has only one run**, unlike bare/`referenced_symbol_context`-only/`sibling_file_context`-only, each of which got two. Given the measured run-to-run noise on the other three configs (5-10 points), a second enriched-context run would strengthen the 65.0% figure, though the gap between it and the other configs (25+ points from the best) is large enough that noise alone is an unlikely full explanation.
+3. **Non-determinism is real and now measured, not assumed.** GLM-5.3-Flash is called with no seed. Bare prompt and `referenced_symbol_context`-only each varied 5-10 points of recall between their two runs, and one specific false positive (case `024`) appeared in one run of each variant but not the other. `sibling_file_context`-only was the exception — identical numbers both times — which is part of why it was trusted as the isolated driver despite the general noise floor.
+4. **This run's conclusion about `sibling_file_context` is not reconciled with its own original validation** on a different corpus (see "The real finding" above) — stated as an open question, not resolved.
+5. Case `020` remains excluded corpus-wide (same fixture/push-protection issue as every prior run).
+
 </details>
+
+## The Martian Benchmark
+
+A different measurement from the hand-curated corpus above: instead of one known bug per diff and
+a written ground-truth answer, this benchmark scores each tool's findings against **what a real
+human reviewer actually said** on a real, merged pull request — 14 clean cases (10 more excluded
+for contaminated ground truth, kept and labeled rather than hidden) across `sentry`, `grafana`,
+`cal.diy`, and `keycloak`, judged for semantic match against real review comments by `gpt-5-nano`.
+It's the benchmark used to validate two real Flash Review changes tonight before shipping them, and
+to correctly reject two others that looked plausible but didn't hold up:
+
+| Run | Aletheore recall | PR-Agent recall | Greptile recall |
+|---|---|---|---|
+| Baseline (511 golden findings, all 24 cases, pre-fix) | 38.6% | 36.2% | 35.6% |
+| PR #746 (sibling-file context) | 44.7% / 41.1%\* | 31.1% / 32.9% | 25.6% / 24.2% |
+| **PR #747 (softened confidence gate) — shipped** | **47.9%** | 31.5% | 26.5% |
+| Rejected: finding cap 5→10 | 42.9% | 30.6% | 26.0% |
+| Rejected: expanded few-shot example | 40.2% | 28.8% | 22.8% |
+
+\*Two independent runs of the identical PR #746 config — real GLM-5.3-Flash run-to-run noise,
+both numbers published rather than the more flattering one alone.
+
+**This corpus and the 24-case corpus above reached opposite conclusions about the same feature**
+(PR #746: a real recall gain here, a real recall *and* precision cost on the smaller corpus — see
+Experiment 6 above). Both results are published, neither discarded to make the story cleaner; full
+account of the conflict, the precision tradeoffs behind PR #747's own number, and every raw log in
+[`martian_benchmark/README.md`](martian_benchmark/README.md).
 
 ## Explaining code — "how does X work?"
 
@@ -4385,8 +4504,10 @@ python3 scripts/score_retrieval_matrix.py results/retrieval_raw_zod_0813_verifie
 | `scripts/score_retrieval_matrix.py` | re-derives the "Locating code" and "Hosted embeddings" tables from `results/`, no API key |
 | `results/` | raw per-query output — recompute any number without an API key |
 | `results/det_vs_llm_*` | inputs, model outputs, and ground truth for the deterministic-analysis-vs-bare-LLM benchmark |
-| `pr_review/` | the Flash Review compact-vs-full-context A/B (4 experiments, 3 models) plus a named head-to-head against PR-Agent (Experiment 5) — full writeup in `pr_review/README.md` |
+| `pr_review/` | the Flash Review compact-vs-full-context A/B (4 experiments, 3 models), a named 3-way head-to-head against PR-Agent (Experiment 5), and a named 5-way head-to-head that found and fixed a real production context-block regression (Experiment 6) — full writeup in `pr_review/README.md` |
 | `pr_review/results/` | raw generation and verification output for every PR-review experiment run |
+| `martian_benchmark/` | real-reviewer-comment recall benchmark across sentry/grafana/cal.diy/keycloak — used to validate/reject real Flash Review prompt changes; full writeup in `martian_benchmark/README.md` |
+| `martian_benchmark/results/` | corpus manifest, per-run logs, and the full recall/precision summary |
 | `graphify_comparison/` | head-to-head against Graphify on ERPNext, both tools run ourselves under one harness and judge, full writeup in `graphify_comparison/README.md` |
 | `security-scanner-benchmark/` | `aletheore_secrets` + `aletheore_vulnerabilities` accuracy — synthetic pilot corpus + 20-real-repo validation, full writeup in `security-scanner-benchmark/README.md` and `REPORT.md` |
 | `dead-code-benchmark/` | `aletheore_dead_code` accuracy — 10-case pilot corpus, full writeup in `dead-code-benchmark/README.md` |

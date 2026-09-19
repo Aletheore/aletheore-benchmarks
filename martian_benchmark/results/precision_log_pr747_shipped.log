@@ -1,0 +1,17 @@
+verifying 118 findings...
+  10/118 done
+  20/118 done
+  30/118 done
+  40/118 done
+  50/118 done
+  60/118 done
+  70/118 done
+  80/118 done
+  90/118 done
+  100/118 done
+  110/118 done
+
+=== PRECISION SUMMARY (softened confidence gate) ===
+pr_agent: 20 ACCEPT, 0 REJECT, 2 UNCERTAIN out of 22 -> precision (ACCEPT/total)=90.9%, (ACCEPT/(ACCEPT+REJECT))=100.0%
+aletheore: 30 ACCEPT, 8 REJECT, 0 UNCERTAIN out of 38 -> precision (ACCEPT/total)=78.9%, (ACCEPT/(ACCEPT+REJECT))=78.9%
+greptile: 36 ACCEPT, 22 REJECT, 0 UNCERTAIN out of 58 -> precision (ACCEPT/total)=62.1%, (ACCEPT/(ACCEPT+REJECT))=62.1%

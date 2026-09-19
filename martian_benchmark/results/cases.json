@@ -1,0 +1,194 @@
+[
+  {
+    "case_id": "keycloak-37429",
+    "cache_key": "keycloak#37429",
+    "upstream_repo": "keycloak/keycloak",
+    "upstream_pr": 37429,
+    "greptile_repo": "ai-code-review-evaluation/keycloak-greptile",
+    "greptile_pr": 7
+  },
+  {
+    "case_id": "sentry-95633",
+    "cache_key": "sentry#95633",
+    "upstream_repo": "getsentry/sentry",
+    "upstream_pr": 95633,
+    "greptile_repo": "ai-code-review-evaluation/sentry-greptile",
+    "greptile_pr": 9
+  },
+  {
+    "case_id": "calcom-22532",
+    "cache_key": "cal.com#22532",
+    "upstream_repo": "calcom/cal.diy",
+    "upstream_pr": 22532,
+    "greptile_repo": "ai-code-review-evaluation/cal.com-greptile",
+    "greptile_pr": 11
+  },
+  {
+    "case_id": "discourse-graphite-7",
+    "cache_key": "discourse-graphite#7",
+    "upstream_repo": "ai-code-review-evaluation/discourse-graphite",
+    "upstream_pr": 7,
+    "greptile_repo": "ai-code-review-evaluation/discourse-greptile",
+    "greptile_pr": 7
+  },
+  {
+    "case_id": "grafana-80329",
+    "cache_key": "grafana#80329",
+    "upstream_repo": "grafana/grafana",
+    "upstream_pr": 80329,
+    "greptile_repo": "ai-code-review-evaluation/grafana-greptile",
+    "greptile_pr": 7
+  },
+  {
+    "case_id": "sentry-80168",
+    "cache_key": "sentry#80168",
+    "upstream_repo": "getsentry/sentry",
+    "upstream_pr": 80168,
+    "greptile_repo": "ai-code-review-evaluation/sentry-greptile",
+    "greptile_pr": 10
+  },
+  {
+    "case_id": "sentry-80528",
+    "cache_key": "sentry#80528",
+    "upstream_repo": "getsentry/sentry",
+    "upstream_pr": 80528,
+    "greptile_repo": "ai-code-review-evaluation/sentry-greptile",
+    "greptile_pr": 8
+  },
+  {
+    "case_id": "grafana-76186",
+    "cache_key": "grafana#76186",
+    "upstream_repo": "grafana/grafana",
+    "upstream_pr": 76186,
+    "greptile_repo": "ai-code-review-evaluation/grafana-greptile",
+    "greptile_pr": 3
+  },
+  {
+    "case_id": "grafana-103633",
+    "cache_key": "grafana#103633",
+    "upstream_repo": "grafana/grafana",
+    "upstream_pr": 103633,
+    "greptile_repo": "ai-code-review-evaluation/grafana-greptile",
+    "greptile_pr": 2
+  },
+  {
+    "case_id": "grafana-79265",
+    "cache_key": "grafana#79265",
+    "upstream_repo": "grafana/grafana",
+    "upstream_pr": 79265,
+    "greptile_repo": "ai-code-review-evaluation/grafana-greptile",
+    "greptile_pr": 1
+  },
+  {
+    "case_id": "calcom-22345",
+    "cache_key": "cal.com#22345",
+    "upstream_repo": "calcom/cal.diy",
+    "upstream_pr": 22345,
+    "greptile_repo": "ai-code-review-evaluation/cal.com-greptile",
+    "greptile_pr": 5
+  },
+  {
+    "case_id": "calcom-10967",
+    "cache_key": "cal.com#10967",
+    "upstream_repo": "calcom/cal.diy",
+    "upstream_pr": 10967,
+    "greptile_repo": "ai-code-review-evaluation/cal.com-greptile",
+    "greptile_pr": 4
+  },
+  {
+    "case_id": "calcom-10600",
+    "cache_key": "cal.com#10600",
+    "upstream_repo": "calcom/cal.diy",
+    "upstream_pr": 10600,
+    "greptile_repo": "ai-code-review-evaluation/cal.com-greptile",
+    "greptile_pr": 3
+  },
+  {
+    "case_id": "calcom-8087",
+    "cache_key": "cal.com#8087",
+    "upstream_repo": "calcom/cal.diy",
+    "upstream_pr": 8087,
+    "greptile_repo": "ai-code-review-evaluation/cal.com-greptile",
+    "greptile_pr": 2
+  },
+  {
+    "case_id": "keycloak-41249",
+    "cache_key": "keycloak#41249",
+    "upstream_repo": "keycloak/keycloak",
+    "upstream_pr": 41249,
+    "greptile_repo": "ai-code-review-evaluation/keycloak-greptile",
+    "greptile_pr": 27
+  },
+  {
+    "case_id": "discourse-graphite-10",
+    "cache_key": "discourse-graphite#10",
+    "upstream_repo": "ai-code-review-evaluation/discourse-graphite",
+    "upstream_pr": 10,
+    "greptile_repo": "ai-code-review-evaluation/discourse-greptile",
+    "greptile_pr": 10
+  },
+  {
+    "case_id": "discourse-graphite-9",
+    "cache_key": "discourse-graphite#9",
+    "upstream_repo": "ai-code-review-evaluation/discourse-graphite",
+    "upstream_pr": 9,
+    "greptile_repo": "ai-code-review-evaluation/discourse-greptile",
+    "greptile_pr": 9
+  },
+  {
+    "case_id": "discourse-graphite-8",
+    "cache_key": "discourse-graphite#8",
+    "upstream_repo": "ai-code-review-evaluation/discourse-graphite",
+    "upstream_pr": 8,
+    "greptile_repo": "ai-code-review-evaluation/discourse-greptile",
+    "greptile_pr": 8
+  },
+  {
+    "case_id": "discourse-graphite-6",
+    "cache_key": "discourse-graphite#6",
+    "upstream_repo": "ai-code-review-evaluation/discourse-graphite",
+    "upstream_pr": 6,
+    "greptile_repo": "ai-code-review-evaluation/discourse-greptile",
+    "greptile_pr": 6
+  },
+  {
+    "case_id": "discourse-graphite-5",
+    "cache_key": "discourse-graphite#5",
+    "upstream_repo": "ai-code-review-evaluation/discourse-graphite",
+    "upstream_pr": 5,
+    "greptile_repo": "ai-code-review-evaluation/discourse-greptile",
+    "greptile_pr": 5
+  },
+  {
+    "case_id": "discourse-graphite-4",
+    "cache_key": "discourse-graphite#4",
+    "upstream_repo": "ai-code-review-evaluation/discourse-graphite",
+    "upstream_pr": 4,
+    "greptile_repo": "ai-code-review-evaluation/discourse-greptile",
+    "greptile_pr": 4
+  },
+  {
+    "case_id": "discourse-graphite-3",
+    "cache_key": "discourse-graphite#3",
+    "upstream_repo": "ai-code-review-evaluation/discourse-graphite",
+    "upstream_pr": 3,
+    "greptile_repo": "ai-code-review-evaluation/discourse-greptile",
+    "greptile_pr": 3
+  },
+  {
+    "case_id": "discourse-graphite-2",
+    "cache_key": "discourse-graphite#2",
+    "upstream_repo": "ai-code-review-evaluation/discourse-graphite",
+    "upstream_pr": 2,
+    "greptile_repo": "ai-code-review-evaluation/discourse-greptile",
+    "greptile_pr": 2
+  },
+  {
+    "case_id": "discourse-graphite-1",
+    "cache_key": "discourse-graphite#1",
+    "upstream_repo": "ai-code-review-evaluation/discourse-graphite",
+    "upstream_pr": 1,
+    "greptile_repo": "ai-code-review-evaluation/discourse-greptile",
+    "greptile_pr": 1
+  }
+]
