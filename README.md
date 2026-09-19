@@ -22,6 +22,7 @@
   <a href="#covering-the-files-a-pr-touches">PR coverage</a> ·
   <a href="#pr-review--compact-evidence-vs-full-file-context">PR review</a> ·
   <a href="#head-to-head-against-pr-agent">PR-Agent comparison</a> ·
+  <a href="#the-martian-benchmark">Martian Benchmark</a> ·
   <a href="#explaining-code--how-does-x-work">Explaining code</a> ·
   <a href="#deterministic-analysis-vs-bare-llm">Deterministic vs. LLM</a> ·
   <a href="#deterministic-scanner-accuracy">Scanner accuracy</a> ·
@@ -1152,6 +1153,33 @@ A real regression Aletheore had shipped to production (`sibling_file_context`, P
 5. Case `020` remains excluded corpus-wide (same fixture/push-protection issue as every prior run).
 
 </details>
+
+## The Martian Benchmark
+
+A different measurement from the hand-curated corpus above: instead of one known bug per diff and
+a written ground-truth answer, this benchmark scores each tool's findings against **what a real
+human reviewer actually said** on a real, merged pull request — 14 clean cases (10 more excluded
+for contaminated ground truth, kept and labeled rather than hidden) across `sentry`, `grafana`,
+`cal.diy`, and `keycloak`, judged for semantic match against real review comments by `gpt-5-nano`.
+It's the benchmark used to validate two real Flash Review changes tonight before shipping them, and
+to correctly reject two others that looked plausible but didn't hold up:
+
+| Run | Aletheore recall | PR-Agent recall | Greptile recall |
+|---|---|---|---|
+| Baseline (511 golden findings, all 24 cases, pre-fix) | 38.6% | 36.2% | 35.6% |
+| PR #746 (sibling-file context) | 44.7% / 41.1%\* | 31.1% / 32.9% | 25.6% / 24.2% |
+| **PR #747 (softened confidence gate) — shipped** | **47.9%** | 31.5% | 26.5% |
+| Rejected: finding cap 5→10 | 42.9% | 30.6% | 26.0% |
+| Rejected: expanded few-shot example | 40.2% | 28.8% | 22.8% |
+
+\*Two independent runs of the identical PR #746 config — real GLM-5.3-Flash run-to-run noise,
+both numbers published rather than the more flattering one alone.
+
+**This corpus and the 24-case corpus above reached opposite conclusions about the same feature**
+(PR #746: a real recall gain here, a real recall *and* precision cost on the smaller corpus — see
+Experiment 6 above). Both results are published, neither discarded to make the story cleaner; full
+account of the conflict, the precision tradeoffs behind PR #747's own number, and every raw log in
+[`martian_benchmark/README.md`](martian_benchmark/README.md).
 
 ## Explaining code — "how does X work?"
 
@@ -4476,6 +4504,8 @@ python3 scripts/score_retrieval_matrix.py results/retrieval_raw_zod_0813_verifie
 | `results/det_vs_llm_*` | inputs, model outputs, and ground truth for the deterministic-analysis-vs-bare-LLM benchmark |
 | `pr_review/` | the Flash Review compact-vs-full-context A/B (4 experiments, 3 models), a named 3-way head-to-head against PR-Agent (Experiment 5), and a named 5-way head-to-head that found and fixed a real production context-block regression (Experiment 6) — full writeup in `pr_review/README.md` |
 | `pr_review/results/` | raw generation and verification output for every PR-review experiment run |
+| `martian_benchmark/` | real-reviewer-comment recall benchmark across sentry/grafana/cal.diy/keycloak — used to validate/reject real Flash Review prompt changes; full writeup in `martian_benchmark/README.md` |
+| `martian_benchmark/results/` | corpus manifest, per-run logs, and the full recall/precision summary |
 | `graphify_comparison/` | head-to-head against Graphify on ERPNext, both tools run ourselves under one harness and judge, full writeup in `graphify_comparison/README.md` |
 | `security-scanner-benchmark/` | `aletheore_secrets` + `aletheore_vulnerabilities` accuracy — synthetic pilot corpus + 20-real-repo validation, full writeup in `security-scanner-benchmark/README.md` and `REPORT.md` |
 | `dead-code-benchmark/` | `aletheore_dead_code` accuracy — 10-case pilot corpus, full writeup in `dead-code-benchmark/README.md` |

@@ -1,0 +1,22 @@
+skip keycloak-37429 (already scored)
+skip sentry-95633 (already scored)
+skip calcom-22532 (already scored)
+skip grafana-80329 (already scored)
+skip sentry-80168 (already scored)
+skip sentry-80528 (already scored)
+skip grafana-76186 (already scored)
+skip grafana-103633 (already scored)
+skip grafana-79265 (already scored)
+skip calcom-22345 (already scored)
+skip calcom-10967 (already scored)
+scoring calcom-10600...
+scoring calcom-8087...
+scoring keycloak-41249...
+done calcom-10600: aletheore=15/49, pr_agent=4/49, greptile=11/49
+done calcom-8087: aletheore=21/22, pr_agent=20/22, greptile=1/22
+done keycloak-41249: aletheore=0/4, pr_agent=3/4, greptile=0/4
+
+=== SUMMARY (14 clean cases, expand-example) ===
+aletheore: 88/219 golden findings caught (40.2%)
+pr_agent: 63/219 golden findings caught (28.8%)
+greptile: 50/219 golden findings caught (22.8%)
