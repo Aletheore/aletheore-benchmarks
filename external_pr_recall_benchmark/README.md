@@ -1,4 +1,18 @@
-# The Martian Benchmark
+# The External PR Recall Benchmark
+
+> **⚠️ Numbers below are known stale, correction in progress.** Renamed from
+> "Martian Benchmark" to avoid collision with the real, independent,
+> unrelated [Martian Code Review Bench](https://codereview.withmartian.com/)
+> (300k+ real PRs, tested by CodeRabbit/Greptile/Qodo and others). Separately:
+> the recall numbers in this doc were scored by an uncalibrated `gpt-5-nano`
+> judge later found to credit matches against non-technical chatter (e.g.
+> crediting "Thanks a lot you two!" as a matched finding) and against a
+> likely-automated review account (`ron-x5labs`) contributing the large
+> majority of "golden" comments on the cal.com cases. A from-scratch manual
+> audit against organic human commentary only found real recall of 3/43
+> (Aletheore and PR-Agent tied) and 0/43 (Greptile) on the same 14 cases -
+> a full write-up with the corrected numbers and methodology is in progress
+> and will replace this notice once published.
 
 A different measurement from `pr_review/`'s hand-curated 24-case corpus: instead of a single
 known bug per diff and a written ground-truth description, this benchmark measures each tool's
@@ -39,7 +53,7 @@ Full case manifest: `results/cases.json`.
   each repo.
 - **Recall judge**: `gpt-5-nano`, scoring semantic match between each tool's own candidate finding
   and a real human reviewer's actual comment on that same merged PR (the "golden" finding set —
-  see `results/martian_summary.json` and the real comment data these were extracted from).
+  see `results/summary.json` and the real comment data these were extracted from).
   Recall is reported as *fraction of golden findings any candidate matched*, not a per-case
   hit/miss the way the 24-case corpus scores.
 - **Precision check**: Aletheore's own real production verification method —
@@ -83,7 +97,7 @@ Precision (DeepSeek-v4-flash ACCEPT/REJECT/UNCERTAIN verification, ACCEPT ÷ tot
 | Rejected: expanded few-shot example | 87.1% | 77.3% | 58.6% |
 
 Full per-case logs: `results/log_*.log`. Full summary with per-config candidate counts:
-`results/martian_summary.json`.
+`results/summary.json`.
 
 ## Reading this honestly
 
