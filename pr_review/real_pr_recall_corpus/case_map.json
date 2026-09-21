@@ -1,0 +1,114 @@
+{
+  "keycloak-37429": {
+    "case_id": "keycloak-37429",
+    "cache_key": "keycloak#37429",
+    "upstream_repo": "keycloak/keycloak",
+    "upstream_pr": 37429,
+    "greptile_repo": "ai-code-review-evaluation/keycloak-greptile",
+    "greptile_pr": 7
+  },
+  "sentry-95633": {
+    "case_id": "sentry-95633",
+    "cache_key": "sentry#95633",
+    "upstream_repo": "getsentry/sentry",
+    "upstream_pr": 95633,
+    "greptile_repo": "ai-code-review-evaluation/sentry-greptile",
+    "greptile_pr": 9
+  },
+  "calcom-22532": {
+    "case_id": "calcom-22532",
+    "cache_key": "cal.com#22532",
+    "upstream_repo": "calcom/cal.diy",
+    "upstream_pr": 22532,
+    "greptile_repo": "ai-code-review-evaluation/cal.com-greptile",
+    "greptile_pr": 11
+  },
+  "grafana-80329": {
+    "case_id": "grafana-80329",
+    "cache_key": "grafana#80329",
+    "upstream_repo": "grafana/grafana",
+    "upstream_pr": 80329,
+    "greptile_repo": "ai-code-review-evaluation/grafana-greptile",
+    "greptile_pr": 7
+  },
+  "sentry-80168": {
+    "case_id": "sentry-80168",
+    "cache_key": "sentry#80168",
+    "upstream_repo": "getsentry/sentry",
+    "upstream_pr": 80168,
+    "greptile_repo": "ai-code-review-evaluation/sentry-greptile",
+    "greptile_pr": 10
+  },
+  "sentry-80528": {
+    "case_id": "sentry-80528",
+    "cache_key": "sentry#80528",
+    "upstream_repo": "getsentry/sentry",
+    "upstream_pr": 80528,
+    "greptile_repo": "ai-code-review-evaluation/sentry-greptile",
+    "greptile_pr": 8
+  },
+  "grafana-76186": {
+    "case_id": "grafana-76186",
+    "cache_key": "grafana#76186",
+    "upstream_repo": "grafana/grafana",
+    "upstream_pr": 76186,
+    "greptile_repo": "ai-code-review-evaluation/grafana-greptile",
+    "greptile_pr": 3
+  },
+  "grafana-103633": {
+    "case_id": "grafana-103633",
+    "cache_key": "grafana#103633",
+    "upstream_repo": "grafana/grafana",
+    "upstream_pr": 103633,
+    "greptile_repo": "ai-code-review-evaluation/grafana-greptile",
+    "greptile_pr": 2
+  },
+  "grafana-79265": {
+    "case_id": "grafana-79265",
+    "cache_key": "grafana#79265",
+    "upstream_repo": "grafana/grafana",
+    "upstream_pr": 79265,
+    "greptile_repo": "ai-code-review-evaluation/grafana-greptile",
+    "greptile_pr": 1
+  },
+  "calcom-22345": {
+    "case_id": "calcom-22345",
+    "cache_key": "cal.com#22345",
+    "upstream_repo": "calcom/cal.diy",
+    "upstream_pr": 22345,
+    "greptile_repo": "ai-code-review-evaluation/cal.com-greptile",
+    "greptile_pr": 5
+  },
+  "calcom-10967": {
+    "case_id": "calcom-10967",
+    "cache_key": "cal.com#10967",
+    "upstream_repo": "calcom/cal.diy",
+    "upstream_pr": 10967,
+    "greptile_repo": "ai-code-review-evaluation/cal.com-greptile",
+    "greptile_pr": 4
+  },
+  "calcom-10600": {
+    "case_id": "calcom-10600",
+    "cache_key": "cal.com#10600",
+    "upstream_repo": "calcom/cal.diy",
+    "upstream_pr": 10600,
+    "greptile_repo": "ai-code-review-evaluation/cal.com-greptile",
+    "greptile_pr": 3
+  },
+  "calcom-8087": {
+    "case_id": "calcom-8087",
+    "cache_key": "cal.com#8087",
+    "upstream_repo": "calcom/cal.diy",
+    "upstream_pr": 8087,
+    "greptile_repo": "ai-code-review-evaluation/cal.com-greptile",
+    "greptile_pr": 2
+  },
+  "keycloak-41249": {
+    "case_id": "keycloak-41249",
+    "cache_key": "keycloak#41249",
+    "upstream_repo": "keycloak/keycloak",
+    "upstream_pr": 41249,
+    "greptile_repo": "ai-code-review-evaluation/keycloak-greptile",
+    "greptile_pr": 27
+  }
+}

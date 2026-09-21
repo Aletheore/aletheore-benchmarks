@@ -1,0 +1,715 @@
+diff --git a/apps/web/components/auth/BackupCode.tsx b/apps/web/components/auth/BackupCode.tsx
+new file mode 100644
+index 00000000000..a9121d815eb
+--- /dev/null
++++ b/apps/web/components/auth/BackupCode.tsx
+@@ -0,0 +1,29 @@
++import React from "react";
++import { useFormContext } from "react-hook-form";
++
++import { useLocale } from "@calcom/lib/hooks/useLocale";
++import { Label, TextField } from "@calcom/ui";
++
++export default function TwoFactor({ center = true }) {
++  const { t } = useLocale();
++  const methods = useFormContext();
++
++  return (
++    <div className={center ? "mx-auto !mt-0 max-w-sm" : "!mt-0 max-w-sm"}>
++      <Label className="mt-4">{t("backup_code")}</Label>
++
++      <p className="text-subtle mb-4 text-sm">{t("backup_code_instructions")}</p>
++
++      <TextField
++        id="backup-code"
++        label=""
++        defaultValue=""
++        placeholder="XXXXX-XXXXX"
++        minLength={10} // without dash
++        maxLength={11} // with dash
++        required
++        {...methods.register("backupCode")}
++      />
++    </div>
++  );
++}
+diff --git a/apps/web/components/auth/TwoFactor.tsx b/apps/web/components/auth/TwoFactor.tsx
+index e074639fe2e..f46aa3b7e34 100644
+--- a/apps/web/components/auth/TwoFactor.tsx
++++ b/apps/web/components/auth/TwoFactor.tsx
+@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
+ import { useLocale } from "@calcom/lib/hooks/useLocale";
+ import { Label, Input } from "@calcom/ui";
+ 
+-export default function TwoFactor({ center = true }) {
++export default function TwoFactor({ center = true, autoFocus = true }) {
+   const [value, onChange] = useState("");
+   const { t } = useLocale();
+   const methods = useFormContext();
+@@ -40,7 +40,7 @@ export default function TwoFactor({ center = true }) {
+             name={`2fa${index + 1}`}
+             inputMode="decimal"
+             {...digit}
+-            autoFocus={index === 0}
++            autoFocus={autoFocus && index === 0}
+             autoComplete="one-time-code"
+           />
+         ))}
+diff --git a/apps/web/components/settings/DisableTwoFactorModal.tsx b/apps/web/components/settings/DisableTwoFactorModal.tsx
+index 385e775f320..46d49ce62aa 100644
+--- a/apps/web/components/settings/DisableTwoFactorModal.tsx
++++ b/apps/web/components/settings/DisableTwoFactorModal.tsx
+@@ -5,6 +5,7 @@ import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
+ import { useLocale } from "@calcom/lib/hooks/useLocale";
+ import { Button, Dialog, DialogContent, DialogFooter, Form, PasswordField } from "@calcom/ui";
+ 
++import BackupCode from "@components/auth/BackupCode";
+ import TwoFactor from "@components/auth/TwoFactor";
+ 
+ import TwoFactorAuthAPI from "./TwoFactorAuthAPI";
+@@ -20,6 +21,7 @@ interface DisableTwoFactorAuthModalProps {
+ }
+ 
+ interface DisableTwoFactorValues {
++  backupCode: string;
+   totpCode: string;
+   password: string;
+ }
+@@ -33,11 +35,19 @@ const DisableTwoFactorAuthModal = ({
+ }: DisableTwoFactorAuthModalProps) => {
+   const [isDisabling, setIsDisabling] = useState(false);
+   const [errorMessage, setErrorMessage] = useState<string | null>(null);
++  const [twoFactorLostAccess, setTwoFactorLostAccess] = useState(false);
+   const { t } = useLocale();
+ 
+   const form = useForm<DisableTwoFactorValues>();
+ 
+-  async function handleDisable({ totpCode, password }: DisableTwoFactorValues) {
++  const resetForm = (clearPassword = true) => {
++    if (clearPassword) form.setValue("password", "");
++    form.setValue("backupCode", "");
++    form.setValue("totpCode", "");
++    setErrorMessage(null);
++  };
++
++  async function handleDisable({ password, totpCode, backupCode }: DisableTwoFactorValues) {
+     if (isDisabling) {
+       return;
+     }
+@@ -45,8 +55,10 @@ const DisableTwoFactorAuthModal = ({
+     setErrorMessage(null);
+ 
+     try {
+-      const response = await TwoFactorAuthAPI.disable(password, totpCode);
++      const response = await TwoFactorAuthAPI.disable(password, totpCode, backupCode);
+       if (response.status === 200) {
++        setTwoFactorLostAccess(false);
++        resetForm();
+         onDisable();
+         return;
+       }
+@@ -54,12 +66,14 @@ const DisableTwoFactorAuthModal = ({
+       const body = await response.json();
+       if (body.error === ErrorCode.IncorrectPassword) {
+         setErrorMessage(t("incorrect_password"));
+-      }
+-      if (body.error === ErrorCode.SecondFactorRequired) {
++      } else if (body.error === ErrorCode.SecondFactorRequired) {
+         setErrorMessage(t("2fa_required"));
+-      }
+-      if (body.error === ErrorCode.IncorrectTwoFactorCode) {
++      } else if (body.error === ErrorCode.IncorrectTwoFactorCode) {
+         setErrorMessage(t("incorrect_2fa"));
++      } else if (body.error === ErrorCode.IncorrectBackupCode) {
++        setErrorMessage(t("incorrect_backup_code"));
++      } else if (body.error === ErrorCode.MissingBackupCodes) {
++        setErrorMessage(t("missing_backup_codes"));
+       } else {
+         setErrorMessage(t("something_went_wrong"));
+       }
+@@ -78,6 +92,7 @@ const DisableTwoFactorAuthModal = ({
+           <div className="mb-8">
+             {!disablePassword && (
+               <PasswordField
++                required
+                 labelProps={{
+                   className: "block text-sm font-medium text-default",
+                 }}
+@@ -85,12 +100,25 @@ const DisableTwoFactorAuthModal = ({
+                 className="border-default mt-1 block w-full rounded-md border px-3 py-2 text-sm focus:border-black focus:outline-none focus:ring-black"
+               />
+             )}
+-            <TwoFactor center={false} />
++            {twoFactorLostAccess ? (
++              <BackupCode center={false} />
++            ) : (
++              <TwoFactor center={false} autoFocus={false} />
++            )}
+ 
+             {errorMessage && <p className="mt-1 text-sm text-red-700">{errorMessage}</p>}
+           </div>
+ 
+           <DialogFooter showDivider className="relative mt-5">
++            <Button
++              color="minimal"
++              className="mr-auto"
++              onClick={() => {
++                setTwoFactorLostAccess(!twoFactorLostAccess);
++                resetForm(false);
++              }}>
++              {twoFactorLostAccess ? t("go_back") : t("lost_access")}
++            </Button>
+             <Button color="secondary" onClick={onCancel}>
+               {t("cancel")}
+             </Button>
+diff --git a/apps/web/components/settings/EnableTwoFactorModal.tsx b/apps/web/components/settings/EnableTwoFactorModal.tsx
+index 099558a8af0..0ed406787fa 100644
+--- a/apps/web/components/settings/EnableTwoFactorModal.tsx
++++ b/apps/web/components/settings/EnableTwoFactorModal.tsx
+@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
+ import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
+ import { useCallbackRef } from "@calcom/lib/hooks/useCallbackRef";
+ import { useLocale } from "@calcom/lib/hooks/useLocale";
+-import { Button, Dialog, DialogContent, DialogFooter, Form, TextField } from "@calcom/ui";
++import { Button, Dialog, DialogContent, DialogFooter, Form, PasswordField, showToast } from "@calcom/ui";
+ 
+ import TwoFactor from "@components/auth/TwoFactor";
+ 
+@@ -28,6 +28,7 @@ interface EnableTwoFactorModalProps {
+ 
+ enum SetupStep {
+   ConfirmPassword,
++  DisplayBackupCodes,
+   DisplayQrCode,
+   EnterTotpCode,
+ }
+@@ -54,16 +55,25 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
+ 
+   const setupDescriptions = {
+     [SetupStep.ConfirmPassword]: t("2fa_confirm_current_password"),
++    [SetupStep.DisplayBackupCodes]: t("backup_code_instructions"),
+     [SetupStep.DisplayQrCode]: t("2fa_scan_image_or_use_code"),
+     [SetupStep.EnterTotpCode]: t("2fa_enter_six_digit_code"),
+   };
+   const [step, setStep] = useState(SetupStep.ConfirmPassword);
+   const [password, setPassword] = useState("");
++  const [backupCodes, setBackupCodes] = useState([]);
++  const [backupCodesUrl, setBackupCodesUrl] = useState("");
+   const [dataUri, setDataUri] = useState("");
+   const [secret, setSecret] = useState("");
+   const [isSubmitting, setIsSubmitting] = useState(false);
+   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+ 
++  const resetState = () => {
++    setPassword("");
++    setErrorMessage(null);
++    setStep(SetupStep.ConfirmPassword);
++  };
++
+   async function handleSetup(e: React.FormEvent) {
+     e.preventDefault();
+ 
+@@ -79,6 +89,15 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
+       const body = await response.json();
+ 
+       if (response.status === 200) {
++        setBackupCodes(body.backupCodes);
++
++        // create backup codes download url
++        const textBlob = new Blob([body.backupCodes.map(formatBackupCode).join("\n")], {
++          type: "text/plain",
++        });
++        if (backupCodesUrl) URL.revokeObjectURL(backupCodesUrl);
++        setBackupCodesUrl(URL.createObjectURL(textBlob));
++
+         setDataUri(body.dataUri);
+         setSecret(body.secret);
+         setStep(SetupStep.DisplayQrCode);
+@@ -113,7 +132,7 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
+       const body = await response.json();
+ 
+       if (response.status === 200) {
+-        onEnable();
++        setStep(SetupStep.DisplayBackupCodes);
+         return;
+       }
+ 
+@@ -141,13 +160,18 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
+     }
+   }, [form, handleEnableRef, totpCode]);
+ 
++  const formatBackupCode = (code: string) => `${code.slice(0, 5)}-${code.slice(5, 10)}`;
++
+   return (
+     <Dialog open={open} onOpenChange={onOpenChange}>
+-      <DialogContent title={t("enable_2fa")} description={setupDescriptions[step]} type="creation">
++      <DialogContent
++        title={step === SetupStep.DisplayBackupCodes ? t("backup_codes") : t("enable_2fa")}
++        description={setupDescriptions[step]}
++        type="creation">
+         <WithStep step={SetupStep.ConfirmPassword} current={step}>
+           <form onSubmit={handleSetup}>
+             <div className="mb-4">
+-              <TextField
++              <PasswordField
+                 label={t("password")}
+                 type="password"
+                 name="password"
+@@ -173,6 +197,15 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
+             </p>
+           </>
+         </WithStep>
++        <WithStep step={SetupStep.DisplayBackupCodes} current={step}>
++          <>
++            <div className="mt-5 grid grid-cols-2 gap-1 text-center font-mono md:pl-10 md:pr-10">
++              {backupCodes.map((code) => (
++                <div key={code}>{formatBackupCode(code)}</div>
++              ))}
++            </div>
++          </>
++        </WithStep>
+         <Form handleSubmit={handleEnable} form={form}>
+           <WithStep step={SetupStep.EnterTotpCode} current={step}>
+             <div className="-mt-4 pb-2">
+@@ -186,9 +219,16 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
+             </div>
+           </WithStep>
+           <DialogFooter className="mt-8" showDivider>
+-            <Button color="secondary" onClick={onCancel}>
+-              {t("cancel")}
+-            </Button>
++            {step !== SetupStep.DisplayBackupCodes ? (
++              <Button
++                color="secondary"
++                onClick={() => {
++                  onCancel();
++                  resetState();
++                }}>
++                {t("cancel")}
++              </Button>
++            ) : null}
+             <WithStep step={SetupStep.ConfirmPassword} current={step}>
+               <Button
+                 type="submit"
+@@ -218,6 +258,35 @@ const EnableTwoFactorModal = ({ onEnable, onCancel, open, onOpenChange }: Enable
+                 {t("enable")}
+               </Button>
+             </WithStep>
++            <WithStep step={SetupStep.DisplayBackupCodes} current={step}>
++              <>
++                <Button
++                  color="secondary"
++                  data-testid="backup-codes-close"
++                  onClick={(e) => {
++                    e.preventDefault();
++                    resetState();
++                    onEnable();
++                  }}>
++                  {t("close")}
++                </Button>
++                <Button
++                  color="secondary"
++                  data-testid="backup-codes-copy"
++                  onClick={(e) => {
++                    e.preventDefault();
++                    navigator.clipboard.writeText(backupCodes.map(formatBackupCode).join("\n"));
++                    showToast(t("backup_codes_copied"), "success");
++                  }}>
++                  {t("copy")}
++                </Button>
++                <a download="cal-backup-codes.txt" href={backupCodesUrl}>
++                  <Button color="primary" data-testid="backup-codes-download">
++                    {t("download")}
++                  </Button>
++                </a>
++              </>
++            </WithStep>
+           </DialogFooter>
+         </Form>
+       </DialogContent>
+diff --git a/apps/web/components/settings/TwoFactorAuthAPI.ts b/apps/web/components/settings/TwoFactorAuthAPI.ts
+index 35ef6305759..1ea7792e875 100644
+--- a/apps/web/components/settings/TwoFactorAuthAPI.ts
++++ b/apps/web/components/settings/TwoFactorAuthAPI.ts
+@@ -19,10 +19,10 @@ const TwoFactorAuthAPI = {
+     });
+   },
+ 
+-  async disable(password: string, code: string) {
++  async disable(password: string, code: string, backupCode: string) {
+     return fetch("/api/auth/two-factor/totp/disable", {
+       method: "POST",
+-      body: JSON.stringify({ password, code }),
++      body: JSON.stringify({ password, code, backupCode }),
+       headers: {
+         "Content-Type": "application/json",
+       },
+diff --git a/apps/web/pages/api/auth/two-factor/totp/disable.ts b/apps/web/pages/api/auth/two-factor/totp/disable.ts
+index abc0835c4a9..fecb75d92f2 100644
+--- a/apps/web/pages/api/auth/two-factor/totp/disable.ts
++++ b/apps/web/pages/api/auth/two-factor/totp/disable.ts
+@@ -43,8 +43,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
+       return res.status(400).json({ error: ErrorCode.IncorrectPassword });
+     }
+   }
+-  // if user has 2fa
+-  if (user.twoFactorEnabled) {
++
++  // if user has 2fa and using backup code
++  if (user.twoFactorEnabled && req.body.backupCode) {
++    if (!process.env.CALENDSO_ENCRYPTION_KEY) {
++      console.error("Missing encryption key; cannot proceed with backup code login.");
++      throw new Error(ErrorCode.InternalServerError);
++    }
++
++    if (!user.backupCodes) {
++      return res.status(400).json({ error: ErrorCode.MissingBackupCodes });
++    }
++
++    const backupCodes = JSON.parse(symmetricDecrypt(user.backupCodes, process.env.CALENDSO_ENCRYPTION_KEY));
++
++    // check if user-supplied code matches one
++    const index = backupCodes.indexOf(req.body.backupCode.replaceAll("-", ""));
++    if (index === -1) {
++      return res.status(400).json({ error: ErrorCode.IncorrectBackupCode });
++    }
++
++    // we delete all stored backup codes at the end, no need to do this here
++
++    // if user has 2fa and NOT using backup code, try totp
++  } else if (user.twoFactorEnabled) {
+     if (!req.body.code) {
+       return res.status(400).json({ error: ErrorCode.SecondFactorRequired });
+       // throw new Error(ErrorCode.SecondFactorRequired);
+@@ -82,6 +104,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
+       id: session.user.id,
+     },
+     data: {
++      backupCodes: null,
+       twoFactorEnabled: false,
+       twoFactorSecret: null,
+     },
+diff --git a/apps/web/pages/api/auth/two-factor/totp/setup.ts b/apps/web/pages/api/auth/two-factor/totp/setup.ts
+index de63fcada67..a6fbed03912 100644
+--- a/apps/web/pages/api/auth/two-factor/totp/setup.ts
++++ b/apps/web/pages/api/auth/two-factor/totp/setup.ts
+@@ -1,3 +1,4 @@
++import crypto from "crypto";
+ import type { NextApiRequest, NextApiResponse } from "next";
+ import { authenticator } from "otplib";
+ import qrcode from "qrcode";
+@@ -56,11 +57,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
+   // bytes without updating the sanity checks in the enable and login endpoints.
+   const secret = authenticator.generateSecret(20);
+ 
++  // generate backup codes with 10 character length
++  const backupCodes = Array.from(Array(10), () => crypto.randomBytes(5).toString("hex"));
++
+   await prisma.user.update({
+     where: {
+       id: session.user.id,
+     },
+     data: {
++      backupCodes: symmetricEncrypt(JSON.stringify(backupCodes), process.env.CALENDSO_ENCRYPTION_KEY),
+       twoFactorEnabled: false,
+       twoFactorSecret: symmetricEncrypt(secret, process.env.CALENDSO_ENCRYPTION_KEY),
+     },
+@@ -70,5 +75,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
+   const keyUri = authenticator.keyuri(name, "Cal", secret);
+   const dataUri = await qrcode.toDataURL(keyUri);
+ 
+-  return res.json({ secret, keyUri, dataUri });
++  return res.json({ secret, keyUri, dataUri, backupCodes });
+ }
+diff --git a/apps/web/pages/auth/login.tsx b/apps/web/pages/auth/login.tsx
+index 4847ceb9fbf..ca4e752e72d 100644
+--- a/apps/web/pages/auth/login.tsx
++++ b/apps/web/pages/auth/login.tsx
+@@ -21,7 +21,7 @@ import { useLocale } from "@calcom/lib/hooks/useLocale";
+ import { collectPageParameters, telemetryEventTypes, useTelemetry } from "@calcom/lib/telemetry";
+ import prisma from "@calcom/prisma";
+ import { Alert, Button, EmailField, PasswordField } from "@calcom/ui";
+-import { ArrowLeft } from "@calcom/ui/components/icon";
++import { ArrowLeft, Lock } from "@calcom/ui/components/icon";
+ 
+ import type { inferSSRProps } from "@lib/types/inferSSRProps";
+ import type { WithNonceProps } from "@lib/withNonce";
+@@ -29,6 +29,7 @@ import withNonce from "@lib/withNonce";
+ 
+ import AddToHomescreen from "@components/AddToHomescreen";
+ import PageWrapper from "@components/PageWrapper";
++import BackupCode from "@components/auth/BackupCode";
+ import TwoFactor from "@components/auth/TwoFactor";
+ import AuthContainer from "@components/ui/AuthContainer";
+ 
+@@ -39,6 +40,7 @@ interface LoginValues {
+   email: string;
+   password: string;
+   totpCode: string;
++  backupCode: string;
+   csrfToken: string;
+ }
+ export default function Login({
+@@ -65,6 +67,7 @@ export default function Login({
+   const methods = useForm<LoginValues>({ resolver: zodResolver(formSchema) });
+   const { register, formState } = methods;
+   const [twoFactorRequired, setTwoFactorRequired] = useState(!!totpEmail || false);
++  const [twoFactorLostAccess, setTwoFactorLostAccess] = useState(false);
+   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+ 
+   const errorMessages: { [key: string]: string } = {
+@@ -98,15 +101,35 @@ export default function Login({
+   );
+ 
+   const TwoFactorFooter = (
+-    <Button
+-      onClick={() => {
+-        setTwoFactorRequired(false);
+-        methods.setValue("totpCode", "");
+-      }}
+-      StartIcon={ArrowLeft}
+-      color="minimal">
+-      {t("go_back")}
+-    </Button>
++    <>
++      <Button
++        onClick={() => {
++          if (twoFactorLostAccess) {
++            setTwoFactorLostAccess(false);
++            methods.setValue("backupCode", "");
++          } else {
++            setTwoFactorRequired(false);
++            methods.setValue("totpCode", "");
++          }
++          setErrorMessage(null);
++        }}
++        StartIcon={ArrowLeft}
++        color="minimal">
++        {t("go_back")}
++      </Button>
++      {!twoFactorLostAccess ? (
++        <Button
++          onClick={() => {
++            setTwoFactorLostAccess(true);
++            setErrorMessage(null);
++            methods.setValue("totpCode", "");
++          }}
++          StartIcon={Lock}
++          color="minimal">
++          {t("lost_access")}
++        </Button>
++      ) : null}
++    </>
+   );
+ 
+   const ExternalTotpFooter = (
+@@ -130,8 +153,9 @@ export default function Login({
+     if (!res) setErrorMessage(errorMessages[ErrorCode.InternalServerError]);
+     // we're logged in! let's do a hard refresh to the desired url
+     else if (!res.error) router.push(callbackUrl);
+-    // reveal two factor input if required
+     else if (res.error === ErrorCode.SecondFactorRequired) setTwoFactorRequired(true);
++    else if (res.error === ErrorCode.IncorrectBackupCode) setErrorMessage(t("incorrect_backup_code"));
++    else if (res.error === ErrorCode.MissingBackupCodes) setErrorMessage(t("missing_backup_codes"));
+     // fallback if error not found
+     else setErrorMessage(errorMessages[res.error] || t("something_went_wrong"));
+   };
+@@ -194,7 +218,7 @@ export default function Login({
+                 </div>
+               </div>
+ 
+-              {twoFactorRequired && <TwoFactor center />}
++              {twoFactorRequired ? !twoFactorLostAccess ? <TwoFactor center /> : <BackupCode center /> : null}
+ 
+               {errorMessage && <Alert severity="error" title={errorMessage} />}
+               <Button
+diff --git a/apps/web/playwright/login.2fa.e2e.ts b/apps/web/playwright/login.2fa.e2e.ts
+index 5aff1299499..6b1e588c4cc 100644
+--- a/apps/web/playwright/login.2fa.e2e.ts
++++ b/apps/web/playwright/login.2fa.e2e.ts
+@@ -9,6 +9,8 @@ import { test } from "./lib/fixtures";
+ 
+ test.describe.configure({ mode: "parallel" });
+ 
++// TODO: add more backup code tests, e.g. login + disabling 2fa with backup
++
+ // a test to logout requires both a succesfull login as logout, to prevent
+ // a doubling of tests failing on logout & logout, we can group them.
+ test.describe("2FA Tests", async () => {
+@@ -45,6 +47,8 @@ test.describe("2FA Tests", async () => {
+         secret: secret!,
+       });
+ 
++      // FIXME: this passes even when switch is not checked, compare to test
++      // below which checks for data-state="checked" and works as expected
+       await page.waitForSelector(`[data-testid=two-factor-switch]`);
+       await expect(page.locator(`[data-testid=two-factor-switch]`).isChecked()).toBeTruthy();
+ 
+@@ -103,6 +107,23 @@ test.describe("2FA Tests", async () => {
+       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+       await fillOtp({ page, secret: secret! });
+ 
++      // backup codes are now showing, so run a few tests
++
++      // click download button
++      const promise = page.waitForEvent("download");
++      await page.getByTestId("backup-codes-download").click();
++      const download = await promise;
++      expect(download.suggestedFilename()).toBe("cal-backup-codes.txt");
++      // TODO: check file content
++
++      // click copy button
++      await page.getByTestId("backup-codes-copy").click();
++      await page.getByTestId("toast-success").waitFor();
++      // TODO: check clipboard content
++
++      // close backup code dialog
++      await page.getByTestId("backup-codes-close").click();
++
+       await expect(page.locator(`[data-testid=two-factor-switch][data-state="checked"]`)).toBeVisible();
+ 
+       return user;
+diff --git a/apps/web/public/static/locales/en/common.json b/apps/web/public/static/locales/en/common.json
+index 082de5a93c8..a246e379687 100644
+--- a/apps/web/public/static/locales/en/common.json
++++ b/apps/web/public/static/locales/en/common.json
+@@ -2010,6 +2010,13 @@
+   "member_removed": "Member removed",
+   "my_availability": "My Availability",
+   "team_availability": "Team Availability",
++  "backup_code": "Backup Code",
++  "backup_codes": "Backup Codes",
++  "backup_code_instructions": "Each backup code can be used exactly once to grant access without your authenticator.",
++  "backup_codes_copied": "Backup codes copied!",
++  "incorrect_backup_code": "Backup code is incorrect.",
++  "lost_access": "Lost access",
++  "missing_backup_codes": "No backup codes found. Please generate them in your settings.",
+   "admin_org_notification_email_subject": "New organization created: pending action",
+   "hi_admin": "Hi Administrator",
+   "admin_org_notification_email_title": "An organization requires DNS setup",
+diff --git a/packages/features/auth/lib/ErrorCode.ts b/packages/features/auth/lib/ErrorCode.ts
+index ae054721e42..c4f86af26b5 100644
+--- a/packages/features/auth/lib/ErrorCode.ts
++++ b/packages/features/auth/lib/ErrorCode.ts
+@@ -8,6 +8,8 @@ export enum ErrorCode {
+   TwoFactorSetupRequired = "two-factor-setup-required",
+   SecondFactorRequired = "second-factor-required",
+   IncorrectTwoFactorCode = "incorrect-two-factor-code",
++  IncorrectBackupCode = "incorrect-backup-code",
++  MissingBackupCodes = "missing-backup-codes",
+   IncorrectEmailVerificationCode = "incorrect_email_verification_code",
+   InternalServerError = "internal-server-error",
+   NewPasswordMatchesOld = "new-password-matches-old",
+diff --git a/packages/features/auth/lib/next-auth-options.ts b/packages/features/auth/lib/next-auth-options.ts
+index 01d3aa66a81..7fd3ffbcafb 100644
+--- a/packages/features/auth/lib/next-auth-options.ts
++++ b/packages/features/auth/lib/next-auth-options.ts
+@@ -11,7 +11,7 @@ import ImpersonationProvider from "@calcom/features/ee/impersonation/lib/Imperso
+ import { clientSecretVerifier, hostedCal, isSAMLLoginEnabled } from "@calcom/features/ee/sso/lib/saml";
+ import { checkRateLimitAndThrowError } from "@calcom/lib/checkRateLimitAndThrowError";
+ import { IS_TEAM_BILLING_ENABLED, WEBAPP_URL } from "@calcom/lib/constants";
+-import { symmetricDecrypt } from "@calcom/lib/crypto";
++import { symmetricDecrypt, symmetricEncrypt } from "@calcom/lib/crypto";
+ import { defaultCookies } from "@calcom/lib/default-cookies";
+ import { isENVDev } from "@calcom/lib/env";
+ import { randomString } from "@calcom/lib/random";
+@@ -62,6 +62,7 @@ const providers: Provider[] = [
+       email: { label: "Email Address", type: "email", placeholder: "john.doe@example.com" },
+       password: { label: "Password", type: "password", placeholder: "Your super secure password" },
+       totpCode: { label: "Two-factor Code", type: "input", placeholder: "Code from authenticator app" },
++      backupCode: { label: "Backup Code", type: "input", placeholder: "Two-factor backup code" },
+     },
+     async authorize(credentials) {
+       if (!credentials) {
+@@ -85,6 +86,7 @@ const providers: Provider[] = [
+           organizationId: true,
+           twoFactorEnabled: true,
+           twoFactorSecret: true,
++          backupCodes: true,
+           locale: true,
+           organization: {
+             select: {
+@@ -126,7 +128,33 @@ const providers: Provider[] = [
+         }
+       }
+ 
+-      if (user.twoFactorEnabled) {
++      if (user.twoFactorEnabled && credentials.backupCode) {
++        if (!process.env.CALENDSO_ENCRYPTION_KEY) {
++          console.error("Missing encryption key; cannot proceed with backup code login.");
++          throw new Error(ErrorCode.InternalServerError);
++        }
++
++        if (!user.backupCodes) throw new Error(ErrorCode.MissingBackupCodes);
++
++        const backupCodes = JSON.parse(
++          symmetricDecrypt(user.backupCodes, process.env.CALENDSO_ENCRYPTION_KEY)
++        );
++
++        // check if user-supplied code matches one
++        const index = backupCodes.indexOf(credentials.backupCode.replaceAll("-", ""));
++        if (index === -1) throw new Error(ErrorCode.IncorrectBackupCode);
++
++        // delete verified backup code and re-encrypt remaining
++        backupCodes[index] = null;
++        await prisma.user.update({
++          where: {
++            id: user.id,
++          },
++          data: {
++            backupCodes: symmetricEncrypt(JSON.stringify(backupCodes), process.env.CALENDSO_ENCRYPTION_KEY),
++          },
++        });
++      } else if (user.twoFactorEnabled) {
+         if (!credentials.totpCode) {
+           throw new Error(ErrorCode.SecondFactorRequired);
+         }
+diff --git a/packages/lib/test/builder.ts b/packages/lib/test/builder.ts
+index 20962a69ffc..43c25e40776 100644
+--- a/packages/lib/test/builder.ts
++++ b/packages/lib/test/builder.ts
+@@ -189,6 +189,7 @@ export const buildUser = <T extends Partial<UserPayload>>(user?: T): UserPayload
+     availability: [],
+     avatar: "",
+     away: false,
++    backupCodes: null,
+     bio: null,
+     brandColor: "#292929",
+     bufferTime: 0,
+diff --git a/packages/prisma/migrations/20230804153419_add_backup_codes/migration.sql b/packages/prisma/migrations/20230804153419_add_backup_codes/migration.sql
+new file mode 100644
+index 00000000000..469f554e496
+--- /dev/null
++++ b/packages/prisma/migrations/20230804153419_add_backup_codes/migration.sql
+@@ -0,0 +1,2 @@
++-- AlterTable
++ALTER TABLE "users" ADD COLUMN     "backupCodes" TEXT;
+diff --git a/packages/prisma/schema.prisma b/packages/prisma/schema.prisma
+index 7a4caa669ff..ec45c33d0c9 100644
+--- a/packages/prisma/schema.prisma
++++ b/packages/prisma/schema.prisma
+@@ -202,6 +202,7 @@ model User {
+   timeFormat          Int?                 @default(12)
+   twoFactorSecret     String?
+   twoFactorEnabled    Boolean              @default(false)
++  backupCodes         String?
+   identityProvider    IdentityProvider     @default(CAL)
+   identityProviderId  String?
+   availability        Availability[]
+diff --git a/packages/ui/components/form/inputs/Input.tsx b/packages/ui/components/form/inputs/Input.tsx
+index 5944b40ec63..4f50cd9eb1a 100644
+--- a/packages/ui/components/form/inputs/Input.tsx
++++ b/packages/ui/components/form/inputs/Input.tsx
+@@ -44,7 +44,11 @@ export const PasswordField = forwardRef<HTMLInputElement, InputFieldProps>(funct
+         addOnFilled={false}
+         addOnSuffix={
+           <Tooltip content={textLabel}>
+-            <button className="text-emphasis h-9" type="button" onClick={() => toggleIsPasswordVisible()}>
++            <button
++              className="text-emphasis h-9"
++              tabIndex={-1}
++              type="button"
++              onClick={() => toggleIsPasswordVisible()}>
+               {isPasswordVisible ? (
+                 <EyeOff className="h-4 stroke-[2.5px]" />
+               ) : (
