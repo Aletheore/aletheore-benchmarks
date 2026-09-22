@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "source": "Real, professionally-curated golden bugs from real GitHub PRs (keycloak, sentry, cal.com, grafana), assembled for a real-PR recall benchmark this session (2026-09-21). Repo/PR mapping in case_map.json.",
+  "cases": {
+    "keycloak-37429": {
+      "upstream_repo": "keycloak/keycloak",
+      "upstream_pr": 37429,
+      "golden_bugs": {
+        "0": "lt Italian totpStep1 (account:101)",
+        "1": "zh_CN trad zh:112",
+        "2": "anchor english-groups",
+        "3": "santizeAnchors typo",
+        "4": "HTML_TAGS static"
+      }
+    },
+    "sentry-95633": {
+      "upstream_repo": "getsentry/sentry",
+      "upstream_pr": 95633,
+      "golden_bugs": {
+        "0": "magic 50 const",
+        "1": "test docstring mismatch"
+      }
+    },
+    "calcom-22532": {
+      "upstream_repo": "calcom/cal.diy",
+      "upstream_pr": 22532,
+      "golden_bugs": {
+        "0": "updateManyByCredentialId empty data",
+        "1": "sed -i ''",
+        "2": "generic Error 500 TRPCError",
+        "3": "hardcoded en-US"
+      }
+    },
+    "grafana-80329": {
+      "upstream_repo": "grafana/grafana",
+      "upstream_pr": 80329,
+      "golden_bugs": {
+        "0": "Error log level",
+        "1": "ticker 10->1min"
+      }
+    },
+    "sentry-80168": {
+      "upstream_repo": "getsentry/sentry",
+      "upstream_pr": 80168,
+      "golden_bugs": {
+        "0": "abstract TypeError",
+        "1": "docstring list vs dict",
+        "2": "group_2 6 vs 10"
+      }
+    },
+    "sentry-80528": {
+      "upstream_repo": "getsentry/sentry",
+      "upstream_pr": 80528,
+      "golden_bugs": {
+        "0": "config mutated unused",
+        "1": "MonitorCheckIn refetch"
+      }
+    },
+    "grafana-76186": {
+      "upstream_repo": "grafana/grafana",
+      "upstream_pr": 76186,
+      "golden_bugs": {
+        "0": "nil request panic",
+        "1": "traceID gone",
+        "2": "TestLogger.FromContext"
+      }
+    },
+    "grafana-103633": {
+      "upstream_repo": "grafana/grafana",
+      "upstream_pr": 103633,
+      "golden_bugs": {
+        "0": "asymmetric cache trust",
+        "1": "test comment allow-access",
+        "2": "denial key underscore collision"
+      }
+    },
+    "grafana-79265": {
+      "upstream_repo": "grafana/grafana",
+      "upstream_pr": 79265,
+      "golden_bugs": {
+        "0": "race count/create",
+        "1": "TagDevice sync breaks auth",
+        "2": "rowsAffected semantics",
+        "3": "time window",
+        "4": "tagDeviceUI cache bypass"
+      }
+    },
+    "calcom-22345": {
+      "upstream_repo": "calcom/cal.diy",
+      "upstream_pr": 22345,
+      "golden_bugs": {
+        "0": "else-if unreachable",
+        "1": "org-only excluded"
+      }
+    },
+    "calcom-10967": {
+      "upstream_repo": "calcom/cal.diy",
+      "upstream_pr": 10967,
+      "golden_bugs": {
+        "0": "null mainHostDestCal",
+        "1": "redundant ?.",
+        "2": "externalId find fails",
+        "3": "slug inversion",
+        "4": "interface contract",
+        "5": "undefined credential"
+      }
+    },
+    "calcom-10600": {
+      "upstream_repo": "calcom/cal.diy",
+      "upstream_pr": 10600,
+      "golden_bugs": {
+        "0": "TwoFactor/BackupCode naming",
+        "1": "err msg backup login",
+        "2": "case sensitivity",
+        "3": "concurrent reuse",
+        "4": "URL revoke"
+      }
+    },
+    "calcom-8087": {
+      "upstream_repo": "calcom/cal.diy",
+      "upstream_pr": 8087,
+      "golden_bugs": {
+        "0": "try-catch import",
+        "1": "forEach async fire-and-forget"
+      }
+    }
+  }
+}

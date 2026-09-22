@@ -555,3 +555,101 @@ A real regression Aletheore had shipped to production (`sibling_file_context`, P
 4. **This run's conclusion about `sibling_file_context` is not reconciled with its own original validation** on a different corpus (see "The real finding" above) — stated as an open question, not resolved.
 5. Case `020` remains excluded corpus-wide (same fixture/push-protection issue as every prior run).
 
+## Experiment 7: per-file completeness generation + windowed verification, named vs. real competitors
+
+Experiment 6 above found and fixed a real regression from an enriched-context feature. This experiment starts from a different diagnostic: does Aletheore's *generation* step miss real bugs even on a diff it can see in full, with no context or budget problem involved at all? It does, traced to a specific, fixable cause, and this run measures the fix against three real, independently-run competitor tools on the same corpus.
+
+**Not the same corpus as "The Martian Benchmark" section of the top-level README.** Both draw on the real, external Martian Code Review Bench concept and overlap in source repos (sentry, grafana, keycloak, cal.com), but this is a separate 13-case, 44-golden-bug corpus with its own structured golden-bug list and its own scoring method (an explicit file/line/keyword signature table, not a `gpt-5-nano` semantic judge against real review comments). Kept in its own directory (`real_pr_recall_corpus/`, not `martian_corpus/`) specifically to avoid repeating this repo's own prior `martian-benchmark-collision` naming problem.
+
+### The diagnostic
+
+A 13-case, 44-golden-bug corpus of real, unmodified GitHub PRs (keycloak, sentry x2, cal.com x5, grafana x4, full mapping in `real_pr_recall_corpus/case_map.json`, golden bugs in `real_pr_recall_corpus/ground_truth.json`) was run through Aletheore's real single-shot `review_diff()`. On several multi-bug PRs it surfaced only 1-2 real bugs even though the rest were fully present in the diff, not truncated by any size budget (confirmed directly: `calcom-10967`'s real diff is ~45KB across 22 files, `calcom-8087`'s ~18KB across 12, both far under `MAX_DIFF_TOTAL_BYTES` and `MAX_CONTEXT_FILE_BYTES`).
+
+Traced to `FLASH_REVIEW_SYSTEM_PROMPT`'s vendored PR-Agent schema (see Experiment 3-4 above for that prompt's own validation history), whose `key_issues_to_review` field is documented as "a concise list (0-5 issues) ... introduced in this PR" - a single cap shared across the whole PR, not per file. A 22-file PR with 6 real bugs structurally crowds most of them out of that cap regardless of model quality. Confirmed live: re-running `sentry-80528` and `calcom-10600` through the unmodified single-shot pipeline returned **zero** findings on both, despite each PR containing 2 and 5 real golden bugs respectively that were fully visible in the diff.
+
+### The fix
+
+Three changes, all in `Aletheore/Aletheore`, [PR #762](https://github.com/Aletheore/Aletheore/pull/762) (open at time of writing, not yet merged, commit `0b54eb7`):
+
+- **`per_file_completeness`**: `review_diff()` gains a flag that runs one real generation call per changed file instead of one for the whole PR, so PR-Agent's 0-5 cap applies per file. Same downstream grounding/merge/verification pipeline as before, unchanged.
+- **Windowed verification context**: `_verify_findings_with_second_model` gains `diff_patches` windowing, scoping each finding's own verification call to just its file's patch instead of the whole PR's diff. Real cost lever for per-file completeness's much larger candidate pool - roughly 2x cheaper per call on a validated sample, with no true-positive regression found.
+- **Asymmetric-risk verification prompt**: `VERIFICATION_SYSTEM_PROMPT` rewritten so the burden of proof is on REJECT, not ACCEPT (a wrongly-kept finding costs a developer a few seconds; a wrongly-dropped one is gone with no second chance). Recovers most of verification's recall cost while keeping its precision gain, versus the unmodified prompt.
+
+`scan_worker/jobs.py` wires both paid tiers to `per_file_completeness` (real measured cost ~3x single-shot generation, ~$0.0028/review, cheap enough for Flash tier too) and keeps second-model verification AIR-only (~15x generation cost even windowed - too expensive for Flash's already-validated cost model). Free tier gets neither.
+
+### Results
+
+Real, 3x-averaged runs through the exact production code path (`review_diff()`, unmodified, called the same way `jobs.py` calls it for each tier - not a parallel test harness), scored against `ground_truth.json`'s 44 golden bugs with an explicit, reviewable (file substring, line window, keyword) matching table (`real_pr_recall_corpus/scripts/score_results.py`), not a fresh LLM judge per run:
+
+| Config | Recall (3 trials) | Precision (3 trials) | Cost/review |
+|---|---|---|---|
+| Flash (per-file, no verification) | 59.1% / 59.1% / 56.8% (avg **58.3%**) | 32.7% / 31.1% / 37.9% (avg **33.9%**) | ~$0.0028 |
+| AIR (per-file + windowed verification) | 56.8% / 59.1% / 59.1% (avg **58.3%**) | 38.5% / 40.7% / 38.9% (avg **39.4%**) | ~$0.047 |
+
+Against three real competitor tools run independently on this same corpus in an earlier session (`real_pr_recall_corpus/results/score_competitors.log`, real hosted GitHub App reactions, same methodology as Experiment 6's competitor arms):
+
+| Tool | Recall | Precision |
+|---|---|---|
+| CodeRabbit | 54.5% (24/44) | 29.6% (24/81) |
+| Greptile-v5 | 52.3% (23/44) | 41.1% (23/56) |
+| Qodo-v2-2 | 34.1% (15/44) | 40.5% (15/37) |
+| **Aletheore Flash** | **58.3%** | 33.9% |
+| **Aletheore AIR** | **58.3%** | **39.4%** |
+
+Both Aletheore configs beat CodeRabbit on recall and precision. AIR lands within 1.7 points of Greptile's precision while beating its recall by 6 points, and beats Qodo's recall by 24 points.
+
+### What averaging over 3 trials changed
+
+A single-trial version of this same comparison (not reported as the headline number here, kept only as the reason the 3x design exists) showed AIR's second-model verification costing real recall - findings that matched a golden bug got REJECTed alongside genuine noise. Two of those specific losses were investigated directly rather than accepted at face value:
+
+- `sentry-80168`'s golden bug (`test_detector.py:195`, a claimed `value`-parameter mismatch) turned out to be an **imprecise golden label**, not a real verifier failure: reading the real function it referenced (`build_mock_occurrence_and_event` in the actual repo checkout) confirmed the `value` parameter is never used in constructing the returned object, so the claimed mismatch has no real effect. The verifier's REJECT reason stated exactly this, correctly.
+- `grafana-76186`'s golden bug (`logger_middleware.go:49`, a traceID-removal finding) flipped to ACCEPT when re-run in isolation with identical context - genuine call-to-call sampling noise in the verifier, not a systematic weakness.
+
+Averaged over 3 fresh trials, AIR's recall came out identical to Flash's (58.3% both) rather than lower, consistent with those two findings: at least some of the apparent recall cost was noise and a corpus-label problem, not a real, reproducible verifier weakness.
+
+### Real cost
+
+The reported 3x-trial run (`real_pr_recall_corpus/results/aletheore_3x_results.json`): generation across all 6 trials (3 Flash + 3 AIR) **$0.2175** (138 calls/trial, `glm-5.3-flash` via IndieRouter), verification across the 3 AIR trials **$1.7333** (`deepseek-v4-flash`, ~101-113 calls/trial). Total **$1.9508** for the full reported comparison. Exact per-trial costs are in the results file alongside each trial's findings.
+
+This does not include earlier exploratory spend during development (prompt A/B tests, windowing validation on a smaller sample) that led to this design - only the final, reported 3x comparison.
+
+### Reading this honestly
+
+- **Competitor numbers are single runs from an earlier session, not 3x-averaged like Aletheore's own numbers here.** Not perfectly apples-to-apples, though Aletheore's own trial-to-trial variance was small (recall varied at most 2.3 points across any 3 trials), so it is unlikely to flip the comparison.
+- **The golden-matching table is a hand-built signature key, not a fresh LLM judge.** Built by reading real findings against real diffs and real repo source across several earlier scoring passes this session, then applied mechanically and reproducibly across all 6 trials - deliberate, given this session's own prior finding that LLM-judge agreement with manual scoring needed auditing rather than being trusted outright. The known cost: a real finding phrased in a way the table's keywords do not anticipate would score as a miss even if correct.
+- **This is pre-merge code.** PR #762 is open, not yet deployed to production. The numbers above describe what would ship if merged, not Aletheore's live behavior today.
+- **A real operational hiccup happened mid-investigation**: the IndieRouter key in use went invalid partway through this session (a live `401 Invalid API key` from every call), traced to the credential itself rather than a code or rate-limit problem, and was rotated before the reported run. Every failed call in that window failed at the auth stage before any tokens were billed, so it cost nothing beyond time - noted here because a full account of what happened during a benchmark run is worth more than a clean-looking final number that omits it.
+- **44 golden bugs across 13 cases is a real but modest sample.** One case's finding flipping moves the aggregate by 2-4 points, and this session found at least one golden label itself imprecise (see above) - the corpus is real and useful, not flawless ground truth.
+
+### Reproducing
+
+```bash
+git clone https://github.com/Aletheore/Aletheore
+cd Aletheore
+git fetch origin experiment/verification-asymmetric-risk
+git checkout experiment/verification-asymmetric-risk   # PR #762, commit 0b54eb7
+
+cd ../aletheore-benchmarks/pr_review/real_pr_recall_corpus/scripts
+
+export INDIEROUTER_API_KEY=...   # generation, glm-5.3-flash
+export DEEPSEEK_API_KEY=...      # verification (AIR config only)
+
+python3 run_benchmark.py --aletheore-root ../../../../Aletheore --trials 3 --config both
+# real cost: ~$1.95 for 3 trials of each config (generation + verification)
+
+python3 score_results.py
+```
+
+`--aletheore-root` points at a local `Aletheore/Aletheore` checkout - the script inserts `{root}/github-app` onto `sys.path` and imports `review_diff`/`flash_review_generation_adapter` directly, the same functions `scan_worker/jobs.py` calls in production, not a reimplementation. `--config flash`/`--config air`/`--trials N` run a smaller slice for a cheaper smoke test.
+
+### Verdict
+
+Per-file completeness generation, closed the largest measured gap: production's real single-shot pipeline returned zero findings on two real multi-bug PRs it should have caught something on, traced to a per-PR (not per-file) finding cap in the vendored generation prompt. The fix, plus windowed asymmetric-risk verification for AIR tier, measured a real, 3x-replicated recall and precision lead over CodeRabbit on this corpus, and closed most of the gap to Greptile's precision while keeping a real recall lead over it. Cost stays proportionate to what each tier can absorb: per-file completeness is cheap enough for both paid tiers (~$0.0028/review), second-model verification stays AIR-only (~$0.047/review combined) because it costs roughly 15x generation even after the windowing fix.
+
+**Open, disclosed limitations**:
+1. **PR #762 is not yet merged.** These are pre-release numbers for code that exists and was tested against the real production call path, not numbers from what is currently live.
+2. **Only 2 of the recall-cost findings from the pre-averaging single-trial run were individually investigated** (`sentry-80168`, `grafana-76186`). Averaging over 3 trials shows the aggregate recall cost disappeared, which is the stronger evidence, but not every individual case-level fluctuation across all 6 trials was traced to a specific cause the way those two were.
+3. **The competitor numbers' own run count and methodology come from an earlier session** and are cited, not independently re-verified in this one - see `real_pr_recall_corpus/results/score_competitors.log` for that run's own real output.
+4. **Verification cost (~$0.047/review) is a real, meaningful multiple of generation cost** even after windowing cut it roughly 2x - a further reduction was investigated (see the git history behind this file for the windowing validation) but not pushed further within this session.
+5. `calcom-8087`'s golden bug G0 (a claimed missing try/catch around a dynamic import) was matched inconsistently across trials and is the least reliably scored golden in this corpus - kept in the denominator rather than excluded, since the underlying claim is real, just imprecisely worded for keyword matching.
+
