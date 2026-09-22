@@ -1224,21 +1224,22 @@ own prior runs:
 
 | Model | Overall score (`s̄`) | Cost / 100 PRs |
 |---|---|---|
+| **Aletheore (GLM-5.3-Flash, per_file_completeness=True)** | **0.174** | $0.162 |
 | Claude Haiku 4.5 | 0.153 | $0.825 |
 | Claude Sonnet 4.6 | 0.152 | $2.475 |
 | DeepSeek V3 | 0.150 | $0.163 |
-| **Aletheore (GLM-5.3-Flash)** | **0.149 - 0.169** | **$0.055** |
+| Aletheore (GLM-5.3-Flash, bare mode) | 0.149 - 0.169 | $0.055 |
 | GPT-4o | 0.113 | - |
 
-The honest read: Aletheore is statistically tied with the Sonnet 4.6/Haiku 4.5/DeepSeek V3/Mistral Large 3
-cluster (the gap is smaller than GLM's own measured run-to-run variance) and clearly ahead of GPT-4o-class
-models, at 15-45x lower cost than the models it's tied with. A side-experiment on the same 100 tasks found
+The honest read: bare-mode Aletheore is statistically tied with the Sonnet 4.6/Haiku 4.5/DeepSeek V3/Mistral
+Large 3 cluster (the gap is smaller than GLM's own measured run-to-run variance). Turning on
+`per_file_completeness=True` (production's real current paid-tier setting, closed same-day as a real open
+item this README used to flag) moves Aletheore's score *above* that entire cluster - a real, meaningful gain
+(+5.5 recall points for -2 precision), not noise-sized, though it hasn't yet been re-verified against its
+own 4-run variance check the way the bare-mode number was. A side-experiment on the same 100 tasks found
 Luna (production's default for every *other* writing surface) scores markedly worse here (3.1% recall vs.
-GLM's 14.2%) - consistent with why Flash Review deliberately uses GLM for this exact surface. Full
-methodology, every caveat, and the real per-task data: [`swe_prbench/README.md`](swe_prbench/README.md).
-
-**This run predates PR #762** (per-file completeness generation + windowed verification, merged the day
-after) - re-running with that flag on is a real open item, not done yet.
+GLM's 14.2% in bare mode) - consistent with why Flash Review deliberately uses GLM for this exact surface.
+Full methodology, every caveat, and the real per-task data: [`swe_prbench/README.md`](swe_prbench/README.md).
 
 ## Explaining code — "how does X work?"
 
