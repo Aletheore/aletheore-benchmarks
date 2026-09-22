@@ -1213,6 +1213,33 @@ Experiment 6 above). Both results are published, neither discarded to make the s
 account of the conflict, the precision tradeoffs behind PR #747's own number, and every raw log in
 [`external_pr_recall_benchmark/README.md`](external_pr_recall_benchmark/README.md).
 
+## SWE-PRBench
+
+A real, independent, externally-published benchmark, not one we built — `foundry-ai/swe-prbench` (350
+real merged PRs, human-annotated ground truth via the GitHub review API, judge methodology validated at
+κ=0.75 against human agreement). Running Aletheore's real `review_diff()` (GLM-5.3-Flash, production's
+real generation adapter) against the published `eval_100` diff-only split, scored with the paper's own
+unmodified harness, gives a number directly comparable to their published leaderboard - not just to our
+own prior runs:
+
+| Model | Overall score (`s̄`) | Cost / 100 PRs |
+|---|---|---|
+| Claude Haiku 4.5 | 0.153 | $0.825 |
+| Claude Sonnet 4.6 | 0.152 | $2.475 |
+| DeepSeek V3 | 0.150 | $0.163 |
+| **Aletheore (GLM-5.3-Flash)** | **0.149 - 0.169** | **$0.055** |
+| GPT-4o | 0.113 | - |
+
+The honest read: Aletheore is statistically tied with the Sonnet 4.6/Haiku 4.5/DeepSeek V3/Mistral Large 3
+cluster (the gap is smaller than GLM's own measured run-to-run variance) and clearly ahead of GPT-4o-class
+models, at 15-45x lower cost than the models it's tied with. A side-experiment on the same 100 tasks found
+Luna (production's default for every *other* writing surface) scores markedly worse here (3.1% recall vs.
+GLM's 14.2%) - consistent with why Flash Review deliberately uses GLM for this exact surface. Full
+methodology, every caveat, and the real per-task data: [`swe_prbench/README.md`](swe_prbench/README.md).
+
+**This run predates PR #762** (per-file completeness generation + windowed verification, merged the day
+after) - re-running with that flag on is a real open item, not done yet.
+
 ## Explaining code — "how does X work?"
 
 Blind LLM judge, 0-3, each question graded twice with the two systems' positions
@@ -4538,6 +4565,9 @@ python3 scripts/score_retrieval_matrix.py results/retrieval_raw_zod_0813_verifie
 | `pr_review/results/` | raw generation and verification output for every PR-review experiment run |
 | `external_pr_recall_benchmark/` | real-reviewer-comment recall benchmark across sentry/grafana/cal.diy/keycloak — used to validate/reject real Flash Review prompt changes; full writeup in `external_pr_recall_benchmark/README.md` |
 | `external_pr_recall_benchmark/results/` | corpus manifest, per-run logs, and the full recall/precision summary |
+| `swe_prbench/` | head-to-head against the real, external SWE-PRBench leaderboard (Claude Sonnet 4.6, Haiku 4.5, DeepSeek V3, GPT-4o) - full writeup in `swe_prbench/README.md` |
+| `swe_prbench/scripts/` | generation and scoring drivers - run inside the deployed scan-worker container, reusable for a re-run |
+| `swe_prbench/results/` | real per-task judge output (gpt-5.2, both API routes), the Luna side-experiment, and the 4-run variance check |
 | `graphify_comparison/` | head-to-head against Graphify on ERPNext, both tools run ourselves under one harness and judge, full writeup in `graphify_comparison/README.md` |
 | `security-scanner-benchmark/` | `aletheore_secrets` + `aletheore_vulnerabilities` accuracy — synthetic pilot corpus + 20-real-repo validation, full writeup in `security-scanner-benchmark/README.md` and `REPORT.md` |
 | `dead-code-benchmark/` | `aletheore_dead_code` accuracy — 10-case pilot corpus, full writeup in `dead-code-benchmark/README.md` |
