@@ -92,6 +92,34 @@ while GLM is comfortable flagging things off the raw diff alone. This is consist
 Flash Review feature deliberately uses GLM rather than Luna for this exact generation surface. Full data:
 `results/eval_report_luna.json`.
 
+### Re-run with per_file_completeness=True (2026-09-22)
+
+The gap this README originally flagged as open — this run predates PR #762 — closed same-day. Same 100
+tasks, same harness, same GLM-5.3-Flash adapter, same real `gpt-5.2` judge (direct via OpenAI), the only
+variable changed is `per_file_completeness=True` (production's real current paid-tier value, one generation
+call per changed file instead of one call for the whole diff — `verify_with_second_model` held at `False`
+in both runs, to isolate this one variable rather than changing two things at once):
+
+| | Bare (original, openai-direct route) | per_file_completeness=True |
+|---|---|---|
+| Recall | 16.8% | **22.3%** |
+| Precision | 23.8% | 20.5% |
+| Overall score | 0.169 | **0.174** |
+| Attempt rate | - | 78/100 |
+| Coverage | 0.40 | 0.48 |
+
+Recall gained ~5.5 points for a ~2-point precision cost — a real, meaningful shift, not noise-sized (compare
+to the 0.02 openrouter-vs-openai-direct judge-routing gap on the bare run, or the 0.015-0.017 std the 4-run
+variance check measured). Against the published leaderboard, 0.174 is now **above** every model in the
+previously-"tied" cluster (Claude Haiku 4.5 0.153, Claude Sonnet 4.6 0.152, DeepSeek V3 0.150, Mistral Large
+3 0.147) — but this is a single run against no fresh variance check of its own, so **"clearly ahead of the
+bare-mode tied cluster" is the defensible claim, not yet "clearly ahead of Sonnet/Haiku themselves"** without
+running the same 4-run variance protocol against this new config first. Real, measured generation cost:
+$0.1615 for the full 100-task pass (higher than bare mode's ~$0.055, as expected — per-file completeness
+means more calls, more repeated system-prompt/diff-header overhead per task). Full data:
+`results/eval_report_perfile.json`, `results/generation_results_perfile.json`. Scripts:
+`scripts/run_generation_perfile.py`, `scripts/run_scoring_perfile.py`.
+
 ## Reading this honestly
 
 - **The gap to the top of the "tied" cluster is smaller than GLM's own measured noise.** The entire spread
@@ -147,9 +175,14 @@ Our own glue scripts live in `scripts/`:
   and/or `OPENAI_API_KEY` for the real `gpt-5.2` judge.
 - `smoke_test.py` — single-task sanity check before committing to a full 100-task paid run.
 
-**This run predates PR #762** (`feat: per-file completeness generation + windowed verification for Flash
-Review`, merged 2026-09-21 — one day after this run) - `run_generation.py`'s `review_diff()` call doesn't
-pass `per_file_completeness`, so it ran on that parameter's default (`False`), not production's real
-current paid-tier value (`per_file_completeness=not is_free_tier`, i.e. `True`). Re-running with that flag
-set is the natural next step to get a number that reflects current production, not a Sept 20 snapshot of
-it - see the open item this creates.
+- `run_generation_perfile.py` / `run_scoring_perfile.py` — the `per_file_completeness=True` re-run (see
+  "Re-run with per_file_completeness=True" above). Same shape as the originals, `review_diff()` called with
+  `per_file_completeness=True` instead of that parameter's default.
+
+**The original run predated PR #762** (`feat: per-file completeness generation + windowed verification for
+Flash Review`, merged 2026-09-21 — one day after) - `run_generation.py`'s `review_diff()` call didn't pass
+`per_file_completeness`, so it ran on that parameter's default (`False`), not production's real paid-tier
+value. Closed same-day by the re-run above. Still open: neither re-run has `verify_with_second_model=True`
+(AIR tier's real second-model verification pass), and a fresh 4-run variance check hasn't been run against
+the per-file config specifically - the "beats the tied cluster" claim above is provisional until that
+exists.
