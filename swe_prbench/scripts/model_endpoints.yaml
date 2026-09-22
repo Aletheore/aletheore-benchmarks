@@ -1,0 +1,24 @@
+defaults:
+  judge_model: gpt_5_2
+
+providers:
+  openai_compatible:
+    api_key_env: OPENROUTER_API_KEY
+    base_url: https://openrouter.ai/api/v1
+  openai:
+    api_key_env: OPENAI_API_KEY
+    base_url: https://api.openai.com/v1
+
+judge:
+  gpt_5_2:
+    provider: openai_compatible
+    model: openai/gpt-5.2
+    note: "Real gpt-5.2 via OpenRouter - matching the paper's published judge exactly."
+  gpt_5_2_openai:
+    provider: openai
+    model: gpt-5.2
+    note: "Real gpt-5.2 direct via OpenAI's own API (OPENAI_API_KEY), not OpenRouter."
+  gpt_4o_mini_free:
+    provider: openai
+    model: gpt-4o-mini
+    note: "Free-tier OpenAI proxy judge for a cheap variance check only - not the paper's real judge, just a stability signal. gpt-5-nano rejected the harness's hardcoded temperature=0 (400 unsupported_value), gpt-4o-mini accepts it."
