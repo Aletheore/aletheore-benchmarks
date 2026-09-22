@@ -110,7 +110,8 @@ def matches(finding: dict, sig) -> bool:
 
 
 def score_file(results_path: Path, output_path: Path) -> None:
-    data = json.load(open(results_path))
+    with open(results_path) as f:
+        data = json.load(f)
     summary = {}
     for config in ["flash", "air"]:
         if config not in data or not data[config]:
@@ -150,7 +151,8 @@ def score_file(results_path: Path, output_path: Path) -> None:
             "recalls": trial_recalls, "precisions": trial_precisions,
             "avg_recall": avg_recall, "avg_precision": avg_precision,
         }
-    json.dump(summary, open(output_path, "w"), indent=2)
+    with open(output_path, "w") as f:
+        json.dump(summary, f, indent=2)
 
 
 if __name__ == "__main__":

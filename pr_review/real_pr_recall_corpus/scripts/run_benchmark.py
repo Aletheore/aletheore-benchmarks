@@ -72,7 +72,21 @@ def main() -> None:
     parser.add_argument("--trials", type=int, default=3)
     parser.add_argument("--config", choices=["flash", "air", "both"], default="both")
     parser.add_argument("--output", type=Path, default=RESULTS_DIR / "aletheore_3x_results.json")
+    parser.add_argument(
+        "--resume", action="store_true",
+        help="merge new trials into an existing --output file instead of refusing to run. "
+        "Without this flag, an existing output file is a hard error - real API spend has "
+        "already gone into whatever's there, and silently appending on top of it used to "
+        "double-count trials on an accidental rerun with no way to tell after the fact.",
+    )
     args = parser.parse_args()
+
+    if args.output.exists() and not args.resume:
+        raise SystemExit(
+            f"{args.output} already exists - pass --resume to merge new trials into it, "
+            "or point --output somewhere else. Refusing to guess, since the existing file "
+            "may already hold real trials from a previous run."
+        )
 
     sys.path.insert(0, str(args.aletheore_root / "github-app"))
     from app_server.llm_cost import cost_for_usage
@@ -89,7 +103,15 @@ def main() -> None:
     configs = ["flash", "air"] if args.config == "both" else [args.config]
     results = {"flash": [], "air": []}
     if args.output.exists():
-        results.update(json.load(open(args.output)))
+        with open(args.output) as f:
+            loaded = json.load(f)
+        # Merge per-key rather than results.update(loaded) - a whole-dict
+        # replace means an output file from an older script version (or a
+        # hand-edit) missing "flash" or "air" entirely would raise KeyError
+        # below mid-run, after real API spend already went into this
+        # trial's calls.
+        for key in ("flash", "air"):
+            results[key] = list(loaded.get(key, []))
 
     for config_name in configs:
         verify = config_name == "air"
@@ -120,7 +142,8 @@ def main() -> None:
                 "verify_cost": {**verify_stats, "cost_usd": round(verify_cost, 4)},
             })
             args.output.parent.mkdir(parents=True, exist_ok=True)
-            json.dump(results, open(args.output, "w"), indent=2)
+            with open(args.output, "w") as f:
+                json.dump(results, f, indent=2)
             print(f"  gen: {gen_stats['calls']} calls ${gen_cost:.4f} | "
                   f"verify: {verify_stats['calls']} calls ${verify_cost:.4f}", flush=True)
 
