@@ -605,18 +605,25 @@ corpus, 3 trials per config, real cost $1.95:
 
 | Tool | Recall | Precision |
 |---|---|---|
-| Greptile-v5 | 52.3% | 41.1% |
-| Qodo-v2-2 | 34.1% | 40.5% |
+| Greptile-v5 | 52.3% | 54.8% |
+| Qodo-v2-2 | 34.1% | 62.5% |
 | **Aletheore Flash** (per-file, no verification, ~$0.0028/review) | **58.3%** | 33.9% |
-| **Aletheore AIR** (per-file + windowed verification, ~$0.047/review) | **58.3%** | **39.4%** |
+| **Aletheore AIR** (per-file + windowed verification, ~$0.047/review) | **58.3%** | 39.4% |
 
 > A fourth named tool was benchmarked in this same run and has been redacted (2026-09-23): its
 > Terms of Service bars disclosing benchmark results about its product without prior written
 > consent, which this repository did not have. Permission is being requested; this table will be
 > restored with the same real numbers if granted.
 
-AIR closes to within 1.7 points of
-Greptile's precision while beating its recall by 6 points. Not yet deployed - the code is
+> **Precision correction (2026-09-23):** the originally published Greptile/Qodo precision figures
+> (41.1%/40.5%) counted every raw string captured from each tool's real review comments as a
+> "finding," including non-finding UI chrome (one whole-PR summary comment per case for each
+> tool, plus one genuine duplicate finding for Greptile). Excluding those - Greptile 23/42, Qodo
+> 15/24 - corrects both numbers upward. Recall is unaffected (fixed 44-golden-bug denominator).
+> Full detail in [`pr_review/README.md`](pr_review/README.md), Experiment 7.
+
+Aletheore leads decisively on recall but, once corrected, has the lowest precision of the five
+configs measured here - a real tradeoff, not a clean sweep. Not yet deployed - the code is
 [PR #762](https://github.com/Aletheore/Aletheore/pull/762) in `Aletheore/Aletheore`, open at time of
 writing. Full diagnostic, the real cost breakdown, two individually-investigated findings behind why
 averaging over 3 trials changed the recall picture, and every disclosed limitation, in

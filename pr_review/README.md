@@ -590,17 +590,34 @@ Against real competitor tools run independently on this same corpus in an earlie
 
 | Tool | Recall | Precision |
 |---|---|---|
-| Greptile-v5 | 52.3% (23/44) | 41.1% (23/56) |
-| Qodo-v2-2 | 34.1% (15/44) | 40.5% (15/37) |
+| Greptile-v5 | 52.3% (23/44) | 54.8% (23/42) |
+| Qodo-v2-2 | 34.1% (15/44) | 62.5% (15/24) |
 | **Aletheore Flash** | **58.3%** | 33.9% |
-| **Aletheore AIR** | **58.3%** | **39.4%** |
+| **Aletheore AIR** | **58.3%** | 39.4% |
 
 > A fourth named tool was benchmarked in this same run and has been redacted (2026-09-23):
 > its Terms of Service bars disclosing benchmark results about its product without prior
 > written consent, which this repository did not have. Permission is being requested;
 > this table will be restored with the same real numbers if granted.
 
-AIR lands within 1.7 points of Greptile's precision while beating its recall by 6 points, and beats Qodo's recall by 24 points.
+> **Precision correction (2026-09-23):** the original published precision figures for both
+> Greptile-v5 and Qodo-v2-2 (41.1% and 40.5%) used the raw count of every string captured
+> from each tool's real review comments as the denominator - which included non-finding
+> items: one whole-PR "Greptile Summary" comment per case (13 total, plus one genuine
+> duplicate finding in `calcom-8087`), and one "Code Review by Qodo ... Bugs (N) ..." summary
+> line per case (13 total). Neither is an individual finding, and counting them inflated the
+> denominator and deflated measured precision for both tools - an error caught while
+> re-verifying this table before an unrelated outreach email, not by either vendor. Corrected
+> by excluding those items: Greptile 23/42 (was 23/56), Qodo 15/24 (was 15/37). Recall is
+> unaffected - its denominator is the fixed 44 golden bugs, not tool output. The redacted
+> fourth tool's own precision has the same class of error (its raw data included
+> `@coderabbitai full review` trigger echoes, `Actionable comments posted: N` summaries, and
+> marketing-footer boilerplate) and would need the same correction before it is ever restored.
+
+Aletheore leads decisively on recall (58.3% vs. the next-best 52.3%) but, once corrected, has
+the lowest precision of the five configs measured here - a real, honest tradeoff, not a clean
+sweep. AIR still beats Qodo's recall by 24 points and Greptile's by 6, but both Greptile and
+Qodo now measure higher precision than either Aletheore tier on this corpus.
 
 ### What averaging over 3 trials changed
 
