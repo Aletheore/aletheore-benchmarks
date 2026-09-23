@@ -1,0 +1,5835 @@
+{
+  "run_date": "2026-09-23T01:01:15.125610",
+  "total_prs": 100,
+  "total_eval_records": 100,
+  "by_config": {
+    "config_A": {
+      "n": 100,
+      "detection_rate": 0.17,
+      "false_positive_rate": 0.097,
+      "precision": 0.167,
+      "recall": 0.17,
+      "f1_score": 0.144,
+      "hallucination_rate": 0.097,
+      "actionability_score": 0.419,
+      "semantic_alignment": 0.042,
+      "redundancy_penalty": 0.0,
+      "coverage": 0.38,
+      "attempt_rate": 0.78,
+      "difficulty_weight": 1.334,
+      "pr_difficulty_tag": "easy",
+      "no_attempt_count": 22,
+      "plausible_penalty": 0.049,
+      "fallback_penalty": 0.23,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.111,
+      "overall_score_weighted": 0.118
+    }
+  },
+  "by_difficulty": {
+    "Type3_Latent_Candidate": {
+      "n": 20,
+      "detection_rate": 0.057,
+      "coverage": 0.2,
+      "f1_score": 0.058,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.065,
+      "overall_score_weighted": 0.071
+    },
+    "Type1_Direct": {
+      "n": 40,
+      "detection_rate": 0.202,
+      "coverage": 0.375,
+      "f1_score": 0.157,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.108,
+      "overall_score_weighted": 0.114
+    },
+    "Type2_Contextual": {
+      "n": 40,
+      "detection_rate": 0.193,
+      "coverage": 0.475,
+      "f1_score": 0.173,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.136,
+      "overall_score_weighted": 0.146
+    }
+  },
+  "ablation_table": {
+    "Type1_Direct": {
+      "config_A": {
+        "n": 40,
+        "detection_rate": 0.202,
+        "actionability_score": 0.395,
+        "adjacent_detection_rate": 0.0,
+        "overall_score": 0.108
+      }
+    },
+    "Type2_Contextual": {
+      "config_A": {
+        "n": 40,
+        "detection_rate": 0.193,
+        "actionability_score": 0.437,
+        "adjacent_detection_rate": 0.0,
+        "overall_score": 0.136
+      }
+    },
+    "Type3_Latent_Candidate": {
+      "config_A": {
+        "n": 20,
+        "detection_rate": 0.057,
+        "actionability_score": 0.431,
+        "adjacent_detection_rate": 0.0,
+        "overall_score": 0.065
+      }
+    }
+  },
+  "agent_parse_failures": 0,
+  "judge_parse_fallback_count": 46,
+  "records": [
+    {
+      "task_id": "prowler__9865",
+      "pr_number": 9865,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.16666666666666666,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 1.0,
+      "semantic_alignment": 0.08,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.47866666666666663,
+      "total_agent_comments": 1,
+      "confirmed_count": 1,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 5,
+      "total_human_comments": 6,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_2",
+          "actionability": 5
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 1.0,
+      "recall": 0.16666666666666666,
+      "f1_score": 0.2857142857142857,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.9459101490553132,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "stylelint__9026",
+      "pr_number": 9026,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "JavaScript",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "linkding__1261",
+      "pr_number": 1261,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "vitest__9512",
+      "pr_number": 9512,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "TypeScript",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 5,
+      "total_human_comments": 5,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.791759469228055,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "stylelint__9062",
+      "pr_number": 9062,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "JavaScript",
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.75,
+      "semantic_alignment": 0.0849025974025974,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.7877353896103896,
+      "total_agent_comments": 2,
+      "confirmed_count": 2,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 2,
+      "missed_human_comments": 0,
+      "total_human_comments": 2,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_1",
+          "human_comment_id": "c_2",
+          "actionability": 4
+        },
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_1",
+          "actionability": 4
+        }
+      ],
+      "missed_comments": [],
+      "fabricated_comments": [],
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.5,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "ragas__2331",
+      "pr_number": 2331,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.14285714285714285,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.875,
+      "semantic_alignment": 0.07228915662650602,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.30548623063683306,
+      "total_agent_comments": 2,
+      "confirmed_count": 1,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 6,
+      "total_human_comments": 7,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_1",
+          "human_comment_id": "c_6",
+          "actionability": 5
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_7"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.5,
+      "recall": 0.14285714285714285,
+      "f1_score": 0.22222222222222224,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 2.0794415416798357,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "effect__5952",
+      "pr_number": 5952,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "TypeScript",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "altair__3936",
+      "pr_number": 3936,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.6875,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.53875,
+      "total_agent_comments": 4,
+      "confirmed_count": 1,
+      "plausible_count": 3,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 0,
+      "total_human_comments": 1,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_2",
+          "human_comment_id": "c_1",
+          "actionability": 4
+        }
+      ],
+      "missed_comments": [],
+      "fabricated_comments": [],
+      "precision": 0.25,
+      "recall": 1.0,
+      "f1_score": 0.4,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.050000000000000044,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "chia-blockchain__20099",
+      "pr_number": 20099,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.3333333333333333,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.11702127659574468,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.28421985815602835,
+      "total_agent_comments": 3,
+      "confirmed_count": 1,
+      "plausible_count": 1,
+      "fabricated_count": 1,
+      "caught_human_comments": 1,
+      "missed_human_comments": 1,
+      "total_human_comments": 2,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_1",
+          "human_comment_id": "c_1",
+          "actionability": 4
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_0"
+        }
+      ],
+      "precision": 0.3333333333333333,
+      "recall": 0.5,
+      "f1_score": 0.4,
+      "hallucination_rate": 0.3333333333333333,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "pipecat__3428",
+      "pr_number": 3428,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "dask__12144",
+      "pr_number": 12144,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 1.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.020000000000000004,
+      "total_agent_comments": 1,
+      "confirmed_count": 0,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "espnet__6278",
+      "pr_number": 6278,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.25,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.6785714285714286,
+      "semantic_alignment": 0.06918238993710692,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.20537735849056607,
+      "total_agent_comments": 7,
+      "confirmed_count": 1,
+      "plausible_count": 6,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 3,
+      "total_human_comments": 4,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_4",
+          "human_comment_id": "c_1",
+          "actionability": 4
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.14285714285714285,
+      "recall": 0.25,
+      "f1_score": 0.18181818181818182,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.15714285714285714,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.6094379124341003,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "agents__4155",
+      "pr_number": 4155,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.8387096774193549,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.12096774193548387,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 31,
+      "confirmed_count": 0,
+      "plausible_count": 5,
+      "fabricated_count": 26,
+      "caught_human_comments": 0,
+      "missed_human_comments": 3,
+      "total_human_comments": 3,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_2"
+        },
+        {
+          "comment_id": "a_3"
+        },
+        {
+          "comment_id": "a_4"
+        },
+        {
+          "comment_id": "a_5"
+        },
+        {
+          "comment_id": "a_6"
+        },
+        {
+          "comment_id": "a_7"
+        },
+        {
+          "comment_id": "a_8"
+        },
+        {
+          "comment_id": "a_9"
+        },
+        {
+          "comment_id": "a_10"
+        },
+        {
+          "comment_id": "a_11"
+        },
+        {
+          "comment_id": "a_12"
+        },
+        {
+          "comment_id": "a_13"
+        },
+        {
+          "comment_id": "a_14"
+        },
+        {
+          "comment_id": "a_15"
+        },
+        {
+          "comment_id": "a_16"
+        },
+        {
+          "comment_id": "a_17"
+        },
+        {
+          "comment_id": "a_18"
+        },
+        {
+          "comment_id": "a_19"
+        },
+        {
+          "comment_id": "a_20"
+        },
+        {
+          "comment_id": "a_23"
+        },
+        {
+          "comment_id": "a_24"
+        },
+        {
+          "comment_id": "a_25"
+        },
+        {
+          "comment_id": "a_26"
+        },
+        {
+          "comment_id": "a_28"
+        },
+        {
+          "comment_id": "a_29"
+        },
+        {
+          "comment_id": "a_30"
+        }
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.8387096774193549,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "kedro__5334",
+      "pr_number": 5334,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 7,
+      "total_human_comments": 7,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        },
+        {
+          "comment_id": "c_7"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 2.0794415416798357,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "lucene__15223",
+      "pr_number": 15223,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Java",
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.4444444444444444,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.33333333333333337,
+      "semantic_alignment": 0.0821917808219178,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.36788432267884325,
+      "total_agent_comments": 9,
+      "confirmed_count": 1,
+      "plausible_count": 4,
+      "fabricated_count": 4,
+      "caught_human_comments": 1,
+      "missed_human_comments": 0,
+      "total_human_comments": 1,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_7",
+          "human_comment_id": "c_1",
+          "actionability": 5
+        }
+      ],
+      "missed_comments": [],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_0"
+        },
+        {
+          "comment_id": "a_1"
+        },
+        {
+          "comment_id": "a_2"
+        },
+        {
+          "comment_id": "a_3"
+        }
+      ],
+      "precision": 0.1111111111111111,
+      "recall": 1.0,
+      "f1_score": 0.19999999999999998,
+      "hallucination_rate": 0.4444444444444444,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "stylelint__9074",
+      "pr_number": 9074,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "JavaScript",
+      "detection_rate": 0.0,
+      "false_positive_rate": 1.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.025000000000000022,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 10,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 10,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_0"
+        },
+        {
+          "comment_id": "a_1"
+        },
+        {
+          "comment_id": "a_2"
+        },
+        {
+          "comment_id": "a_3"
+        },
+        {
+          "comment_id": "a_4"
+        },
+        {
+          "comment_id": "a_5"
+        },
+        {
+          "comment_id": "a_6"
+        },
+        {
+          "comment_id": "a_7"
+        },
+        {
+          "comment_id": "a_8"
+        },
+        {
+          "comment_id": "a_9"
+        }
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 1.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "deepeval__2394",
+      "pr_number": 2394,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 1.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.125,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 2,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 2,
+      "caught_human_comments": 0,
+      "missed_human_comments": 5,
+      "total_human_comments": 5,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_0"
+        },
+        {
+          "comment_id": "a_1"
+        }
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 1.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.791759469228055,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "spyder__25609",
+      "pr_number": 25609,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 6,
+      "total_human_comments": 6,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.9459101490553132,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "pipecat__2974",
+      "pr_number": 2974,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 1.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.25,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 2,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 2,
+      "caught_human_comments": 0,
+      "missed_human_comments": 3,
+      "total_human_comments": 3,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_0"
+        },
+        {
+          "comment_id": "a_1"
+        }
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 1.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "espnet__6352",
+      "pr_number": 6352,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.6666666666666666,
+      "false_positive_rate": 0.5,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.45833333333333337,
+      "semantic_alignment": 0.17109071363598777,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.31316360704539814,
+      "total_agent_comments": 6,
+      "confirmed_count": 2,
+      "plausible_count": 1,
+      "fabricated_count": 3,
+      "caught_human_comments": 2,
+      "missed_human_comments": 1,
+      "total_human_comments": 3,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_5",
+          "human_comment_id": "c_3",
+          "actionability": 5
+        },
+        {
+          "agent_comment_id": "a_3",
+          "human_comment_id": "c_1",
+          "actionability": 5
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_0"
+        },
+        {
+          "comment_id": "a_1"
+        },
+        {
+          "comment_id": "a_2"
+        }
+      ],
+      "precision": 0.3333333333333333,
+      "recall": 0.6666666666666666,
+      "f1_score": 0.4444444444444444,
+      "hallucination_rate": 0.5,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 1.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "agents__3948",
+      "pr_number": 3948,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.5,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.40625,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 8,
+      "confirmed_count": 0,
+      "plausible_count": 4,
+      "fabricated_count": 4,
+      "caught_human_comments": 0,
+      "missed_human_comments": 5,
+      "total_human_comments": 5,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_1"
+        },
+        {
+          "comment_id": "a_2"
+        },
+        {
+          "comment_id": "a_3"
+        },
+        {
+          "comment_id": "a_4"
+        }
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.5,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.791759469228055,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "coreos-assembler__4381",
+      "pr_number": 4381,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Go",
+      "detection_rate": 0.25,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5833333333333334,
+      "semantic_alignment": 0.1650485436893204,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.28309061488673143,
+      "total_agent_comments": 3,
+      "confirmed_count": 1,
+      "plausible_count": 2,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 3,
+      "total_human_comments": 4,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_2",
+          "human_comment_id": "c_4",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.3333333333333333,
+      "recall": 0.25,
+      "f1_score": 0.28571428571428575,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 1.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.6094379124341003,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "protocompile__630",
+      "pr_number": 630,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Go",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.625,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0125,
+      "total_agent_comments": 2,
+      "confirmed_count": 0,
+      "plausible_count": 2,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "falcon__2581",
+      "pr_number": 2581,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 3,
+      "total_human_comments": 3,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "qutebrowser__8845",
+      "pr_number": 8845,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.010000000000000002,
+      "total_agent_comments": 1,
+      "confirmed_count": 0,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 4,
+      "total_human_comments": 4,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.6094379124341003,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "pipecat__3392",
+      "pr_number": 3392,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5833333333333334,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 3,
+      "confirmed_count": 0,
+      "plausible_count": 3,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "spyder__24990",
+      "pr_number": 24990,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.07692307692307693,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.75,
+      "semantic_alignment": 0.119126589275843,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.3236382191606072,
+      "total_agent_comments": 3,
+      "confirmed_count": 2,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 2,
+      "missed_human_comments": 24,
+      "total_human_comments": 26,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_13",
+          "actionability": 4
+        },
+        {
+          "agent_comment_id": "a_2",
+          "human_comment_id": "c_8",
+          "actionability": 5
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        },
+        {
+          "comment_id": "c_7"
+        },
+        {
+          "comment_id": "c_9"
+        },
+        {
+          "comment_id": "c_10"
+        },
+        {
+          "comment_id": "c_11"
+        },
+        {
+          "comment_id": "c_12"
+        },
+        {
+          "comment_id": "c_14"
+        },
+        {
+          "comment_id": "c_15"
+        },
+        {
+          "comment_id": "c_16"
+        },
+        {
+          "comment_id": "c_17"
+        },
+        {
+          "comment_id": "c_18"
+        },
+        {
+          "comment_id": "c_19"
+        },
+        {
+          "comment_id": "c_20"
+        },
+        {
+          "comment_id": "c_21"
+        },
+        {
+          "comment_id": "c_22"
+        },
+        {
+          "comment_id": "c_23"
+        },
+        {
+          "comment_id": "c_24"
+        },
+        {
+          "comment_id": "c_25"
+        },
+        {
+          "comment_id": "c_26"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.6666666666666666,
+      "recall": 0.07692307692307693,
+      "f1_score": 0.13793103448275862,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.5,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 3.295836866004329,
+      "failure_type": null,
+      "pr_difficulty_tag": "hard",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "autogluon__5586",
+      "pr_number": 5586,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.75,
+      "semantic_alignment": 0.09821428571428571,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.5897321428571429,
+      "total_agent_comments": 1,
+      "confirmed_count": 1,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 1,
+      "total_human_comments": 2,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_2",
+          "actionability": 4
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1_score": 0.6666666666666666,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "pipecat__3598",
+      "pr_number": 3598,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.3333333333333333,
+      "false_positive_rate": 0.75,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.25,
+      "semantic_alignment": 0.015625,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.04817708333333334,
+      "total_agent_comments": 4,
+      "confirmed_count": 1,
+      "plausible_count": 0,
+      "fabricated_count": 3,
+      "caught_human_comments": 1,
+      "missed_human_comments": 2,
+      "total_human_comments": 3,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_3",
+          "actionability": 5
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_1"
+        },
+        {
+          "comment_id": "a_2"
+        },
+        {
+          "comment_id": "a_3"
+        }
+      ],
+      "precision": 0.25,
+      "recall": 0.3333333333333333,
+      "f1_score": 0.28571428571428575,
+      "hallucination_rate": 0.75,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "chia-blockchain__20321",
+      "pr_number": 20321,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.25,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5625,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 4,
+      "confirmed_count": 0,
+      "plausible_count": 3,
+      "fabricated_count": 1,
+      "caught_human_comments": 0,
+      "missed_human_comments": 0,
+      "total_human_comments": 0,
+      "matched_pairs": [],
+      "missed_comments": [],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_0"
+        }
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.25,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.050000000000000044,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.0,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "node-postgres__3547",
+      "pr_number": 3547,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "JavaScript",
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.75,
+      "semantic_alignment": 0.12455322455322455,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.5936829836829838,
+      "total_agent_comments": 2,
+      "confirmed_count": 2,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 2,
+      "missed_human_comments": 2,
+      "total_human_comments": 4,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_3",
+          "actionability": 4
+        },
+        {
+          "agent_comment_id": "a_1",
+          "human_comment_id": "c_2",
+          "actionability": 4
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_4"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1_score": 0.6666666666666666,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.5,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.6094379124341003,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "dask__12106",
+      "pr_number": 12106,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.4,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.75,
+      "semantic_alignment": 0.12574639971900245,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.4038619599578504,
+      "total_agent_comments": 4,
+      "confirmed_count": 2,
+      "plausible_count": 2,
+      "fabricated_count": 0,
+      "caught_human_comments": 2,
+      "missed_human_comments": 3,
+      "total_human_comments": 5,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_2",
+          "human_comment_id": "c_4",
+          "actionability": 4
+        },
+        {
+          "agent_comment_id": "a_3",
+          "human_comment_id": "c_3",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_5"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.5,
+      "recall": 0.4,
+      "f1_score": 0.4444444444444445,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 1.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.791759469228055,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "prowler__9702",
+      "pr_number": 9702,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.75,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.015000000000000003,
+      "total_agent_comments": 2,
+      "confirmed_count": 0,
+      "plausible_count": 2,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 4,
+      "total_human_comments": 4,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.6094379124341003,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "prowler__9561",
+      "pr_number": 9561,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.2,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.55,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 5,
+      "confirmed_count": 0,
+      "plausible_count": 4,
+      "fabricated_count": 1,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_2"
+        }
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.2,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.10000000000000009,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "pip__13482",
+      "pr_number": 13482,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.25,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.625,
+      "semantic_alignment": 0.06956521739130435,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.3229347826086957,
+      "total_agent_comments": 2,
+      "confirmed_count": 1,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 3,
+      "total_human_comments": 4,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_1",
+          "actionability": 4
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.5,
+      "recall": 0.25,
+      "f1_score": 0.3333333333333333,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.6094379124341003,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "backstage__32466",
+      "pr_number": 32466,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "TypeScript",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "litgpt__2188",
+      "pr_number": 2188,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.3333333333333333,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.6875,
+      "semantic_alignment": 0.04878048780487805,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.27940040650406506,
+      "total_agent_comments": 4,
+      "confirmed_count": 1,
+      "plausible_count": 3,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 2,
+      "total_human_comments": 3,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_2",
+          "human_comment_id": "c_1",
+          "actionability": 4
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.25,
+      "recall": 0.3333333333333333,
+      "f1_score": 0.28571428571428575,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.050000000000000044,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "chia-blockchain__20318",
+      "pr_number": 20318,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.8571428571428571,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.10714285714285715,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 7,
+      "confirmed_count": 0,
+      "plausible_count": 1,
+      "fabricated_count": 6,
+      "caught_human_comments": 0,
+      "missed_human_comments": 0,
+      "total_human_comments": 0,
+      "matched_pairs": [],
+      "missed_comments": [],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_1"
+        },
+        {
+          "comment_id": "a_2"
+        },
+        {
+          "comment_id": "a_3"
+        },
+        {
+          "comment_id": "a_4"
+        },
+        {
+          "comment_id": "a_5"
+        },
+        {
+          "comment_id": "a_6"
+        }
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.8571428571428571,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.0,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "spyder__25481",
+      "pr_number": 25481,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.2,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.625,
+      "semantic_alignment": 0.19090909090909092,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.32113636363636366,
+      "total_agent_comments": 2,
+      "confirmed_count": 1,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 4,
+      "total_human_comments": 5,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_4",
+          "actionability": 4
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_5"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.5,
+      "recall": 0.2,
+      "f1_score": 0.28571428571428575,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 1.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.791759469228055,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "coreos-assembler__4386",
+      "pr_number": 4386,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Go",
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.75,
+      "semantic_alignment": 0.11818181818181818,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.44272727272727275,
+      "total_agent_comments": 2,
+      "confirmed_count": 1,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 1,
+      "total_human_comments": 2,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_1",
+          "human_comment_id": "c_1",
+          "actionability": 4
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1_score": 0.5,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "chia-blockchain__20317",
+      "pr_number": 20317,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.5,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.4375,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 4,
+      "confirmed_count": 0,
+      "plausible_count": 2,
+      "fabricated_count": 2,
+      "caught_human_comments": 0,
+      "missed_human_comments": 0,
+      "total_human_comments": 0,
+      "matched_pairs": [],
+      "missed_comments": [],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_0"
+        },
+        {
+          "comment_id": "a_1"
+        }
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.5,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.0,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "kale__593",
+      "pr_number": 593,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.4,
+      "false_positive_rate": 0.14285714285714285,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5714285714285714,
+      "semantic_alignment": 0.14393939393939392,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.2887337662337663,
+      "total_agent_comments": 7,
+      "confirmed_count": 2,
+      "plausible_count": 4,
+      "fabricated_count": 1,
+      "caught_human_comments": 2,
+      "missed_human_comments": 3,
+      "total_human_comments": 5,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_1",
+          "human_comment_id": "c_1",
+          "actionability": 4
+        },
+        {
+          "agent_comment_id": "a_6",
+          "human_comment_id": "c_3",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_2"
+        }
+      ],
+      "precision": 0.2857142857142857,
+      "recall": 0.4,
+      "f1_score": 0.3333333333333333,
+      "hallucination_rate": 0.14285714285714285,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 1.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.791759469228055,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "dask__12221",
+      "pr_number": 12221,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.3333333333333333,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.875,
+      "semantic_alignment": 0.10112359550561797,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.30600187265917606,
+      "total_agent_comments": 4,
+      "confirmed_count": 1,
+      "plausible_count": 3,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 2,
+      "total_human_comments": 3,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_1",
+          "actionability": 5
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.25,
+      "recall": 0.3333333333333333,
+      "f1_score": 0.28571428571428575,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.050000000000000044,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "kedro__5107",
+      "pr_number": 5107,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 18,
+      "total_human_comments": 18,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        },
+        {
+          "comment_id": "c_7"
+        },
+        {
+          "comment_id": "c_8"
+        },
+        {
+          "comment_id": "c_9"
+        },
+        {
+          "comment_id": "c_10"
+        },
+        {
+          "comment_id": "c_11"
+        },
+        {
+          "comment_id": "c_12"
+        },
+        {
+          "comment_id": "c_13"
+        },
+        {
+          "comment_id": "c_14"
+        },
+        {
+          "comment_id": "c_15"
+        },
+        {
+          "comment_id": "c_16"
+        },
+        {
+          "comment_id": "c_17"
+        },
+        {
+          "comment_id": "c_18"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 2.9444389791664403,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "hard",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "agents__4846",
+      "pr_number": 4846,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.14285714285714285,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.6071428571428571,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 7,
+      "confirmed_count": 0,
+      "plausible_count": 6,
+      "fabricated_count": 1,
+      "caught_human_comments": 0,
+      "missed_human_comments": 3,
+      "total_human_comments": 3,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_3"
+        }
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.14285714285714285,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.15714285714285714,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "espnet__6248",
+      "pr_number": 6248,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.16666666666666666,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5833333333333334,
+      "semantic_alignment": 0.19230769230769232,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.2955128205128205,
+      "total_agent_comments": 6,
+      "confirmed_count": 1,
+      "plausible_count": 4,
+      "fabricated_count": 1,
+      "caught_human_comments": 1,
+      "missed_human_comments": 1,
+      "total_human_comments": 2,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_1",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_1"
+        }
+      ],
+      "precision": 0.16666666666666666,
+      "recall": 0.5,
+      "f1_score": 0.25,
+      "hallucination_rate": 0.16666666666666666,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 1.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "spyder__25460",
+      "pr_number": 25460,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.14285714285714285,
+      "false_positive_rate": 0.16666666666666666,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5833333333333334,
+      "semantic_alignment": 0.11422413793103448,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.140943144499179,
+      "total_agent_comments": 12,
+      "confirmed_count": 2,
+      "plausible_count": 8,
+      "fabricated_count": 2,
+      "caught_human_comments": 2,
+      "missed_human_comments": 12,
+      "total_human_comments": 14,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_10",
+          "human_comment_id": "c_1",
+          "actionability": 5
+        },
+        {
+          "agent_comment_id": "a_9",
+          "human_comment_id": "c_5",
+          "actionability": 4
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_6"
+        },
+        {
+          "comment_id": "c_7"
+        },
+        {
+          "comment_id": "c_8"
+        },
+        {
+          "comment_id": "c_9"
+        },
+        {
+          "comment_id": "c_10"
+        },
+        {
+          "comment_id": "c_11"
+        },
+        {
+          "comment_id": "c_12"
+        },
+        {
+          "comment_id": "c_13"
+        },
+        {
+          "comment_id": "c_14"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_6"
+        },
+        {
+          "comment_id": "a_7"
+        }
+      ],
+      "precision": 0.16666666666666666,
+      "recall": 0.14285714285714285,
+      "f1_score": 0.15384615384615383,
+      "hallucination_rate": 0.16666666666666666,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.5,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 2.70805020110221,
+      "failure_type": null,
+      "pr_difficulty_tag": "medium",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "kale__601",
+      "pr_number": 601,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.75,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.015000000000000003,
+      "total_agent_comments": 2,
+      "confirmed_count": 0,
+      "plausible_count": 2,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "stylelint__8985",
+      "pr_number": 8985,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "JavaScript",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "prowler__9606",
+      "pr_number": 9606,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 7,
+      "total_human_comments": 7,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        },
+        {
+          "comment_id": "c_7"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 2.0794415416798357,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "agents__4713",
+      "pr_number": 4713,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.75,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.015000000000000003,
+      "total_agent_comments": 1,
+      "confirmed_count": 0,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "pipecat__2792",
+      "pr_number": 2792,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.5,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.3125,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 4,
+      "confirmed_count": 0,
+      "plausible_count": 2,
+      "fabricated_count": 2,
+      "caught_human_comments": 0,
+      "missed_human_comments": 6,
+      "total_human_comments": 6,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_0"
+        },
+        {
+          "comment_id": "a_1"
+        }
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.5,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.9459101490553132,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "falcon__2572",
+      "pr_number": 2572,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 6,
+      "total_human_comments": 6,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.9459101490553132,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "redis-py__3949",
+      "pr_number": 3949,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.25,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.1,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.1325,
+      "total_agent_comments": 3,
+      "confirmed_count": 1,
+      "plausible_count": 2,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 3,
+      "total_human_comments": 4,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_2",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.3333333333333333,
+      "recall": 0.25,
+      "f1_score": 0.28571428571428575,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.6094379124341003,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "pipecat__3233",
+      "pr_number": 3233,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 3,
+      "confirmed_count": 0,
+      "plausible_count": 3,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "pipecat__2735",
+      "pr_number": 2735,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.11363636363636363,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.20852272727272728,
+      "total_agent_comments": 2,
+      "confirmed_count": 1,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 1,
+      "total_human_comments": 2,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_2",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1_score": 0.5,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "protocompile__569",
+      "pr_number": 569,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Go",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 3,
+      "total_human_comments": 3,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "coreos-assembler__4359",
+      "pr_number": 4359,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Go",
+      "detection_rate": 0.3333333333333333,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.18333333333333332,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.18041666666666664,
+      "total_agent_comments": 2,
+      "confirmed_count": 1,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 2,
+      "total_human_comments": 3,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_1",
+          "human_comment_id": "c_1",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.5,
+      "recall": 0.3333333333333333,
+      "f1_score": 0.4,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 1.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "zod__5578",
+      "pr_number": 5578,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "TypeScript",
+      "detection_rate": 0.75,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.1504862287470983,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.2612864671560324,
+      "total_agent_comments": 6,
+      "confirmed_count": 3,
+      "plausible_count": 3,
+      "fabricated_count": 0,
+      "caught_human_comments": 3,
+      "missed_human_comments": 1,
+      "total_human_comments": 4,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_3",
+          "human_comment_id": "c_3",
+          "actionability": 3
+        },
+        {
+          "agent_comment_id": "a_4",
+          "human_comment_id": "c_2",
+          "actionability": 3
+        },
+        {
+          "agent_comment_id": "a_5",
+          "human_comment_id": "c_4",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.5,
+      "recall": 0.75,
+      "f1_score": 0.6,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.3333333333333333,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.6094379124341003,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "metaflow__2653",
+      "pr_number": 2653,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.3333333333333333,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.09183673469387756,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.17355442176870747,
+      "total_agent_comments": 2,
+      "confirmed_count": 1,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 2,
+      "total_human_comments": 3,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_1",
+          "human_comment_id": "c_3",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.5,
+      "recall": 0.3333333333333333,
+      "f1_score": 0.4,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "vitest__9152",
+      "pr_number": 9152,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "TypeScript",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 4,
+      "confirmed_count": 0,
+      "plausible_count": 4,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "agents__3909",
+      "pr_number": 3909,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 3,
+      "confirmed_count": 0,
+      "plausible_count": 3,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 5,
+      "total_human_comments": 5,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.791759469228055,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "falcon__2540",
+      "pr_number": 2540,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.005000000000000001,
+      "total_agent_comments": 1,
+      "confirmed_count": 0,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 6,
+      "total_human_comments": 6,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.9459101490553132,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "coreos-assembler__4394",
+      "pr_number": 4394,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Go",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "pipecat__2266",
+      "pr_number": 2266,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 5,
+      "confirmed_count": 0,
+      "plausible_count": 5,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "stylelint__9044",
+      "pr_number": 9044,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "JavaScript",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.005000000000000001,
+      "total_agent_comments": 1,
+      "confirmed_count": 0,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "nessie__11676",
+      "pr_number": 11676,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Java",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 4,
+      "total_human_comments": 4,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.6094379124341003,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "openbao__2307",
+      "pr_number": 2307,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Go",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.005000000000000001,
+      "total_agent_comments": 1,
+      "confirmed_count": 0,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "pipecat__3025",
+      "pr_number": 3025,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.07894736842105263,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.28092105263157896,
+      "total_agent_comments": 3,
+      "confirmed_count": 1,
+      "plausible_count": 2,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 0,
+      "total_human_comments": 1,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_2",
+          "human_comment_id": "c_1",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [],
+      "fabricated_comments": [],
+      "precision": 0.3333333333333333,
+      "recall": 1.0,
+      "f1_score": 0.5,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "pipecat__3113",
+      "pr_number": 3113,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.16666666666666666,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.1206896551724138,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.10238505747126436,
+      "total_agent_comments": 4,
+      "confirmed_count": 1,
+      "plausible_count": 3,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 5,
+      "total_human_comments": 6,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_2",
+          "human_comment_id": "c_3",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.25,
+      "recall": 0.16666666666666666,
+      "f1_score": 0.2,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.050000000000000044,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 1.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.9459101490553132,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "server__8569",
+      "pr_number": 8569,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 14,
+      "confirmed_count": 0,
+      "plausible_count": 14,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "mycli__1517",
+      "pr_number": 1517,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.189873417721519,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.28924050632911397,
+      "total_agent_comments": 3,
+      "confirmed_count": 1,
+      "plausible_count": 2,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 0,
+      "total_human_comments": 1,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_1",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [],
+      "fabricated_comments": [],
+      "precision": 0.3333333333333333,
+      "recall": 1.0,
+      "f1_score": 0.5,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 1.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "numba__10276",
+      "pr_number": 10276,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.005000000000000001,
+      "total_agent_comments": 1,
+      "confirmed_count": 0,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 3,
+      "total_human_comments": 3,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "wakatime-cli__1245",
+      "pr_number": 1245,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Go",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "pipecat__3410",
+      "pr_number": 3410,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 5,
+      "confirmed_count": 0,
+      "plausible_count": 5,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 3,
+      "total_human_comments": 3,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "zod__5672",
+      "pr_number": 5672,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "TypeScript",
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.21818181818181817,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.21636363636363637,
+      "total_agent_comments": 2,
+      "confirmed_count": 1,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 1,
+      "total_human_comments": 2,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_1",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1_score": 0.5,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 1.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "openbao__1906",
+      "pr_number": 1906,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Go",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.005000000000000001,
+      "total_agent_comments": 1,
+      "confirmed_count": 0,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "ratelimit__996",
+      "pr_number": 996,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Go",
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.06896551724137931,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.16517241379310346,
+      "total_agent_comments": 4,
+      "confirmed_count": 1,
+      "plausible_count": 3,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 1,
+      "total_human_comments": 2,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_2",
+          "human_comment_id": "c_2",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.25,
+      "recall": 0.5,
+      "f1_score": 0.3333333333333333,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.050000000000000044,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "deepchem__4601",
+      "pr_number": 4601,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 10,
+      "confirmed_count": 0,
+      "plausible_count": 10,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "sktime__9042",
+      "pr_number": 9042,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 9,
+      "confirmed_count": 0,
+      "plausible_count": 9,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "protocompile__590",
+      "pr_number": 590,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Go",
+      "detection_rate": 0.3333333333333333,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.056338028169014086,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.1708920187793427,
+      "total_agent_comments": 2,
+      "confirmed_count": 1,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 2,
+      "total_human_comments": 3,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_2",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.5,
+      "recall": 0.3333333333333333,
+      "f1_score": 0.4,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "discord.py__10307",
+      "pr_number": 10307,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 7,
+      "confirmed_count": 0,
+      "plausible_count": 7,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 3,
+      "total_human_comments": 3,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "stylelint__9060",
+      "pr_number": 9060,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "JavaScript",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "espnet__6325",
+      "pr_number": 6325,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.3333333333333333,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.1595744680851064,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.11363475177304964,
+      "total_agent_comments": 8,
+      "confirmed_count": 1,
+      "plausible_count": 7,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 2,
+      "total_human_comments": 3,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_2",
+          "human_comment_id": "c_2",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.125,
+      "recall": 0.3333333333333333,
+      "f1_score": 0.18181818181818182,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.17500000000000004,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 1.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "transformers.js__1436",
+      "pr_number": 1436,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "JavaScript",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 3,
+      "total_human_comments": 3,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.3862943611198906,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "vega__4219",
+      "pr_number": 4219,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "JavaScript",
+      "detection_rate": 0.4,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.08999108999108998,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.2617493317493318,
+      "total_agent_comments": 2,
+      "confirmed_count": 2,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 2,
+      "missed_human_comments": 3,
+      "total_human_comments": 5,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_2",
+          "actionability": 3
+        },
+        {
+          "agent_comment_id": "a_1",
+          "human_comment_id": "c_4",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_5"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 1.0,
+      "recall": 0.4,
+      "f1_score": 0.5714285714285715,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.791759469228055,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "prowler__9718",
+      "pr_number": 9718,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.005000000000000001,
+      "total_agent_comments": 2,
+      "confirmed_count": 0,
+      "plausible_count": 2,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 5,
+      "total_human_comments": 5,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.791759469228055,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "agents__3608",
+      "pr_number": 3608,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "espnet__6356",
+      "pr_number": 6356,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.16037735849056603,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.15536163522012578,
+      "total_agent_comments": 6,
+      "confirmed_count": 1,
+      "plausible_count": 5,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 1,
+      "total_human_comments": 2,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_2",
+          "human_comment_id": "c_2",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.16666666666666666,
+      "recall": 0.5,
+      "f1_score": 0.25,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.13333333333333341,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 1.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "pipecat__3328",
+      "pr_number": 3328,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.125,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.09090909090909091,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.10681818181818181,
+      "total_agent_comments": 3,
+      "confirmed_count": 1,
+      "plausible_count": 2,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 7,
+      "total_human_comments": 8,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_1",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        },
+        {
+          "comment_id": "c_7"
+        },
+        {
+          "comment_id": "c_8"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.3333333333333333,
+      "recall": 0.125,
+      "f1_score": 0.18181818181818182,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 2.1972245773362196,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "firebase-android-sdk__7617",
+      "pr_number": 7617,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Java",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 2,
+      "total_human_comments": 2,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "pipecat__2819",
+      "pr_number": 2819,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 3,
+      "confirmed_count": 0,
+      "plausible_count": 3,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 6,
+      "total_human_comments": 6,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.9459101490553132,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "pipecat__3692",
+      "pr_number": 3692,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.005000000000000001,
+      "total_agent_comments": 2,
+      "confirmed_count": 0,
+      "plausible_count": 2,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "pipecat__3041",
+      "pr_number": 3041,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.005000000000000001,
+      "total_agent_comments": 1,
+      "confirmed_count": 0,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "protocompile__645",
+      "pr_number": 645,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type3_Latent_Candidate",
+      "language": "Go",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 4,
+      "confirmed_count": 0,
+      "plausible_count": 4,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 4,
+      "total_human_comments": 4,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.6094379124341003,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "sqlfluff__7499",
+      "pr_number": 7499,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.005000000000000001,
+      "total_agent_comments": 1,
+      "confirmed_count": 0,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 1,
+      "total_human_comments": 1,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 0.6931471805599453,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "numba__10366",
+      "pr_number": 10366,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type2_Contextual",
+      "language": "Python",
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5,
+      "semantic_alignment": 0.06779661016949153,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.20508474576271188,
+      "total_agent_comments": 2,
+      "confirmed_count": 1,
+      "plausible_count": 1,
+      "fabricated_count": 0,
+      "caught_human_comments": 1,
+      "missed_human_comments": 1,
+      "total_human_comments": 2,
+      "matched_pairs": [
+        {
+          "agent_comment_id": "a_0",
+          "human_comment_id": "c_2",
+          "actionability": 3
+        }
+      ],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1_score": 0.5,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 1.0,
+      "difficulty_weight": 1.0986122886681098,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    },
+    {
+      "task_id": "openbao__2362",
+      "pr_number": 2362,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "Go",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.4,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.43333333333333335,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 15,
+      "confirmed_count": 0,
+      "plausible_count": 9,
+      "fabricated_count": 6,
+      "caught_human_comments": 0,
+      "missed_human_comments": 9,
+      "total_human_comments": 9,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        },
+        {
+          "comment_id": "c_7"
+        },
+        {
+          "comment_id": "c_8"
+        },
+        {
+          "comment_id": "c_9"
+        }
+      ],
+      "fabricated_comments": [
+        {
+          "comment_id": "a_0"
+        },
+        {
+          "comment_id": "a_1"
+        },
+        {
+          "comment_id": "a_2"
+        },
+        {
+          "comment_id": "a_3"
+        },
+        {
+          "comment_id": "a_4"
+        },
+        {
+          "comment_id": "a_14"
+        }
+      ],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.4,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 2.302585092994046,
+      "failure_type": null,
+      "pr_difficulty_tag": "medium",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "vitest__9521",
+      "pr_number": 9521,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "TypeScript",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.5833333333333334,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 3,
+      "confirmed_count": 0,
+      "plausible_count": 3,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 6,
+      "total_human_comments": 6,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.30000000000000004,
+      "fallback_penalty": 0.0,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 1.0,
+      "coverage": 0.0,
+      "difficulty_weight": 1.9459101490553132,
+      "failure_type": null,
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": false
+    },
+    {
+      "task_id": "stylelint__8953",
+      "pr_number": 8953,
+      "config_name": "config_A_diff_only",
+      "model": "aletheore_glm53flash_perfile_openrouter",
+      "pipeline_version": "",
+      "difficulty": "Type1_Direct",
+      "language": "JavaScript",
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "severity_accuracy": -1.0,
+      "actionability_score": 0.0,
+      "semantic_alignment": 0.0,
+      "adjacent_detection_rate": 0.0,
+      "overall_score": 0.0,
+      "total_agent_comments": 0,
+      "confirmed_count": 0,
+      "plausible_count": 0,
+      "fabricated_count": 0,
+      "caught_human_comments": 0,
+      "missed_human_comments": 7,
+      "total_human_comments": 7,
+      "matched_pairs": [],
+      "missed_comments": [
+        {
+          "comment_id": "c_1"
+        },
+        {
+          "comment_id": "c_2"
+        },
+        {
+          "comment_id": "c_3"
+        },
+        {
+          "comment_id": "c_4"
+        },
+        {
+          "comment_id": "c_5"
+        },
+        {
+          "comment_id": "c_6"
+        },
+        {
+          "comment_id": "c_7"
+        }
+      ],
+      "fabricated_comments": [],
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "hallucination_rate": 0.0,
+      "redundancy_penalty": 0.0,
+      "plausible_penalty": 0.0,
+      "fallback_penalty": 0.5,
+      "judge_alignment_agreement": 0.0,
+      "attempt_rate": 0.0,
+      "coverage": 0.0,
+      "difficulty_weight": 2.0794415416798357,
+      "failure_type": "no_attempt",
+      "pr_difficulty_tag": "easy",
+      "agent_parse_success": true,
+      "agent_parse_error": null,
+      "judge_parse_fallback_used": true
+    }
+  ]
+}
