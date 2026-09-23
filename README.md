@@ -589,45 +589,22 @@ LLM-judge pass (98.3% recall agreement with manual scoring), and every disclosed
 [`pr_review/README.md`](pr_review/README.md), Experiment 6. Experiment 5's original 3-way,
 `gpt-5.6-luna`-only result is below it, superseded but not deleted.
 
-## Per-file completeness generation, named vs. Greptile, Qodo
+## Per-file completeness generation, named vs. real competitors
 
-**2026-09-21 (Experiment 7).** A different diagnostic from Experiment 6 above: on multi-bug PRs,
-Aletheore's real single-shot generation surfaced only 1-2 real bugs even when several were fully
-visible in the diff, with no truncation or budget problem involved. Traced to the vendored
-generation prompt's finding cap being shared across the whole PR rather than applied per file - on
-two real PRs (`sentry-80528`, `calcom-10600`) the unmodified pipeline returned **zero** findings
-despite each containing real, visible bugs.
-
-The fix - one real generation call per changed file (`per_file_completeness`), windowed
-verification context, and an asymmetric-risk verification prompt (burden of proof on REJECT, not
-ACCEPT) - measured against real competitor tools on the same 13-case, 44-golden-bug real-PR
-corpus, 3 trials per config, real cost $1.95:
-
-| Tool | Recall | Precision |
-|---|---|---|
-| Greptile-v5 | 52.3% | 54.8% |
-| Qodo-v2-2 | 34.1% | 62.5% |
-| **Aletheore Flash** (per-file, no verification, ~$0.0028/review) | **58.3%** | 33.9% |
-| **Aletheore AIR** (per-file + windowed verification, ~$0.047/review) | **58.3%** | 39.4% |
-
-> A fourth named tool was benchmarked in this same run and has been redacted (2026-09-23): its
-> Terms of Service bars disclosing benchmark results about its product without prior written
-> consent, which this repository did not have. Permission is being requested; this table will be
-> restored with the same real numbers if granted.
-
-> **Precision correction (2026-09-23):** the originally published Greptile/Qodo precision figures
-> (41.1%/40.5%) counted every raw string captured from each tool's real review comments as a
-> "finding," including non-finding UI chrome (one whole-PR summary comment per case for each
-> tool, plus one genuine duplicate finding for Greptile). Excluding those - Greptile 23/42, Qodo
-> 15/24 - corrects both numbers upward. Recall is unaffected (fixed 44-golden-bug denominator).
-> Full detail in [`pr_review/README.md`](pr_review/README.md), Experiment 7.
-
-Aletheore leads decisively on recall but, once corrected, has the lowest precision of the five
-configs measured here - a real tradeoff, not a clean sweep. Not yet deployed - the code is
-[PR #762](https://github.com/Aletheore/Aletheore/pull/762) in `Aletheore/Aletheore`, open at time of
-writing. Full diagnostic, the real cost breakdown, two individually-investigated findings behind why
-averaging over 3 trials changed the recall picture, and every disclosed limitation, in
-[`pr_review/README.md`](pr_review/README.md), Experiment 7.
+> **⚠️ Pulled from public view (2026-09-23), under review.** This section previously showed a
+> named comparison table (recall/precision against Greptile, Qodo, and a since-redacted fourth
+> tool). Two real problems were found while re-verifying it before an unrelated outreach email:
+> (1) a competitor whose Terms of Service did not permit disclosing benchmark results was
+> included without that permission having been requested first; (2) the "total findings"
+> denominator used for precision was inflated for every competitor tool by non-finding UI chrome
+> (whole-PR summary comments, bot-trigger echoes, a duplicate finding) scraped alongside their
+> real findings - correcting it flips the precision story: Aletheore has the best recall of the
+> configs measured, but the *worst* precision once corrected, not the best. Recall itself is
+> unaffected and still real. The full data, the correction, and the redaction are documented in
+> [`pr_review/README.md`](pr_review/README.md), Experiment 7 - that page is the source of truth
+> while this summary is being rewritten. Do not cite the old numbers from this section; they were
+> wrong. PR #762 (the code this experiment measures) is real and unaffected by this - only the
+> competitor comparison table is under review.
 
 <details>
 <summary><strong>Full write-up: all 6 PR-review experiments (compact vs. context, DeepSeek V4 Flash, the production-model run that decided the default, the original PR-Agent head-to-head, and the 5-way run that found and fixed a real context-block regression)</strong></summary>
