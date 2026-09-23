@@ -22,7 +22,7 @@
   <a href="#covering-the-files-a-pr-touches">PR coverage</a> ·
   <a href="#pr-review--compact-evidence-vs-full-file-context">PR review</a> ·
   <a href="#head-to-head-against-pr-agent">PR-Agent comparison</a> ·
-  <a href="#per-file-completeness-generation-named-vs-coderabbit-greptile-qodo">Per-file completeness</a> ·
+  <a href="#per-file-completeness-generation-named-vs-greptile-qodo">Per-file completeness</a> ·
   <a href="#the-external-pr-recall-benchmark">External PR Recall Benchmark</a> ·
   <a href="#explaining-code--how-does-x-work">Explaining code</a> ·
   <a href="#deterministic-analysis-vs-bare-llm">Deterministic vs. LLM</a> ·
@@ -589,7 +589,7 @@ LLM-judge pass (98.3% recall agreement with manual scoring), and every disclosed
 [`pr_review/README.md`](pr_review/README.md), Experiment 6. Experiment 5's original 3-way,
 `gpt-5.6-luna`-only result is below it, superseded but not deleted.
 
-## Per-file completeness generation, named vs. CodeRabbit, Greptile, Qodo
+## Per-file completeness generation, named vs. Greptile, Qodo
 
 **2026-09-21 (Experiment 7).** A different diagnostic from Experiment 6 above: on multi-bug PRs,
 Aletheore's real single-shot generation surfaced only 1-2 real bugs even when several were fully
@@ -600,18 +600,22 @@ despite each containing real, visible bugs.
 
 The fix - one real generation call per changed file (`per_file_completeness`), windowed
 verification context, and an asymmetric-risk verification prompt (burden of proof on REJECT, not
-ACCEPT) - measured against three real competitor tools on the same 13-case, 44-golden-bug real-PR
+ACCEPT) - measured against real competitor tools on the same 13-case, 44-golden-bug real-PR
 corpus, 3 trials per config, real cost $1.95:
 
 | Tool | Recall | Precision |
 |---|---|---|
-| CodeRabbit | 54.5% | 29.6% |
 | Greptile-v5 | 52.3% | 41.1% |
 | Qodo-v2-2 | 34.1% | 40.5% |
 | **Aletheore Flash** (per-file, no verification, ~$0.0028/review) | **58.3%** | 33.9% |
 | **Aletheore AIR** (per-file + windowed verification, ~$0.047/review) | **58.3%** | **39.4%** |
 
-Both Aletheore tiers beat CodeRabbit on recall and precision. AIR closes to within 1.7 points of
+> A fourth named tool was benchmarked in this same run and has been redacted (2026-09-23): its
+> Terms of Service bars disclosing benchmark results about its product without prior written
+> consent, which this repository did not have. Permission is being requested; this table will be
+> restored with the same real numbers if granted.
+
+AIR closes to within 1.7 points of
 Greptile's precision while beating its recall by 6 points. Not yet deployed - the code is
 [PR #762](https://github.com/Aletheore/Aletheore/pull/762) in `Aletheore/Aletheore`, open at time of
 writing. Full diagnostic, the real cost breakdown, two individually-investigated findings behind why

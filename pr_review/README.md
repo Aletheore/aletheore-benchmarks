@@ -586,17 +586,21 @@ Real, 3x-averaged runs through the exact production code path (`review_diff()`, 
 | Flash (per-file, no verification) | 59.1% / 59.1% / 56.8% (avg **58.3%**) | 32.7% / 31.1% / 37.9% (avg **33.9%**) | ~$0.0028 |
 | AIR (per-file + windowed verification) | 56.8% / 59.1% / 59.1% (avg **58.3%**) | 38.5% / 40.7% / 38.9% (avg **39.4%**) | ~$0.047 |
 
-Against three real competitor tools run independently on this same corpus in an earlier session (`real_pr_recall_corpus/results/score_competitors.log`, real hosted GitHub App reactions, same methodology as Experiment 6's competitor arms):
+Against real competitor tools run independently on this same corpus in an earlier session (`real_pr_recall_corpus/results/score_competitors.log`, real hosted GitHub App reactions, same methodology as Experiment 6's competitor arms):
 
 | Tool | Recall | Precision |
 |---|---|---|
-| CodeRabbit | 54.5% (24/44) | 29.6% (24/81) |
 | Greptile-v5 | 52.3% (23/44) | 41.1% (23/56) |
 | Qodo-v2-2 | 34.1% (15/44) | 40.5% (15/37) |
 | **Aletheore Flash** | **58.3%** | 33.9% |
 | **Aletheore AIR** | **58.3%** | **39.4%** |
 
-Both Aletheore configs beat CodeRabbit on recall and precision. AIR lands within 1.7 points of Greptile's precision while beating its recall by 6 points, and beats Qodo's recall by 24 points.
+> A fourth named tool was benchmarked in this same run and has been redacted (2026-09-23):
+> its Terms of Service bars disclosing benchmark results about its product without prior
+> written consent, which this repository did not have. Permission is being requested;
+> this table will be restored with the same real numbers if granted.
+
+AIR lands within 1.7 points of Greptile's precision while beating its recall by 6 points, and beats Qodo's recall by 24 points.
 
 ### What averaging over 3 trials changed
 
@@ -644,7 +648,7 @@ python3 score_results.py
 
 ### Verdict
 
-Per-file completeness generation, closed the largest measured gap: production's real single-shot pipeline returned zero findings on two real multi-bug PRs it should have caught something on, traced to a per-PR (not per-file) finding cap in the vendored generation prompt. The fix, plus windowed asymmetric-risk verification for AIR tier, measured a real, 3x-replicated recall and precision lead over CodeRabbit on this corpus, and closed most of the gap to Greptile's precision while keeping a real recall lead over it. Cost stays proportionate to what each tier can absorb: per-file completeness is cheap enough for both paid tiers (~$0.0028/review), second-model verification stays AIR-only (~$0.047/review combined) because it costs roughly 15x generation even after the windowing fix.
+Per-file completeness generation, closed the largest measured gap: production's real single-shot pipeline returned zero findings on two real multi-bug PRs it should have caught something on, traced to a per-PR (not per-file) finding cap in the vendored generation prompt. The fix, plus windowed asymmetric-risk verification for AIR tier, measured a real, 3x-replicated recall and precision lead over a fourth named competitor on this corpus (redacted above pending permission), and closed most of the gap to Greptile's precision while keeping a real recall lead over it. Cost stays proportionate to what each tier can absorb: per-file completeness is cheap enough for both paid tiers (~$0.0028/review), second-model verification stays AIR-only (~$0.047/review combined) because it costs roughly 15x generation even after the windowing fix.
 
 **Open, disclosed limitations**:
 1. **PR #762 is not yet merged.** These are pre-release numbers for code that exists and was tested against the real production call path, not numbers from what is currently live.
