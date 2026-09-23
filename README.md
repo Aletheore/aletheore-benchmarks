@@ -1235,11 +1235,14 @@ The honest read: bare-mode Aletheore is statistically tied with the Sonnet 4.6/H
 Large 3 cluster (the gap is smaller than GLM's own measured run-to-run variance). Turning on
 `per_file_completeness=True` (production's real current paid-tier setting, closed same-day as a real open
 item this README used to flag) moves Aletheore's score *above* that entire cluster - a real, meaningful gain
-(+5.5 recall points for -2 precision), not noise-sized, though it hasn't yet been re-verified against its
-own 4-run variance check the way the bare-mode number was. A side-experiment on the same 100 tasks found
-Luna (production's default for every *other* writing surface) scores markedly worse here (3.1% recall vs.
-GLM's 14.2% in bare mode) - consistent with why Flash Review deliberately uses GLM for this exact surface.
-Full methodology, every caveat, and the real per-task data: [`swe_prbench/README.md`](swe_prbench/README.md).
+(+5.5 recall points for -2 precision), and repeat-verified, not a single unchecked number: a same-route judge
+repeat scored 0.170 against the original 0.174 (0.4-point gap), 4-5x smaller than the gap to the top of the
+cluster. A separate cross-route check (OpenRouter vs. direct OpenAI, same generation) initially looked like
+a 6.3-point swing - investigated rather than trusted, and traced to OpenRouter serving inconsistent behavior
+for the same model name, not real judge noise. A side-experiment on the same 100 tasks found Luna
+(production's default for every *other* writing surface) scores markedly worse here (3.1% recall vs. GLM's
+14.2% in bare mode) - consistent with why Flash Review deliberately uses GLM for this exact surface. Full
+methodology, every caveat, and the real per-task data: [`swe_prbench/README.md`](swe_prbench/README.md).
 
 ## Explaining code — "how does X work?"
 

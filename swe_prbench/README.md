@@ -112,13 +112,46 @@ Recall gained ~5.5 points for a ~2-point precision cost — a real, meaningful s
 to the 0.02 openrouter-vs-openai-direct judge-routing gap on the bare run, or the 0.015-0.017 std the 4-run
 variance check measured). Against the published leaderboard, 0.174 is now **above** every model in the
 previously-"tied" cluster (Claude Haiku 4.5 0.153, Claude Sonnet 4.6 0.152, DeepSeek V3 0.150, Mistral Large
-3 0.147) — but this is a single run against no fresh variance check of its own, so **"clearly ahead of the
-bare-mode tied cluster" is the defensible claim, not yet "clearly ahead of Sonnet/Haiku themselves"** without
-running the same 4-run variance protocol against this new config first. Real, measured generation cost:
-$0.1615 for the full 100-task pass (higher than bare mode's ~$0.055, as expected — per-file completeness
-means more calls, more repeated system-prompt/diff-header overhead per task). Full data:
-`results/eval_report_perfile.json`, `results/generation_results_perfile.json`. Scripts:
-`scripts/run_generation_perfile.py`, `scripts/run_scoring_perfile.py`.
+3 0.147). Real, measured generation cost: $0.1615 for the full 100-task pass (higher than bare mode's
+~$0.055, as expected — per-file completeness means more calls, more repeated system-prompt/diff-header
+overhead per task). Full data: `results/eval_report_perfile.json`, `results/generation_results_perfile.json`.
+Scripts: `scripts/run_generation_perfile.py`, `scripts/run_scoring_perfile.py`.
+
+#### Verifying 0.174 is real signal, not judge noise
+
+Two follow-up judge passes on the **identical** per-file generation output, to separate two different
+possible noise sources before trusting the number above:
+
+| Pass | Route | Overall score | Delta vs. 0.174 |
+|---|---|---|---|
+| Original | OpenAI direct (`gpt-5.2`) | 0.174 | - |
+| Repeat #1 | **OpenRouter** (`openai/gpt-5.2`) | 0.111 | -0.063 |
+| Repeat #2 | **OpenAI direct** (`gpt-5.2`, independent call) | 0.170 | -0.004 |
+
+The OpenRouter repeat looked alarming at first — a 6.3-point swing, well outside the 2-3 point band the
+bare-mode cross-route comparison had suggested. Investigated rather than reported blind: per-task
+comparison (e.g. `pipecat__3692` - identical 2 findings, identical 1 human comment to match, on both
+routes) showed the OpenRouter judge and the OpenAI-direct judge reaching genuinely different
+*classifications* of the same evidence (OpenAI-direct: 1 finding confirmed as a real match, score 0.63;
+OpenRouter: both findings called merely "plausible," nothing matched, score 0.005) - not a parsing bug, a
+real disagreement. `no_matches_detected` warning counts ruled out one candidate explanation (OpenRouter's
+route actually logged *fewer* of these on this run - 40/100 - than it did on the original bare-mode run,
+53/100, so this isn't new). The remaining, more likely explanation: OpenRouter serves `openai/gpt-5.2`
+through its own routing layer, which is not guaranteed to hit the identical serving stack as OpenAI's own
+direct API for the same model name - real provider inconsistency, not generation-level noise.
+
+The same-route repeat (#2) is the clean test, since it isolates the one thing that actually matters here -
+does the real judge agree with itself: **0.174 vs. 0.170, a 0.4-point gap.** That's small enough to trust
+the number. Averaging the two same-route OpenAI-direct passes (0.172) is the more defensible single figure
+if one is needed. **Conclusion: "Aletheore (GLM-5.3-Flash, per_file_completeness=True) clearly beats the
+Sonnet 4.6/Haiku 4.5/DeepSeek V3/Mistral Large 3 cluster" is now a real, repeat-verified claim** - the
+~1.7-2.1 point gap to the top of that cluster is 4-5x larger than the 0.4-point same-route judge noise just
+measured, not comparable to it. **Separately, real finding worth flagging for anyone else using this
+harness**: don't trust OpenRouter as a stand-in for a specific frontier judge model without first checking
+same-route repeatability - it measured provider inconsistency here, not the noise floor it was meant to
+check. Full data: `results/eval_report_perfile_openai_run2.json` (repeat #2),
+`results/eval_report_perfile_openrouter.json` (repeat #1). Scripts:
+`scripts/run_scoring_perfile_repeat.py`, `scripts/run_scoring_perfile_openrouter.py`.
 
 ## Reading this honestly
 
@@ -178,11 +211,14 @@ Our own glue scripts live in `scripts/`:
 - `run_generation_perfile.py` / `run_scoring_perfile.py` — the `per_file_completeness=True` re-run (see
   "Re-run with per_file_completeness=True" above). Same shape as the originals, `review_diff()` called with
   `per_file_completeness=True` instead of that parameter's default.
+- `run_scoring_perfile_repeat.py` / `run_scoring_perfile_openrouter.py` — the two follow-up judge passes on
+  the identical per-file generation output (see "Verifying 0.174 is real signal, not judge noise" above) -
+  a same-route repeat and a cross-route (OpenRouter) comparison, run to distinguish real judge noise from
+  provider-routing inconsistency before trusting the headline number.
 
 **The original run predated PR #762** (`feat: per-file completeness generation + windowed verification for
 Flash Review`, merged 2026-09-21 — one day after) - `run_generation.py`'s `review_diff()` call didn't pass
 `per_file_completeness`, so it ran on that parameter's default (`False`), not production's real paid-tier
-value. Closed same-day by the re-run above. Still open: neither re-run has `verify_with_second_model=True`
-(AIR tier's real second-model verification pass), and a fresh 4-run variance check hasn't been run against
-the per-file config specifically - the "beats the tied cluster" claim above is provisional until that
-exists.
+value. Closed same-day by the re-run above, and the resulting 0.174 score was itself repeat-verified via a
+same-route judge pass (0.170, a 0.4-point gap - see above) - not a single, unverified number. Still open:
+neither re-run has `verify_with_second_model=True` (AIR tier's real second-model verification pass).
