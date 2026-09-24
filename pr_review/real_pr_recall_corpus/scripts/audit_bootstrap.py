@@ -67,4 +67,6 @@ for k,trials in data.items():
     fp=sum(sum(x["fp"] for x in t.values()) for t in trials)/len(trials)
     dis=sum(sum(x["disputed"] for x in t.values()) for t in trials)/len(trials)
     hits=sum(sum(x["hits"] for x in t.values()) for t in trials)/len(trials)
-    print(f"  {k:20s} trials={len(trials)} findings={n:.0f} confirmedFP={fp:.1f} disputed={dis:.1f} hits={hits:.1f}/44")
+    ok=sum(sum(x["ok"] for x in t.values()) for t in trials)/len(trials)
+    real=sum(sum(x["n"]-x["naf"] for x in t.values()) for t in trials)/len(trials)
+    print(f"  {k:20s} trials={len(trials)} findings={n:.0f} confirmedFP={fp:.1f} disputed={dis:.1f} hits={hits:.1f}/44 accurate_findings={ok:.1f} real_findings(excl. summary chrome)={real:.1f}")

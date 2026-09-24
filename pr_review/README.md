@@ -705,15 +705,21 @@ precision is measured for every tool, not only recall.
 
 ### Results
 
-| Tool | Recall | Precision | Findings per run | Confirmed FPs per run | Runs |
-|---|---|---|---|---|---|
-| **Aletheore Flash, shared context** | 53.4% [39-68] | 92.6% [86-96] | 94 | 2.0 | 2 |
-| **Aletheore AIR, shared context** (with verification) | 51.1% [37-65] | 93.3% [87-98] | 92 | 0.5 | 2 |
-| GitHub Copilot | 59.1% [40-76] | 89.6% [82-98] | 80 | 1 | 1 |
-| GitLab Duo | 50.0% [38-63] | 95.1% [85-100] | 41 | 1 | 1 |
-| Qodo | 22.7% [10-38] | 100% [100-100] | 37 | 0 | 1 |
-| *Aletheore Flash, no shared context (before)* | 52.3% [39-66] | 71.5% [63-82] | 96 | 13.0 | 2 |
-| *Aletheore AIR, no shared context (before)* | 50.0% [37-63] | 79.7% [73-89] | 92 | 10.3 | 3 |
+| Tool | Golden bugs caught (of 44) | Recall | Precision | Accurate findings | Real findings | Confirmed FPs | Runs |
+|---|---|---|---|---|---|---|---|
+| **Aletheore Flash, shared context** | 23.5 | 53.4% [39-68] | 92.6% [86-96] | **87.5** | 94.5 | 2.0 | 2 |
+| **Aletheore AIR, shared context** (with verification) | 22.5 | 51.1% [37-65] | 93.3% [87-98] | **86.5** | 92.5 | 0.5 | 2 |
+| GitHub Copilot | 26.0 | 59.1% [40-76] | 89.6% [82-98] | 60.0 | 67 | 1 | 1 |
+| GitLab Duo | 22.0 | 50.0% [38-63] | 95.1% [85-100] | 39.0 | 41 | 1 | 1 |
+| Qodo | 10.0 | 22.7% [10-38] | 100% [100-100] | 24.0 | 24 | 0 | 1 |
+| *Aletheore Flash, no shared context (before)* | 23.0 | 52.3% [39-66] | 71.5% [63-82] | 69.0 | 96.5 | 13.0 | 2 |
+| *Aletheore AIR, no shared context (before)* | 22.0 | 50.0% [37-63] | 79.7% [73-89] | 73.7 | 92.3 | 10.3 | 3 |
+
+Per-run averages. **Golden bugs caught** = distinct golden bugs a finding catches. **Real findings** =
+findings the tool made, excluding summary comments and other non-findings (Qodo's raw capture had 37
+strings, 13 of them summary chrome; Copilot's had 80, also 13). **Accurate findings** = real findings
+the judge confirmed as accurate, specific claims about the diff: the golden bugs plus other true
+observations, including test-coverage and style notes, so it is not a count of bugs.
 
 Aletheore's numbers are not cherry-picked from a best run: each row is the mean over every
 generation trial run for that configuration.
@@ -727,14 +733,21 @@ generation trial run for that configuration.
   +7.2 to +31.3) and AIR precision by 13.1 points (CI +4.6 to +19.7), with no detectable change in
   recall (+1.2 and +1.4 points, both CIs spanning zero). Confirmed false positives per run fell from
   13.0 to 2.0 (Flash) and from 10.3 to 0.5 (AIR).
+- **Bugs caught versus accurate findings are different questions.** On the 44 golden bugs
+  Aletheore is level with GitLab Duo (23.5 vs 22.0 per run) and behind Copilot (26.0), and well ahead
+  of Qodo (10.0); there is no significant lead over GitLab or Copilot. Where the gap is large is
+  volume of accurate findings: about 87 per run against 60 (Copilot), 39 (GitLab Duo) and 24
+  (Qodo), roughly 1.5x to 3.6x. Those extra findings are real and accurate but are mostly not
+  golden bugs (many are test-coverage, maintainability and edge-case observations), so treat that
+  margin as breadth of accurate feedback, not as more bugs caught.
 - **Against GitLab Duo and Copilot, Aletheore is in the same range on both metrics, not ahead.**
   Flash minus GitLab: recall +3.3 points (CI -12.9 to +18.1), precision -2.9 (CI -13.2 to +9.6).
   Flash minus Copilot: recall -5.3 (CI -26.5 to +14.3), precision +2.5 (CI -8.5 to +12.0). Copilot's
   recall is numerically higher than ours; none of these differences is significant. Aletheore
   returns about two to three times as many findings as GitLab, at similar measured accuracy.
 - **Against Qodo there is a real trade-off.** Flash minus Qodo: recall +30.5 points (CI +22.2 to
-  +37.5) but precision -7.7 (CI -13.9 to -3.5). Qodo reported few findings (37) and every one was
-  judged accurate; Aletheore reports 94 and is less accurate per finding, though still above 90%.
+  +37.5) but precision -7.7 (CI -13.9 to -3.5). Qodo made few findings (24 real ones) and every one was
+  judged accurate; Aletheore makes about 94 and is less accurate per finding, though still above 90%.
 - **The second-model verification pass added little once shared context was on.** AIR (with
   verification) minus Flash (without it), both with shared context: precision +0.9 points
   (CI -4.8 to +7.1), recall -2.1 (CI -9.6 to +6.6), at roughly five times the generation cost.

@@ -596,16 +596,18 @@ LLM-judge pass (98.3% recall agreement with manual scoring), and every disclosed
 > same blinded judge on the same 13 real PRs. Full method, confidence intervals and limitations:
 > [`pr_review/README.md`, Experiment 8](pr_review/README.md#experiment-8-symmetric-llm-judged-comparison-on-13-real-prs-2026-09-24).
 >
-> | Tool | Recall (95% CI) | Precision (95% CI) |
-> |---|---|---|
-> | Aletheore Flash | 53.4% [39-68] | 92.6% [86-96] |
-> | Aletheore AIR | 51.1% [37-65] | 93.3% [87-98] |
-> | GitHub Copilot | 59.1% [40-76] | 89.6% [82-98] |
-> | GitLab Duo | 50.0% [38-63] | 95.1% [85-100] |
-> | Qodo | 22.7% [10-38] | 100% [100-100] |
+> | Tool | Golden bugs caught (of 44) | Recall (95% CI) | Precision (95% CI) | Accurate findings |
+> |---|---|---|---|---|
+> | Aletheore Flash | 23.5 | 53.4% [39-68] | 92.6% [86-96] | 87.5 |
+> | Aletheore AIR | 22.5 | 51.1% [37-65] | 93.3% [87-98] | 86.5 |
+> | GitHub Copilot | 26.0 | 59.1% [40-76] | 89.6% [82-98] | 60.0 |
+> | GitLab Duo | 22.0 | 50.0% [38-63] | 95.1% [85-100] | 39.0 |
+> | Qodo | 10.0 | 22.7% [10-38] | 100% [100-100] | 24.0 |
 >
 > Read it as: in the same range as GitLab Duo and Copilot on both metrics, well ahead of Qodo on
-> recall but behind it on precision (Qodo reported few findings, all accurate). Shared PR
+> recall but behind it on precision (Qodo made 24 findings, all accurate). On golden bugs caught the
+> tools are level (Copilot highest); Aletheore's clear lead is in the volume of accurate findings
+> (about 87 per run vs 24 to 60), which are mostly not golden bugs. Shared PR
 > context lifted Flash precision from 71.5% to 92.6% with recall unchanged. 13 PRs, wide intervals,
 > a diff-only path, and a broad definition of a correct finding (see the limitations). CodeRabbit,
 > Bugbot and Greptile are not shown, for terms-of-service reasons explained there.
