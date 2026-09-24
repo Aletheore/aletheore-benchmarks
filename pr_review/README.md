@@ -732,7 +732,8 @@ generation trial run for that configuration.
   Showing every per-file call the rest of the PR raised Flash precision by 20.4 points (95% CI
   +7.2 to +31.3) and AIR precision by 13.1 points (CI +4.6 to +19.7), with no detectable change in
   recall (+1.2 and +1.4 points, both CIs spanning zero). Confirmed false positives per run fell from
-  13.0 to 2.0 (Flash) and from 10.3 to 0.5 (AIR).
+  13.0 to 2.0 (Flash) and from 10.3 to 0.5 (AIR); findings the judge could not confirm (disputed
+  between runs, and also counted against precision) fell from 14.5 to 5.0 (Flash) and from 8.3 to 5.5 (AIR).
 - **Bugs caught versus accurate findings are different questions.** On the 44 golden bugs
   Aletheore is level with GitLab Duo (23.5 vs 22.0 per run) and behind Copilot (26.0), and well ahead
   of Qodo (10.0); there is no significant lead over GitLab or Copilot. Where the gap is large is
