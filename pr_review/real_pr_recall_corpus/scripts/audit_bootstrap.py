@@ -55,7 +55,7 @@ for k,trials in data.items():
 def diff(a,b,j):
     xs=[x[j]-y[j] for x,y in zip(boot[a],boot[b])]; lo,hi=ci(xs); return 100*sum(xs)/len(xs),100*lo,100*hi,sum(1 for x in xs if x>0)/len(xs)
 print("\nPAIRED DIFFERENCES (same resampled PRs; a minus b, points, 95% CI, P(a>b))")
-pairs=[("flash +ctx","flash no-ctx"),("flash +ctx","gitlab"),("air +ctx","flash +ctx"),("air +ctx","gitlab")]
+pairs=[("flash +ctx","flash no-ctx"),("flash +ctx","gitlab"),("flash +ctx","qodo"),("flash +ctx","copilot"),("air +ctx","qodo"),("air +ctx","copilot"),("air +ctx","flash +ctx"),("air +ctx","gitlab")]
 if "air no-ctx (3 gens)" in data: pairs.insert(3,("air +ctx","air no-ctx (3 gens)"))
 for a,b in pairs:
     for j,name in ((0,"recall"),(1,"precision")):

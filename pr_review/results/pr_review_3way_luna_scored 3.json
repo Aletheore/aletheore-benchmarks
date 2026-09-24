@@ -1,0 +1,426 @@
+{
+  "001-flask-cli-key-quote": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "002-requests-json-decode-pickle": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "003-requests-proxy-bypass-registry": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "004-click-version-package-name": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "005-axios-progress-negative-clamp": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "006-express-content-length-transfer-encoding": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "007-lodash-omit-array-clone": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "008-axios-headers-set-cookie": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "009-cobra-completions-args-mutation": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "010-gin-runfd-file-leak": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    }
+  },
+  "011-gorilla-mux-query-match": {
+    "aletheore": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [
+        "Queries() odd-argument-count panic (route.go:405) - real but unrelated to MatchErr clearing"
+      ],
+      "actionability": null
+    }
+  },
+  "012-urfave-cli-empty-positional-arg": {
+    "aletheore": {
+      "recall": "partial",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [
+        "GitHub token logged via SetMkdocsRemoteActionFunc - real but unrelated function, not part of this diff"
+      ],
+      "actionability": null
+    }
+  },
+  "013-gson-jsonprimitive-hashcode": {
+    "aletheore": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "014-junit4-assumption-serialization": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [
+        "duplicate contributor name in list - unrelated to serialization"
+      ],
+      "actionability": null
+    }
+  },
+  "015-commons-lang-bitfield-sign-extension": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [
+        "testAddWeeks calls addMonths instead of addWeeks - unrelated pre-existing test bug, recurring distractor also seen in case 017"
+      ],
+      "actionability": null
+    }
+  },
+  "016-flask-sql-injection-user-lookup": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    }
+  },
+  "017-commons-lang-arrayutils-off-by-one": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [
+        "same testAddWeeks/addMonths distractor as case 015 - unrelated to the off-by-one bug"
+      ],
+      "actionability": null
+    }
+  },
+  "018-axios-missing-null-check-charset": {
+    "aletheore": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "019-gin-request-counter-race": {
+    "aletheore": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "aletheore_flash": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 4
+    },
+    "pr_agent": {
+      "recall": "miss",
+      "false_positives": [
+        "OnlyFilesFS 404-response-ordering finding - real but unrelated to the requestCount race condition"
+      ],
+      "actionability": null
+    }
+  },
+  "021-requests-swallowed-close-exception": {
+    "aletheore": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "aletheore_flash": {
+      "recall": "miss",
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": "hit",
+      "false_positives": [],
+      "actionability": 5
+    }
+  },
+  "022-flask-docs-mongoengine-typo": {
+    "aletheore": {
+      "recall": null,
+      "false_positives": [],
+      "actionability": null
+    },
+    "aletheore_flash": {
+      "recall": null,
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": null,
+      "false_positives": [],
+      "actionability": null
+    }
+  },
+  "023-cobra-test-name-typo": {
+    "aletheore": {
+      "recall": null,
+      "false_positives": [],
+      "actionability": null
+    },
+    "aletheore_flash": {
+      "recall": null,
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": null,
+      "false_positives": [
+        "TestHelpflag/TestHelpFlag capitalization inconsistency - real, minor, but this is a clean diff so any finding counts as a false positive"
+      ],
+      "actionability": null
+    }
+  },
+  "024-lodash-test-description-fix": {
+    "aletheore": {
+      "recall": null,
+      "false_positives": [],
+      "actionability": null
+    },
+    "aletheore_flash": {
+      "recall": null,
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": null,
+      "false_positives": [
+        "iteratee import redeclaration ES-module syntax-error claim - clean diff, any finding is a false positive"
+      ],
+      "actionability": null
+    }
+  },
+  "025-gson-javadoc-getaschar-fix": {
+    "aletheore": {
+      "recall": null,
+      "false_positives": [],
+      "actionability": null
+    },
+    "aletheore_flash": {
+      "recall": null,
+      "false_positives": [],
+      "actionability": null
+    },
+    "pr_agent": {
+      "recall": null,
+      "false_positives": [],
+      "actionability": null
+    }
+  }
+}

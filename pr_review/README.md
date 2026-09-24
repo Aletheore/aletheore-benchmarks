@@ -556,6 +556,8 @@ A real regression Aletheore had shipped to production (`sibling_file_context`, P
 
 ## Experiment 7: per-file completeness generation + windowed verification, named vs. real competitors
 
+> **Superseded 2026-09-24 for the competitor comparison by [Experiment 8](#experiment-8-symmetric-llm-judged-comparison-on-13-real-prs-2026-09-24).** The keyword-matched numbers below are kept for the record; use Experiment 8.
+
 Experiment 6 above found and fixed a real regression from an enriched-context feature. This experiment starts from a different diagnostic: does Aletheore's *generation* step miss real bugs even on a diff it can see in full, with no context or budget problem involved at all? It does, traced to a specific, fixable cause, and this run measures the fix against three real, independently-run competitor tools on the same corpus.
 
 **Not the same corpus as "The Martian Benchmark" section of the top-level README.** Both draw on the real, external Martian Code Review Bench concept and overlap in source repos (sentry, grafana, keycloak, cal.com), but this is a separate 13-case, 44-golden-bug corpus with its own structured golden-bug list and its own scoring method (an explicit file/line/keyword signature table, not a `gpt-5-nano` semantic judge against real review comments). Kept in its own directory (`real_pr_recall_corpus/`, not `martian_corpus/`) specifically to avoid repeating this repo's own prior `martian-benchmark-collision` naming problem.
@@ -668,3 +670,121 @@ Per-file completeness generation, closed the largest measured gap: production's 
 4. **Verification cost (~$0.047/review) is a real, meaningful multiple of generation cost** even after windowing cut it roughly 2x - a further reduction was investigated (see the git history behind this file for the windowing validation) but not pushed further within this session.
 5. `calcom-8087`'s golden bug G0 (a claimed missing try/catch around a dynamic import) was matched inconsistently across trials and is the least reliably scored golden in this corpus - kept in the denominator rather than excluded, since the underlying claim is real, just imprecisely worded for keyword matching.
 
+
+## Experiment 8: symmetric LLM-judged comparison on 13 real PRs (2026-09-24)
+
+**This supersedes the competitor table in Experiment 7.** Experiment 7 scored Aletheore's findings
+with keyword matching against golden bugs and scored competitors from scraped comments, which is
+not the same measurement. Here every tool goes through the same judge with the same prompt, and
+precision is measured for every tool, not only recall.
+
+### Setup
+
+- **Corpus:** the same 13 real pull requests as Experiment 7 (sentry, grafana, cal.com, keycloak),
+  44 human-identified golden bugs (`real_pr_recall_corpus/ground_truth.json`).
+- **Aletheore:** the production `review_diff()` in its two paid configs, run through
+  `scripts/run_benchmark.py`. Per-file generation (`per_file_completeness`), GLM-5.3-Flash. The
+  "shared context" arms also show each per-file call the rest of the PR's patches (context only).
+  The AIR rows include the DeepSeek second-model verification pass; that pass has since been dropped
+  from the product (see below). Inputs are the diff only: no file contents, referenced-symbol
+  context, suggestion verification or ranking, all of which production also has.
+- **Competitors:** the review comments each tool's hosted app produced on these PRs, as stored in
+  `results/competitors.json`. One run per tool. Capture dates and tool versions were not recorded
+  when the data was collected (before 2026-09-23).
+- **Judge:** `gpt-6-luna`, one call per (PR, tool), three runs with a two-of-three agreement rule
+  (`scripts/judge_full_pipeline.py`). The judge sees the diff, the golden bugs and the candidate
+  findings; it is never told which tool produced them. Judge noise was measured at 4.5 points on
+  recall and 1.9 on precision worst case, with 0 insufficient-data verdicts.
+- **Recall** = golden bugs a finding actually catches / 44. **Precision** = (findings matching a
+  golden bug + other findings the judge confirms are accurate and specific) / (all findings minus
+  non-findings such as summary chrome). A finding that is disputed between judge runs counts
+  against precision.
+- **Confidence intervals** resample the 13 PRs (5,000 draws); for tools with several generation
+  trials the per-PR value is the mean over trials. `scripts/audit_bootstrap.py` reproduces every
+  number below from the committed result files.
+
+### Results
+
+| Tool | Recall | Precision | Findings per run | Confirmed FPs per run | Runs |
+|---|---|---|---|---|---|
+| **Aletheore Flash, shared context** | 53.4% [39-68] | 92.6% [86-96] | 94 | 2.0 | 2 |
+| **Aletheore AIR, shared context** (with verification) | 51.1% [37-65] | 93.3% [87-98] | 92 | 0.5 | 2 |
+| GitHub Copilot | 59.1% [40-76] | 89.6% [82-98] | 80 | 1 | 1 |
+| GitLab Duo | 50.0% [38-63] | 95.1% [85-100] | 41 | 1 | 1 |
+| Qodo | 22.7% [10-38] | 100% [100-100] | 37 | 0 | 1 |
+| *Aletheore Flash, no shared context (before)* | 52.3% [39-66] | 71.5% [63-82] | 96 | 13.0 | 2 |
+| *Aletheore AIR, no shared context (before)* | 50.0% [37-63] | 79.7% [73-89] | 92 | 10.3 | 3 |
+
+Aletheore's numbers are not cherry-picked from a best run: each row is the mean over every
+generation trial run for that configuration.
+
+### What the data supports
+
+- **Shared context fixed a real precision problem.** Most of Aletheore's confirmed false positives
+  were claims made about one file that another file in the same PR contradicts ("no migration is
+  included", "this field is never registered"), because each per-file call saw only its own patch.
+  Showing every per-file call the rest of the PR raised Flash precision by 20.4 points (95% CI
+  +7.2 to +31.3) and AIR precision by 13.1 points (CI +4.6 to +19.7), with no detectable change in
+  recall (+1.2 and +1.4 points, both CIs spanning zero). Confirmed false positives per run fell from
+  13.0 to 2.0 (Flash) and from 10.3 to 0.5 (AIR).
+- **Against GitLab Duo and Copilot, Aletheore is in the same range on both metrics, not ahead.**
+  Flash minus GitLab: recall +3.3 points (CI -12.9 to +18.1), precision -2.9 (CI -13.2 to +9.6).
+  Flash minus Copilot: recall -5.3 (CI -26.5 to +14.3), precision +2.5 (CI -8.5 to +12.0). Copilot's
+  recall is numerically higher than ours; none of these differences is significant. Aletheore
+  returns about two to three times as many findings as GitLab, at similar measured accuracy.
+- **Against Qodo there is a real trade-off.** Flash minus Qodo: recall +30.5 points (CI +22.2 to
+  +37.5) but precision -7.7 (CI -13.9 to -3.5). Qodo reported few findings (37) and every one was
+  judged accurate; Aletheore reports 94 and is less accurate per finding, though still above 90%.
+- **The second-model verification pass added little once shared context was on.** AIR (with
+  verification) minus Flash (without it), both with shared context: precision +0.9 points
+  (CI -4.8 to +7.1), recall -2.1 (CI -9.6 to +6.6), at roughly five times the generation cost.
+  A small benefit cannot be ruled out, but on this evidence it did not justify its cost, and the
+  product no longer runs it.
+
+### Limitations, stated plainly
+
+1. **13 PRs.** Intervals are wide (about plus or minus 14 points on recall). Small differences
+   between tools are noise.
+2. **The shared-context design was developed while looking at this corpus.** It has not been
+   validated on unseen pull requests.
+3. **Precision measures accuracy of claims, not their importance.** The judge counts any accurate,
+   specific claim about the diff as correct, including test-coverage and style observations. It is
+   not "the share of findings a maintainer would act on".
+4. **Diff-only path.** Production adds file contents (grounding), referenced-symbol context,
+   suggestion verification and ranking. These numbers are for the generation path above, not for
+   the whole hosted product.
+5. **Competitor rows are single, undated runs** of tools that change over time.
+6. **One judge family (OpenAI).** Generation used GLM (Aletheore) and other vendors' models
+   (competitors), so there is no self-preference, but there is also no cross-judge check.
+7. **Recall is capped by ground-truth quality.** Several golden bugs have no file or line hint.
+
+### Tools not shown
+
+CodeRabbit is excluded: its Terms of Service (Section 4.2(iv)) bar disclosing benchmark results
+without prior written consent. Cursor Bugbot is excluded because its terms allow disclosure only
+alongside everything a third party needs to replicate the test. Greptile's results were removed on
+2026-09-24: its Terms of Service (Section 1.4(a)) restrict making results of the service available
+to third parties without written authorization, none was requested, and the data is restored only
+if Greptile consents.
+
+### Reproducing
+
+```bash
+# Recompute every table above from the committed result files (no API key, no network)
+python3 pr_review/real_pr_recall_corpus/scripts/audit_bootstrap.py
+
+# Regenerate Aletheore findings (needs an Aletheore checkout, INDIEROUTER_API_KEY)
+python3 pr_review/real_pr_recall_corpus/scripts/run_benchmark.py \
+  --aletheore-root /path/to/Aletheore --config flash --trials 2 --share-pr-context \
+  --output pr_review/real_pr_recall_corpus/results/gen_ctx.json
+
+# Judge (needs OPENAI_API_KEY; about $0.03 per tool-arm)
+python3 pr_review/real_pr_recall_corpus/scripts/judge_full_pipeline.py \
+  --aletheore-results pr_review/real_pr_recall_corpus/results/gen_ctx.json \
+  --competitors pr_review/real_pr_recall_corpus/results/competitors.json \
+  --output pr_review/real_pr_recall_corpus/results/judged_gen_ctx.json \
+  --judge-model gpt-6-luna --arms aletheore-flash
+```
+
+Result files: `gen_ctrl_*`, `gen_ctx_*`, `gen_air_ctx*`, `base_air_t*` (Aletheore findings) and the
+matching `judged_*` files in `pr_review/real_pr_recall_corpus/results/`.

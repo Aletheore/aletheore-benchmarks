@@ -22,7 +22,7 @@
   <a href="#covering-the-files-a-pr-touches">PR coverage</a> ·
   <a href="#pr-review--compact-evidence-vs-full-file-context">PR review</a> ·
   <a href="#head-to-head-against-pr-agent">PR-Agent comparison</a> ·
-  <a href="#per-file-completeness-generation-named-vs-greptile-qodo">Per-file completeness</a> ·
+  <a href="#per-file-completeness-generation-named-vs-real-competitors">Per-file completeness</a> ·
   <a href="#the-external-pr-recall-benchmark">External PR Recall Benchmark</a> ·
   <a href="#explaining-code--how-does-x-work">Explaining code</a> ·
   <a href="#deterministic-analysis-vs-bare-llm">Deterministic vs. LLM</a> ·
@@ -590,20 +590,25 @@ LLM-judge pass (98.3% recall agreement with manual scoring), and every disclosed
 
 ## Per-file completeness generation, named vs. real competitors
 
-> **⚠️ Pulled from public view (2026-09-23), under review.** This section previously showed a
-> named comparison table (recall/precision against Qodo and other tools, some since redacted, including a fourth
-> tool). Two real problems were found while re-verifying it before an unrelated outreach email:
-> (1) a competitor whose Terms of Service did not permit disclosing benchmark results was
-> included without that permission having been requested first; (2) the "total findings"
-> denominator used for precision was inflated for every competitor tool by non-finding UI chrome
-> (whole-PR summary comments, bot-trigger echoes, a duplicate finding) scraped alongside their
-> real findings - correcting it flips the precision story: Aletheore has the best recall of the
-> configs measured, but the *worst* precision once corrected, not the best. Recall itself is
-> unaffected and still real. The full data, the correction, and the redaction are documented in
-> [`pr_review/README.md`](pr_review/README.md), Experiment 7 - that page is the source of truth
-> while this summary is being rewritten. Do not cite the old numbers from this section; they were
-> wrong. PR #762 (the code this experiment measures) is real and unaffected by this - only the
-> competitor comparison table is under review.
+> **Updated 2026-09-24.** The earlier comparison here was withdrawn on 2026-09-23 (a
+> competitor's terms barred disclosure, and precision denominators were inflated by non-finding UI
+> chrome). It is replaced by a symmetric, LLM-judged comparison where every tool goes through the
+> same blinded judge on the same 13 real PRs. Full method, confidence intervals and limitations:
+> [`pr_review/README.md`, Experiment 8](pr_review/README.md#experiment-8-symmetric-llm-judged-comparison-on-13-real-prs-2026-09-24).
+>
+> | Tool | Recall (95% CI) | Precision (95% CI) |
+> |---|---|---|
+> | Aletheore Flash | 53.4% [39-68] | 92.6% [86-96] |
+> | Aletheore AIR | 51.1% [37-65] | 93.3% [87-98] |
+> | GitHub Copilot | 59.1% [40-76] | 89.6% [82-98] |
+> | GitLab Duo | 50.0% [38-63] | 95.1% [85-100] |
+> | Qodo | 22.7% [10-38] | 100% [100-100] |
+>
+> Read it as: in the same range as GitLab Duo and Copilot on both metrics, well ahead of Qodo on
+> recall but behind it on precision (Qodo reported few findings, all accurate). Shared PR
+> context lifted Flash precision from 71.5% to 92.6% with recall unchanged. 13 PRs, wide intervals,
+> a diff-only path, and a broad definition of a correct finding (see the limitations). CodeRabbit,
+> Bugbot and Greptile are not shown, for terms-of-service reasons explained there.
 
 <details>
 <summary><strong>Full write-up: all 6 PR-review experiments (compact vs. context, DeepSeek V4 Flash, the production-model run that decided the default, the original PR-Agent head-to-head, and the 5-way run that found and fixed a real context-block regression)</strong></summary>
