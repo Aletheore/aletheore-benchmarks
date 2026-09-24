@@ -18,7 +18,6 @@
   "methodology": {
     "aletheore_model": "glm-5.3-flash via IndieRouter (scan_worker.model_tiers.flash_review_generation_adapter - production's real generation adapter)",
     "pr_agent_model": "PR-Agent's own real CLI, default config",
-    "greptile": "real Greptile API results on a purpose-built Greptile eval fork per repo",
     "recall_judge": "gpt-5-nano, semantic match between each tool's candidate finding and a real human reviewer's actual comment on that same merged PR (golden findings)",
     "precision_check": "scan_worker.flash_review.VERIFICATION_SYSTEM_PROMPT + DeepSeek-v4-flash via scan_worker.model_tiers.verification_adapter - Aletheore's own real production verification method, applied identically to all three tools' candidate findings, diff-only (no file-context window)"
   },
@@ -27,39 +26,33 @@
       "note": "only run across all 24 cases including discourse-graphite, before it was found contaminated",
       "aletheore_pct": 38.6,
       "pr_agent_pct": 36.2,
-      "greptile_pct": 35.6,
       "golden_findings_total": 511
     },
     "pr746_sibling_file_context_run1": {
       "aletheore_pct": 44.7,
       "pr_agent_pct": 31.1,
-      "greptile_pct": 25.6,
       "golden_findings_total": 219
     },
     "pr746_sibling_file_context_run2": {
       "aletheore_pct": 41.1,
       "pr_agent_pct": 32.9,
-      "greptile_pct": 24.2,
       "golden_findings_total": 219,
       "note": "repeat run, same config - real run-to-run model noise, not a config change"
     },
     "pr747_softened_confidence_gate_on_top_of_pr746_SHIPPED": {
       "aletheore_pct": 47.9,
       "pr_agent_pct": 31.5,
-      "greptile_pct": 26.5,
       "golden_findings_total": 219
     },
     "rejected_max_findings_cap_5_to_10": {
       "aletheore_pct": 42.9,
       "pr_agent_pct": 30.6,
-      "greptile_pct": 26.0,
       "golden_findings_total": 219,
       "verdict": "rejected - lower recall than PR #747's config"
     },
     "rejected_expanded_few_shot_example": {
       "aletheore_pct": 40.2,
       "pr_agent_pct": 28.8,
-      "greptile_pct": 22.8,
       "golden_findings_total": 219,
       "verdict": "rejected - lower recall than PR #747's config"
     }
@@ -77,12 +70,6 @@
         "reject": 0,
         "uncertain": 2,
         "precision_accept_over_total": 90.9
-      },
-      "greptile": {
-        "accept": 37,
-        "reject": 21,
-        "uncertain": 0,
-        "precision_accept_over_total": 63.8
       }
     },
     "pr747_softened_confidence_gate_SHIPPED": {
@@ -97,12 +84,6 @@
         "reject": 0,
         "uncertain": 2,
         "precision_accept_over_total": 90.9
-      },
-      "greptile": {
-        "accept": 36,
-        "reject": 22,
-        "uncertain": 0,
-        "precision_accept_over_total": 62.1
       }
     },
     "rejected_max_findings_cap_5_to_10": {
@@ -117,12 +98,6 @@
         "reject": 0,
         "uncertain": 2,
         "precision_accept_over_total": 90.9
-      },
-      "greptile": {
-        "accept": 35,
-        "reject": 23,
-        "uncertain": 0,
-        "precision_accept_over_total": 60.3
       }
     },
     "rejected_expanded_few_shot_example": {
@@ -137,12 +112,6 @@
         "reject": 2,
         "uncertain": 3,
         "precision_accept_over_total": 77.3
-      },
-      "greptile": {
-        "accept": 34,
-        "reject": 24,
-        "uncertain": 0,
-        "precision_accept_over_total": 58.6
       }
     }
   }

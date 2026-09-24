@@ -481,7 +481,7 @@ On a real, named, external competitor, same model, same corpus, post-deploy: Ale
 4. **Case 020** remains excluded corpus-wide (a fixture/push-protection issue, fixed locally but not yet re-verified against a live push). **DeepSource** was excluded this run (real quota exhaustion on the test account).
 ## Experiment 6: 5-way named comparison, same corpus — and a real production fix decided by the results
 
-Experiment 5 above compared Aletheore against one named competitor (PR-Agent), both on `gpt-5.6-luna`. This run asks a broader question on the same 24-case corpus: how does Aletheore's *actual current shipped config* — `glm-5.3-flash` via IndieRouter, the model production switched to after Experiment 5 for cost reasons — compare against five real tools, including two (Greptile, DeepSource) that were excluded or degraded in every prior run on this corpus? And it does not stay a passive measurement: a real regression it found in Aletheore's own scoring led to an isolation test, which led to a real production code change the same night.
+Experiment 5 above compared Aletheore against one named competitor (PR-Agent), both on `gpt-5.6-luna`. This run asks a broader question on the same 24-case corpus: how does Aletheore's *actual current shipped config* — `glm-5.3-flash` via IndieRouter, the model production switched to after Experiment 5 for cost reasons — compare against five real tools, including two (one now redacted pending vendor consent, and DeepSource) that were excluded or degraded in every prior run on this corpus? And it does not stay a passive measurement: a real regression it found in Aletheore's own scoring led to an isolation test, which led to a real production code change the same night.
 
 The corpus, `ground_truth.yaml` files, and pipeline scripts live in `Aletheore/Aletheore`'s `benchmarks/pr-review-benchmark/` — same convention as Experiment 5, that repo is the source of truth this experiment's scripts read from.
 
@@ -490,7 +490,7 @@ The corpus, `ground_truth.yaml` files, and pipeline scripts live in `Aletheore/A
 - **Aletheore commit**: production deployed at `8545f77` (tag `github-app-deploy-2026-09-19-2`), which includes PR #746 (sibling-file context, later disabled — see below), PR #747 (softened confidence bar), and PR #748 (the fix this experiment's own results produced).
 - **Aletheore's arm**: direct invocation of `scan_worker.flash_review.review_diff()` — Flash tier only (`verify_with_second_model=False`, no AIR second-model verification pass), model `glm-5.3-flash` via IndieRouter (production's real current default). Three context configurations were tested, not one — see "The real finding" below.
 - **PR-Agent**: `gpt-5.6-luna`, unchanged from Experiment 5's config — kept rather than force-matched to Aletheore's new model, because routing PR-Agent through IndieRouter to reach `glm-5.3-flash` turned out to be a real, unresolved integration problem (litellm's own wrapper around the call adds parameters IndieRouter rejects with a generic "model does not exist" error, even though a bare `litellm.completion()` call with identical model/endpoint/key succeeds standalone — isolated but not fixed this run). So this comparison is "each tool's real current config," not architecture-only with the model held constant, and is documented as such rather than silently presented as apples-to-apples.
-- **DeepSource, Sourcery, Greptile**: real hosted GitHub App reactions on the scratch repo. All 24 case PRs were closed and reopened fresh partway through this run after discovering Sourcery/Greptile's Apps react reliably to a genuine "PR opened" event but not to a force-push "synchronize" event on an already-existing PR — the initial run looked like Greptile was completely uninstalled/out of credits; it wasn't, it just never saw a fresh-PR event on the stale PRs.
+- **DeepSource, Sourcery, and one further tool (redacted pending vendor consent)**: real hosted GitHub App reactions on the scratch repo. All 24 case PRs were closed and reopened fresh partway through this run after discovering Sourcery's and another hosted tool's Apps react reliably to a genuine "PR opened" event but not to a force-push "synchronize" event on an already-existing PR — the initial run looked like that tool was completely uninstalled/out of credits; it wasn't, it just never saw a fresh-PR event on the stale PRs.
 - **Scoring**: Step 4 manual scoring (real finding content read against `ground_truth.yaml`, not file:line proximity alone) *and* Step 5 — four fresh Claude subagents, one per 6-case batch, each with zero knowledge of this session, genuinely blind, findings passed under real tool names (named comparison, no anonymization needed). Recall agreement between manual and LLM-judge scoring: **98.3%**. Actionability agreement (1-5 subjective scale): 57.3% — expected noise on that axis, not a scoring problem.
 - **Corpus**: 24 of 25 cases (case `020` excluded, same fixture issue as every prior run on this corpus).
 
@@ -527,13 +527,12 @@ A controlled test on this exact corpus — same model, same prompt, only the con
 | PR-Agent / Qodo (`gpt-5.6-luna`) | 21 | 1 | 2 | 1 | 4.75 | 0.95 | 0.00 |
 | DeepSource | 5 | 0 | 19 | 0 | 3.0 | 1.00 | n/a |
 | Sourcery | 20 | 0 | 4 | 0 | 4.75 | 0.94 | 0.50 |
-| Greptile | 22 | 0 | 2 | 1 | 3.9 | 1.00 | n/a |
 
 †0 in this specific judged run, 0-1 across the config's two replicated runs — see "The real finding" above, not a discrepancy with it.
 
-Manual-scoring-only recall (before merging in the LLM judge): Aletheore 90.0% (18/20), Greptile 95.0% (19/20), PR-Agent 92.5% (18/20 + 1 partial), Sourcery 80.0% (16/20), DeepSource 5.0% (1/20).
+Manual-scoring-only recall (before merging in the LLM judge): Aletheore 90.0% (18/20), PR-Agent 92.5% (18/20 + 1 partial), Sourcery 80.0% (16/20), DeepSource 5.0% (1/20).
 
-**Location grounding** (cited file exists, cited line is inside it) is close to uninformative on its own — a static analyser clears it by construction. **Content grounding** (text the finding quotes verbatim really appears near the cited line) is the bar Aletheore's Flash Review enforces on itself in production, applied identically to every tool here; DeepSource and Greptile show `n/a` because their finding text doesn't quote source verbatim by convention, not because their findings are ungrounded.
+**Location grounding** (cited file exists, cited line is inside it) is close to uninformative on its own — a static analyser clears it by construction. **Content grounding** (text the finding quotes verbatim really appears near the cited line) is the bar Aletheore's Flash Review enforces on itself in production, applied identically to every tool here; DeepSource and one further tool (redacted) show `n/a` because their finding text doesn't quote source verbatim by convention, not because their findings are ungrounded.
 
 Raw results: `results/pr_review_5way_glm_manual_scored.json` (Step 4), `results/pr_review_5way_glm_llm_judged.json` (Step 5, one independent Claude subagent batch per file), `results/pr_review_sibling_context_isolation.json` (the full isolation-test data behind the table above, all 8 runs, per-case).
 
@@ -546,7 +545,7 @@ Raw results: `results/pr_review_5way_glm_manual_scored.json` (Step 4), `results/
 
 ### Verdict
 
-A real regression Aletheore had shipped to production (`sibling_file_context`, PR #746) was found by this benchmark, isolated from a separate, unaffected feature (`referenced_symbol_context`) via a replicated controlled test, and fixed in production the same night (PR #748), with a post-deploy run confirming the fix performs as predicted. On the resulting current config, Aletheore is competitive with or ahead of every tool in this comparison on recall, false positives, and actionability, and content-grounds more of its findings than PR-Agent, Greptile, or DeepSource (Sourcery is the only tool that content-grounds a higher share). This experiment is presented as a full account of a real mistake and its fix, not just a final scoreboard — the honest number for Aletheore's recall on this corpus is a measured 85-95% range, not a single confident figure, and the isolation methodology that produced that range is the more durable result than any one run's percentage.
+A real regression Aletheore had shipped to production (`sibling_file_context`, PR #746) was found by this benchmark, isolated from a separate, unaffected feature (`referenced_symbol_context`) via a replicated controlled test, and fixed in production the same night (PR #748), with a post-deploy run confirming the fix performs as predicted. On the resulting current config, Aletheore is competitive with or ahead of every tool in this comparison on recall, false positives, and actionability, and content-grounds more of its findings than PR-Agent or DeepSource (Sourcery is the only named tool that content-grounds a higher share; a further hosted tool's figures are redacted pending vendor consent). This experiment is presented as a full account of a real mistake and its fix, not just a final scoreboard — the honest number for Aletheore's recall on this corpus is a measured 85-95% range, not a single confident figure, and the isolation methodology that produced that range is the more durable result than any one run's percentage.
 
 **Open, disclosed limitations**:
 1. **PR-Agent stayed on `gpt-5.6-luna`, not Aletheore's current `glm-5.3-flash`.** A real attempt was made to route PR-Agent through IndieRouter to `glm-5.3-flash` for a true architecture-only comparison; it failed with a real, unresolved litellm/IndieRouter compatibility issue (isolated to PR-Agent's own request wrapper — a bare `litellm.completion()` call with identical parameters succeeds) not worth blocking this run on.
@@ -586,7 +585,7 @@ Real, 3x-averaged runs through the exact production code path (`review_diff()`, 
 | Flash (per-file, no verification) | 59.1% / 59.1% / 56.8% (avg **58.3%**) | 32.7% / 31.1% / 37.9% (avg **33.9%**) | ~$0.0028 |
 | AIR (per-file + windowed verification) | 56.8% / 59.1% / 59.1% (avg **58.3%**) | 38.5% / 40.7% / 38.9% (avg **39.4%**) | ~$0.047 |
 
-**The named competitor comparison table (Greptile, Qodo, and a since-redacted fourth tool) has
+**The named competitor comparison table (Qodo and two since-redacted tools) has
 been pulled from this page as of 2026-09-23, pending re-verification.** Two real problems were
 found while checking it before an unrelated outreach email:
 
@@ -594,21 +593,21 @@ found while checking it before an unrelated outreach email:
    benchmark results about its product without prior written consent, which was not requested
    before this run. That tool's data has been removed from this repository entirely (raw results,
    scoring logs, and this writeup) pending that request.
-2. The "total findings" precision denominator for the remaining tools (Greptile-v5, Qodo-v2-2)
+2. The "total findings" precision denominator for the remaining tools (Qodo-v2-2 and one other tool, since redacted, see below)
    was the raw count of every string captured from their real review comments, which included
    non-finding UI chrome - one whole-PR summary comment per case for each tool (13 apiece), plus
-   one genuine duplicate finding for Greptile - counted as if each were an individual finding.
+   one genuine duplicate finding for the other tool - counted as if each were an individual finding.
    That inflated the denominator and deflated measured precision for both. Aletheore's own
    precision (the two-row table above) does not have this problem: verified directly against all
    587 findings across all 6 trials in `aletheore_3x_results.json` - every finding is a
    structured `{file, line, issue}` object from `review_diff()`'s real API output, not scraped
    comment text, with zero exact duplicates and zero placeholder/summary-shaped entries.
 
-Correcting the denominator (excluding the summary comments and the duplicate) moves Greptile's
-precision from 41.1% to 54.8% and Qodo's from 40.5% to 62.5% - both now measure **higher**
-precision than either Aletheore config, reversing the original published comparison. Recall is
+Correcting the denominator (excluding the summary comments and the duplicate) moves Qodo's
+precision from 40.5% to 62.5% (now **higher** than either Aletheore config, reversing the original
+published comparison; the other tool's figures are redacted). Recall is
 unaffected either way (its denominator is the fixed 44 golden bugs, not tool output), so
-Aletheore's recall lead (58.3% vs. Greptile's 52.3% and Qodo's 34.1%) still stands as measured.
+Aletheore's recall lead (58.3% vs. Qodo's 34.1%) still stands as measured.
 The honest summary once both issues are accounted for: **Aletheore has the best recall and the
 worst precision of the configs benchmarked here** - a real tradeoff, not a clean sweep, and not
 what was originally published. A corrected, permission-checked version of this table will
@@ -660,7 +659,7 @@ python3 score_results.py
 
 ### Verdict
 
-Per-file completeness generation, closed the largest measured gap: production's real single-shot pipeline returned zero findings on two real multi-bug PRs it should have caught something on, traced to a per-PR (not per-file) finding cap in the vendored generation prompt. The fix, plus windowed asymmetric-risk verification for AIR tier, measured a real, 3x-replicated recall and precision lead over a fourth named competitor on this corpus (redacted above pending permission), and closed most of the gap to Greptile's precision while keeping a real recall lead over it. Cost stays proportionate to what each tier can absorb: per-file completeness is cheap enough for both paid tiers (~$0.0028/review), second-model verification stays AIR-only (~$0.047/review combined) because it costs roughly 15x generation even after the windowing fix.
+Per-file completeness generation, closed the largest measured gap: production's real single-shot pipeline returned zero findings on two real multi-bug PRs it should have caught something on, traced to a per-PR (not per-file) finding cap in the vendored generation prompt. The fix, plus windowed asymmetric-risk verification for AIR tier, measured a real, 3x-replicated recall and precision lead over a fourth named competitor on this corpus (redacted above pending permission), and closed most of the precision gap to a named competitor (figures redacted pending vendor consent) while keeping a real recall lead over it. Cost stays proportionate to what each tier can absorb: per-file completeness is cheap enough for both paid tiers (~$0.0028/review), second-model verification stays AIR-only (~$0.047/review combined) because it costs roughly 15x generation even after the windowing fix.
 
 **Open, disclosed limitations**:
 1. **PR #762 is not yet merged.** These are pre-release numbers for code that exists and was tested against the real production call path, not numbers from what is currently live.

@@ -22,28 +22,28 @@ scoring discourse-graphite-4...
 scoring discourse-graphite-3...
 scoring discourse-graphite-2...
 scoring discourse-graphite-1...
-done keycloak-37429: aletheore=3/6, pr_agent=2/6, greptile=2/6
-done sentry-95633: aletheore=2/6, pr_agent=4/6, greptile=0/6
-done calcom-22532: aletheore=7/25, pr_agent=9/25, greptile=3/25
-done discourse-graphite-7: aletheore=15/15, pr_agent=15/15, greptile=10/15
-done grafana-80329: aletheore=1/8, pr_agent=0/8, greptile=3/8
-done sentry-80528: aletheore=0/2, pr_agent=0/2, greptile=0/2
-done sentry-80168: aletheore=1/6, pr_agent=0/6, greptile=1/6
-done grafana-76186: aletheore=5/9, pr_agent=6/9, greptile=1/9
-done grafana-103633: aletheore=4/5, pr_agent=2/5, greptile=0/5
-done grafana-79265: aletheore=5/11, pr_agent=2/11, greptile=5/11
-done calcom-22345: aletheore=3/24, pr_agent=5/24, greptile=3/24
-done calcom-10967: aletheore=25/58, pr_agent=22/58, greptile=25/58
+done keycloak-37429: aletheore=3/6, pr_agent=2/6
+done sentry-95633: aletheore=2/6, pr_agent=4/6
+done calcom-22532: aletheore=7/25, pr_agent=9/25
+done discourse-graphite-7: aletheore=15/15, pr_agent=15/15
+done grafana-80329: aletheore=1/8, pr_agent=0/8
+done sentry-80528: aletheore=0/2, pr_agent=0/2
+done sentry-80168: aletheore=1/6, pr_agent=0/6
+done grafana-76186: aletheore=5/9, pr_agent=6/9
+done grafana-103633: aletheore=4/5, pr_agent=2/5
+done grafana-79265: aletheore=5/11, pr_agent=2/11
+done calcom-22345: aletheore=3/24, pr_agent=5/24
+done calcom-10967: aletheore=25/58, pr_agent=22/58
     judge attempt 1 failed: TimeoutError: 
-done calcom-10600: aletheore=15/55, pr_agent=7/55, greptile=16/55
-done keycloak-41249: aletheore=0/4, pr_agent=3/4, greptile=0/4
-done calcom-8087: aletheore=22/25, pr_agent=21/25, greptile=3/25
-done discourse-graphite-10: aletheore=20/41, pr_agent=13/41, greptile=23/41
-done discourse-graphite-9: aletheore=1/18, pr_agent=11/18, greptile=2/18
-done discourse-graphite-8: aletheore=12/25, pr_agent=6/25, greptile=8/25
-done discourse-graphite-6: aletheore=0/15, pr_agent=5/15, greptile=1/15
-done discourse-graphite-5: aletheore=0/13, pr_agent=2/13, greptile=0/13
-done discourse-graphite-4: aletheore=15/52, pr_agent=6/52, greptile=15/52
+done calcom-10600: aletheore=15/55, pr_agent=7/55
+done keycloak-41249: aletheore=0/4, pr_agent=3/4
+done calcom-8087: aletheore=22/25, pr_agent=21/25
+done discourse-graphite-10: aletheore=20/41, pr_agent=13/41
+done discourse-graphite-9: aletheore=1/18, pr_agent=11/18
+done discourse-graphite-8: aletheore=12/25, pr_agent=6/25
+done discourse-graphite-6: aletheore=0/15, pr_agent=5/15
+done discourse-graphite-5: aletheore=0/13, pr_agent=2/13
+done discourse-graphite-4: aletheore=15/52, pr_agent=6/52
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 442. Please try again in 132ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 387. Please try again in 116ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 484. Please try again in 145ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
@@ -110,7 +110,7 @@ done discourse-graphite-4: aletheore=15/52, pr_agent=6/52, greptile=15/52
     judge attempt 2 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 199674, Requested 429. Please try again in 30ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
     judge attempt 2 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 1569. Please try again in 470ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
     judge attempt 2 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 199496, Requested 1546. Please try again in 312ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
-done discourse-graphite-3: aletheore=6/25, pr_agent=6/25, greptile=15/25
+done discourse-graphite-3: aletheore=6/25, pr_agent=6/25
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 403. Please try again in 120ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 415. Please try again in 124ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 404. Please try again in 121ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
@@ -124,7 +124,7 @@ done discourse-graphite-3: aletheore=6/25, pr_agent=6/25, greptile=15/25
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 308. Please try again in 92ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 324. Please try again in 97ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 297. Please try again in 89ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
-done discourse-graphite-2: aletheore=9/25, pr_agent=8/25, greptile=10/25
+done discourse-graphite-2: aletheore=9/25, pr_agent=8/25
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 515. Please try again in 154ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
     judge attempt 2 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 199734, Requested 515. Please try again in 74ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 392. Please try again in 117ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
@@ -142,9 +142,8 @@ done discourse-graphite-2: aletheore=9/25, pr_agent=8/25, greptile=10/25
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 320. Please try again in 96ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
     judge attempt 1 failed: RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-5-nano in organization org-hbL36FUOeQiHi91L6utZ0tSJ on tokens per min (TPM): Limit 200000, Used 200000, Requested 390. Please try again in 117ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
     judge attempt 1 failed: TimeoutError: 
-done discourse-graphite-1: aletheore=26/38, pr_agent=30/38, greptile=36/38
+done discourse-graphite-1: aletheore=26/38, pr_agent=30/38
 
 === SUMMARY ===
 aletheore: 197/511 golden findings caught (38.6%)
 pr_agent: 185/511 golden findings caught (36.2%)
-greptile: 182/511 golden findings caught (35.6%)

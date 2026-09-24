@@ -10,7 +10,7 @@
 > likely-automated review account (`ron-x5labs`) contributing the large
 > majority of "golden" comments on the cal.com cases. A from-scratch manual
 > audit against organic human commentary only found real recall of 3/43
-> (Aletheore and PR-Agent tied) and 0/43 (Greptile) on the same 14 cases -
+> (Aletheore and PR-Agent tied; a third hosted tool's figures are redacted pending vendor consent) on the same 14 cases -
 > a full write-up with the corrected numbers and methodology is in progress
 > and will replace this notice once published.
 
@@ -49,8 +49,7 @@ Full case manifest: `results/cases.json`.
   (`flash_review_generation_adapter()` in `model_tiers.py`), same one used in `pr_review/`'s
   Experiment 6.
 - **PR-Agent**: its own real CLI, default configuration.
-- **Greptile**: real Greptile API results, run against a purpose-built Greptile evaluation fork of
-  each repo.
+- **Greptile**: a third hosted tool; its results are redacted (2026-09-24) pending vendor consent.
 - **Recall judge**: `gpt-5-nano`, scoring semantic match between each tool's own candidate finding
   and a real human reviewer's actual comment on that same merged PR (the "golden" finding set —
   see `results/summary.json` and the real comment data these were extracted from).
@@ -74,14 +73,14 @@ plausible but didn't hold up.
 Recall = fraction of golden (real reviewer) findings any tool's candidates matched, 14 clean cases
 (219 golden findings) unless noted:
 
-| Run | Aletheore | PR-Agent | Greptile |
-|---|---|---|---|
-| Baseline, all 24 cases (511 golden findings, pre-fix) | 38.6% | 36.2% | 35.6% |
-| PR #746 (sibling-file context), run 1 | 44.7% | 31.1% | 25.6% |
-| PR #746, run 2 (same config, repeat) | 41.1% | 32.9% | 24.2% |
-| **PR #747 (softened confidence gate, on top of #746) — shipped** | **47.9%** | 31.5% | 26.5% |
-| Rejected: finding cap raised 5→10 | 42.9% | 30.6% | 26.0% |
-| Rejected: expanded few-shot example | 40.2% | 28.8% | 22.8% |
+| Run | Aletheore | PR-Agent |
+|---|---|---|
+| Baseline, all 24 cases (511 golden findings, pre-fix) | 38.6% | 36.2% |
+| PR #746 (sibling-file context), run 1 | 44.7% | 31.1% |
+| PR #746, run 2 (same config, repeat) | 41.1% | 32.9% |
+| **PR #747 (softened confidence gate, on top of #746) — shipped** | **47.9%** | 31.5% |
+| Rejected: finding cap raised 5→10 | 42.9% | 30.6% |
+| Rejected: expanded few-shot example | 40.2% | 28.8% |
 
 PR #746's two runs (44.7% vs. 41.1%, same exact config) are a real, measured example of GLM-5.3-Flash's
 own run-to-run noise — reported both, not just the more flattering one.
@@ -89,12 +88,12 @@ own run-to-run noise — reported both, not just the more flattering one.
 Precision (DeepSeek-v4-flash ACCEPT/REJECT/UNCERTAIN verification, ACCEPT ÷ total candidates),
 14 clean cases:
 
-| Run | Aletheore | PR-Agent | Greptile |
-|---|---|---|---|
-| PR #746 only | 81.8% | 90.9% | 63.8% |
-| **PR #747 — shipped** | 78.9% | 90.9% | 62.1% |
-| Rejected: finding cap 5→10 | 75.0% | 90.9% | 60.3% |
-| Rejected: expanded few-shot example | 87.1% | 77.3% | 58.6% |
+| Run | Aletheore | PR-Agent |
+|---|---|---|
+| PR #746 only | 81.8% | 90.9% |
+| **PR #747 — shipped** | 78.9% | 90.9% |
+| Rejected: finding cap 5→10 | 75.0% | 90.9% |
+| Rejected: expanded few-shot example | 87.1% | 77.3% |
 
 Full per-case logs: `results/log_*.log`. Full summary with per-config candidate counts:
 `results/summary.json`.
@@ -110,8 +109,8 @@ Full per-case logs: `results/log_*.log`. Full summary with per-config candidate 
   The expanded few-shot example bought real precision (87.1%, the best of any Aletheore config
   tested) but at a recall cost too large to accept (40.2%, barely above the pre-fix baseline) —
   correctly not shipped.
-- **PR-Agent and Greptile's numbers barely move across any Aletheore-side config change** (PR-Agent:
-  28.8-36.2%, Greptile: 22.8-35.6%, no trend tied to which Aletheore variant was running) — expected,
+- **PR-Agent's numbers barely move across any Aletheore-side config change** (PR-Agent:
+  28.8-36.2%, no trend tied to which Aletheore variant was running) — expected,
   since none of these changes touch either competitor, and useful as a rough noise-floor reference
   for how much any one tool's number can be expected to move run-to-run on this corpus.
 - **This corpus and the 24-case corpus in `pr_review/` reached opposite conclusions about

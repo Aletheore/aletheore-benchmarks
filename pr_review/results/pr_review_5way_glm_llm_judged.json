@@ -19,11 +19,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 5
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 2
     }
   },
   "002-requests-json-decode-pickle": {
@@ -43,11 +38,6 @@
       "actionability": null
     },
     "sourcery": {
-      "recall": "miss",
-      "false_positives": [],
-      "actionability": null
-    },
-    "greptile": {
       "recall": "miss",
       "false_positives": [],
       "actionability": null
@@ -79,11 +69,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 5
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 2
     }
   },
   "004-click-version-package-name": {
@@ -106,11 +91,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 3
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 2
     }
   },
   "005-axios-progress-negative-clamp": {
@@ -133,11 +113,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 3
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 2
     }
   },
   "006-express-content-length-transfer-encoding": {
@@ -160,11 +135,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 3
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 2
     }
   },
   "007-lodash-omit-array-clone": {
@@ -187,11 +157,6 @@
       "recall": "miss",
       "false_positives": [],
       "actionability": null
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 3
     }
   },
   "008-axios-headers-set-cookie": {
@@ -214,11 +179,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 5
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 3
     }
   },
   "009-cobra-completions-args-mutation": {
@@ -241,11 +201,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 5
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 3
     }
   },
   "010-gin-runfd-file-leak": {
@@ -268,11 +223,6 @@
       "recall": "miss",
       "false_positives": [],
       "actionability": null
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 3
     }
   },
   "011-gorilla-mux-query-match": {
@@ -295,11 +245,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 5
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 3
     }
   },
   "012-urfave-cli-empty-positional-arg": {
@@ -322,11 +267,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 5
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 3
     }
   },
   "013-gson-jsonprimitive-hashcode": {
@@ -349,11 +289,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 5
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 2
     }
   },
   "014-junit4-assumption-serialization": {
@@ -376,11 +311,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 5
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 2
     }
   },
   "015-commons-lang-bitfield-sign-extension": {
@@ -401,11 +331,6 @@
     },
     "sourcery": {
       "recall": "partial",
-      "false_positives": [],
-      "actionability": 2
-    },
-    "greptile": {
-      "recall": "hit",
       "false_positives": [],
       "actionability": 2
     }
@@ -430,11 +355,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 5
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 2
     }
   },
   "017-commons-lang-arrayutils-off-by-one": {
@@ -457,11 +377,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 5
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 2
     }
   },
   "018-axios-missing-null-check-charset": {
@@ -484,11 +399,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 5
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 3
     }
   },
   "019-gin-request-counter-race": {
@@ -511,11 +421,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": 5
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 2
     }
   },
   "021-requests-swallowed-close-exception": {
@@ -538,11 +443,6 @@
       "recall": "miss",
       "false_positives": [],
       "actionability": null
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": 2
     }
   },
   "022-flask-docs-mongoengine-typo": {
@@ -562,11 +462,6 @@
       "actionability": null
     },
     "sourcery": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": null
-    },
-    "greptile": {
       "recall": "hit",
       "false_positives": [],
       "actionability": null
@@ -592,11 +487,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": null
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": null
     }
   },
   "024-lodash-test-description-fix": {
@@ -619,11 +509,6 @@
       "recall": "hit",
       "false_positives": [],
       "actionability": null
-    },
-    "greptile": {
-      "recall": "hit",
-      "false_positives": [],
-      "actionability": null
     }
   },
   "025-gson-javadoc-getaschar-fix": {
@@ -638,7 +523,7 @@
         {
           "file": "gson/src/main/java/com/google/gson/JsonArray.java",
           "line": 367,
-          "message": "The return description still says the element is returned \u201cas a character,\u201d but `getAsCharacter()` returns the first character of the element's string value, as stated by the deprecation note. Documenting the conversion as a direct character conversion can mislead callers about behavior for multi-character strings."
+          "message": "The return description still says the element is returned “as a character,” but `getAsCharacter()` returns the first character of the element's string value, as stated by the deprecation note. Documenting the conversion as a direct character conversion can mislead callers about behavior for multi-character strings."
         }
       ],
       "actionability": null
@@ -651,17 +536,6 @@
     "sourcery": {
       "recall": "hit",
       "false_positives": [],
-      "actionability": null
-    },
-    "greptile": {
-      "recall": "miss",
-      "false_positives": [
-        {
-          "file": "gson/src/main/java/com/google/gson/JsonArray.java",
-          "line": 367,
-          "message": "Return description remains inaccurate"
-        }
-      ],
       "actionability": null
     }
   }

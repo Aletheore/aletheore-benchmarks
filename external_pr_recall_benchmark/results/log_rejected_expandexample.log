@@ -12,11 +12,10 @@ skip calcom-10967 (already scored)
 scoring calcom-10600...
 scoring calcom-8087...
 scoring keycloak-41249...
-done calcom-10600: aletheore=15/49, pr_agent=4/49, greptile=11/49
-done calcom-8087: aletheore=21/22, pr_agent=20/22, greptile=1/22
-done keycloak-41249: aletheore=0/4, pr_agent=3/4, greptile=0/4
+done calcom-10600: aletheore=15/49, pr_agent=4/49
+done calcom-8087: aletheore=21/22, pr_agent=20/22
+done keycloak-41249: aletheore=0/4, pr_agent=3/4
 
 === SUMMARY (14 clean cases, expand-example) ===
 aletheore: 88/219 golden findings caught (40.2%)
 pr_agent: 63/219 golden findings caught (28.8%)
-greptile: 50/219 golden findings caught (22.8%)

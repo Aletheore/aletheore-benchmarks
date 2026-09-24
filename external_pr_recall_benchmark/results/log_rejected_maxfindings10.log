@@ -4,7 +4,7 @@ scoring calcom-22532...
 scoring grafana-80329...
 scoring sentry-80168...
 scoring sentry-80528...
-done sentry-80528: aletheore=0/0, pr_agent=0/0, greptile=0/0
+done sentry-80528: aletheore=0/0, pr_agent=0/0
 scoring grafana-76186...
 scoring grafana-103633...
 scoring grafana-79265...
@@ -13,22 +13,21 @@ scoring calcom-10967...
 scoring calcom-10600...
 scoring calcom-8087...
 scoring keycloak-41249...
-done keycloak-37429: aletheore=4/6, pr_agent=3/6, greptile=3/6
-done sentry-95633: aletheore=3/6, pr_agent=2/6, greptile=0/6
-done calcom-22532: aletheore=6/25, pr_agent=8/25, greptile=3/25
-done grafana-80329: aletheore=1/8, pr_agent=0/8, greptile=4/8
-done sentry-80168: aletheore=0/5, pr_agent=0/5, greptile=0/5
-done grafana-76186: aletheore=6/9, pr_agent=4/9, greptile=1/9
-done grafana-103633: aletheore=5/5, pr_agent=1/5, greptile=0/5
+done keycloak-37429: aletheore=4/6, pr_agent=3/6
+done sentry-95633: aletheore=3/6, pr_agent=2/6
+done calcom-22532: aletheore=6/25, pr_agent=8/25
+done grafana-80329: aletheore=1/8, pr_agent=0/8
+done sentry-80168: aletheore=0/5, pr_agent=0/5
+done grafana-76186: aletheore=6/9, pr_agent=4/9
+done grafana-103633: aletheore=5/5, pr_agent=1/5
     judge attempt 1 failed: TimeoutError: 
-done calcom-22345: aletheore=5/16, pr_agent=2/16, greptile=3/16
-done grafana-79265: aletheore=5/11, pr_agent=1/11, greptile=5/11
-done calcom-10967: aletheore=25/53, pr_agent=19/53, greptile=23/53
-done calcom-10600: aletheore=15/49, pr_agent=5/49, greptile=14/49
-done keycloak-41249: aletheore=0/4, pr_agent=3/4, greptile=0/4
-done calcom-8087: aletheore=19/22, pr_agent=19/22, greptile=1/22
+done calcom-22345: aletheore=5/16, pr_agent=2/16
+done grafana-79265: aletheore=5/11, pr_agent=1/11
+done calcom-10967: aletheore=25/53, pr_agent=19/53
+done calcom-10600: aletheore=15/49, pr_agent=5/49
+done keycloak-41249: aletheore=0/4, pr_agent=3/4
+done calcom-8087: aletheore=19/22, pr_agent=19/22
 
 === SUMMARY (14 clean cases, max-findings-10) ===
 aletheore: 94/219 golden findings caught (42.9%)
 pr_agent: 67/219 golden findings caught (30.6%)
-greptile: 57/219 golden findings caught (26.0%)

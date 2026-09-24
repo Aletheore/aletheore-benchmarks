@@ -1,77 +1,5 @@
 {
   "_redaction_note": "2026-09-23: a 'coderabbit' entry previously here has been removed. CodeRabbit's ToS (Section 4.2(iv)) bars disclosing the results of benchmarking their Services without prior written consent - this run benchmarked their real hosted GitHub App, so the data is redacted pending that consent.",
-  "greptile-v5": {
-    "keycloak-37429": [
-      true,
-      true,
-      true,
-      false,
-      false
-    ],
-    "sentry-95633": [
-      false,
-      false
-    ],
-    "calcom-22532": [
-      true,
-      true,
-      false,
-      false
-    ],
-    "grafana-80329": [
-      true,
-      true
-    ],
-    "sentry-80168": [
-      true,
-      true,
-      false
-    ],
-    "sentry-80528": [
-      false,
-      false
-    ],
-    "grafana-76186": [
-      false,
-      true,
-      false
-    ],
-    "grafana-103633": [
-      true,
-      true,
-      true
-    ],
-    "grafana-79265": [
-      true,
-      true,
-      false,
-      false,
-      true
-    ],
-    "calcom-22345": [
-      false,
-      false
-    ],
-    "calcom-10967": [
-      true,
-      false,
-      false,
-      true,
-      true,
-      false
-    ],
-    "calcom-10600": [
-      false,
-      false,
-      true,
-      true,
-      false
-    ],
-    "calcom-8087": [
-      true,
-      true
-    ]
-  },
   "qodo-v2-2": {
     "keycloak-37429": [
       false,
@@ -143,5 +71,6 @@
       false,
       true
     ]
-  }
+  },
+  "_greptile_redaction_note": "2026-09-24: Greptile results (raw comments, per-finding scores, aggregate figures) removed. Greptile's Terms of Service (Section 1.4(a)) restrict making results of the Services available to third parties without written authorization, and none was requested before this data was published. Restored only if Greptile consents."
 }
