@@ -12,6 +12,7 @@ generation ~$0.22, verification ~$1.73 (2026-09-21 pricing) - see
 """
 import argparse
 import json
+import logging
 import re
 import sys
 from pathlib import Path
@@ -79,6 +80,34 @@ def main() -> None:
         "already gone into whatever's there, and silently appending on top of it used to "
         "double-count trials on an accidental rerun with no way to tell after the fact.",
     )
+    parser.add_argument(
+        "--rank", action="store_true",
+        help="pass rank_findings=True to review_diff() - exercises the post-verification "
+        "ranking/severity pass (jobs.py wires this for both tiers in production). The "
+        "ranking call reuses the generation on_usage callback, so its cost folds into "
+        "gen_cost automatically, no separate tracker needed.",
+    )
+    parser.add_argument(
+        "--share-pr-context", action="store_true",
+        help="pass share_pr_context_per_file=True: each per-file generation call is also shown the "
+        "rest of the PR's patches as context-only, with a guard dropping findings it attributes to "
+        "another file. Also counts those dropped findings into each trial's off_file_dropped.",
+    )
+    parser.add_argument(
+        "--ctx-max-chars", type=int, default=None,
+        help="experiment: override the per-call cap on the other-files context (production: 120000). "
+        "Only meaningful with --share-pr-context.",
+    )
+    parser.add_argument(
+        "--ctx-strip-unchanged", action="store_true",
+        help="experiment: drop unchanged context lines (leading space) from the other files' patches "
+        "in the shared context, keeping hunk headers and +/- lines. Only with --share-pr-context.",
+    )
+    parser.add_argument(
+        "--cases", type=str, default=None,
+        help="comma-separated subset of case ids to run (e.g. for a cheap pilot before "
+        "committing to the full corpus). Default: all cases.",
+    )
     args = parser.parse_args()
 
     if args.output.exists() and not args.resume:
@@ -90,15 +119,49 @@ def main() -> None:
 
     sys.path.insert(0, str(args.aletheore_root / "github-app"))
     from app_server.llm_cost import cost_for_usage
+    from scan_worker import flash_review as _fr
     from scan_worker.flash_review import review_diff
     from scan_worker.model_tiers import VERIFICATION_MODEL, flash_review_generation_adapter
 
+    if args.ctx_max_chars is not None or args.ctx_strip_unchanged:
+        _orig_build = _fr._build_other_files_context
+
+        def _patched_build(filename, diff_patches, max_chars=_fr.MAX_PR_CONTEXT_CHARS):
+            if args.ctx_strip_unchanged:
+                diff_patches = tuple(
+                    (name, "\n".join(l for l in patch.splitlines() if not l.startswith(" ")))
+                    for name, patch in diff_patches
+                )
+            return _orig_build(filename, diff_patches, args.ctx_max_chars or max_chars)
+
+        _fr._build_other_files_context = _patched_build
+
+    cases_to_run = CASES
+    if args.cases:
+        wanted = [c.strip() for c in args.cases.split(",") if c.strip()]
+        unknown = [c for c in wanted if c not in CASES]
+        if unknown:
+            raise SystemExit(f"unknown case id(s): {unknown} - valid ids: {list(CASES)}")
+        cases_to_run = {c: CASES[c] for c in wanted}
+
     case_data = {}
-    for case_id, title in CASES.items():
+    for case_id, title in cases_to_run.items():
         diff_text_raw = (DIFFS_DIR / f"{case_id}.diff").read_text()
         diff_patches = diff_patches_from_diff(diff_text_raw)
         diff_text = "\n\n".join(f"--- {f} ---\n{p}" for f, p in diff_patches)
         case_data[case_id] = (title, diff_text, diff_patches)
+
+    off_file_dropped = {"n": 0}
+
+    class _OffFileCounter(logging.Handler):
+        def emit(self, record):
+            m = re.search(r"dropped (\d+) off-file finding", record.getMessage())
+            if m:
+                off_file_dropped["n"] += int(m.group(1))
+
+    fr_logger = logging.getLogger("scan_worker.flash_review")
+    fr_logger.setLevel(logging.INFO)
+    fr_logger.addHandler(_OffFileCounter())
 
     configs = ["flash", "air"] if args.config == "both" else [args.config]
     results = {"flash": [], "air": []}
@@ -118,6 +181,7 @@ def main() -> None:
         for trial in range(args.trials):
             print(f"=== config={config_name} trial={trial + 1}/{args.trials} ===", flush=True)
             trial_result = {}
+            off_file_dropped["n"] = 0
             gen_stats, on_gen_usage = make_usage_tracker()
             verify_stats, on_verify_usage = make_usage_tracker()
             for case_id, (title, diff_text, diff_patches) in case_data.items():
@@ -131,6 +195,8 @@ def main() -> None:
                     verify_with_second_model=verify,
                     on_verification_usage=on_verify_usage if verify else None,
                     verify_suggestions=False,
+                    rank_findings=args.rank,
+                    share_pr_context_per_file=args.share_pr_context,
                 )
                 trial_result[case_id] = findings
                 print(f"  {case_id}: {len(findings)} findings", flush=True)
@@ -140,6 +206,10 @@ def main() -> None:
                 "findings": trial_result,
                 "gen_cost": {**gen_stats, "cost_usd": round(gen_cost, 4)},
                 "verify_cost": {**verify_stats, "cost_usd": round(verify_cost, 4)},
+                "share_pr_context": args.share_pr_context,
+                "ctx_max_chars": args.ctx_max_chars,
+                "ctx_strip_unchanged": args.ctx_strip_unchanged,
+                "off_file_dropped": off_file_dropped["n"],
             })
             args.output.parent.mkdir(parents=True, exist_ok=True)
             with open(args.output, "w") as f:

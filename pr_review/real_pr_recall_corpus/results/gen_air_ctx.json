@@ -1,0 +1,1203 @@
+{
+  "flash": [],
+  "air": [
+    {
+      "findings": {
+        "keycloak-37429": [
+          {
+            "file": "themes/src/main/resources-community/theme/base/account/messages/messages_zh_CN.properties",
+            "line": 112,
+            "issue": "Wrong script variant: The new `totpStep1` value is written in Traditional Chinese (\"\u60a8\u7684\u624b\u6a5f\", \"\u61c9\u7528\u7a0b\u5f0f\", \"\u88dd\u7f6e\") while this is the Simplified Chinese (zh_CN) message bundle, and all surrounding keys in the file (e.g. `totpStep2`, `totpStep3`) use Simplified Chinese. Users of the zh_CN locale will see a mixed-language page. The text should be converted to Simplified Chinese (e.g. \"\u5728\u60a8\u7684\u624b\u673a\u4e0a\u5b89\u88c5\u4ee5\u4e0b\u5e94\u7528\u7a0b\u5e8f\u4e4b\u4e00\uff1a\").",
+            "source": "llm"
+          },
+          {
+            "file": "misc/theme-verifier/pom.xml",
+            "line": 75,
+            "issue": "Dependency management: The new `owasp-java-html-sanitizer` and `commons-text` dependencies pin their versions directly in this module's pom instead of using a property or the project's `dependencyManagement`. In a multi-module project this makes future upgrades error-prone and can lead to version drift if other modules also need these libraries. Consider declaring the versions via properties or the parent BOM. Additionally, the explicit `<scope>compile</scope>` on `commons-text` is redundant since compile is the default scope.",
+            "source": "llm"
+          },
+          {
+            "file": "themes/src/main/resources-community/theme/base/account/messages/messages_lt.properties",
+            "line": 101,
+            "issue": "Wrong Language: The Lithuanian translation of `totpStep1` was replaced with Italian text (\"Installa una delle seguenti applicazioni sul tuo cellulare:\"). Lithuanian users of the account theme will see an Italian instruction, and the surrounding keys (`totpStep2`, `totpStep3`) remain in Lithuanian, so the message is inconsistent within the same page. The value should be translated to Lithuanian (e.g., matching the style of the login theme's `loginTotpStep1` change in this same PR).",
+            "source": "llm"
+          },
+          {
+            "file": "themes/src/main/resources-community/theme/base/login/messages/messages_lt.properties",
+            "line": 71,
+            "issue": "Wrong language translation: The Lithuanian `loginTotpStep1` message was replaced with Italian text (\"Installa una delle seguenti applicazioni sul tuo cellulare:\"). Lithuanian users will see an Italian instruction on the login page. The original Lithuanian sentence (with the FreeOTP/Google Authenticator links) should be reworded in Lithuanian instead, matching the pattern used in the other locale files in this PR (e.g. messages_sv, messages_no, messages_sk).",
+            "source": "llm"
+          },
+          {
+            "file": "js/apps/admin-ui/maven-resources/theme/keycloak.v2/admin/messages/messages_en.properties",
+            "line": 3138,
+            "issue": "Possible Bug: The message was changed from the ICU-escaped form `{{0}}`/`{{1}}`/`{{2}}` to single-brace placeholders with a `{2,choice,...}` ChoiceFormat sub-message. The Java-side theme files (e.g. themes/src/main/resources/theme/base/admin/messages_en.properties) use Java MessageFormat, where this syntax is valid, but this file lives under admin-ui, whose JS message formatting (messageformat.js / react-intl style) historically required the doubled braces seen in the old value and does not support the legacy `choice` argument type the way ICU4J does. If the admin-ui frontend formats this key with its own MessageFormat implementation, the new `choice` syntax may render incorrectly or throw at runtime when a multivalued-size validation error is displayed. Worth verifying against the actual formatting library used by admin-ui before merging.",
+            "source": "llm"
+          }
+        ],
+        "sentry-95633": [
+          {
+            "file": "src/sentry/remote_subscriptions/consumers/result_consumer.py",
+            "line": 131,
+            "issue": "Resource concern: In `thread-queue-parallel` mode, `num_queues=max_workers or 20` means that when `max_workers` is not provided (the CLI default is `None`), the factory silently spawns 20 worker threads and 20 unbounded queues per consumer, regardless of the workload. A user launching the consumer without explicit tuning gets a fixed 20-thread pool they did not ask for. Consider requiring an explicit value or choosing a smaller, documented default.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/remote_subscriptions/consumers/result_consumer.py",
+            "line": 180,
+            "issue": "Shutdown gap: `shutdown()` shuts down the `queue_pool` but has no handle to the `SimpleQueueProcessingStrategy` created by `create_with_partitions`, so its `_commit_loop` thread (started in the strategy's `__init__`) is only stopped if arroyo later calls `close()`/`terminate()` on the strategy. If the factory is shut down directly (as the tests do via `factory.shutdown()`), the commit thread keeps running until process exit. It is a daemon thread so it won't block exit, but it can still invoke `commit_function` after the pool is gone. Consider having the factory track and close the created strategy.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/remote_subscriptions/consumers/queue_consumer.py",
+            "line": 168,
+            "issue": "Data loss on processing failure: In `OrderedQueueWorker.run`, the `finally` block always calls `complete_offset`, even when `result_processor` raised an exception. Since the exception is only logged (not retried or re-raised), the failed offset becomes committable and the commit loop will commit past it, permanently skipping that message. This directly contradicts the class's stated guarantee of \"Only commits offsets after successful processing\". Trigger: any transient error in `result_processor` (e.g., DB timeout) causes that message's result to be silently lost. The same applies to `SimpleQueueProcessingStrategy.submit`'s exception path, which marks a failed decode/submit offset as complete. If dropping failed messages is intentional, it should be documented and metric'd; otherwise failed items should not be marked complete (or should be retried/dead-lettered).",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/remote_subscriptions/consumers/queue_consumer.py",
+            "line": 96,
+            "issue": "Unbounded offset tracking memory: `OffsetTracker.all_offsets` retains every offset per partition until `mark_committed` prunes it, and `get_committable_offsets` scans `range(start, max_offset + 1)` for each partition every second. If a single offset is stuck (e.g., a worker dies before completing an item, or a group's queue backs up), all_offsets grows without bound and the per-second scan walks the entire uncommitted range, degrading over time on high-throughput partitions. A concrete trigger: a worker thread crashes (e.g., an exception in `complete_offset` path or thread killed at interpreter shutdown) leaving one offset permanently outstanding \u2014 the set then grows for the lifetime of the process.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/remote_subscriptions/consumers/queue_consumer.py",
+            "line": 288,
+            "issue": "Assert in production path: `SimpleQueueProcessingStrategy.submit` uses `assert isinstance(message.value, BrokerValue)` to obtain the partition/offset. Asserts are stripped when Python runs with `-O`, and if a non-BrokerValue message ever reaches this path the code would raise `AttributeError` instead of a clear error. The exception handler below already handles non-BrokerValue values defensively (`isinstance(message.value, BrokerValue)` check), so the assert is both redundant and inconsistent with that handling.",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/remote_subscriptions/consumers/test_queue_consumer.py",
+            "line": 246,
+            "issue": "Flaky assertion: In `test_stats_reporting`, the assertion `stats[\"total_items\"] > 0` is made immediately after submitting 10 items, with no synchronization. The worker threads may consume all items from the queues before `get_stats()` is called, making `total_items` 0 and failing the assertion intermittently. A small sleep or a wait-until-nonempty check (or removing this racy assertion, since the final `total_items == 0` check after the completion event already covers the behavior) would make it deterministic.",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/remote_subscriptions/consumers/test_queue_consumer.py",
+            "line": 111,
+            "issue": "Flaky assertion: `test_different_groups_distributed` asserts that 20 group keys hash to exactly 3 distinct queue indices. This relies on Python's randomized string hashing (`hash(group_key) % num_queues`); while unlikely, the 20 keys can land in only 1 or 2 buckets for certain hash seeds, causing intermittent failure depending on `PYTHONHASHSEED`. Consider seeding with a deterministic hash (e.g., md5-based, as used elsewhere in the codebase) or loosening the assertion.",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/remote_subscriptions/consumers/test_queue_consumer.py",
+            "line": 404,
+            "issue": "Resource leak on failure: In `test_factory_creates_thread_queue_parallel_strategy`, `factory.shutdown()` is only called at the end of the test body. If any assertion fails (e.g., the `isinstance` or `num_queues` check), the `FixedQueuePool`'s worker threads and the strategy's commit thread are never shut down, leaving daemon threads and a commit loop running for the rest of the test session. Use try/finally or a tearDown to guarantee shutdown.",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/uptime/consumers/test_results_consumer.py",
+            "line": 1830,
+            "issue": "Contradictory error-handling test: In `test_thread_queue_parallel_error_handling`, the docstring says errors \"don't block offset commits for other messages\", but the assertion requires that no commit occurs (`len(committed_offsets) == 0 or test_partition not in committed_offsets`). In the implementation, `OrderedQueueWorker.run` completes the offset in a `finally` block even when `result_processor` raises, so after both messages are processed the commit loop will commit past the failed offset 100. The test will therefore fail intermittently (whenever a commit lands before `factory.shutdown()`), and its assertion contradicts both its own docstring and the actual intended behavior. The assertion should be that a commit eventually happens (offset 102), or the test should be rewritten to match the documented semantics.",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/uptime/consumers/test_results_consumer.py",
+            "line": 1689,
+            "issue": "Resource leak on failure: In all the new `test_thread_queue_parallel_*` tests, `factory.shutdown()` is called after the assertions rather than in a `try/finally`. The tests spin up real worker threads via `FixedQueuePool` (default 20 queues when `max_workers` is passed... here 2-3, but still daemon threads plus queues); if any assertion or the polling loop fails, `shutdown()` is never reached and the threads/queues leak into other tests in the same process, which can cause cross-test flakiness. Wrapping the body in `try/finally` would make failures clean up deterministically.",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/uptime/consumers/test_results_consumer.py",
+            "line": 2050,
+            "issue": "Private API usage: The Kafka integration test drives `StreamProcessor` via `processor._run_once()` and `processor._shutdown()`, which are private arroyo internals. If arroyo changes these internals, the test breaks in a way unrelated to the feature under test. Consider using the public `run()` in a thread with a timeout, or an exposed test hook, if available.",
+            "source": "llm"
+          }
+        ],
+        "calcom-22532": [
+          {
+            "file": "packages/prisma/schema.prisma",
+            "line": 1718,
+            "issue": "Misleading timestamps for legacy rows: The migration backfills `updatedAt` with `NOW()` at migration time for all existing `CalendarCache` rows. Since this field is used to surface \"cache last updated\" to users (via `getCacheStatusByCredentialIds`), pre-existing cache entries will appear as freshly updated at the moment the migration runs, even though their cached availability data may be stale. Consider backfilling with the row's `expiresAt` minus a known TTL, or accepting that legacy rows briefly show an inaccurate \"last updated\" time.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/prisma/schema.prisma",
+            "line": 1719,
+            "issue": "@updatedAt only applies via Prisma client: `@updatedAt` is enforced by the Prisma client, not the database. Any raw SQL writes or updates to `CalendarCache` performed outside Prisma (e.g., scripts, manual DB operations) will not refresh `updatedAt`, so the cache status shown to users could be stale in those paths. If all writes go through `prisma.calendarCache.*` this is fine, but worth confirming.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/googlecalendar/lib/CalendarService.ts",
+            "line": 1022,
+            "issue": "Possible Bug: The new call `SelectedCalendarRepository.updateManyByCredentialId(this.credential.id, {})` passes an empty `data` object. Prisma's `updateMany` requires at least one field in `data`; an empty object will either throw a validation error at runtime (failing the whole availability-refresh flow) or, if accepted, only bump `updatedAt` if the `SelectedCalendar.updatedAt` field is marked `@updatedAt` in the schema \u2014 which is not shown or guaranteed here (the migration/schema changes in this PR only touch `CalendarCache.updatedAt`, not `SelectedCalendar`). If `SelectedCalendar.updatedAt` lacks `@updatedAt`, this call is a silent no-op and the intended \"refresh timestamp\" never happens. Verify the schema and pass explicit data (e.g., `{ updatedAt: new Date() }`) if needed.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/googlecalendar/lib/CalendarService.ts",
+            "line": 1022,
+            "issue": "Unconditional update: The `updateManyByCredentialId` call runs on every invocation of this method, even when the cache was not refreshed (i.e., when the `if` block that fetches and stores availability was skipped). This performs a write against all `SelectedCalendar` rows for the credential on every call, adding unnecessary DB load and potentially misleading consumers of `updatedAt` into thinking fresh data was fetched when it was served from cache. If the intent is to reflect a refresh, the update should only run after an actual fetch/cache write.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/trpc/server/routers/viewer/calendars/_router.tsx",
+            "line": 28,
+            "issue": "Schema convention: The `deleteCache` procedure defines its input schema inline with `z.object({ credentialId: z.number() })`, while the sibling procedures in this router (e.g. `setDestinationCalendar`) import their schemas from `connectedCalendars.schema`. Placing the schema in a `.schema.ts` file keeps validation reusable and consistent with the existing pattern in this router. Low severity, but a concrete deviation from the file's own convention.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/lib/server/repository/selectedCalendar.ts",
+            "line": 400,
+            "issue": "Possible Bug: `updateManyByCredentialId` is called from `CalendarService.ts` (in this PR) with an empty data object: `updateManyByCredentialId(this.credential.id, {})`. Prisma's `updateMany` rejects an empty `data` object with a validation error, so this call will throw and abort the availability-fetch flow after the cache refresh. If the intent is only to bump `updatedAt`, the method should explicitly pass a field (e.g. `data: { updatedAt: new Date() }`) or the caller should pass meaningful data. Note: I'm not fully certain Prisma throws on empty `data` in all versions, but the empty call is at minimum a fragile contract for the new API.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/trpc/server/routers/viewer/calendars/connectedCalendars.handler.ts",
+            "line": 27,
+            "issue": "Performance: The handler now runs an additional `calendarCache.groupBy` query on every `connectedCalendars` fetch, even when `connectedCalendars` is empty (an empty `credentialIds` array is passed to the repository, producing a pointless `WHERE credentialId IN ()` query) and even for non-Google calendar credentials that never populate the cache. Since this endpoint is called frequently (settings page loads, onboarding, invalidations), consider skipping the repository call when `credentialIds` is empty or when no credential can have cache entries.",
+            "source": "llm"
+          },
+          {
+            "file": "scripts/test-gcal-webhooks.sh",
+            "line": 68,
+            "issue": "Portability Bug: `sed -i '' -E ...` uses the BSD/macOS form of in-place editing. On GNU/Linux, `sed -i ''` treats the empty string as the backup-suffix argument incorrectly or treats `''` as a filename, causing the command to fail (or create a stray file), so `GOOGLE_WEBHOOK_URL` is never updated on Linux machines. Use a portable approach (e.g., detect sed flavor, or use `sed -i.bak` and remove the backup).",
+            "source": "llm"
+          },
+          {
+            "file": "scripts/test-gcal-webhooks.sh",
+            "line": 5,
+            "issue": "Relative Path Risk: `ENV_FILE=\"../.env\"` is resolved relative to the current working directory, not the script location. Running the script from the repo root (or any other directory) silently creates/updates a `.env` in the wrong place (`touch \"$ENV_FILE\"` even creates a new file there), leaving the real env file stale and the webhook URL pointing at an old tunnel.",
+            "source": "llm"
+          },
+          {
+            "file": "scripts/test-gcal-webhooks.sh",
+            "line": 30,
+            "issue": "Stale URL on Reuse: When an existing `tmole` process is detected, the URL is read from `/tmp/tmole.log`, which may be from a previous session (the log is only removed when this script starts tmole itself). A reused tunnel typically gets a different URL on restart, so the script can write a stale, no-longer-valid URL into `.env` and report success.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/apps/components/CredentialActionsDropdown.tsx",
+            "line": 103,
+            "issue": "Hardcoded locale: The cache timestamp is formatted with `new Intl.DateTimeFormat(\"en-US\", ...)`, ignoring the user's locale even though the component uses `useLocale()`. Non-English users will see dates formatted in US style (e.g., \"9/24/26, 3:15 PM\") mixed with their translated UI text. Use the locale from `useLocale()` (or `navigator.language`) instead.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/apps/components/CredentialActionsDropdown.tsx",
+            "line": 34,
+            "issue": "Stale cache status: `deleteCacheMutation` shows a success toast but, unlike `disconnectMutation`, never invalidates `utils.viewer.calendars.connectedCalendars`. It relies solely on the optional `onSuccess` callback; when the component is used without `onSuccess` (the prop is optional), the dropdown will keep showing the old \"Last updated\" timestamp after the cache was deleted.",
+            "source": "llm"
+          }
+        ],
+        "grafana-80329": [
+          {
+            "file": "pkg/services/cleanup/cleanup.go",
+            "line": 77,
+            "issue": "Increased job frequency: The cleanup ticker interval is reduced from 10 minutes to 1 minute. Combined with the PR's change to run cleanup in multiple separate query/delete batches, this means the cleanup service now issues batched SELECT + DELETE statements against the annotation tables every minute instead of every 10 minutes, a 10x increase in background database load. If the shorter interval is not intentional (e.g., a debugging leftover), it should be reverted; if intentional, it may be worth confirming the database can absorb the extra per-minute batched deletes, especially on large annotation tables.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/annotations/annotationsimpl/xorm_store.go",
+            "line": 531,
+            "issue": "Misuse of Error-level logging: The new cleanup paths log routine progress via `r.log.Error` (e.g., \"Annotations to clean by time\", \"cleaned annotations by time\", \"Tags to clean\"). These are informational messages that fire on every cleanup cycle, not errors, so every cleanup run will emit error-level log entries and trigger alerting/noise in error-rate dashboards. Additionally, the `err` field logged alongside is always nil at that point (errors are returned instead), which is misleading. These should be `r.log.Debug` (or Info), and the `err` fields dropped. The \"cleaned ...\" logs also pass `y` (the delete error) as a log field while still returning it, double-handling the error.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/annotations/annotationsimpl/xorm_store.go",
+            "line": 533,
+            "issue": "Unbounded log payload: The log statements include `\"ids\", ids`, dumping the full list of fetched IDs. With `AnnotationCleanupJobBatchSize` potentially large (the tests exercise a batch size of 32767), each cleanup cycle can emit a log line containing tens of thousands of IDs at Error level, bloating logs and log-processing pipelines. The count alone (or a truncated ID sample) would suffice.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/annotations/annotationsimpl/cleanup_test.go",
+            "line": 277,
+            "issue": "Possible SQLite parameter limit failure: The new test case creates 40003 annotations and inserts them via `sess.InsertMulti` in batches of 500. Each `annotations.Item` has on the order of a dozen columns, so a single InsertMulti statement can bind ~6000 parameters. On SQLite versions older than 3.32.0 (where SQLITE_MAX_VARIABLE_NUMBER defaults to 999), this insert would fail with a \"too many terms\" error \u2014 the very limit the new test case is named after. Since the test's purpose is to validate behavior at the parameter-limit boundary, consider lowering the insert batch size (e.g., to 100) or making it dialect-aware so the test does not fail on older SQLite builds.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/annotations/annotationsimpl/cleanup_test.go",
+            "line": 237,
+            "issue": "Hardcoded annotation IDs: `createTestAnnotations` now explicitly sets `ID: int64(i + 1)` instead of letting the database assign IDs. If the annotation table already contains rows (e.g., seed data from migrations or a prior insert in the same shared `fakeSQL` instance whose cleanup failed), these explicit inserts will collide with existing primary keys and fail. It also decouples the test from real ID assignment behavior; if insertion order or ID allocation changes, the \"old annotations deleted first\" assumptions tied to IDs may silently diverge from production behavior. Consider letting the DB assign IDs and reading them back, unless the explicit IDs are specifically required by the new delete-by-ID logic under test.",
+            "source": "llm"
+          }
+        ],
+        "sentry-80168": [
+          {
+            "file": "src/sentry/incidents/grouptype.py",
+            "line": 12,
+            "issue": "Unimplemented abstract methods: `MetricAlertDetectorHandler` now subclasses `StatefulDetectorHandler`, which declares abstract methods `get_dedupe_value`, `get_group_key_values`, and `build_occurrence_and_event_data` (per the diff in `src/sentry/workflow_engine/processors/detector.py`). The class body is just `pass`, so it does not implement any of them. If this class is ever instantiated (e.g., when a detector of this group type is processed via `Detector.detector_handler`), Python will raise `TypeError: Can't instantiate abstract class ...`. The previous stub `evaluate` returning `[]` was replaced by the base-class implementation, but the required hooks are missing. If this handler is not yet registered/used, consider noting that it is intentionally incomplete, but as written any code path reaching it will fail.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/workflow_engine/processors/detector.py",
+            "line": 298,
+            "issue": "Possible enum mismatch: `PriorityLevel(new_status)` casts a `DetectorPriorityLevel` value into `sentry.types.group.PriorityLevel`. This only works if the two enums have identical numeric values for every non-OK status; if any level differs (or a `DetectorPriorityLevel` value has no `PriorityLevel` counterpart), this raises a `ValueError` at occurrence-build time for that status. Worth verifying the two enums are value-aligned, or mapping explicitly.",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/workflow_engine/processors/test_detector.py",
+            "line": 254,
+            "issue": "Test helper ignores value: `build_mock_occurrence_and_event` accepts a `value` parameter but never uses it when constructing the `IssueOccurrence` or `event_data`. As a result, the expected occurrences in tests like `test_state_results_multi_group` (where `occurrence_2` is built with value `6` even though `group_2`'s actual value is `10`) and `test_results_on_change`/`test_dedupe` (built with `6` while the packet value is `100`/`8`) do not actually reflect the value the handler passed to `build_occurrence_and_event_data`. If the production code passed the wrong value (or swapped values between group keys), these tests would still pass, masking a real bug. Either use `value` in the helper or drop the parameter and note that value is intentionally not asserted.",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/workflow_engine/processors/test_detector.py",
+            "line": 30,
+            "issue": "Type mismatch in mock: `MockDetectorStateHandler.get_group_key_values` is typed as returning `dict[str, int]`, but tests pass packets with `{\"group_vals\": {None: 6}}`, i.e. a `None` key. This works at runtime but the annotation no longer matches actual usage; if the handler or callers ever rely on string keys (e.g., for fingerprint building or redis keys), the None-key case exercised in `test_state_results` would not be representative. Consider widening the type or using a string key in the test.",
+            "source": "llm"
+          }
+        ],
+        "sentry-80528": [
+          {
+            "file": "src/sentry/monitors/logic/incident_occurrence.py",
+            "line": 160,
+            "issue": "Dead code / lost transformation: In `get_monitor_environment_context`, a copy of `monitor.config` is made and `schedule_type` is converted to its display value on the copy, but the copy is never used \u2014 the returned dict includes the raw `monitor_environment.monitor.config` instead. As a result, the `schedule_type` in the monitor context sent to Kafka remains the raw enum/integer value rather than the human-readable display value, defeating the apparent intent of the conversion. This is a pure move of existing code, so the bug predates the PR, but the new file carries it forward.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/monitors/logic/incident_occurrence.py",
+            "line": 122,
+            "issue": "Docstring typos: The `get_failure_reason` docstring reads \"humam readible\" (should be \"human readable\"). Minor, but worth fixing while the code is being relocated.",
+            "source": "llm"
+          }
+        ],
+        "grafana-76186": [
+          {
+            "file": "pkg/plugins/log/fake.go",
+            "line": 46,
+            "issue": "Test fake loses log capture: `TestLogger.FromContext` returns a brand-new `NewTestLogger()` instead of a logger tied to the receiver. Any code under test that calls `logger.FromContext(ctx)` and logs through the result will write to a throwaway logger, so those log calls are not recorded in the original `TestLogger`'s `Logs`/call counters. Tests that assert on captured log output after the `Logger.FromContext` interface method is introduced (e.g., via the new `ContextualLoggerMiddleware` path) will silently see zero calls. Returning a logger that shares or forwards to the receiver's recording state (e.g., `return f`) would preserve test observability.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/plugins/log/logger.go",
+            "line": 47,
+            "issue": "Possible Bug: The new `FromContext` method silently falls back to `d.New()` when the type assertion to `*log.ConcreteLogger` fails. Two concerns: (1) if `d.l.FromContext(ctx)` returns a value type rather than a pointer (or any other concrete type), the assertion fails and the returned logger loses all contextual attributes from `ctx` without any error or logging \u2014 callers like `LoggerMiddleware.logRequest` would log requests without the plugin/datasource/user context added by the new `ContextualLoggerMiddleware`. (2) Even in the success path, the fallback path discards the context silently. Without a referenced definition of `infra/log.Logger.FromContext` it is uncertain whether the assertion can actually fail in practice, but if it can, the failure mode is silent loss of log context.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/pluginsintegration/pluginsintegration.go",
+            "line": 160,
+            "issue": "Stale logger name: The `LoggerMiddleware` is still constructed with `log.New(\"plugin.instrumentation\")` even though the instrumentation middleware was renamed to `MetricsMiddleware` and the contextual-logger responsibility moved to `ContextualLoggerMiddleware`. Log entries emitted by this middleware will continue to carry the \"plugin.instrumentation\" logger name, which no longer matches the component's purpose and may confuse log-based dashboards or alerts keyed on that name. Consider renaming it (e.g., \"plugin.logger\") if downstream consumers don't depend on the old name.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/plugins/log/ifaces.go",
+            "line": 26,
+            "issue": "Breaking interface change: Adding `FromContext(ctx context.Context) Logger` to the exported `Logger` interface is a breaking change for any external or unshown implementer of this interface: all implementations must add this method or fail to compile. The implementations visible in this PR (`TestLogger` in fake.go and `grafanaInfraLogWrapper` in logger.go) do implement it, but any other implementers elsewhere in the codebase or in external plugins would break. If this package is consumed only internally and all implementers are covered by this PR, this is fine; otherwise consider whether a separate optional interface (e.g., `ContextualLogger`) would avoid the break.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/pluginsintegration/clientmiddleware/logger_middleware.go",
+            "line": 52,
+            "issue": "Lost traceID in logs: The PR removes the explicit \"traceID\" log parameter (previously populated via tracing.TraceIDFromContext) from the \"Plugin Request Completed\" log entry. The new ContextualLoggerMiddleware only injects endpoint, pluginId, dsName, dsUID, and uname into the context, so trace correlation is no longer present in this log line at all. Any log-based dashboards or alerts that join \"Plugin Request Completed\" entries to traces by traceID will silently lose that ability. If this removal is intentional (e.g., trace correlation is now handled elsewhere), it should be noted; otherwise the traceID should be preserved, e.g. via the contextual attributes or by re-adding the parameter.",
+            "source": "llm"
+          }
+        ],
+        "grafana-103633": [
+          {
+            "file": "pkg/services/authz/rbac/cache.go",
+            "line": 30,
+            "issue": "Cache key collision: `userPermDenialCacheKey` joins `namespace`, `userUID`, `action`, `name`, and `parent` with \"_\" separators, none of which are escaped or length-delimited. Since the same \"_\"-joined format is used by `userPermCacheKey` (namespace + \".perm_\" + userUID + \"_\" + action), two different (action, name, parent) tuples can produce the same denial key \u2014 e.g. action=\"dashboards:read\", name=\"a_b\", parent=\"c\" collides with action=\"dashboards:read_a\", name=\"b\", parent=\"c\" \u2014 and can also collide with a plain permission cache key. A collision would cause a denial cached for one resource to incorrectly deny checks for a different resource, a security-relevant false denial (or, in the reverse direction, a cached denial could be attributed to the wrong key). Using a delimiter that cannot appear in the components (or encoding them) avoids this.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/authz/rbac.go",
+            "line": 101,
+            "issue": "Cache behavior asymmetry: The in-process authz client (ProvideAuthZClient) is now wired with `NoopCache`, while `newRemoteRBACClient` still uses a 30-second `cache.NewLocalCache`. If this asymmetry is intentional (server-side caching added in the Service), it deserves a comment; otherwise the in-process path silently loses client-side caching that the remote path retains. No test in this PR covers the NoopCache wiring.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/authz/rbac.go",
+            "line": 239,
+            "issue": "Placement of NoopCache: `NoopCache` is defined in `rbac.go` while the other cache-related helpers (e.g., `userPermDenialCacheKey`) live in `pkg/services/authz/rbac/cache.go`. Minor consistency concern only; behavior is correct since Get always returns `cache.ErrNotFound`, Set/Delete are no-ops.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/authz/rbac/service_test.go",
+            "line": 893,
+            "issue": "Missing coverage: The new tests cover cache-hit allow, cache-miss fallback, stale-cache fallback, and explicit denial-cache deny, but do not cover two important paths of the new Check logic: (1) that a denial is actually written to `permDenialCache` when the database check denies access, and (2) the case where `permCache` contains an entry for the action but the permission is not granted (cachedPerms found, checkPermission returns false) and the request falls through to the database. Without test (1), a regression that silently stops populating the denial cache would go unnoticed, and without test (2) the fallback-on-cached-deny path is unverified.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/authz/rbac/service_test.go",
+            "line": 946,
+            "issue": "Weak assertion: In \"Fallback to the database on outdated cache\", the test only asserts `resp.Allowed` is true. It does not verify that the denial cache was not populated (the check was allowed) or that the permission cache was updated with the fresh database result. As written, this test would pass even if the fallback path incorrectly wrote a denial entry or failed to refresh the cache, so it does not fully pin down the intended cache behavior it claims to test.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/authz/rbac/service.go",
+            "line": 116,
+            "issue": "Stale denial cache: The new `permDenialCache` entry is set on every denied Check, but unlike `permCache` it is never invalidated when a user's permissions change (e.g., a permission is granted or a role is updated elsewhere in the codebase that deletes `permCache`/`idCache` keys). Because the denial check short-circuits before the permission cache and the database, a user who is granted access to a resource will continue to be denied for that specific resource until the short TTL expires, even after the permission cache has been refreshed. If permission-change invalidation exists elsewhere it should also target `permDenialCache`; otherwise this is a deliberate staleness trade-off that should be documented.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/authz/rbac/service.go",
+            "line": 122,
+            "issue": "Swallowed cache-lookup errors: In `Check`, the result of `getCachedIdentityPermissions` is only used when `err == nil`; any error (including real failures from `GetUserIdentifiers`, not just `cache.ErrNotFound`) is silently discarded and the code falls through to the database path. This hides genuine backend errors (no log, no metric distinguishing them from a cache miss) and can cause a redundant second identifiers lookup inside `getIdentityPermissions`. A low-severity issue since the fallback still returns a correct result, but errors other than `cache.ErrNotFound` should at least be logged or distinguished.",
+            "source": "llm"
+          }
+        ],
+        "grafana-79265": [
+          {
+            "file": "packages/grafana-runtime/src/config.ts",
+            "line": 97,
+            "issue": "Missing type annotation: The new field `anonymousDeviceLimit = undefined;` has no explicit type annotation, so TypeScript infers its type as `undefined` (under strict settings) rather than `number | undefined` as declared in the `GrafanaConfig` interface. Any code in this file or consumers that later assign a number to `config.anonymousDeviceLimit` (e.g., from the frontend settings boot data) will get a type error, and reads will be typed as `undefined` instead of `number | undefined`. It should be declared as `anonymousDeviceLimit: number | undefined = undefined;` to match the interface and the backend DTO (`AnonymousDeviceLimit int64`).",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/anonymous/anonimpl/client.go",
+            "line": 44,
+            "issue": "Performance regression: TagDevice was previously invoked in a background goroutine with a 2-minute timeout and panic recovery, so anonymous authentication never waited on it. It is now called synchronously on the authentication path with no timeout, meaning every anonymous request blocks on the device DB write (including the new count/update queries when a device limit is configured), and a slow or saturated database directly delays or stalls user authentication. The removed panic recovery also means a panic inside TagDevice now propagates into the request instead of being logged.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/anonymous/anonimpl/client.go",
+            "line": 44,
+            "issue": "Context cancellation: The tagging call now uses the request-scoped ctx instead of a detached context. If the client disconnects or the request context is cancelled mid-request, TagDevice is aborted and the device is never recorded/updated, skewing device counts against the configured limit. The previous code deliberately used context.Background() with its own timeout to avoid this.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/anonymous/anonimpl/impl.go",
+            "line": 144,
+            "issue": "Behavioral change in error handling: `TagDevice` previously logged a `tagDeviceUI` failure and still returned `nil`; it now returns the error. In `client.go`'s `Authenticate` this is handled (non-limit errors are logged and authentication proceeds, limit errors abort it), but any other caller of `TagDevice` that previously relied on UI-tagging failures being non-fatal will now receive an error for transient DB failures during UI tagging. If `TagDevice` has callers outside `client.go`, verify they tolerate this new error propagation; otherwise consider returning the error only for `ErrDeviceLimitReached`.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/anonymous/anonimpl/anonstore/database.go",
+            "line": 100,
+            "issue": "Race condition: The device limit check in CreateOrUpdateDevice is a non-atomic count-then-act: CountDevices is read, then an INSERT follows with no locking or transaction. Under concurrent anonymous requests (a realistic burst scenario), multiple goroutines can all observe count < deviceLimit and each insert, so the actual number of devices can exceed the configured limit. If a hard cap is the goal, the check and insert should be done atomically (e.g., in a transaction with a lock, or an INSERT ... WHERE with a count subquery).",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/anonymous/anonimpl/anonstore/database.go",
+            "line": 72,
+            "issue": "Misleading error semantics: updateDevice returns ErrDeviceLimitReached whenever rowsAffected == 0, but that condition also occurs when the device exists yet its updated_at falls outside the [UpdatedAt-30d, UpdatedAt+1min] window (e.g., a returning device last seen more than 30 days ago, or a caller supplying a stale/incorrect UpdatedAt). In that case the failure is not \"device limit reached\" but \"device not eligible for update\", and callers (see client.go, which rejects authentication on this error) will surface the wrong reason. Consider distinguishing the two cases, e.g., by checking existence first or using a distinct error.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/anonymous/anonimpl/anonstore/database.go",
+            "line": 82,
+            "issue": "Inconsistent time windows: The count check in CreateOrUpdateDevice uses a window anchored at time.Now(), while updateDevice uses a window anchored at device.UpdatedAt. If device.UpdatedAt differs from the current time (clock skew, or a caller passing a historical timestamp), the two checks disagree about which devices are \"active\", so a device may be counted toward the limit yet not updatable, or vice versa. Anchoring both windows to the same clock would make the behavior predictable.",
+            "source": "llm"
+          }
+        ],
+        "calcom-22345": [
+          {
+            "file": "packages/lib/server/service/insightsBooking.ts",
+            "line": 29,
+            "issue": "Type inconsistency: The new `InsightsBookingServicePublicOptions` type declares `teamId?: number` as optional, but `buildTeamAuthorizationCondition` (typed via `Extract<InsightsBookingServiceOptions, { scope: \"team\" }>`, where `teamId` is required) uses `options.teamId` directly in `Prisma.sql``(\"teamId\" = ${options.teamId})``. A caller constructing the service with `scope: \"team\"` and omitting `teamId` (allowed by the new public type) would produce `\"teamId\" = undefined`, which Prisma rejects at query time or silently mismatches. The public type should require `teamId` when `scope` is `\"team\"` (e.g., a discriminated union), or the constructor should validate it.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/lib/server/service/insightsBooking.ts",
+            "line": 164,
+            "issue": "Possible Bug: In `buildOrgAuthorizationCondition`, when `teamIds` is empty the generated SQL is `(\"teamId\" = ANY(EMPTY_ARRAY)) AND (\"isTeamBooking\" = true)`. With Prisma raw queries an empty JS array bound as a single parameter can fail or behave inconsistently depending on the driver (the old `{ teamId: { in: [] } }` Prisma filter reliably evaluated to false). If the org has no teams, this path is hit; consider guarding with `NOTHING_CONDITION` when `teamIds.length === 0`. Uncertainty: whether the empty-array binding fails depends on the Prisma/driver version, but the safe explicit guard costs nothing.",
+            "source": "llm"
+          }
+        ],
+        "calcom-10967": [
+          {
+            "file": "packages/trpc/server/routers/viewer/bookings/requestReschedule.handler.ts",
+            "line": 240,
+            "issue": "Missing fallback: The new code returns an empty array when `bookingToReschedule?.destinationCalendar` is unset, but sibling handlers changed in this same PR (e.g. `confirm.handler.ts`, `editLocation.handler.ts`, `handleCancelBooking.ts`, `deleteCredential.handler.ts`) fall back to the user's `destinationCalendar` in that case. If the reschedule flow relies on the organizer's default destination calendar the way those flows do, calendar events for rescheduled bookings may be created on the wrong calendar (or the \"primary\" fallback) instead of the organizer's selected one. If the absence of the fallback here is intentional, it would be worth a comment explaining why this handler differs from the others.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/trpc/server/routers/viewer/organizations/create.handler.ts",
+            "line": 151,
+            "issue": "Behavior Inversion: The refactor of the conditional spread inverted the logic for `slug`. Previously, `slug` was included in the organization `create` payload when `IS_TEAM_BILLING_ENABLED` was false (`...(!IS_TEAM_BILLING_ENABLED && { slug })`). The new ternary `...(IS_TEAM_BILLING_ENABLED ? { slug } : {})` includes `slug` only when billing IS enabled. Unless this inversion was intentional, organizations created with team billing disabled will no longer receive their slug, which can break slug-based lookups downstream. Note the adjacent `metadata.requestedSlug` line kept its original condition (`IS_TEAM_BILLING_ENABLED`), so the two conditions now disagree, which strongly suggests the `slug` flip is accidental.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/office365calendar/lib/CalendarService.ts",
+            "line": 73,
+            "issue": "Interface mismatch: The `Calendar` interface in `packages/types/Calendar.d.ts` was changed to `createEvent(event: CalendarEvent, credentialId: number)`, and `CalendarManager.createEvent` now calls `calendar.createEvent(calEvent, credential.id)`. This service's `createEvent` still only accepts `(event)` and ignores the `credentialId`. Unlike the Google service (which uses `credentialId` to find the matching destination calendar), Office365 always uses the first element of `destinationCalendar`. In a collective event where the first destination calendar belongs to a different credential (e.g., a Google calendar) while this Office365 credential is also creating the event, the event will be created in the wrong calendar (or fall back to `/me/calendar/events`), since the entry matching this credential is never selected.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/office365calendar/lib/CalendarService.ts",
+            "line": 73,
+            "issue": "Wrong calendar selection: `const [mainHostDestinationCalendar] = event.destinationCalendar ?? []` assumes the first entry is the correct destination for this credential. With the new multi-host collective behavior (team members' destination calendars are appended in `handleNewBooking`), the first entry can belong to a different user/credential than the one executing this service. The Google service was updated to select by `cal.credentialId === credentialId`, but this file was not, so for mixed-provider collective events the Office365 event may be written to another host's calendar externalId, which this credential may not even have access to, causing a Microsoft Graph error or an event in the wrong calendar.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/lib/CalendarService.ts",
+            "line": 156,
+            "issue": "Ordering assumption: Both hunks assume that the first element of `event.destinationCalendar` is the \"main host\" calendar (`const [mainHostDestinationCalendar] = event.destinationCalendar ?? []`). This relies on callers always placing the organizer's calendar first in the array. If any caller constructs the array in a different order (e.g., team members' calendars first, or a re-sorted/persisted list read back from the DB), the wrong calendar's `externalId` will be used to filter which calendars receive the event and to mark the `primary` calendar, causing the event to be created on/synced with the wrong member's calendar. Worth verifying that the array ordering is guaranteed (or selecting by `credentialId` as the Google service in this PR does) before relying on index 0.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/larkcalendar/lib/CalendarService.ts",
+            "line": 128,
+            "issue": "Wrong calendar for collective events: With `destinationCalendar` now being an array (collective events push each host's calendar), this service always uses the first element (`mainHostDestinationCalendar`) without matching it to the service's own credential. The Google service in this same PR was updated to select the destination calendar by `credentialId` (and `createEvent` now receives a `credentialId` parameter for exactly this purpose), but the Lark service ignores it. In a collective booking where the first host uses Google Calendar and a later host uses Lark, `createEvent`/`createAttendees` will attempt to create the Lark event using the Google host's `externalId` as the Lark calendar ID, which will fail or target the wrong calendar. Consider filtering `event.destinationCalendar` by the credential associated with this Lark service (e.g., accepting and using the new `credentialId` argument) instead of blindly taking index 0.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/larkcalendar/lib/CalendarService.ts",
+            "line": 125,
+            "issue": "Interface contract drift: The `Calendar` interface was changed to `createEvent(event, credentialId)`, and callers (CalendarManager) now pass `credential.id`. This service's `createEvent` was not updated to accept the parameter, so it silently ignores the credential ID. That is legal TypeScript but means the Lark implementation cannot disambiguate which destination calendar belongs to it, reinforcing the wrong-calendar selection issue above.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/core/CalendarManager.ts",
+            "line": 267,
+            "issue": "externalId returned on failure: `createEvent` now returns `externalId` unconditionally, even when the calendar event creation failed (e.g., the 404 catch path returns `undefined` for `creationResult`, so `success` is false). Downstream, `EventManager` builds the booking's `externalCalendarId` from `result.externalId`, so a failed creation can still persist an external calendar ID reference for an event that was never created, which later update/delete flows will rely on. Consider returning `externalId` only when `creationResult` exists (or when success is true).",
+            "source": "llm"
+          },
+          {
+            "file": "packages/core/CalendarManager.ts",
+            "line": 220,
+            "issue": "externalId lost in fallback path: `externalId` is an optional parameter, and callers that don't pass it (e.g., the no-credentialId fallback path in `createAllCalendarEvents` which calls `createEvent(c, event)`) will get `externalId: undefined` in the result. Since `EventManager` now derives the booking's `externalCalendarId` from `result.externalId` instead of `evt.destinationCalendar?.externalId`, bookings created via that path may lose their external calendar ID reference compared to the previous behavior.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/googlecalendar/lib/CalendarService.ts",
+            "line": 255,
+            "issue": "Possible Bug: In `updateEvent`, the fallback `event.destinationCalendar?.find((cal) => cal.externalId === externalCalendarId)?.externalId` compares each calendar's `externalId` against `externalCalendarId`. When `externalCalendarId` is not provided (the common case, since it's the fallback branch), no entry can match `undefined`, so `selectedCalendar` is always `undefined` and the update is attempted with an undefined `calendarId`. The previous code used `event.destinationCalendar.externalId` as the fallback, so events in a non-primary selected calendar will no longer be updated correctly (or the API call will fail). The lookup should probably match on `credentialId` (as `createEvent` now does) or fall back to the first destination calendar's `externalId`.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/googlecalendar/lib/CalendarService.ts",
+            "line": 315,
+            "issue": "Possible Bug: Same regression in `deleteEvent`: `event.destinationCalendar?.find((cal) => cal.externalId === externalCalendarId)?.externalId` can never match when `externalCalendarId` is undefined, so `calendarId` becomes `undefined` and the delete targets the wrong calendar or fails. Previously the code fell back to `event.destinationCalendar?.externalId`, meaning cancellations of bookings stored on a selected (non-primary) Google calendar will no longer delete the remote event, leaving orphaned calendar entries.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/bookings/lib/handleCancelBooking.ts",
+            "line": 418,
+            "issue": "Duplicate deletions: The switch from `find` to `filter` over booking references now runs the deletion logic once per calendar reference. In the recurring-event branch, each iteration re-iterates ALL of the user's calendar credentials and ALL updatedBookings, deleting every booking's calendar event once per reference. With N calendar references (the multi-host collective scenario this PR targets), each event is deleted N times via the calendar API - redundant calls that can surface as errors or rate-limit issues. The same duplication applies to the no-credentialId fallback branch, which deletes `uid` from every calendar credential once per reference. Consider deduplicating the recurring/all-remaining-bookings path outside the per-reference loop.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/bookings/lib/handleCancelBooking.ts",
+            "line": 427,
+            "issue": "Credential shape mismatch: When the credential is not found in `bookingToDelete.user.credentials`, it is fetched via `prisma.credential.findUnique` and passed to `getCalendar`. A raw Prisma `Credential` lacks the app-related fields (e.g. `appName`/app slug) that the in-memory user credentials carry; if `getCalendar` relies on those fields to instantiate the calendar service, the deletion will silently fail (calendar is optional-chained) for credentials not attached to the booking user - exactly the multi-host case this PR intends to support. Worth verifying `getCalendar` works with a bare DB credential.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/bookings/lib/handleNewBooking.ts",
+            "line": 1078,
+            "issue": "Possible Bug: `evt.destinationCalendar?.push(...teamDestinationCalendars)` silently does nothing when `evt.destinationCalendar` is `null`. The assignment a few lines above sets it to `null` when neither `eventType.destinationCalendar` nor `organizerUser.destinationCalendar` exists. So for a COLLECTIVE team event where the event type and organizer have no destination calendar, the team members' destination calendars collected in `teamDestinationCalendars` are silently dropped and no calendar event is created for them. The optional chaining masks the error instead of handling it.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/bookings/lib/handleNewBooking.ts",
+            "line": 1874,
+            "issue": "Data loss: When creating the booking record, only `evt.destinationCalendar[0]` is connected via `connect: { id: evt.destinationCalendar[0].id }`, even though the PR intentionally pushes multiple team destination calendars into `evt.destinationCalendar` for COLLECTIVE events. The additional calendars are used by EventManager but never persisted as booking references/relations, so on reschedule or cancel flows that reload the booking, those team member calendars are lost.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/bookings/lib/handleNewBooking.ts",
+            "line": 724,
+            "issue": "Error handling: The new `loadUsers` catch block converts any non-HttpError/non-Prisma error into a generic 500 \"Unable to load users\" without logging the original error, making failures (e.g., the thrown \"dynamicUserList is not properly defined or empty.\" validation error, which becomes a 500 instead of a 400) hard to diagnose in production. The thrown validation Error is not an HttpError, so it is swallowed into an opaque 500.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/core/EventManager.ts",
+            "line": 117,
+            "issue": "Possible Bug: `evt.destinationCalendar` is now an array, and the code destructures `const [mainHostDestinationCalendar] = evt.destinationCalendar ?? [];` then accesses `mainHostDestinationCalendar.integration` without optional chaining. When `destinationCalendar` is an empty array (which is now a valid state per the type change to `DestinationCalendar[] | null` and other callers passing `[]`), the destructured value is `undefined` and `.integration` throws a TypeError, failing the whole event creation. The old code used `evt.destinationCalendar?.integration` which safely evaluated to undefined. Use `mainHostDestinationCalendar?.integration !== \"google_calendar\"`.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/core/EventManager.ts",
+            "line": 505,
+            "issue": "Possible Bug: In `updateAllCalendarEvents`, when a reference has a `credentialId` but the credential is neither in `this.calendarCredentials` nor fetchable from the DB (e.g., the credential row was deleted, or `app` is null so the `credentialFromDB.app?.slug` check fails), `credential` remains `undefined` and `updateEvent(credential, ...)` is still called with an undefined credential. This will throw inside the calendar lookup instead of being skipped or surfaced as a failed EventResult. A guard (skip and push a failure result, like the `!calendarReference` case) is needed.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/core/EventManager.ts",
+            "line": 169,
+            "issue": "Behavior Change: In the video-event result mapping, `credentialId` changed from `isCalendarType ? evt.destinationCalendar?.credentialId : result.credentialId` to `isCalendarType ? result.credentialId : undefined`. For non-calendar (video) results, `credentialId` is now always `undefined`, whereas previously it was taken from `result.credentialId`. If any consumer relies on the video result's credentialId (e.g., booking references), this silently drops it. Verify this is intentional.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/core/EventManager.ts",
+            "line": 344,
+            "issue": "Silent Failure: In `createAllCalendarEvents`, when the credential is fetched from the DB it is only accepted if `credentialFromDB.app?.slug` is truthy. If the credential's app record is missing (deleted/disabled app), the credential is silently not built and the calendar event is skipped with no logging and no failed EventResult, so the booking proceeds with a missing calendar event and no diagnostic trace. Consider logging or pushing a failure result in this path.",
+            "source": "llm"
+          }
+        ],
+        "calcom-10600": [
+          {
+            "file": "packages/ui/components/form/inputs/Input.tsx",
+            "line": 47,
+            "issue": "Accessibility regression: Adding `tabIndex={-1}` to the password visibility toggle button removes it from keyboard tab order, so keyboard-only users can no longer toggle password visibility (e.g., on the login page where verifying a typed password matters). If the intent was to keep the toggle out of the tab flow during 2FA entry, a more targeted fix (e.g., only skipping the tab stop when a second-factor input is focused) would preserve accessibility. If this is intentional, consider at least keeping it operable via Enter/Space when focused by other means.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/auth/BackupCode.tsx",
+            "line": 21,
+            "issue": "Weak client-side validation: The input only enforces `minLength={10}` / `maxLength={11}` with no format pattern. A user can submit any 10-11 character string (e.g. \"1234567890\" or \"abcde-fghijk\" with the dash in the wrong position), and the browser will accept it. The server strips dashes and compares against hex codes, so the request will always fail with a generic \"Backup code is incorrect\" error even for well-formed but non-hex input. Adding a `pattern` (e.g. `^[A-Fa-f0-9]{5}-?[A-Fa-f0-9]{5}$`) would give immediate, accurate feedback. Low severity since the server still validates correctly.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/auth/BackupCode.tsx",
+            "line": 21,
+            "issue": "Validation errors not surfaced: The component calls `methods.register(\"backupCode\")` and sets the HTML `required` attribute, but it never reads `methods.formState.errors` to render an error message, unlike the sibling `TwoFactor` pattern. If the form's resolver (e.g. the zod schema in `login.tsx`) rejects an empty or malformed `backupCode`, the user sees the submit silently fail with no visible message next to the field.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/auth/BackupCode.tsx",
+            "line": 8,
+            "issue": "Missing autoFocus prop: The sibling `TwoFactor` component was updated in this PR to accept an `autoFocus` prop so the disable-2FA modal can avoid stealing focus (`<TwoFactor center={false} autoFocus={false} />`). `BackupCode` is rendered in the exact same modal position but has no equivalent prop, so behavior is inconsistent between the TOTP and backup-code views of the same dialog.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/pages/api/auth/two-factor/totp/setup.ts",
+            "line": 61,
+            "issue": "Backup codes overwritten silently: Every call to the setup endpoint regenerates and overwrites `backupCodes` in the database. If a user who already has backup codes (or an in-progress setup) re-runs setup, all previously issued backup codes are silently invalidated and replaced. Since the response returns only the new codes, any previously saved/downloaded copies stop working without warning. Consider only generating backup codes when none exist, or making regeneration an explicit user action.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/pages/api/auth/two-factor/totp/setup.ts",
+            "line": 60,
+            "issue": "Codes persisted before 2FA is enabled: Backup codes are generated and persisted at the same time `twoFactorEnabled` is set to false (i.e., during setup, before the user has verified a TOTP code). If the user abandons the setup flow, stale backup codes remain stored in the database. They are not usable while `twoFactorEnabled` is false, so impact is limited, but the stored codes are out of sync with the actual 2FA state and will be reused on a later setup attempt unless regenerated.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/pages/api/auth/two-factor/totp/disable.ts",
+            "line": 47,
+            "issue": "Unvalidated input: `req.body.backupCode` is used directly without validating it is a string. If a client sends a non-string value (e.g., a number or object) in the JSON body, `replaceAll` will throw a TypeError, resulting in an unhandled 500 instead of a proper 400 error. Add a typeof check or zod validation before use.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/pages/api/auth/two-factor/totp/disable.ts",
+            "line": 55,
+            "issue": "Unhandled parse failure: `JSON.parse(symmetricDecrypt(...))` has no error handling. If the stored `backupCodes` blob is corrupted, was encrypted with a different/rotated key, or contains malformed JSON, this throws an unhandled exception and returns a generic 500 to the user, with no way to distinguish it from a server fault. Wrapping in try/catch and returning `MissingBackupCodes` (or a clear error) would let the user recover via the normal flow.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/playwright/login.2fa.e2e.ts",
+            "line": 50,
+            "issue": "Known broken assertion left in place: The newly added FIXME comment documents that the `two-factor-switch` isChecked() assertion passes even when the switch is not checked (because `expect(promise).toBeTruthy()` only checks that a Promise object exists, not its resolved value). The PR acknowledges the broken check but does not fix it, so this test continues to give a false sense of coverage for enabling 2FA. It should use `await expect(page.locator(...)).toBeChecked()` as the neighboring test does.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/playwright/login.2fa.e2e.ts",
+            "line": 110,
+            "issue": "Incomplete assertions: The new backup-code test block clicks download and copy but leaves TODOs for verifying the downloaded file content and clipboard content. As written, the download test only checks the filename and the copy test only checks that a success toast appeared, so a regression that emits wrong/empty backup codes would still pass. Consider asserting the actual content before merging, since this is the only coverage for backup code generation.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/auth/lib/next-auth-options.ts",
+            "line": 139,
+            "issue": "Unhandled JSON.parse: `JSON.parse(symmetricDecrypt(user.backupCodes, ...))` is called without a try/catch. If the stored `backupCodes` value is corrupted, was written by an older format, or decryption produces garbage (e.g., key rotation), `JSON.parse` throws a raw SyntaxError that surfaces as an unhandled exception during `authorize`, giving the user an opaque login failure instead of a meaningful error code. A realistic trigger: any user row where `backupCodes` is non-null but not valid JSON of an array.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/auth/lib/next-auth-options.ts",
+            "line": 145,
+            "issue": "Non-constant-time comparison: The backup code check uses `backupCodes.indexOf(credentials.backupCode...)`, a non-constant-time string comparison. This is a lower-severity concern: a timing side channel on backup-code matching could in principle allow narrowing down a valid code over many attempts. Note the impact is limited if the pre-existing rate limiting on `authorize` (checkRateLimitAndThrowError) throttles repeated attempts, but the comparison itself is not hardened, unlike typical TOTP verification paths.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/pages/auth/login.tsx",
+            "line": 156,
+            "issue": "Stale input on retry: When a backup code attempt fails (`IncorrectBackupCode`), the error is shown but the `backupCode` field value is not cleared, so the invalid code remains in the input and will be resubmitted if the user clicks sign in again without manually editing it. Contrast with the \"go back\" button, which explicitly calls `methods.setValue(\"backupCode\", \"\")`. Consider clearing the field (or at least the failed value) when this error occurs.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/pages/auth/login.tsx",
+            "line": 221,
+            "issue": "Unvalidated mode switch: The `lost_access` toggle clears `totpCode` and shows the `BackupCode` field, but the form is validated with `zodResolver(formSchema)` whose shape (defined outside this diff) may still require a `totpCode` when `twoFactorRequired` is true. If the schema enforces `totpCode`, submitting in backup-code mode would be blocked by a validation error on a hidden field. Worth verifying the schema includes `backupCode` and makes `totpCode` optional in this state.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/settings/DisableTwoFactorModal.tsx",
+            "line": 43,
+            "issue": "Form reset doesn't clear OTP inputs: `resetForm` calls `form.setValue(\"totpCode\", \"\")`, but the `TwoFactor` component registers its six digit inputs under the names `2fa1`...`2fa6` (via `methods.register`), not `totpCode`. So the value being cleared is not the field the user typed into. Concretely: after a failed disable attempt (or when toggling between \"Lost access\" and the TOTP view via the new footer button), the previously entered OTP digits remain visible and pre-filled in the inputs, which is confusing and can lead to resubmitting a stale code. The `backupCode` field is cleared correctly since `BackupCode` registers under that name, but the TOTP reset is a no-op.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/settings/EnableTwoFactorModal.tsx",
+            "line": 135,
+            "issue": "Possible Bug: After a successful TOTP verification, the code no longer calls `onEnable()` immediately; it only calls it from the \"close\" button in the DisplayBackupCodes step. If the user dismisses the dialog any other way (Escape key, clicking the overlay, or `onOpenChange` firing), `onEnable()` is never invoked, so the parent component is never notified that 2FA was enabled even though the backend has enabled it. The parent's UI state (e.g., the two-factor switch) will then be out of sync with the server.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/settings/EnableTwoFactorModal.tsx",
+            "line": 71,
+            "issue": "Stale state on reopen: `resetState()` clears password, error, and step, but not `backupCodes` or `backupCodesUrl`. If the dialog is dismissed via `onOpenChange` (Escape/overlay click) during the DisplayBackupCodes step and reopened, the modal will still show the previous step and the old backup codes, since `step` is only reset when the cancel/close buttons are clicked. Consider resetting all setup state (or calling `resetState`) when the dialog closes.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/settings/EnableTwoFactorModal.tsx",
+            "line": 63,
+            "issue": "Untyped state: `useState([])` infers `never[]`, so `setBackupCodes(body.backupCodes)` (where `body` is untyped JSON) bypasses type safety; a malformed API response would render `code.slice` on non-strings and crash the modal. Typing the state as `string[]` and validating the response would catch this.",
+            "source": "llm"
+          }
+        ],
+        "calcom-8087": [
+          {
+            "file": "packages/app-store/vital/lib/reschedule.ts",
+            "line": 125,
+            "issue": "Unawaited async forEach: The callback passed to `bookingRefsFiltered.forEach` is now `async`, so `forEach` does not wait for the promises it returns. The `calendar?.deleteEvent(...)` and `deleteMeeting(...)` calls become fire-and-forget: the surrounding `try` block cannot catch rejections from them, so a failed calendar/video deletion is silently swallowed (unhandled promise rejection) and `Reschedule` may complete before deletions finish. Since `getCalendar` is now async, the correct fix is a `for...of` loop with `await`, or `Promise.all` over the mapped promises, as done elsewhere in this PR (e.g. `handleCancelBooking.ts`).",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/wipemycalother/lib/reschedule.ts",
+            "line": 125,
+            "issue": "Fire-and-forget async in forEach: Changing the `forEach` callback to `async` means the promises created inside it are not awaited. The surrounding `try` block no longer catches any errors from `getCalendar`, `deleteEvent`, or `deleteMeeting` \u2014 a failed calendar/video deletion becomes an unhandled promise rejection and the caller (the reschedule flow) proceeds as if deletion succeeded. Additionally, since `getCalendar` is now async, the `return calendar?.deleteEvent(...)` value is a promise that nothing collects, so callers awaiting this function's result get no deletion outcomes. Use a `for...of` loop with `await` (as done in `handleCancelBooking.ts` in this same PR) or `Promise.all` with a map.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/trpc/server/routers/viewer/bookings.tsx",
+            "line": 553,
+            "issue": "Unawaited async forEach: Converting the `bookingRefsFiltered.forEach` callback to `async` means the callback now returns a promise that `forEach` ignores. The `calendar?.deleteEvent(...)` calls become fire-and-forget: failures (e.g., a calendar API error while deleting an event during reschedule) become unhandled promise rejections instead of being caught by the surrounding error handling, and the router can report success to the caller while deletions are still in flight or have failed. Replacing `forEach` with a `for...of` loop (with `await`) or collecting promises into `Promise.all` would preserve error propagation and completion guarantees.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/bookings/lib/handleCancelBooking.ts",
+            "line": 458,
+            "issue": "Async callback in forEach: The refactor of the recurring-bookings deletion path keeps using `.forEach(async (credential) => ...)`. Since `getCalendar` is now async, the `await getCalendar(credential)` inside the callback only suspends the callback, not the surrounding handler. The resulting `calendar?.deleteEvent(...)` promises are neither collected into `apiDeletes` nor awaited anywhere, so (a) calendar deletions for recurring bookings run fire-and-forget and their failures are silently lost as unhandled rejections, and (b) the handler can complete before any of the deletions finish. Converting this loop to a `for...of` with `await` (like the sibling \"old behaviour\" block below it now correctly does) or collecting the promises would fix it.",
+            "source": "llm"
+          }
+        ]
+      },
+      "gen_cost": {
+        "calls": 138,
+        "prompt_tokens": 1585160,
+        "completion_tokens": 52584,
+        "cost_usd": 0.1347
+      },
+      "verify_cost": {
+        "calls": 106,
+        "prompt_tokens": 210708,
+        "completion_tokens": 412418,
+        "cost_usd": 0.6371
+      },
+      "share_pr_context": true,
+      "off_file_dropped": 0
+    },
+    {
+      "findings": {
+        "keycloak-37429": [
+          {
+            "file": "themes/src/main/resources-community/theme/base/account/messages/messages_zh_CN.properties",
+            "line": 112,
+            "issue": "Wrong locale script: The new `totpStep1` value uses Traditional Chinese characters and Taiwan-style vocabulary (\u624b\u6a5f, \u61c9\u7528\u7a0b\u5f0f) in the `messages_zh_CN.properties` file, which is the Simplified Chinese locale. Users of the zh_CN locale will see mixed-script text; the Simplified equivalent would be e.g. \u5728\u60a8\u7684\u624b\u673a\u4e0a\u5b89\u88c5\u4ee5\u4e0b\u5e94\u7528\u7a0b\u5e8f\u4e4b\u4e00\uff1a. Note the neighboring lines (totpStep2, totpStep3) remain in Simplified Chinese, making the inconsistency visible on the same screen.",
+            "source": "llm"
+          },
+          {
+            "file": "themes/src/main/resources-community/theme/base/account/messages/messages_lt.properties",
+            "line": 101,
+            "issue": "Wrong Language: The Lithuanian `totpStep1` message was replaced with Italian text (\"Installa una delle seguenti applicazioni sul tuo cellulare:\"). Lithuanian users of the base account theme will see an Italian instruction for setting up an OTP authenticator. It should be translated to Lithuanian, e.g. \"\u012ediekite vien\u0105 i\u0161 \u0161i\u0173 program\u0173 savo mobiliajame telefone:\", consistent with the other Lithuanian messages in this file and with how the same key was updated in the other locales (sv, sk, fi, zh_CN).",
+            "source": "llm"
+          },
+          {
+            "file": "themes/src/main/resources-community/theme/base/login/messages/messages_lt.properties",
+            "line": 71,
+            "issue": "Wrong language translation: The `loginTotpStep1` value was replaced with Italian text (\"Installa una delle seguenti applicazioni sul tuo cellulare:\") in the Lithuanian (`messages_lt.properties`) message bundle. Lithuanian users will see an Italian instruction on the login page. The original Lithuanian sentence (which also carried the FreeOTP/Google Play links that other locales still keep, or at least a Lithuanian equivalent of the new wording) should be restored.",
+            "source": "llm"
+          },
+          {
+            "file": "js/apps/admin-ui/maven-resources/theme/keycloak.v2/admin/messages/messages_en.properties",
+            "line": 3138,
+            "issue": "Unsupported MessageFormat syntax: The new value uses the Java-only `choice` format: `{2,choice,0#values|1#value|1<values}`. The admin-ui frontend renders these messages with a JavaScript ICU MessageFormat implementation (FormatJS/react-intl), which does not support the `choice` argument type (it uses `plural`/`select` instead). When this message is rendered in the admin console, formatting may fail or display the raw pattern instead of the intended text. Note the previous value in this JS file used doubled braces (`{{0}}`), consistent with the JS message-format conventions, while the Java-side theme files (themes/.../messages_en.properties) correctly use single braces with `choice`. The same pattern was also applied in js/apps/account-ui/.../messages_en.properties. Consider verifying how the admin-ui parses this key, or using a JS-compatible plural construct.",
+            "source": "llm"
+          }
+        ],
+        "sentry-95633": [
+          {
+            "file": "src/sentry/remote_subscriptions/consumers/result_consumer.py",
+            "line": 244,
+            "issue": "Failed messages are committed (data loss): In `thread-queue-parallel` mode, `create_thread_queue_parallel_worker` wires `commit_offsets` into `SimpleQueueProcessingStrategy`. In the queue consumer, a worker that raises inside `result_processor` logs the exception and then marks the offset complete in the `finally` block, so the offset becomes committable and `commit_offsets` advances past it. A message whose processing failed is therefore permanently skipped (offset committed, result never handled), unlike the serial path where an exception propagates and blocks the commit. If at-least-once delivery is intended, failed items need to be retried or left outstanding rather than marked complete.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/remote_subscriptions/consumers/result_consumer.py",
+            "line": 131,
+            "issue": "Batching options silently ignored: In `thread-queue-parallel` mode, `max_batch_size` and `max_batch_time` are accepted but have no effect: `SimpleQueueProcessingStrategy` submits each decoded message to the queue pool individually, with no batch collection. Operators configuring these knobs for this mode get per-message processing with no warning, which can materially change throughput and DB write patterns compared to the other parallel modes.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/remote_subscriptions/consumers/result_consumer.py",
+            "line": 131,
+            "issue": "Threads spawned eagerly in constructor: `FixedQueuePool` (and its worker threads) is created in `__init__` with `num_queues=max_workers or 20`, before any strategy is built or any message consumed. Constructing a factory in `thread-queue-parallel` mode immediately starts 20 daemon threads even if `create_with_partitions` is never called (e.g., in tests or dry-run paths), and the default of 20 applies silently when `max_workers` is not provided. Consider lazily creating the pool in `create_with_partitions` and/or requiring an explicit queue count.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/remote_subscriptions/consumers/queue_consumer.py",
+            "line": 168,
+            "issue": "Data loss on processing failure: In `OrderedQueueWorker.run`, the `finally` block calls `offset_tracker.complete_offset(...)` unconditionally, including when `result_processor` raised an exception. The exception is only logged, so the offset is marked complete and the commit loop will happily commit past it, meaning a message whose processing failed is permanently skipped (at-least-once semantics are broken). This directly contradicts the class docstring \"Only commits offsets after successful processing\" and the PR's own `test_thread_queue_parallel_error_handling` test, which asserts no commit happens after a processing failure \u2014 that test should fail against this implementation. Failed offsets should be left outstanding (or routed to a DLQ) instead of completed.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/remote_subscriptions/consumers/queue_consumer.py",
+            "line": 296,
+            "issue": "Silent message drop on submit errors: In `SimpleQueueProcessingStrategy.submit`, any exception from `decoder` or `grouping_fn` is caught and the offset is immediately added and completed, so the message is silently skipped and its offset becomes committable. A transient error (e.g., a codec/decoding hiccup, DB error inside `build_payload_grouping_key`) results in permanent data loss with only a log line. If dropping poison messages is intentional, it should be limited to decode failures and surfaced with a metric, not blanket `except Exception`.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/remote_subscriptions/consumers/queue_consumer.py",
+            "line": 320,
+            "issue": "Python version compatibility: `queue.Queue.shutdown()` (used in `FixedQueuePool.shutdown` and relied on for `queue.ShutDown` in the worker) was only added in Python 3.13. If this codebase still supports 3.12, shutdown will raise `AttributeError` and workers will hang on `work_queue.get()` forever (they are daemon threads, so the process can still exit, but graceful drain is impossible). Verify the minimum supported Python version before merging.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/remote_subscriptions/consumers/queue_consumer.py",
+            "line": 339,
+            "issue": "join() calls close(): `SimpleQueueProcessingStrategy.join()` calls `self.close()`. In arroyo's `ProcessingStrategy` contract, `join()` is only called after `close()`/`terminate()` by the framework, so this triggers a second shutdown of the queue pool and commit thread. `q.shutdown()` on an already-shut-down queue and `commit_thread.join()` on a finished thread are mostly harmless here (exceptions are swallowed), but it also means `join()` performs teardown the framework doesn't expect, and `terminate()` never joins the commit thread, leaving it to exit via the 1-second poll. Prefer making `join()` a no-op (or just wait) and keeping teardown in `close()`/`terminate()`.",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/remote_subscriptions/consumers/test_queue_consumer.py",
+            "line": 116,
+            "issue": "Flaky assertion: `test_different_groups_distributed` asserts that 20 group keys hash to exactly 3 distinct queue indices. Queue assignment uses `hash(group_key) % num_queues`, and Python string hashing is randomized per process (PYTHONHASHSEED), so there is no guarantee that 20 arbitrary keys cover all 3 queues. On an unlucky seed only 2 queues may be hit, making this test fail intermittently in CI. Consider seeding the hash, using a deterministic assignment check, or asserting a weaker property (e.g., more than one queue used).",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/remote_subscriptions/consumers/test_queue_consumer.py",
+            "line": 216,
+            "issue": "Race condition in test: In `test_stats_reporting`, immediately after submitting 10 items the test asserts `stats[\"total_items\"] > 0`. The worker threads run concurrently and can drain all queues before this line executes, making the assertion fail intermittently. The subsequent wait on `process_complete_event` already validates processing, so this eager assertion adds flakiness without additional coverage.",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/uptime/consumers/test_results_consumer.py",
+            "line": 1838,
+            "issue": "Test contradicts implementation: In `test_thread_queue_parallel_error_handling`, the test asserts that no offsets are committed when processing fails (`assert len(committed_offsets) == 0 or test_partition not in committed_offsets`). However, in the implementation the worker's `finally` block calls `offset_tracker.complete_offset()` even when `result_processor` raises, so failed offsets become committable and the commit loop will commit them. This means the assertion will fail (or only pass by timing luck if the 1-second commit loop hasn't fired before the assertion runs), making the test flaky at best and wrong at worst. The test should assert the actual intended behavior \u2014 either that failed offsets are still committed (matching the implementation) or the implementation should be changed to not complete offsets on failure.",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/uptime/consumers/test_results_consumer.py",
+            "line": 2085,
+            "issue": "Private API usage: The Kafka integration test drives `StreamProcessor` via its private methods `processor._run_once()` and `processor._shutdown()` instead of the public `run()`/`shutdown()` interface. This couples the test to arroyo internals and will break silently if arroyo changes these internals; it also bypasses normal signal handling and consumer lifecycle paths the production code exercises.",
+            "source": "llm"
+          },
+          {
+            "file": "tests/sentry/uptime/consumers/test_results_consumer.py",
+            "line": 1795,
+            "issue": "Timing-based flakiness: The new thread-queue-parallel tests rely on fixed sleep/poll loops (e.g. `max_wait = 20`/`50` iterations with `time.sleep(0.1)`) rather than events or deterministic synchronization. Under slow CI machines the commit loop (which fires every 1 second) may not have run before assertions like `assert test_partition in committed_offsets` execute, producing intermittent failures. Prefer waiting on an explicit signal (e.g. a commit-callback event) instead of polling `queue_pool.get_stats()`.",
+            "source": "llm"
+          }
+        ],
+        "calcom-22532": [
+          {
+            "file": "packages/app-store/googlecalendar/lib/CalendarService.ts",
+            "line": 1022,
+            "issue": "Wrong table updated / misleading status: The new call `SelectedCalendarRepository.updateManyByCredentialId(this.credential.id, {})` bumps `SelectedCalendar.updatedAt`, but the cache status surfaced by this PR (via `getCacheStatusByCredentialIds` in `connectedCalendars.handler.ts`) is read from the `CalendarCache` table's `updatedAt`, not from `SelectedCalendar`. So this write does not affect the \"Cache Status / Last updated\" value shown to users. Additionally, it executes unconditionally after the cache-refresh block \u2014 including when availability was served from a still-valid cache \u2014 so it performs a write-many across all selected calendars for the credential on every availability fetch, adding DB load without achieving the stated intent. If the goal was to reflect cache freshness, the `CalendarCache` record's `updatedAt` (already maintained via `@updatedAt` in the schema) is the relevant field, and no explicit touch of `SelectedCalendar` is needed here.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/package.json",
+            "line": 11,
+            "issue": "Undeclared dependency: The `dev:cron` script now runs `npx tsx cron-tester.ts`, but `tsx` is not declared in `package.json` dependencies (and `ts-node` appears to have been dropped). `npx` will resolve `tsx` from node_modules if hoisted there by another workspace package, but if it isn't, the script will download an unpinned version from the registry at runtime \u2014 introducing version drift and a network dependency for a dev script. Safer to add `tsx` as a devDependency and invoke it directly (e.g., `tsx cron-tester.ts` or `yarn tsx`).",
+            "source": "llm"
+          },
+          {
+            "file": "packages/lib/server/repository/selectedCalendar.ts",
+            "line": 400,
+            "issue": "No-op update: `updateManyByCredentialId` is called from `CalendarService.ts` with an empty data object (`{}`) with the comment that it updates `SelectedCalendar.updatedAt`. However, an empty `data` payload updates no fields, so the call is a no-op (and Prisma may raise a validation error for empty update data). Additionally, this PR adds `@updatedAt` only to the `CalendarCache` model in `schema.prisma`, not to `SelectedCalendar`, so even a non-empty update would not auto-refresh `updatedAt` unless the caller explicitly sets it. The cache-status feature that relies on this timestamp will not behave as intended.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/trpc/server/routers/viewer/calendars/connectedCalendars.handler.ts",
+            "line": 27,
+            "issue": "Unconditional extra DB query: The handler now always instantiates `CalendarCacheRepository` and calls `getCacheStatusByCredentialIds` on every `connectedCalendars` fetch, even when `connectedCalendars` is empty or contains no cacheable (e.g., Google) credentials. This adds an extra Prisma `groupBy` round-trip to a frequently-called endpoint for all users regardless of whether the result can ever be non-empty. Consider skipping the query when `credentialIds` is empty, or only enriching credentials whose integration actually uses the calendar cache.",
+            "source": "llm"
+          },
+          {
+            "file": "scripts/test-gcal-webhooks.sh",
+            "line": 68,
+            "issue": "Portability Bug: `sed -i '' -E ...` uses the macOS/BSD syntax for in-place editing. On GNU/Linux, `sed -i ''` treats the empty string as an input filename and fails with \"sed: can't read : No such file or directory\", so `GOOGLE_WEBHOOK_URL` is never updated on Linux machines. Use a portable form (e.g., `sed -i.bak` or detect the OS) or document macOS-only usage.",
+            "source": "llm"
+          },
+          {
+            "file": "scripts/test-gcal-webhooks.sh",
+            "line": 27,
+            "issue": "Stale URL Reuse: When Tunnelmole is already running, the script extracts the URL from `/tmp/tmole.log` without verifying the log exists or that the URL belongs to the current tunnel session. If the log file is missing (e.g., rebooted machine with tmole still running, or log from a previous session that was never cleaned), `TUNNEL_URL` will be empty and the script exits with \"Failed to extract Tunnelmole URL\" even though the tunnel is healthy; conversely, a stale log could yield a URL from an old, dead tunnel. Consider asking tmole for its current URL or validating the log's freshness.",
+            "source": "llm"
+          },
+          {
+            "file": "scripts/test-gcal-webhooks.sh",
+            "line": 6,
+            "issue": "Relative Env Path: `ENV_FILE=\"../.env\"` is resolved relative to the caller's current working directory, not the script's location. Running the script from anywhere other than `scripts/` silently creates or edits a `.env` in the wrong directory (the script even `touch`es a new file if it's missing, masking the mistake). Use `ENV_FILE=\"$(dirname \"$0\")/../.env\"` to anchor it to the script location.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/apps/components/CredentialActionsDropdown.tsx",
+            "line": 40,
+            "issue": "Stale cache status after delete: Unlike `disconnectMutation`, which invalidates `viewer.calendars.connectedCalendars` and `viewer.apps.integrations` in `onSettled`, `deleteCacheMutation` performs no cache invalidation. It only calls the optional `onSuccess?.()` callback. When the component is rendered without an `onSuccess` prop (it is optional in the interface), deleting the cached data leaves the dropdown showing the old \"Last updated\" timestamp until an unrelated refetch happens, making the delete appear to have failed.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/apps/components/CredentialActionsDropdown.tsx",
+            "line": 92,
+            "issue": "Hardcoded locale: `new Intl.DateTimeFormat(\"en-US\", ...)` hardcodes the `en-US` locale for formatting the cache timestamp, while the rest of the component uses `useLocale()` for i18n. Users in other locales will see dates formatted in US style (e.g., MM/DD/YY) next to translated UI text. Passing the user's locale from `useLocale()` would keep formatting consistent.",
+            "source": "llm"
+          }
+        ],
+        "grafana-80329": [
+          {
+            "file": "pkg/services/cleanup/cleanup.go",
+            "line": 77,
+            "issue": "Unrelated behavior change: The cleanup job ticker interval is changed from 10 minutes to 1 minute. This is unrelated to the PR's stated goal (splitting annotation cleanup queries to avoid MySQL deadlocks) and significantly increases how often the cleanup job runs against the database. If intentional, it should be documented in the PR description; if not, it may cause unnecessary DB load, especially since the new annotation cleanup logic runs multiple batched queries per invocation. Note that the new batched cleanup loop in the annotations store terminates when a batch deletes nothing, so this does not cause an infinite loop, but the frequency change deserves explicit confirmation.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/annotations/annotationsimpl/xorm_store.go",
+            "line": 533,
+            "issue": "Error-level logging of routine cleanup: The new cleanup paths log every batch at `Error` severity (e.g. `r.log.Error(\"Annotations to clean by time\", ...)`, `r.log.Error(\"cleaned annotations by time\", ...)`, and the equivalents for count-based and orphaned-tag cleanup). This is routine, expected work that runs on a recurring cleanup job, so it will flood error dashboards/alerting on every cycle even when nothing is wrong. These should be Debug-level. Additionally, each message logs the full list of fetched IDs (`\"ids\", ids`), which can be thousands of entries per batch and is very expensive to format and emit; and `\"err\", err` is logged when `err` is known to be nil at that point (it was checked and returned on earlier), so it always logs `err=nil`.",
+            "source": "llm"
+          }
+        ],
+        "sentry-80168": [
+          {
+            "file": "src/sentry/incidents/grouptype.py",
+            "line": 10,
+            "issue": "Unimplemented abstract methods: `MetricAlertDetectorHandler` now subclasses `StatefulDetectorHandler`, which declares abstract methods `get_dedupe_value`, `get_group_key_values`, and `build_occurrence_and_event_data` (per the diff in `src/sentry/workflow_engine/processors/detector.py`). The class body is just `pass`, so instantiating it (e.g., when `Detector.detector_handler` constructs the handler for a detector whose grouptype slug resolves to this class) will raise `TypeError: Can't instantiate abstract class ...`. The previous `DetectorHandler` subclass had no abstract methods to implement, so this change silently breaks any code path that uses this handler. Either implement the required methods or keep it raising a clear NotImplementedError intentionally.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/workflow_engine/processors/detector.py",
+            "line": 299,
+            "issue": "Possible enum mismatch: `PriorityLevel(new_status)` assumes `DetectorPriorityLevel` and `sentry.types.group.PriorityLevel` share the same member values. If the two enums define different numeric values for the same conceptual level (e.g. HIGH), the occurrence will be created with an unintended priority, and a value with no counterpart in `PriorityLevel` would raise a ValueError mid-evaluation. Worth verifying the two enums are value-compatible before shipping.",
+            "source": "llm"
+          }
+        ],
+        "sentry-80528": [
+          {
+            "file": "src/sentry/monitors/logic/incident_occurrence.py",
+            "line": 165,
+            "issue": "Dead code / lost conversion: In `get_monitor_environment_context`, a copy of `monitor.config` is made and `schedule_type` is converted to its display value on the copy, but the copy is never used \u2014 the returned dict includes the raw `monitor_environment.monitor.config` instead. As a result the `schedule_type` in the monitor context sent to Kafka remains the raw enum/int value rather than the human-readable display value, and the conversion work is silently discarded. Either return `config` in the dict or drop the copy/conversion block.",
+            "source": "llm"
+          },
+          {
+            "file": "src/sentry/monitors/logic/incident_occurrence.py",
+            "line": 133,
+            "issue": "Docstring mismatch: The `get_failure_reason` docstring contains typos (\"humam readible\") and its third example (\"A failed check-in was detected\") does not match the actual singular output, which is one of \"An error check-in was detected\" / \"A missed check-in was detected\" / \"A timeout check-in was detected\" via `SINGULAR_HUMAN_FAILURE_MAP`. Minor, but the example is misleading for future maintainers.",
+            "source": "llm"
+          }
+        ],
+        "grafana-76186": [
+          {
+            "file": "pkg/plugins/log/logger.go",
+            "line": 48,
+            "issue": "Silent context loss on fallback: In `grafanaInfraLogWrapper.FromContext`, when the type assertion to `*log.ConcreteLogger` fails, the method falls back to `d.New()`, which returns a logger carrying only the wrapper's own context and silently discards everything stored in the passed `ctx` (e.g., contextual attributes added by the new `ContextualLoggerMiddleware`). There is no logging or error signal, so callers get a logger that appears contextual but is not. If the assertion can realistically fail (e.g., the infra logger wraps or replaces the concrete logger in some configurations), request-scoped fields like `dsName`, `dsUID`, or `uname` would be dropped from log output. It is uncertain how often the assertion fails in practice, but the fallback path is silent and lossy either way.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/pluginsintegration/clientmiddleware/contextual_logger_middleware.go",
+            "line": 57,
+            "issue": "Missing coverage for streams: The new ContextualLoggerMiddleware instruments QueryData, CallResource, CheckHealth and CollectMetrics, but SubscribeStream, PublishStream and RunStream pass the context through unchanged. This mirrors the old MetricsMiddleware behavior (which also skipped stream endpoints), so it may be intentional, but it means any downstream consumer of the contextual logger (e.g. LoggerMiddleware via FromContext) will not see pluginId/dsName/uname attributes for streaming requests. If streaming request logging matters, these endpoints should be instrumented too; otherwise consider a comment stating streams are deliberately excluded. Also note this new middleware has no dedicated test file, unlike the metrics middleware it was extracted from.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/pluginsintegration/clientmiddleware/logger_middleware.go",
+            "line": 52,
+            "issue": "Lost traceID field: The `traceID` field (previously extracted via `tracing.TraceIDFromContext`) was removed from the \"Plugin Request Completed\" log entry. The new `ContextualLoggerMiddleware` (which now supplies pluginId, endpoint, uname, dsName, dsUID) does not add a traceID, and nothing else in the shown diff injects trace information into the contextual logger. Unless the tracing middleware or `log.FromContext` implicitly attaches the trace ID, correlating plugin data-egress logs with traces is no longer possible from the log line alone. Worth verifying that trace correlation is preserved elsewhere before merging.",
+            "source": "llm"
+          }
+        ],
+        "grafana-103633": [
+          {
+            "file": "pkg/services/authz/rbac/cache.go",
+            "line": 30,
+            "issue": "Cache key collision: `userPermDenialCacheKey` concatenates `name` and `parent` with `_` separators without escaping. Two different (name, parent) pairs can produce the same key \u2014 e.g. name=\"a\", parent=\"b_c\" and name=\"a_b\", parent=\"c\" both yield `ns.perm_user_action_a_b_c`. Since this key drives a hard deny in `Check`, a collision would deny a user access to a resource they are otherwise allowed to use. Using a separator that cannot appear in resource names/UIDs (or hashing the components) avoids this.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/authz/rbac/service.go",
+            "line": 116,
+            "issue": "Stale denial cache blocks new grants: The `permDenialCache` is checked before the permission cache and the database, and an entry is written after every full-check denial. If a user is denied access to a resource and then granted permission (e.g., role or permission added), subsequent `Check` calls short-circuit on the denial entry and return `Allowed: false` until `shortCacheTTL` expires \u2014 the newly granted permission has no effect even though the permission-cache fallback path was designed to pick up fresh grants (see the \"Fallback to the database on outdated cache\" test). There is no invalidation of denial entries when permissions change. If this staleness window is intentional, it should be documented; otherwise denial entries should be invalidated on permission changes or the denial check should be consulted only after the permission cache misses.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/authz/rbac/service.go",
+            "line": 124,
+            "issue": "Swallowed errors in cache fast path: In `Check`, `getCachedIdentityPermissions` errors are ignored wholesale (`if err == nil`). This is fine for `cache.ErrNotFound`, but the function can also return real errors \u2014 e.g., a `GetUserIdentifiers` failure or `fmt.Errorf(\"unsupported identity type: %s\", idType)`. In those cases the code silently falls through and repeats the same work via `getIdentityPermissions`, which will hit the same error, doubling the failure work and skipping the cache-usage metric semantics. Distinguishing `cache.ErrNotFound` from other errors (or at least logging non-not-found errors) would avoid masking real failures.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/authz/rbac/service.go",
+            "line": 124,
+            "issue": "Duplicate cache lookups: When the permission cache misses in `Check`, `getCachedIdentityPermissions` runs (resolving user identifiers and checking `permCache`), then `getIdentityPermissions` runs and performs the identical identifier resolution and cache lookup again inside `getUserPermissions`. On every cache miss this doubles the identifier-resolution work. Minor performance concern, but it is on the hot path of every uncached check.",
+            "source": "llm"
+          }
+        ],
+        "grafana-79265": [
+          {
+            "file": "pkg/services/anonymous/anonimpl/anonstore/database_test.go",
+            "line": 51,
+            "issue": "Missing coverage: The new test only covers the error path: when the device limit is reached and the incoming device does not already exist, `CreateOrUpdateDevice` returns `ErrDeviceLimitReached`. There is no test asserting the complementary behavior that an existing device (same `DeviceID`) can still be updated successfully when the limit is reached \u2014 which is the core promise of the `updateDevice` fallback path. A test creating one device, hitting the limit, then calling `CreateOrUpdateDevice` again with the same `DeviceID` and asserting no error (and that the row was updated) would guard against regressions where legitimate returning anonymous users are locked out.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/anonymous/anonimpl/client.go",
+            "line": 44,
+            "issue": "Blocking request path: TagDevice was previously invoked in a background goroutine with its own timeout and panic recovery, so failures or slowness never affected the request. It is now called synchronously during Authenticate on every anonymous request, adding a DB round-trip (and, when the device limit is configured, an extra CountDevices query) to the authentication latency of each request. A slow or loaded database now directly delays all anonymous traffic, and there is no per-call timeout anymore since the request context is used. If this is intentional, consider documenting it; otherwise restore async tagging or add a timeout.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/anonymous/anonimpl/client.go",
+            "line": 45,
+            "issue": "Error surfaced to anonymous users: When ErrDeviceLimitReached is returned, Authenticate now fails the whole authentication instead of falling back to anonymous access. Once the configured device limit is reached, every new anonymous visitor receives an authentication error (likely a failed request) rather than being served as anonymous with a default identity. If the intent is to cap tracked devices, it may be preferable to still return the anonymous identity and skip tagging. Flagging as a possible unintended UX/availability impact since the PR title suggests a tracking limit, not blocking access.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/anonymous/anonimpl/impl.go",
+            "line": 144,
+            "issue": "Behavior change in TagDevice: TagDevice previously always returned nil after logging a UI-tagging failure at Debug level; it now propagates the error from tagDeviceUI to its callers. The visible caller in client.go handles this (warns, or fails auth on ErrDeviceLimitReached), but any other existing callers of TagDevice that assumed it never returns an error will now see failures for transient DB errors during UI tagging. If skipping the early return is intentional, consider whether non-limit errors should still be swallowed here to preserve the old contract, since UI tagging is best-effort telemetry.",
+            "source": "llm"
+          },
+          {
+            "file": "pkg/services/anonymous/anonimpl/anonstore/database.go",
+            "line": 94,
+            "issue": "Race condition: The limit enforcement is a non-atomic check-then-act: `CountDevices` is read, then a new row is inserted with no locking or transaction spanning both steps. Under concurrent anonymous requests (common at scale, which is exactly when the limit matters), multiple requests can pass the count check simultaneously and insert extra rows, exceeding `deviceLimit`. The limit will be soft/approximate rather than hard. If a hard cap is required, the insert should be conditional (e.g., INSERT ... WHERE (SELECT COUNT(...)) < limit within a transaction).",
+            "source": "llm"
+          }
+        ],
+        "calcom-22345": [
+          {
+            "file": "packages/lib/server/service/insightsBooking.ts",
+            "line": 29,
+            "issue": "Lost input validation: The constructor now accepts `InsightsBookingServicePublicOptions`, a plain type where `teamId` is optional, instead of the zod-validated `InsightsBookingServiceOptions` where `teamId` is required for the \"team\" scope. A caller can now pass `{ scope: \"team\", userId, orgId }` with no `teamId` and it type-checks; `buildTeamAuthorizationCondition` will then call `teamRepo.findByIdAndParentId({ id: undefined, ... })`, producing a query that matches nothing (or a runtime error depending on the repository) instead of being rejected at the boundary. The zod schema still exists but is no longer enforced by this class.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/lib/server/service/insightsBooking.ts",
+            "line": 148,
+            "issue": "Possible Bug: `buildOrgAuthorizationCondition` and `buildTeamAuthorizationCondition` still take `Extract<InsightsBookingServiceOptions, { scope: ... }>` while the constructor now accepts `InsightsBookingServicePublicOptions`. Since `InsightsBookingServiceOptions` for scope \"team\" requires `teamId`, TypeScript will flag passing the public (optional-teamId) options into these private methods, and the two types can silently drift. The parameter types should be updated to the public options type (or a shared narrowed type) for consistency.",
+            "source": "llm"
+          }
+        ],
+        "calcom-10967": [
+          {
+            "file": "packages/trpc/server/routers/viewer/organizations/create.handler.ts",
+            "line": 151,
+            "issue": "Logic Inversion: The refactor inverts the conditional logic rather than just changing syntax. Previously, `slug` was spread into the organization create payload when `IS_TEAM_BILLING_ENABLED` was falsy (`...(!IS_TEAM_BILLING_ENABLED && { slug })`), and `requestedSlug` was set in metadata when it was truthy. The new code spreads `slug` only when `IS_TEAM_BILLING_ENABLED` is truthy and sets `requestedSlug` only when it is truthy. If the original behavior was intentional (slug stored directly on the organization only when billing is disabled, while always recording the requested slug in metadata when billing is enabled), this change silently flips which deployments persist the slug, potentially breaking organization lookup by slug in non-billing deployments. If the inversion is an intentional fix, it should be called out explicitly in the PR description and covered by a test, since no tests are included.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/office365calendar/lib/CalendarService.ts",
+            "line": 73,
+            "issue": "Wrong calendar selection for collective events: `createEvent` now always uses `destinationCalendar[0]` (the \"main host\" calendar) as the target calendar. Unlike the Google Calendar service in this same PR, which selects the destination calendar matching the executing `credentialId`, this service ignores which credential is running. In a collective event where multiple hosts' destination calendars are passed (as built in `handleNewBooking.ts`), the first entry may belong to a different user's credential than the one executing this service. The event would then be attempted in a calendar externalId that this credential may not own, resulting in a 404/403 from the Microsoft Graph API or the event being created on the wrong host's calendar. Consider matching the destination calendar by credentialId (as the Google implementation does) instead of blindly taking the first element.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/ee/payments/api/webhook.ts",
+            "line": 101,
+            "issue": "Collective events limited to one calendar: The new code wraps only a single destination calendar (`booking.destinationCalendar || user.destinationCalendar`) into an array. For COLLECTIVE event types, `handleNewBooking.ts` now collects `teamDestinationCalendars` from all hosts and pushes them into `evt.destinationCalendar`, but the payment webhook path (both `getBooking` and `handlePaymentSuccess`) never does this. A paid collective booking will therefore only have its calendar event created on the organizer's (or booking's) calendar, and the other hosts' destination calendars are silently ignored. Consider deriving the full list the same way `handleNewBooking` does, or at least confirm this asymmetry is intentional.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/larkcalendar/lib/CalendarService.ts",
+            "line": 128,
+            "issue": "Wrong calendar selected for collective events: This PR changes `destinationCalendar` to an array (one entry per host in collective events) and this service now always uses `destinationCalendar[0]`. The `Calendar` interface was updated so `createEvent` receives a `credentialId`, and the Google service uses it to find the destination calendar matching its own credential. The Lark service ignores the new `credentialId` parameter and blindly takes the first array element. In a collective booking where the first host uses a different calendar provider (e.g., Google) and a later host uses Lark, `createEvent`/`updateEvent`/`deleteEvent` will operate on the wrong host's calendar (or throw \"no calendar id\" behavior changes), creating or deleting the event in the incorrect calendar. Consider selecting the entry whose `credentialId` matches the credential passed to `createEvent`, or whose `integration` matches the Lark integration, as the Google service does.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/core/CalendarManager.ts",
+            "line": 267,
+            "issue": "Possible Bug: The new `externalId` parameter is echoed back verbatim in the returned `EventResult.externalId`, and `EventManager` now uses `result.externalId` to persist `externalCalendarId` on booking references. However, the actual calendar the event is created on is decided inside each calendar service, not here. For example, the Google service selects the calendar by matching `credentialId` and falls back to `\"primary\"` when no destination matches, and other services fall back to the default calendar when `externalId` is absent. In those fallback cases the event is created on a different calendar than the `externalId` reported here, so the booking reference will store an `externalCalendarId` that doesn't point at the real event, which can break later update/delete flows that rely on that reference.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/core/CalendarManager.ts",
+            "line": 230,
+            "issue": "Silent failure path: When `calendar.createEvent` rejects with a 404, the catch returns `undefined` while `success` is set to false, and the result is still returned with the new `externalId` and `credentialId` fields populated. Downstream code (e.g., `EventManager` building booking references from `result.externalId`/`result.credentialId`) may now record a calendar reference for an event that was never created, since the 404 path previously had no externalId/credentialId surfaced in the result. Worth verifying that callers distinguish `success: false` results before persisting references.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/googlecalendar/lib/CalendarService.ts",
+            "line": 253,
+            "issue": "Possible Bug: In `updateEvent`, the fallback now does `event.destinationCalendar?.find((cal) => cal.externalId === externalCalendarId)?.externalId`. When `externalCalendarId` is not provided (undefined), the `find` predicate compares `cal.externalId === undefined` and always fails, so `selectedCalendar` becomes `undefined` and the update is issued with an undefined `calendarId`. Previously the code fell back to `event.destinationCalendar?.externalId`, so the event was still updated on the correct calendar. Any caller that invokes `updateEvent` without an explicit `externalCalendarId` (which the optional parameter allows) will now target the wrong calendar or fail.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/googlecalendar/lib/CalendarService.ts",
+            "line": 312,
+            "issue": "Possible Bug: Same pattern in `deleteEvent`: `event.destinationCalendar?.find((cal) => cal.externalId === externalCalendarId)?.externalId` returns `undefined` whenever `externalCalendarId` is undefined, so the delete no longer falls back to the event's destination calendar externalId as it did before. Deleting a booking whose calendar reference lacks `externalCalendarId` will pass an undefined `calendarId` to `calendar.events.delete`, causing the event to remain on the calendar (orphaned) or the call to error out.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/bookings/lib/handleCancelBooking.ts",
+            "line": 445,
+            "issue": "Incomplete multi-reference handling: The PR's intent is to support multiple calendar references (collective events with multiple host destination calendars), and the outer loop was changed from `find` to `filter` to iterate all references. However, inside the recurring-event branch, the per-booking lookup still uses `updBooking.references.find((ref) => ref.type.includes(\"_calendar\"))`, which only picks the first calendar reference for each remaining booking. For a recurring collective booking with multiple hosts, cancellation with `allRemainingBookings` will delete only the first host's calendar event and leave the other hosts' events on their calendars. The lookup should be `filter` (and iterate) to match the new multi-reference behavior.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/bookings/lib/handleCancelBooking.ts",
+            "line": 425,
+            "issue": "Silent skip on missing credential: When a calendar reference has a `credentialId` but the credential is neither in `bookingToDelete.user.credentials` nor found in the DB via `prisma.credential.findUnique`, the reference is silently skipped \u2014 no log, no error, and the calendar event is never deleted. This is a new code path introduced by the DB fallback lookup; a stale/deleted credential (e.g., user disconnected the calendar app) now results in orphaned calendar events with no operator visibility. Consider logging when `calendarCredential` remains undefined after both lookups.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/bookings/lib/handleNewBooking.ts",
+            "line": 1085,
+            "issue": "Possible Bug: `evt.destinationCalendar?.push(...teamDestinationCalendars)` silently does nothing when `evt.destinationCalendar` is null. Since `destinationCalendar` is set to `null` when neither `eventType.destinationCalendar` nor `organizerUser.destinationCalendar` exists, a COLLECTIVE team event whose organizer has no destination calendar will silently drop all team members' destination calendars instead of creating the array. The team members' calendars then never receive the event. Use `(evt.destinationCalendar ??= []).push(...)` or equivalent.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/bookings/lib/handleNewBooking.ts",
+            "line": 1874,
+            "issue": "Data not persisted: The booking record only connects `evt.destinationCalendar[0]` (the organizer's/eventType's calendar) via `connect: { id: evt.destinationCalendar[0].id }`. The team destination calendars pushed into `evt.destinationCalendar` for COLLECTIVE events are used to create calendar events but are never connected to the booking row, so the booking's persisted `destinationCalendar` relation loses the other members' calendars. If downstream flows (reschedule, cancel) rely on the booking's destinationCalendar list, they will only see the first one. Worth confirming this is intentional.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/bookings/lib/handleNewBooking.ts",
+            "line": 724,
+            "issue": "Error masking: In `loadUsers`, the explicit `throw new Error(\"dynamicUserList is not properly defined or empty.\")` (and the `eventType.hosts` check) is caught by the surrounding catch and converted into a generic 500 `HttpError({ message: \"Unable to load users\" })`, since a plain `Error` is neither `HttpError` nor a Prisma known request error. The specific validation message is lost and a client-input problem is reported as a server error; these should be thrown as `HttpError({ statusCode: 400 })` directly.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/core/EventManager.ts",
+            "line": 117,
+            "issue": "Possible Bug: The new code destructures `const [mainHostDestinationCalendar] = evt.destinationCalendar ?? []` and then accesses `mainHostDestinationCalendar.integration` without any null check. When `destinationCalendar` is `null` or an empty array (which is now a valid state per the PR \u2014 e.g. the webhook payload uses `destinationCalendar: []`), `mainHostDestinationCalendar` is `undefined` and this line throws a TypeError, failing the whole event creation. The old code used optional chaining (`evt.destinationCalendar?.integration`) and handled this safely. A guard like `mainHostDestinationCalendar?.integration !== \"google_calendar\"` is needed.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/core/EventManager.ts",
+            "line": 169,
+            "issue": "Lost externalCalendarId: `externalCalendarId` is now taken from `result.externalId`, but `result.externalId` is only populated when `createEvent(credential, event, destination.externalId)` is called with the destination's externalId. In the branch where a destination has no `credentialId` (the legacy path in `createAllCalendarEvents`), `createEvent` is called without an externalId, so `result.externalId` is `undefined` and the booking's calendar reference loses its `externalCalendarId` \u2014 previously it was copied from `evt.destinationCalendar?.externalId`. This can break subsequent update/delete of the calendar event for bookings created via that path.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/core/EventManager.ts",
+            "line": 508,
+            "issue": "Possible Bug: In `updateCalendarEvent`, when a reference has a `credentialId` that is not found in `this.calendarCredentials`, the code fetches the credential from the DB, but only assigns it if `credentialFromDB.app?.slug` exists. If the DB lookup fails or the credential has no associated app (e.g. legacy credentials), `credential` remains `undefined` and `updateEvent(credential, ...)` is still called, which will throw inside the calendar service (or silently fail) instead of being skipped or reported. The same pattern exists in `createAllCalendarEvents`, where the event creation is silently skipped with no logging when the credential can't be resolved.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/core/EventManager.ts",
+            "line": 344,
+            "issue": "Credential fetch duplication: The identical ~25-line \"fetch credential from DB and map to credential object\" block is duplicated verbatim in `createAllCalendarEvents` and `updateCalendarEvent`. Extracting it into a shared helper would reduce the risk of the two copies drifting (one already requires `app?.slug` while the other silently skips). This is a maintainability concern rather than a functional bug.",
+            "source": "llm"
+          }
+        ],
+        "calcom-10600": [
+          {
+            "file": "packages/ui/components/form/inputs/Input.tsx",
+            "line": 47,
+            "issue": "Accessibility regression: Adding `tabIndex={-1}` to the password visibility toggle button removes it from keyboard tab order. Keyboard-only users (and screen reader users relying on keyboard navigation) can no longer toggle password visibility, which is an accessibility regression for a shared UI component used across the app (e.g., the login and settings password fields). If the intent was to prevent focus stealing when clicking the toggle, a common alternative is `onMouseDown={(e) => e.preventDefault()}`, which keeps the button keyboard-accessible while avoiding focus shift.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/auth/BackupCode.tsx",
+            "line": 22,
+            "issue": "Weak client-side validation: `minLength={10}` / `maxLength={11}` only bound the raw string length, so an 11-character input without a dash (e.g., \"1234567890X\") passes client validation but will never match a stored 10-character code after the backend strips dashes, producing a confusing \"incorrect backup code\" error. A regex pattern (e.g., `^\\d{5}-?\\d{5}$`) would match the actual code format. Low severity since the server still validates, but the client check gives a false sense of correctness.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/auth/BackupCode.tsx",
+            "line": 8,
+            "issue": "Missing autoFocus prop: The sibling `TwoFactor` component was updated in this PR to accept an `autoFocus` prop so callers can control focus behavior (e.g., `DisableTwoFactorModal` passes `autoFocus={false}`), but `BackupCode` has no equivalent. When the disable modal toggles to the backup-code view, focus behavior will be inconsistent with the TOTP view. Minor UX inconsistency introduced by the same PR.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/pages/api/auth/two-factor/totp/setup.ts",
+            "line": 61,
+            "issue": "Backup codes silently invalidated: Every call to the setup endpoint overwrites `backupCodes` with a freshly generated set, even if the user never completes enabling 2FA (the handler also sets `twoFactorEnabled: false`). If a user starts setup, abandons it, and later re-runs setup (or another session/tab triggers it), any previously issued backup codes that the user may have saved or printed are silently invalidated with no warning. Consider only generating backup codes when none exist, or explicitly warning the user that re-running setup rotates their codes.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/pages/api/auth/two-factor/totp/disable.ts",
+            "line": 56,
+            "issue": "Unhandled JSON.parse: `JSON.parse(symmetricDecrypt(user.backupCodes, ...))` is not wrapped in try/catch. If the stored `backupCodes` value is corrupted, was written by an older format, or decryption yields non-JSON output, this throws an unhandled exception and the client gets an opaque 500 instead of a meaningful error. The sibling login flow in `next-auth-options.ts` has the same pattern, but here the failure occurs on a settings/disable path where a clean error message is expected.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/pages/api/auth/two-factor/totp/disable.ts",
+            "line": 68,
+            "issue": "Unvalidated input type: `req.body.backupCode` is used directly without validating it is a string. Since the handler accepts an arbitrary JSON body, a client can send `{\"backupCode\": 123}` or an object; `req.body.backupCode.replaceAll` would then throw a TypeError, producing an unhandled 500. A `typeof req.body.backupCode === \"string\"` check (or zod validation) before use would prevent this.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/pages/api/auth/two-factor/totp/disable.ts",
+            "line": 66,
+            "issue": "Backup code not consumed: When disabling 2FA with a backup code, the matched code is verified but not marked as used at that point; the code relies on the final update setting `backupCodes: null` to invalidate them. This is safe only because disable always reaches that update \u2014 but note the comment \"we delete all stored backup codes at the end\" makes the correctness depend on control flow further down the handler. If any early return is ever added between verification and the final update, the code would remain valid. Low severity given current flow, but worth an explicit guard or consuming the code at verification time.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/playwright/login.2fa.e2e.ts",
+            "line": 50,
+            "issue": "Weak assertion: The newly added FIXME comment confirms that the assertion `await expect(page.locator('[data-testid=two-factor-switch]').isChecked()).toBeTruthy()` passes even when the switch is not checked, meaning this step of the test does not actually verify 2FA was enabled at that point. Since this test is the setup path that later exercises the new backup-code download/copy/close flow, a regression in enabling 2FA could go unnoticed while the backup-code assertions still pass. The sibling test below uses `[data-state=\"checked\"]` and works correctly; this assertion should be updated to match.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/playwright/login.2fa.e2e.ts",
+            "line": 110,
+            "issue": "Incomplete coverage: The new backup-code test block verifies the download filename and that a success toast appears on copy, but leaves explicit TODOs for checking the downloaded file content and clipboard content. As written, the copy test would pass even if the clipboard contains wrong or empty data (the toast is shown unconditionally by the UI), and the download test would pass even if the file content is malformed. Given backup codes are a security-recovery feature, at least one content assertion would meaningfully strengthen the test.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/auth/lib/next-auth-options.ts",
+            "line": 137,
+            "issue": "Unguarded JSON.parse: `JSON.parse(symmetricDecrypt(user.backupCodes, ...))` is not wrapped in try/catch. If the stored `backupCodes` value is corrupt, was encrypted with a different/rotated `CALENDSO_ENCRYPTION_KEY`, or is not a JSON array, this throws an unhandled exception during login. The user gets a generic InternalServerError and cannot authenticate even with a valid backup code, with no way to recover short of manual DB intervention. Consider catching the error and treating it as `MissingBackupCodes` so the user is directed to regenerate codes.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/auth/lib/next-auth-options.ts",
+            "line": 143,
+            "issue": "Non-constant-time comparison: `backupCodes.indexOf(credentials.backupCode.replaceAll(\"-\", \"\"))` compares the user-supplied backup code with a plain string equality check, which is not constant-time. Backup codes are high-entropy (10 hex chars), so this is low practical risk, but since this is an authentication secret check, a timing-safe comparison (e.g., `crypto.timingSafeEqual`) would be more robust. Note the same pattern exists in the disable endpoint (reviewed separately).",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/pages/auth/login.tsx",
+            "line": 158,
+            "issue": "Stuck in backup-code view: In the login response handler, `ErrorCode.SecondFactorRequired` only sets `twoFactorRequired(true)` but never resets `twoFactorLostAccess`. If the server returns this error while the user is in the \"lost access\" (backup code) view \u2014 e.g., the backup code field was submitted empty or the request reached the server without a backup code \u2014 the UI stays on the `BackupCode` input with no error message displayed, since the `errorMessage` branch for this code is not set. The user gets no feedback and cannot tell why login did not proceed. Consider resetting `twoFactorLostAccess(false)` (or showing an error) when this error code is received.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/pages/auth/login.tsx",
+            "line": 43,
+            "issue": "Form validation gap: A `backupCode` field was added to `LoginValues` and registered via the new `BackupCode` component, but the diff does not show `formSchema` being updated to include/validate `backupCode`. If the zod schema still only validates `email`/`password`/`totpCode`, an empty backup code can be submitted to the server (react-hook-form's HTML `required` on the TextField may not block submit since the form is driven by the zod resolver), resulting in a confusing server-side error instead of client-side validation. Please confirm the schema covers the new field.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/settings/DisableTwoFactorModal.tsx",
+            "line": 109,
+            "issue": "Possible unintended submit: The new \"Lost access\" / \"Go back\" toggle button in `DialogFooter` has an `onClick` handler but no explicit `type=\"button\"`. If this footer is rendered inside the `Form` element (as the sibling `EnableTwoFactorModal` suggests, where analogous buttons call `e.preventDefault()`), a click would also submit the form and trigger `handleDisable` with whatever values are currently filled in, in addition to toggling the view. Adding `type=\"button\"` (as done for the copy/close buttons in `EnableTwoFactorModal`) avoids this. Flagging with some uncertainty since the exact DOM nesting of `DialogFooter` relative to `Form` is not fully visible in this diff.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/settings/EnableTwoFactorModal.tsx",
+            "line": 135,
+            "issue": "Possible Bug: After a successful TOTP verification, `onEnable()` is no longer called immediately; it is deferred to the \"close\" button in the DisplayBackupCodes step. However, the Dialog's `onOpenChange` path (Escape key, clicking the overlay, or the dialog's close X) still closes the modal without calling `onEnable()` or `resetState()`. In that scenario 2FA is already enabled server-side, but the parent component is never notified (e.g., the two-factor switch in settings won't refresh), and the modal state (backup codes, password, step) is left stale \u2014 reopening the modal will show leftover backup codes from the previous session instead of starting fresh at ConfirmPassword.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/settings/EnableTwoFactorModal.tsx",
+            "line": 68,
+            "issue": "Resource Leak: `resetState()` clears the password and step but does not revoke `backupCodesUrl` or clear `backupCodes`. Each call to `handleSetup` creates a new object URL (revoking only the previous one), but when the modal is closed/reset the last URL is never revoked, leaking a Blob URL containing the user's unencrypted backup codes for the lifetime of the page. The backup codes also remain in component state after the flow completes.",
+            "source": "llm"
+          },
+          {
+            "file": "apps/web/components/settings/EnableTwoFactorModal.tsx",
+            "line": 61,
+            "issue": "Type Safety: `useState([])` for `backupCodes` infers type `never[]`, so `setBackupCodes(body.backupCodes)` (any) bypasses type checking entirely. Typing it as `useState<string[]>([])` would catch malformed API responses at compile time rather than rendering `undefined` values that then crash `formatBackupCode` (`code.slice` on undefined).",
+            "source": "llm"
+          }
+        ],
+        "calcom-8087": [
+          {
+            "file": "packages/app-store/vital/lib/reschedule.ts",
+            "line": 125,
+            "issue": "Unawaited async forEach: Changing the `forEach` callback to `async` makes the callback return a promise that `forEach` ignores, so the calendar deletions (`calendar?.deleteEvent(...)`) become fire-and-forget. The surrounding `try` block cannot catch any rejection from these async operations, so a failed `getCalendar` or `deleteEvent` (e.g., network error or invalid credential) will result in an unhandled promise rejection and the calendar event may silently remain undeleted. Since `getCalendar` is now async, the previously synchronous flow is fully asynchronous and should be awaited, e.g. with a `for...of` loop or `Promise.all(bookingRefsFiltered.map(...))`.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/app-store/wipemycalother/lib/reschedule.ts",
+            "line": 125,
+            "issue": "Fire-and-forget async in forEach: The `forEach` callback is now `async`, so the promises returned by `calendar?.deleteEvent(...)` and `deleteMeeting(...)` are not awaited by anyone. Two concrete consequences: (1) the surrounding `try`/`catch` cannot catch rejections from these operations \u2014 a failed calendar event deletion (e.g., expired OAuth token) becomes an unhandled promise rejection and the reschedule flow continues as if deletion succeeded; (2) callers of `Reschedule` get no signal when (or whether) the deletions complete. Since `bookingRefsFiltered` is a small array, a `for...of` loop with `await` (as done elsewhere in this PR, e.g. in `handleCancelBooking.ts`) would preserve error handling and sequencing.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/trpc/server/routers/viewer/bookings.tsx",
+            "line": 553,
+            "issue": "Fire-and-forget async forEach: Changing the `forEach` callback to `async` means the returned promises from `calendar?.deleteEvent(...)` and `deleteMeeting(...)` are not awaited or collected. The router procedure can complete (and respond) before any calendar event deletion actually finishes, so a client rescheduling a booking may see stale events, and any rejection inside the callback becomes an unhandled promise rejection with no way for the caller to learn the deletion failed. Since `getCalendar` is now async, the deletion calls only start after an await inside the callback, making the race more likely. Use a `for...of` loop with `await` (as done in `handleCancelBooking.ts` in this same PR) or collect promises with `Promise.all`.",
+            "source": "llm"
+          },
+          {
+            "file": "packages/features/bookings/lib/handleCancelBooking.ts",
+            "line": 458,
+            "issue": "Fire-and-forget async forEach: The callback passed to `.forEach(async (credential) => {...})` is now async because `getCalendar` became async. `forEach` does not await async callbacks, so the loop body (including the `for (const updBooking of updatedBookings)` loop and the calendar `deleteEvent` calls) runs detached from the surrounding async function: the handler can complete (and the response be sent) before any calendar deletion finishes, and any rejection inside the callback becomes an unhandled promise rejection. Previously the synchronous `getCalendar` meant the `deleteEvent` promises were at least created synchronously within the same tick. Consider collecting promises and awaiting them (e.g. `Promise.all` over a `map`), as was effectively done in the sibling `else` branch that was correctly converted to a `for...of` loop.",
+            "source": "llm"
+          }
+        ]
+      },
+      "gen_cost": {
+        "calls": 138,
+        "prompt_tokens": 1585160,
+        "completion_tokens": 48822,
+        "cost_usd": 0.1337
+      },
+      "verify_cost": {
+        "calls": 92,
+        "prompt_tokens": 187763,
+        "completion_tokens": 310257,
+        "cost_usd": 0.4922
+      },
+      "share_pr_context": true,
+      "off_file_dropped": 0
+    }
+  ]
+}

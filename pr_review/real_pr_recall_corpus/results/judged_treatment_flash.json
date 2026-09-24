@@ -1,0 +1,2681 @@
+{
+  "aletheore-flash": {
+    "keycloak-37429": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "lt Italian totpStep1 (account:101) (near messages_lt.properties)"
+        },
+        {
+          "index": 1,
+          "description": "zh_CN trad zh:112 (near messages_zh_CN.properties)"
+        },
+        {
+          "index": 2,
+          "description": "anchor english-groups"
+        },
+        {
+          "index": 3,
+          "description": "santizeAnchors typo (near VerifyMessageProperties.java:122)"
+        },
+        {
+          "index": 4,
+          "description": "HTML_TAGS static"
+        }
+      ],
+      "findings": [
+        "File: js/apps/account-ui/maven-resources/theme/keycloak.v3/account/messages/messages_en.properties, Line: 188, Issue: Unsupported format syntax: The message now uses ICU/ChoiceFormat syntax (`{2,choice,0#values|1#value|1<values}`). The account UI renders message properties with its own lightweight JS formatter, which historically supports only simple positional placeholders like `{0}` and does not implement `choice` subformats. If that is the case here, users will see the raw pattern text (e.g. \"at most {2,choice,0#values|1#value|1<values}\") instead of a formatted count. Worth verifying that the JS-side message renderer in this PR actually handles `choice` before merging; if it does not, the message should be reworded to avoid the syntax.",
+        "File: misc/theme-verifier/src/main/java/org/keycloak/themeverifier/VerifyMessageProperties.java, Line: 88, Issue: Missing English key handling: `getEnglishValue` returns an empty string when a key is missing from the English bundle. For a translation key that doesn't exist in the English file, `containsHtml(\"\")` is false, so `POLICY_NO_HTML` is applied and any legitimate HTML in the translation (e.g. a `<br>` or `<strong>` tag) is reported as \"Illegal HTML\", with a confusing message comparing against an empty English source. It would be clearer to skip the check (or report a distinct \"key missing in English file\" error) in this case.",
+        "File: misc/theme-verifier/src/main/java/org/keycloak/themeverifier/VerifyMessageProperties.java, Line: 60, Issue: Wrong exception type: `verifySafeHtml` throws raw `RuntimeException` on IO errors, while the surrounding `verify()` method correctly wraps IO failures in `MojoExecutionException`. A failure reading the file or the derived English file will bypass the Maven plugin's error handling and surface as an unhandled runtime exception instead of a proper build error with the plugin's context.",
+        "File: misc/theme-verifier/src/main/java/org/keycloak/themeverifier/VerifyMessageProperties.java, Line: 113, Issue: Anchor removal mismatch: In `santizeAnchors`, when a translation anchor matches an English anchor, `value.replaceFirst(Pattern.quote(englishMatcher.group()), \"\")` removes the *first* occurrence of that tag string in the translation, not necessarily the occurrence the matcher just found. If the same anchor tag appears multiple times with different surrounding text, the accounting between translation and English anchors can drift, potentially allowing an extra unmatched anchor to slip through or falsely flagging a valid one. Matching counts explicitly (or removing by matcher region) would be more robust.",
+        "File: misc/theme-verifier/src/main/java/org/keycloak/themeverifier/VerifyMessageProperties.java, Line: 60, Issue: Duplicate file read: `verify()` already reads the file contents via `Files.readString`, then `verifySafeHtml` re-opens and parses the same file a second time through `FileInputStream`. The already-read `contents` string could be parsed once and shared, avoiding redundant I/O and the possibility of the two reads seeing different file states.",
+        "File: misc/theme-verifier/src/test/resources/noHtml_en.properties, Line: 17, Issue: Missing newline at EOF: The file lacks a trailing newline at end of file. While Java properties loading tolerates this, some tools and diffs (e.g., future edits appending keys) may behave unexpectedly or produce noisy diffs. Minor issue.",
+        "File: themes/src/main/resources-community/theme/base/account/messages/messages_lt.properties, Line: 101, Issue: Wrong Language Translation: The `totpStep1` value in the Lithuanian (`messages_lt.properties`) message bundle was replaced with Italian text (\"Installa una delle seguenti applicazioni sul tuo cellulare:\"). Lithuanian users will now see an Italian instruction on the TOTP setup page. Additionally, the original value contained HTML links (to FreeOTP and Google Play) that are now lost, changing the rendered content beyond just the language. The value should be a Lithuanian translation preserving the original HTML structure.",
+        "File: themes/src/main/resources-community/theme/base/account/messages/messages_zh_CN.properties, Line: 112, Issue: Locale mismatch: The replacement text uses Traditional Chinese characters (\u624b\u6a5f, \u61c9\u7528\u7a0b\u5f0f, \u60a8) in the `zh_CN` (Simplified Chinese) locale file, while surrounding keys (e.g., `totpStep2`, `totpStep3`) remain in Simplified Chinese. Users of this locale will see inconsistent script within the same page. The text should be converted to Simplified Chinese (e.g., \u5728\u60a8\u7684\u624b\u673a\u4e0a\u5b89\u88c5\u4ee5\u4e0b\u5e94\u7528\u7a0b\u5e8f\u4e4b\u4e00\uff1a) or moved to a `zh_TW` bundle if Traditional Chinese was intended."
+      ],
+      "runs": [
+        null,
+        null,
+        null
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "1": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "2": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "3": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "4": {
+            "status": "insufficient_data",
+            "reasoning": []
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "1": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "2": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "3": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "4": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "5": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "6": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "7": {
+            "status": "insufficient_data",
+            "reasoning": []
+          }
+        }
+      }
+    },
+    "sentry-95633": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "magic 50 const"
+        },
+        {
+          "index": 1,
+          "description": "test docstring mismatch"
+        }
+      ],
+      "findings": [
+        "File: src/sentry/remote_subscriptions/consumers/queue_consumer.py, Line: 143, Issue: Data loss on processing failure: In `OrderedQueueWorker.run`, if `result_processor` raises, the exception is logged but the `finally` block still calls `complete_offset`. Since the offset was added via `add_offset` in `submit`, the offset now appears processed, and the commit loop will advance `last_committed` past it even though the message was never successfully handled. Any consumer relying on the commit guarantee (\"Only commits offsets after successful processing\" per the class docstring) will silently lose that message on restart. If at-most-once semantics are intentional, the docstring and metric naming should say so; otherwise failed items need a retry/dead-letter path before the offset is completed.",
+        "File: src/sentry/remote_subscriptions/consumers/queue_consumer.py, Line: 337, Issue: Commit after terminate: `terminate()` sets `shutdown_event` but never joins `commit_thread`, unlike `close()`. The commit thread waits on `shutdown_event.wait(1.0)` and can wake up one more time after termination, calling `commit_function` concurrently with (or after) the strategy has been torn down. Depending on what `commit_function` does (e.g., producer commit on a closed producer), this can raise or commit offsets at an unsafe point during shutdown.",
+        "File: src/sentry/remote_subscriptions/consumers/queue_consumer.py, Line: 296, Issue: Assert for control flow: `submit` uses `assert isinstance(message.value, BrokerValue)` to extract the partition/offset. Under `python -O` asserts are stripped, and `message.value.partition` would then raise `AttributeError` on a non-BrokerValue, which is caught by the broad `except Exception` and silently swallowed (offset never tracked). A explicit check with proper handling would be safer.",
+        "File: tests/sentry/remote_subscriptions/consumers/test_queue_consumer.py, Line: 116, Issue: Flaky test: `test_different_groups_distributed` asserts that 20 group keys hash to exactly 3 distinct queue indices. With hash-based assignment there is no guarantee that all 3 queues are hit \u2014 a hash function that maps the 20 generated keys to only 2 buckets (or a future change of hashing scheme) makes this assertion fail intermittently or after refactoring. The test should assert the count is <= num_queues (or that assignment is valid), not exactly equal to the queue count.",
+        "File: tests/sentry/remote_subscriptions/consumers/test_queue_consumer.py, Line: 195, Issue: Timing-dependent assertion: In `test_stats_reporting`, `stats[\"total_items\"] > 0` is checked immediately after submitting 10 items, but background workers may have already drained the queues by then, making the assertion flaky. Similarly, the later assertion `stats[\"total_items\"] == 0` right after the completion event can race if items are still being accounted for. These stats checks should be retried/polled with a timeout rather than asserted once.",
+        "File: tests/sentry/uptime/consumers/test_results_consumer.py, Line: 2130, Issue: Flaky Kafka assertion: In the Kafka integration test, `verify_consumer.committed(partitions)` is called immediately after `processor._shutdown()` with no timeout or retry. Depending on timing (the ONCE_PER_SECOND commit policy plus async broker group coordination), `committed()` can return `OFFSET_INVALID` (-1001) or a stale offset even when a commit was made, making `committed[0].offset == 5` flaky. Consider polling `committed()` with a timeout until it reflects the expected offset, or asserting against `commits_made` (which is already tracked) as the source of truth.",
+        "File: tests/sentry/uptime/consumers/test_results_consumer.py, Line: 2098, Issue: Private API usage: The integration test drives the arroyo `StreamProcessor` via private methods `processor._run_once()` and `processor._shutdown()`. These are not part of arroyo's public contract and can break silently on arroyo upgrades. If a public run/stop API (or a test helper) exists, prefer it; otherwise this coupling should be noted.",
+        "File: tests/sentry/uptime/consumers/test_results_consumer.py, Line: 1900, Issue: Fixed side_effect list: In `test_thread_queue_parallel_error_handling`, `mock_processor_call.side_effect = [Exception(\"Processing failed\"), None]` is a fixed-length list. If the implementation ever retries a failed message (now or after a future change), the third call raises `StopIteration` inside a worker thread, which can mask the actual behavior under test and make the failure hard to diagnose. A callable side effect that fails only on the first call per message would be more robust."
+      ],
+      "runs": [
+        {
+          "golden_matches": {
+            "0": {
+              "finding": null,
+              "reasoning": "No candidate finding clearly matches the golden bug labeled 'magic 50 const'."
+            },
+            "1": {
+              "finding": null,
+              "reasoning": "No candidate finding clearly matches the golden bug labeled 'test docstring mismatch'."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "FP",
+              "reasoning": "Candidate finding describes potential data loss but does not correspond to any golden bug."
+            },
+            "1": {
+              "label": "FP",
+              "reasoning": "Candidate finding about commit after terminate is a concern but not a golden bug match."
+            },
+            "2": {
+              "label": "FP",
+              "reasoning": "Candidate finding about assert in submit leading to potential AttributeError is plausible but not a golden bug match."
+            },
+            "3": {
+              "label": "FP",
+              "reasoning": "Candidate test about distribution of groups across queues is a test reliability concern, not a golden bug match."
+            },
+            "4": {
+              "label": "FP",
+              "reasoning": "Candidate test timing/flakiness concerns shown; not a golden bug match."
+            },
+            "5": {
+              "label": "FP",
+              "reasoning": "Candidate Kafka integration flakiness note; not a golden bug match."
+            },
+            "6": {
+              "label": "FP",
+              "reasoning": "Candidate note about private API usage in tests; not a golden bug match."
+            },
+            "7": {
+              "label": "FP",
+              "reasoning": "Candidate test with fixed side_effect list; not a golden bug match."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": null,
+              "reasoning": "No candidate finding explicitly captures the 'magic 50' constant issue described in golden bug 0."
+            },
+            "1": {
+              "finding": null,
+              "reasoning": "No candidate finding explicitly captures a test docstring mismatch described in golden bug 1."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "TP",
+              "reasoning": "Candidate finding 0 accurately describes potential data loss on processing failure due to completing offsets in the finally block despite an exception."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Candidate finding 1 notes a potential unsafe commit behavior if terminate() does not join the commit thread, which matches the code paths observed."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "Candidate finding 2 correctly highlights the explicit assert when extracting partition/offset, which is brittle under -O and could mask a real issue if BrokerValue is not present."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Candidate finding 3 points out a timing-sensitive flaky test expectation about group-to-queue distribution."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "Candidate finding 4 flags a flaky stats-check pattern that races with background processing."
+            },
+            "5": {
+              "label": "TP",
+              "reasoning": "Candidate finding 5 identifies flakiness in a Kafka integration test related to commit timing."
+            },
+            "6": {
+              "label": "TP",
+              "reasoning": "Candidate finding 6 notes reliance on private API (_run_once/_shutdown) to drive the arroyo processor, which is fragile."
+            },
+            "7": {
+              "label": "TP",
+              "reasoning": "Candidate finding 7 calls out a fixed side-effect list which can cause brittle tests if retries occur."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": null,
+              "reasoning": "No candidate finding corresponds to the 'magic 50 const' golden bug (it refers to a magic constant in tests, not a specific issue surfaced by the candidate findings)."
+            },
+            "1": {
+              "finding": null,
+              "reasoning": "No candidate finding corresponds to a 'test docstring mismatch' golden bug (no such mismatch is asserted by the findings)."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "TP",
+              "reasoning": "Matches data-loss risk: OrderedQueueWorker always calls complete_offset in finally, potentially marking a message as processed even if result_processor raised an exception."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Commit after terminate: terminate() mentions shutdown handling; if it does not join commit_thread, there is a risk of committing during teardown."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "Assert for control flow: submit uses an assert to extract partition/offset which is fragile if assertions are disabled."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Flaky test: test_different_groups_distributed asserts exact 3 distinct queues for 20 groups; distribution via hash is not guaranteed to hit all buckets consistently."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "Timing-dependent assertion: test_stats_reporting may race between submissions and queue draining; should poll with timeout rather than single assert."
+            },
+            "5": {
+              "label": "TP",
+              "reasoning": "Kafka integration test: relying on committed() immediately after shutdown is flaky; should poll for commit results or use commits_made as truth."
+            },
+            "6": {
+              "label": "TP",
+              "reasoning": "Private API usage: tests invoke processor via private methods (_run_once, _shutdown) which may break with library changes."
+            },
+            "7": {
+              "label": "TP",
+              "reasoning": "Fixed side_effect list: using a fixed-length side_effect can cause StopIteration if more retries occur; a more robust approach is needed."
+            }
+          }
+        }
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "confirmed_miss",
+            "reasoning": [
+              "No candidate finding clearly matches the golden bug labeled 'magic 50 const'.",
+              "No candidate finding explicitly captures the 'magic 50' constant issue described in golden bug 0.",
+              "No candidate finding corresponds to the 'magic 50 const' golden bug (it refers to a magic constant in tests, not a specific issue surfaced by the candidate findings)."
+            ]
+          },
+          "1": {
+            "status": "confirmed_miss",
+            "reasoning": [
+              "No candidate finding clearly matches the golden bug labeled 'test docstring mismatch'.",
+              "No candidate finding explicitly captures a test docstring mismatch described in golden bug 1.",
+              "No candidate finding corresponds to a 'test docstring mismatch' golden bug (no such mismatch is asserted by the findings)."
+            ]
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate finding describes potential data loss but does not correspond to any golden bug.",
+              "Candidate finding 0 accurately describes potential data loss on processing failure due to completing offsets in the finally block despite an exception.",
+              "Matches data-loss risk: OrderedQueueWorker always calls complete_offset in finally, potentially marking a message as processed even if result_processor raised an exception."
+            ]
+          },
+          "1": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate finding about commit after terminate is a concern but not a golden bug match.",
+              "Candidate finding 1 notes a potential unsafe commit behavior if terminate() does not join the commit thread, which matches the code paths observed.",
+              "Commit after terminate: terminate() mentions shutdown handling; if it does not join commit_thread, there is a risk of committing during teardown."
+            ]
+          },
+          "2": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate finding about assert in submit leading to potential AttributeError is plausible but not a golden bug match.",
+              "Candidate finding 2 correctly highlights the explicit assert when extracting partition/offset, which is brittle under -O and could mask a real issue if BrokerValue is not present.",
+              "Assert for control flow: submit uses an assert to extract partition/offset which is fragile if assertions are disabled."
+            ]
+          },
+          "3": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate test about distribution of groups across queues is a test reliability concern, not a golden bug match.",
+              "Candidate finding 3 points out a timing-sensitive flaky test expectation about group-to-queue distribution.",
+              "Flaky test: test_different_groups_distributed asserts exact 3 distinct queues for 20 groups; distribution via hash is not guaranteed to hit all buckets consistently."
+            ]
+          },
+          "4": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate test timing/flakiness concerns shown; not a golden bug match.",
+              "Candidate finding 4 flags a flaky stats-check pattern that races with background processing.",
+              "Timing-dependent assertion: test_stats_reporting may race between submissions and queue draining; should poll with timeout rather than single assert."
+            ]
+          },
+          "5": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate Kafka integration flakiness note; not a golden bug match.",
+              "Candidate finding 5 identifies flakiness in a Kafka integration test related to commit timing.",
+              "Kafka integration test: relying on committed() immediately after shutdown is flaky; should poll for commit results or use commits_made as truth."
+            ]
+          },
+          "6": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate note about private API usage in tests; not a golden bug match.",
+              "Candidate finding 6 notes reliance on private API (_run_once/_shutdown) to drive the arroyo processor, which is fragile.",
+              "Private API usage: tests invoke processor via private methods (_run_once, _shutdown) which may break with library changes."
+            ]
+          },
+          "7": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate test with fixed side_effect list; not a golden bug match.",
+              "Candidate finding 7 calls out a fixed side-effect list which can cause brittle tests if retries occur.",
+              "Fixed side_effect list: using a fixed-length side_effect can cause StopIteration if more retries occur; a more robust approach is needed."
+            ]
+          }
+        }
+      }
+    },
+    "calcom-22532": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "updateManyByCredentialId empty data (near CalendarService.ts:1022)"
+        },
+        {
+          "index": 1,
+          "description": "sed -i '' (near test-gcal-webhooks.sh)"
+        },
+        {
+          "index": 2,
+          "description": "generic Error 500 TRPCError"
+        },
+        {
+          "index": 3,
+          "description": "hardcoded en-US (near CredentialActionsDropdown.tsx:100)"
+        }
+      ],
+      "findings": [
+        "File: packages/features/apps/components/CredentialActionsDropdown.tsx, Line: 100, Issue: Hardcoded locale: The cache timestamp is formatted with `new Intl.DateTimeFormat(\"en-US\", ...)` instead of the user's locale. The component already uses `useLocale()` for translations, so the timestamp will render in US format for all users regardless of their locale preference. Use the locale from `useLocale()` (or `Intl.DateTimeFormat()` with no locale argument) instead.",
+        "File: packages/features/apps/components/CredentialActionsDropdown.tsx, Line: 40, Issue: Stale cache status: `deleteCacheMutation` shows a success toast and calls `onSuccess?.()`, but unlike `disconnectMutation` it never invalidates the relevant tRPC queries (e.g. `viewer.calendars.connectedCalendars`). After deleting the cache, any parent view that reads cache status will keep showing the old \"cache last updated\" entry until a full refetch happens elsewhere.",
+        "File: packages/lib/server/repository/selectedCalendar.ts, Line: 400, Issue: Possible Type Bug: `updateManyByCredentialId` declares its `data` parameter as `Prisma.SelectedCalendarUpdateInput`, but Prisma's `updateMany` expects `SelectedCalendarUpdateManyMutationInput` (the updateMany mutation input type). `SelectedCalendarUpdateInput` allows nested relation-style fields (e.g., object-shaped relation updates) that `updateMany` does not support, so callers could pass a `data` object that type-checks at this signature but fails at runtime or at the actual `prisma.selectedCalendar.updateMany` call site. Using `Prisma.SelectedCalendarUpdateManyMutationInput` would align the signature with the underlying query.",
+        "File: packages/prisma/schema.prisma, Line: 1718, Issue: Misleading comment: The comment claims `@updatedAt` provides an initial value for \"future raw inserts\", but Prisma's `@updatedAt` is applied only by Prisma Client on create/update operations; raw SQL inserts (or writes from other tools bypassing Prisma Client) will not populate or update `updatedAt` unless the database itself has a default. If raw inserts are a real use case, a database-level default (e.g., `@default(now())` mapped to a DB default via `prisma migrate` with `DEFAULT CURRENT_TIMESTAMP`) is needed. Also note legacy rows will get the migration timestamp as their `updatedAt`, not their actual last-update time, which may be acceptable but is worth confirming.",
+        "File: packages/trpc/server/routers/viewer/calendars/_router.tsx, Line: 28, Issue: Possible authorization gap: The new `deleteCache` mutation accepts an arbitrary `credentialId` from the client. The handler implementation is not visible in this diff, so it may well validate ownership, but if `deleteCacheHandler` does not verify that the credential belongs to `ctx.user`, any authenticated user could delete another user's calendar cache by guessing/enumerating credential IDs. Worth confirming the ownership check exists in `deleteCache.handler`.",
+        "File: packages/trpc/server/routers/viewer/calendars/connectedCalendars.handler.ts, Line: 33, Issue: Possible Bug: `cacheStatusMap.get(calendar.credentialId) || null` uses falsy coercion instead of a nullish check. If `updatedAt` is a valid timestamp, this is fine, but if `updatedAt` could ever be an epoch value of 0 or the repository returns a falsy-but-valid value, it would be silently converted to `null`. More concretely: `Map.get` returning `undefined` (credential not found in cache) and an actual cached entry with a falsy `updatedAt` are conflated. Use `?? null` to distinguish \"no cache entry\" from \"falsy timestamp\".",
+        "File: packages/trpc/server/routers/viewer/calendars/connectedCalendars.handler.ts, Line: 27, Issue: Extra DB query: A new `CalendarCacheRepository` query is added on every `connectedCalendars` call, which is a frequently invoked viewer endpoint. If `connectedCalendars` is empty, `getCacheStatusByCredentialIds` is still called with an empty array \u2014 worth verifying the repository handles an empty `credentialIds` list without issuing a pointless query or a Prisma `findMany` with an `in: []` filter (which returns empty but still hits the DB).",
+        "File: scripts/test-gcal-webhooks.sh, Line: 68, Issue: Portability Bug: `sed -i '' -E ...` is macOS/BSD syntax only. On Linux (GNU sed), `-i` takes an optional suffix argument, so `''` is treated as the input file name and the script fails with \"sed: can't read : No such file or directory\", leaving `GOOGLE_WEBHOOK_URL` unupdated. Use a portable form, e.g. detect sed flavor or use `sed -i.bak`.",
+        "File: scripts/test-gcal-webhooks.sh, Line: 10, Issue: Wrong exit code: `cleanup` always calls `exit 0`, including on the failure paths (rate limit hit, failed URL extraction). Callers and CI will see the script as successful even though no tunnel URL was obtained and the env file was never updated. It should exit non-zero on failure.",
+        "File: scripts/test-gcal-webhooks.sh, Line: 30, Issue: Reuse path fragile: When an existing tmole process is detected, the URL is read from `$LOG_FILE`, but the log is only created/reset when this script starts tmole itself. If tmole was started elsewhere (or the log was rotated/deleted), `extract_url_from_log` returns empty and the script exits via cleanup without a clear diagnostic distinguishing \"reuse failed\" from \"startup failed\"."
+      ],
+      "runs": [
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 2,
+              "reasoning": "UpdateManyByCredentialId signature/behavior issue aligns with the golden bug about empty data for updateMany by credential."
+            },
+            "1": {
+              "finding": 7,
+              "reasoning": "Candidate 7 directly corresponds to the macOS sed portability issue in test-gcal-webhooks.sh."
+            },
+            "2": {
+              "finding": null,
+              "reasoning": "No candidate finding clearly captures the generic TRPCError 500 scenario described by the golden bug."
+            },
+            "3": {
+              "finding": 0,
+              "reasoning": "Hardcoded en-US locale in CredentialActionsDropdown.tsx directly matches the en-US issue in the golden bugs."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 3."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Describes a valid maintainability/behavior issue (stale cache invalidation) in CredentialActionsDropdown.tsx."
+            },
+            "2": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 0 (updateManyByCredentialId type/usage concern)."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Describes a possible misinterpretation due to a misleading code comment about updatedAt."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "Notes a potential authorization gap in deleteCache mutation without visible ownership checks."
+            },
+            "5": {
+              "label": "TP",
+              "reasoning": "Identifies an extra DB query in connectedCalendars handler (potential performance/logic impact)."
+            },
+            "6": {
+              "label": "TP",
+              "reasoning": "Ports issue: sed -i syntax portability across environments."
+            },
+            "7": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 1 (sed -i '' portability in test script)."
+            },
+            "8": {
+              "label": "TP",
+              "reasoning": "Notes reuse-path fragility when reusing an external tmole process and missing diagnostic."
+            },
+            "9": {
+              "label": "TP",
+              "reasoning": "Additional reuse-path fragility note similar to candidate 8; warns about diagnostic clarity."
+            }
+          }
+        },
+        null,
+        null
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "1": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "2": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "3": {
+            "status": "insufficient_data",
+            "reasoning": []
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "1": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "2": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "3": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "4": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "5": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "6": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "7": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "8": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "9": {
+            "status": "insufficient_data",
+            "reasoning": []
+          }
+        }
+      }
+    },
+    "grafana-80329": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "Error log level (near xorm_store.go:538)"
+        },
+        {
+          "index": 1,
+          "description": "ticker 10->1min (near cleanup.go:77)"
+        }
+      ],
+      "findings": [
+        "File: pkg/services/annotations/annotationsimpl/cleanup_test.go, Line: 237, Issue: Possible Bug: `createTestAnnotations` now explicitly assigns `ID: int64(i + 1)` to every annotation before bulk-inserting them. If the old-annotation loop (not shown in this hunk) does not also set explicit IDs, those inserts will rely on the table's auto-increment, which typically starts at 1 and will collide with the explicitly inserted IDs 1..N, causing duplicate-key failures on databases that enforce primary key uniqueness (e.g., MySQL/Postgres). Even if all inserts set explicit IDs, on Postgres the sequence is not advanced by explicit-ID inserts, so any later auto-increment insert in the same test DB can fail. Verify both loops assign IDs consistently or drop the explicit IDs.",
+        "File: pkg/services/annotations/annotationsimpl/cleanup_test.go, Line: 98, Issue: Test performance: The new test case creates 40003 annotations plus 80006 tag rows to exercise a batch size of 32767. Even with the 500-row `InsertMulti` batching, this makes an already-integration-scoped test substantially slower and more resource-heavy; consider whether a smaller count just above the SQLite variable limit (e.g., ~33000) would suffice, or at least confirm CI tolerates the added runtime.",
+        "File: pkg/services/annotations/annotationsimpl/xorm_store.go, Line: 531, Issue: Incorrect log level: The new cleanup paths use `r.log.Error` for routine, successful progress messages (\"Annotations to clean by time\", \"cleaned annotations by time\", \"Tags to clean\", etc.). These fire on every cleanup batch and will flood error logs/alerting on healthy systems, and each message also logs `err` even when it is nil. These should be Debug/Info level, and the full `ids` list should not be logged (it can be thousands of entries per batch).",
+        "File: pkg/services/annotations/annotationsimpl/xorm_store.go, Line: 630, Issue: Possible infinite loop: `untilDoneOrCancelled` terminates only when a batch reports zero affected rows, but the loop condition is based on `affected`, not on whether IDs were found. If `fetchIDs` returns a non-empty ID list but `deleteByIDs` reports 0 affected rows (e.g., the rows were deleted concurrently between the SELECT and the DELETE, or the driver misreports RowsAffected), the same IDs are re-fetched and re-deleted forever with no progress. Consider terminating when the fetched ID list is empty, or bounding retries when affected == 0 despite non-empty IDs.",
+        "File: pkg/services/annotations/annotationsimpl/xorm_store.go, Line: 596, Issue: SQL built via string concat: `fetchIDs` interpolates `table` and `condition` directly into the SQL string. This is not currently exploitable since both come from internal constants, but the new `deleteByIDs` carefully parameterizes IDs while `fetchIDs` does not, which is inconsistent and fragile if a caller ever passes user-influenced input. Low severity given current call sites.",
+        "File: pkg/services/cleanup/cleanup.go, Line: 77, Issue: Possible debug leftover: The cleanup ticker interval was reduced from 10 minutes to 1 minute. If this change was made to speed up manual testing, it looks like a debug value accidentally left in: running the cleanup job every minute increases database load (especially given the PR title mentions deadlock-prone cleanup queries on MySQL) for no stated benefit. If the more frequent interval is intentional, it should be documented or made configurable."
+      ],
+      "runs": [
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 2,
+              "reasoning": "Candidate finding 2 identifies incorrect log level usage for routine progress messages near xorm_store.go:538, which maps to the golden bug about error-level logging."
+            },
+            "1": {
+              "finding": 5,
+              "reasoning": "Candidate finding 5 notes the cleanup ticker interval changed from 10 minutes to 1 minute, matching the golden bug about ticker interval."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "NOT_A_FINDING",
+              "reasoning": "No specific claim about the code that relates to the golden bugs."
+            },
+            "1": {
+              "label": "NOT_A_FINDING",
+              "reasoning": "No specific claim about the code that relates to the golden bugs."
+            },
+            "2": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Accurately flags the inappropriate error-level logging for routine cleanup progress messages."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Identifies a potential infinite-loop risk in untilDoneOrCancelled due to non-empty fetch IDs possibly never reducing; a valid code quality concern though not a golden bug."
+            },
+            "4": {
+              "label": "NOT_A_FINDING",
+              "reasoning": "No specific claim about the code that relates to the golden bugs."
+            },
+            "5": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Accurately flags the ticker interval change from 10 minutes to 1 minute as a potential golden bug."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 2,
+              "reasoning": "The log level change to Error for routine cleanup messages and logging of nil errors matches the 'Error log level' golden bug."
+            },
+            "1": {
+              "finding": 5,
+              "reasoning": "The ticker interval reduction from 10 minutes to 1 minute matches the 'ticker 10->1min' golden bug."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "TP",
+              "reasoning": "Explicitly setting IDs in new annotation objects in tests could clash with auto-incremented IDs in the old inserts, risking duplicate keys depending on DB and insert order."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "A single integration test case uses 40k+ annotations and 80k+ tag rows to exercise a large batch size, which is heavy and could slow CI; a smaller count might be sufficient."
+            },
+            "2": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Catches the golden bug about using error-level logging for normal cleanup progress messages."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Describes a potential infinite-loop risk in untilDoneOrCancelled if deleteByIDs reports zero affected rows despite non-empty IDs."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "FetchIDs builds SQL by interpolating table/condition directly (potential inconsistency with parameterized deletes)."
+            },
+            "5": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Catches the golden bug about reducing the cleanup ticker interval from 10 minutes to 1 minute."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 2,
+              "reasoning": "The new log messages and their error-level usage imply a problematic practice: routine cleanup progress is logged as errors, which can flood logs."
+            },
+            "1": {
+              "finding": 5,
+              "reasoning": "The cleanup ticker was reduced from 10 minutes to 1 minute, matching the described ticker change in the golden bug."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "TP",
+              "reasoning": "The candidate notes a potential ID collision risk due to explicit IDs on inserts alongside existing auto-increment behavior, which is a plausible real issue."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "The proposed test case with 40003 annotations and 80006 tag rows highlights a performance/resource concern; a smaller count could still exercise batch behavior effectively."
+            },
+            "2": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "This finding directly corresponds to the golden bug about log level being error for routine cleanup messages."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Identifies a potential infinite-loop scenario in untilDoneOrCancelled when non-empty fetch results aren\u2019t paired with progress; a valid behavioral concern."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "Points out inconsistent SQL construction: fetchIDs interpolates table/condition directly, while deleteByIDs uses parameterization; a valid maintainability/robustness note."
+            },
+            "5": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "This finding maps to the ticker interval change from 10 minutes to 1 minute in the cleanup loop."
+            }
+          }
+        }
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "Candidate finding 2 identifies incorrect log level usage for routine progress messages near xorm_store.go:538, which maps to the golden bug about error-level logging.",
+              "The log level change to Error for routine cleanup messages and logging of nil errors matches the 'Error log level' golden bug.",
+              "The new log messages and their error-level usage imply a problematic practice: routine cleanup progress is logged as errors, which can flood logs."
+            ]
+          },
+          "1": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "Candidate finding 5 notes the cleanup ticker interval changed from 10 minutes to 1 minute, matching the golden bug about ticker interval.",
+              "The ticker interval reduction from 10 minutes to 1 minute matches the 'ticker 10->1min' golden bug.",
+              "The cleanup ticker was reduced from 10 minutes to 1 minute, matching the described ticker change in the golden bug."
+            ]
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "disputed",
+            "reasoning": [
+              "No specific claim about the code that relates to the golden bugs.",
+              "Explicitly setting IDs in new annotation objects in tests could clash with auto-incremented IDs in the old inserts, risking duplicate keys depending on DB and insert order.",
+              "The candidate notes a potential ID collision risk due to explicit IDs on inserts alongside existing auto-increment behavior, which is a plausible real issue."
+            ]
+          },
+          "1": {
+            "status": "disputed",
+            "reasoning": [
+              "No specific claim about the code that relates to the golden bugs.",
+              "A single integration test case uses 40k+ annotations and 80k+ tag rows to exercise a large batch size, which is heavy and could slow CI; a smaller count might be sufficient.",
+              "The proposed test case with 40003 annotations and 80006 tag rows highlights a performance/resource concern; a smaller count could still exercise batch behavior effectively."
+            ]
+          },
+          "2": {
+            "status": "golden_associated",
+            "reasoning": [
+              "Accurately flags the inappropriate error-level logging for routine cleanup progress messages.",
+              "Catches the golden bug about using error-level logging for normal cleanup progress messages.",
+              "This finding directly corresponds to the golden bug about log level being error for routine cleanup messages."
+            ]
+          },
+          "3": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Identifies a potential infinite-loop risk in untilDoneOrCancelled due to non-empty fetch IDs possibly never reducing; a valid code quality concern though not a golden bug.",
+              "Describes a potential infinite-loop risk in untilDoneOrCancelled if deleteByIDs reports zero affected rows despite non-empty IDs.",
+              "Identifies a potential infinite-loop scenario in untilDoneOrCancelled when non-empty fetch results aren\u2019t paired with progress; a valid behavioral concern."
+            ]
+          },
+          "4": {
+            "status": "disputed",
+            "reasoning": [
+              "No specific claim about the code that relates to the golden bugs.",
+              "FetchIDs builds SQL by interpolating table/condition directly (potential inconsistency with parameterized deletes).",
+              "Points out inconsistent SQL construction: fetchIDs interpolates table/condition directly, while deleteByIDs uses parameterization; a valid maintainability/robustness note."
+            ]
+          },
+          "5": {
+            "status": "golden_associated",
+            "reasoning": [
+              "Accurately flags the ticker interval change from 10 minutes to 1 minute as a potential golden bug.",
+              "Catches the golden bug about reducing the cleanup ticker interval from 10 minutes to 1 minute.",
+              "This finding maps to the ticker interval change from 10 minutes to 1 minute in the cleanup loop."
+            ]
+          }
+        }
+      }
+    },
+    "sentry-80168": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "abstract TypeError"
+        },
+        {
+          "index": 1,
+          "description": "docstring list vs dict"
+        },
+        {
+          "index": 2,
+          "description": "group_2 6 vs 10 (near test_detector.py:195)"
+        }
+      ],
+      "findings": [
+        "File: src/sentry/workflow_engine/processors/detector.py, Line: 298, Issue: Enum conversion may raise: `PriorityLevel(new_status)` converts a `DetectorPriorityLevel` member to a `PriorityLevel` by value. This only works if the two enums have identical member values; if any `DetectorPriorityLevel` value (e.g., a high/medium priority) does not match a `PriorityLevel` value, this raises `ValueError` during evaluation, failing the whole detector pass. If the enums are intentionally value-aligned this is fine, but it deserves a check or a safe mapping.",
+        "File: src/sentry/workflow_engine/processors/detector.py, Line: 240, Issue: Silent duplicate handling: The removed code logged an error when duplicate group keys appeared in detector results; the new dict-based `results[result.group_key] = result` silently overwrites duplicates with no logging. The original comment said duplicates \"shouldn't happen\" and warranted investigation \u2014 that observability signal is now gone, so a duplicate-producing handler would silently drop results."
+      ],
+      "runs": [
+        {
+          "golden_matches": {
+            "0": {
+              "finding": null,
+              "reasoning": "No candidate finding matches the 'abstract TypeError' issue described in golden bug 0."
+            },
+            "1": {
+              "finding": 1,
+              "reasoning": "Candidate finding 1 directly flags the silent duplicate handling introduced by switching to a dict for detector results."
+            },
+            "2": {
+              "finding": null,
+              "reasoning": "No candidate finding addresses the test expectation mismatch for group_2 value (6 vs 10) near test_detector.py:195."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "TP",
+              "reasoning": "Not a golden match, but it makes a precise, accurate claim about a potential enum conversion issue in the diff."
+            },
+            "1": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 1 about duplicate key handling in detector results."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": null,
+              "reasoning": "No candidate finding corresponds to the described 'abstract TypeError' golden bug."
+            },
+            "1": {
+              "finding": null,
+              "reasoning": "No candidate finding corresponds to the described 'docstring list vs dict' golden bug."
+            },
+            "2": {
+              "finding": null,
+              "reasoning": "No candidate finding corresponds to the described 'group_2 6 vs 10' golden bug."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "FP",
+              "reasoning": "Candidate finding mentions enum conversion safety; does not appear to precisely diagnose a real issue in the diff relative to golden bugs."
+            },
+            "1": {
+              "label": "FP",
+              "reasoning": "Candidate finding mentions duplicate handling observability; while related to code changes, it does not map to any golden bug given."
+            }
+          }
+        },
+        null
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "confirmed_miss",
+            "reasoning": [
+              "No candidate finding matches the 'abstract TypeError' issue described in golden bug 0.",
+              "No candidate finding corresponds to the described 'abstract TypeError' golden bug."
+            ]
+          },
+          "1": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate finding 1 directly flags the silent duplicate handling introduced by switching to a dict for detector results.",
+              "No candidate finding corresponds to the described 'docstring list vs dict' golden bug."
+            ]
+          },
+          "2": {
+            "status": "confirmed_miss",
+            "reasoning": [
+              "No candidate finding addresses the test expectation mismatch for group_2 value (6 vs 10) near test_detector.py:195.",
+              "No candidate finding corresponds to the described 'group_2 6 vs 10' golden bug."
+            ]
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "disputed",
+            "reasoning": [
+              "Not a golden match, but it makes a precise, accurate claim about a potential enum conversion issue in the diff.",
+              "Candidate finding mentions enum conversion safety; does not appear to precisely diagnose a real issue in the diff relative to golden bugs."
+            ]
+          },
+          "1": {
+            "status": "confirmed_FP",
+            "reasoning": [
+              "Used to catch golden bug 1 about duplicate key handling in detector results.",
+              "Candidate finding mentions duplicate handling observability; while related to code changes, it does not map to any golden bug given."
+            ]
+          }
+        }
+      }
+    },
+    "sentry-80528": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "config mutated unused (near incident_occurrence.py:160)"
+        },
+        {
+          "index": 1,
+          "description": "MonitorCheckIn refetch (near incidents.py:70)"
+        }
+      ],
+      "findings": [
+        "File: src/sentry/monitors/logic/incident_occurrence.py, Line: 165, Issue: Unused computed config: `get_monitor_environment_context` builds a `config` copy and converts `schedule_type` to its human-readable display value, but then returns the raw `monitor_environment.monitor.config` instead of the transformed `config`. The humanized `schedule_type` is silently discarded, so the monitor context in the produced event shows the raw enum/integer value rather than the intended display value.",
+        "File: src/sentry/monitors/logic/incident_occurrence.py, Line: 143, Issue: Possible IndexError: In `get_failure_reason`, if none of the passed check-ins have a status in `HUMAN_FAILURE_STATUS_MAP` (e.g., a check-in with an unexpected status value), `status_counts` is empty and `list(status_counts.keys())[0]` raises an `IndexError`. The sum==1 branch assumes at least one matching status without guarding against zero. Low likelihood if callers only pass failed check-ins, but the function's filtering implies non-matching statuses are possible.",
+        "File: src/sentry/monitors/logic/incidents.py, Line: 96, Issue: Non-deterministic ordering: The `checkins` queryset (`MonitorCheckIn.objects.filter(id__in=...)`) has no explicit ordering, so the loop calling `create_incident_occurrence` may process check-ins in arbitrary DB order. When `failure_issue_threshold > 1`, occurrence creation order (and any ordering-dependent behavior inside `create_incident_occurrence`) becomes non-deterministic. Adding `.order_by(\"date_added\")` would make behavior consistent.",
+        "File: src/sentry/monitors/logic/incidents.py, Line: 100, Issue: Signal on missing incident: In the `MonitorStatus.ERROR` branch, `monitor_env.active_incident` can be `None` (e.g., the incident was resolved but the status was not reset). In that case no occurrence is created, but `monitor_environment_failed` is still sent at the end of the function. If consumers of this signal assume an active incident exists (e.g., to notify on an ongoing failure), they will receive a signal with no incident backing it. Verify this is intended, or skip the signal when `incident is None`."
+      ],
+      "runs": [
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 0,
+              "reasoning": "Candidate finding 0 directly corresponds to the unused mutated config in incident_occurrence where a humanized schedule_type is computed but not used."
+            },
+            "1": {
+              "finding": 2,
+              "reasoning": "Candidate finding 2 identifies non-deterministic ordering when retrieving checkins for threshold handling, which matches the referenced golden bug about potential reordering."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Uses candidate 0 to detect the unused transformed config in incident_occurrence."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Candidate 1 makes a true claim about an issue (ordering) being non-deterministic when fetching related checkins."
+            },
+            "2": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Uses candidate 2 to detect the non-deterministic ordering issue described by the golden bug."
+            },
+            "3": {
+              "label": "FP",
+              "reasoning": "Candidate 3 discusses signaling with a None incident; not clearly a real bug tied to the golden bugs provided."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 0,
+              "reasoning": "Candidate 0 precisely notes that get_monitor_environment_context mutates a local config but returns the original, causing the humanized schedule_type display to be discarded."
+            },
+            "1": {
+              "finding": 2,
+              "reasoning": "Candidate 2 highlights non-deterministic ordering of check-ins when building previous_checkins, which aligns with the refetching/ordering concern in the golden bug."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Matches golden bug 0 (config mutation/unused transformed config in incident_occurrence)."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Candidate 1 discusses a potential edge case in get_failure_reason (empty status counts) which is a real issue in the function's robustness."
+            },
+            "2": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Candidate 2 matches golden bug 1 by pointing out non-deterministic ordering due to lack of explicit ordering in the query."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Candidate 3 correctly observes a potential signal emission when there is no active incident, which is a valid behavior concern in incidents handling."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 0,
+              "reasoning": "Directly identifies the unused mutated config in get_monitor_environment_context that discards the humanized schedule_type."
+            },
+            "1": {
+              "finding": 2,
+              "reasoning": "Matches the non-deterministic ordering concern in incidents.py where the checkins queryset lacks explicit ordering, making output order potentially unpredictable."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 0."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Finds a real issue (indexing guard risk) not tied to golden bugs."
+            },
+            "2": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 1."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Raises a plausible signal/flow concern not tied to golden bugs."
+            }
+          }
+        }
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "Candidate finding 0 directly corresponds to the unused mutated config in incident_occurrence where a humanized schedule_type is computed but not used.",
+              "Candidate 0 precisely notes that get_monitor_environment_context mutates a local config but returns the original, causing the humanized schedule_type display to be discarded.",
+              "Directly identifies the unused mutated config in get_monitor_environment_context that discards the humanized schedule_type."
+            ]
+          },
+          "1": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "Candidate finding 2 identifies non-deterministic ordering when retrieving checkins for threshold handling, which matches the referenced golden bug about potential reordering.",
+              "Candidate 2 highlights non-deterministic ordering of check-ins when building previous_checkins, which aligns with the refetching/ordering concern in the golden bug.",
+              "Matches the non-deterministic ordering concern in incidents.py where the checkins queryset lacks explicit ordering, making output order potentially unpredictable."
+            ]
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "golden_associated",
+            "reasoning": [
+              "Uses candidate 0 to detect the unused transformed config in incident_occurrence.",
+              "Matches golden bug 0 (config mutation/unused transformed config in incident_occurrence).",
+              "Used to catch golden bug 0."
+            ]
+          },
+          "1": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Candidate 1 makes a true claim about an issue (ordering) being non-deterministic when fetching related checkins.",
+              "Candidate 1 discusses a potential edge case in get_failure_reason (empty status counts) which is a real issue in the function's robustness.",
+              "Finds a real issue (indexing guard risk) not tied to golden bugs."
+            ]
+          },
+          "2": {
+            "status": "golden_associated",
+            "reasoning": [
+              "Uses candidate 2 to detect the non-deterministic ordering issue described by the golden bug.",
+              "Candidate 2 matches golden bug 1 by pointing out non-deterministic ordering due to lack of explicit ordering in the query.",
+              "Used to catch golden bug 1."
+            ]
+          },
+          "3": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate 3 discusses signaling with a None incident; not clearly a real bug tied to the golden bugs provided.",
+              "Candidate 3 correctly observes a potential signal emission when there is no active incident, which is a valid behavior concern in incidents handling.",
+              "Raises a plausible signal/flow concern not tied to golden bugs."
+            ]
+          }
+        }
+      }
+    },
+    "grafana-76186": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "nil request panic"
+        },
+        {
+          "index": 1,
+          "description": "traceID gone (near logger_middleware.go:44)"
+        },
+        {
+          "index": 2,
+          "description": "TestLogger.FromContext (near fake.go:46)"
+        }
+      ],
+      "findings": [
+        "File: pkg/plugins/log/fake.go, Line: 46, Issue: Possible Bug: `FromContext` returns a brand-new `NewTestLogger()` instead of the receiver `f`. In a test fake, callers that extract a logger from a context (e.g., code under test calling `logger.FromContext(ctx)` and then logging) will record calls on a fresh `TestLogger`, so assertions made against the original `TestLogger` (its `Logs`/`Calls` fields) will fail or silently pass with zero calls. Returning `f` (or a logger sharing the same recording state) would preserve the fake's contract.",
+        "File: pkg/plugins/log/ifaces.go, Line: 20, Issue: Breaking interface change: Adding `FromContext(ctx context.Context) Logger` to the `Logger` interface is a breaking change for any external or internal type that implements `Logger` but does not have this method; all such implementations will fail to compile until updated. If this is intentional (e.g., all implementers are updated elsewhere in this PR), it can be ignored, but external plugin authors implementing `Logger` will also be affected.",
+        "File: pkg/plugins/log/logger.go, Line: 48, Issue: Silent fallback loses context logger: `FromContext` type-asserts the result of `d.l.FromContext(ctx)` to `*log.ConcreteLogger`, and on failure silently returns `d.New()` \u2014 the wrapper's default logger \u2014 instead of the logger stored in the context. If the assertion fails (e.g., the infra package stores a different concrete type or a value rather than a pointer in the context), callers will log to the wrong logger with no error or indication. Consider logging a warning on the fallback path, or verifying that the assertion matches how the infra package actually stores loggers in contexts.",
+        "File: pkg/services/pluginsintegration/clientmiddleware/contextual_logger_middleware.go, Line: 60, Issue: Inconsistent coverage: The streaming endpoints (SubscribeStream, PublishStream, RunStream) do not call instrumentContext, unlike all other endpoints. If contextual logging is intended for all plugin requests, stream requests will lack the pluginId/dsName/uname attributes in their logs. If this exclusion is intentional (e.g., long-lived streams), a comment explaining it would help reviewers and future maintainers.",
+        "File: pkg/services/pluginsintegration/clientmiddleware/contextual_logger_middleware.go, Line: 30, Issue: Misleading name: The helper is named instrumentContext but performs contextual logging, not instrumentation/metrics. Given the PR renames instrumentation middleware to metrics middleware, keeping an \"instrument*\" name here may cause confusion between the two middlewares. Consider a name like withContextualLogger.",
+        "File: pkg/services/pluginsintegration/clientmiddleware/logger_middleware.go, Line: 52, Issue: Loss of log context: The refactor removes `pluginId`, `endpoint`, `uname`, `traceID`, `dsName`, and `dsUID` from the \"Plugin Request Completed\" log line. If the intent is to rely on `logger.FromContext(ctx)` for trace correlation, note that plugin ID, endpoint, username, and datasource name/UID are not typically present in the context logger, so these fields will be lost from data-egress audit logs. If this removal is intentional (e.g., fields moved to a metrics middleware elsewhere in the PR), this can be disregarded \u2014 but as shown, this reduces observability of plugin requests.",
+        "File: pkg/services/pluginsintegration/clientmiddleware/metrics_middleware.go, Line: 110, Issue: Behavior change beyond rename: This PR is described as a rename chore, but it also removes the `instrumentContext` call in `instrumentPluginRequest` (and the `log` import). Previously, the context passed to downstream middleware and plugins was enriched with a contextual logger containing `endpoint`, `pluginId`, `dsName`, `dsUID`, and `uname`. After this change, that enrichment silently disappears, so any code relying on these contextual log attributes (e.g., request logs from plugins or inner middleware) will lose plugin/datasource/user details. If this removal is intentional it should be called out in the PR description and covered by tests; otherwise the `instrumentContext` invocation should be kept."
+      ],
+      "runs": [
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 0,
+              "reasoning": "Catches the same issue as golden bug 2: TestLogger.FromContext returns a brand-new logger instead of using the receiver."
+            },
+            "1": {
+              "finding": 5,
+              "reasoning": "Highlights loss of traceID/log context due to the refactor/renaming in the logger middleware (trace/context loss)."
+            },
+            "2": {
+              "finding": 0,
+              "reasoning": "Catches the same issue as golden bug 2: TestLogger.FromContext returns a brand-new logger instead of using the receiver."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 2."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Describes a breaking interface change by adding FromContext to Logger."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "Describes silent fallback losing context logger behavior in FromContext."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Points out inconsistent coverage for contextual logging on streaming endpoints."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "Warns about misleading name instrumentContext vs contextual logging."
+            },
+            "5": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 1 (traceID gone)."
+            },
+            "6": {
+              "label": "TP",
+              "reasoning": "Notes behavior change related to removing contextual enrichment in instrumentation/metrics rename."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": null,
+              "reasoning": "No candidate finding clearly catches the nil request panic described in golden bug 0."
+            },
+            "1": {
+              "finding": 5,
+              "reasoning": "Finding 5 describes loss of log context including traceID, which matches the golden bug 1."
+            },
+            "2": {
+              "finding": 0,
+              "reasoning": "Finding 0 directly matches TestLogger.FromContext behavior described in golden bug 2."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 2 (TestLogger.FromContext)."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Adds FromContext to Logger interface a breaking change; an accurate, specific claim about the diff."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "Silent fallback loses context logger on FromContext; an accurate, specific claim about the code."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Streaming endpoints do not call instrumentContext, implying missing contextual logging."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "Misleading name instrumentContext for contextual logging; rename confusion with instrumentation."
+            },
+            "5": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 1 (traceID removal / log context loss)."
+            },
+            "6": {
+              "label": "TP",
+              "reasoning": "Removes instrumentContext usage in metrics middleware; describes a significant behavioral change."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": null,
+              "reasoning": "No candidate finding corresponds to a nil request panic in the provided diff."
+            },
+            "1": {
+              "finding": 5,
+              "reasoning": "Candidate 5 notes removal of traceID from the log line, addressing the 'traceID gone' bug."
+            },
+            "2": {
+              "finding": 0,
+              "reasoning": "Candidate 0 describes TestLogger.FromContext returning a brand-new logger, matching the TestLogger.FromContext bug."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 2 (TestLogger.FromContext)."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Accurately notes interface change; not tied to a golden bug."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "Accurately notes silent fallback loses context logger in FromContext handling."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Notes inconsistent coverage for streaming endpoints; valid observation."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "Misleading name of helper; valid readability/maintainability issue."
+            },
+            "5": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 1 (traceID gone in logs)."
+            },
+            "6": {
+              "label": "TP",
+              "reasoning": "Notes behavior change beyond rename (instrumentContext removal); valid though not a golden bug."
+            }
+          }
+        }
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "disputed",
+            "reasoning": [
+              "Catches the same issue as golden bug 2: TestLogger.FromContext returns a brand-new logger instead of using the receiver.",
+              "No candidate finding clearly catches the nil request panic described in golden bug 0.",
+              "No candidate finding corresponds to a nil request panic in the provided diff."
+            ]
+          },
+          "1": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "Highlights loss of traceID/log context due to the refactor/renaming in the logger middleware (trace/context loss).",
+              "Finding 5 describes loss of log context including traceID, which matches the golden bug 1.",
+              "Candidate 5 notes removal of traceID from the log line, addressing the 'traceID gone' bug."
+            ]
+          },
+          "2": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "Catches the same issue as golden bug 2: TestLogger.FromContext returns a brand-new logger instead of using the receiver.",
+              "Finding 0 directly matches TestLogger.FromContext behavior described in golden bug 2.",
+              "Candidate 0 describes TestLogger.FromContext returning a brand-new logger, matching the TestLogger.FromContext bug."
+            ]
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "golden_associated",
+            "reasoning": [
+              "Used to catch golden bug 2.",
+              "Used to catch golden bug 2 (TestLogger.FromContext).",
+              "Used to catch golden bug 2 (TestLogger.FromContext)."
+            ]
+          },
+          "1": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Describes a breaking interface change by adding FromContext to Logger.",
+              "Adds FromContext to Logger interface a breaking change; an accurate, specific claim about the diff.",
+              "Accurately notes interface change; not tied to a golden bug."
+            ]
+          },
+          "2": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Describes silent fallback losing context logger behavior in FromContext.",
+              "Silent fallback loses context logger on FromContext; an accurate, specific claim about the code.",
+              "Accurately notes silent fallback loses context logger in FromContext handling."
+            ]
+          },
+          "3": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Points out inconsistent coverage for contextual logging on streaming endpoints.",
+              "Streaming endpoints do not call instrumentContext, implying missing contextual logging.",
+              "Notes inconsistent coverage for streaming endpoints; valid observation."
+            ]
+          },
+          "4": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Warns about misleading name instrumentContext vs contextual logging.",
+              "Misleading name instrumentContext for contextual logging; rename confusion with instrumentation.",
+              "Misleading name of helper; valid readability/maintainability issue."
+            ]
+          },
+          "5": {
+            "status": "golden_associated",
+            "reasoning": [
+              "Used to catch golden bug 1 (traceID gone).",
+              "Used to catch golden bug 1 (traceID removal / log context loss).",
+              "Used to catch golden bug 1 (traceID gone in logs)."
+            ]
+          },
+          "6": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Notes behavior change related to removing contextual enrichment in instrumentation/metrics rename.",
+              "Removes instrumentContext usage in metrics middleware; describes a significant behavioral change.",
+              "Notes behavior change beyond rename (instrumentContext removal); valid though not a golden bug."
+            ]
+          }
+        }
+      }
+    },
+    "grafana-103633": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "asymmetric cache trust (near service.go:116)"
+        },
+        {
+          "index": 1,
+          "description": "test comment allow-access"
+        },
+        {
+          "index": 2,
+          "description": "denial key underscore collision (near cache.go:30)"
+        }
+      ],
+      "findings": [
+        "File: pkg/services/authz/rbac/cache.go, Line: 30, Issue: Cache key collision: The new `userPermDenialCacheKey` builds the key by naive string concatenation with `_` separators, without escaping or a fixed-length encoding. Since user UIDs, actions, names, and parents can themselves contain underscores, distinct tuples can produce identical keys (e.g., `name=\"a_b\", parent=\"c\"` and `name=\"a\", parent=\"b_c\"` both yield `ns.perm_<user>_<action>_a_b_c`). A cached denial for one resource would then be wrongly returned for another, denying a user access they should have. Using a delimiter that cannot appear in the components (or hashing/encoding the components) avoids this.",
+        "File: pkg/services/authz/rbac/service.go, Line: 116, Issue: Stale denial cache: The new denial cache is checked before the permission cache and is never invalidated or overwritten when access is later granted. Scenario: a user's check is denied at T0, so the denial is cached. An admin then grants the user the permission and the permission cache is refreshed (e.g., via another request that populates `permCache` with allowed=true). Subsequent `Check` calls still short-circuit on the denial cache entry and return `Allowed: false` for the remainder of `shortCacheTTL`, even though fresh permissions allow the action. Since the full-check path (which would set allowed=true) never deletes the denial key, the denial persists independently of the permission cache's own TTL/invalidation. Consider deleting the denial key whenever a check succeeds, or invalidating it on permission changes.",
+        "File: pkg/services/authz/rbac/service.go, Line: 153, Issue: Same root cause as `pkg/services/authz/rbac/service.go:116`.\n\nDenial cached on stale data: When `getCachedIdentityPermissions` returns a cached permission set and `checkPermission` yields allowed=false, the code falls through to the full DB path and re-checks \u2014 good. However, if that full path also denies, the denial is written to `permDenialCache` keyed only by namespace/user/action/name/parentFolder. The denial may have been produced from a cached permission snapshot that is itself stale (e.g., permissions were just revoked and later restored within `shortCacheTTL`), extending the effective staleness window beyond the permission cache TTL. This is a lower-severity consistency concern tied to the same invalidation gap as the stale-denial issue.",
+        "File: pkg/services/authz/rbac/service_test.go, Line: 339, Issue: Coverage loss: The removed test case \"should return permissions from cache if available\" in TestService_getUserPermissions is the only test that covered the cache-hit path of getUserPermissions. Since this PR changes how permission caching behaves (adding a denial cache and cache-aware Check/List), removing this case without a replacement reduces coverage of exactly the code path being modified. Consider re-adding an equivalent cache-hit test for getUserPermissions.",
+        "File: pkg/services/authz/rbac/service_test.go, Line: 893, Issue: Missing deny-on-miss test: The new TestService_CacheCheck covers allow-on-cache-hit, fallback-on-miss, fallback-on-outdated-cache, and explicit denial, but has no case asserting that Check denies when the cache contains an explicit false entry for the requested resource (e.g., permCache with {\"dashboards:uid:dash1\": false} and no denial cache entry). Without it, a regression that treats cached false as \"not cached\" and falls back to the store would go undetected."
+      ],
+      "runs": [
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 1,
+              "reasoning": "The candidate correctly identifies the denial cache race issue (denial checked before permission cache and not invalidated on permission grant) as the root cause for golden bug 0."
+            },
+            "1": {
+              "finding": 3,
+              "reasoning": "The candidate links the removal of a test case around cached permissions to coverage loss related to golden bug 1."
+            },
+            "2": {
+              "finding": 0,
+              "reasoning": "The candidate accurately describes the underscore-delimited cache key collision that can mix up denial keys, matching golden bug 2."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Describes a real issue (cache key collision) that matches a golden bug."
+            },
+            "1": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Directly corresponds to golden bug about denial cache risk."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "Describes a denial-cache staleness issue that is a valid, specific finding about the code."
+            },
+            "3": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Addresses the test-coverage concern that maps to a golden bug."
+            },
+            "4": {
+              "label": "NOT_A_FINDING",
+              "reasoning": "No specific code issue is asserted by this item; it describes a test addition rather than a bug."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": null,
+              "reasoning": "No candidate finding corresponds to the asymmetric cache trust issue described near service.go:116."
+            },
+            "1": {
+              "finding": null,
+              "reasoning": "No candidate finding corresponds to the test comment about allow-access; none of the findings mention that exact issue."
+            },
+            "2": {
+              "finding": "0",
+              "reasoning": "The denial key underscore collision is exactly described by candidate 0 (Noop: cache key construction can collide)."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch the denial-key collision golden bug."
+            },
+            "1": {
+              "label": "FP",
+              "reasoning": "Describes a stale/incorrect denial-cache behavior, but no golden bug maps to this exact claim."
+            },
+            "2": {
+              "label": "FP",
+              "reasoning": "Describes a similar denial-cache issue but not used to map any golden bug here (duplicate/alternative wording)."
+            },
+            "3": {
+              "label": "FP",
+              "reasoning": "Covers coverage loss in tests; not tied to any golden bug in the provided set."
+            },
+            "4": {
+              "label": "FP",
+              "reasoning": "Covers missing deny-on-miss test; not tied to any golden bug in the provided set."
+            }
+          }
+        },
+        null
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "disputed",
+            "reasoning": [
+              "The candidate correctly identifies the denial cache race issue (denial checked before permission cache and not invalidated on permission grant) as the root cause for golden bug 0.",
+              "No candidate finding corresponds to the asymmetric cache trust issue described near service.go:116."
+            ]
+          },
+          "1": {
+            "status": "disputed",
+            "reasoning": [
+              "The candidate links the removal of a test case around cached permissions to coverage loss related to golden bug 1.",
+              "No candidate finding corresponds to the test comment about allow-access; none of the findings mention that exact issue."
+            ]
+          },
+          "2": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "The candidate accurately describes the underscore-delimited cache key collision that can mix up denial keys, matching golden bug 2.",
+              "The denial key underscore collision is exactly described by candidate 0 (Noop: cache key construction can collide)."
+            ]
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "golden_associated",
+            "reasoning": [
+              "Describes a real issue (cache key collision) that matches a golden bug.",
+              "Used to catch the denial-key collision golden bug."
+            ]
+          },
+          "1": {
+            "status": "confirmed_FP",
+            "reasoning": [
+              "Directly corresponds to golden bug about denial cache risk.",
+              "Describes a stale/incorrect denial-cache behavior, but no golden bug maps to this exact claim."
+            ]
+          },
+          "2": {
+            "status": "disputed",
+            "reasoning": [
+              "Describes a denial-cache staleness issue that is a valid, specific finding about the code.",
+              "Describes a similar denial-cache issue but not used to map any golden bug here (duplicate/alternative wording)."
+            ]
+          },
+          "3": {
+            "status": "confirmed_FP",
+            "reasoning": [
+              "Addresses the test-coverage concern that maps to a golden bug.",
+              "Covers coverage loss in tests; not tied to any golden bug in the provided set."
+            ]
+          },
+          "4": {
+            "status": "disputed",
+            "reasoning": [
+              "No specific code issue is asserted by this item; it describes a test addition rather than a bug.",
+              "Covers missing deny-on-miss test; not tied to any golden bug in the provided set."
+            ]
+          }
+        }
+      }
+    },
+    "grafana-79265": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "race count/create (near database.go:105)"
+        },
+        {
+          "index": 1,
+          "description": "TagDevice sync breaks auth (near client.go:44)"
+        },
+        {
+          "index": 2,
+          "description": "rowsAffected semantics (near database.go:78)"
+        },
+        {
+          "index": 3,
+          "description": "time window (near database.go:78)"
+        },
+        {
+          "index": 4,
+          "description": "tagDeviceUI cache bypass"
+        }
+      ],
+      "findings": [
+        "File: packages/grafana-runtime/src/config.ts, Line: 97, Issue: Type inference issue: `anonymousDeviceLimit = undefined;` infers the property type as `undefined`, so any later assignment of a numeric device limit (e.g., from server-provided settings) will fail TypeScript's type check. Declare it with an explicit type, e.g. `anonymousDeviceLimit: number | undefined = undefined;` (or `= 0` if a numeric default is intended).",
+        "File: pkg/services/anonymous/anonimpl/anonstore/database.go, Line: 100, Issue: Race condition: The limit check in `CreateOrUpdateDevice` is a non-atomic count-then-insert: two concurrent requests for different new devices can both observe `count < deviceLimit` and both insert, exceeding the limit. Under concurrent traffic the configured limit can be silently surpassed. Consider enforcing the limit atomically (e.g., insert guarded by a conditional statement or transaction with a lock).",
+        "File: pkg/services/anonymous/anonimpl/anonstore/database.go, Line: 72, Issue: Error semantics: `updateDevice` returns `ErrDeviceLimitReached` whenever `rowsAffected == 0`, but this also occurs when the device exists yet its `updated_at` falls outside the 30-day window (e.g., a caller passes a device with an old `UpdatedAt`, or clock skew between the count's `time.Now()` anchor and the device's `UpdatedAt`). In that case the error misreports the cause, and a genuinely stale existing device is never refreshed. The window anchor should be consistent (e.g., use `time.Now()` in both places) or the error should distinguish \"not found/stale\" from \"limit reached\".",
+        "File: pkg/services/anonymous/anonimpl/client.go, Line: 44, Issue: Synchronous tagging on request path: TagDevice was previously run in a background goroutine with its own 2-minute timeout and panic recovery, so failures or slowness never affected authentication. It is now called synchronously with the request's context on every anonymous authentication. If the backing store (anonstore) is slow or unavailable, every anonymous request will block or fail until the store responds, turning a previously non-blocking side effect into a latency/availability risk on the hot authentication path. Consider keeping the call asynchronous or bounding it with a timeout.",
+        "File: pkg/services/anonymous/anonimpl/client.go, Line: 44, Issue: Request context for tagging: The new call passes the request-scoped ctx instead of a detached context. If the client disconnects or the request is cancelled mid-authentication, TagDevice will be cancelled and the device may never be tagged/recorded, defeating the device-limit accounting. The old code deliberately used context.Background() with a timeout to avoid this.",
+        "File: pkg/services/anonymous/anonimpl/impl.go, Line: 144, Issue: Behavior change: `TagDevice` now returns the error from `tagDeviceUI` instead of only logging it and returning nil. This changes the contract for all callers: previously a UI-tagging failure was non-fatal (logged at Debug level and swallowed), now it propagates. If any caller treats a returned error as fatal (e.g., aborting a request or login flow), a transient UI-tag failure will now fail that flow. Verify this propagation is intentional and that callers handle it, or keep logging-and-continuing if UI tagging is best-effort."
+      ],
+      "runs": [
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 1,
+              "reasoning": "The race condition in CreateOrUpdateDevice's count-then-insert is captured by the non-atomic limit check in candidate 1."
+            },
+            "1": {
+              "finding": 3,
+              "reasoning": "Synchronous tagging on the authentication path is described by candidate 3."
+            },
+            "2": {
+              "finding": 2,
+              "reasoning": "ErrDeviceLimitReached being returned when rowsAffected == 0 covers the intended rows-affected semantics issue."
+            },
+            "3": {
+              "finding": 2,
+              "reasoning": "Time window consistency issue is also described by candidate 2 regarding the updated_at/window handling."
+            },
+            "4": {
+              "finding": 5,
+              "reasoning": "Propagating the error from tagDeviceUI (change in TagDevice behavior) aligns with the implied issue in the golden bug."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "NOT_A_FINDING",
+              "reasoning": "TS type inference issue not related to the golden bugs."
+            },
+            "1": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Catches race condition in CreateOrUpdateDevice limit check."
+            },
+            "2": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Catches rowsAffected semantics regarding the update path and window."
+            },
+            "3": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Catches synchronous tagging on the authentication path."
+            },
+            "4": {
+              "label": "NOT_A_FINDING",
+              "reasoning": "Context-based tagging behavior not tied to golden bugs."
+            },
+            "5": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Catches propagation of UI tagging error as part of TagDevice behavior change."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 2,
+              "reasoning": "Catches non-atomic race between count check and insert for device limit."
+            },
+            "1": {
+              "finding": 3,
+              "reasoning": "Catches synchronous tagging on the authentication path that can affect auth flow."
+            },
+            "2": {
+              "finding": 2,
+              "reasoning": "Catches mis-specified error semantics around rows affected and 30-day window consistency."
+            },
+            "3": {
+              "finding": 2,
+              "reasoning": "Catches time-window anchoring inconsistency for device freshness."
+            },
+            "4": {
+              "finding": 5,
+              "reasoning": "Catches propagation of UI tagging error changing function contract."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "TP",
+              "reasoning": "Accurately notes a TypeScript type/initialization issue present in diff."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Accurately notes a race-condition-like concern in database operation."
+            },
+            "2": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch a race/consistency issue with the device limit logic."
+            },
+            "3": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch a time-window consistency issue in device handling."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "Accurately notes a change to request context usage for tagging."
+            },
+            "5": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch the change in TagDevice error propagation behavior."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 0,
+              "reasoning": "Candidate 0 captures the non-atomic race between counting and inserting in CreateOrUpdateDevice that can overshoot the limit under concurrency."
+            },
+            "1": {
+              "finding": 3,
+              "reasoning": "Candidate 3 describes the synchronous TagDevice call on the authentication path, aligning with the golden bug about TagDevice sync breaking auth."
+            },
+            "2": {
+              "finding": 2,
+              "reasoning": "Candidate 2 describes the semantics around rowsAffected == 0 in updateDevice, which relates to the window/limit behavior in the golden bugs."
+            },
+            "3": {
+              "finding": 4,
+              "reasoning": "Candidate 4 highlights the time-window inconsistency in the Update/Count logic, matching the golden time-window issue."
+            },
+            "4": {
+              "finding": null,
+              "reasoning": "No candidate finding directly captures the reported tagDeviceUI cache bypass behavior in the golden bugs."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug [0]."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Valid finding about TagDevice being moved to synchronous path on auth, not a false positive."
+            },
+            "2": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug [2]."
+            },
+            "3": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug [1]."
+            },
+            "4": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug [3]."
+            },
+            "5": {
+              "label": "TP",
+              "reasoning": "Not a golden-match but a valid finding about TagDevice error propagation semantics."
+            }
+          }
+        }
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "The race condition in CreateOrUpdateDevice's count-then-insert is captured by the non-atomic limit check in candidate 1.",
+              "Catches non-atomic race between count check and insert for device limit.",
+              "Candidate 0 captures the non-atomic race between counting and inserting in CreateOrUpdateDevice that can overshoot the limit under concurrency."
+            ]
+          },
+          "1": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "Synchronous tagging on the authentication path is described by candidate 3.",
+              "Catches synchronous tagging on the authentication path that can affect auth flow.",
+              "Candidate 3 describes the synchronous TagDevice call on the authentication path, aligning with the golden bug about TagDevice sync breaking auth."
+            ]
+          },
+          "2": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "ErrDeviceLimitReached being returned when rowsAffected == 0 covers the intended rows-affected semantics issue.",
+              "Catches mis-specified error semantics around rows affected and 30-day window consistency.",
+              "Candidate 2 describes the semantics around rowsAffected == 0 in updateDevice, which relates to the window/limit behavior in the golden bugs."
+            ]
+          },
+          "3": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "Time window consistency issue is also described by candidate 2 regarding the updated_at/window handling.",
+              "Catches time-window anchoring inconsistency for device freshness.",
+              "Candidate 4 highlights the time-window inconsistency in the Update/Count logic, matching the golden time-window issue."
+            ]
+          },
+          "4": {
+            "status": "disputed",
+            "reasoning": [
+              "Propagating the error from tagDeviceUI (change in TagDevice behavior) aligns with the implied issue in the golden bug.",
+              "Catches propagation of UI tagging error changing function contract.",
+              "No candidate finding directly captures the reported tagDeviceUI cache bypass behavior in the golden bugs."
+            ]
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "disputed",
+            "reasoning": [
+              "TS type inference issue not related to the golden bugs.",
+              "Accurately notes a TypeScript type/initialization issue present in diff.",
+              "Used to catch golden bug [0]."
+            ]
+          },
+          "1": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Catches race condition in CreateOrUpdateDevice limit check.",
+              "Accurately notes a race-condition-like concern in database operation.",
+              "Valid finding about TagDevice being moved to synchronous path on auth, not a false positive."
+            ]
+          },
+          "2": {
+            "status": "golden_associated",
+            "reasoning": [
+              "Catches rowsAffected semantics regarding the update path and window.",
+              "Used to catch a race/consistency issue with the device limit logic.",
+              "Used to catch golden bug [2]."
+            ]
+          },
+          "3": {
+            "status": "golden_associated",
+            "reasoning": [
+              "Catches synchronous tagging on the authentication path.",
+              "Used to catch a time-window consistency issue in device handling.",
+              "Used to catch golden bug [1]."
+            ]
+          },
+          "4": {
+            "status": "disputed",
+            "reasoning": [
+              "Context-based tagging behavior not tied to golden bugs.",
+              "Accurately notes a change to request context usage for tagging.",
+              "Used to catch golden bug [3]."
+            ]
+          },
+          "5": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Catches propagation of UI tagging error as part of TagDevice behavior change.",
+              "Used to catch the change in TagDevice error propagation behavior.",
+              "Not a golden-match but a valid finding about TagDevice error propagation semantics."
+            ]
+          }
+        }
+      }
+    },
+    "calcom-22345": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "else-if unreachable"
+        },
+        {
+          "index": 1,
+          "description": "org-only excluded"
+        }
+      ],
+      "findings": [
+        "File: packages/lib/server/service/__tests__/insightsBooking.integration-test.ts, Line: 273, Issue: Brittle assertions: The new assertions compare `Prisma.sql` objects with `toEqual` against hand-written SQL strings (e.g. `Prisma.sql`(\"userId\" = ${...}) AND (\"teamId\" IS NULL)``). `Prisma.Sql` equality depends on the exact internal `strings`/`values` arrays, including whitespace and parenthesization of the implementation's generated SQL. Any harmless reformatting of the raw SQL in the service (spacing, paren grouping, `TRUE` vs `true`) will break these tests even when behavior is identical. Consider asserting on the semantic result (rows returned via a raw query, as done in the `getBaseConditions` test) or normalizing the SQL string before comparison.",
+        "File: packages/lib/server/service/insightsBooking.ts, Line: 170, Issue: Possible Bug: `Prisma.sql` does not correctly interpolate a raw JavaScript array as a single parameter. In `(\"teamId\" = ANY(${teamIds}))`, `(\"userId\" = ANY(${uniqueUserIds}))`, and `(\"userId\" = ANY(${userIdsFromTeam}))`, the array interpolation will not produce the intended single array/bind parameter the way `teamId: { in: [...] }` did in the old Prisma filter. The safe pattern is `Prisma.join(teamIds)` (e.g., `\"teamId\" IN (${Prisma.join(teamIds)})`) or passing a properly typed array. As written, these authorization conditions may throw at query time or produce incorrect SQL, which would break org/team scoping for the insights queries.",
+        "File: packages/lib/server/service/insightsBooking.ts, Line: 68, Issue: Removed public API: The `findMany` method was removed and replaced by `getBaseConditions`, which now returns raw `Prisma.Sql` instead of executing a query and returning booking records. Any caller that previously used `service.findMany(...)` to fetch rows will break unless it was migrated in the rest of the PR; the new contract also pushes responsibility for table name, select columns, and `$queryRaw` usage onto callers, which is easy to get wrong (e.g., forgetting to pass the returned SQL as a WHERE fragment on `bookingTimeStatusDenormalized`)."
+      ],
+      "runs": [
+        {
+          "golden_matches": {
+            "0": {
+              "finding": null,
+              "reasoning": "No candidate finding directly captures the 'else-if unreachable' issue described in golden bug 0."
+            },
+            "1": {
+              "finding": 1,
+              "reasoning": "Candidate 1 describes array interpolation within Prisma.sql for org/team scope checks, which aligns with the org-only scope handling concern and the potential bug in using ANY with arrays."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "TP",
+              "reasoning": "Candidate 0 comments on brittle test assertions comparing Prisma.sql objects, which is a real, specific test quality issue in the diff."
+            },
+            "1": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Candidate 1 directly corresponds to a risky pattern in the code (ANY with arrays in Prisma.sql) that relates to the org/team scope logic."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "Candidate 2 notes the removal of findMany and the new getBaseConditions API, which is an accurate description of the change in the PR."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": null,
+              "reasoning": "No candidate finding describes the 'else-if unreachable' issue; none of the findings match that golden bug."
+            },
+            "1": {
+              "finding": 1,
+              "reasoning": "Candidate 1 describes the correct problem: using Prisma.sql with ANY interpolated arrays may not produce a proper single parameter, matching the org/team scope issue in the golden bug."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "TP",
+              "reasoning": "The finding notes brittle assertions comparing Prisma.sql objects to raw SQL strings in tests; this is a precise, code-level claim about the tests' behavior."
+            },
+            "1": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "This finding directly corresponds to the golden bug about interpolating arrays with ANY in Prisma.sql."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "This finding comments on the API change from findMany to getBaseConditions, a concrete, accurate description of the code change."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": null,
+              "reasoning": "No candidate finding maps to the 'else-if unreachable' issue in the diff."
+            },
+            "1": {
+              "finding": null,
+              "reasoning": "No candidate finding maps to the 'org-only excluded' issue in the diff."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "TP",
+              "reasoning": "Candidate finding highlights brittle, SQL-string-based assertions in tests comparing Prisma.sql objects."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Candidate finding notes potential incorrect SQL array interpolation with Prisma.sql using ANY(...) patterns for org/team/user scopes."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "Candidate finding points out the removal of findMany in favor of a raw SQL path, which changes how data is retrieved and could break callers."
+            }
+          }
+        }
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "confirmed_miss",
+            "reasoning": [
+              "No candidate finding directly captures the 'else-if unreachable' issue described in golden bug 0.",
+              "No candidate finding describes the 'else-if unreachable' issue; none of the findings match that golden bug.",
+              "No candidate finding maps to the 'else-if unreachable' issue in the diff."
+            ]
+          },
+          "1": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate 1 describes array interpolation within Prisma.sql for org/team scope checks, which aligns with the org-only scope handling concern and the potential bug in using ANY with arrays.",
+              "Candidate 1 describes the correct problem: using Prisma.sql with ANY interpolated arrays may not produce a proper single parameter, matching the org/team scope issue in the golden bug.",
+              "No candidate finding maps to the 'org-only excluded' issue in the diff."
+            ]
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Candidate 0 comments on brittle test assertions comparing Prisma.sql objects, which is a real, specific test quality issue in the diff.",
+              "The finding notes brittle assertions comparing Prisma.sql objects to raw SQL strings in tests; this is a precise, code-level claim about the tests' behavior.",
+              "Candidate finding highlights brittle, SQL-string-based assertions in tests comparing Prisma.sql objects."
+            ]
+          },
+          "1": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Candidate 1 directly corresponds to a risky pattern in the code (ANY with arrays in Prisma.sql) that relates to the org/team scope logic.",
+              "This finding directly corresponds to the golden bug about interpolating arrays with ANY in Prisma.sql.",
+              "Candidate finding notes potential incorrect SQL array interpolation with Prisma.sql using ANY(...) patterns for org/team/user scopes."
+            ]
+          },
+          "2": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Candidate 2 notes the removal of findMany and the new getBaseConditions API, which is an accurate description of the change in the PR.",
+              "This finding comments on the API change from findMany to getBaseConditions, a concrete, accurate description of the code change.",
+              "Candidate finding points out the removal of findMany in favor of a raw SQL path, which changes how data is retrieved and could break callers."
+            ]
+          }
+        }
+      }
+    },
+    "calcom-10967": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "null mainHostDestCal (near EventManager.ts:118)"
+        },
+        {
+          "index": 1,
+          "description": "redundant ?."
+        },
+        {
+          "index": 2,
+          "description": "externalId find fails (near CalendarService.ts:254)"
+        },
+        {
+          "index": 3,
+          "description": "slug inversion (near create.handler.ts:150)"
+        },
+        {
+          "index": 4,
+          "description": "interface contract"
+        },
+        {
+          "index": 5,
+          "description": "undefined credential (near EventManager.ts:509)"
+        }
+      ],
+      "findings": [
+        "File: packages/app-store/googlecalendar/lib/CalendarService.ts, Line: 253, Issue: Possible Bug: In `updateEvent` and `deleteEvent`, the fallback lookup `event.destinationCalendar?.find((cal) => cal.externalId === externalCalendarId)?.externalId` only executes when `externalCalendarId` is falsy. In that case, comparing `cal.externalId === externalCalendarId` compares against `undefined`, so the `find` will (at best) match an entry with no externalId or return `undefined`, making `calendarId`/`selectedCalendar` `undefined` instead of the destination calendar's externalId as before. Previously the code used `event.destinationCalendar?.externalId` directly. A realistic trigger: updating/deleting an event without passing an explicit `externalCalendarId` now targets the wrong calendar (or fails), whereas before it used the destination calendar. The lookup likely should match on `credentialId` (as done in `createEvent`) or fall back to the first destination calendar.",
+        "File: packages/app-store/googlecalendar/lib/CalendarService.ts, Line: 145, Issue: Silent fallback: In `createEvent`, if no destination calendar matches the given `credentialId`, `selectedCalendar` is `undefined` and the code silently falls back to `\"primary\"`. Combined with the new multi-host flow, a mismatched `credentialId` (e.g., a stale or wrong credential passed by the caller) would cause the event to be created on the organizer's primary calendar instead of the intended shared calendar, with no error or log to surface the mismatch. Consider logging or rejecting when no matching destination calendar is found.",
+        "File: packages/core/CalendarManager.ts, Line: 220, Issue: Unused parameter: The new `externalId` parameter is accepted but never used inside `createEvent` - it is only echoed back in the returned result. If the intent (per the PR title, handling multiple hosts on destinationCalendar) was to derive or validate the external ID from the credential/selected calendar, that logic is missing; callers passing a wrong or empty `externalId` will get it propagated verbatim into the event result. If it is intentionally just a pass-through, consider documenting that, since the signature suggests the function is responsible for resolving it.",
+        "File: packages/core/CalendarManager.ts, Line: 230, Issue: Same root cause as `packages/types/Calendar.d.ts:221`.\n\nUnverified interface change: `calendar.createEvent(calEvent, credential.id)` now passes a second argument to the calendar adapter. If any calendar implementation's `createEvent` signature does not accept this extra argument (TypeScript would catch it only if all adapters share a strict typed interface), the value is silently ignored or, for adapters using positional params differently, could be misinterpreted. Worth confirming all calendar app implementations were updated in this PR.",
+        "File: packages/core/EventManager.ts, Line: 117, Issue: Possible Bug: The new destructuring `const [mainHostDestinationCalendar] = evt.destinationCalendar ?? [];` yields `undefined` when `destinationCalendar` is not set, and the following condition then accesses `mainHostDestinationCalendar.integration` without optional chaining. The old code used `evt.destinationCalendar?.integration`, so bookings without a destinationCalendar worked; now any such booking with `location === MeetLocationType` will throw a TypeError (\"Cannot read properties of undefined\") instead of falling back to Cal Video. Should be `mainHostDestinationCalendar?.integration !== \"google_calendar\"`.",
+        "File: packages/core/EventManager.ts, Line: 508, Issue: Possible Bug: In `updateAllCalendarEvents`, when a reference has a `credentialId` that is neither in `this.calendarCredentials` nor resolvable from the DB (e.g., the DB lookup returns null, or the credential has no `app.slug`), `credential` remains `undefined` and `updateEvent(undefined, event, ...)` is still pushed into `result`. This will likely throw inside `updateEvent` (or fail the update) for that reference, whereas the pre-existing DB-fetch fallback in `createAllCalendarEvents` at least guards with `if (credential)`. The loop should skip pushing when no credential could be resolved.",
+        "File: packages/core/builders/CalendarEvent/class.ts, Line: 26, Issue: Same root cause as `packages/types/Calendar.d.ts:171`.\n\nType change ripple: The `destinationCalendar` property type changes from a single `DestinationCalendar` to `DestinationCalendar[]`. This is a breaking contract change for any existing consumer of `CalendarEventClass` that reads or writes `destinationCalendar` as a single object (e.g., `event.destinationCalendar.userId` or passing a single object). Within the shown diff there is no code updating such usages or normalizing the value, so any code path still assigning a single object will now silently violate the declared type (and array operations like `.map` on it would fail at runtime). Verify all producers/consumers of this field were updated in the rest of the PR.",
+        "File: packages/features/bookings/lib/handleCancelBooking.ts, Line: 440, Issue: Duplicate deletions: The outer loop now iterates over every calendar reference, but the recurring-event branch inside the loop still iterates over ALL of the user's calendar credentials and deletes events for every updated booking. With multiple calendar references (the multi-host scenario this PR targets), the same set of events will be deleted once per reference, producing N duplicate deleteEvent API calls (and N entries in `apiDeletes`). The recurring branch should either run once outside the reference loop or be scoped to the current reference's credential/uid.",
+        "File: packages/features/bookings/lib/handleCancelBooking.ts, Line: 445, Issue: Only first reference deleted per booking: Inside the recurring branch, `updBooking.references.find((ref) => ref.type.includes(\"_calendar\"))` picks only the first calendar reference of each updated booking. For multi-host bookings each updated booking can have several calendar references, so events on the other hosts' calendars will never be deleted \u2014 contradicting the PR's goal of handling multiple destination calendars. `find` should be `filter` (or otherwise iterate all matching refs), consistent with the change made to `bookingCalendarReference`.",
+        "File: packages/features/bookings/lib/handleCancelBooking.ts, Line: 424, Issue: Unhandled credential fallback: When the credential is not found in `bookingToDelete.user.credentials`, it is fetched from the DB via `prisma.credential.findUnique`. If that lookup also returns null (e.g., the credential was deleted after the booking was created), `calendarCredential` stays undefined and the event is silently never deleted from the calendar, with no logging or fallback. A stale reference for a removed credential therefore leaves orphaned calendar events.",
+        "File: packages/features/bookings/lib/handleNewBooking.ts, Line: 1874, Issue: Dropped calendars: Multiple destination calendars are collected into `evt.destinationCalendar` (event-type + organizer + team members), but the booking creation only connects `evt.destinationCalendar[0]`. The remaining collected calendars are discarded, so for a COLLECTIVE event the intended per-member calendar handling (per the original comment) does not actually persist beyond the first entry. If only the first is intentionally connected, the push of `teamDestinationCalendars` into `evt` is misleading dead data.",
+        "File: packages/features/bookings/lib/handleNewBooking.ts, Line: 729, Issue: Removed select field: The dynamic-booking `prisma.user.findMany` select no longer includes `organization: { select: { slug: true } }`. If downstream logic in this handler (or the event manager it feeds) relies on the user's organization slug for dynamic bookings in organizations, it will now receive `undefined`. This removal appears unrelated to the PR's stated goal and should be verified as safe.",
+        "File: packages/features/bookings/lib/handleNewBooking.ts, Line: 724, Issue: Wrong error status: The validation errors thrown inside `loadUsers` (e.g., \"dynamicUserList is not properly defined or empty.\") are plain `Error`s, so the catch block maps them to a 500 \"Unable to load users\" instead of a client-appropriate 4xx. The caller gets a generic server error for what is a bad request.",
+        "File: packages/trpc/server/routers/viewer/bookings/editLocation.handler.ts, Line: 85, Issue: Possible double-wrapping: The new code unconditionally wraps `booking.destinationCalendar` in an array (`[booking?.destinationCalendar]`). If `booking.destinationCalendar` is already stored as an array (which is common for this field in the schema), this produces a nested array `[[...]]` instead of a flat list, which could break downstream calendar handling. If the field is guaranteed to be a single object, this is fine \u2014 but that assumption should be verified or guarded (e.g., `Array.isArray` check).",
+        "File: packages/trpc/server/routers/viewer/organizations/create.handler.ts, Line: 151, Issue: Possible Bug: The refactor inverts the condition for `slug`. Previously, `...(!IS_TEAM_BILLING_ENABLED && { slug })` included `slug` in the organization `create` payload only when team billing was NOT enabled. The new ternary `...(IS_TEAM_BILLING_ENABLED ? { slug } : {})` includes `slug` only when billing IS enabled. If this was meant as a no-op cleanup, it silently changes behavior: with billing enabled, `slug` is now passed to the create call (previously omitted), and with billing disabled it is now omitted (previously passed). This can change the created organization's slug handling depending on the billing flag. The `requestedSlug` change in `metadata` is behavior-preserving, but this one is not.",
+        "File: packages/types/Calendar.d.ts, Line: 221, Issue: Breaking interface change: The `Calendar.createEvent` signature now requires a second `credentialId: number` argument, and `destinationCalendar` changed from a single object to an array. Every existing `Calendar` implementation (Google, Outlook, etc.) and every caller that constructs a `CalendarEvent` must be updated in the same PR; if any implementation or caller is missed, TypeScript will fail to compile or, worse, `createEvent` implementations that ignore the new parameter may silently use the wrong credential when handling multiple destination calendars. Since only this type file is visible, it cannot be confirmed that all implementations/callers were updated \u2014 this should be verified across the PR.",
+        "File: packages/types/Calendar.d.ts, Line: 171, Issue: Type migration risk: Changing `destinationCalendar` from `DestinationCalendar | null` to `DestinationCalendar[] | null` is a breaking change for all existing consumers that read it as a single object (e.g., code doing `event.destinationCalendar?.externalId`). Any consumer not updated in this PR will produce type errors or, if using untyped/loosely-typed paths, runtime undefined-property access on the array. Verify all read/write sites were migrated."
+      ],
+      "runs": [
+        null,
+        null,
+        null
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "1": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "2": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "3": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "4": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "5": {
+            "status": "insufficient_data",
+            "reasoning": []
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "1": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "2": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "3": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "4": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "5": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "6": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "7": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "8": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "9": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "10": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "11": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "12": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "13": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "14": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "15": {
+            "status": "insufficient_data",
+            "reasoning": []
+          },
+          "16": {
+            "status": "insufficient_data",
+            "reasoning": []
+          }
+        }
+      }
+    },
+    "calcom-10600": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "TwoFactor/BackupCode naming (near BackupCode.tsx:7)"
+        },
+        {
+          "index": 1,
+          "description": "err msg backup login"
+        },
+        {
+          "index": 2,
+          "description": "case sensitivity"
+        },
+        {
+          "index": 3,
+          "description": "concurrent reuse (near next-auth-options.ts:146)"
+        },
+        {
+          "index": 4,
+          "description": "URL revoke (near EnableTwoFactorModal.tsx:82)"
+        }
+      ],
+      "findings": [
+        "File: apps/web/components/auth/BackupCode.tsx, Line: 7, Issue: Naming Mismatch: The component is defined as `TwoFactor` in a file named `BackupCode.tsx`, and it renders a backup-code input, not a generic 2FA input. The misleading name can confuse consumers importing this component (e.g., someone looking for a TOTP code input may import `TwoFactor` expecting a different UI). Rename the component to match its purpose.",
+        "File: apps/web/components/auth/BackupCode.tsx, Line: 22, Issue: Weak Input Validation: Validation relies only on `minLength={10}` / `maxLength={11}`. Any 10-11 character string (e.g., \"aaaaaaaaaaaa\" or \"12345\") passes, and a user can also enter a dash in the wrong position (e.g., \"XXXXXX-XXXX\" is 11 chars). Since backup codes are consumed server-side, a malformed value will only fail after submission. Consider a `pattern` (e.g., `^[A-Z0-9]{5}-[A-Z0-9]{5}$` or the dash-less equivalent) to fail fast client-side.",
+        "File: apps/web/components/settings/DisableTwoFactorModal.tsx, Line: 103, Issue: Form field registration: `handleDisable` destructures `backupCode` from form values and passes it to `TwoFactorAuthAPI.disable`, but unlike the password field (which is rendered via `PasswordField` with `...form.register(\"password\")` elsewhere), the `BackupCode` component is rendered without any visible registration into the react-hook-form instance. If `BackupCode` does not internally call `form.register(\"backupCode\")` (it receives no form props here), `backupCode` will always be `undefined` and the \"lost access\" flow will silently submit without a backup code. Verify the component registers the field or pass the registration down explicitly.",
+        "File: apps/web/components/settings/DisableTwoFactorModal.tsx, Line: 118, Issue: Stale error message on toggle: When the user toggles between TOTP and backup-code modes via the \"lost access\"/\"go back\" button, `resetForm(false)` clears `backupCode`/`totpCode` but the previous submission error (e.g. \"incorrect 2fa code\") remains displayed under the newly switched input, which can confuse users into thinking the new mode also failed. Consider clearing `errorMessage` on toggle or moving the error display next to the active input.",
+        "File: apps/web/components/settings/EnableTwoFactorModal.tsx, Line: 68, Issue: State not reset: `resetState()` clears the password, error message, and step, but does not clear `backupCodes` or `backupCodesUrl`. After the modal is closed and reopened, the previously generated backup codes (and their blob URL) remain in state. If the user re-runs setup, stale codes from a prior generation could briefly be displayed, and the old blob URL is only revoked when a new one is created \u2014 never on dialog close/unmount, leaking the object URL (which contains the backup codes) for the lifetime of the page.",
+        "File: apps/web/components/settings/EnableTwoFactorModal.tsx, Line: 261, Issue: Dismissal path skips onEnable: When the flow reaches `SetupStep.DisplayBackupCodes`, the cancel button is hidden and the only way to finish is the custom \"close\" button, which calls `resetState()` and `onEnable()`. However, the Dialog can still be dismissed via the backdrop/escape key (`onOpenChange`), which calls neither. In that case `onEnable()` is never invoked even though 2FA was successfully enabled (the enable endpoint already returned 200 before this step), leaving the parent component unaware that 2FA is now active. The backup codes are also lost without download/copy in that path.",
+        "File: apps/web/components/settings/EnableTwoFactorModal.tsx, Line: 62, Issue: Possible Bug: `const [backupCodes, setBackupCodes] = useState([])` infers the state type as `never[]` in TypeScript, so `setBackupCodes(body.backupCodes)` (where `body` is untyped JSON from `response.json()`) either fails to typecheck or silently widens. Additionally, `body.backupCodes` is used without any validation \u2014 if the response shape differs (e.g., codes returned as an object or missing), `body.backupCodes.map(...)` will throw at runtime inside `handleSetup`. Consider typing the state as `string[]` and guarding the response shape.",
+        "File: apps/web/pages/api/auth/two-factor/totp/disable.ts, Line: 55, Issue: Possible Bug: `JSON.parse(symmetricDecrypt(...))` is called without error handling. If `user.backupCodes` contains malformed or legacy data (or decryption produces garbage due to a key mismatch), `JSON.parse` will throw and the request will fail with an unhandled 500 instead of a clean error response. Wrap it in try/catch and return `ErrorCode.MissingBackupCodes` or a similar client-facing error.",
+        "File: apps/web/pages/api/auth/two-factor/totp/disable.ts, Line: 60, Issue: Backup code consumption unclear: The comment states \"we delete all stored backup codes at the end\", but in the visible disable flow the only mutation is `backupCodes: null` in the final `prisma` update, which runs regardless of whether a backup code or TOTP was used. If this same handler is also used for backup-code login (the branch comment mentions \"backup code login\"), nothing in this file consumes the matched code, so a single backup code could be reused indefinitely unless deletion is handled elsewhere. Worth verifying the consumption path exists.",
+        "File: apps/web/pages/api/auth/two-factor/totp/setup.ts, Line: 61, Issue: Backup codes overwritten on every setup call: The setup endpoint unconditionally regenerates and overwrites `backupCodes` in the database on every request. Since this endpoint also sets `twoFactorEnabled: false`, a user who already has 2FA configured (or who re-visits setup, or an attacker with a hijacked session) can silently invalidate all previously issued backup codes simply by hitting setup again, without any confirmation step. If the user saved the old codes, they no longer work, which can lock them out of accounts when they lose their TOTP device. Consider only generating backup codes when 2FA is actually being enabled, or requiring confirmation before invalidating existing codes.",
+        "File: apps/web/pages/api/auth/two-factor/totp/setup.ts, Line: 78, Issue: Backup codes returned before 2FA is enabled: The plaintext `backupCodes` are returned in the API response at a point where `twoFactorEnabled` is still set to `false` (the user has not yet verified the TOTP secret). If the user never completes enablement, they still possess valid backup codes while 2FA is disabled; depending on how the login endpoint consumes backup codes (not shown here), these codes may allow bypassing or enabling flows in an inconsistent state. Verify the login/enable endpoints only accept backup codes once `twoFactorEnabled` is true.",
+        "File: apps/web/playwright/login.2fa.e2e.ts, Line: 50, Issue: Unreliable assertion: The check on `two-factor-switch` uses `isChecked()` even though the in-code FIXME notes it passes even when the switch is not checked. This weakens the test: enabling 2FA could silently fail (e.g., a regression in the switch component) and the test would still pass, defeating the purpose of the assertion. The sibling assertion later in the same test (`data-state=\"checked\"`) is the correct pattern and should be used here too.",
+        "File: apps/web/playwright/login.2fa.e2e.ts, Line: 110, Issue: Incomplete verification: The new backup-code tests only verify that a download event fires and a success toast appears, but explicitly leave the file content and clipboard content unchecked (TODOs). A regression that produces an empty or malformed backup-codes file, or copies nothing to the clipboard, would still pass. Since backup codes are a recovery-critical feature, asserting on the downloaded file's content (and clipboard via context.grantPermissions + navigator.clipboard.readText) would make these tests meaningful.",
+        "File: packages/features/auth/lib/next-auth-options.ts, Line: 138, Issue: Same root cause as `apps/web/components/settings/EnableTwoFactorModal.tsx:68`.\n\nUnvalidated JSON.parse: `JSON.parse(symmetricDecrypt(user.backupCodes, ...))` is called with no try/catch and no validation that the result is an array. If the stored value is corrupted, was written by an older format, or decryption yields garbage (e.g., wrong key version), JSON.parse throws a raw SyntaxError instead of an ErrorCode, producing an unhandled error during login. A cheap guard (try/catch plus Array.isArray check) would map this to `ErrorCode.MissingBackupCodes` or InternalServerError.",
+        "File: packages/features/auth/lib/next-auth-options.ts, Line: 143, Issue: Race condition on single-use code: The backup code is verified and then consumed in two separate steps (read `user.backupCodes`, then update). Two concurrent login requests with the same backup code can both read the code before either update lands, allowing a single-use code to be used twice. Low likelihood in practice, but it defeats the single-use guarantee; a conditional update (e.g., compare-and-swap on the encrypted value) or a transaction would close it.",
+        "File: packages/features/auth/lib/next-auth-options.ts, Line: 131, Issue: Backup code path skips TOTP check: When `credentials.backupCode` is supplied, the TOTP branch is skipped entirely, which is presumably intended. However, note that if a user has two-factor enabled and submits both a `totpCode` and a `backupCode`, the TOTP code is never validated and only the backup code is checked. If that is intentional (backup code as full alternative factor), consider documenting it; otherwise both should be verified.",
+        "File: packages/prisma/migrations/20230804153419_add_backup_codes/migration.sql, Line: 2, Issue: Nullable column: The `backupCodes` column is added as nullable TEXT with no default. If the application assumes backup codes always exist for users with 2FA enabled, users who enable 2FA before this migration or without codes generated could hit null-handling bugs. Consider whether NOT NULL with a default (e.g., empty JSON array) is more appropriate, or verify application code handles NULL.",
+        "File: packages/prisma/schema.prisma, Line: 205, Issue: Security concern: The new `backupCodes` field is a single nullable `String`, which suggests backup codes will be stored in plaintext (e.g., JSON or comma-separated) alongside `twoFactorSecret`. Backup codes are one-time credentials that bypass 2FA entirely; storing them unhashed means a database leak exposes usable login bypass codes. Consider storing only hashed codes (e.g., bcrypt/sha256 per code) and deleting each code on use. Note this is a schema-level observation - the actual storage logic lives elsewhere in the PR, so the severity depends on how codes are written to this field."
+      ],
+      "runs": [
+        null,
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 0,
+              "reasoning": "Candidate 0 directly matches the naming mismatch issue described in golden bug 0."
+            },
+            "1": {
+              "finding": null,
+              "reasoning": "No candidate finding clearly captures the golden bug about error messaging during backup login."
+            },
+            "2": {
+              "finding": null,
+              "reasoning": "No candidate finding clearly captures the golden bug about case sensitivity for backup code handling."
+            },
+            "3": {
+              "finding": 14,
+              "reasoning": "Candidate 14 describes the race condition in consuming a single-use backup code, matching golden bug 3."
+            },
+            "4": {
+              "finding": 4,
+              "reasoning": "Candidate 4 addresses URL revocation of the generated blob URL for backup codes, matching golden bug 4."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 0."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Weak input validation in backup code input (minLength/maxLength) is a real, specific issue."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "BackupCode integration requires proper form registration; potential bug in passing backupCode."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Race condition in backup code consumption / single-use semantics is present in the codebase."
+            },
+            "4": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Directly matches the URL revoke concern for backup codes."
+            },
+            "5": {
+              "label": "FP",
+              "reasoning": "Dismissal path issues are not clearly evidenced in the candidate finding set."
+            },
+            "6": {
+              "label": "TP",
+              "reasoning": "BackupCodes state typing and safety could cause runtime/type issues."
+            },
+            "7": {
+              "label": "TP",
+              "reasoning": "JSON.parse on decrypted data without try/catch is a real, concrete risk."
+            },
+            "8": {
+              "label": "TP",
+              "reasoning": "Backup code consumption and flow clarity gaps are present."
+            },
+            "9": {
+              "label": "TP",
+              "reasoning": "Setup overwrites backup codes on each call is a real behavior bug."
+            },
+            "10": {
+              "label": "TP",
+              "reasoning": "Returning plaintext backup codes before enabling 2FA can lead to inconsistent state."
+            },
+            "11": {
+              "label": "FP",
+              "reasoning": "Test assertion choice is weak but not a code-level finding in the diff."
+            },
+            "12": {
+              "label": "FP",
+              "reasoning": "Test coverage notes not tied to a code-level issue in the diff."
+            },
+            "13": {
+              "label": "TP",
+              "reasoning": "Unvalidated JSON.parse vulnerability is present in a related path."
+            },
+            "14": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Directly matches the race condition described in golden bug 3 (duplicate entry from 14)."
+            },
+            "15": {
+              "label": "TP",
+              "reasoning": "Backup code path skips TOTP check in certain branches; needs documentation."
+            },
+            "16": {
+              "label": "FP",
+              "reasoning": "Nullable DB column concern is noted but not a specific code finding in this diff."
+            },
+            "17": {
+              "label": "TP",
+              "reasoning": "Security concern about plaintext backup codes vs hashed storage is a real issue in schema notes."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 0,
+              "reasoning": "Matches the golden bug about naming mismatch between BackupCode.tsx component and its backup-code purpose."
+            },
+            "1": {
+              "finding": null,
+              "reasoning": "No candidate finding directly captures the specific err msg backup login issue from the golden bugs."
+            },
+            "2": {
+              "finding": null,
+              "reasoning": "No candidate finding explicitly mentions case sensitivity related to backup codes."
+            },
+            "3": {
+              "finding": null,
+              "reasoning": "No candidate finding describes a concurrency/reuse issue around next-auth-options similar to the golden bug."
+            },
+            "4": {
+              "finding": null,
+              "reasoning": "No candidate finding corresponds to the URL revoke / object URL lifecycle issue in EnableTwoFactorModal."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Directly matches the naming confusion between BackupCode.tsx and its purpose."
+            },
+            "1": {
+              "label": "FP",
+              "reasoning": "Describes weak input validation in backup code field, not clearly tied to a golden bug."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "Notes that BackupCode input may not be registered in the DisableTwoFactorModal form path."
+            },
+            "3": {
+              "label": "TP",
+              "reasoning": "Identifies potential stale error message when toggling between 2FA modes."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "Points out state not reset for backupCodes/URL in EnableTwoFactorModal across resets."
+            },
+            "5": {
+              "label": "TP",
+              "reasoning": "Mentions potential dismissal path not invoking onEnable, leaving parent unaware."
+            },
+            "6": {
+              "label": "TP",
+              "reasoning": "Highlights typing/shape issues around backupCodes state and response data."
+            },
+            "7": {
+              "label": "TP",
+              "reasoning": "Flags lack of try/catch around JSON.parse(symmetricDecrypt(...)) in disable endpoint."
+            },
+            "8": {
+              "label": "TP",
+              "reasoning": "Notes ambiguity in how backup codes are consumed/deleted in disable path."
+            },
+            "9": {
+              "label": "TP",
+              "reasoning": "Backup codes are regenerated on every setup call, which can invalidate existing codes."
+            },
+            "10": {
+              "label": "TP",
+              "reasoning": "Plaintext backupCodes returned before 2FA enabled, potential state mismatch."
+            },
+            "11": {
+              "label": "TP",
+              "reasoning": "Playwright test uses a weak assertion for the switch state as noted in the test."
+            },
+            "12": {
+              "label": "TP",
+              "reasoning": "Tests don't verify content of downloaded backup codes or clipboard contents."
+            },
+            "13": {
+              "label": "TP",
+              "reasoning": "Unvalidated JSON.parse path in next-auth-options with backupCodes handling."
+            },
+            "14": {
+              "label": "TP",
+              "reasoning": "Race condition potential on single-use backup codes due to separate read/update steps."
+            },
+            "15": {
+              "label": "TP",
+              "reasoning": "Backup code path may bypass/skip TOTP check if both codes supplied; needs clarification."
+            },
+            "16": {
+              "label": "TP",
+              "reasoning": "Nullable backupCodes column may cause null-handling issues or security concerns."
+            },
+            "17": {
+              "label": "TP",
+              "reasoning": "Security concern: storing backup codes in plaintext alongside 2FA secret."
+            }
+          }
+        }
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "Candidate 0 directly matches the naming mismatch issue described in golden bug 0.",
+              "Matches the golden bug about naming mismatch between BackupCode.tsx component and its backup-code purpose."
+            ]
+          },
+          "1": {
+            "status": "confirmed_miss",
+            "reasoning": [
+              "No candidate finding clearly captures the golden bug about error messaging during backup login.",
+              "No candidate finding directly captures the specific err msg backup login issue from the golden bugs."
+            ]
+          },
+          "2": {
+            "status": "confirmed_miss",
+            "reasoning": [
+              "No candidate finding clearly captures the golden bug about case sensitivity for backup code handling.",
+              "No candidate finding explicitly mentions case sensitivity related to backup codes."
+            ]
+          },
+          "3": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate 14 describes the race condition in consuming a single-use backup code, matching golden bug 3.",
+              "No candidate finding describes a concurrency/reuse issue around next-auth-options similar to the golden bug."
+            ]
+          },
+          "4": {
+            "status": "disputed",
+            "reasoning": [
+              "Candidate 4 addresses URL revocation of the generated blob URL for backup codes, matching golden bug 4.",
+              "No candidate finding corresponds to the URL revoke / object URL lifecycle issue in EnableTwoFactorModal."
+            ]
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "golden_associated",
+            "reasoning": [
+              "Used to catch golden bug 0.",
+              "Directly matches the naming confusion between BackupCode.tsx and its purpose."
+            ]
+          },
+          "1": {
+            "status": "disputed",
+            "reasoning": [
+              "Weak input validation in backup code input (minLength/maxLength) is a real, specific issue.",
+              "Describes weak input validation in backup code field, not clearly tied to a golden bug."
+            ]
+          },
+          "2": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "BackupCode integration requires proper form registration; potential bug in passing backupCode.",
+              "Notes that BackupCode input may not be registered in the DisableTwoFactorModal form path."
+            ]
+          },
+          "3": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Race condition in backup code consumption / single-use semantics is present in the codebase.",
+              "Identifies potential stale error message when toggling between 2FA modes."
+            ]
+          },
+          "4": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Directly matches the URL revoke concern for backup codes.",
+              "Points out state not reset for backupCodes/URL in EnableTwoFactorModal across resets."
+            ]
+          },
+          "5": {
+            "status": "disputed",
+            "reasoning": [
+              "Dismissal path issues are not clearly evidenced in the candidate finding set.",
+              "Mentions potential dismissal path not invoking onEnable, leaving parent unaware."
+            ]
+          },
+          "6": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "BackupCodes state typing and safety could cause runtime/type issues.",
+              "Highlights typing/shape issues around backupCodes state and response data."
+            ]
+          },
+          "7": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "JSON.parse on decrypted data without try/catch is a real, concrete risk.",
+              "Flags lack of try/catch around JSON.parse(symmetricDecrypt(...)) in disable endpoint."
+            ]
+          },
+          "8": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Backup code consumption and flow clarity gaps are present.",
+              "Notes ambiguity in how backup codes are consumed/deleted in disable path."
+            ]
+          },
+          "9": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Setup overwrites backup codes on each call is a real behavior bug.",
+              "Backup codes are regenerated on every setup call, which can invalidate existing codes."
+            ]
+          },
+          "10": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Returning plaintext backup codes before enabling 2FA can lead to inconsistent state.",
+              "Plaintext backupCodes returned before 2FA enabled, potential state mismatch."
+            ]
+          },
+          "11": {
+            "status": "disputed",
+            "reasoning": [
+              "Test assertion choice is weak but not a code-level finding in the diff.",
+              "Playwright test uses a weak assertion for the switch state as noted in the test."
+            ]
+          },
+          "12": {
+            "status": "disputed",
+            "reasoning": [
+              "Test coverage notes not tied to a code-level issue in the diff.",
+              "Tests don't verify content of downloaded backup codes or clipboard contents."
+            ]
+          },
+          "13": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Unvalidated JSON.parse vulnerability is present in a related path.",
+              "Unvalidated JSON.parse path in next-auth-options with backupCodes handling."
+            ]
+          },
+          "14": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Directly matches the race condition described in golden bug 3 (duplicate entry from 14).",
+              "Race condition potential on single-use backup codes due to separate read/update steps."
+            ]
+          },
+          "15": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Backup code path skips TOTP check in certain branches; needs documentation.",
+              "Backup code path may bypass/skip TOTP check if both codes supplied; needs clarification."
+            ]
+          },
+          "16": {
+            "status": "disputed",
+            "reasoning": [
+              "Nullable DB column concern is noted but not a specific code finding in this diff.",
+              "Nullable backupCodes column may cause null-handling issues or security concerns."
+            ]
+          },
+          "17": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Security concern about plaintext backup codes vs hashed storage is a real issue in schema notes.",
+              "Security concern: storing backup codes in plaintext alongside 2FA secret."
+            ]
+          }
+        }
+      }
+    },
+    "calcom-8087": {
+      "golden_bugs": [
+        {
+          "index": 0,
+          "description": "try-catch import"
+        },
+        {
+          "index": 1,
+          "description": "forEach async fire-and-forget"
+        }
+      ],
+      "findings": [
+        "File: packages/app-store/_utils/getCalendar.ts, Line: 15, Issue: Same root cause as `packages/trpc/server/routers/viewer/bookings.tsx:553`.\n\nUnhandled import rejection: The function now awaits `appStore[calendarType.split(\"_\").join(\"\")]`, implying the store entries are async (dynamic) imports. If such an import fails (e.g., a broken/missing calendar package, or a chunk-load failure at runtime), the promise rejection propagates uncaught to every caller of `getCalendar`, whereas previously the synchronous lookup could not throw for a missing entry. There is no try/catch or `.catch` here, so a single bad calendar type can crash the flow that resolves credentials. Consider wrapping the await and returning `null` (with a log) on failure, matching the existing \"not implemented\" fallback path. Note: this depends on how `appStore` entries are defined elsewhere in the PR, which is not shown in this diff.",
+        "File: packages/app-store/_utils/getCalendar.ts, Line: 15, Issue: Possible shape mismatch: After awaiting, `calendarApp` is presumably a module namespace object rather than the previous app-store entry object. The subsequent check `\"lib\" in calendarApp && \"CalendarService\" in calendarApp.lib` only holds if `lib` is a named export of each dynamically imported module. If any package exports its calendar service under a different shape (e.g., default export containing `lib`), the check will fail and the calendar will be silently reported as \"not implemented\". Worth verifying all entries in `appStore` export `lib` at the top level. This is contingent on the (unseen) new definitions of the store entries.",
+        "File: packages/app-store/index.ts, Line: 3, Issue: Type contract change: Each entry in `appStore` changes from a module namespace object to a `Promise<module>` (dynamic `import()` returns a Promise). Any consumer that previously accessed exports synchronously, e.g. `appStore.googlecalendar.someExport`, will now receive `undefined` unless it awaits the promise first. All call sites of `appStore` must be updated to `await` (or `.then()`) the resolved module; if any consumer was not updated in this PR, it will break at runtime. Also note the resolved module is under `.default` when the underlying files use `export default`, which consumers must handle.",
+        "File: packages/app-store/vital/lib/reschedule.ts, Line: 125, Issue: Unhandled async in forEach: The callback passed to `bookingRefsFiltered.forEach` is now `async`, but `forEach` does not await the returned promises. Two consequences: (1) the surrounding `try/catch` will not catch any rejection from `calendar?.deleteEvent`, `deleteMeeting`, or `getCalendar`, so a failed calendar/video deletion becomes an unhandled promise rejection and reschedule continues as if deletion succeeded; (2) the deletions no longer run to completion before the function returns. Using `for...of` with `await` (or `Promise.all` over a mapped array) inside the `try` block would restore the intended error handling and sequencing.",
+        "File: packages/app-store/wipemycalother/lib/reschedule.ts, Line: 125, Issue: Unawaited async callback: Passing an `async` callback to `Array.forEach` means the returned promises are not awaited. The surrounding `try` block can no longer catch errors from `calendar?.deleteEvent(...)` or `deleteMeeting(...)`, so a failed calendar/video deletion will be silently swallowed (unhandled promise rejection) and `Reschedule` will report success even when deletions failed. If sequential or awaited deletion is intended, use a `for...of` loop with `await`, or `Promise.all` with `map` if parallel deletion is acceptable.",
+        "File: packages/core/CalendarManager.ts, Line: 28, Issue: Same root cause as `packages/trpc/server/routers/viewer/bookings.tsx:553`.\n\nPossible Bug: `getCalendar` is now asynchronous (as evidenced by the `await getCalendar(credential)` changes in `createEvent`, `updateEvent`, and `deleteEvent`), but in `getCalendarCredentials` the call `const calendar = getCalendar(credential)` is not awaited. Each entry pushed into `credentials` will contain a `calendar` that is a Promise rather than a calendar instance. Any consumer of the returned credentials that reads `calendar` (e.g., to check availability or list events) will operate on a Promise object and fail or behave incorrectly. This call should be awaited (e.g., make the map callback async and `await getCalendar(credential)`).",
+        "File: packages/features/bookings/lib/handleCancelBooking.ts, Line: 458, Issue: async callback in forEach: The `.forEach(async (credential) => { ... })` callback now contains `await getCalendar(credential)` and an inner loop awaiting calendar operations. `forEach` does not wait for async callbacks, so these deletions run detached: the enclosing handler can complete (and the request finish) before the calendar events are deleted, and any rejection from `getCalendar` or the delete calls becomes an unhandled promise rejection with no logging or propagation. Converting this to a `for...of` loop (as done for the legacy path further below) or collecting promises and awaiting them would fix it.",
+        "File: packages/features/bookings/lib/handleCancelBooking.ts, Line: 474, Issue: Sequential awaits in loop: The legacy-path loop now awaits `getCalendar(credential)` sequentially for each credential. If `getCalendar` performs dynamic imports or network work, deletions that previously started in parallel are now serialized, increasing cancellation latency for users with multiple calendar credentials. Consider `Promise.all` over the credentials if ordering does not matter.",
+        "File: packages/trpc/server/routers/viewer/bookings.tsx, Line: 553, Issue: Fire-and-forget async: Converting the `forEach` callback to `async` does not make `forEach` await it. The calendar `deleteEvent` calls now run unawaited: the surrounding flow (and any transaction/response to the caller) proceeds before deletions complete, and a rejected promise from `deleteEvent` or `getCalendar` becomes an unhandled rejection with no way for the caller to know the deletion failed. Use `for...of` with `await`, or `Promise.all` over a mapped array, so errors propagate and ordering/completion is guaranteed.",
+        "File: packages/trpc/server/routers/viewer/bookings.tsx, Line: 967, Issue: Same root cause as `packages/trpc/server/routers/viewer/bookings.tsx:553`.\n\nUnawaited async import: `getCalendar` is now awaited here, implying it (or the underlying appStore lookup) is asynchronous, but the sibling payment-app lookup at line 967 does `await appStore[...]` on the raw store entry. If `appStore` values are lazy dynamic-import promises this is correct, but if only `getCalendar` performs the async resolution, awaiting the store entry is a no-op and `paymentApp.lib` may be checked before the module is actually loaded. Verify which layer is actually async so both call sites resolve consistently."
+      ],
+      "runs": [
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 0,
+              "reasoning": "Candidate finding 0 explicitly notes an unhandled import rejection due to awaiting an async import, matching golden bug 0."
+            },
+            "1": {
+              "finding": 3,
+              "reasoning": "Candidate finding 3 describes unawaited async callback in a forEach, i.e., fire-and-forget behavior that matches golden bug 1."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 0."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Accurately notes potential shape/mismatch issues after dynamic import handling; not a golden bug itself."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "Highlights a type-contract change risk due to async module imports; not a golden bug."
+            },
+            "3": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 1."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "Notes unawaited async in forEach in another file path; valid but not a golden bug."
+            },
+            "5": {
+              "label": "TP",
+              "reasoning": "Points out getCalendar is awaited in some places but called synchronously in getCalendarCredentials; valid issue."
+            },
+            "6": {
+              "label": "TP",
+              "reasoning": "Another forEach async usage; aligns with fire-and-forget concerns."
+            },
+            "7": {
+              "label": "TP",
+              "reasoning": "Notes sequential awaits in a loop; valid but not a golden bug."
+            },
+            "8": {
+              "label": "TP",
+              "reasoning": "Additional fire-and-forget async in another router/path; valid issue."
+            },
+            "9": {
+              "label": "TP",
+              "reasoning": "Describes possible inconsistency between awaiting getCalendar and awaiting appStore entry; valid concern."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 0,
+              "reasoning": "Candidate finding 0 directly describes the unhandled rejection risk introduced by awaiting a dynamic appStore entry in getCalendar."
+            },
+            "1": {
+              "finding": 3,
+              "reasoning": "Candidate finding 3 exactly identifies the fire-and-forget pattern in forEach within reschedule, matching the golden bug about unhandled async in forEach."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Directly addresses the unhandled import rejection risk described in golden bug 0."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Accurately notes the fire-and-forget async in a forEach callback as a potential issue."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "Notes a real contract-change risk: consumers may need to await dynamic imports from appStore."
+            },
+            "3": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Directly corresponds to the fire-and-forget forEach async issue in reschedule as golden bug 1."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "Describes another forEach/async pattern risk in reschedule for wipemycalother, a valid issue."
+            },
+            "5": {
+              "label": "TP",
+              "reasoning": "Catches the need to await getCalendarCredentials results, a real pattern change risk."
+            },
+            "6": {
+              "label": "TP",
+              "reasoning": "Identifies forEach async callback risk in handleCancelBooking, a valid issue."
+            },
+            "7": {
+              "label": "TP",
+              "reasoning": "Mentions sequential awaits in a loop, a legitimate performance/ordering concern."
+            },
+            "8": {
+              "label": "TP",
+              "reasoning": "Notes fire-and-forget risk in trpc bookings path, a valid issue."
+            },
+            "9": {
+              "label": "TP",
+              "reasoning": "Notes unawaited async import pattern similar to other spots, a valid concern."
+            }
+          }
+        },
+        {
+          "golden_matches": {
+            "0": {
+              "finding": 0,
+              "reasoning": "This finding directly matches the unhandled import rejection risk described in the golden bug about try-catch import in getCalendar."
+            },
+            "1": {
+              "finding": 3,
+              "reasoning": "This finding identifies the forEach-async fire-and-forget issue in reschedule logic, which aligns with the golden bug about forEach async fire-and-forget."
+            }
+          },
+          "finding_labels": {
+            "0": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 0."
+            },
+            "1": {
+              "label": "TP",
+              "reasoning": "Notes a shape/mismatch risk from awaiting a dynamic import entry; accurate description of a related issue in the diff."
+            },
+            "2": {
+              "label": "TP",
+              "reasoning": "Describes a type-contract change due to dynamic imports; aligns with the changes in appStore being async."
+            },
+            "3": {
+              "label": "GOLDEN_MATCH",
+              "reasoning": "Used to catch golden bug 1."
+            },
+            "4": {
+              "label": "TP",
+              "reasoning": "Notes unawaited async in forEach in another reschedule path; accurate in context."
+            },
+            "5": {
+              "label": "TP",
+              "reasoning": "Highlights getCalendarCredentials returning a Promise-valued calendar; matches the async behavior introduced."
+            },
+            "6": {
+              "label": "TP",
+              "reasoning": "Identifies forEach async in handleCancelBooking; valid issue in the diff."
+            },
+            "7": {
+              "label": "TP",
+              "reasoning": "Notes potential sequential awaits in a loop; accurate given the change to await in the loop."
+            },
+            "8": {
+              "label": "TP",
+              "reasoning": "Points out fire-and-forget in bookings TRPC path; consistent with the diff."
+            },
+            "9": {
+              "label": "TP",
+              "reasoning": "Reiterates the same root for fire-and-forget in another location; accurate description."
+            }
+          }
+        }
+      ],
+      "reconciled": {
+        "golden": {
+          "0": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "Candidate finding 0 explicitly notes an unhandled import rejection due to awaiting an async import, matching golden bug 0.",
+              "Candidate finding 0 directly describes the unhandled rejection risk introduced by awaiting a dynamic appStore entry in getCalendar.",
+              "This finding directly matches the unhandled import rejection risk described in the golden bug about try-catch import in getCalendar."
+            ]
+          },
+          "1": {
+            "status": "confirmed_hit",
+            "reasoning": [
+              "Candidate finding 3 describes unawaited async callback in a forEach, i.e., fire-and-forget behavior that matches golden bug 1.",
+              "Candidate finding 3 exactly identifies the fire-and-forget pattern in forEach within reschedule, matching the golden bug about unhandled async in forEach.",
+              "This finding identifies the forEach-async fire-and-forget issue in reschedule logic, which aligns with the golden bug about forEach async fire-and-forget."
+            ]
+          }
+        },
+        "findings": {
+          "0": {
+            "status": "golden_associated",
+            "reasoning": [
+              "Used to catch golden bug 0.",
+              "Directly addresses the unhandled import rejection risk described in golden bug 0.",
+              "Used to catch golden bug 0."
+            ]
+          },
+          "1": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Accurately notes potential shape/mismatch issues after dynamic import handling; not a golden bug itself.",
+              "Accurately notes the fire-and-forget async in a forEach callback as a potential issue.",
+              "Notes a shape/mismatch risk from awaiting a dynamic import entry; accurate description of a related issue in the diff."
+            ]
+          },
+          "2": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Highlights a type-contract change risk due to async module imports; not a golden bug.",
+              "Notes a real contract-change risk: consumers may need to await dynamic imports from appStore.",
+              "Describes a type-contract change due to dynamic imports; aligns with the changes in appStore being async."
+            ]
+          },
+          "3": {
+            "status": "golden_associated",
+            "reasoning": [
+              "Used to catch golden bug 1.",
+              "Directly corresponds to the fire-and-forget forEach async issue in reschedule as golden bug 1.",
+              "Used to catch golden bug 1."
+            ]
+          },
+          "4": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Notes unawaited async in forEach in another file path; valid but not a golden bug.",
+              "Describes another forEach/async pattern risk in reschedule for wipemycalother, a valid issue.",
+              "Notes unawaited async in forEach in another reschedule path; accurate in context."
+            ]
+          },
+          "5": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Points out getCalendar is awaited in some places but called synchronously in getCalendarCredentials; valid issue.",
+              "Catches the need to await getCalendarCredentials results, a real pattern change risk.",
+              "Highlights getCalendarCredentials returning a Promise-valued calendar; matches the async behavior introduced."
+            ]
+          },
+          "6": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Another forEach async usage; aligns with fire-and-forget concerns.",
+              "Identifies forEach async callback risk in handleCancelBooking, a valid issue.",
+              "Identifies forEach async in handleCancelBooking; valid issue in the diff."
+            ]
+          },
+          "7": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Notes sequential awaits in a loop; valid but not a golden bug.",
+              "Mentions sequential awaits in a loop, a legitimate performance/ordering concern.",
+              "Notes potential sequential awaits in a loop; accurate given the change to await in the loop."
+            ]
+          },
+          "8": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Additional fire-and-forget async in another router/path; valid issue.",
+              "Notes fire-and-forget risk in trpc bookings path, a valid issue.",
+              "Points out fire-and-forget in bookings TRPC path; consistent with the diff."
+            ]
+          },
+          "9": {
+            "status": "confirmed_TP",
+            "reasoning": [
+              "Describes possible inconsistency between awaiting getCalendar and awaiting appStore entry; valid concern.",
+              "Notes unawaited async import pattern similar to other spots, a valid concern.",
+              "Reiterates the same root for fire-and-forget in another location; accurate description."
+            ]
+          }
+        }
+      }
+    }
+  }
+}
