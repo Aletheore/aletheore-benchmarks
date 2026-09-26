@@ -1,0 +1,151 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "go_app",
+      "label": "App",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "app",
+      "source_file": "main.go",
+      "source_location": "L7"
+    },
+    {
+      "id": "main",
+      "label": "main.go",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "main.go",
+      "source_file": "main.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "main_run",
+      "label": "Run()",
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "run()",
+      "source_file": "main.go",
+      "source_location": "L9"
+    },
+    {
+      "id": "mod_mod_helper",
+      "label": "Helper()",
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "helper()",
+      "source_file": "mod/mod.go",
+      "source_location": "L7"
+    },
+    {
+      "id": "mod_mod",
+      "label": "mod.go",
+      "_origin": "ast",
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "mod.go",
+      "source_file": "mod/mod.go",
+      "source_location": "L1"
+    },
+    {
+      "id": "mod_widget",
+      "label": "Widget",
+      "_origin": "ast",
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "widget",
+      "source_file": "mod/mod.go",
+      "source_location": "L5"
+    },
+    {
+      "id": "pkg_example_com_demo",
+      "label": "example.com/demo",
+      "_origin": "ast",
+      "community": 3,
+      "ecosystem": "go",
+      "file_type": "code",
+      "norm_label": "example.com/demo",
+      "source_file": "go.mod",
+      "source_location": "L1",
+      "type": "package"
+    }
+  ],
+  "links": [
+    {
+      "source": "main_run",
+      "target": "mod_mod_helper",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "main.go",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "mod_mod",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "main.go",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "go_app",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.go",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "main_run",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.go",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "mod_mod",
+      "target": "mod_widget",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "mod/mod.go",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "mod_mod",
+      "target": "mod_mod_helper",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "mod/mod.go",
+      "source_location": "L7",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "23aa148dded35bf0366249f760b41ee92fc212a2"
+}

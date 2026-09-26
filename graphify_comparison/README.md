@@ -1,5 +1,14 @@
 # Head-to-head against Graphify (ERPNext code intelligence)
 
+This directory's run below covers real-world QA coverage on one large
+Python repository. For a controlled, per-language structural comparison
+across all 13 languages Aletheore supports, see
+[`LANGUAGE_COVERAGE.md`](LANGUAGE_COVERAGE.md). For Graphify's separate
+PR-review/differential-verification claim — which turned out to be
+inaccessible (proprietary, hosted-only, no self-serve install) — see
+[`differential_testing_baseline/README.md`](differential_testing_baseline/README.md),
+which tests the *technique* they describe rather than their product.
+
 [Graphify](https://github.com/Graphify-Labs/graphify) is a tree-sitter-based
 code-knowledge-graph tool with its own `query`/`path`/`explain` CLI, and its
 own primary-source benchmark (`BENCHMARKS.md` in their repo) runs on

@@ -1,0 +1,226 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "main_app_run_main",
+      "label": "Main",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "metadata": {
+        "namespace": "App.Run",
+        "scope_chain": [
+          "s16"
+        ]
+      },
+      "norm_label": "main",
+      "source_file": "Main.cs",
+      "source_location": "L5"
+    },
+    {
+      "id": "mod_app_lib_mod",
+      "label": "Mod",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 2,
+      "file_type": "code",
+      "metadata": {
+        "namespace": "App.Lib",
+        "scope_chain": [
+          "s0"
+        ]
+      },
+      "norm_label": "mod",
+      "source_file": "Mod.cs",
+      "source_location": "L3"
+    },
+    {
+      "id": "main_app_run_main_run",
+      "label": ".Run()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "metadata": {
+        "namespace": "App.Run",
+        "scope_chain": [
+          "s16"
+        ]
+      },
+      "norm_label": ".run()",
+      "source_file": "Main.cs",
+      "source_location": "L7"
+    },
+    {
+      "id": "mod_app_lib_mod_helper",
+      "label": ".Helper()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "metadata": {
+        "namespace": "App.Lib",
+        "scope_chain": [
+          "s0"
+        ]
+      },
+      "norm_label": ".helper()",
+      "source_file": "Mod.cs",
+      "source_location": "L5"
+    },
+    {
+      "id": "csharp_namespace:09064a72ac24e62c",
+      "label": "App.Lib",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "metadata": {
+        "kind": "csharp_namespace",
+        "namespace": "App.Lib"
+      },
+      "norm_label": "app.lib",
+      "source_file": "Mod.cs",
+      "source_location": "L1",
+      "type": "namespace"
+    },
+    {
+      "id": "csharp_namespace:27612c3a058c67de",
+      "label": "App.Run",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "metadata": {
+        "kind": "csharp_namespace",
+        "namespace": "App.Run"
+      },
+      "norm_label": "app.run",
+      "source_file": "Main.cs",
+      "source_location": "L3",
+      "type": "namespace"
+    },
+    {
+      "id": "main",
+      "label": "Main.cs",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "main.cs",
+      "source_file": "Main.cs",
+      "source_location": "L1"
+    },
+    {
+      "id": "mod",
+      "label": "Mod.cs",
+      "_origin": "ast",
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "mod.cs",
+      "source_file": "Mod.cs",
+      "source_location": "L1"
+    }
+  ],
+  "links": [
+    {
+      "source": "main_app_run_main_run",
+      "target": "mod_app_lib_mod_helper",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "Main.cs",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "csharp_namespace:09064a72ac24e62c",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "metadata": {
+        "using_kind": "namespace",
+        "target_fqn": "App.Lib",
+        "scope_kind": "file"
+      },
+      "source_file": "Main.cs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "csharp_namespace:27612c3a058c67de",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Main.cs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "main_app_run_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Main.cs",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "mod",
+      "target": "csharp_namespace:09064a72ac24e62c",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Mod.cs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "mod",
+      "target": "mod_app_lib_mod",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Mod.cs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "main_app_run_main",
+      "target": "main_app_run_main_run",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Main.cs",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "mod_app_lib_mod",
+      "target": "mod_app_lib_mod_helper",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Mod.cs",
+      "source_location": "L5",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "0036ef1f383c9f1359206df031d41bdb01f0067f"
+}

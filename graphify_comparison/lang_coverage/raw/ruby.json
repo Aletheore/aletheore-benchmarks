@@ -1,0 +1,133 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "main_app",
+      "label": "App",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "app",
+      "source_file": "main.rb",
+      "source_location": "L5"
+    },
+    {
+      "id": "mod_widget",
+      "label": "Widget",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "widget",
+      "source_file": "mod.rb",
+      "source_location": "L3"
+    },
+    {
+      "id": "main_run",
+      "label": "run()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "run()",
+      "source_file": "main.rb",
+      "source_location": "L8"
+    },
+    {
+      "id": "mod_helper",
+      "label": "helper()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "helper()",
+      "source_file": "mod.rb",
+      "source_location": "L6"
+    },
+    {
+      "id": "main",
+      "label": "main.rb",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "metadata": {
+        "ruby_resolution_schema": 1,
+        "ruby_external_method_owners": [
+          "MAIN_CONST::*"
+        ]
+      },
+      "norm_label": "main.rb",
+      "source_file": "main.rb",
+      "source_location": "L1"
+    },
+    {
+      "id": "mod",
+      "label": "mod.rb",
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "metadata": {
+        "ruby_resolution_schema": 1,
+        "ruby_external_method_owners": [
+          "CONST_VALUE::*"
+        ]
+      },
+      "norm_label": "mod.rb",
+      "source_file": "mod.rb",
+      "source_location": "L1"
+    }
+  ],
+  "links": [
+    {
+      "source": "main",
+      "target": "main_app",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.rb",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "main_run",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.rb",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "mod",
+      "target": "mod_widget",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "mod.rb",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "mod",
+      "target": "mod_helper",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "mod.rb",
+      "source_location": "L6",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "5bdfe189e7bb5d66567fae18c4945c759fe80536"
+}

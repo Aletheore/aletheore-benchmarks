@@ -1,0 +1,172 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "src_helper_widget",
+      "label": "Widget",
+      "_origin": "ast",
+      "_rust_declaration_count": 1,
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "widget",
+      "source_file": "src/helper.rs",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_lib_app",
+      "label": "App",
+      "_origin": "ast",
+      "_rust_declaration_count": 1,
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "app",
+      "source_file": "src/lib.rs",
+      "source_location": "L5"
+    },
+    {
+      "id": "src_helper",
+      "label": "helper.rs",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "helper.rs",
+      "source_file": "src/helper.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_helper_const_value",
+      "label": "CONST_VALUE",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "const_value",
+      "source_file": "src/helper.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_helper_help",
+      "label": "help()",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "help()",
+      "source_file": "src/helper.rs",
+      "source_location": "L5"
+    },
+    {
+      "id": "src_lib",
+      "label": "lib.rs",
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "lib.rs",
+      "source_file": "src/lib.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_main_const",
+      "label": "MAIN_CONST",
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "main_const",
+      "source_file": "src/lib.rs",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_lib_run",
+      "label": "run()",
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "run()",
+      "source_file": "src/lib.rs",
+      "source_location": "L7"
+    },
+    {
+      "id": "pkg_demo",
+      "label": "demo",
+      "_origin": "ast",
+      "community": 2,
+      "ecosystem": "cargo",
+      "file_type": "code",
+      "norm_label": "demo",
+      "source_file": "Cargo.toml",
+      "source_location": "L1",
+      "type": "package",
+      "version": "0.1.0"
+    }
+  ],
+  "links": [
+    {
+      "source": "src_helper",
+      "target": "src_helper_const_value",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/helper.rs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_helper",
+      "target": "src_helper_widget",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/helper.rs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_helper",
+      "target": "src_helper_help",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/helper.rs",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib",
+      "target": "src_lib_main_const",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib.rs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib",
+      "target": "src_lib_app",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib.rs",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib",
+      "target": "src_lib_run",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib.rs",
+      "source_location": "L7",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "9fc8d4bf0b0366b21c556a2b6190d6e7f968a52d"
+}

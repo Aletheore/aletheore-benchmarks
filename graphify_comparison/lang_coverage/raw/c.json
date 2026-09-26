@@ -1,0 +1,65 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "main_run",
+      "label": "run()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "run()",
+      "source_file": "main.c",
+      "source_location": "L5"
+    },
+    {
+      "id": "main",
+      "label": "main.c",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "main.c",
+      "source_file": "main.c",
+      "source_location": "L1"
+    },
+    {
+      "id": "mod",
+      "label": "mod.h",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "mod.h",
+      "source_file": "mod.h",
+      "source_location": "L1"
+    }
+  ],
+  "links": [
+    {
+      "source": "main",
+      "target": "mod",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "main.c",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "main_run",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.c",
+      "source_location": "L5",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "5fce34fa27b63463ee7f4617d780e35891684c0c"
+}

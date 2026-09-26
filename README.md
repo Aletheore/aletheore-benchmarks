@@ -3410,6 +3410,15 @@ Full methodology, the two corrections made before publishing, the setup-time
 comparison, and total real cost ($0.19) in
 [`graphify_comparison/README.md`](graphify_comparison/README.md).
 
+That ERPNext run only ever exercised Python. A separate, controlled
+structural comparison across all 13 languages Aletheore claims to support —
+same minimal two-file fixtures used to grade Aletheore's own scanner in
+`LANGUAGE_COVERAGE.md` above — finds module-level constants missing from
+Graphify's graph in 11 of 14 fixture variants, and the cross-file reference
+itself unlinked in Rust and Ruby. Full results, raw `graph.json` per
+language, and the exact tool version tested:
+[`graphify_comparison/LANGUAGE_COVERAGE.md`](graphify_comparison/LANGUAGE_COVERAGE.md).
+
 <details>
 <summary><strong>Full write-up: Graphify (ERPNext) comparison</strong></summary>
 
@@ -4566,6 +4575,7 @@ python3 scripts/score_retrieval_matrix.py results/retrieval_raw_zod_0813_verifie
 | `swe_prbench/scripts/` | generation and scoring drivers - run inside the deployed scan-worker container, reusable for a re-run |
 | `swe_prbench/results/` | real per-task judge output (gpt-5.2, both API routes), the Luna side-experiment, and the 4-run variance check |
 | `graphify_comparison/` | head-to-head against Graphify on ERPNext, both tools run ourselves under one harness and judge, full writeup in `graphify_comparison/README.md` |
+| `graphify_comparison/LANGUAGE_COVERAGE.md` | structural comparison against Graphify across all 13 languages Aletheore supports, controlled 2-file fixtures, raw `graph.json` per language in `graphify_comparison/lang_coverage/raw/` |
 | `security-scanner-benchmark/` | `aletheore_secrets` + `aletheore_vulnerabilities` accuracy — synthetic pilot corpus + 20-real-repo validation, full writeup in `security-scanner-benchmark/README.md` and `REPORT.md` |
 | `dead-code-benchmark/` | `aletheore_dead_code` accuracy — 10-case pilot corpus, full writeup in `dead-code-benchmark/README.md` |
 | `ast-pattern-benchmark/` | `aletheore_ast_pattern` real-repo stress test — found and fixed a real tree-sitter segfault, full writeup in `ast-pattern-benchmark/README.md` |

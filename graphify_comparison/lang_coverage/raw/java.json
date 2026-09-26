@@ -1,0 +1,156 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "src_com_example_mod_mod",
+      "label": "Mod",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "mod",
+      "source_file": "src/com/example/Mod.java",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_com_example_main_main",
+      "label": "Main",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "main",
+      "source_file": "src/com/example/Main.java",
+      "source_location": "L5"
+    },
+    {
+      "id": "src_com_example_main_main_run",
+      "label": ".run()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": ".run()",
+      "source_file": "src/com/example/Main.java",
+      "source_location": "L7"
+    },
+    {
+      "id": "src_com_example_mod_mod_helper",
+      "label": ".helper()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": ".helper()",
+      "source_file": "src/com/example/Mod.java",
+      "source_location": "L5"
+    },
+    {
+      "id": "src_com_example_main",
+      "label": "Main.java",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "main.java",
+      "source_file": "src/com/example/Main.java",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_com_example_mod",
+      "label": "Mod.java",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "mod.java",
+      "source_file": "src/com/example/Mod.java",
+      "source_location": "L1"
+    }
+  ],
+  "links": [
+    {
+      "source": "src_com_example_main_main_run",
+      "target": "src_com_example_mod_mod_helper",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/com/example/Main.java",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "src_com_example_main",
+      "target": "src_com_example_mod",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/com/example/Main.java",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_com_example_main",
+      "target": "src_com_example_main_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/com/example/Main.java",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "src_com_example_mod",
+      "target": "src_com_example_mod_mod",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/com/example/Mod.java",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_com_example_main",
+      "target": "src_com_example_mod_mod",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/com/example/Main.java",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_com_example_main_main",
+      "target": "src_com_example_main_main_run",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/com/example/Main.java",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "src_com_example_mod_mod",
+      "target": "src_com_example_mod_mod_helper",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/com/example/Mod.java",
+      "source_location": "L5",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "beded6b63126b531de7890d0fdbe20bd82a020ca"
+}

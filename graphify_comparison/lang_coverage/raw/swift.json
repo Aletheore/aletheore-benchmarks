@@ -1,0 +1,239 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "sources_mod_mod_widget",
+      "label": "Widget",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "widget",
+      "source_file": "Sources/Mod/Mod.swift",
+      "source_location": "L3"
+    },
+    {
+      "id": "sources_main_main_app",
+      "label": "App",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "app",
+      "source_file": "Sources/Main/Main.swift",
+      "source_location": "L5"
+    },
+    {
+      "id": "sources_mod_mod_helper",
+      "label": "helper()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "helper()",
+      "source_file": "Sources/Mod/Mod.swift",
+      "source_location": "L5"
+    },
+    {
+      "id": "sources_main_main_run",
+      "label": "run()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "file_type": "code",
+      "norm_label": "run()",
+      "source_file": "Sources/Main/Main.swift",
+      "source_location": "L7"
+    },
+    {
+      "id": "sources_mod_mod",
+      "label": "Mod.swift",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "mod.swift",
+      "source_file": "Sources/Mod/Mod.swift",
+      "source_location": "L1"
+    },
+    {
+      "id": "sources_mod_mod_swift_int",
+      "label": "Int",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "int",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "mod",
+      "label": "Mod",
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "mod",
+      "source_file": "Sources/Main/Main.swift",
+      "source_location": "L1",
+      "type": "module"
+    },
+    {
+      "id": "sources_main_main",
+      "label": "Main.swift",
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "main.swift",
+      "source_file": "Sources/Main/Main.swift",
+      "source_location": "L1"
+    },
+    {
+      "id": "package",
+      "label": "Package.swift",
+      "_origin": "ast",
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "package.swift",
+      "source_file": "Package.swift",
+      "source_location": "L1"
+    },
+    {
+      "id": "packagedescription",
+      "label": "PackageDescription",
+      "_origin": "ast",
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "packagedescription",
+      "source_file": "Package.swift",
+      "source_location": "L2",
+      "type": "module"
+    },
+    {
+      "id": "sources_main_main_swift_int",
+      "label": "Int",
+      "_origin": "ast",
+      "community": 3,
+      "file_type": "code",
+      "norm_label": "int",
+      "source_file": "",
+      "source_location": ""
+    }
+  ],
+  "links": [
+    {
+      "source": "package",
+      "target": "packagedescription",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "Package.swift",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "sources_main_main",
+      "target": "mod",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "Sources/Main/Main.swift",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "sources_main_main_run",
+      "target": "sources_main_main_swift_int",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "return_type",
+      "metadata": {
+        "swift_plain_return": true
+      },
+      "source_file": "Sources/Main/Main.swift",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "sources_mod_mod_helper",
+      "target": "sources_mod_mod_swift_int",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "return_type",
+      "metadata": {
+        "swift_plain_return": true
+      },
+      "source_file": "Sources/Mod/Mod.swift",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "sources_main_main",
+      "target": "sources_main_main_app",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Sources/Main/Main.swift",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "sources_main_main",
+      "target": "sources_main_main_run",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Sources/Main/Main.swift",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "sources_mod_mod",
+      "target": "sources_mod_mod_widget",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Sources/Mod/Mod.swift",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "sources_mod_mod",
+      "target": "sources_mod_mod_helper",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "Sources/Mod/Mod.swift",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "sources_main_main_run",
+      "target": "sources_mod_mod_helper",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "call",
+      "source_file": "Sources/Main/Main.swift",
+      "source_location": "L7",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "27cd8a417e3b7a326832bbec2f668fb503d7d3c8"
+}

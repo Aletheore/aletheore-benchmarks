@@ -1,0 +1,218 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "src_runner_runner",
+      "label": "Runner",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "runner",
+      "source_file": "src/Runner.php",
+      "source_location": "L8"
+    },
+    {
+      "id": "src_widget_widget",
+      "label": "Widget",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "widget",
+      "source_file": "src/Widget.php",
+      "source_location": "L6"
+    },
+    {
+      "id": "src_runner_run",
+      "label": "run()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "run()",
+      "source_file": "src/Runner.php",
+      "source_location": "L10"
+    },
+    {
+      "id": "src_widget_helper",
+      "label": "helper()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "helper()",
+      "source_file": "src/Widget.php",
+      "source_location": "L8"
+    },
+    {
+      "id": "composer",
+      "label": "composer.json",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "composer.json",
+      "source_file": "composer.json",
+      "source_location": "L1"
+    },
+    {
+      "id": "composer_autoload",
+      "label": "autoload",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "autoload",
+      "source_file": "composer.json",
+      "source_location": "L1"
+    },
+    {
+      "id": "composer_autoload_psr_4",
+      "label": "psr-4",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "psr-4",
+      "source_file": "composer.json",
+      "source_location": "L1"
+    },
+    {
+      "id": "composer_psr_4_app",
+      "label": "App\\\\",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "app\\\\",
+      "source_file": "composer.json",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_runner",
+      "label": "Runner.php",
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "runner.php",
+      "source_file": "src/Runner.php",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_widget",
+      "label": "Widget.php",
+      "_origin": "ast",
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "widget.php",
+      "source_file": "src/Widget.php",
+      "source_location": "L1"
+    }
+  ],
+  "links": [
+    {
+      "source": "src_runner",
+      "target": "src_widget_widget",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/Runner.php",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "composer",
+      "target": "composer_autoload",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "composer.json",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "composer_autoload",
+      "target": "composer_autoload_psr_4",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "composer.json",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "composer_autoload_psr_4",
+      "target": "composer_psr_4_app",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "composer.json",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_runner",
+      "target": "src_runner_run",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/Runner.php",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_runner",
+      "target": "src_runner_runner",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/Runner.php",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_widget",
+      "target": "src_widget_widget",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/Widget.php",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_widget",
+      "target": "src_widget_helper",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/Widget.php",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_runner_run",
+      "target": "src_widget_helper",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "call",
+      "source_file": "src/Runner.php",
+      "source_location": "L10",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "139144c225d5f7088220b464010ab7434c9b1a0a"
+}

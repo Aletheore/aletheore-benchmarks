@@ -1,0 +1,180 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "main_app",
+      "label": "App",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "app",
+      "source_file": "main.js",
+      "source_location": "L3"
+    },
+    {
+      "id": "mod_widget",
+      "label": "Widget",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "widget",
+      "source_file": "mod.js",
+      "source_location": "L2"
+    },
+    {
+      "id": "main_run",
+      "label": "run()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "run()",
+      "source_file": "main.js",
+      "source_location": "L4"
+    },
+    {
+      "id": "mod_helper",
+      "label": "helper()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "helper()",
+      "source_file": "mod.js",
+      "source_location": "L3"
+    },
+    {
+      "id": "main",
+      "label": "main.js",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "main.js",
+      "source_file": "main.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "main_helper",
+      "label": "{ helper }",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "{ helper }",
+      "source_file": "main.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "mod",
+      "label": "mod.js",
+      "_origin": "ast",
+      "community": 2,
+      "file_type": "code",
+      "norm_label": "mod.js",
+      "source_file": "mod.js",
+      "source_location": "L1"
+    }
+  ],
+  "links": [
+    {
+      "source": "main_run",
+      "target": "mod_helper",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "main.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "mod_helper",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "main.js",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "mod",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "main.js",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "main_helper",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.js",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "main_app",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "main.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "mod",
+      "target": "mod_widget",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "mod.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "main",
+      "target": "main_run",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "collection",
+      "source_file": "main.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "mod",
+      "target": "mod_helper",
+      "relation": "indirect_call",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "context": "collection",
+      "source_file": "mod.js",
+      "source_location": "L4",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "7fa20914f8d2b21c5fc3240eebd0ddd15cff352b"
+}

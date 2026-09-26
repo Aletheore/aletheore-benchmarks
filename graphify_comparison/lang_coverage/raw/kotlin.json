@@ -1,0 +1,163 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "src_com_example_main_main_app",
+      "label": "App",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "app",
+      "source_file": "src/com/example/main/Main.kt",
+      "source_location": "L8"
+    },
+    {
+      "id": "src_com_example_mod_mod_widget",
+      "label": "Widget",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "widget",
+      "source_file": "src/com/example/mod/Mod.kt",
+      "source_location": "L5"
+    },
+    {
+      "id": "src_com_example_main_main_run",
+      "label": "run()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "run()",
+      "source_file": "src/com/example/main/Main.kt",
+      "source_location": "L10"
+    },
+    {
+      "id": "src_com_example_mod_mod_helper",
+      "label": "helper()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "helper()",
+      "source_file": "src/com/example/mod/Mod.kt",
+      "source_location": "L7"
+    },
+    {
+      "id": "src_com_example_main_main",
+      "label": "Main.kt",
+      "_origin": "ast",
+      "community": 0,
+      "file_type": "code",
+      "norm_label": "main.kt",
+      "source_file": "src/com/example/main/Main.kt",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_com_example_mod_mod",
+      "label": "Mod.kt",
+      "_origin": "ast",
+      "community": 1,
+      "file_type": "code",
+      "norm_label": "mod.kt",
+      "source_file": "src/com/example/mod/Mod.kt",
+      "source_location": "L1"
+    }
+  ],
+  "links": [
+    {
+      "source": "src_com_example_main_main_run",
+      "target": "src_com_example_mod_mod_helper",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/com/example/main/Main.kt",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_com_example_main_main",
+      "target": "src_com_example_mod_mod_widget",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "metadata": {
+        "target_fqn": "com.example.mod.Widget"
+      },
+      "source_file": "src/com/example/main/Main.kt",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "src_com_example_main_main",
+      "target": "src_com_example_mod_mod_helper",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "metadata": {
+        "target_fqn": "com.example.mod.helper"
+      },
+      "source_file": "src/com/example/main/Main.kt",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_com_example_main_main",
+      "target": "src_com_example_main_main_run",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/com/example/main/Main.kt",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_com_example_main_main",
+      "target": "src_com_example_main_main_app",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/com/example/main/Main.kt",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_com_example_mod_mod",
+      "target": "src_com_example_mod_mod_widget",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/com/example/mod/Mod.kt",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "src_com_example_mod_mod",
+      "target": "src_com_example_mod_mod_helper",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/com/example/mod/Mod.kt",
+      "source_location": "L7",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "42a37cbfa163ca2e72db437d9b447fc5fe2eae77"
+}
