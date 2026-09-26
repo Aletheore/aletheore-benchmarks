@@ -65,6 +65,65 @@ Graphify 15,296 — Aletheore answers for **36% fewer tokens than Graphify**,
 consistently, not as an artifact of one question. Median tells the same
 story: 7,645 / 8,510 / 11,730.
 
+## A gap in this benchmark itself, found after publishing
+
+Two problems with the comparison above, found while investigating why
+Aletheore's win over Graphify was so much narrower than expected given the
+two tools' architectures (semantic embeddings vs. pure graph traversal):
+
+**The 15 questions in `questions.json` are all exact-citation lookups that
+name the file in the question text** ("In `erpnext/hooks.py`, which
+function..."). That's answerable by grep alone - which is exactly why the
+grep/read/list baseline already scores 92.2% coverage with zero code
+intelligence. Neither tool's real capability gets exercised by a question
+whose answer location is already in the prompt.
+
+**The harness didn't record which tool *kind* the agent actually called.**
+`aletheore_query_tool` exposes `search-codebase` (the embedding-backed
+path the ~19-minute indexing step pays for) alongside `symbol-source` /
+`imports` / `imported-by` (pure structural, no embeddings involved at
+all). `agent_loop.py`'s `run_one()` only logged cumulative tokens and
+turns, never which kind of call the model made - so the published numbers
+above cannot actually confirm `search-codebase` was ever invoked, versus
+the agent defaulting to structural lookups the whole time (functionally
+the same category of thing Graphify's `path`/`explain` graph traversal
+gives).
+
+**Fixed, in this order:**
+
+1. `agent_loop.py` now logs `{"tool": ..., "kind": ...}` for every tool
+   call in the loop (`tool_calls` on the result dict), carried through
+   `run_harness.py` into `harness_results.json`. `score.py`'s summary now
+   reports `search_codebase_calls` and `questions_using_search_codebase`
+   per condition, so a re-run of the existing `questions.json` can settle
+   the "was the semantic path even used" question directly instead of by
+   inference.
+2. A second, harder question set, `questions_conceptual.json` - the same
+   15 underlying facts as `questions.json` (verified against the same
+   pinned commit; `expected_key_facts` are identical to their
+   `counterpart_id` in `questions.json`, checked by
+   `test_questions_conceptual.py`), rephrased as behavior/scenario
+   descriptions with every filename, dotted path, and internal variable
+   name removed from the question text. A grep-only baseline has nothing
+   to grep for. This is the regime where embedding-based semantic search
+   is actually supposed to separate from graph traversal or lexical
+   search - the original question set never tested it.
+
+**Not yet run** - both require a `DEEPSEEK_API_KEY` this environment
+didn't have. To reproduce:
+
+```bash
+cd graphify_comparison/scripts
+python3 run_harness.py questions_conceptual   # writes results/questions_conceptual_harness_results.json
+python3 judge.py questions_conceptual          # writes results/questions_conceptual_judge_results.json
+python3 score.py questions_conceptual          # writes results/questions_conceptual_summary.json
+
+# and, to settle the search-codebase question on the *original* set too:
+python3 run_harness.py                         # unchanged default, now with tool_calls logged
+python3 judge.py
+python3 score.py
+```
+
 ## Where we lose
 
 Nowhere on coverage in the final, corrected numbers — Aletheore ties or

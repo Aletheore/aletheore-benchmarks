@@ -44,6 +44,18 @@ SYSTEM_PROMPT = (
 )
 
 
+_KIND_ARGS = {"aletheore_query_tool": "kind", "graphify_query_tool": "mode"}
+
+
+def _tool_call_record(tool_name: str, args: dict) -> dict:
+    """One (tool, kind) pair per call - the "kind" of question a query tool
+    was actually asked (e.g. `search-codebase` vs `symbol-source`), not the
+    full arguments. Without this, a run can't be told apart from one where
+    the model never touched the semantic-search path at all."""
+    kind_arg = _KIND_ARGS.get(tool_name)
+    return {"tool": tool_name, "kind": args.get(kind_arg) if kind_arg else None}
+
+
 def run_one(question: str, condition: str, client) -> dict:
     tools = _schemas_for(condition)
     messages = [
@@ -52,6 +64,7 @@ def run_one(question: str, condition: str, client) -> dict:
     ]
     total_tokens = 0
     turns = 0
+    tool_calls_log = []
 
     while turns < MAX_TURNS:
         turns += 1
@@ -63,12 +76,18 @@ def run_one(question: str, condition: str, client) -> dict:
         message = response.choices[0].message
 
         if not message.tool_calls:
-            return {"answer": message.content, "total_tokens": total_tokens, "turns": turns}
+            return {
+                "answer": message.content,
+                "total_tokens": total_tokens,
+                "turns": turns,
+                "tool_calls": tool_calls_log,
+            }
 
         messages.append(message)
         for call in message.tool_calls:
             fn = _TOOL_FUNCTIONS[call.function.name]
             args = json.loads(call.function.arguments)
+            tool_calls_log.append(_tool_call_record(call.function.name, args))
             try:
                 result = fn(**args)
             except Exception as exc:  # noqa: BLE001 - a bad tool call must not kill the whole run
@@ -83,4 +102,5 @@ def run_one(question: str, condition: str, client) -> dict:
         "answer": "(no final answer - hit MAX_TURNS)",
         "total_tokens": total_tokens,
         "turns": turns,
+        "tool_calls": tool_calls_log,
     }

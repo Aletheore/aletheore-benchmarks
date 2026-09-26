@@ -21,6 +21,7 @@ def test_run_one_returns_immediately_when_model_answers_with_no_tool_calls():
     assert result["answer"] == "the answer is X"
     assert result["total_tokens"] == 150
     assert result["turns"] == 1
+    assert result["tool_calls"] == []
 
 
 def test_run_one_accumulates_tokens_across_multiple_tool_call_turns():
@@ -43,3 +44,49 @@ def test_run_one_accumulates_tokens_across_multiple_tool_call_turns():
     assert result["answer"] == "final answer"
     assert result["total_tokens"] == (100 + 20) + (150 + 30)
     assert result["turns"] == 2
+    assert result["tool_calls"] == [{"tool": "grep_tool", "kind": None}]
+
+
+def test_run_one_logs_the_kind_argument_for_aletheore_and_graphify_calls():
+    client = MagicMock()
+
+    aletheore_call = MagicMock()
+    aletheore_call.id = "call_1"
+    aletheore_call.function.name = "aletheore_query_tool"
+    aletheore_call.function.arguments = '{"kind": "search-codebase", "target": "budget"}'
+
+    graphify_call = MagicMock()
+    graphify_call.id = "call_2"
+    graphify_call.function.name = "graphify_query_tool"
+    graphify_call.function.arguments = '{"mode": "explain", "x": "budget_controller.py"}'
+
+    turn1_message = MagicMock(tool_calls=[aletheore_call, graphify_call], content=None)
+    turn1 = MagicMock(choices=[MagicMock(message=turn1_message)], usage=_fake_usage())
+
+    turn2_message = MagicMock(tool_calls=None, content="final answer")
+    turn2 = MagicMock(choices=[MagicMock(message=turn2_message)], usage=_fake_usage())
+
+    client.chat.completions.create.side_effect = [turn1, turn2]
+
+    result = run_one("q", "aletheore", client)
+
+    assert result["tool_calls"] == [
+        {"tool": "aletheore_query_tool", "kind": "search-codebase"},
+        {"tool": "graphify_query_tool", "kind": "explain"},
+    ]
+
+
+def test_run_one_logs_tool_calls_even_when_max_turns_is_hit():
+    client = MagicMock()
+    tool_call = MagicMock()
+    tool_call.id = "call_1"
+    tool_call.function.name = "grep_tool"
+    tool_call.function.arguments = '{"pattern": "foo"}'
+    message = MagicMock(tool_calls=[tool_call], content=None)
+    response = MagicMock(choices=[MagicMock(message=message)], usage=_fake_usage())
+    client.chat.completions.create.return_value = response
+
+    result = run_one("where is foo?", "baseline", client)
+
+    assert result["answer"] == "(no final answer - hit MAX_TURNS)"
+    assert len(result["tool_calls"]) == 8  # MAX_TURNS

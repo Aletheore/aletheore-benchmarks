@@ -30,6 +30,7 @@ def run_all(questions: list[dict], client) -> list[dict]:
                 "answer": out["answer"],
                 "total_tokens": out["total_tokens"],
                 "turns": out["turns"],
+                "tool_calls": out.get("tool_calls", []),
             })
     return results
 
@@ -38,6 +39,12 @@ def main() -> int:
     from openai import OpenAI
     sys.path.insert(0, os.path.join(ROOT, "..", "scripts"))
     from _bench import require_key
+
+    # Optional CLI arg selects an alternate question set, e.g.
+    # `python3 run_harness.py questions_conceptual` - defaults to the
+    # original set so the no-arg invocation is unchanged.
+    tag = sys.argv[1] if len(sys.argv) > 1 else "questions"
+    results_name = "harness_results.json" if tag == "questions" else f"{tag}_harness_results.json"
 
     smoke_test()
     checkout = ensure_corpus()
@@ -48,7 +55,7 @@ def main() -> int:
     key = require_key("DEEPSEEK_API_KEY")
     client = OpenAI(base_url="https://api.deepseek.com", api_key=key)
 
-    with open(os.path.join(ROOT, "questions.json")) as f:
+    with open(os.path.join(ROOT, f"{tag}.json")) as f:
         questions = json.load(f)
 
     results = run_all(questions, client)
@@ -56,7 +63,7 @@ def main() -> int:
     total_tokens = sum(r["total_tokens"] for r in results)
     print(f"\ndone: {len(results)} (question, condition) pairs, {total_tokens} total tokens", file=sys.stderr)
 
-    out_path = os.path.join(ROOT, "results", "harness_results.json")
+    out_path = os.path.join(ROOT, "results", results_name)
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(results, f, indent=2)

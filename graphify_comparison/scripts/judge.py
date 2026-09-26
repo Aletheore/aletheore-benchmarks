@@ -54,9 +54,15 @@ def main() -> int:
     key = require_key("DEEPSEEK_API_KEY")
     client = OpenAI(base_url="https://api.deepseek.com", api_key=key)
 
-    with open(os.path.join(ROOT, "questions.json")) as f:
+    # Optional CLI arg mirrors run_harness.py's - selects an alternate
+    # question set and its matching harness_results file.
+    tag = sys.argv[1] if len(sys.argv) > 1 else "questions"
+    harness_name = "harness_results.json" if tag == "questions" else f"{tag}_harness_results.json"
+    judge_name = "judge_results.json" if tag == "questions" else f"{tag}_judge_results.json"
+
+    with open(os.path.join(ROOT, f"{tag}.json")) as f:
         questions = {q["id"]: q for q in json.load(f)}
-    with open(os.path.join(ROOT, "results", "harness_results.json")) as f:
+    with open(os.path.join(ROOT, "results", harness_name)) as f:
         harness_results = json.load(f)
 
     results = []
@@ -80,7 +86,7 @@ def main() -> int:
             time.sleep(0.2)
         print(f"=== run {run_idx} complete ===", file=sys.stderr, flush=True)
 
-    out_path = os.path.join(ROOT, "results", "judge_results.json")
+    out_path = os.path.join(ROOT, "results", judge_name)
     with open(out_path, "w") as f:
         json.dump(results, f, indent=2)
     missing = sum(1 for r in results if r["coverage"] is None)

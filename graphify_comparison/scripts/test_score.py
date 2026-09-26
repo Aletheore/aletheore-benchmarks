@@ -29,3 +29,34 @@ def test_aggregate_skips_none_coverage_values():
     ]
     summary = aggregate(harness_results, judge_results)
     assert summary["baseline"]["coverage_mean"] == 1.0
+
+
+def test_aggregate_counts_search_codebase_calls_separately_from_other_kinds():
+    harness_results = [
+        {
+            "question_id": "q01", "condition": "aletheore", "total_tokens": 100,
+            "tool_calls": [
+                {"tool": "aletheore_query_tool", "kind": "search-codebase"},
+                {"tool": "aletheore_query_tool", "kind": "symbol-source"},
+            ],
+        },
+        {
+            "question_id": "q02", "condition": "aletheore", "total_tokens": 100,
+            "tool_calls": [{"tool": "aletheore_query_tool", "kind": "imports"}],
+        },
+    ]
+    judge_results = [
+        {"run": 0, "question_id": "q01", "condition": "aletheore", "coverage": 1.0},
+        {"run": 0, "question_id": "q02", "condition": "aletheore", "coverage": 1.0},
+    ]
+    summary = aggregate(harness_results, judge_results)
+    assert summary["aletheore"]["search_codebase_calls"] == 1
+    assert summary["aletheore"]["questions_using_search_codebase"] == 1
+
+
+def test_aggregate_defaults_search_codebase_calls_to_zero_when_tool_calls_missing():
+    harness_results = [{"question_id": "q01", "condition": "baseline", "total_tokens": 100}]
+    judge_results = [{"run": 0, "question_id": "q01", "condition": "baseline", "coverage": 1.0}]
+    summary = aggregate(harness_results, judge_results)
+    assert summary["baseline"]["search_codebase_calls"] == 0
+    assert summary["baseline"]["questions_using_search_codebase"] == 0
