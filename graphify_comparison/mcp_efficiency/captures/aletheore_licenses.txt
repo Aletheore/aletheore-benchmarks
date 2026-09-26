@@ -1,0 +1,15 @@
+result:
+  checked: true
+  reason: null
+  repo_license:
+    category: permissive
+    detected_from: "pyproject.toml: BSD-3-Clause"
+  findings[8,]{ecosystem,package,installed_version,license,category}:
+    PyPI,blinker,1.9.0,null,unknown
+    PyPI,click,8.1.3,null,unknown
+    PyPI,itsdangerous,2.2.0,null,unknown
+    PyPI,jinja2,3.1.2,null,unknown
+    PyPI,markupsafe,2.1.1,null,unknown
+    PyPI,werkzeug,3.1.0,null,unknown
+    PyPI,asgiref,"3.2",null,unknown
+    PyPI,python-dotenv,*,null,unknown

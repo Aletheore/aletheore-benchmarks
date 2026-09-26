@@ -1,0 +1,4 @@
+result:
+  id: 2
+  modules[9]: src/flask/__main__.py,src/flask/app.py,src/flask/cli.py,src/flask/json/__init__.py,src/flask/json/provider.py,src/flask/json/tag.py,src/flask/sessions.py,src/flask/testing.py,src/flask/wrappers.py
+  internal_edges: 24

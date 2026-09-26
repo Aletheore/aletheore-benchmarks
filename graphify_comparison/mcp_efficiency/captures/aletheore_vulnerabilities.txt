@@ -1,0 +1,143 @@
+result:
+  checked: true
+  reason: null
+  findings[19]:
+    - ecosystem: PyPI
+      package: click
+      installed_version: 8.1.3
+      advisory_id: PYSEC-2026-2132
+      summary: "Pallets Click, versions 8.3.2 and below, contain a command injection vulnerability in the click.edit() function, allowing attackers to pass arbitrary OS commands from an unprivileged account."
+      severity[1,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:C/C:H/I:H/A:H"
+    - ecosystem: PyPI
+      package: jinja2
+      installed_version: 3.1.2
+      advisory_id: GHSA-cpwx-vrp4-4pq7
+      summary: Jinja2 vulnerable to sandbox breakout through attr filter selecting format method
+      severity[1,]{type,score}:
+        CVSS_V4,"CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N"
+    - ecosystem: PyPI
+      package: jinja2
+      installed_version: 3.1.2
+      advisory_id: GHSA-gmj6-6f8f-6699
+      summary: Jinja has a sandbox breakout through malicious filenames
+      severity[2,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        CVSS_V4,"CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N"
+    - ecosystem: PyPI
+      package: jinja2
+      installed_version: 3.1.2
+      advisory_id: GHSA-h5c8-rqwp-cp95
+      summary: Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter
+      severity[1,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N"
+    - ecosystem: PyPI
+      package: jinja2
+      installed_version: 3.1.2
+      advisory_id: GHSA-h75v-3vvj-5mfj
+      summary: Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter
+      severity[1,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N"
+    - ecosystem: PyPI
+      package: jinja2
+      installed_version: 3.1.2
+      advisory_id: GHSA-q2x7-8rv6-6q7h
+      summary: Jinja has a sandbox breakout through indirect reference to format method
+      severity[2,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        CVSS_V4,"CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N"
+    - ecosystem: PyPI
+      package: jinja2
+      installed_version: 3.1.2
+      advisory_id: PYSEC-2026-1471
+      summary: Jinja2 vulnerable to sandbox breakout through attr filter selecting format method
+      severity[1,]{type,score}:
+        CVSS_V4,"CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N"
+    - ecosystem: PyPI
+      package: jinja2
+      installed_version: 3.1.2
+      advisory_id: PYSEC-2026-1472
+      summary: Jinja has a sandbox breakout through malicious filenames
+      severity[2,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        CVSS_V4,"CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N"
+    - ecosystem: PyPI
+      package: jinja2
+      installed_version: 3.1.2
+      advisory_id: PYSEC-2026-1473
+      summary: Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter
+      severity[1,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N"
+    - ecosystem: PyPI
+      package: jinja2
+      installed_version: 3.1.2
+      advisory_id: PYSEC-2026-1474
+      summary: Jinja vulnerable to HTML attribute injection when passing user input as keys to xmlattr filter
+      severity[1,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N"
+    - ecosystem: PyPI
+      package: jinja2
+      installed_version: 3.1.2
+      advisory_id: PYSEC-2026-1475
+      summary: Jinja has a sandbox breakout through indirect reference to format method
+      severity[2,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        CVSS_V4,"CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N"
+    - ecosystem: PyPI
+      package: werkzeug
+      installed_version: 3.1.0
+      advisory_id: GHSA-29vq-49wr-vm6x
+      summary: " Werkzeug safe_join() allows Windows special device names"
+      severity[1,]{type,score}:
+        CVSS_V4,"CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+    - ecosystem: PyPI
+      package: werkzeug
+      installed_version: 3.1.0
+      advisory_id: GHSA-87hc-h4r5-73f7
+      summary: " Werkzeug safe_join() allows Windows special device names with compound extensions"
+      severity[2,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        CVSS_V4,"CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+    - ecosystem: PyPI
+      package: werkzeug
+      installed_version: 3.1.0
+      advisory_id: GHSA-hgf8-39gv-g3f2
+      summary: Werkzeug safe_join() allows Windows special device names
+      severity[1,]{type,score}:
+        CVSS_V4,"CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+    - ecosystem: PyPI
+      package: werkzeug
+      installed_version: 3.1.0
+      advisory_id: PYSEC-2026-2044
+      summary: " Werkzeug safe_join() allows Windows special device names with compound extensions"
+      severity[2,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        CVSS_V4,"CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+    - ecosystem: PyPI
+      package: werkzeug
+      installed_version: 3.1.0
+      advisory_id: PYSEC-2026-2046
+      summary: Werkzeug safe_join() allows Windows special device names
+      severity[1,]{type,score}:
+        CVSS_V4,"CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N"
+    - ecosystem: PyPI
+      package: werkzeug
+      installed_version: 3.1.0
+      advisory_id: PYSEC-2026-2320
+      summary: "Werkzeug is a comprehensive WSGI web application library. Versions 3.1.5 and below, the safe_join function allows Windows device names as filenames if preceded by other path segments. This was previou"
+      severity[1,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+    - ecosystem: PyPI
+      package: python-dotenv
+      installed_version: *
+      advisory_id: GHSA-mf9w-mj56-hr94
+      summary: "python-dotenv: Symlink following in set_key allows arbitrary file overwrite via cross-device rename fallback"
+      severity[1,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:N/I:H/A:H"
+    - ecosystem: PyPI
+      package: python-dotenv
+      installed_version: *
+      advisory_id: PYSEC-2026-2270
+      summary: "python-dotenv reads key-value pairs from a .env file and can set them as environment variables. Prior to version 1.2.2, `set_key()` and `unset_key()` in python-dotenv follow symbolic links when rewrit"
+      severity[1,]{type,score}:
+        CVSS_V3,"CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:N/I:H/A:H"

@@ -76,6 +76,42 @@ structural capability gap in our own tool, not a case of Graphify being wrong �
 reported here because a comparison that only surfaces the other side's gaps isn't
 one worth trusting.
 
+## Cross-repo check: is Query 1 a one-repo artifact?
+
+Repeated on a second, different-language real repo (`gin-gonic/gin`, Go) with a
+different real file (`gin.go`, imported by `ginS/gins.go` and `ginS/gins_test.go`):
+
+| tool call | tokens | correct? |
+|---|---|---|
+| Aletheore `aletheore_imported_by` | **17** | ✅ exact, complete |
+| Graphify `get_neighbors` | 1,070 | ⚠️ the 2 real importers are in there — at the very bottom of 50 lines, undistinguished from ~48 unrelated outgoing edges |
+| Graphify `query_graph` | 1,860 | ⚠️ truncated again (102 of 163 nodes); the 2 real importers happen to appear near the top of what's shown this time, but still undifferentiated from everything else BFS turned up |
+
+Same pattern, same order of magnitude (60-70x), on a different language and a
+different codebase. Not a one-repo artifact.
+
+## Capability surface: tools Graphify simply doesn't have
+
+Separately from efficiency, seven of Aletheore's MCP tools answer questions
+Graphify's 10-tool surface has no path to at all — not "less efficient," genuinely
+absent, because Graphify is scoped as a pure code-knowledge-graph tool and doesn't
+claim to do security/dependency/git-history analysis. Listed for completeness, not
+as an unfair ding — real output, same flask repo:
+
+| Aletheore tool | tokens | real finding on this run |
+|---|---|---|
+| `aletheore_vulnerabilities` | 2,359 | a real CVE (`PYSEC-2026-2132`, command injection in `click.edit()`) in Flask's own pinned `click` dependency |
+| `aletheore_endpoints` | 6,344 | 311 real API endpoints mapped across the repo and its example apps |
+| `aletheore_hotspots` | 1,709 | real git churn/co-change data, 30 files |
+| `aletheore_dead_code` | 273 | 2 real unreachable modules (`docs/conf.py`, `examples/celery/make_celery.py`) |
+| `aletheore_licenses` | 184 | repo license classification + per-dependency license findings |
+| `aletheore_cluster` | 84 | the 9-module architecture cluster containing `app.py` |
+| `aletheore_secrets` | 4 | correctly empty — no secrets in this file |
+
+Graphify's `list_prs`/`get_pr_impact`/`triage_prs` are the reverse case: GitHub PR/CI
+integration Aletheore's MCP tools don't do. Each tool's scope is genuinely different;
+this table says what exists, not which is "better."
+
 ## Honest summary
 
 - **Directional relationship queries (imports/imported-by, callers/callees):**

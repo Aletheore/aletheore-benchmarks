@@ -1,0 +1,151 @@
+result[30]:
+  - path: .devcontainer/devcontainer.json
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .devcontainer/on-create-command.sh
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .editorconfig
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .github/ISSUE_TEMPLATE/bug-report.md
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .github/ISSUE_TEMPLATE/config.yml
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .github/ISSUE_TEMPLATE/feature-request.md
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .github/pull_request_template.md
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .github/workflows/lock.yaml
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .github/workflows/pre-commit.yaml
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .github/workflows/publish.yaml
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .github/workflows/tests.yaml
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .github/workflows/zizmor.yaml
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .gitignore
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .pre-commit-config.yaml
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: .readthedocs.yaml
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: CHANGES.rst
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: LICENSE.txt
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: README.md
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: docs/Makefile
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: docs/_static/debugger.png
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: docs/_static/flask-icon.svg
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: docs/_static/flask-logo.svg
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: docs/_static/flask-name.svg
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: docs/_static/pycharm-run-config.png
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: docs/api.rst
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: docs/appcontext.rst
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: docs/async-await.rst
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: docs/blueprints.rst
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: docs/changes.rst
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
+  - path: docs/cli.rst
+    churn_count: 1
+    co_change_partners[0]:
+    dependents_count: 0
+    last_commit_at: "2026-09-08T09:40:33-07:00"
