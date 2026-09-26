@@ -6,4 +6,5 @@ result:
   transitive_dependents_truncated: true
   symbol: wsgi_app
   confirmed_callers[0]:
+  same_file_caller: true
   layer_violations[0]:

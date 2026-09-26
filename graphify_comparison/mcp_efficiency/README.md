@@ -52,29 +52,40 @@ method list could be fetched at all. Reported here in full because a benchmark t
 only publishes the query where we win isn't a benchmark — see this project's own
 established standard on that (`graphify_comparison/README.md`, `pr_review/README.md`).
 
-## Query 3: "Who calls `Flask.wsgi_app`?" — a real gap this surfaced in *our own* tool
+## Query 3: "Who calls `Flask.wsgi_app`?" — a real gap this surfaced in *our own* tool, now fixed
 
 | tool call | tokens | what you get |
 |---|---|---|
-| Aletheore `aletheore_get_blast_radius(target="src/flask/app.py", symbol="wsgi_app")` | 504 | 6 direct + 50 (truncated) transitive file-level dependents, plus a symbol-verified `confirmed_callers` field — which came back **empty** |
+| Aletheore `aletheore_get_blast_radius(target="src/flask/app.py", symbol="wsgi_app")` (pre-fix) | 504 | 6 direct + 50 (truncated) transitive file-level dependents, plus a symbol-verified `confirmed_callers` field — which came back **empty** |
+| Aletheore, same call, **post-fix** | 512 | identical result, plus a new `same_file_caller: true` field |
 | Graphify `get_neighbors` on the `wsgi_app` node | 222 | the real, correct answer: `.__call__()` calls `.wsgi_app()`, in the same file, at `app.py:L1628` |
 
-`confirmed_callers[0]` being empty is not a display bug — verified directly
+`confirmed_callers[0]` being empty was not a display bug — verified directly
 (`grep -rn "\.wsgi_app(" bench-repo --include="*.py"` outside `app.py`: zero hits).
 No *other file* in the repo calls `wsgi_app` by name; every real caller goes through
 Flask's `__call__` (the WSGI entry point), which lives in the *same* file as
 `wsgi_app` itself.
 
-That's the real gap this query surfaced: **`aletheore_get_blast_radius`'s
-`confirmed_callers` only checks *other files'* dependents for a call to the named
-symbol — it has no path to a same-file/same-class caller at all**, so it correctly
-reports zero rather than guessing, but it also can't tell you about the actual,
+That was the real gap this query surfaced: `aletheore_get_blast_radius`'s
+`confirmed_callers` only checked *other files'* dependents for a call to the named
+symbol — it had no path to a same-file/same-class caller at all, so it correctly
+reported zero rather than guessing, but it also couldn't tell you about the actual,
 real caller sitting one class away. Graphify's `get_neighbors`, being a native
 call-graph tool rather than a file-dependency tool, found that real caller directly
-because intra-file calls are just edges in its graph like any other. A real,
-structural capability gap in our own tool, not a case of Graphify being wrong —
-reported here because a comparison that only surfaces the other side's gaps isn't
-one worth trusting.
+because intra-file calls are just edges in its graph like any other.
+
+**Fixed** (`find_blast_radius` in `query.py`, and the mirrored
+`build_blast_radius_context` in the production PR-review path —
+[Aletheore/Aletheore#835](https://github.com/Aletheore/Aletheore/pull/835)):
+both now check the target's own file content for a call to the symbol from
+anywhere other than its own definition line, and report it as `same_file_caller`.
+Re-run live against the same real MCP server, same repo, same query — the result
+above is not simulated. Cost: 8 extra tokens (504 → 512) for a call that used to
+silently omit the real caller. Same-file detection is boolean-only (it says a
+same-file caller exists but not *which* function, unlike Graphify's graph, which
+points straight at `Flask.__call__`) — a real, remaining difference between a
+file-dependency tool extended with a same-file check and a native call-graph
+tool, not a claim of full parity.
 
 ## Cross-repo check: is Query 1 a one-repo artifact?
 
@@ -125,10 +136,12 @@ this table says what exists, not which is "better."
 - Neither tool is "the efficient one" in general. Which one costs less depends on
   whether the question has a clear direction (Aletheore) or wants a flat name dump
   (Graphify) versus rich per-symbol detail (Aletheore, at real token cost).
-- **Same-file call-graph edges are a real, verified gap in Aletheore's own
-  `confirmed_callers`**, not just a Graphify weakness elsewhere — a file-dependency
-  tool and a call-graph tool answer different questions, and neither subsumes the
-  other.
+- **Same-file call-graph edges were a real, verified gap in Aletheore's own
+  `confirmed_callers`**, found here and fixed in
+  [#835](https://github.com/Aletheore/Aletheore/pull/835) — `same_file_caller`
+  now reports the same-file case Graphify's native call-graph always saw, at a
+  cost of 8 tokens. It's boolean-only, not a named caller, so a file-dependency
+  tool extended this way still doesn't fully subsume a native call-graph tool.
 
 ## Reproducing
 
