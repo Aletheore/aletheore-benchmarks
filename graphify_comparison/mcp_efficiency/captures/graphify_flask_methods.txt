@@ -1,0 +1,8 @@
+Ambiguous: 'flask' matches 3 nodes in different files.
+  src/flask/app.py
+    id: src_flask_app_flask
+  tests_test_views_py_flask
+    id: tests_test_views_py_flask
+  pyproject.toml
+    id: pkg_flask
+Retry with path::symbol using one of the paths above (e.g. <path>::flask) or the full node id.

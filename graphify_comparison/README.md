@@ -7,7 +7,11 @@ across all 13 languages Aletheore supports, see
 PR-review/differential-verification claim — which turned out to be
 inaccessible (proprietary, hosted-only, no self-serve install) — see
 [`differential_testing_baseline/README.md`](differential_testing_baseline/README.md),
-which tests the *technique* they describe rather than their product.
+which tests the *technique* they describe rather than their product. For a live,
+real-MCP-protocol comparison of both tools' actual servers (not code reading), see
+[`mcp_efficiency/README.md`](mcp_efficiency/README.md) — Aletheore wins decisively on
+directional relationship queries, Graphify is cheaper (but returns less) on flat
+symbol dumps; both results reported.
 
 [Graphify](https://github.com/Graphify-Labs/graphify) is a tree-sitter-based
 code-knowledge-graph tool with its own `query`/`path`/`explain` CLI, and its

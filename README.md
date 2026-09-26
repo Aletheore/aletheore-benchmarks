@@ -4576,6 +4576,7 @@ python3 scripts/score_retrieval_matrix.py results/retrieval_raw_zod_0813_verifie
 | `swe_prbench/results/` | real per-task judge output (gpt-5.2, both API routes), the Luna side-experiment, and the 4-run variance check |
 | `graphify_comparison/` | head-to-head against Graphify on ERPNext, both tools run ourselves under one harness and judge, full writeup in `graphify_comparison/README.md` |
 | `graphify_comparison/LANGUAGE_COVERAGE.md` | structural comparison against Graphify across all 13 languages Aletheore supports, controlled 2-file fixtures, raw `graph.json` per language in `graphify_comparison/lang_coverage/raw/` |
+| `graphify_comparison/mcp_efficiency/` | live, real-MCP-protocol token-efficiency comparison against Graphify's actual server (both tools' real subprocesses, real stdio calls, `tiktoken`-measured) — Aletheore wins on directional queries, Graphify is cheaper (but sparser) on flat symbol dumps, both reported |
 | `security-scanner-benchmark/` | `aletheore_secrets` + `aletheore_vulnerabilities` accuracy — synthetic pilot corpus + 20-real-repo validation, full writeup in `security-scanner-benchmark/README.md` and `REPORT.md` |
 | `dead-code-benchmark/` | `aletheore_dead_code` accuracy — 10-case pilot corpus, full writeup in `dead-code-benchmark/README.md` |
 | `ast-pattern-benchmark/` | `aletheore_ast_pattern` real-repo stress test — found and fixed a real tree-sitter segfault, full writeup in `ast-pattern-benchmark/README.md` |
