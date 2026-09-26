@@ -87,6 +87,51 @@ points straight at `Flask.__call__`) — a real, remaining difference between a
 file-dependency tool extended with a same-file check and a native call-graph
 tool, not a claim of full parity.
 
+## Query 4: "Is there a call path from `Flask.__call__` to `Flask.wsgi_app`?" — a capability Aletheore doesn't have, and Graphify's version of it doesn't work
+
+Graphify's real MCP tool surface includes `shortest_path` (CLI: `graphify path`),
+a class of question Aletheore has no equivalent tool for at all — a genuine,
+structural capability gap in Aletheore's favor of Graphify, worth reporting
+honestly rather than only surfacing gaps that favor us.
+
+Tested it on the one pair in this repo we can verify is ground-truth true: `.wsgi_app()`
+is called directly, by name, inside `.__call__()` (confirmed via `grep`, and the same
+fact Query 3 above is built on). First got each node's exact canonical ID from
+Graphify's own `get_node` tool — no ambiguity reported for either:
+
+```
+get_node("wsgi_app")   -> id: src_flask_app_flask_wsgi_app  (src/flask/app.py L1569)
+get_node("__call__")   -> id: src_flask_app_flask_call      (src/flask/app.py, one of 3 matches - picked the flask/app.py one)
+```
+
+Then asked for the path between those exact IDs:
+
+```
+$ graphify path "src_flask_app_flask_call" "src_flask_app_flask_wsgi_app"
+'src_flask_app_flask_call' and 'src_flask_app_flask_wsgi_app' both resolved to
+the same node 'src_flask_app_flask'. Use a more specific label or the exact node ID.
+```
+
+Both exact IDs — copied verbatim from `get_node`'s own output — collapse onto their
+shared parent class node instead of resolving to the two distinct methods, and the
+tool's own error message asks for "the exact node ID," which is exactly what was
+passed. `--undirected` doesn't change this (confirmed): the collision happens in
+label resolution, before direction is considered. A separate attempt using file-qualified
+labels (`"app.py:run"` / `"app.py:wsgi_app"`) *did* resolve to two distinct nodes, but
+one of them silently matched the wrong symbol (a `shell_command` docstring node, not
+`Flask.run`) despite the tool's own "ambiguous match" warning — it proceeded anyway
+rather than refusing, unlike `get_neighbors`'s behavior on Query 2's ambiguous-label
+case, and returned a technically-real but nonsensical 4-hop path through unrelated
+files.
+
+**Honest read:** this isn't "Aletheore wins" — Aletheore has no tool for this
+question at all, so it can't be wrong about it, but it also can't answer it.
+Graphify's `path`/`shortest_path` is the right idea, a real capability Aletheore
+lacks structurally. But on the one pair here we could independently verify as
+ground-truth true, it failed twice in a row: once by refusing even exact canonical
+IDs, once by silently guessing the wrong node instead of erroring. A genuinely
+useful capability, unreliable in practice on this repo.
+
 ## Cross-repo check: is Query 1 a one-repo artifact?
 
 Repeated on a second, different-language real repo (`gin-gonic/gin`, Go) with a
@@ -142,6 +187,12 @@ this table says what exists, not which is "better."
   now reports the same-file case Graphify's native call-graph always saw, at a
   cost of 8 tokens. It's boolean-only, not a named caller, so a file-dependency
   tool extended this way still doesn't fully subsume a native call-graph tool.
+- **Path-between-two-symbols is a real capability Aletheore lacks structurally**
+  (Graphify's `shortest_path`) — but on the one ground-truth-true pair tested here,
+  Graphify's own tool failed twice: refusing its own exact canonical node IDs, then
+  silently resolving to the wrong node instead of erroring. A real capability gap
+  in Aletheore, and a real reliability gap in Graphify's version of it — neither
+  side comes out ahead on this one.
 
 ## Reproducing
 

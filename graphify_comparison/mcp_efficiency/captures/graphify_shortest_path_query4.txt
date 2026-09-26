@@ -1,0 +1,20 @@
+$ get_node("wsgi_app")
+Node: .wsgi_app()
+  ID: src_flask_app_flask_wsgi_app
+  Source: src/flask/app.py L1569
+  Type: code
+  Community: 77
+  Degree: 8
+
+$ get_node("__call__")
+Ambiguous: '__call__' matches 3 nodes in different files.
+  tests/test_basic.py
+    id: tests_test_basic_test_session_using_application_root_call
+  examples/celery/src/task_app/__init__.py
+    id: examples_celery_src_task_app_init_celery_init_app_call
+  src/flask/app.py
+    id: src_flask_app_flask_call
+Retry with path::symbol using one of the paths above (e.g. <path>::__call__) or the full node id.
+
+$ graphify path src_flask_app_flask_call src_flask_app_flask_wsgi_app
+'src_flask_app_flask_call' and 'src_flask_app_flask_wsgi_app' both resolved to the same node 'src_flask_app_flask'. Use a more specific label or the exact node ID.
