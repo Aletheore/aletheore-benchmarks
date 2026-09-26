@@ -1,0 +1,66 @@
+result:
+  functions[45,]{name,start_line,end_line,params,docstring,return_type,is_public,is_pure_declaration}:
+    Last,67,72,(),Last returns the last handler in the chain. i.e. the last handler is the main one.,null,true,false
+    New,215,247,(opts ...OptionFunc),"New returns a new blank Engine instance without any middleware attached.\nBy default, the configuration is:\n- RedirectTrailingSlash:  true\n- RedirectFixedPath:      false\n- HandleMethodNotAllowed: false\n- ForwardedByClientIP:    true\n- UseRawPath:             false\n- UseEscapedPath: \t\t false\n- UnescapePathValues:     true",null,true,false
+    Default,250,255,(opts ...OptionFunc),Default returns an Engine instance with the Logger and Recovery middleware already attached.,null,true,false
+    Handler,257,264,(),null,null,true,false
+    allocateContext,266,270,(maxParams uint16),null,null,false,false
+    getReadHeaderTimeout,274,279,(),"getReadHeaderTimeout returns the configured ReadHeaderTimeout, or the\ndefault if it is zero or negative.",null,false,false
+    Delims,282,285,"(left, right string)",Delims sets template left and right delims and returns an Engine instance.,null,true,false
+    SecureJsonPrefix,288,291,(prefix string),SecureJsonPrefix sets the secureJSONPrefix used in Context.SecureJSON.,null,true,false
+    LoadHTMLGlob,295,307,(pattern string),"LoadHTMLGlob loads HTML files identified by glob pattern\nand associates the result with HTML renderer.",null,true,false
+    LoadHTMLFiles,311,319,(files ...string),"LoadHTMLFiles loads a slice of HTML files\nand associates the result with HTML renderer.",null,true,false
+    LoadHTMLFS,323,332,"(fs http.FileSystem, patterns ...string)","LoadHTMLFS loads an http.FileSystem and a slice of patterns\nand associates the result with HTML renderer.",null,true,false
+    SetHTMLTemplate,335,341,(templ *template.Template),SetHTMLTemplate associate a template with HTML renderer.,null,true,false
+    SetFuncMap,344,346,(funcMap template.FuncMap),SetFuncMap sets the FuncMap used for template.FuncMap.,null,true,false
+    NoRoute,349,352,(handlers ...HandlerFunc),NoRoute adds handlers for NoRoute. It returns a 404 code by default.,null,true,false
+    NoMethod,355,358,(handlers ...HandlerFunc),NoMethod sets the handlers called when Engine.HandleMethodNotAllowed = true.,null,true,false
+    Use,363,368,(middleware ...HandlerFunc),"Use attaches a global middleware to the router. i.e. the middleware attached through Use() will be\nincluded in the handlers chain for every single request. Even 404, 405, static files...\nFor example, this is the right place for a logger or error management middleware.",null,true,false
+    With,371,377,(opts ...OptionFunc),With returns an Engine with the configuration set in the OptionFunc.,null,true,false
+    rebuild404Handlers,379,381,(),null,null,false,false
+    rebuild405Handlers,383,385,(),null,null,false,false
+    addRoute,387,409,"(method, path string, handlers HandlersChain)",null,null,false,false
+    Routes,413,418,(),"Routes returns a slice of registered routes, including some useful information, such as:\nthe http method, path, and the handler name.",null,true,false
+    iterate,420,435,"(path, method string, routes RoutesInfo, root *node)",null,null,false,false
+    prepareTrustedCIDRs,437,464,(),null,null,false,false
+    SetTrustedProxies,474,477,"(trustedProxies []string)","SetTrustedProxies set a list of network origins (IPv4 addresses,\nIPv4 CIDRs, IPv6 addresses or IPv6 CIDRs) from which to trust\nrequest's headers that contain alternative client IP when\n`(*gin.Engine).ForwardedByClientIP` is `true`. `TrustedProxies`\nfeature is enabled by default, and it also trusts all proxies\nby default. If you want to disable this feature, use\nEngine.SetTrustedProxies(nil), then Context.ClientIP() will\nreturn the remote address directly.",null,true,false
+    isUnsafeTrustedProxies,480,482,(),"isUnsafeTrustedProxies checks if Engine.trustedCIDRs contains all IPs, it's not safe if it has (returns true)",null,false,false
+    parseTrustedProxies,485,489,(),parseTrustedProxies parse Engine.trustedProxies to Engine.trustedCIDRs,null,false,false
+    isTrustedProxy,492,502,(ip net.IP),isTrustedProxy will check whether the IP address is included in the trusted list according to Engine.trustedCIDRs,null,false,false
+    validateHeader,505,524,(header string),validateHeader will parse X-Forwarded-For header and return the trusted client IP address,null,false,false
+    updateRouteTree,527,537,(n *node),updateRouteTree do update to the route tree recursively,null,false,false
+    updateRouteTrees,540,544,(),updateRouteTrees do update to the route trees,null,false,false
+    parseIP,548,558,(ip string),"parseIP parse a string representation of an IP and returns a net.IP with the\nminimum byte representation or nil if input is invalid.",null,false,false
+    Run,566,583,(addr ...string),"Run attaches the router to a http.Server and starts listening and serving HTTP requests.\nIt is a shortcut for http.ListenAndServe(addr, router)\nNote: this method will block the calling goroutine indefinitely unless an error happens.\nThe created http.Server is configured with a default ReadHeaderTimeout of 10 seconds\n(configurable via Engine.ReadHeaderTimeout) to mitigate slowloris attacks.\nFor full control over timeouts, create a custom http.Server and use ServeHTTP.",null,true,false
+    RunTLS,588,604,"(addr, certFile, keyFile string)","RunTLS attaches the router to a http.Server and starts listening and serving HTTPS (secure) requests.\nIt is a shortcut for http.ListenAndServeTLS(addr, certFile, keyFile, router)\nNote: this method will block the calling goroutine indefinitely unless an error happens.",null,true,false
+    RunUnix,609,630,(file string),"RunUnix attaches the router to a http.Server and starts listening and serving HTTP requests\nthrough the specified unix socket (i.e. a file).\nNote: this method will block the calling goroutine indefinitely unless an error happens.",null,true,false
+    RunFd,635,653,(fd int),"RunFd attaches the router to a http.Server and starts listening and serving HTTP requests\nthrough the specified file descriptor.\nNote: this method will block the calling goroutine indefinitely unless an error happens.",null,true,false
+    RunQUIC,658,669,"(addr, certFile, keyFile string)","RunQUIC attaches the router to a http.Server and starts listening and serving QUIC requests.\nIt is a shortcut for http3.ListenAndServeQUIC(addr, certFile, keyFile, router)\nNote: this method will block the calling goroutine indefinitely unless an error happens.",null,true,false
+    RunListener,673,688,(listener net.Listener),"RunListener attaches the router to a http.Server and starts listening and serving HTTP requests\nthrough the specified net.Listener",null,true,false
+    ServeHTTP,691,704,"(w http.ResponseWriter, req *http.Request)",ServeHTTP conforms to the http.Handler interface.,null,true,false
+    HandleContext,709,717,(c *Context),"HandleContext re-enters a context that has been rewritten.\nThis can be done by setting c.Request.URL.Path to your new target.\nDisclaimer: You can loop yourself to deal with this, use wisely.",null,true,false
+    handleHTTPRequest,719,789,(c *Context),null,null,false,false
+    serveError,793,808,"(c *Context, code int, defaultMessage []byte)",null,null,false,false
+    redirectTrailingSlash,810,824,(c *Context),null,null,false,false
+    sanitizePathChars,828,835,(s string),"sanitizePathChars removes unsafe characters from path strings,\nkeeping only ASCII letters, ASCII numbers, forward slashes, and hyphens.",null,false,false
+    redirectFixedPath,837,847,"(c *Context, root *node, trailingSlash bool)",null,null,false,false
+    redirectRequest,849,861,(c *Context),null,null,false,false
+  classes[6,]{name,start_line,end_line,params,docstring,return_type,is_public,is_pure_declaration}:
+    HandlerFunc,58,58,null,HandlerFunc defines the handler used by gin middleware as return value.,null,true,false
+    OptionFunc,61,61,null,OptionFunc defines the function to change the default configuration,null,true,false
+    HandlersChain,64,64,null,HandlersChain defines a HandlerFunc slice.,null,true,false
+    RouteInfo,75,80,null,RouteInfo represents a request route's specification which contains method and path and its handler.,null,true,false
+    RoutesInfo,83,83,null,RoutesInfo defines a RouteInfo slice.,null,true,false
+    Engine,99,202,null,"Engine is the framework's instance, it contains the muxer, middleware and configuration settings.\nCreate an instance of Engine, by using New() or Default()",null,true,false
+  constants[11,]{name,start_line,end_line,params,docstring,return_type,is_public,is_pure_declaration}:
+    defaultMultipartMemory,27,27,null,null,null,false,false
+    escapedColon,28,28,null,null,null,false,false
+    colon,29,29,null,null,null,false,false
+    backslash,30,30,null,null,null,false,false
+    defaultReadHeaderTimeout,37,37,null,null,null,false,false
+    defaultPlatform,44,44,null,null,null,false,false
+    defaultTrustedCIDRs,46,55,null,null,null,false,false
+    PlatformGoogleAppEngine,89,89,null,null,null,true,false
+    PlatformCloudflare,92,92,null,null,null,true,false
+    PlatformFlyIO,94,94,null,null,null,true,false
+    mimePlain,791,791,null,null,null,false,false

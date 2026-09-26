@@ -1,0 +1,44 @@
+$ aletheore_get_blast_radius(target="gin.go", symbol="handleHTTPRequest")
+result:
+  target: gin.go
+  direct_dependents[2]: ginS/gins.go,ginS/gins_test.go
+  direct_dependents_truncated: false
+  transitive_dependents[0]:
+  transitive_dependents_truncated: false
+  symbol: handleHTTPRequest
+  confirmed_callers[0]:
+  same_file_caller: true
+  layer_violations[0]:
+
+$ aletheore_symbol_path(source="gin.go", source_symbol="ServeHTTP", target="gin.go", target_symbol="handleHTTPRequest")
+result:
+  source:
+    file: gin.go
+    symbol: ServeHTTP
+  target:
+    file: gin.go
+    symbol: handleHTTPRequest
+  same_file: true
+  hops[1]: gin.go
+  hops_truncated: false
+  confirmed: true
+  confirmation_basis: ServeHTTP's own body contains a call to handleHTTPRequest
+
+$ get_node("ServeHTTP")
+Ambiguous: 'servehttp' matches 2 nodes in different files.
+  gin.go
+    id: bench_repo_2_engine_servehttp
+  utils_test.go
+    id: bench_repo_2_teststruct_servehttp
+Retry with path::symbol using one of the paths above (e.g. <path>::servehttp) or the full node id.
+
+$ get_node("handleHTTPRequest")
+Node: .handleHTTPRequest()
+  ID: bench_repo_2_engine_handlehttprequest
+  Source: gin.go L719
+  Type: code
+  Community: 49
+  Degree: 8
+
+$ graphify path bench_repo_2_engine_servehttp bench_repo_2_engine_handlehttprequest
+'bench_repo_2_engine_servehttp' and 'bench_repo_2_engine_handlehttprequest' both resolved to the same node 'bench_repo_2_engine'. Use a more specific label or the exact node ID.

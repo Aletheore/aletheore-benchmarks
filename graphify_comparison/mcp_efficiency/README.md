@@ -146,6 +146,43 @@ different real file (`gin.go`, imported by `ginS/gins.go` and `ginS/gins_test.go
 Same pattern, same order of magnitude (60-70x), on a different language and a
 different codebase. Not a one-repo artifact.
 
+## Second-repo replication: do the fix and the shortest_path finding generalize?
+
+The same `gin-gonic/gin` repo used above, extended to Queries 2-4 - do the
+`same_file_caller` fix, the new `aletheore_symbol_path` tool, and Graphify's
+`shortest_path` node-resolution bug hold up outside Flask/Python, or were
+they specific to that one repo?
+
+`gin.go`'s `ServeHTTP` (the `Engine`'s real HTTP entry point) calls
+`handleHTTPRequest` directly, both in the same file - the exact same
+structural shape as Flask's `__call__`/`wsgi_app`, independently verified the
+same way (`grep -rn "handleHTTPRequest(" --include="*.go"` outside `gin.go`:
+zero hits).
+
+| tool call | result |
+|---|---|
+| Aletheore `aletheore_get_blast_radius(target="gin.go", symbol="handleHTTPRequest")` | `confirmed_callers: []`, `same_file_caller: true` - correct, matches the verified fact |
+| Aletheore `aletheore_symbol_path(source="gin.go", source_symbol="ServeHTTP", target="gin.go", target_symbol="handleHTTPRequest")` | `confirmed: true`, `"ServeHTTP's own body contains a call to handleHTTPRequest"` |
+| Graphify `get_node("ServeHTTP")` / `get_node("handleHTTPRequest")` | both resolve cleanly to exact canonical IDs, no ambiguity reported |
+| Graphify `path <exact ServeHTTP id> <exact handleHTTPRequest id>` | `'...engine_servehttp' and '...engine_handlehttprequest' both resolved to the same node 'bench_repo_2_engine'. Use a more specific label or the exact node ID.` |
+
+Both the fix and the new tool generalize correctly to a second repo in a
+different language. Graphify's `shortest_path` node-collision bug also
+generalizes - the exact same failure mode (two distinct exact canonical IDs
+collapsing onto their shared parent node) reproduces identically on Go/gin as
+it did on Python/Flask, with different node IDs but the identical error
+message shape. Not a Python-specific or one-repo quirk on either side.
+
+Query 2's shape also holds: `aletheore_symbols(target="gin.go")` returns all
+45 functions in the file (package-level and `Engine` methods together, since
+Aletheore's `symbols` tool is file-scoped, not struct-scoped) at 2,214 tokens
+with full detail (params, docstring, return type). Graphify's
+`get_neighbors(label="Engine", relation_filter="method")`, scoped specifically
+to `Engine`'s methods, returns names and line numbers only at 743 tokens - the
+same "Graphify cheaper, sparser, and answering a slightly narrower question"
+pattern as Query 2 on Flask. The comparison isn't perfectly matched in scope
+here (file-level vs. struct-level), noted rather than smoothed over.
+
 ## Capability surface: tools Graphify simply doesn't have
 
 Separately from efficiency, seven of Aletheore's MCP tools answer questions
@@ -187,12 +224,18 @@ this table says what exists, not which is "better."
   now reports the same-file case Graphify's native call-graph always saw, at a
   cost of 8 tokens. It's boolean-only, not a named caller, so a file-dependency
   tool extended this way still doesn't fully subsume a native call-graph tool.
-- **Path-between-two-symbols is a real capability Aletheore lacks structurally**
-  (Graphify's `shortest_path`) — but on the one ground-truth-true pair tested here,
-  Graphify's own tool failed twice: refusing its own exact canonical node IDs, then
-  silently resolving to the wrong node instead of erroring. A real capability gap
-  in Aletheore, and a real reliability gap in Graphify's version of it — neither
-  side comes out ahead on this one.
+  Confirmed generalizing beyond the repo that found it: reproduces correctly
+  on `gin-gonic/gin` (Go).
+- **Path-between-two-symbols was a real capability Aletheore lacked
+  structurally** (Graphify's `shortest_path`) — on the one ground-truth-true
+  pair tested here, Graphify's own tool failed twice: refusing its own exact
+  canonical node IDs, then silently resolving to the wrong node instead of
+  erroring. Rather than leave it as a gap, built it:
+  [#837](https://github.com/Aletheore/Aletheore/pull/837) adds
+  `aletheore_symbol_path`, verified correct on both Flask/Python and
+  gin/Go. Graphify's node-collision bug in `shortest_path` also reproduces
+  identically on the second repo, different language, same failure mode -
+  not a one-repo or Python-specific quirk on either side.
 
 ## Reproducing
 
