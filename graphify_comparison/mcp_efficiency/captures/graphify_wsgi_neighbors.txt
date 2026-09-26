@@ -1,0 +1,9 @@
+Neighbors of .wsgi_app():
+  --> .request_context() [calls] [EXTRACTED] at=src/flask/app.py:L1595
+  --> .full_dispatch_request() [calls] [EXTRACTED] at=src/flask/app.py:L1600
+  --> .handle_exception() [calls] [EXTRACTED] at=src/flask/app.py:L1603
+  --> WSGIEnvironment [references] [EXTRACTED] at=src/flask/app.py:L1569
+  --> StartResponse [references] [EXTRACTED] at=src/flask/app.py:L1569
+  <-- .__call__() [calls] [EXTRACTED] at=src/flask/app.py:L1628
+  <-- Flask [method] [EXTRACTED] at=src/flask/app.py:L1569
+  <-- The actual WSGI application. This is not implemented in :meth:`__call__` so… [rationale_for] [EXTRACTED] at=src/flask/app.py:L1572

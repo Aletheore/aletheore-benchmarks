@@ -1,0 +1,9 @@
+result:
+  target: src/flask/app.py
+  direct_dependents[6]: src/flask/__init__.py,src/flask/cli.py,src/flask/ctx.py,src/flask/globals.py,src/flask/sessions.py,src/flask/testing.py
+  direct_dependents_truncated: false
+  transitive_dependents[50]: examples/celery/src/task_app/__init__.py,examples/celery/src/task_app/views.py,examples/javascript/js_example/__init__.py,examples/javascript/js_example/views.py,examples/javascript/tests/test_js_example.py,examples/tutorial/flaskr/__init__.py,examples/tutorial/flaskr/auth.py,examples/tutorial/flaskr/blog.py,examples/tutorial/flaskr/db.py,examples/tutorial/tests/test_auth.py,tests/conftest.py,tests/test_appctx.py,tests/test_apps/blueprintapp/__init__.py,tests/test_apps/blueprintapp/apps/admin/__init__.py,tests/test_apps/blueprintapp/apps/frontend/__init__.py,tests/test_apps/cliapp/app.py,tests/test_apps/cliapp/factory.py,tests/test_apps/cliapp/importerrorapp.py,tests/test_apps/cliapp/inner1/__init__.py,tests/test_apps/cliapp/inner1/inner2/flask.py,tests/test_apps/cliapp/multiapp.py,tests/test_apps/helloworld/hello.py,tests/test_apps/subdomaintestmodule/__init__.py,tests/test_async.py,tests/test_basic.py,tests/test_blueprints.py,tests/test_cli.py,tests/test_config.py,tests/test_converters.py,tests/test_helpers.py,tests/test_instance_config.py,tests/test_json.py,tests/test_regression.py,tests/test_reqctx.py,tests/test_request.py,tests/test_session_interface.py,tests/test_signals.py,tests/test_subclassing.py,tests/test_templating.py,tests/test_testing.py,tests/test_user_error_handler.py,tests/type_check/typing_app_decorators.py,tests/type_check/typing_error_handler.py,tests/type_check/typing_route.py,src/flask/__main__.py,src/flask/blueprints.py,src/flask/sansio/app.py,src/flask/templating.py,src/flask/debughelpers.py,src/flask/helpers.py
+  transitive_dependents_truncated: true
+  symbol: wsgi_app
+  confirmed_callers[0]:
+  layer_violations[0]:
