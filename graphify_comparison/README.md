@@ -109,8 +109,11 @@ gives).
    is actually supposed to separate from graph traversal or lexical
    search - the original question set never tested it.
 
-**Not yet run** - both require a `DEEPSEEK_API_KEY` this environment
-didn't have. To reproduce:
+**Not yet run.** A real attempt (with a real key) got through `scan` and
+`extract` but stalled on `aletheore index .` for reasons specific to the
+sandbox it ran in - see [`RERUN_NOTES.md`](RERUN_NOTES.md) for exactly what
+happened and what to do differently next time. To reproduce once indexing
+is done:
 
 ```bash
 cd graphify_comparison/scripts
