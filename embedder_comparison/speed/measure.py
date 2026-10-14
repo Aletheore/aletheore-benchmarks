@@ -11,7 +11,10 @@ def sidecar(batch):
     req = urllib.request.Request("http://jina-embed:80/embed_batch", data=json.dumps({"texts": batch}).encode(),
                                  headers={"Content-Type": "application/json"}, method="POST")
     with urllib.request.urlopen(req, timeout=300) as r:  # nosec B310 - fixed internal http URL
-        return len(json.loads(r.read())["embeddings"])
+        got = len(json.loads(r.read())["embeddings"])
+    if got != len(batch):
+        raise RuntimeError(f"sidecar returned {got} embeddings for {len(batch)} texts")
+    return got
 
 def run(label, fn, workers):
     t0 = time.perf_counter()
@@ -26,10 +29,13 @@ if mode == "sidecar":
     for w in (1, 2):
         run("jina sidecar (/embed_batch)", sidecar, w)
 else:
-    sys.path.insert(0, "/app")
+    # Runs inside the app-server container, where the application lives at /app (override with APP_ROOT).
+    sys.path.insert(0, os.environ.get("APP_ROOT", "/app"))
     from app_server import hosted_embedder as he
     def hosted(batch):
         vecs, _tokens = he.embed_batch(batch, timeout_seconds=120)
+        if len(vecs) != len(batch):
+            raise RuntimeError(f"hosted returned {len(vecs)} embeddings for {len(batch)} texts")
         return len(vecs)
     print("provider:", he.provider(), "model:", he.deepinfra_model(), "dims:", he.deepinfra_dimensions(), flush=True)
     for w in (1, 2, 4):
