@@ -1,0 +1,2 @@
+jina sidecar (/embed_batch)        workers=1: 240/240 chunks in  144.3s =   1.7 chunks/s
+jina sidecar (/embed_batch)        workers=2: 240/240 chunks in  112.2s =   2.1 chunks/s
