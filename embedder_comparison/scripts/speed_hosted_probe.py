@@ -10,8 +10,11 @@ for name, mid in M.items():
     for n in (60, 400, 2200, 7000):
         ts=[]
         for i in range(8):
-            s,d,dt = di.embed(mid, [chunk(n, i*997)]); ts.append(dt if s==200 else float('nan'))
-        print(f"  single call {n:5d} chars: median {statistics.median(ts)*1000:5.0f} ms  p90 {sorted(ts)[-2]*1000:5.0f} ms")
+            s,d,dt = di.embed(mid, [chunk(n, i*997)]); ts.append(dt if s==200 else None)
+        ok = sorted(t for t in ts if t is not None)
+        if len(ok) < len(ts):
+            print(f"  WARNING: {len(ts) - len(ok)} of {len(ts)} calls failed")
+        print(f"  single call {n:5d} chars: median {statistics.median(ok)*1000:5.0f} ms  second slowest {ok[-2]*1000:5.0f} ms (of {len(ok)})")
     texts=[chunk(900, i*601) for i in range(240)]
     for w in (1,4,8,16):
         batches=[texts[i:i+24] for i in range(0,240,24)]
