@@ -12,7 +12,7 @@ Resumable: a PR whose output file exists is skipped. Progress is printed with ti
 import argparse
 import json
 import re
-import subprocess
+import subprocess  # nosec B404 - benchmark tooling: runs git against public upstream repos
 import sys
 import time
 from pathlib import Path
@@ -29,7 +29,7 @@ CASE_MAP = json.loads((BENCH / "pr_review/real_pr_recall_corpus/case_map.json").
 
 
 def sh(cmd, cwd=None, check=True):
-    return subprocess.run(cmd, cwd=cwd, check=check, capture_output=True, text=True)
+    return subprocess.run(cmd, cwd=cwd, check=check, capture_output=True, text=True)  # nosec B603 - fixed git argv, no shell
 
 
 def ensure_checkout(repo: str, pr: int, repos_dir: Path) -> tuple[Path, str]:

@@ -60,7 +60,7 @@ def metric(trials, idx):
 
 random.seed(7)
 B = 5000
-samples = [[random.choice(cases) for _ in cases] for _ in range(B)]
+samples = [[random.choice(cases) for _ in cases] for _ in range(B)]  # nosec B311 - bootstrap resampling, not security
 boot = {k: [metric(tr, s) for s in samples] for k, tr in data.items()}
 
 
