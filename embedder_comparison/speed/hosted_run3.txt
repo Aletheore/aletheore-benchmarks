@@ -1,0 +1,4 @@
+provider: deepinfra model: Qwen/Qwen3-Embedding-8B dims: 1024
+hosted (production embed_batch)    workers=1: 240/240 chunks in   21.6s =  11.1 chunks/s
+hosted (production embed_batch)    workers=2: 240/240 chunks in   10.9s =  22.1 chunks/s
+hosted (production embed_batch)    workers=4: 240/240 chunks in    6.4s =  37.5 chunks/s

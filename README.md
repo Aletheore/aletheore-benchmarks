@@ -262,6 +262,11 @@ the lesson is recorded in **METHODOLOGY.md** rather than quietly corrected.
 
 ## Hosted embeddings: jina vs local nomic
 
+> **Update 2026-10-14:** the hosted endpoint no longer serves the Jina model described below. It now serves
+> `Qwen/Qwen3-Embedding-8B` at 1024 dimensions, chosen after the comparison in
+> [`embedder_comparison/`](embedder_comparison/README.md) (level with Jina on retrieval quality, much faster
+> bulk indexing). The section below is kept as the record of the earlier measurement.
+
 > **This section does not carry the same "no API key, no network" guarantee
 > as the rest of this repository.** It measures Aletheore's *hosted*
 > embedding endpoint (`jina-embeddings-v2-base-code`, Q8_0 GGUF via
