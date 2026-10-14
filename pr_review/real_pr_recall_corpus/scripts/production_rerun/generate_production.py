@@ -4,7 +4,8 @@ The call mirrors scan_worker/jobs.py for a paid installation: per_file_completen
 share_pr_context_per_file, cross_file_check_runs=0, sibling_file_context="", no similarity cache, and no
 adapter passed (review_diff builds the production GLM-5.3-Flash adapter itself). file_contents,
 referenced_symbol_context and the deterministic checks that ride on them are all live.
-Resumable per PR; failures are counted, never swallowed.
+Resumable per PR. A per-file generation failure inside review_diff is logged as a warning and recorded
+with the PR's output; an exception that escapes review_diff stops the run, which can be resumed.
 """
 import argparse
 import json

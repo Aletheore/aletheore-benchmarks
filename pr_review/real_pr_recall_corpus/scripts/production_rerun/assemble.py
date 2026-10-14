@@ -11,10 +11,12 @@ cases, ungated, warnings = {}, {}, []
 for f in sorted((work / f"trial_{tag}").glob("*.json")):
     d = json.loads(f.read_text())
     cases[f.stem] = d["findings"]
-    ungated[f.stem] = (d["gate"] or {}).get("proposed", d["findings"])
+    if not d["gate"] or "proposed" not in d["gate"]:
+        raise SystemExit(f"{f.name}: no captured grounding gate, cannot build the before-gate file")
+    ungated[f.stem] = d["gate"]["proposed"]
     warnings += d["warnings"]
 (work / f"prod_{tag}.json").write_text(json.dumps({"flash": [{"findings": cases, "warnings": warnings}], "air": []}))
-(work / f"ungated_{tag}.json").write_text(json.dumps({"flash": [{"findings": ungated}], "air": []}))
+(work / f"ungated_{tag}.json").write_text(json.dumps({"flash": [{"findings": ungated, "warnings": warnings}], "air": []}))
 src = {}
 for fs in cases.values():
     for f in fs:

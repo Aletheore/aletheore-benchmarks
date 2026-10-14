@@ -29,7 +29,11 @@ CASE_MAP = json.loads((BENCH / "pr_review/real_pr_recall_corpus/case_map.json").
 
 
 def sh(cmd, cwd=None, check=True):
-    return subprocess.run(cmd, cwd=cwd, check=check, capture_output=True, text=True)  # nosec B603 - fixed git argv, no shell
+    try:
+        return subprocess.run(cmd, cwd=cwd, check=check, capture_output=True, text=True)  # nosec B603 - fixed git argv, no shell
+    except subprocess.CalledProcessError as exc:
+        print(f"command failed: {' '.join(cmd)}\n{exc.stderr}", file=sys.stderr, flush=True)
+        raise
 
 
 def ensure_checkout(repo: str, pr: int, repos_dir: Path) -> tuple[Path, str]:

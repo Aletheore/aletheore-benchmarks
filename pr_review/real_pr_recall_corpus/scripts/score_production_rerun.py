@@ -40,7 +40,8 @@ cases = sorted(next(iter(data.values()))[0])
 print("INTEGRITY")
 for k, trials in data.items():
     for i, t in enumerate(trials):
-        assert sorted(t) == cases, (k, "case set differs")
+        if sorted(t) != cases:
+            raise SystemExit(f"{k}: case set differs from the first arm")
         bad = [c for c, x in t.items() if x["labelled"] != x["n"]]
         print(f"  {k:40s} t{i}: golden={sum(x['golden'] for x in t.values())} insufficient={sum(x['insufficient'] for x in t.values())} "
               f"findings={sum(x['n'] for x in t.values())} unlabelled={bad}")

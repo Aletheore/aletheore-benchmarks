@@ -821,8 +821,11 @@ and 44 golden bugs through the full call the hosted product makes, on the code d
   or name a symbol that appears nowhere in the file. Sibling-file context and cross-file check runs are
   off, as in production; no similarity cache was used. Model: GLM-5.3-Flash through IndieRouter.
 - **Inputs:** `scripts/production_rerun/prepare_inputs.py` checks out each upstream repo at the PR head
-  (depth 1), verifies the checkout contains the corpus diff's added lines, and builds the file contents
-  and referenced-symbol context production would have fetched. They are built once and reused, so the
+  (depth 1), measures how many of the corpus diff's added lines (12 characters or longer) appear in the
+  checkout (all of them, for all 13 PRs: 2,855 of 2,855), and builds the file contents and
+  referenced-symbol context production would have fetched. The match is logged, not enforced; production's
+  own file selection read 30 of the 48 changed files in the keycloak PR and every changed file in the
+  other 12. They are built once and reused, so the
   four trials differ only in generation sampling.
 - **Trials:** four independent generation runs (`gen_prod_t1` to `t4`). `gen_prod_before_gate_t*` holds
   the same generations before the grounding gate, for comparison.
@@ -841,7 +844,9 @@ and 44 golden bugs through the full call the hosted product makes, on the code d
 | GitLab Duo | 22.0 | 50.0% [38-63] | 95.1% [85-100] | 39.0 | 41 | 1 | 1 |
 | Qodo | 10.0 | 22.7% [10-38] | 100% [100-100] | 24.0 | 24 | 0 | 1 |
 
-Per-run averages, defined as in Experiment 8. Disputed findings (counted against precision) averaged
+Per-run averages, defined as in Experiment 8. Paired differences below are the mean of the 5,000
+bootstrap differences, as in Experiment 8, so they can sit a few tenths of a point from the difference
+of the table's point estimates (for example -3.2 below against 89.2 minus 92.6). Disputed findings (counted against precision) averaged
 7.0 per run in the production configuration, against 5.0 in Experiment 8.
 
 ### What the data supports
