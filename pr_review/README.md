@@ -766,7 +766,8 @@ generation trial run for that configuration.
    not "the share of findings a maintainer would act on".
 4. **Diff-only path.** Production adds file contents (grounding), referenced-symbol context,
    suggestion verification and ranking. These numbers are for the generation path above, not for
-   the whole hosted product.
+   the whole hosted product. [Experiment 9](#experiment-9-flash-review-in-its-production-configuration-2026-10-14)
+   re-runs the 13 PRs through the production configuration.
 5. **Competitor rows are single, undated runs** of tools that change over time.
 6. **One judge family (OpenAI).** Generation used GLM (Aletheore) and other vendors' models
    (competitors), so there is no self-preference, but there is also no cross-judge check.
@@ -802,3 +803,97 @@ python3 pr_review/real_pr_recall_corpus/scripts/judge_full_pipeline.py \
 
 Result files: `gen_ctrl_*`, `gen_ctx_*`, `gen_air_ctx*`, `base_air_t*` (Aletheore findings) and the
 matching `judged_*` files in `pr_review/real_pr_recall_corpus/results/`.
+
+## Experiment 9: Flash Review in its production configuration (2026-10-14)
+
+Experiment 8 scored the diff-only generation path (its limitation 4). This re-runs the same 13 PRs
+and 44 golden bugs through the full call the hosted product makes, on the code deployed on
+2026-10-14, and scores it with the same judge and the same method.
+
+### Setup
+
+- **Code:** Aletheore master at `7ad9ff03`, the commit deployed to production on 2026-10-14.
+- **Call:** production's `review_diff()` as `scan_worker/jobs.py` makes it for a paid installation:
+  per-file generation (`per_file_completeness`), the rest of the PR shown to each per-file call
+  (`share_pr_context_per_file`), finding ranking, real file contents, referenced-symbol context, the
+  deterministic semantic checks, and the grounding gate, which moves a finding to the line its quoted
+  code is really on and drops findings that sit outside the diff, cite a line past the end of the file,
+  or name a symbol that appears nowhere in the file. Sibling-file context and cross-file check runs are
+  off, as in production; no similarity cache was used. Model: GLM-5.3-Flash through IndieRouter.
+- **Inputs:** `scripts/production_rerun/prepare_inputs.py` checks out each upstream repo at the PR head
+  (depth 1), measures how many of the corpus diff's added lines (12 characters or longer) appear in the
+  checkout (all of them, for all 13 PRs: 2,855 of 2,855), and builds the file contents and
+  referenced-symbol context production would have fetched. The match is logged, not enforced; production's
+  own file selection read 30 of the 48 changed files in the keycloak PR and every changed file in the
+  other 12. They are built once and reused, so the
+  four trials differ only in generation sampling.
+- **Trials:** four independent generation runs (`gen_prod_t1` to `t4`). `gen_prod_before_gate_t*` holds
+  the same generations before the grounding gate, for comparison.
+- **Judge and scoring:** unchanged from Experiment 8 (`gpt-6-luna`, three runs with a two-of-three
+  rule, 5,000-draw bootstrap over the 13 PRs). The competitor and Experiment 8 rows below are the
+  existing result files, not re-run.
+
+### Results
+
+| Tool | Golden bugs caught (of 44) | Recall | Precision | Accurate findings | Real findings | Confirmed FPs | Runs |
+|---|---|---|---|---|---|---|---|
+| **Aletheore Flash, production configuration** | 24.2 | 55.1% [43-67] | 89.2% [83-94] | 86.5 | 97.0 | 3.5 | 4 |
+| *Same generations, before the grounding gate* | 25.0 | 56.8% [45-69] | 87.3% [81-92] | 87.2 | 100.0 | 2.2 | 4 |
+| *Aletheore Flash, shared context (Experiment 8)* | 23.5 | 53.4% [39-68] | 92.6% [86-96] | 87.5 | 94.5 | 2.0 | 2 |
+| GitHub Copilot | 26.0 | 59.1% [40-76] | 89.6% [82-98] | 60.0 | 67 | 1 | 1 |
+| GitLab Duo | 22.0 | 50.0% [38-63] | 95.1% [85-100] | 39.0 | 41 | 1 | 1 |
+| Qodo | 10.0 | 22.7% [10-38] | 100% [100-100] | 24.0 | 24 | 0 | 1 |
+
+Per-run averages, defined as in Experiment 8. Paired differences below are the mean of the 5,000
+bootstrap differences, as in Experiment 8, so they can sit a few tenths of a point from the difference
+of the table's point estimates (for example -3.2 below against 89.2 minus 92.6). Disputed findings (counted against precision) averaged
+7.0 per run in the production configuration, against 5.0 in Experiment 8.
+
+### What the data supports
+
+- **Production precision is about 89%, and it is not distinguishable from Experiment 8's 92.6%.**
+  Production minus the Experiment 8 Flash row: recall +1.7 points (CI -2.6 to +6.4), precision -3.2
+  (CI -8.5 to +3.1). Confirmed false positives average 3.5 per run, against 2.0. The two runs used
+  different code (2026-09-24 against 2026-10-14) and different numbers of trials, so the comparison
+  mixes code changes with sampling.
+- **The comparisons from Experiment 8 hold.** Production minus Copilot: recall -3.6 (CI -22.6 to
+  +15.9), precision -0.7 (CI -12.0 to +10.1). Minus GitLab Duo: recall +4.9 (CI -9.4 to +17.6),
+  precision -6.1 (CI -14.4 to +2.7). Minus Qodo: recall +32.1 (CI +23.7 to +39.4), precision -10.9
+  (CI -16.7 to -5.9). Only the Qodo row excludes zero.
+- **The grounding gate trades a little recall for a little precision, within noise.** Gated minus
+  ungated: recall -1.8 points (CI -4.5 to +0.6), precision +2.0 (CI -0.7 to +5.6). Neither interval
+  excludes zero.
+- **Earlier production-configuration measurements are not published.** Runs earlier in October, before
+  the grounding-gate fix (PR #1011) and the exception-mismatch check fix (PR #1013), scored lower
+  (recall about 50%, precision about 85%) on code that has since been replaced.
+
+### Limitations, stated plainly
+
+1. **13 PRs.** Intervals are wide; differences between tools other than Qodo are noise.
+2. **The pipeline was developed while looking at these PRs.** It has not been validated on unseen pull
+   requests.
+3. **Precision measures accuracy of claims, not their importance** (see Experiment 8, limitation 3).
+4. **The four trials share one set of inputs,** so they measure generation variance, not variation in
+   what production would fetch. Inputs come from checkouts of the upstream repos at the PR head, which
+   is what production reads through the GitHub API at the head SHA.
+5. **One generation failure.** In one trial, one translation properties file in the keycloak PR failed
+   to generate and was skipped (the warning is recorded in `gen_prod_t1.json`).
+6. **Competitor rows are single, undated runs** of tools that change over time; one judge family.
+
+### Reproducing
+
+```bash
+# Recompute the tables above from the committed result files (no API key, no network)
+python3 pr_review/real_pr_recall_corpus/scripts/score_production_rerun.py
+
+# Regenerate (needs an Aletheore checkout at 7ad9ff03 and INDIEROUTER_API_KEY)
+cd pr_review/real_pr_recall_corpus/scripts/production_rerun
+python3 prepare_inputs.py --root /path/to/Aletheore --bench /path/to/this/repo --work ./work
+python3 generate_production.py --root /path/to/Aletheore --bench /path/to/this/repo --work ./work \
+  --tag A --env-file /path/to/.env
+python3 assemble.py ./work A     # writes work/prod_A.json and work/ungated_A.json
+# then judge with judge_full_pipeline.py exactly as in Experiment 8 (needs OPENAI_API_KEY)
+```
+
+Result files: `results/production_rerun_2026-10-14/` (`gen_prod_*`, `gen_prod_before_gate_*` and the
+matching `judged_*`).
