@@ -1,0 +1,554 @@
+[
+ {
+  "id": "gin_locate_x0",
+  "repo": "gin",
+  "kind": "locate",
+  "target": "NoMethod",
+  "truth_file": "ginS/gins.go",
+  "word": "function"
+ },
+ {
+  "id": "gin_locate_x1",
+  "repo": "gin",
+  "kind": "locate",
+  "target": "Context",
+  "truth_file": "context.go",
+  "word": "type"
+ },
+ {
+  "id": "gin_locate_x2",
+  "repo": "gin",
+  "kind": "locate",
+  "target": "FileSystem",
+  "truth_file": "internal/fs/fs.go",
+  "word": "type"
+ },
+ {
+  "id": "gin_path_x3",
+  "repo": "gin",
+  "kind": "path",
+  "target": "recovery.go",
+  "to": "fs.go",
+  "truth_len": 3
+ },
+ {
+  "id": "gin_path_x4",
+  "repo": "gin",
+  "kind": "path",
+  "target": "binding/query.go",
+  "to": "binding/multipart_form_mapping.go",
+  "truth_len": 3
+ },
+ {
+  "id": "gin_path_x5",
+  "repo": "gin",
+  "kind": "path",
+  "target": "render/html.go",
+  "to": "internal/bytesconv/bytesconv.go",
+  "truth_len": 3
+ },
+ {
+  "id": "zod_locate_x0",
+  "repo": "zod",
+  "kind": "locate",
+  "target": "_normalize",
+  "truth_file": "packages/zod/src/v4/core/api.ts",
+  "word": "function"
+ },
+ {
+  "id": "zod_locate_x1",
+  "repo": "zod",
+  "kind": "locate",
+  "target": "ZodPipeline",
+  "truth_file": "packages/zod/src/v3/types.ts",
+  "word": "class"
+ },
+ {
+  "id": "zod_locate_x2",
+  "repo": "zod",
+  "kind": "locate",
+  "target": "ZodNaN",
+  "truth_file": "packages/zod/src/v3/types.ts",
+  "word": "class"
+ },
+ {
+  "id": "zod_path_x3",
+  "repo": "zod",
+  "kind": "path",
+  "target": "packages/zod/src/v3/types.ts",
+  "to": "packages/zod/src/v3/external.ts",
+  "truth_len": 3
+ },
+ {
+  "id": "zod_path_x4",
+  "repo": "zod",
+  "kind": "path",
+  "target": "packages/integration/fixtures/drizzle-zod/index.ts",
+  "to": "packages/zod/src/v4/core/doc.ts",
+  "truth_len": 4
+ },
+ {
+  "id": "zod_path_x5",
+  "repo": "zod",
+  "kind": "path",
+  "target": "packages/bench/single-element-enum.ts",
+  "to": "packages/zod/src/v4/core/json-schema-processors.ts",
+  "truth_len": 4
+ },
+ {
+  "id": "axios_locate_x0",
+  "repo": "axios",
+  "kind": "locate",
+  "target": "AxiosHeaders",
+  "truth_file": "index.d.ts",
+  "word": "class"
+ },
+ {
+  "id": "axios_locate_x1",
+  "repo": "axios",
+  "kind": "locate",
+  "target": "create",
+  "truth_file": "index.d.ts",
+  "word": "function"
+ },
+ {
+  "id": "axios_locate_x2",
+  "repo": "axios",
+  "kind": "locate",
+  "target": "formToJSON",
+  "truth_file": "index.d.ts",
+  "word": "function"
+ },
+ {
+  "id": "axios_path_x3",
+  "repo": "axios",
+  "kind": "path",
+  "target": "examples/network_enhanced.js",
+  "to": "lib/helpers/validator.js",
+  "truth_len": 4
+ },
+ {
+  "id": "axios_path_x4",
+  "repo": "axios",
+  "kind": "path",
+  "target": "docs/scripts/process-sponsors.js",
+  "to": "lib/helpers/isAxiosError.js",
+  "truth_len": 3
+ },
+ {
+  "id": "axios_path_x5",
+  "repo": "axios",
+  "kind": "path",
+  "target": "sandbox/client.js",
+  "to": "lib/helpers/buildURL.js",
+  "truth_len": 4
+ },
+ {
+  "id": "gson_locate_x0",
+  "repo": "gson",
+  "kind": "locate",
+  "target": "JsonDeserializer",
+  "truth_file": "gson/src/main/java/com/google/gson/JsonDeserializer.java",
+  "word": "type"
+ },
+ {
+  "id": "gson_locate_x1",
+  "repo": "gson",
+  "kind": "locate",
+  "target": "NumberTypeAdapter",
+  "truth_file": "gson/src/main/java/com/google/gson/internal/bind/NumberTypeAdapter.java",
+  "word": "type"
+ },
+ {
+  "id": "gson_locate_x2",
+  "repo": "gson",
+  "kind": "locate",
+  "target": "FactorySupplier",
+  "truth_file": "gson/src/main/java/com/google/gson/internal/bind/TypeAdapters.java",
+  "word": "type"
+ },
+ {
+  "id": "gson_path_x3",
+  "repo": "gson",
+  "kind": "path",
+  "target": "extras/src/main/java/com/google/gson/typeadapters/UtcDateTypeAdapter.java",
+  "to": "gson/src/main/java/com/google/gson/internal/LazilyParsedNumber.java",
+  "truth_len": 4
+ },
+ {
+  "id": "gson_path_x4",
+  "repo": "gson",
+  "kind": "path",
+  "target": "gson/src/main/java/com/google/gson/LongSerializationPolicy.java",
+  "to": "gson/src/main/java/com/google/gson/internal/GsonTypes.java",
+  "truth_len": 3
+ },
+ {
+  "id": "gson_path_x5",
+  "repo": "gson",
+  "kind": "path",
+  "target": "gson/src/main/java/com/google/gson/internal/UnsafeAllocator.java",
+  "to": "gson/src/main/java/com/google/gson/internal/GsonTypes.java",
+  "truth_len": 3
+ },
+ {
+  "id": "thrift_locate_x0",
+  "repo": "thrift",
+  "kind": "locate",
+  "target": "ThriftSet",
+  "truth_file": "lib/java/src/main/java/org/apache/thrift/partial/ThriftMetadata.java",
+  "word": "type"
+ },
+ {
+  "id": "thrift_locate_x1",
+  "repo": "thrift",
+  "kind": "locate",
+  "target": "TSaslProcessorFactory",
+  "truth_file": "lib/java/src/main/java/org/apache/thrift/transport/sasl/TSaslProcessorFactory.java",
+  "word": "type"
+ },
+ {
+  "id": "thrift_locate_x2",
+  "repo": "thrift",
+  "kind": "locate",
+  "target": "TSaslServerFactory",
+  "truth_file": "lib/java/src/main/java/org/apache/thrift/transport/sasl/TSaslServerFactory.java",
+  "word": "type"
+ },
+ {
+  "id": "thrift_path_x3",
+  "repo": "thrift",
+  "kind": "path",
+  "target": "lib/java/src/main/java/org/apache/thrift/server/TThreadedSelectorServer.java",
+  "to": "lib/java/src/main/java/org/apache/thrift/scheme/StandardScheme.java",
+  "truth_len": 3
+ },
+ {
+  "id": "thrift_path_x4",
+  "repo": "thrift",
+  "kind": "path",
+  "target": "lib/java/src/main/java/org/apache/thrift/transport/sasl/SaslNegotiationFrameWriter.java",
+  "to": "lib/java/src/main/java/org/apache/thrift/transport/sasl/TInvalidSaslFrameException.java",
+  "truth_len": 4
+ },
+ {
+  "id": "thrift_path_x5",
+  "repo": "thrift",
+  "kind": "path",
+  "target": "lib/java/src/main/java/org/apache/thrift/meta_data/StructMetaData.java",
+  "to": "lib/java/src/main/java/org/apache/thrift/scheme/StandardScheme.java",
+  "truth_len": 4
+ },
+ {
+  "id": "automapper_locate_x0",
+  "repo": "automapper",
+  "kind": "locate",
+  "target": "ConvertMapper",
+  "truth_file": "src/AutoMapper/Mappers/ConvertMapper.cs",
+  "word": "type"
+ },
+ {
+  "id": "automapper_locate_x1",
+  "repo": "automapper",
+  "kind": "locate",
+  "target": "FeatureExtensions",
+  "truth_file": "src/AutoMapper/Features.cs",
+  "word": "type"
+ },
+ {
+  "id": "automapper_locate_x2",
+  "repo": "automapper",
+  "kind": "locate",
+  "target": "NullableUntypedMapFrom",
+  "truth_file": "src/UnitTests/Bug/NullableUntypedMapFrom.cs",
+  "word": "type"
+ },
+ {
+  "id": "automapper_path_x3",
+  "repo": "automapper",
+  "kind": "path",
+  "target": "src/UnitTests/Bug/MapAtRuntimeWithCollections/Entity20.cs",
+  "to": "src/UnitTests/Bug/MapAtRuntimeWithCollections/Entity10.cs",
+  "truth_len": 3
+ },
+ {
+  "id": "automapper_path_x4",
+  "repo": "automapper",
+  "kind": "path",
+  "target": "src/UnitTests/Bug/MapAtRuntimeWithCollections/EntityDTO5.cs",
+  "to": "src/UnitTests/Bug/MapAtRuntimeWithCollections/EntityDTO21.cs",
+  "truth_len": 3
+ },
+ {
+  "id": "automapper_path_x5",
+  "repo": "automapper",
+  "kind": "path",
+  "target": "src/UnitTests/Bug/ProjectUsingTheQueriedEntity.cs",
+  "to": "src/AutoMapper/Licensing/License.cs",
+  "truth_len": 3
+ },
+ {
+  "id": "serde_locate_x0",
+  "repo": "serde",
+  "kind": "locate",
+  "target": "serialize_struct_variant_with_flatten",
+  "truth_file": "serde_derive/src/ser.rs",
+  "word": "function"
+ },
+ {
+  "id": "serde_locate_x1",
+  "repo": "serde",
+  "kind": "locate",
+  "target": "StringInPlaceVisitor",
+  "truth_file": "serde_core/src/de/impls.rs",
+  "word": "type"
+ },
+ {
+  "id": "serde_locate_x2",
+  "repo": "serde",
+  "kind": "locate",
+  "target": "serialize_tuple_struct",
+  "truth_file": "serde_derive/src/ser.rs",
+  "word": "function"
+ },
+ {
+  "id": "serde_path_x3",
+  "repo": "serde",
+  "kind": "path",
+  "target": "serde_core/src/de/ignored_any.rs",
+  "to": "serde_core/src/ser/impls.rs",
+  "truth_len": 3
+ },
+ {
+  "id": "serde_path_x4",
+  "repo": "serde",
+  "kind": "path",
+  "target": "serde_core/src/de/impls.rs",
+  "to": "serde_core/src/ser/impls.rs",
+  "truth_len": 3
+ },
+ {
+  "id": "serde_path_x5",
+  "repo": "serde",
+  "kind": "path",
+  "target": "serde_derive/src/de/tuple.rs",
+  "to": "serde_derive/src/internals/respan.rs",
+  "truth_len": 3
+ },
+ {
+  "id": "guzzle_locate_x0",
+  "repo": "guzzle",
+  "kind": "locate",
+  "target": "HeaderProcessor",
+  "truth_file": "src/Handler/HeaderProcessor.php",
+  "word": "type"
+ },
+ {
+  "id": "guzzle_locate_x1",
+  "repo": "guzzle",
+  "kind": "locate",
+  "target": "CurlMultiHandler",
+  "truth_file": "src/Handler/CurlMultiHandler.php",
+  "word": "type"
+ },
+ {
+  "id": "guzzle_locate_x2",
+  "repo": "guzzle",
+  "kind": "locate",
+  "target": "FileCookieJar",
+  "truth_file": "src/Cookie/FileCookieJar.php",
+  "word": "type"
+ },
+ {
+  "id": "guzzle_path_x3",
+  "repo": "guzzle",
+  "kind": "path",
+  "target": "src/Exception/ConnectTimeoutException.php",
+  "to": "src/Exception/TransferException.php",
+  "truth_len": 3
+ },
+ {
+  "id": "guzzle_path_x4",
+  "repo": "guzzle",
+  "kind": "path",
+  "target": "src/Handler/ProxyEnv.php",
+  "to": "src/Exception/GuzzleException.php",
+  "truth_len": 3
+ },
+ {
+  "id": "guzzle_path_x5",
+  "repo": "guzzle",
+  "kind": "path",
+  "target": "src/Client.php",
+  "to": "src/Handler/Clock.php",
+  "truth_len": 3
+ },
+ {
+  "id": "slim_locate_x0",
+  "repo": "slim",
+  "kind": "locate",
+  "target": "ResponseEmitter",
+  "truth_file": "Slim/ResponseEmitter.php",
+  "word": "type"
+ },
+ {
+  "id": "slim_locate_x1",
+  "repo": "slim",
+  "kind": "locate",
+  "target": "XmlErrorRenderer",
+  "truth_file": "Slim/Error/Renderers/XmlErrorRenderer.php",
+  "word": "type"
+ },
+ {
+  "id": "slim_locate_x2",
+  "repo": "slim",
+  "kind": "locate",
+  "target": "RequestResponseArgs",
+  "truth_file": "Slim/Handlers/Strategies/RequestResponseArgs.php",
+  "word": "type"
+ },
+ {
+  "id": "slim_path_x3",
+  "repo": "slim",
+  "kind": "path",
+  "target": "Slim/Factory/Psr17/Psr17FactoryProvider.php",
+  "to": "Slim/Interfaces/Psr17FactoryInterface.php",
+  "truth_len": 3
+ },
+ {
+  "id": "slim_path_x4",
+  "repo": "slim",
+  "kind": "path",
+  "target": "Slim/Interfaces/RouteCollectorInterface.php",
+  "to": "Slim/Interfaces/AdvancedCallableResolverInterface.php",
+  "truth_len": 3
+ },
+ {
+  "id": "slim_path_x5",
+  "repo": "slim",
+  "kind": "path",
+  "target": "Slim/Routing/RouteCollector.php",
+  "to": "Slim/Interfaces/MiddlewareDispatcherInterface.php",
+  "truth_len": 3
+ },
+ {
+  "id": "jekyll_locate_x0",
+  "repo": "jekyll",
+  "kind": "locate",
+  "target": "Servlet",
+  "truth_file": "lib/jekyll/commands/serve/servlet.rb",
+  "word": "class or module"
+ },
+ {
+  "id": "jekyll_locate_x1",
+  "repo": "jekyll",
+  "kind": "locate",
+  "target": "PluginManager",
+  "truth_file": "lib/jekyll/plugin_manager.rb",
+  "word": "class or module"
+ },
+ {
+  "id": "jekyll_locate_x2",
+  "repo": "jekyll",
+  "kind": "locate",
+  "target": "ERBRenderer",
+  "truth_file": "lib/jekyll/theme_builder.rb",
+  "word": "class or module"
+ },
+ {
+  "id": "jekyll_path_x3",
+  "repo": "jekyll",
+  "kind": "path",
+  "target": "features/step_definitions.rb",
+  "to": "lib/jekyll/filters/url_filters.rb",
+  "truth_len": 3
+ },
+ {
+  "id": "jekyll_path_x4",
+  "repo": "jekyll",
+  "kind": "path",
+  "target": "lib/jekyll/reader.rb",
+  "to": "lib/jekyll/deprecator.rb",
+  "truth_len": 3
+ },
+ {
+  "id": "jekyll_path_x5",
+  "repo": "jekyll",
+  "kind": "path",
+  "target": "lib/jekyll/url.rb",
+  "to": "lib/jekyll/errors.rb",
+  "truth_len": 3
+ },
+ {
+  "id": "jq_path_x0",
+  "repo": "jq",
+  "kind": "path",
+  "target": "vendor/decNumber/example6.c",
+  "to": "vendor/decNumber/decContext.h",
+  "truth_len": 3
+ },
+ {
+  "id": "jq_path_x1",
+  "repo": "jq",
+  "kind": "path",
+  "target": "src/parser.c",
+  "to": "src/opcode_list.h",
+  "truth_len": 3
+ },
+ {
+  "id": "jq_path_x2",
+  "repo": "jq",
+  "kind": "path",
+  "target": "src/bytecode.c",
+  "to": "src/jv.h",
+  "truth_len": 3
+ },
+ {
+  "id": "fmt_locate_x0",
+  "repo": "fmt",
+  "kind": "locate",
+  "target": "type_constant",
+  "truth_file": "include/fmt/base.h",
+  "word": "type"
+ },
+ {
+  "id": "fmt_locate_x1",
+  "repo": "fmt",
+  "kind": "locate",
+  "target": "FMT_SO_VISIBILITY",
+  "truth_file": "include/fmt/format.h",
+  "word": "type"
+ },
+ {
+  "id": "fmt_locate_x2",
+  "repo": "fmt",
+  "kind": "locate",
+  "target": "is_reference_wrapper",
+  "truth_file": "include/fmt/args.h",
+  "word": "type"
+ },
+ {
+  "id": "fmt_path_x3",
+  "repo": "fmt",
+  "kind": "path",
+  "target": "src/format.cc",
+  "to": "include/fmt/base.h",
+  "truth_len": 3
+ },
+ {
+  "id": "fmt_path_x4",
+  "repo": "fmt",
+  "kind": "path",
+  "target": "src/fmt-c.cc",
+  "to": "include/fmt/format-inl.h",
+  "truth_len": 3
+ },
+ {
+  "id": "fmt_path_x5",
+  "repo": "fmt",
+  "kind": "path",
+  "target": "src/os.cc",
+  "to": "include/fmt/format-inl.h",
+  "truth_len": 3
+ }
+]

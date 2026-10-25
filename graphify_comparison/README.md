@@ -1,5 +1,10 @@
 # Head-to-head against Graphify (ERPNext code intelligence)
 
+> **Newer results:** a larger comparison (14 repositories, 12 languages, 4,830 runs, including Graphify's LLM mode) is in
+> [`../graph_questions/`](../graph_questions/README.md). The two places below where Graphify came out ahead (setup time, and
+> cost on flat "everything about this symbol" queries) were measured before the changes described there and have not been
+> re-run.
+
 This directory's run below covers real-world QA coverage on one large
 Python repository. For a controlled, per-language structural comparison
 across all 13 languages Aletheore supports, see

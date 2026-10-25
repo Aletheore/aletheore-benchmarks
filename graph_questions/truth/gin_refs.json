@@ -1,0 +1,622 @@
+{
+ "functions": [
+  {
+   "name": "BasicAuth",
+   "file": "auth.go",
+   "callers": [
+    "auth_test.go"
+   ]
+  },
+  {
+   "name": "BasicAuthForProxy",
+   "file": "auth.go",
+   "callers": [
+    "auth_test.go"
+   ]
+  },
+  {
+   "name": "BasicAuthForRealm",
+   "file": "auth.go",
+   "callers": [
+    "auth_test.go"
+   ]
+  },
+  {
+   "name": "BytesToString",
+   "file": "internal/bytesconv/bytesconv.go",
+   "callers": [
+    "binding/plain.go",
+    "gin.go",
+    "internal/bytesconv/bytesconv_test.go",
+    "recovery.go",
+    "render/json.go",
+    "tree.go"
+   ]
+  },
+  {
+   "name": "CreateTestContext",
+   "file": "test_helpers.go",
+   "callers": [
+    "context_file_test.go",
+    "context_test.go",
+    "deprecated_test.go"
+   ]
+  },
+  {
+   "name": "CreateTestContextOnly",
+   "file": "test_helpers.go",
+   "callers": [
+    "context_test.go"
+   ]
+  },
+  {
+   "name": "CustomRecovery",
+   "file": "recovery.go",
+   "callers": [
+    "recovery_test.go"
+   ]
+  },
+  {
+   "name": "CustomRecoveryWithWriter",
+   "file": "recovery.go",
+   "callers": [
+    "recovery_test.go"
+   ]
+  },
+  {
+   "name": "DisableBindValidation",
+   "file": "mode.go",
+   "callers": [
+    "mode_test.go"
+   ]
+  },
+  {
+   "name": "DisableConsoleColor",
+   "file": "logger.go",
+   "callers": [
+    "logger_test.go"
+   ]
+  },
+  {
+   "name": "EnableJsonDecoderDisallowUnknownFields",
+   "file": "mode.go",
+   "callers": [
+    "mode_test.go"
+   ]
+  },
+  {
+   "name": "EnableJsonDecoderUseNumber",
+   "file": "mode.go",
+   "callers": [
+    "mode_test.go"
+   ]
+  },
+  {
+   "name": "ErrorLogger",
+   "file": "logger.go",
+   "callers": [
+    "logger_test.go"
+   ]
+  },
+  {
+   "name": "ForceConsoleColor",
+   "file": "logger.go",
+   "callers": [
+    "logger_test.go"
+   ]
+  },
+  {
+   "name": "IsDebugging",
+   "file": "debug.go",
+   "callers": [
+    "debug_test.go",
+    "gin.go",
+    "recovery.go"
+   ]
+  },
+  {
+   "name": "Logger",
+   "file": "logger.go",
+   "callers": [
+    "gin.go"
+   ]
+  },
+  {
+   "name": "LoggerWithConfig",
+   "file": "logger.go",
+   "callers": [
+    "logger_test.go"
+   ]
+  },
+  {
+   "name": "LoggerWithFormatter",
+   "file": "logger.go",
+   "callers": [
+    "logger_test.go"
+   ]
+  },
+  {
+   "name": "LoggerWithWriter",
+   "file": "logger.go",
+   "callers": [
+    "benchmarks_test.go",
+    "logger_test.go"
+   ]
+  },
+  {
+   "name": "MapFormWithTag",
+   "file": "binding/form_mapping.go",
+   "callers": [
+    "binding/form_mapping_test.go"
+   ]
+  },
+  {
+   "name": "PerformRequest",
+   "file": "routes_test.go",
+   "callers": [
+    "context_test.go",
+    "gin_test.go",
+    "githubapi_test.go",
+    "logger_test.go",
+    "middleware_test.go",
+    "recovery_test.go",
+    "routergroup_test.go",
+    "utils_test.go"
+   ]
+  },
+  {
+   "name": "Recovery",
+   "file": "recovery.go",
+   "callers": [
+    "benchmarks_test.go",
+    "gin.go"
+   ]
+  },
+  {
+   "name": "RecoveryWithWriter",
+   "file": "recovery.go",
+   "callers": [
+    "recovery_test.go"
+   ]
+  },
+  {
+   "name": "SetMode",
+   "file": "mode.go",
+   "callers": [
+    "context_test.go",
+    "debug_test.go",
+    "ginS/gins_test.go",
+    "gin_test.go",
+    "logger_test.go",
+    "mode_test.go",
+    "recovery_test.go",
+    "response_writer_test.go",
+    "routergroup_test.go",
+    "utils_test.go"
+   ]
+  },
+  {
+   "name": "StringToBytes",
+   "file": "internal/bytesconv/bytesconv.go",
+   "callers": [
+    "auth.go",
+    "binding/form_mapping.go",
+    "internal/bytesconv/bytesconv_test.go",
+    "render/json.go",
+    "render/text.go"
+   ]
+  },
+  {
+   "name": "WriteMsgPack",
+   "file": "render/msgpack.go",
+   "callers": [
+    "render/render_msgpack_test.go"
+   ]
+  },
+  {
+   "name": "assert1",
+   "file": "utils.go",
+   "callers": [
+    "auth.go",
+    "context.go",
+    "gin.go",
+    "routergroup.go"
+   ]
+  },
+  {
+   "name": "authorizationHeader",
+   "file": "auth.go",
+   "callers": [
+    "auth_test.go"
+   ]
+  },
+  {
+   "name": "bodyAllowedForStatus",
+   "file": "context.go",
+   "callers": [
+    "context_test.go"
+   ]
+  },
+  {
+   "name": "captureOutput",
+   "file": "debug_test.go",
+   "callers": [
+    "context_test.go",
+    "deprecated_test.go",
+    "gin_test.go"
+   ]
+  },
+  {
+   "name": "chooseData",
+   "file": "utils.go",
+   "callers": [
+    "context.go",
+    "utils_test.go"
+   ]
+  },
+  {
+   "name": "cleanPath",
+   "file": "path.go",
+   "callers": [
+    "gin.go",
+    "path_test.go"
+   ]
+  },
+  {
+   "name": "compareFunc",
+   "file": "gin_test.go",
+   "callers": [
+    "context_test.go"
+   ]
+  },
+  {
+   "name": "countParams",
+   "file": "tree.go",
+   "callers": [
+    "gin.go",
+    "tree_test.go"
+   ]
+  },
+  {
+   "name": "countSections",
+   "file": "tree.go",
+   "callers": [
+    "gin.go"
+   ]
+  },
+  {
+   "name": "debugPrint",
+   "file": "debug.go",
+   "callers": [
+    "context.go",
+    "debug_test.go",
+    "gin.go",
+    "response_writer.go",
+    "utils.go"
+   ]
+  },
+  {
+   "name": "debugPrintError",
+   "file": "debug.go",
+   "callers": [
+    "debug_test.go",
+    "gin.go"
+   ]
+  },
+  {
+   "name": "debugPrintLoadTemplate",
+   "file": "debug.go",
+   "callers": [
+    "debug_test.go",
+    "gin.go"
+   ]
+  },
+  {
+   "name": "debugPrintRoute",
+   "file": "debug.go",
+   "callers": [
+    "debug_test.go",
+    "gin.go"
+   ]
+  },
+  {
+   "name": "debugPrintWARNINGDefault",
+   "file": "debug.go",
+   "callers": [
+    "debug_test.go",
+    "gin.go"
+   ]
+  },
+  {
+   "name": "debugPrintWARNINGNew",
+   "file": "debug.go",
+   "callers": [
+    "debug_test.go",
+    "gin.go"
+   ]
+  },
+  {
+   "name": "debugPrintWARNINGSetHTMLTemplate",
+   "file": "debug.go",
+   "callers": [
+    "debug_test.go",
+    "gin.go"
+   ]
+  },
+  {
+   "name": "filterFlags",
+   "file": "utils.go",
+   "callers": [
+    "context.go",
+    "utils_test.go"
+   ]
+  },
+  {
+   "name": "function",
+   "file": "recovery.go",
+   "callers": [
+    "recovery_test.go"
+   ]
+  },
+  {
+   "name": "getMapFromFormData",
+   "file": "context.go",
+   "callers": [
+    "context_test.go"
+   ]
+  },
+  {
+   "name": "getMinVer",
+   "file": "debug.go",
+   "callers": [
+    "debug_test.go"
+   ]
+  },
+  {
+   "name": "isASCII",
+   "file": "utils.go",
+   "callers": [
+    "context.go",
+    "utils_test.go"
+   ]
+  },
+  {
+   "name": "joinPaths",
+   "file": "utils.go",
+   "callers": [
+    "routergroup.go",
+    "utils_test.go"
+   ]
+  },
+  {
+   "name": "lastChar",
+   "file": "utils.go",
+   "callers": [
+    "utils_test.go"
+   ]
+  },
+  {
+   "name": "mapForm",
+   "file": "binding/form_mapping.go",
+   "callers": [
+    "binding/form.go",
+    "binding/form_mapping_benchmark_test.go",
+    "binding/form_mapping_test.go",
+    "binding/query.go"
+   ]
+  },
+  {
+   "name": "mapURI",
+   "file": "binding/form_mapping.go",
+   "callers": [
+    "binding/form_mapping_test.go",
+    "binding/uri.go"
+   ]
+  },
+  {
+   "name": "mapping",
+   "file": "binding/form_mapping.go",
+   "callers": [
+    "binding/form_mapping_test.go"
+   ]
+  },
+  {
+   "name": "mappingByPtr",
+   "file": "binding/form_mapping.go",
+   "callers": [
+    "binding/form.go",
+    "binding/form_mapping_test.go",
+    "binding/header.go"
+   ]
+  },
+  {
+   "name": "nameOfFunction",
+   "file": "utils.go",
+   "callers": [
+    "context.go",
+    "debug.go",
+    "gin.go",
+    "utils_test.go"
+   ]
+  },
+  {
+   "name": "parseAccept",
+   "file": "utils.go",
+   "callers": [
+    "context.go",
+    "utils_test.go"
+   ]
+  },
+  {
+   "name": "processAccounts",
+   "file": "auth.go",
+   "callers": [
+    "auth_test.go"
+   ]
+  },
+  {
+   "name": "readNthLine",
+   "file": "recovery.go",
+   "callers": [
+    "recovery_test.go"
+   ]
+  },
+  {
+   "name": "removeRepeatedChar",
+   "file": "path.go",
+   "callers": [
+    "gin.go",
+    "path_test.go"
+   ]
+  },
+  {
+   "name": "requestWithBody",
+   "file": "binding/binding_test.go",
+   "callers": [
+    "binding/binding_msgpack_test.go"
+   ]
+  },
+  {
+   "name": "resolveAddress",
+   "file": "utils.go",
+   "callers": [
+    "gin.go"
+   ]
+  },
+  {
+   "name": "runRequest",
+   "file": "benchmarks_test.go",
+   "callers": [
+    "githubapi_test.go"
+   ]
+  },
+  {
+   "name": "safeInt8",
+   "file": "utils.go",
+   "callers": [
+    "context.go",
+    "utils_test.go"
+   ]
+  },
+  {
+   "name": "safeUint16",
+   "file": "utils.go",
+   "callers": [
+    "tree.go",
+    "utils_test.go"
+   ]
+  },
+  {
+   "name": "secureRequestDump",
+   "file": "recovery.go",
+   "callers": [
+    "recovery_test.go"
+   ]
+  },
+  {
+   "name": "setByForm",
+   "file": "binding/form_mapping.go",
+   "callers": [
+    "binding/header.go",
+    "binding/multipart_form_mapping.go"
+   ]
+  },
+  {
+   "name": "waitForServerReady",
+   "file": "test_helpers.go",
+   "callers": [
+    "gin_integration_test.go"
+   ]
+  },
+  {
+   "name": "writeContentType",
+   "file": "render/render.go",
+   "callers": [
+    "render/bson.go",
+    "render/data.go",
+    "render/html.go",
+    "render/json.go",
+    "render/msgpack.go",
+    "render/pdf.go",
+    "render/protobuf.go",
+    "render/reader.go",
+    "render/text.go",
+    "render/toml.go",
+    "render/xml.go",
+    "render/yaml.go"
+   ]
+  }
+ ],
+ "classes": [
+  {
+   "name": "BindUnmarshaler",
+   "file": "binding/form_mapping.go",
+   "direct": [
+    "binding/form_mapping_test.go"
+   ],
+   "subclasses": [
+    "binding/form_mapping_test.go"
+   ]
+  },
+  {
+   "name": "IRouter",
+   "file": "routergroup.go",
+   "direct": [
+    "gin.go"
+   ],
+   "subclasses": [
+    "gin.go"
+   ]
+  },
+  {
+   "name": "IRoutes",
+   "file": "routergroup.go",
+   "direct": [
+    "gin.go"
+   ],
+   "subclasses": [
+    "gin.go"
+   ]
+  },
+  {
+   "name": "ResponseWriter",
+   "file": "response_writer.go",
+   "direct": [
+    "context_test.go"
+   ],
+   "subclasses": [
+    "context_test.go"
+   ]
+  },
+  {
+   "name": "RouterGroup",
+   "file": "routergroup.go",
+   "direct": [
+    "gin.go"
+   ],
+   "subclasses": [
+    "gin.go"
+   ]
+  },
+  {
+   "name": "setter",
+   "file": "binding/form_mapping.go",
+   "direct": [
+    "binding/multipart_form_mapping.go"
+   ],
+   "subclasses": [
+    "binding/multipart_form_mapping.go"
+   ]
+  },
+  {
+   "name": "testInterface",
+   "file": "binding/validate_test.go",
+   "direct": [
+    "testdata/protoexample/test.pb.go"
+   ],
+   "subclasses": [
+    "testdata/protoexample/test.pb.go"
+   ]
+  }
+ ]
+}
