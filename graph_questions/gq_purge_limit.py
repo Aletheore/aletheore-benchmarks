@@ -8,7 +8,7 @@ from safe_cleanup import quarantine_json_files
 
 BASE = Path(__file__).resolve().parent
 LIMIT = re.compile(
-    r"\b(?:session|usage|rate)[ -]limit\s+(?:was\s+)?(?:reached|hit|exceeded)\b"
+    r"\b(?:session|usage|rate)[ -]limit\b"
     r"|\b(?:hit|reached|exceeded)\s+(?:your|the)\s+(?:session|usage|rate)[ -]limit\b",
     re.IGNORECASE,
 )
@@ -26,7 +26,7 @@ def main():
     args = parser.parse_args()
     for name in args.directories:
         directory = (BASE / name).resolve()
-        if BASE not in directory.parents:
+        if directory != BASE and BASE not in directory.parents:
             parser.error(f"directory must be inside {BASE}")
         matches = quarantine_json_files(directory, is_rate_limited, apply=args.apply)
         action = "quarantined" if args.apply else "candidate(s); dry run"

@@ -1,9 +1,13 @@
 import json
+from contextlib import redirect_stdout
+import io
+import os
 from pathlib import Path
 import sys
 import tarfile
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -11,6 +15,7 @@ from gq_purge_limit import is_rate_limited
 from purge_bad import is_network_failure
 from reproduce import extract_run_archives
 from safe_cleanup import quarantine_json_files
+from scoring import load_tasks, score
 
 
 class SafeCleanupTests(unittest.TestCase):
@@ -48,6 +53,43 @@ class SafeCleanupTests(unittest.TestCase):
     def test_session_limit_match_is_specific(self):
         self.assertTrue(is_rate_limited({"result": "You hit your session limit"}))
         self.assertFalse(is_rate_limited({"result": "You hit your breakpoint"}))
+
+    def test_session_limit_variants_are_kept_as_candidates(self):
+        for text in (
+            "maximum session limit",
+            "session limit is 5h",
+            "your session limit resets at midnight",
+        ):
+            with self.subTest(text=text):
+                self.assertTrue(is_rate_limited({"result": text}))
+
+    def test_partial_quarantine_failure_reports_what_moved(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            results = Path(temporary) / "out"
+            results.mkdir()
+            first = results / "a.json"
+            second = results / "b.json"
+            first.write_text('{"result":"session limit"}', encoding="utf-8")
+            second.write_text('{"result":"session limit"}', encoding="utf-8")
+            real_move = __import__("shutil").move
+
+            def fail_second(source, destination):
+                if Path(source).name == "b.json":
+                    raise PermissionError("blocked")
+                return real_move(source, destination)
+
+            with patch("safe_cleanup.shutil.move", side_effect=fail_second):
+                with self.assertRaisesRegex(OSError, "moved 1 of 2.*a.json"):
+                    quarantine_json_files(results, is_rate_limited, apply=True)
+            self.assertFalse(first.exists())
+            self.assertTrue(second.exists())
+
+    def test_non_object_json_is_skipped(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            results = Path(temporary) / "out"
+            results.mkdir()
+            (results / "array.json").write_text("[]", encoding="utf-8")
+            self.assertEqual(quarantine_json_files(results, is_rate_limited), [])
 
 
 class ReproductionExtractionTests(unittest.TestCase):
@@ -87,6 +129,51 @@ class ReproductionExtractionTests(unittest.TestCase):
 
             self.assertEqual(original.read_text(encoding="utf-8"), "original")
 
+    def test_existing_empty_output_directory_is_never_replaced(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            existing = base / "out_demo"
+            existing.mkdir()
+            self.make_archive(base, "out_demo/result.json", "replacement")
+
+            extract_run_archives(base)
+
+            self.assertEqual(list(existing.iterdir()), [])
+
+    def test_output_directory_created_during_extraction_is_not_replaced(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            destination = base / "out_demo"
+            self.make_archive(base, "out_demo/result.json", "replacement")
+            real_mkdir = os.mkdir
+            raced = False
+
+            def create_racing_destination(path, *args, **kwargs):
+                nonlocal raced
+                if os.fspath(path) == str(destination) and not raced:
+                    raced = True
+                    real_mkdir(path, *args, **kwargs)
+                    raise FileExistsError(path)
+                return real_mkdir(path, *args, **kwargs)
+
+            with patch("reproduce.os.mkdir", side_effect=create_racing_destination):
+                extract_run_archives(base)
+
+            self.assertEqual(list(destination.iterdir()), [])
+
+    def test_missing_runs_directory_is_a_no_op(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            extract_run_archives(temporary)
+
+    def test_running_purge_on_its_base_directory_is_allowed(self):
+        with patch.object(sys, "argv", ["gq_purge_limit.py", "."]):
+            output = io.StringIO()
+            with redirect_stdout(output):
+                from gq_purge_limit import main
+
+                main()
+            self.assertIn("0 candidate(s)", output.getvalue())
+
     def test_rejects_archive_path_traversal(self):
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
@@ -96,6 +183,19 @@ class ReproductionExtractionTests(unittest.TestCase):
                 extract_run_archives(base)
 
             self.assertFalse((base / "tracked.json").exists())
+
+
+class SharedScoringTests(unittest.TestCase):
+    def test_score_is_shared_and_keeps_direct_answer_behavior(self):
+        task = {"kind": "direct", "truth": ["src/a.py"]}
+        self.assertEqual(score(task, '["src/a.py"]'), (1.0, True))
+        self.assertEqual(score(task, "not json"), (0.0, False))
+
+    def test_task_loader_reads_requested_set(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            task_file = Path(temporary) / "tasks.json"
+            task_file.write_text('[{"id":"one"}]', encoding="utf-8")
+            self.assertEqual(load_tasks(["tasks.json"], temporary), {"one": {"id": "one"}})
 
 
 if __name__ == "__main__":

@@ -2,9 +2,13 @@
 Writes publish_numbers.json and prints the tables."""
 import collections, glob, json, random, statistics, sys, os
 S = os.path.dirname(os.path.abspath(__file__)) + "/"
-sys.argv = ["x", "gq_tasks_all.json,ml_tasks_all.json,ml_tasks_b.json,ml_tasks_c.json,ml_tasks_x.json,ml_tasks_h.json", "out_ml1"]
-src = open(S + "ml_score2.py").read()
-exec(src[: src.index("rows = collections.defaultdict")])  # TASKS, score(), LANGNAME, REPOS via import
+sys.path.insert(0, S)
+from scoring import LANGNAME, REPOS, load_tasks, score
+
+TASKS = load_tasks(
+    "gq_tasks_all.json,ml_tasks_all.json,ml_tasks_b.json,ml_tasks_c.json,ml_tasks_x.json,ml_tasks_h.json".split(","),
+    S,
+)
 SETS = {
     "python": ("Python (Django, ERPNext)", ["out_py1"]),
     "ml": ("12 repositories, 9 more languages", ["out_ml1", "out_ml2", "out_ml3"]),

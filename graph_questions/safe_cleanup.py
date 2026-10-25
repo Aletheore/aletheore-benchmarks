@@ -3,6 +3,7 @@
 from datetime import datetime, timezone
 import json
 import shutil
+import tempfile
 from pathlib import Path
 
 
@@ -15,6 +16,8 @@ def quarantine_json_files(directory, predicate, *, apply=False):
             record = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue
+        if not isinstance(record, dict):
+            continue
         if predicate(record):
             candidates.append(path)
 
@@ -22,8 +25,20 @@ def quarantine_json_files(directory, predicate, *, apply=False):
         return candidates
 
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
-    quarantine = directory.parent / "quarantine" / stamp / directory.name
-    quarantine.mkdir(parents=True, exist_ok=False)
+    quarantine_root = directory.parent / "quarantine"
+    quarantine_root.mkdir(parents=True, exist_ok=True)
+    run_root = Path(tempfile.mkdtemp(prefix=f"{stamp}-", dir=quarantine_root))
+    quarantine = run_root / directory.name
+    quarantine.mkdir()
+    moved = []
     for path in candidates:
-        shutil.move(str(path), str(quarantine / path.name))
+        try:
+            shutil.move(str(path), str(quarantine / path.name))
+        except OSError as exc:
+            moved_names = ", ".join(item.name for item in moved) or "none"
+            raise OSError(
+                f"quarantine stopped at {path}; moved {len(moved)} of {len(candidates)} "
+                f"files to {quarantine} (moved: {moved_names})"
+            ) from exc
+        moved.append(path)
     return candidates

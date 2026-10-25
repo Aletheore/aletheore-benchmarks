@@ -7,6 +7,7 @@ truth/ and the task files, and prints the accuracy, token and cost tables (also 
 """
 import os
 import runpy
+import shutil
 import tarfile
 import tempfile
 from pathlib import PurePosixPath
@@ -15,6 +16,8 @@ from pathlib import PurePosixPath
 def extract_run_archives(base_dir):
     base_dir = os.path.abspath(base_dir)
     runs_dir = os.path.join(base_dir, "runs")
+    if not os.path.isdir(runs_dir):
+        return
     for name in sorted(os.listdir(runs_dir)):
         if not name.endswith(".tar.gz"):
             continue
@@ -38,9 +41,16 @@ def extract_run_archives(base_dir):
                 if not os.path.isdir(extracted):
                     raise ValueError(f"{name} does not contain expected directory {expected}")
                 try:
-                    os.rename(extracted, destination)
+                    os.mkdir(destination)
                 except FileExistsError:
                     print(f"Skipping {name}: {expected} appeared during extraction; refusing to overwrite")
+                    continue
+                try:
+                    for entry in os.listdir(extracted):
+                        os.rename(os.path.join(extracted, entry), os.path.join(destination, entry))
+                except OSError:
+                    shutil.rmtree(destination)
+                    raise
 
 
 if __name__ == "__main__":
