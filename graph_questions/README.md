@@ -18,7 +18,7 @@ python3 reproduce.py
 | **D, Graphify** | A, plus the Graphify CLI (`query`, `affected`, `path`, `explain`, `god-nodes`) over a prebuilt code-only graph, with a short note on its commands in the system prompt |
 | **E, Graphify + LLM** | D, over a graph that also had Graphify's LLM pass over docs, papers and images (IndieRouter `deepseek-v4.1-flash`); built for 12 of the 14 repositories |
 
-Every arm runs the same model through Claude Code (`claude -p`, `claude-haiku-5-5`), three repetitions per task, with the same prompt and the same tool permissions. Aletheore is the released code at master `9ab85687` (PRs #1115 and #1120), except that embeddings for arm C were built with the hosted index. Graphify is 0.9.50.
+Every arm runs the same model through Claude Code (`claude -p`, `claude-haiku-5-5`), three repetitions per task, with the same prompt and the same tool permissions. **Aletheore is a development build, not a release**: master at `9ab85687`, which is the latest release (0.10.2, 2026-10-22) plus 11 merged commits. Two things the arms depend on are in those 11 commits and in no release yet: the router tool `aletheore_ask` with its `router` profile (arm B; [#1115](https://github.com/Aletheore/Aletheore/pull/1115)), and fixes to the import graph for Go, Rust, Java and C# among others ([#1120](https://github.com/Aletheore/Aletheore/pull/1120), [#1118](https://github.com/Aletheore/Aletheore/pull/1118), [#1113](https://github.com/Aletheore/Aletheore/pull/1113)). Arm C's 44-tool full profile exists in 0.10.2 (43 tools by default), but its graph there lacks those fixes, so its numbers here are for the development build too. Embeddings for arm C were built with the hosted index. Graphify is 0.9.50.
 
 ## The questions
 
@@ -112,7 +112,7 @@ The one kind that separated anything was "which K files are imported by the most
 
 ### Fixes measured on unreleased code
 
-These come from branches that are not in a release: smaller MCP tool definitions and a new `lean` profile ([#1127](https://github.com/Aletheore/Aletheore/pull/1127)), and router answers for "most imported files" and "circular imports" ([#1128](https://github.com/Aletheore/Aletheore/pull/1128)). Same tasks, same model, so treat the "after" rows as what the release will be measured against, not as released numbers.
+Every Aletheore row in this benchmark is unreleased (see "The arms"); the "before" rows below are the development build at `9ab85687` and the "after" rows add branches that are not even merged: smaller MCP tool definitions and a new `lean` profile ([#1127](https://github.com/Aletheore/Aletheore/pull/1127)), and router answers for "most imported files" and "circular imports" ([#1128](https://github.com/Aletheore/Aletheore/pull/1128)). Same tasks, same model, so treat the "after" rows as what the release will be measured against, not as released numbers.
 
 51 base tasks (importers, blast radius, dependency counts, unreachable, ownership; 12 repositories):
 

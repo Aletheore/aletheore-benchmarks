@@ -3922,7 +3922,9 @@ Who imports this file, how many modules does a change reach, which files does no
 imported the most, is there a circular import. The same cheap model (`claude-haiku-5-5`) answers each question with grep
 alone, with Aletheore's router tool, with Aletheore's full tool set, with Graphify, and (on two question sets) with
 Graphify's LLM mode, and every answer is scored against a ground truth built by the language's own tooling, never by
-Aletheore: 14 repositories, three repetitions, 4,830 raw runs.
+Aletheore: 14 repositories, three repetitions, 4,830 raw runs. **The Aletheore arms are a development build** (master at
+`9ab85687`: the latest release, 0.10.2, plus 11 merged commits), because the router tool and several import-graph fixes
+they depend on are not in a release yet.
 
 | Question set | Tasks | Grep | Aletheore router | Aletheore full | Graphify |
 |---|---|---|---|---|---|
@@ -3944,9 +3946,8 @@ nodes, so questions about what the docs say, which we did not run, are the fair 
 Where grep finds the answer in one or two searches (locating a uniquely named symbol, callers by name, short cycles),
 nothing beats it, and that is what the last two rows show. Two earlier write-ups below show Graphify ahead (setup time,
 and cost on flat "everything about this symbol" queries); both predate the changes since and **have not been re-run**,
-though we expect them to look better now. Unreleased fixes measured on the same tasks (a router that answers "most
-imported files" and "circular imports", and 28% smaller tool definitions plus a `lean` profile) are in the write-up,
-marked as not yet in a release.
+though we expect them to look better now. Fixes measured on the same tasks, from branches not yet merged (a router that answers "most
+imported files" and "circular imports", and 28% smaller tool definitions plus a `lean` profile) are in the write-up.
 
 Reproduce every number with no API key: `python3 graph_questions/reproduce.py`. Full write-up, ground-truth method,
 losses and harness artifacts in [`graph_questions/README.md`](graph_questions/README.md).
