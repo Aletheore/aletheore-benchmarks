@@ -86,12 +86,12 @@ By language (same 192 tasks, ownership included):
 
 Per run, the benchmark agent's own usage (input tokens include cached reads):
 
-| Set | | Grep | Router | Full | Graphify |
-|---|---|---|---|---|---|
-| Python (44 tasks) | input tokens | 70,900 | **27,800** | 80,700 | 57,300 |
-| | cost per correct answer | $0.0083 | **$0.0017** | $0.0023 | $0.0066 |
-| 12 other repositories (192 tasks) | input tokens | 84,300 | **41,800** | 100,700 | 83,900 |
-| | cost per correct answer | $0.0079 | **$0.0027** | $0.0037 | $0.0069 |
+| Set and measure | Grep | Router | Full | Graphify |
+|---|---|---|---|---|
+| Python (44 tasks), input tokens | 70,900 | **27,800** | 80,700 | 57,300 |
+| Python (44 tasks), cost per correct answer | $0.0083 | **$0.0017** | $0.0023 | $0.0066 |
+| 12 other repositories (192 tasks), input tokens | 84,300 | **41,800** | 100,700 | 83,900 |
+| 12 other repositories (192 tasks), cost per correct answer | $0.0079 | **$0.0027** | $0.0037 | $0.0069 |
 
 The router uses 40 to 50% of grep's input tokens and costs a fifth to a third as much per correct answer, at higher accuracy. The full profile is as accurate as the router but reads more input, because its 44 tool definitions are sent on every turn (about 19,000 tokens before the agent has done anything). Input tokens for the full profile exceed grep's; its cost per correct answer is still lower.
 
