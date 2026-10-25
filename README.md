@@ -3922,9 +3922,9 @@ Who imports this file, how many modules does a change reach, which files does no
 imported the most, is there a circular import. The same cheap model (`claude-haiku-5-5`) answers each question with grep
 alone, with Aletheore's router tool, with Aletheore's full tool set, with Graphify, and (on two question sets) with
 Graphify's LLM mode, and every answer is scored against a ground truth built by the language's own tooling, never by
-Aletheore: 14 repositories, three repetitions, 4,830 raw runs. **The Aletheore arms are a development build** (master at
-`9ab85687`: the latest release, 0.10.2, plus 11 merged commits), because the router tool and several import-graph fixes
-they depend on are not in a release yet.
+Aletheore: 14 repositories, three repetitions, 4,830 raw runs. The benchmark was measured at `9ab85687`, a development
+build at the time; that baseline and the relevant router, import-graph, hosted-index, and MCP changes have since shipped
+in `v0.11.0`. These remain results for the recorded commit and PR-era arms, not a fresh measurement against the release tag.
 
 | Question set | Tasks | Grep | Aletheore router | Aletheore full | Graphify |
 |---|---|---|---|---|---|
