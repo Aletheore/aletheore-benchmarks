@@ -1,0 +1,56 @@
+"""Tables with task-level bootstrap CIs across languages/kinds. Usage: ml_score2.py tasks1.json,tasks2.json out1,out2 [arms-to-compare-with-A]"""
+import collections, glob, json, os, random, statistics, sys
+
+S = os.path.dirname(os.path.abspath(__file__)) + "/"
+sys.path.insert(0, S)
+from scoring import LANGNAME, REPOS, load_tasks, score  # noqa: E402
+
+TASKS = load_tasks(sys.argv[1].split(","), S)
+OUTS = sys.argv[2].split(",")
+
+
+rows = collections.defaultdict(list)
+extra = collections.defaultdict(lambda: collections.defaultdict(list))
+unparsed = collections.Counter()
+for out in OUTS:
+    for f in sorted(glob.glob(S + out + "/*.json")):
+        r = json.load(open(f))
+        if r["id"] not in TASKS:
+            continue
+        t = TASKS[r["id"]]
+        ok, parsed = score(t, r.get("result"))
+        unparsed[r["arm"]] += not parsed
+        rows[(r["id"], r["arm"])].append(ok)
+        extra[r["arm"]]["turns"].append(r.get("turns") or 0)
+        extra[r["arm"]]["cost"].append(r.get("cost_usd") or 0)
+arms = sorted({a for _, a in rows if a in os.environ.get("ARMS", "ABCDE")})
+per = {k: statistics.mean(v) for k, v in rows.items()}
+# Seeded bootstrap resampling makes the reported confidence intervals reproducible.
+rng = random.Random(1)  # nosec B311
+
+
+def table(label, ids):
+    ids = [i for i in ids if all((i, a) in per for a in arms)]
+    if not ids:
+        return
+    means = {a: statistics.mean(per[(i, a)] for i in ids) for a in arms}
+    ci = []
+    for a in arms:
+        if a == "A":
+            continue
+        diffs = [per[(i, a)] - per[(i, "A")] for i in ids]
+        bs = sorted(statistics.mean(rng.choice(diffs) for _ in diffs) for _ in range(2000))
+        ci.append(f"{a}-A {statistics.mean(diffs):+.2f} [{bs[50]:+.2f},{bs[1949]:+.2f}]")
+    print(f"{label:24s} n={len(ids):3d} " + " ".join(f"{a}={means[a]:.2f}" for a in arms) + " | " + "  ".join(ci))
+
+
+ids = sorted({i for i, _ in rows})
+lang_of = lambda i: LANGNAME[REPOS[TASKS[i]["repo"]]]  # noqa: E731
+for lang in LANGNAME.values():
+    table(f"lang {lang}", [i for i in ids if lang_of(i) == lang])
+for kind in ("direct", "size", "deps", "unreachable", "owner", "locate", "path", "hubs", "cycles", "dupdef", "callers", "subclasses"):
+    table(f"kind {kind}", [i for i in ids if TASKS[i]["kind"] == kind])
+table("ALL", ids)
+print("unparsed per arm:", dict(unparsed))
+for a in arms:
+    print(a, "turns %.2f" % statistics.mean(extra[a]["turns"]), "cost/run $%.4f" % statistics.mean(extra[a]["cost"]))

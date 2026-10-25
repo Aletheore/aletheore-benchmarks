@@ -1,0 +1,1957 @@
+{
+ "functions": [
+  {
+   "name": "_array",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "_base64",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_base64url",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_bigint",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_boolean",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_cidrv4",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_cidrv6",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_coercedBigint",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/coerce.ts",
+    "packages/zod/src/v4/mini/coerce.ts"
+   ]
+  },
+  {
+   "name": "_coercedBoolean",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/coerce.ts",
+    "packages/zod/src/v4/mini/coerce.ts"
+   ]
+  },
+  {
+   "name": "_coercedDate",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/coerce.ts",
+    "packages/zod/src/v4/mini/coerce.ts"
+   ]
+  },
+  {
+   "name": "_coercedNumber",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/coerce.ts",
+    "packages/zod/src/v4/mini/coerce.ts"
+   ]
+  },
+  {
+   "name": "_coercedString",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/coerce.ts",
+    "packages/zod/src/v4/mini/coerce.ts"
+   ]
+  },
+  {
+   "name": "_cuid2",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_custom",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_decode",
+   "file": "packages/zod/src/v4/core/parse.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/parse.ts"
+   ]
+  },
+  {
+   "name": "_decodeAsync",
+   "file": "packages/zod/src/v4/core/parse.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/parse.ts"
+   ]
+  },
+  {
+   "name": "_email",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_emoji",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_encode",
+   "file": "packages/zod/src/v4/core/parse.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/parse.ts"
+   ]
+  },
+  {
+   "name": "_encodeAsync",
+   "file": "packages/zod/src/v4/core/parse.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/parse.ts"
+   ]
+  },
+  {
+   "name": "_endsWith",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/tests/checks.test.ts"
+   ]
+  },
+  {
+   "name": "_float32",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_float64",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_includes",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/tests/checks.test.ts"
+   ]
+  },
+  {
+   "name": "_int32",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_int64",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_isoDate",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/iso.ts",
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/iso.ts"
+   ]
+  },
+  {
+   "name": "_isoDateTime",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/iso.ts",
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/iso.ts"
+   ]
+  },
+  {
+   "name": "_isoDuration",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/iso.ts",
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/iso.ts"
+   ]
+  },
+  {
+   "name": "_isoTime",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/iso.ts",
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/iso.ts"
+   ]
+  },
+  {
+   "name": "_ksuid",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_length",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/tests/checks.test.ts",
+    "packages/zod/src/v4/mini/tests/computed.test.ts"
+   ]
+  },
+  {
+   "name": "_lowercase",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/tests/checks.test.ts"
+   ]
+  },
+  {
+   "name": "_maxLength",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/treeshake/example-mini.ts",
+    "packages/zod/src/v4/classic/from-json-schema.ts",
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/classic/tests/codec.test.ts",
+    "packages/zod/src/v4/mini/tests/checks.test.ts"
+   ]
+  },
+  {
+   "name": "_maxSize",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "_minLength",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/treeshake/example-mini.ts",
+    "packages/treeshake/zod-mini-simple-object.ts",
+    "packages/treeshake/zod-mini-string.ts",
+    "packages/zod/src/v4/classic/from-json-schema.ts",
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/tests/checks.test.ts",
+    "packages/zod/src/v4/mini/tests/codec.test.ts"
+   ]
+  },
+  {
+   "name": "_minSize",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "_multipleOf",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/tests/computed.test.ts"
+   ]
+  },
+  {
+   "name": "_nanoid",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_never",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_normalize",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "_number",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_overwrite",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/tests/checks.test.ts"
+   ]
+  },
+  {
+   "name": "_refine",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_safeDecode",
+   "file": "packages/zod/src/v4/core/parse.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/parse.ts"
+   ]
+  },
+  {
+   "name": "_safeDecodeAsync",
+   "file": "packages/zod/src/v4/core/parse.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/parse.ts"
+   ]
+  },
+  {
+   "name": "_safeEncode",
+   "file": "packages/zod/src/v4/core/parse.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/parse.ts"
+   ]
+  },
+  {
+   "name": "_safeEncodeAsync",
+   "file": "packages/zod/src/v4/core/parse.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/parse.ts"
+   ]
+  },
+  {
+   "name": "_safeParse",
+   "file": "packages/zod/src/v4/core/parse.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/parse.ts"
+   ]
+  },
+  {
+   "name": "_safeParseAsync",
+   "file": "packages/zod/src/v4/core/parse.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/parse.ts"
+   ]
+  },
+  {
+   "name": "_slugify",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/classic/tests/string.test.ts"
+   ]
+  },
+  {
+   "name": "_startsWith",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/tests/checks.test.ts"
+   ]
+  },
+  {
+   "name": "_string",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_stringbool",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_stringFormat",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_superRefine",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_symbol",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_toLowerCase",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "_toUpperCase",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "_uint32",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_uint64",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_unknown",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_uppercase",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/tests/checks.test.ts"
+   ]
+  },
+  {
+   "name": "_uuidv4",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_uuidv6",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_uuidv7",
+   "file": "packages/zod/src/v4/core/api.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "aborted",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "addIssueToContext",
+   "file": "packages/zod/src/v3/helpers/parseUtil.ts",
+   "callers": [
+    "packages/zod/src/v3/types.ts"
+   ]
+  },
+  {
+   "name": "anyProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "arrayProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "assignProp",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/from-json-schema.ts",
+    "packages/zod/src/v4/core/json-schema-processors.ts",
+    "packages/zod/src/v4/core/schemas.ts",
+    "packages/zod/src/v4/core/to-json-schema.ts"
+   ]
+  },
+  {
+   "name": "base64ToUint8Array",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/codec-examples.test.ts"
+   ]
+  },
+  {
+   "name": "base64urlToUint8Array",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/codec-examples.test.ts"
+   ]
+  },
+  {
+   "name": "benchWithData",
+   "file": "packages/bench/metabench.ts",
+   "callers": [
+    "packages/bench/safe.ts"
+   ]
+  },
+  {
+   "name": "bigintProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "booleanProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "cached",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "catchProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "cleanRegex",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "createStandardJSONSchemaMethod",
+   "file": "packages/zod/src/v4/core/to-json-schema.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "createToJSONSchemaMethod",
+   "file": "packages/zod/src/v4/core/to-json-schema.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "customProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "dateProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "defaultProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "defineLazy",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/core/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "enumProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "escapeRegex",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/core/checks.ts",
+    "packages/zod/src/v4/core/regexes.ts",
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "explicitlyAborted",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "extractDefs",
+   "file": "packages/zod/src/v4/core/to-json-schema.ts",
+   "callers": [
+    "packages/zod/src/v4/core/json-schema-generator.ts",
+    "packages/zod/src/v4/core/json-schema-processors.ts"
+   ]
+  },
+  {
+   "name": "fileProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "finalize",
+   "file": "packages/zod/src/v4/core/to-json-schema.ts",
+   "callers": [
+    "packages/zod/src/v4/core/json-schema-generator.ts",
+    "packages/zod/src/v4/core/json-schema-processors.ts"
+   ]
+  },
+  {
+   "name": "finalizeIssue",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/core/parse.ts",
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "flattenError",
+   "file": "packages/zod/src/v4/core/errors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/errors.ts",
+    "packages/zod/src/v4/classic/tests/error-utils.test.ts"
+   ]
+  },
+  {
+   "name": "formatError",
+   "file": "packages/zod/src/v4/core/errors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/errors.ts",
+    "packages/zod/src/v4/classic/tests/error-utils.test.ts"
+   ]
+  },
+  {
+   "name": "formatNumber",
+   "file": "packages/bench/benchUtil.ts",
+   "callers": [
+    "packages/bench/metabench.ts"
+   ]
+  },
+  {
+   "name": "fromJSONSchema",
+   "file": "packages/zod/src/v4/classic/from-json-schema.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/from-json-schema.test.ts"
+   ]
+  },
+  {
+   "name": "functionProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "generate",
+   "file": "packages/tsc/generate.ts",
+   "callers": [
+    "packages/tsc/bench/lots-of-objects.ts",
+    "packages/tsc/bench/object-with-extend.ts",
+    "packages/tsc/bench/string.ts",
+    "packages/tsc/bench/strongly-connected.ts"
+   ]
+  },
+  {
+   "name": "generateExtendChain",
+   "file": "packages/tsc/generate.ts",
+   "callers": [
+    "packages/tsc/bench/omit-extend.ts",
+    "packages/tsc/bisect.ts"
+   ]
+  },
+  {
+   "name": "getEnumValues",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/core/json-schema-processors.ts",
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "getLengthableOrigin",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/core/checks.ts"
+   ]
+  },
+  {
+   "name": "getSizableOrigin",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/core/checks.ts"
+   ]
+  },
+  {
+   "name": "hexToUint8Array",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/codec-examples.test.ts"
+   ]
+  },
+  {
+   "name": "initializeContext",
+   "file": "packages/zod/src/v4/core/to-json-schema.ts",
+   "callers": [
+    "packages/zod/src/v4/core/json-schema-generator.ts",
+    "packages/zod/src/v4/core/json-schema-processors.ts"
+   ]
+  },
+  {
+   "name": "intersectionProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "isAborted",
+   "file": "packages/zod/src/v3/helpers/parseUtil.ts",
+   "callers": [
+    "packages/zod/src/v3/tests/parseUtil.test.ts",
+    "packages/zod/src/v3/types.ts"
+   ]
+  },
+  {
+   "name": "isAsync",
+   "file": "packages/zod/src/v3/helpers/parseUtil.ts",
+   "callers": [
+    "packages/zod/src/v3/types.ts"
+   ]
+  },
+  {
+   "name": "isDirty",
+   "file": "packages/zod/src/v3/helpers/parseUtil.ts",
+   "callers": [
+    "packages/zod/src/v3/tests/parseUtil.test.ts",
+    "packages/zod/src/v3/types.ts"
+   ]
+  },
+  {
+   "name": "isObject",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "isPlainObject",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/index.test.ts",
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "isValid",
+   "file": "packages/zod/src/v3/helpers/parseUtil.ts",
+   "callers": [
+    "packages/zod/src/v3/tests/parseUtil.test.ts",
+    "packages/zod/src/v3/types.ts"
+   ]
+  },
+  {
+   "name": "lazyProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "literalProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "makeData",
+   "file": "packages/bench/benchUtil.ts",
+   "callers": [
+    "packages/bench/array.ts",
+    "packages/bench/boolean.ts",
+    "packages/bench/datetime.ts",
+    "packages/bench/discriminated-union.ts",
+    "packages/bench/error-handling.ts",
+    "packages/bench/instanceof.ts",
+    "packages/bench/jit-union.ts",
+    "packages/bench/libs.ts",
+    "packages/bench/number.ts",
+    "packages/bench/object-setup.ts",
+    "packages/bench/string.ts"
+   ]
+  },
+  {
+   "name": "makeIssue",
+   "file": "packages/zod/src/v3/helpers/parseUtil.ts",
+   "callers": [
+    "packages/zod/src/v3/types.ts"
+   ]
+  },
+  {
+   "name": "mapProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "mergeDefs",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "metabench",
+   "file": "packages/bench/metabench.ts",
+   "callers": [
+    "packages/bench/array.ts",
+    "packages/bench/boolean.ts",
+    "packages/bench/datetime-regex.ts",
+    "packages/bench/datetime.ts",
+    "packages/bench/discriminated-union.ts",
+    "packages/bench/error-handling.ts",
+    "packages/bench/init.ts",
+    "packages/bench/instanceof.ts",
+    "packages/bench/ipv4-regex.ts",
+    "packages/bench/jit-union.ts",
+    "packages/bench/key-iteration.ts",
+    "packages/bench/lazy-box.ts",
+    "packages/bench/libs.ts",
+    "packages/bench/number.ts",
+    "packages/bench/object-async.ts",
+    "packages/bench/object-creation.ts",
+    "packages/bench/object-fail.ts",
+    "packages/bench/object-moltar-jitless.ts",
+    "packages/bench/object-moltar.ts",
+    "packages/bench/object-safe.ts",
+    "packages/bench/object-safeasync.ts",
+    "packages/bench/object.ts",
+    "packages/bench/property-access.ts",
+    "packages/bench/safeparse.ts",
+    "packages/bench/single-element-enum.ts",
+    "packages/bench/single-item-union.ts",
+    "packages/bench/string.ts",
+    "packages/bench/union.ts"
+   ]
+  },
+  {
+   "name": "nanProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "neverProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "nonoptionalProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "normalizeParams",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/core/api.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "nullableProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "nullProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "numberProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "objectProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "optionalProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "parsedType",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/core/tests/locales/en.test.ts",
+    "packages/zod/src/v4/core/tests/locales/tr.test.ts",
+    "packages/zod/src/v4/locales/ar.ts",
+    "packages/zod/src/v4/locales/az.ts",
+    "packages/zod/src/v4/locales/be.ts",
+    "packages/zod/src/v4/locales/bg.ts",
+    "packages/zod/src/v4/locales/ca.ts",
+    "packages/zod/src/v4/locales/cs.ts",
+    "packages/zod/src/v4/locales/da.ts",
+    "packages/zod/src/v4/locales/de.ts",
+    "packages/zod/src/v4/locales/el.ts",
+    "packages/zod/src/v4/locales/en.ts",
+    "packages/zod/src/v4/locales/eo.ts",
+    "packages/zod/src/v4/locales/es.ts",
+    "packages/zod/src/v4/locales/fa.ts",
+    "packages/zod/src/v4/locales/fi.ts",
+    "packages/zod/src/v4/locales/fr-CA.ts",
+    "packages/zod/src/v4/locales/fr.ts",
+    "packages/zod/src/v4/locales/he.ts",
+    "packages/zod/src/v4/locales/hr.ts",
+    "packages/zod/src/v4/locales/hu.ts",
+    "packages/zod/src/v4/locales/hy.ts",
+    "packages/zod/src/v4/locales/id.ts",
+    "packages/zod/src/v4/locales/is.ts",
+    "packages/zod/src/v4/locales/it.ts",
+    "packages/zod/src/v4/locales/ja.ts",
+    "packages/zod/src/v4/locales/ka.ts",
+    "packages/zod/src/v4/locales/km.ts",
+    "packages/zod/src/v4/locales/ko.ts",
+    "packages/zod/src/v4/locales/lt.ts",
+    "packages/zod/src/v4/locales/mk.ts",
+    "packages/zod/src/v4/locales/ms.ts",
+    "packages/zod/src/v4/locales/nl.ts",
+    "packages/zod/src/v4/locales/no.ts",
+    "packages/zod/src/v4/locales/ota.ts",
+    "packages/zod/src/v4/locales/pl.ts",
+    "packages/zod/src/v4/locales/ps.ts",
+    "packages/zod/src/v4/locales/pt.ts",
+    "packages/zod/src/v4/locales/ro.ts",
+    "packages/zod/src/v4/locales/ru.ts",
+    "packages/zod/src/v4/locales/sl.ts",
+    "packages/zod/src/v4/locales/sv.ts",
+    "packages/zod/src/v4/locales/ta.ts",
+    "packages/zod/src/v4/locales/th.ts",
+    "packages/zod/src/v4/locales/tr.ts",
+    "packages/zod/src/v4/locales/uk.ts",
+    "packages/zod/src/v4/locales/ur.ts",
+    "packages/zod/src/v4/locales/uz.ts",
+    "packages/zod/src/v4/locales/vi.ts",
+    "packages/zod/src/v4/locales/yo.ts",
+    "packages/zod/src/v4/locales/zh-CN.ts",
+    "packages/zod/src/v4/locales/zh-TW.ts"
+   ]
+  },
+  {
+   "name": "pipeProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "prefaultProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "prefixIssues",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/core/checks.ts",
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "preprocess",
+   "file": "packages/zod/src/v4/classic/schemas.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/assignability.test.ts",
+    "packages/zod/src/v4/classic/tests/discriminated-unions.test.ts",
+    "packages/zod/src/v4/classic/tests/preprocess-types.test.ts",
+    "packages/zod/src/v4/classic/tests/preprocess.test.ts",
+    "packages/zod/src/v4/classic/tests/template-literal.test.ts",
+    "packages/zod/src/v4/classic/tests/to-json-schema.test.ts"
+   ]
+  },
+  {
+   "name": "prettifyError",
+   "file": "packages/zod/src/v4/core/errors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/error-utils.test.ts"
+   ]
+  },
+  {
+   "name": "promiseProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "randomPick",
+   "file": "packages/bench/benchUtil.ts",
+   "callers": [
+    "packages/bench/discriminated-union.ts",
+    "packages/bench/jit-union.ts"
+   ]
+  },
+  {
+   "name": "readonlyProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "recordProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "registry",
+   "file": "packages/zod/src/v4/core/registries.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/from-json-schema.test.ts",
+    "packages/zod/src/v4/classic/tests/registries.test.ts",
+    "packages/zod/src/v4/classic/tests/to-json-schema.test.ts"
+   ]
+  },
+  {
+   "name": "setProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "shallowClone",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/classic/tests/index.test.ts",
+    "packages/zod/src/v4/core/api.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "stringifyPrimitive",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/locales/ar.ts",
+    "packages/zod/src/v4/locales/az.ts",
+    "packages/zod/src/v4/locales/be.ts",
+    "packages/zod/src/v4/locales/bg.ts",
+    "packages/zod/src/v4/locales/ca.ts",
+    "packages/zod/src/v4/locales/cs.ts",
+    "packages/zod/src/v4/locales/da.ts",
+    "packages/zod/src/v4/locales/de.ts",
+    "packages/zod/src/v4/locales/el.ts",
+    "packages/zod/src/v4/locales/en.ts",
+    "packages/zod/src/v4/locales/eo.ts",
+    "packages/zod/src/v4/locales/es.ts",
+    "packages/zod/src/v4/locales/fa.ts",
+    "packages/zod/src/v4/locales/fi.ts",
+    "packages/zod/src/v4/locales/fr-CA.ts",
+    "packages/zod/src/v4/locales/fr.ts",
+    "packages/zod/src/v4/locales/he.ts",
+    "packages/zod/src/v4/locales/hr.ts",
+    "packages/zod/src/v4/locales/hu.ts",
+    "packages/zod/src/v4/locales/hy.ts",
+    "packages/zod/src/v4/locales/id.ts",
+    "packages/zod/src/v4/locales/is.ts",
+    "packages/zod/src/v4/locales/it.ts",
+    "packages/zod/src/v4/locales/ja.ts",
+    "packages/zod/src/v4/locales/ka.ts",
+    "packages/zod/src/v4/locales/km.ts",
+    "packages/zod/src/v4/locales/ko.ts",
+    "packages/zod/src/v4/locales/lt.ts",
+    "packages/zod/src/v4/locales/mk.ts",
+    "packages/zod/src/v4/locales/ms.ts",
+    "packages/zod/src/v4/locales/nl.ts",
+    "packages/zod/src/v4/locales/no.ts",
+    "packages/zod/src/v4/locales/ota.ts",
+    "packages/zod/src/v4/locales/pl.ts",
+    "packages/zod/src/v4/locales/ps.ts",
+    "packages/zod/src/v4/locales/pt.ts",
+    "packages/zod/src/v4/locales/ro.ts",
+    "packages/zod/src/v4/locales/ru.ts",
+    "packages/zod/src/v4/locales/sl.ts",
+    "packages/zod/src/v4/locales/sv.ts",
+    "packages/zod/src/v4/locales/ta.ts",
+    "packages/zod/src/v4/locales/th.ts",
+    "packages/zod/src/v4/locales/tr.ts",
+    "packages/zod/src/v4/locales/uk.ts",
+    "packages/zod/src/v4/locales/ur.ts",
+    "packages/zod/src/v4/locales/uz.ts",
+    "packages/zod/src/v4/locales/vi.ts",
+    "packages/zod/src/v4/locales/yo.ts",
+    "packages/zod/src/v4/locales/zh-CN.ts",
+    "packages/zod/src/v4/locales/zh-TW.ts"
+   ]
+  },
+  {
+   "name": "stringProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "successProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "symbolProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "templateLiteralProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "toDotPath",
+   "file": "packages/zod/src/v4/core/errors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/error-utils.test.ts"
+   ]
+  },
+  {
+   "name": "toJSONSchema",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/apply.test.ts",
+    "packages/zod/src/v4/classic/tests/record.test.ts",
+    "packages/zod/src/v4/classic/tests/registries.test.ts",
+    "packages/zod/src/v4/classic/tests/standard-schema.test.ts",
+    "packages/zod/src/v4/classic/tests/string.test.ts",
+    "packages/zod/src/v4/classic/tests/to-json-schema-methods.test.ts",
+    "packages/zod/src/v4/classic/tests/to-json-schema.test.ts",
+    "packages/zod/src/v4/core/tests/record-constructor.test.ts",
+    "packages/zod/src/v4/mini/tests/standard-schema.test.ts"
+   ]
+  },
+  {
+   "name": "transformProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "treeifyError",
+   "file": "packages/zod/src/v4/core/errors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/error-utils.test.ts"
+   ]
+  },
+  {
+   "name": "tupleProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "uint8ArrayToBase64",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/codec-examples.test.ts"
+   ]
+  },
+  {
+   "name": "uint8ArrayToBase64url",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/codec-examples.test.ts"
+   ]
+  },
+  {
+   "name": "uint8ArrayToHex",
+   "file": "packages/zod/src/v4/core/util.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/tests/codec-examples.test.ts"
+   ]
+  },
+  {
+   "name": "undefinedProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "unionProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "unknownProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "voidProcessor",
+   "file": "packages/zod/src/v4/core/json-schema-processors.ts",
+   "callers": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  }
+ ],
+ "classes": [
+  {
+   "name": "_$ZodType",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [],
+   "subclasses": [
+    "packages/zod/src/v4/mini/iso.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "_$ZodTypeInternals",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [],
+   "subclasses": [
+    "packages/zod/src/v4/core/api.ts"
+   ]
+  },
+  {
+   "name": "_ZodBigInt",
+   "file": "packages/zod/src/v4/classic/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/coerce.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/coerce.ts"
+   ]
+  },
+  {
+   "name": "_ZodBoolean",
+   "file": "packages/zod/src/v4/classic/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/coerce.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/coerce.ts"
+   ]
+  },
+  {
+   "name": "_ZodDate",
+   "file": "packages/zod/src/v4/classic/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/coerce.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/coerce.ts"
+   ]
+  },
+  {
+   "name": "_ZodMiniString",
+   "file": "packages/zod/src/v4/mini/schemas.ts",
+   "direct": [],
+   "subclasses": [
+    "packages/zod/src/v4/mini/iso.ts"
+   ]
+  },
+  {
+   "name": "_ZodMiniType",
+   "file": "packages/zod/src/v4/mini/schemas.ts",
+   "direct": [],
+   "subclasses": [
+    "packages/zod/src/v4/mini/iso.ts"
+   ]
+  },
+  {
+   "name": "_ZodNumber",
+   "file": "packages/zod/src/v4/classic/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/coerce.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/coerce.ts"
+   ]
+  },
+  {
+   "name": "_ZodString",
+   "file": "packages/zod/src/v4/classic/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/coerce.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/coerce.ts"
+   ]
+  },
+  {
+   "name": "_ZodType",
+   "file": "packages/zod/src/v4/classic/schemas.ts",
+   "direct": [],
+   "subclasses": [
+    "packages/zod/src/v4/classic/coerce.ts"
+   ]
+  },
+  {
+   "name": "$ZodArray",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodBigInt",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/mini/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodCatch",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodCheckBigIntFormatDef",
+   "file": "packages/zod/src/v4/core/checks.ts",
+   "direct": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodCheckBigIntFormatInternals",
+   "file": "packages/zod/src/v4/core/checks.ts",
+   "direct": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodCheckDef",
+   "file": "packages/zod/src/v4/core/checks.ts",
+   "direct": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodCheckInternals",
+   "file": "packages/zod/src/v4/core/checks.ts",
+   "direct": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodCheckNumberFormatDef",
+   "file": "packages/zod/src/v4/core/checks.ts",
+   "direct": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodCheckNumberFormatInternals",
+   "file": "packages/zod/src/v4/core/checks.ts",
+   "direct": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodCheckStringFormatDef",
+   "file": "packages/zod/src/v4/core/checks.ts",
+   "direct": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodCheckStringFormatInternals",
+   "file": "packages/zod/src/v4/core/checks.ts",
+   "direct": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/core/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodCodec",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodCustom",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodCustomStringFormat",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodDefault",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodDiscriminatedUnion",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodEnum",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodError",
+   "file": "packages/zod/src/v4/core/errors.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/errors.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/errors.ts"
+   ]
+  },
+  {
+   "name": "$ZodExactOptional",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodFile",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodFunction",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodIntersection",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodLazy",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodLiteral",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodMap",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodNaN",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodNonOptional",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodNullable",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodNumber",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/mini/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodNumberFormat",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/mini/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodObject",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodOptional",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodPipe",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodPrefault",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodPreprocess",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodPromise",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodReadonly",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodRecord",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodSet",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodString",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/mini/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/mini/iso.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodStringFormat",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/mini/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts",
+    "packages/zod/src/v4/mini/iso.ts",
+    "packages/zod/src/v4/mini/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodSuccess",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodTemplateLiteral",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodTransform",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodTuple",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodTypeInternals",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/core/api.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/core/api.ts"
+   ]
+  },
+  {
+   "name": "$ZodUnion",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "$ZodXor",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/classic/schemas.ts"
+   ]
+  },
+  {
+   "name": "ParsePayload",
+   "file": "packages/zod/src/v4/core/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/core/api.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/core/api.ts"
+   ]
+  },
+  {
+   "name": "ZodMiniStringFormat",
+   "file": "packages/zod/src/v4/mini/schemas.ts",
+   "direct": [
+    "packages/zod/src/v4/mini/iso.ts"
+   ],
+   "subclasses": [
+    "packages/zod/src/v4/mini/iso.ts"
+   ]
+  }
+ ]
+}

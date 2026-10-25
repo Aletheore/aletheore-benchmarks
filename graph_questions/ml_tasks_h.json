@@ -1,0 +1,874 @@
+[
+ {
+  "id": "dj_hubs_h0",
+  "repo": "dj",
+  "kind": "hubs",
+  "target": "top5",
+  "k": 5,
+  "truth": [
+   "django/conf/__init__.py",
+   "django/core/exceptions.py",
+   "django/db/models/__init__.py",
+   "django/utils/functional.py",
+   "django/utils/translation/__init__.py"
+  ],
+  "degrees": [
+   165,
+   161,
+   114,
+   111,
+   101
+  ]
+ },
+ {
+  "id": "dj_cycles_h1",
+  "repo": "dj",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": true,
+  "largest": 173
+ },
+ {
+  "id": "dj_dupdef_h2",
+  "repo": "dj",
+  "kind": "dupdef",
+  "target": "DurationField",
+  "word": "class",
+  "truth": [
+   "django/db/models/fields/__init__.py",
+   "django/forms/fields.py"
+  ]
+ },
+ {
+  "id": "dj_dupdef_h3",
+  "repo": "dj",
+  "kind": "dupdef",
+  "target": "EmailField",
+  "word": "class",
+  "truth": [
+   "django/db/models/fields/__init__.py",
+   "django/forms/fields.py"
+  ]
+ },
+ {
+  "id": "dj_callers_h4",
+  "repo": "dj",
+  "kind": "callers",
+  "target": "color_style",
+  "file": "django/core/management/color.py",
+  "word": "function",
+  "truth": [
+   "django/contrib/auth/management/__init__.py",
+   "django/contrib/auth/migrations/0011_update_proxy_permissions.py",
+   "django/core/management/__init__.py",
+   "django/core/management/base.py",
+   "django/core/management/commands/listurls.py",
+   "django/utils/log.py"
+  ]
+ },
+ {
+  "id": "dj_callers_h5",
+  "repo": "dj",
+  "kind": "callers",
+  "target": "sensitive_variables",
+  "file": "django/views/decorators/debug.py",
+  "word": "function",
+  "truth": [
+   "django/contrib/auth/__init__.py",
+   "django/contrib/auth/backends.py",
+   "django/contrib/auth/forms.py"
+  ]
+ },
+ {
+  "id": "dj_callers_h6",
+  "repo": "dj",
+  "kind": "callers",
+  "target": "get_current_timezone_name",
+  "file": "django/utils/timezone.py",
+  "word": "function",
+  "truth": [
+   "django/db/models/functions/datetime.py",
+   "django/template/context_processors.py",
+   "django/templatetags/tz.py",
+   "django/utils/cache.py"
+  ]
+ },
+ {
+  "id": "dj_subclasses_h7",
+  "repo": "dj",
+  "kind": "subclasses",
+  "target": "GEOSFuncFactory",
+  "file": "django/contrib/gis/geos/libgeos.py",
+  "word": "class",
+  "truth": [
+   "django/contrib/gis/geos/prototypes/coordseq.py",
+   "django/contrib/gis/geos/prototypes/geom.py",
+   "django/contrib/gis/geos/prototypes/io.py",
+   "django/contrib/gis/geos/prototypes/misc.py",
+   "django/contrib/gis/geos/prototypes/predicates.py",
+   "django/contrib/gis/geos/prototypes/prepared.py",
+   "django/contrib/gis/geos/prototypes/topology.py"
+  ]
+ },
+ {
+  "id": "dj_subclasses_h8",
+  "repo": "dj",
+  "kind": "subclasses",
+  "target": "FieldCacheMixin",
+  "file": "django/db/models/fields/mixins.py",
+  "word": "class",
+  "truth": [
+   "django/contrib/contenttypes/fields.py",
+   "django/db/models/fields/related.py",
+   "django/db/models/fields/reverse_related.py"
+  ]
+ },
+ {
+  "id": "dj_subclasses_h9",
+  "repo": "dj",
+  "kind": "subclasses",
+  "target": "SpatialRefSysMixin",
+  "file": "django/contrib/gis/db/backends/base/models.py",
+  "word": "class",
+  "truth": [
+   "django/contrib/gis/db/backends/oracle/models.py",
+   "django/contrib/gis/db/backends/postgis/models.py",
+   "django/contrib/gis/db/backends/spatialite/models.py"
+  ]
+ },
+ {
+  "id": "erp_hubs_h0",
+  "repo": "erp",
+  "kind": "hubs",
+  "target": "top5",
+  "k": 5,
+  "truth": [
+   "erpnext/__init__.py",
+   "erpnext/accounts/doctype/accounting_dimension/accounting_dimension.py",
+   "erpnext/accounts/party.py",
+   "erpnext/accounts/utils.py",
+   "erpnext/stock/utils.py"
+  ],
+  "degrees": [
+   89,
+   87,
+   63,
+   53,
+   36
+  ]
+ },
+ {
+  "id": "erp_cycles_h1",
+  "repo": "erp",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": true,
+  "largest": 144
+ },
+ {
+  "id": "erp_dupdef_h2",
+  "repo": "erp",
+  "kind": "dupdef",
+  "target": "make_supplier_quotation",
+  "word": "function",
+  "truth": [
+   "erpnext/crm/doctype/opportunity/mapper.py",
+   "erpnext/stock/doctype/material_request/mapper.py"
+  ]
+ },
+ {
+  "id": "erp_dupdef_h3",
+  "repo": "erp",
+  "kind": "dupdef",
+  "target": "daily_reminder",
+  "word": "function",
+  "truth": [
+   "erpnext/projects/doctype/project/project.py",
+   "erpnext/projects/doctype/project_update/project_update.py"
+  ]
+ },
+ {
+  "id": "gin_hubs_h0",
+  "repo": "gin",
+  "kind": "hubs",
+  "target": "top4",
+  "k": 4,
+  "truth": [
+   "binding/binding.go",
+   "context.go",
+   "gin.go",
+   "render/render.go"
+  ],
+  "degrees": [
+   14,
+   13,
+   10,
+   9
+  ]
+ },
+ {
+  "id": "gin_cycles_h1",
+  "repo": "gin",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": true,
+  "largest": 11
+ },
+ {
+  "id": "gin_dupdef_h2",
+  "repo": "gin",
+  "kind": "dupdef",
+  "target": "StructValidator",
+  "word": "type",
+  "truth": [
+   "binding/binding.go",
+   "binding/binding_nomsgpack.go"
+  ]
+ },
+ {
+  "id": "gin_dupdef_h3",
+  "repo": "gin",
+  "kind": "dupdef",
+  "target": "Default",
+  "word": "function",
+  "truth": [
+   "binding/binding.go",
+   "binding/binding_nomsgpack.go",
+   "gin.go"
+  ]
+ },
+ {
+  "id": "gin_callers_h4",
+  "repo": "gin",
+  "kind": "callers",
+  "target": "StringToBytes",
+  "file": "internal/bytesconv/bytesconv.go",
+  "word": "function",
+  "truth": [
+   "auth.go",
+   "binding/form_mapping.go",
+   "render/json.go",
+   "render/text.go"
+  ]
+ },
+ {
+  "id": "gin_callers_h5",
+  "repo": "gin",
+  "kind": "callers",
+  "target": "assert1",
+  "file": "utils.go",
+  "word": "function",
+  "truth": [
+   "auth.go",
+   "context.go",
+   "gin.go",
+   "routergroup.go"
+  ]
+ },
+ {
+  "id": "gin_callers_h6",
+  "repo": "gin",
+  "kind": "callers",
+  "target": "nameOfFunction",
+  "file": "utils.go",
+  "word": "function",
+  "truth": [
+   "context.go",
+   "debug.go",
+   "gin.go"
+  ]
+ },
+ {
+  "id": "zod_hubs_h0",
+  "repo": "zod",
+  "kind": "hubs",
+  "target": "top5",
+  "k": 5,
+  "truth": [
+   "packages/bench/benchUtil.ts",
+   "packages/bench/metabench.ts",
+   "packages/zod/src/v4/core/checks.ts",
+   "packages/zod/src/v4/core/errors.ts",
+   "packages/zod/src/v4/core/util.ts"
+  ],
+  "degrees": [
+   65,
+   60,
+   56,
+   29,
+   18
+  ]
+ },
+ {
+  "id": "zod_cycles_h1",
+  "repo": "zod",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": true,
+  "largest": 66
+ },
+ {
+  "id": "zod_dupdef_h2",
+  "repo": "zod",
+  "kind": "dupdef",
+  "target": "looseObject",
+  "word": "function",
+  "truth": [
+   "packages/zod/src/v4/classic/schemas.ts",
+   "packages/zod/src/v4/mini/schemas.ts"
+  ]
+ },
+ {
+  "id": "zod_dupdef_h3",
+  "repo": "zod",
+  "kind": "dupdef",
+  "target": "optional",
+  "word": "function",
+  "truth": [
+   "packages/zod/src/v4/classic/schemas.ts",
+   "packages/zod/src/v4/mini/schemas.ts"
+  ]
+ },
+ {
+  "id": "zod_callers_h4",
+  "repo": "zod",
+  "kind": "callers",
+  "target": "_isoDuration",
+  "file": "packages/zod/src/v4/core/api.ts",
+  "word": "function",
+  "truth": [
+   "packages/zod/src/v4/classic/iso.ts",
+   "packages/zod/src/v4/classic/schemas.ts",
+   "packages/zod/src/v4/mini/iso.ts"
+  ]
+ },
+ {
+  "id": "zod_callers_h5",
+  "repo": "zod",
+  "kind": "callers",
+  "target": "escapeRegex",
+  "file": "packages/zod/src/v4/core/util.ts",
+  "word": "function",
+  "truth": [
+   "packages/zod/src/v4/core/checks.ts",
+   "packages/zod/src/v4/core/regexes.ts",
+   "packages/zod/src/v4/core/schemas.ts"
+  ]
+ },
+ {
+  "id": "zod_callers_h6",
+  "repo": "zod",
+  "kind": "callers",
+  "target": "defineLazy",
+  "file": "packages/zod/src/v4/core/util.ts",
+  "word": "function",
+  "truth": [
+   "packages/zod/src/v4/classic/schemas.ts",
+   "packages/zod/src/v4/core/schemas.ts",
+   "packages/zod/src/v4/mini/schemas.ts"
+  ]
+ },
+ {
+  "id": "zod_subclasses_h7",
+  "repo": "zod",
+  "kind": "subclasses",
+  "target": "$ZodStringFormat",
+  "file": "packages/zod/src/v4/core/schemas.ts",
+  "word": "class",
+  "truth": [
+   "packages/zod/src/v4/classic/schemas.ts",
+   "packages/zod/src/v4/mini/iso.ts",
+   "packages/zod/src/v4/mini/schemas.ts"
+  ]
+ },
+ {
+  "id": "axios_hubs_h0",
+  "repo": "axios",
+  "kind": "hubs",
+  "target": "top5",
+  "k": 5,
+  "truth": [
+   "lib/cancel/CanceledError.js",
+   "lib/core/AxiosError.js",
+   "lib/core/AxiosHeaders.js",
+   "lib/platform/index.js",
+   "lib/utils.js"
+  ],
+  "degrees": [
+   26,
+   15,
+   10,
+   10,
+   6
+  ]
+ },
+ {
+  "id": "axios_cycles_h1",
+  "repo": "axios",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": false,
+  "largest": 0
+ },
+ {
+  "id": "axios_dupdef_h2",
+  "repo": "axios",
+  "kind": "dupdef",
+  "target": "isAxiosError",
+  "word": "function",
+  "truth": [
+   "index.d.ts",
+   "lib/helpers/isAxiosError.js"
+  ]
+ },
+ {
+  "id": "axios_dupdef_h3",
+  "repo": "axios",
+  "kind": "dupdef",
+  "target": "isCancel",
+  "word": "function",
+  "truth": [
+   "index.d.ts",
+   "lib/cancel/isCancel.js"
+  ]
+ },
+ {
+  "id": "gson_hubs_h0",
+  "repo": "gson",
+  "kind": "hubs",
+  "target": "top5",
+  "k": 5,
+  "truth": [
+   "gson/src/main/java/com/google/gson/Gson.java",
+   "gson/src/main/java/com/google/gson/TypeAdapter.java",
+   "gson/src/main/java/com/google/gson/reflect/TypeToken.java",
+   "gson/src/main/java/com/google/gson/stream/JsonReader.java",
+   "gson/src/main/java/com/google/gson/stream/JsonWriter.java"
+  ],
+  "degrees": [
+   39,
+   33,
+   32,
+   32,
+   29
+  ]
+ },
+ {
+  "id": "gson_cycles_h1",
+  "repo": "gson",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": true,
+  "largest": 24
+ },
+ {
+  "id": "gson_dupdef_h2",
+  "repo": "gson",
+  "kind": "dupdef",
+  "target": "DummyClass",
+  "word": "type",
+  "truth": [
+   "test-shrinker/src/main/java/com/example/ClassWithJsonAdapterAnnotation.java",
+   "test-shrinker/src/main/java/com/example/GenericClasses.java"
+  ]
+ },
+ {
+  "id": "gson_dupdef_h3",
+  "repo": "gson",
+  "kind": "dupdef",
+  "target": "Adapter",
+  "word": "type",
+  "truth": [
+   "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java",
+   "test-shrinker/src/main/java/com/example/ClassWithAdapter.java",
+   "test-shrinker/src/main/java/com/example/ClassWithJsonAdapterAnnotation.java",
+   "test-shrinker/src/main/java/com/example/GenericClasses.java"
+  ]
+ },
+ {
+  "id": "gson_callers_h4",
+  "repo": "gson",
+  "kind": "callers",
+  "target": "writerForAppendable",
+  "file": "gson/src/main/java/com/google/gson/internal/Streams.java",
+  "word": "function",
+  "truth": [
+   "gson/src/main/java/com/google/gson/Gson.java",
+   "gson/src/main/java/com/google/gson/JsonElement.java",
+   "gson/src/main/java/com/google/gson/TypeAdapter.java"
+  ]
+ },
+ {
+  "id": "gson_callers_h5",
+  "repo": "gson",
+  "kind": "callers",
+  "target": "createUrl",
+  "file": "gson/src/main/java/com/google/gson/internal/TroubleshootingGuide.java",
+  "word": "function",
+  "truth": [
+   "gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java",
+   "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java",
+   "gson/src/main/java/com/google/gson/internal/bind/TypeAdapters.java",
+   "gson/src/main/java/com/google/gson/internal/reflect/ReflectionHelper.java",
+   "gson/src/main/java/com/google/gson/reflect/TypeToken.java",
+   "gson/src/main/java/com/google/gson/stream/JsonReader.java"
+  ]
+ },
+ {
+  "id": "gson_callers_h6",
+  "repo": "gson",
+  "kind": "callers",
+  "target": "parseBigDecimal",
+  "file": "gson/src/main/java/com/google/gson/internal/NumberLimits.java",
+  "word": "function",
+  "truth": [
+   "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+   "gson/src/main/java/com/google/gson/ToNumberPolicy.java",
+   "gson/src/main/java/com/google/gson/internal/LazilyParsedNumber.java",
+   "gson/src/main/java/com/google/gson/internal/bind/TypeAdapters.java"
+  ]
+ },
+ {
+  "id": "gson_subclasses_h7",
+  "repo": "gson",
+  "kind": "subclasses",
+  "target": "TypeToken",
+  "file": "gson/src/main/java/com/google/gson/reflect/TypeToken.java",
+  "word": "class",
+  "truth": [
+   "metrics/src/main/java/com/google/gson/metrics/CollectionsDeserializationBenchmark.java",
+   "metrics/src/main/java/com/google/gson/metrics/ParseBenchmark.java",
+   "test-shrinker/src/main/java/com/example/Main.java"
+  ]
+ },
+ {
+  "id": "gson_subclasses_h8",
+  "repo": "gson",
+  "kind": "subclasses",
+  "target": "JsonElement",
+  "file": "gson/src/main/java/com/google/gson/JsonElement.java",
+  "word": "class",
+  "truth": [
+   "gson/src/main/java/com/google/gson/JsonArray.java",
+   "gson/src/main/java/com/google/gson/JsonNull.java",
+   "gson/src/main/java/com/google/gson/JsonObject.java",
+   "gson/src/main/java/com/google/gson/JsonPrimitive.java"
+  ]
+ },
+ {
+  "id": "thrift_hubs_h0",
+  "repo": "thrift",
+  "kind": "hubs",
+  "target": "top5",
+  "k": 5,
+  "truth": [
+   "lib/java/src/main/java/org/apache/thrift/TConfiguration.java",
+   "lib/java/src/main/java/org/apache/thrift/TException.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TProtocol.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/TTransport.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/TTransportException.java"
+  ],
+  "degrees": [
+   53,
+   39,
+   35,
+   32,
+   24
+  ]
+ },
+ {
+  "id": "thrift_cycles_h1",
+  "repo": "thrift",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": true,
+  "largest": 5
+ },
+ {
+  "id": "thrift_dupdef_h2",
+  "repo": "thrift",
+  "kind": "dupdef",
+  "target": "ListMetaData",
+  "word": "type",
+  "truth": [
+   "lib/java/src/main/java/org/apache/thrift/meta_data/ListMetaData.java",
+   "lib/javame/src/org/apache/thrift/meta_data/ListMetaData.java"
+  ]
+ },
+ {
+  "id": "thrift_dupdef_h3",
+  "repo": "thrift",
+  "kind": "dupdef",
+  "target": "TBinaryProtocol",
+  "word": "type",
+  "truth": [
+   "lib/java/src/main/java/org/apache/thrift/protocol/TBinaryProtocol.java",
+   "lib/javame/src/org/apache/thrift/protocol/TBinaryProtocol.java"
+  ]
+ },
+ {
+  "id": "automapper_hubs_h0",
+  "repo": "automapper",
+  "kind": "hubs",
+  "target": "top5",
+  "k": 5,
+  "truth": [
+   "src/AutoMapper/Configuration/MapperConfiguration.cs",
+   "src/AutoMapper/Internal/InternalApi.cs",
+   "src/AutoMapper/Internal/TypePair.cs",
+   "src/AutoMapper/ResolutionContext.cs",
+   "src/UnitTests/AutoMapperSpecBase.cs"
+  ],
+  "degrees": [
+   252,
+   168,
+   52,
+   48,
+   45
+  ]
+ },
+ {
+  "id": "automapper_cycles_h1",
+  "repo": "automapper",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": true,
+  "largest": 64
+ },
+ {
+  "id": "automapper_dupdef_h2",
+  "repo": "automapper",
+  "kind": "dupdef",
+  "target": "SourceB",
+  "word": "type",
+  "truth": [
+   "src/IntegrationTests/IncludeMembers.cs",
+   "src/UnitTests/Bug/TypeMapIncludeBaseTypes.cs",
+   "src/UnitTests/CollectionMapping.cs"
+  ]
+ },
+ {
+  "id": "automapper_dupdef_h3",
+  "repo": "automapper",
+  "kind": "dupdef",
+  "target": "Entity6",
+  "word": "type",
+  "truth": [
+   "src/UnitTests/Bug/MapAtRuntime/Entity6.cs",
+   "src/UnitTests/Bug/MapAtRuntimeWithCollections/Entity6.cs"
+  ]
+ },
+ {
+  "id": "serde_hubs_h0",
+  "repo": "serde",
+  "kind": "hubs",
+  "target": "top5",
+  "k": 5,
+  "truth": [
+   "serde_core/src/lib.rs",
+   "serde_derive/src/fragment.rs",
+   "serde_derive/src/internals/ast.rs",
+   "serde_derive/src/internals/attr.rs",
+   "serde_derive/src/lib.rs"
+  ],
+  "degrees": [
+   17,
+   16,
+   15,
+   14,
+   12
+  ]
+ },
+ {
+  "id": "serde_cycles_h1",
+  "repo": "serde",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": true,
+  "largest": 17
+ },
+ {
+  "id": "serde_dupdef_h2",
+  "repo": "serde",
+  "kind": "dupdef",
+  "target": "Variant",
+  "word": "type",
+  "truth": [
+   "serde_derive/src/internals/ast.rs",
+   "serde_derive/src/internals/attr.rs"
+  ]
+ },
+ {
+  "id": "serde_dupdef_h3",
+  "repo": "serde",
+  "kind": "dupdef",
+  "target": "Container",
+  "word": "type",
+  "truth": [
+   "serde_derive/src/internals/ast.rs",
+   "serde_derive/src/internals/attr.rs"
+  ]
+ },
+ {
+  "id": "guzzle_hubs_h0",
+  "repo": "guzzle",
+  "kind": "hubs",
+  "target": "top4",
+  "k": 4,
+  "truth": [
+   "src/Exception/InvalidArgumentException.php",
+   "src/Exception/RequestException.php",
+   "src/Exception/ResponseException.php",
+   "src/NonSerializableTrait.php"
+  ],
+  "degrees": [
+   19,
+   17,
+   12,
+   8
+  ]
+ },
+ {
+  "id": "guzzle_cycles_h1",
+  "repo": "guzzle",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": true,
+  "largest": 10
+ },
+ {
+  "id": "slim_cycles_h0",
+  "repo": "slim",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": true,
+  "largest": 2
+ },
+ {
+  "id": "jekyll_hubs_h0",
+  "repo": "jekyll",
+  "kind": "hubs",
+  "target": "top4",
+  "k": 4,
+  "truth": [
+   "lib/jekyll/drops/drop.rb",
+   "lib/jekyll/errors.rb",
+   "lib/jekyll/path_manager.rb",
+   "lib/jekyll/utils.rb"
+  ],
+  "degrees": [
+   19,
+   14,
+   9,
+   9
+  ]
+ },
+ {
+  "id": "jekyll_cycles_h1",
+  "repo": "jekyll",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": true,
+  "largest": 3
+ },
+ {
+  "id": "jekyll_dupdef_h2",
+  "repo": "jekyll",
+  "kind": "dupdef",
+  "target": "LiquidRenderer",
+  "word": "class or module",
+  "truth": [
+   "lib/jekyll/liquid_renderer.rb",
+   "lib/jekyll/liquid_renderer/file.rb",
+   "lib/jekyll/liquid_renderer/table.rb"
+  ]
+ },
+ {
+  "id": "jekyll_dupdef_h3",
+  "repo": "jekyll",
+  "kind": "dupdef",
+  "target": "RuboCop",
+  "word": "class or module",
+  "truth": [
+   "rubocop/jekyll/assert_equal_literal_actual.rb",
+   "rubocop/jekyll/no_p_allowed.rb",
+   "rubocop/jekyll/no_puts_allowed.rb"
+  ]
+ },
+ {
+  "id": "jq_hubs_h0",
+  "repo": "jq",
+  "kind": "hubs",
+  "target": "top5",
+  "k": 5,
+  "truth": [
+   "src/jv.h",
+   "src/jv_alloc.h",
+   "src/locfile.h",
+   "vendor/decNumber/decNumber.h",
+   "vendor/decNumber/decNumberLocal.h"
+  ],
+  "degrees": [
+   16,
+   14,
+   13,
+   9,
+   9
+  ]
+ },
+ {
+  "id": "jq_cycles_h1",
+  "repo": "jq",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": false,
+  "largest": 0
+ },
+ {
+  "id": "fmt_hubs_h0",
+  "repo": "fmt",
+  "kind": "hubs",
+  "target": "top3",
+  "k": 3,
+  "truth": [
+   "include/fmt/base.h",
+   "include/fmt/format.h",
+   "include/fmt/ostream.h"
+  ],
+  "degrees": [
+   13,
+   3,
+   3
+  ]
+ },
+ {
+  "id": "fmt_cycles_h1",
+  "repo": "fmt",
+  "kind": "cycles",
+  "target": "cycles",
+  "has_cycle": true,
+  "largest": 3
+ },
+ {
+  "id": "fmt_dupdef_h2",
+  "repo": "fmt",
+  "kind": "dupdef",
+  "target": "is_named_arg",
+  "word": "type",
+  "truth": [
+   "include/fmt/base.h",
+   "include/fmt/format.h"
+  ]
+ },
+ {
+  "id": "fmt_dupdef_h3",
+  "repo": "fmt",
+  "kind": "dupdef",
+  "target": "is_contiguous",
+  "word": "type",
+  "truth": [
+   "include/fmt/base.h",
+   "include/fmt/format.h"
+  ]
+ }
+]

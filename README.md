@@ -29,6 +29,7 @@
   <a href="#deterministic-scanner-accuracy">Scanner accuracy</a> ·
   <a href="#head-to-head-against-graphify-erpnext">Graphify comparison</a> ·
   <a href="#mcp-tool-efficiency--graphify-head-to-head-live-servers">Graphify MCP efficiency</a> ·
+  <a href="#graph-questions-grep-vs-graphify-vs-aletheore-14-repositories-12-languages">Graph questions</a> ·
   <a href="#where-we-lose">Where we lose</a> ·
   <a href="#reproducing">Reproducing</a> ·
   <a href="#contents">Contents</a>
@@ -3915,6 +3916,42 @@ cd bench-repo
 
 </details>
 
+## Graph questions: grep vs Graphify vs Aletheore, 14 repositories, 12 languages
+
+Who imports this file, how many modules does a change reach, which files does nothing import, who owns it, which files are
+imported the most, is there a circular import. The same cheap model (`claude-haiku-5-5`) answers each question with grep
+alone, with Aletheore's router tool, with Aletheore's full tool set, with Graphify, and (on two question sets) with
+Graphify's LLM mode, and every answer is scored against a ground truth built by the language's own tooling, never by
+Aletheore: 14 repositories, three repetitions, 4,830 raw runs. The benchmark was measured at `9ab85687`, a development
+build at the time; that baseline and the relevant router, import-graph, hosted-index, and MCP changes have since shipped
+in `v0.11.0`. These remain results for the recorded commit and PR-era arms, not a fresh measurement against the release tag.
+
+| Question set | Tasks | Grep | Aletheore router | Aletheore full | Graphify |
+|---|---|---|---|---|---|
+| Python (Django, ERPNext) | 44 | 0.64 | **0.89** | **0.88** | 0.55 |
+| 12 other repositories, 9 more languages | 192 | 0.74 | **0.88** | **0.89** | 0.74 |
+| where is X defined, shortest import chain | 69 | 0.90 | 0.87 | 0.93 | 0.89 |
+| hubs, cycles, duplicate names, callers, subclasses | 67 | 0.84 | 0.82 | 0.85 | 0.79 |
+
+On the 192-task set the difference from grep is +0.14 for the router and +0.15 for the full tool set (95% intervals
++0.10 to +0.18 and +0.11 to +0.19); Graphify's is 0.00 (-0.04 to +0.05). The robust win is **blast radius** ("how many
+files does a change to X reach"): grep 0.59, Aletheore 0.95, Graphify 0.52, because grep has to chase imports file by
+file. The router used 40 to 50% of grep's input tokens and cost a fifth to a third as much per correct answer.
+
+**Graphify's LLM mode did not beat Aletheore's deterministic graph**, which has no LLM extraction step and no per-token
+price for it: on the two sets where we ran it, Graphify with its LLM pass scored 0.90 and 0.82 against Aletheore full's
+0.93 and 0.82, for an extraction that cost roughly Rs 300 across 12 repositories. Its LLM pass only adds documentation
+nodes, so questions about what the docs say, which we did not run, are the fair test of it.
+
+Where grep finds the answer in one or two searches (locating a uniquely named symbol, callers by name, short cycles),
+nothing beats it, and that is what the last two rows show. Two earlier write-ups below show Graphify ahead (setup time,
+and cost on flat "everything about this symbol" queries); both predate the changes since and **have not been re-run**,
+though we expect them to look better now. Fixes measured on the same tasks, from branches not yet merged (a router that answers "most
+imported files" and "circular imports", and 28% smaller tool definitions plus a `lean` profile) are in the write-up.
+
+Reproduce every number with no API key: `python3 graph_questions/reproduce.py`. Full write-up, ground-truth method,
+losses and harness artifacts in [`graph_questions/README.md`](graph_questions/README.md).
+
 ## Where we lose
 
 Stated here rather than in a footnote:
@@ -3932,6 +3969,15 @@ Stated here rather than in a footnote:
 - ⚠️ **An earlier revision of this README published flask figures that did not
   reproduce.** They are corrected above, and how it happened is in
   METHODOLOGY.md.
+
+- ⚠️ **On graph questions grep can already answer, Aletheore does not beat it**: where a uniquely named symbol is defined,
+  callers by name, short import cycles (grep 0.84 to 0.90, Aletheore 0.82 to 0.93, Graphify 0.79 to 0.89).
+  Direct importers, dependency counts and unreachable files are ties. C is barely helped (0.51 against 0.59 to 0.62) and
+  Ruby is weak for every tool. Details in `graph_questions/README.md`.
+- ⚠️ **Two earlier Graphify results show Graphify ahead and have not been re-run**: setup time (Graphify's extract about a
+  minute, ours about 20 minutes with the local index; 143 s on ERPNext with the hosted index, in an open PR) and cost on flat
+  "everything about this symbol" queries. Both predate the smaller tool definitions and the router changes; we expect them to
+  improve and have not measured it.
 
 We win on locating code, and on setup cost ($0.00 / 74 s against $0.18 / ~7 min).
 
@@ -4869,6 +4915,7 @@ python3 scripts/score_retrieval_matrix.py results/retrieval_raw_zod_0813_verifie
 | `graphify_comparison/` | head-to-head against Graphify on ERPNext, both tools run ourselves under one harness and judge, full writeup in `graphify_comparison/README.md` |
 | `graphify_comparison/LANGUAGE_COVERAGE.md` | structural comparison against Graphify across all 13 languages Aletheore supports, controlled 2-file fixtures, raw `graph.json` per language in `graphify_comparison/lang_coverage/raw/` |
 | `graphify_comparison/mcp_efficiency/` | live, real-MCP-protocol comparison against Graphify's actual server across 4 queries + a second-repo (Go) replication — Aletheore wins on directional queries, Graphify is cheaper (but sparser) on flat symbol dumps; found and fixed a real gap in Aletheore's own `confirmed_callers` ([#835](https://github.com/Aletheore/Aletheore/pull/835)) and built a missing `aletheore_symbol_path` capability ([#837](https://github.com/Aletheore/Aletheore/pull/837)) after finding Graphify's own `shortest_path` unreliable even on exact canonical node IDs — full writeup in `graphify_comparison/mcp_efficiency/README.md` |
+| `graph_questions/` | grep vs Graphify vs Aletheore on 12 kinds of graph question across 14 repositories and 12 languages: the 4,830 raw runs, the independent ground-truth graphs and the scripts that build them, task sets, scorers; `python3 graph_questions/reproduce.py` recomputes every table with no API key. Full write-up in `graph_questions/README.md` |
 | `security-scanner-benchmark/` | `aletheore_secrets` + `aletheore_vulnerabilities` accuracy — synthetic pilot corpus + 20-real-repo validation, full writeup in `security-scanner-benchmark/README.md` and `REPORT.md` |
 | `dead-code-benchmark/` | `aletheore_dead_code` accuracy — 10-case pilot corpus, full writeup in `dead-code-benchmark/README.md` |
 | `ast-pattern-benchmark/` | `aletheore_ast_pattern` real-repo stress test — found and fixed a real tree-sitter segfault, full writeup in `ast-pattern-benchmark/README.md` |
@@ -4915,6 +4962,13 @@ prompt, so an absolute score moves depending on what it is compared against:
 RepoWise scored 2.35 against one configuration and 2.25 against another on
 byte-identical input. Only the within-run gap is comparable across
 configurations.
+
+**The graph-question benchmark is graph-shaped by construction.** We chose the question kinds, one cheap model answers
+them, Graphify ran in code-only mode with a short note on its commands (plus an LLM mode on two sets), and each of Ruby, C,
+C++, Rust and C# has one repository. Its ownership scores for grep and Graphify are understated by tool refusals in the
+harness (31 of 144 grep runs, 21 of 144 Graphify runs), and a measurement of the smaller tool definitions was first
+contaminated by a second process rewriting a shared config file, caught and repeated. Both are written up in
+`graph_questions/README.md`.
 
 **Scope.** All 11 supported languages across 12 corpora measured for retrieval,
 one repository for the wiki comparison, 356 questions in total. RepoWise's own published benchmark

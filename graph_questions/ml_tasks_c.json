@@ -1,0 +1,556 @@
+[
+ {
+  "id": "gson_direct_0",
+  "repo": "gson",
+  "kind": "direct",
+  "target": "gson/src/main/java/com/google/gson/GsonBuilder.java",
+  "truth": [
+   "gson/src/main/java/com/google/gson/Gson.java",
+   "gson/src/main/java/com/google/gson/annotations/JsonAdapter.java",
+   "gson/src/main/java/com/google/gson/annotations/Since.java",
+   "gson/src/main/java/com/google/gson/annotations/Until.java",
+   "metrics/src/main/java/com/google/gson/metrics/ParseBenchmark.java",
+   "metrics/src/main/java/com/google/gson/metrics/SerializationBenchmark.java",
+   "test-shrinker/src/main/java/com/example/Main.java",
+   "test-shrinker/src/main/java/com/example/NoSerializedNameMain.java"
+  ]
+ },
+ {
+  "id": "gson_direct_1",
+  "repo": "gson",
+  "kind": "direct",
+  "target": "gson/src/main/java/com/google/gson/JsonArray.java",
+  "truth": [
+   "extras/src/main/java/com/google/gson/extras/examples/rawcollections/RawCollectionsExample.java",
+   "gson/src/main/java/com/google/gson/JsonElement.java",
+   "gson/src/main/java/com/google/gson/JsonObject.java",
+   "gson/src/main/java/com/google/gson/internal/bind/JsonElementTypeAdapter.java",
+   "gson/src/main/java/com/google/gson/internal/bind/JsonTreeReader.java",
+   "gson/src/main/java/com/google/gson/internal/bind/JsonTreeWriter.java",
+   "proto/src/main/java/com/google/gson/protobuf/ProtoTypeAdapter.java",
+   "proto/src/main/java/com/google/gson/protobuf/StructTypeAdapter.java"
+  ]
+ },
+ {
+  "id": "gson_direct_2",
+  "repo": "gson",
+  "kind": "direct",
+  "target": "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+  "truth": [
+   "extras/src/main/java/com/google/gson/typeadapters/RuntimeTypeAdapterFactory.java",
+   "gson/src/main/java/com/google/gson/JsonArray.java",
+   "gson/src/main/java/com/google/gson/JsonElement.java",
+   "gson/src/main/java/com/google/gson/JsonObject.java",
+   "gson/src/main/java/com/google/gson/LongSerializationPolicy.java",
+   "gson/src/main/java/com/google/gson/internal/bind/JsonElementTypeAdapter.java",
+   "gson/src/main/java/com/google/gson/internal/bind/JsonTreeReader.java",
+   "gson/src/main/java/com/google/gson/internal/bind/JsonTreeWriter.java",
+   "gson/src/main/java/com/google/gson/internal/bind/MapTypeAdapterFactory.java",
+   "proto/src/main/java/com/google/gson/protobuf/StructTypeAdapter.java",
+   "test-shrinker/src/main/java/com/example/ClassWithJsonAdapterAnnotation.java"
+  ]
+ },
+ {
+  "id": "gson_direct_3",
+  "repo": "gson",
+  "kind": "direct",
+  "target": "gson/src/main/java/com/google/gson/JsonIOException.java",
+  "truth": [
+   "gson/src/main/java/com/google/gson/Gson.java",
+   "gson/src/main/java/com/google/gson/JsonParser.java",
+   "gson/src/main/java/com/google/gson/JsonStreamParser.java",
+   "gson/src/main/java/com/google/gson/TypeAdapter.java",
+   "gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java",
+   "gson/src/main/java/com/google/gson/internal/Streams.java",
+   "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java",
+   "gson/src/main/java/com/google/gson/internal/bind/TypeAdapters.java",
+   "gson/src/main/java/com/google/gson/internal/reflect/ReflectionHelper.java"
+  ]
+ },
+ {
+  "id": "gson_direct_4",
+  "repo": "gson",
+  "kind": "direct",
+  "target": "gson/src/main/java/com/google/gson/internal/LazilyParsedNumber.java",
+  "truth": [
+   "gson/src/main/java/com/google/gson/JsonPrimitive.java",
+   "gson/src/main/java/com/google/gson/ToNumberPolicy.java",
+   "gson/src/main/java/com/google/gson/internal/bind/JsonElementTypeAdapter.java",
+   "gson/src/main/java/com/google/gson/internal/bind/TypeAdapters.java"
+  ]
+ },
+ {
+  "id": "gson_size_5",
+  "repo": "gson",
+  "kind": "size",
+  "target": "metrics/src/main/java/com/google/gson/metrics/NonUploadingCaliperRunner.java",
+  "truth_n": 4
+ },
+ {
+  "id": "gson_size_6",
+  "repo": "gson",
+  "kind": "size",
+  "target": "gson/src/main/java/com/google/gson/GsonBuilder.java",
+  "truth_n": 39
+ },
+ {
+  "id": "gson_deps_7",
+  "repo": "gson",
+  "kind": "deps",
+  "target": "gson/src/main/java/com/google/gson/internal/reflect/ReflectionHelper.java",
+  "truth_n": 4
+ },
+ {
+  "id": "gson_deps_8",
+  "repo": "gson",
+  "kind": "deps",
+  "target": "gson/src/main/java/com/google/gson/JsonStreamParser.java",
+  "truth_n": 26
+ },
+ {
+  "id": "gson_deps_9",
+  "repo": "gson",
+  "kind": "deps",
+  "target": "gson/src/main/java/com/google/gson/GsonBuilder.java",
+  "truth_n": 76
+ },
+ {
+  "id": "gson_unreachable_10",
+  "repo": "gson",
+  "kind": "unreachable",
+  "target": "gson/src/main/java/com/google/gson",
+  "truth": [
+   "gson/src/main/java/com/google/gson/JsonStreamParser.java",
+   "gson/src/main/java/com/google/gson/annotations/package-info.java",
+   "gson/src/main/java/com/google/gson/internal/bind/JavaTimeTypeAdapters.java",
+   "gson/src/main/java/com/google/gson/internal/package-info.java",
+   "gson/src/main/java/com/google/gson/package-info.java",
+   "gson/src/main/java/com/google/gson/reflect/package-info.java",
+   "gson/src/main/java/com/google/gson/stream/package-info.java"
+  ],
+  "members": 85
+ },
+ {
+  "id": "gson_unreachable_11",
+  "repo": "gson",
+  "kind": "unreachable",
+  "target": "metrics/src/main/java/com/google/gson/metrics",
+  "truth": [
+   "metrics/src/main/java/com/google/gson/metrics/BagOfPrimitivesDeserializationBenchmark.java",
+   "metrics/src/main/java/com/google/gson/metrics/CollectionsDeserializationBenchmark.java",
+   "metrics/src/main/java/com/google/gson/metrics/ParseBenchmark.java",
+   "metrics/src/main/java/com/google/gson/metrics/SerializationBenchmark.java"
+  ],
+  "members": 6
+ },
+ {
+  "id": "gson_unreachable_12",
+  "repo": "gson",
+  "kind": "unreachable",
+  "target": "test-shrinker/src/main/java/com/example",
+  "truth": [
+   "test-shrinker/src/main/java/com/example/Main.java",
+   "test-shrinker/src/main/java/com/example/NoSerializedNameMain.java",
+   "test-shrinker/src/main/java/com/example/UnusedClass.java"
+  ],
+  "members": 17
+ },
+ {
+  "id": "gson_owner_13",
+  "repo": "gson",
+  "kind": "owner",
+  "target": "gson/src/main/java/com/google/gson/JsonStreamParser.java",
+  "truth_author": "Inderjeet Singh",
+  "commits": 7
+ },
+ {
+  "id": "gson_owner_14",
+  "repo": "gson",
+  "kind": "owner",
+  "target": "gson/src/main/java/com/google/gson/ExclusionStrategy.java",
+  "truth_author": "Joel Leitch",
+  "commits": 9
+ },
+ {
+  "id": "gson_owner_15",
+  "repo": "gson",
+  "kind": "owner",
+  "target": "gson/src/main/java/com/google/gson/annotations/Expose.java",
+  "truth_author": "Inderjeet Singh",
+  "commits": 5
+ },
+ {
+  "id": "gson_owner_16",
+  "repo": "gson",
+  "kind": "owner",
+  "target": "metrics/src/main/java/com/google/gson/metrics/CollectionsDeserializationBenchmark.java",
+  "truth_author": "Marcono1234",
+  "commits": 4
+ },
+ {
+  "id": "thrift_direct_0",
+  "repo": "thrift",
+  "kind": "direct",
+  "target": "lib/java/src/main/java/org/apache/thrift/protocol/TProtocolDecorator.java",
+  "truth": [
+   "lib/java/src/main/java/org/apache/thrift/TMultiplexedProcessor.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TLegacyUuidProtocolDecorator.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TMultiplexedProtocol.java"
+  ]
+ },
+ {
+  "id": "thrift_direct_1",
+  "repo": "thrift",
+  "kind": "direct",
+  "target": "lib/java/src/main/java/org/apache/thrift/EncodingUtils.java",
+  "truth": [
+   "lib/java/src/main/java/org/apache/thrift/transport/TSaslTransport.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/sasl/DataFrameWriter.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/sasl/SaslNegotiationFrameWriter.java"
+  ]
+ },
+ {
+  "id": "thrift_direct_2",
+  "repo": "thrift",
+  "kind": "direct",
+  "target": "lib/java/src/main/java/org/apache/thrift/partial/Validate.java",
+  "truth": [
+   "lib/java/src/main/java/org/apache/thrift/TDeserializer.java",
+   "lib/java/src/main/java/org/apache/thrift/partial/EnumCache.java",
+   "lib/java/src/main/java/org/apache/thrift/partial/ThriftField.java",
+   "lib/java/src/main/java/org/apache/thrift/partial/ThriftMetadata.java"
+  ]
+ },
+ {
+  "id": "thrift_direct_3",
+  "repo": "thrift",
+  "kind": "direct",
+  "target": "lib/java/src/main/java/org/apache/thrift/transport/sasl/NegotiationStatus.java",
+  "truth": [
+   "lib/java/src/main/java/org/apache/thrift/transport/TSaslClientTransport.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/TSaslServerTransport.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/TSaslTransport.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/sasl/NonblockingSaslHandler.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/sasl/SaslNegotiationHeaderReader.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/sasl/TSaslNegotiationException.java"
+  ]
+ },
+ {
+  "id": "thrift_direct_4",
+  "repo": "thrift",
+  "kind": "direct",
+  "target": "lib/java/src/main/java/org/apache/thrift/protocol/TSet.java",
+  "truth": [
+   "lib/java/src/main/java/org/apache/thrift/TDeserializer.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TBinaryProtocol.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TCompactProtocol.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TJSONProtocol.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TProtocol.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TProtocolDecorator.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TProtocolUtil.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TReadProtocol.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TSimpleJSONProtocol.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TTupleProtocol.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TWriteProtocol.java"
+  ]
+ },
+ {
+  "id": "thrift_size_5",
+  "repo": "thrift",
+  "kind": "size",
+  "target": "lib/java/src/main/java/org/apache/thrift/partial/ThriftField.java",
+  "truth_n": 5
+ },
+ {
+  "id": "thrift_size_6",
+  "repo": "thrift",
+  "kind": "size",
+  "target": "lib/java/src/main/java/org/apache/thrift/transport/sasl/NegotiationStatus.java",
+  "truth_n": 21
+ },
+ {
+  "id": "thrift_size_7",
+  "repo": "thrift",
+  "kind": "size",
+  "target": "lib/java/src/main/java/org/apache/thrift/protocol/TSet.java",
+  "truth_n": 62
+ },
+ {
+  "id": "thrift_size_8",
+  "repo": "thrift",
+  "kind": "size",
+  "target": "lib/java/src/main/java/org/apache/thrift/TException.java",
+  "truth_n": 111
+ },
+ {
+  "id": "thrift_deps_9",
+  "repo": "thrift",
+  "kind": "deps",
+  "target": "lib/java/src/main/java/org/apache/thrift/transport/sasl/SaslPeer.java",
+  "truth_n": 4
+ },
+ {
+  "id": "thrift_deps_10",
+  "repo": "thrift",
+  "kind": "deps",
+  "target": "lib/java/src/main/java/org/apache/thrift/protocol/TProtocolDecorator.java",
+  "truth_n": 21
+ },
+ {
+  "id": "thrift_deps_11",
+  "repo": "thrift",
+  "kind": "deps",
+  "target": "lib/java/src/main/java/org/apache/thrift/server/Invocation.java",
+  "truth_n": 41
+ },
+ {
+  "id": "thrift_unreachable_12",
+  "repo": "thrift",
+  "kind": "unreachable",
+  "target": "lib/java/src/main/java/org/apache/thrift/transport",
+  "truth": [
+   "lib/java/src/main/java/org/apache/thrift/transport/TByteBuffer.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/TFileProcessor.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/THttpClient.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/TSaslClientTransport.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/TSaslServerTransport.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/TSimpleFileTransport.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/TZlibTransport.java",
+   "lib/java/src/main/java/org/apache/thrift/transport/layered/TFastFramedTransport.java"
+  ],
+  "members": 56
+ },
+ {
+  "id": "thrift_unreachable_13",
+  "repo": "thrift",
+  "kind": "unreachable",
+  "target": "lib/java/src/main/java/org/apache/thrift/protocol",
+  "truth": [
+   "lib/java/src/main/java/org/apache/thrift/protocol/TLegacyUuidProtocolDecorator.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TSimpleJSONProtocol.java",
+   "lib/java/src/main/java/org/apache/thrift/protocol/TTupleProtocol.java"
+  ],
+  "members": 24
+ },
+ {
+  "id": "thrift_unreachable_14",
+  "repo": "thrift",
+  "kind": "unreachable",
+  "target": "lib/java/src/main/java/org/apache/thrift/async",
+  "truth": [
+   "lib/java/src/main/java/org/apache/thrift/async/AsyncMethodFutureAdapter.java",
+   "lib/java/src/main/java/org/apache/thrift/async/TAsyncClientFactory.java"
+  ],
+  "members": 6
+ },
+ {
+  "id": "thrift_owner_15",
+  "repo": "thrift",
+  "kind": "owner",
+  "target": "lib/java/src/main/java/org/apache/thrift/protocol/TProtocolDecorator.java",
+  "truth_author": "Jiayu Liu",
+  "commits": 5
+ },
+ {
+  "id": "thrift_owner_16",
+  "repo": "thrift",
+  "kind": "owner",
+  "target": "lib/java/src/main/java/org/apache/thrift/protocol/TJSONProtocol.java",
+  "truth_author": "Jiayu Liu",
+  "commits": 5
+ },
+ {
+  "id": "thrift_owner_17",
+  "repo": "thrift",
+  "kind": "owner",
+  "target": "lib/java/src/main/java/org/apache/thrift/server/TThreadPoolServer.java",
+  "truth_author": "Jiayu Liu",
+  "commits": 4
+ },
+ {
+  "id": "thrift_owner_18",
+  "repo": "thrift",
+  "kind": "owner",
+  "target": "lib/java/src/main/java/org/apache/thrift/protocol/TCompactProtocol.java",
+  "truth_author": "Jiayu Liu",
+  "commits": 4
+ },
+ {
+  "id": "automapper_direct_0",
+  "repo": "automapper",
+  "kind": "direct",
+  "target": "src/AutoMapper/QueryableExtensions/ProjectionBuilder.cs",
+  "truth": [
+   "src/AutoMapper/Configuration/MapperConfiguration.cs",
+   "src/AutoMapper/Configuration/MapperConfigurationExpression.cs",
+   "src/AutoMapper/Internal/InternalApi.cs",
+   "src/AutoMapper/QueryableExtensions/ProjectionMappers/AssignableProjectionMapper.cs",
+   "src/AutoMapper/QueryableExtensions/ProjectionMappers/EnumProjectionMapper.cs",
+   "src/AutoMapper/QueryableExtensions/ProjectionMappers/EnumerableProjectionMapper.cs",
+   "src/AutoMapper/QueryableExtensions/ProjectionMappers/NullableSourceProjectionMapper.cs",
+   "src/AutoMapper/QueryableExtensions/ProjectionMappers/StringProjectionMapper.cs",
+   "src/UnitTests/ExpressionBridge.cs",
+   "src/UnitTests/Projection/ProjectionMappers.cs"
+  ]
+ },
+ {
+  "id": "automapper_direct_1",
+  "repo": "automapper",
+  "kind": "direct",
+  "target": "src/AutoMapper/Configuration/IMappingExpression.cs",
+  "truth": [
+   "src/AutoMapper/Configuration/Annotations/AutoMapAttribute.cs",
+   "src/AutoMapper/Configuration/IProfileExpression.cs",
+   "src/AutoMapper/Configuration/MappingExpression.cs",
+   "src/AutoMapper/Configuration/Profile.cs",
+   "src/AutoMapper/Features.cs",
+   "src/AutoMapper/Internal/InternalApi.cs",
+   "src/AutoMapper/ProfileMap.cs",
+   "src/UnitTests/AutoMapperSpecBase.cs"
+  ]
+ },
+ {
+  "id": "automapper_direct_2",
+  "repo": "automapper",
+  "kind": "direct",
+  "target": "src/UnitTests/Bug/MapAtRuntimeWithCollections/EntityDTO12.cs",
+  "truth": [
+   "src/UnitTests/Bug/MapAtRuntimeWithCollections/EntityDTO1.cs",
+   "src/UnitTests/Bug/MapAtRuntimeWithCollections/EntityDTO14.cs",
+   "src/UnitTests/Bug/MapAtRuntimeWithCollections/EntityDTO16.cs",
+   "src/UnitTests/Bug/MapAtRuntimeWithCollections/EntityDTO20.cs",
+   "src/UnitTests/Bug/MapAtRuntimeWithCollections/EntityDTO6.cs",
+   "src/UnitTests/Bug/MapAtRuntimeWithCollections/MapAtRuntimeWithCollections.cs"
+  ]
+ },
+ {
+  "id": "automapper_direct_3",
+  "repo": "automapper",
+  "kind": "direct",
+  "target": "src/UnitTests/Bug/MapAtRuntime/Entity17.cs",
+  "truth": [
+   "src/UnitTests/Bug/MapAtRuntime/Entity1.cs",
+   "src/UnitTests/Bug/MapAtRuntime/Entity13.cs",
+   "src/UnitTests/Bug/MapAtRuntime/Entity15.cs",
+   "src/UnitTests/Bug/MapAtRuntime/Entity18.cs",
+   "src/UnitTests/Bug/MapAtRuntime/Entity20.cs",
+   "src/UnitTests/Bug/MapAtRuntime/Entity25.cs",
+   "src/UnitTests/Bug/MapAtRuntime/Entity5.cs",
+   "src/UnitTests/Bug/MapAtRuntime/Entity8.cs",
+   "src/UnitTests/Bug/MapAtRuntime/MapAtRuntime.cs"
+  ]
+ },
+ {
+  "id": "automapper_direct_4",
+  "repo": "automapper",
+  "kind": "direct",
+  "target": "src/AutoMapper/ConstructorMap.cs",
+  "truth": [
+   "src/AutoMapper/Configuration/CtorParamConfigurationExpression.cs",
+   "src/AutoMapper/Configuration/TypeMapConfiguration.cs",
+   "src/AutoMapper/Execution/TypeMapPlanBuilder.cs",
+   "src/AutoMapper/TypeMap.cs"
+  ]
+ },
+ {
+  "id": "automapper_size_5",
+  "repo": "automapper",
+  "kind": "size",
+  "target": "src/UnitTests/Bug/MapAtRuntimeWithCollections/EntityDTO12.cs",
+  "truth_n": 26
+ },
+ {
+  "id": "automapper_size_6",
+  "repo": "automapper",
+  "kind": "size",
+  "target": "src/AutoMapper/Mappers/EnumToEnumMapper.cs",
+  "truth_n": 322
+ },
+ {
+  "id": "automapper_deps_7",
+  "repo": "automapper",
+  "kind": "deps",
+  "target": "src/AutoMapper/Licensing/LicenseValidator.cs",
+  "truth_n": 4
+ },
+ {
+  "id": "automapper_deps_8",
+  "repo": "automapper",
+  "kind": "deps",
+  "target": "src/UnitTests/Bug/MapAtRuntime/EntityDTO19.cs",
+  "truth_n": 22
+ },
+ {
+  "id": "automapper_deps_9",
+  "repo": "automapper",
+  "kind": "deps",
+  "target": "src/AutoMapper/Mappers/EnumToEnumMapper.cs",
+  "truth_n": 73
+ },
+ {
+  "id": "automapper_unreachable_10",
+  "repo": "automapper",
+  "kind": "unreachable",
+  "target": "src/UnitTests/Bug/MapAtRuntime",
+  "truth": [
+   "src/UnitTests/Bug/MapAtRuntime/MapAtRuntime.cs",
+   "src/UnitTests/Bug/MapAtRuntime/MapAtRuntimeWithExtensionMethodAndNullable.cs"
+  ],
+  "members": 56
+ },
+ {
+  "id": "automapper_unreachable_11",
+  "repo": "automapper",
+  "kind": "unreachable",
+  "target": "src/AutoMapper",
+  "truth": [
+   "src/AutoMapper/AssemblyInfo.cs",
+   "src/AutoMapper/Configuration/Annotations/MapAtRuntimeAttribute.cs",
+   "src/AutoMapper/Internal/Polyfill.cs"
+  ],
+  "members": 85
+ },
+ {
+  "id": "automapper_unreachable_12",
+  "repo": "automapper",
+  "kind": "unreachable",
+  "target": "src/Benchmark",
+  "truth": [
+   "src/Benchmark/HiPerfTimer.cs",
+   "src/Benchmark/Program.cs"
+  ],
+  "members": 5
+ },
+ {
+  "id": "automapper_owner_13",
+  "repo": "automapper",
+  "kind": "owner",
+  "target": "src/AutoMapper/Mappers/EnumToEnumMapper.cs",
+  "truth_author": "Lucian Bargaoanu",
+  "commits": 22
+ },
+ {
+  "id": "automapper_owner_14",
+  "repo": "automapper",
+  "kind": "owner",
+  "target": "src/UnitTests/MaxExecutionPlanDepth.cs",
+  "truth_author": "Lucian Bargaoanu",
+  "commits": 8
+ },
+ {
+  "id": "automapper_owner_15",
+  "repo": "automapper",
+  "kind": "owner",
+  "target": "src/UnitTests/Bug/DeepInheritanceIssue.cs",
+  "truth_author": "Jimmy Bogard",
+  "commits": 6
+ },
+ {
+  "id": "automapper_owner_16",
+  "repo": "automapper",
+  "kind": "owner",
+  "target": "src/UnitTests/Bug/ParentChildResolversBug.cs",
+  "truth_author": "Jimmy Bogard",
+  "commits": 9
+ }
+]

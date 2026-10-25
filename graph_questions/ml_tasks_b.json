@@ -1,0 +1,884 @@
+[
+ {
+  "id": "serde_direct_0",
+  "repo": "serde",
+  "kind": "direct",
+  "target": "serde_derive/src/de.rs",
+  "truth": [
+   "serde_derive/src/de/enum_.rs",
+   "serde_derive/src/de/enum_adjacently.rs",
+   "serde_derive/src/de/enum_externally.rs",
+   "serde_derive/src/de/enum_internally.rs",
+   "serde_derive/src/de/enum_untagged.rs",
+   "serde_derive/src/de/identifier.rs",
+   "serde_derive/src/de/struct_.rs",
+   "serde_derive/src/de/tuple.rs",
+   "serde_derive/src/de/unit.rs",
+   "serde_derive/src/lib.rs",
+   "serde_derive/src/ser.rs"
+  ]
+ },
+ {
+  "id": "serde_direct_1",
+  "repo": "serde",
+  "kind": "direct",
+  "target": "serde_derive/src/de/enum_untagged.rs",
+  "truth": [
+   "serde_derive/src/de.rs",
+   "serde_derive/src/de/enum_.rs",
+   "serde_derive/src/de/enum_adjacently.rs",
+   "serde_derive/src/de/enum_internally.rs"
+  ]
+ },
+ {
+  "id": "serde_direct_2",
+  "repo": "serde",
+  "kind": "direct",
+  "target": "serde_derive/src/this.rs",
+  "truth": [
+   "serde_derive/src/de.rs",
+   "serde_derive/src/lib.rs",
+   "serde_derive/src/ser.rs"
+  ]
+ },
+ {
+  "id": "serde_direct_3",
+  "repo": "serde",
+  "kind": "direct",
+  "target": "serde_derive/src/lib.rs",
+  "truth": [
+   "serde/src/lib.rs",
+   "serde_derive/src/de.rs",
+   "serde_derive/src/de/enum_.rs",
+   "serde_derive/src/de/enum_adjacently.rs",
+   "serde_derive/src/de/enum_externally.rs",
+   "serde_derive/src/de/enum_internally.rs",
+   "serde_derive/src/de/enum_untagged.rs",
+   "serde_derive/src/de/identifier.rs",
+   "serde_derive/src/de/struct_.rs",
+   "serde_derive/src/de/tuple.rs",
+   "serde_derive/src/de/unit.rs",
+   "serde_derive/src/pretend.rs",
+   "serde_derive/src/ser.rs",
+   "test_suite/no_std/src/main.rs"
+  ]
+ },
+ {
+  "id": "serde_direct_4",
+  "repo": "serde",
+  "kind": "direct",
+  "target": "serde_derive/src/de/enum_.rs",
+  "truth": [
+   "serde_derive/src/de.rs",
+   "serde_derive/src/de/enum_adjacently.rs",
+   "serde_derive/src/de/enum_externally.rs",
+   "serde_derive/src/de/enum_internally.rs"
+  ]
+ },
+ {
+  "id": "serde_size_5",
+  "repo": "serde",
+  "kind": "size",
+  "target": "serde/src/integer128.rs",
+  "truth_n": 4
+ },
+ {
+  "id": "serde_size_6",
+  "repo": "serde",
+  "kind": "size",
+  "target": "serde_core/src/crate_root.rs",
+  "truth_n": 21
+ },
+ {
+  "id": "serde_deps_7",
+  "repo": "serde",
+  "kind": "deps",
+  "target": "serde_derive/src/internals/attr.rs",
+  "truth_n": 9
+ },
+ {
+  "id": "serde_deps_8",
+  "repo": "serde",
+  "kind": "deps",
+  "target": "serde_derive/src/de.rs",
+  "truth_n": 27
+ },
+ {
+  "id": "serde_deps_9",
+  "repo": "serde",
+  "kind": "deps",
+  "target": "serde/src/private/ser.rs",
+  "truth_n": 51
+ },
+ {
+  "id": "serde_owner_10",
+  "repo": "serde",
+  "kind": "owner",
+  "target": "serde_derive/src/internals/attr.rs",
+  "truth_author": "David Tolnay",
+  "commits": 93
+ },
+ {
+  "id": "serde_owner_11",
+  "repo": "serde",
+  "kind": "owner",
+  "target": "serde_derive/src/de.rs",
+  "truth_author": "David Tolnay",
+  "commits": 192
+ },
+ {
+  "id": "serde_owner_12",
+  "repo": "serde",
+  "kind": "owner",
+  "target": "serde_core/src/de/impls.rs",
+  "truth_author": "David Tolnay",
+  "commits": 4
+ },
+ {
+  "id": "serde_owner_13",
+  "repo": "serde",
+  "kind": "owner",
+  "target": "serde/src/private/ser.rs",
+  "truth_author": "David Tolnay",
+  "commits": 34
+ },
+ {
+  "id": "jq_direct_0",
+  "repo": "jq",
+  "kind": "direct",
+  "target": "src/jv_private.h",
+  "truth": [
+   "src/builtin.c",
+   "src/jv_aux.c",
+   "src/jv_print.c"
+  ]
+ },
+ {
+  "id": "jq_direct_1",
+  "repo": "jq",
+  "kind": "direct",
+  "target": "src/jv_unicode.h",
+  "truth": [
+   "src/builtin.c",
+   "src/jv.c",
+   "src/jv_file.c",
+   "src/jv_parse.c",
+   "src/jv_print.c",
+   "src/jv_unicode.c",
+   "src/util.c"
+  ]
+ },
+ {
+  "id": "jq_direct_2",
+  "repo": "jq",
+  "kind": "direct",
+  "target": "src/jq.h",
+  "truth": [
+   "src/builtin.h",
+   "src/bytecode.h",
+   "src/execute.c",
+   "src/linker.c",
+   "src/locfile.c",
+   "src/locfile.h",
+   "src/main.c",
+   "src/util.c"
+  ]
+ },
+ {
+  "id": "jq_direct_3",
+  "repo": "jq",
+  "kind": "direct",
+  "target": "vendor/decNumber/decNumber.h",
+  "truth": [
+   "src/jv.c",
+   "vendor/decNumber/decNumber.c",
+   "vendor/decNumber/decPacked.c",
+   "vendor/decNumber/decPacked.h",
+   "vendor/decNumber/decimal128.c",
+   "vendor/decNumber/decimal128.h",
+   "vendor/decNumber/decimal32.c",
+   "vendor/decNumber/decimal32.h",
+   "vendor/decNumber/decimal64.c",
+   "vendor/decNumber/decimal64.h",
+   "vendor/decNumber/example1.c",
+   "vendor/decNumber/example2.c",
+   "vendor/decNumber/example3.c",
+   "vendor/decNumber/example4.c"
+  ]
+ },
+ {
+  "id": "jq_direct_4",
+  "repo": "jq",
+  "kind": "direct",
+  "target": "vendor/decNumber/decQuad.h",
+  "truth": [
+   "vendor/decNumber/decDouble.h",
+   "vendor/decNumber/decQuad.c",
+   "vendor/decNumber/decSingle.h",
+   "vendor/decNumber/example7.c",
+   "vendor/decNumber/example8.c"
+  ]
+ },
+ {
+  "id": "jq_size_5",
+  "repo": "jq",
+  "kind": "size",
+  "target": "src/jv_unicode.h",
+  "truth_n": 7
+ },
+ {
+  "id": "jq_size_6",
+  "repo": "jq",
+  "kind": "size",
+  "target": "src/jv_alloc.h",
+  "truth_n": 16
+ },
+ {
+  "id": "jq_deps_7",
+  "repo": "jq",
+  "kind": "deps",
+  "target": "src/util.c",
+  "truth_n": 5
+ },
+ {
+  "id": "jq_deps_8",
+  "repo": "jq",
+  "kind": "deps",
+  "target": "src/builtin.c",
+  "truth_n": 16
+ },
+ {
+  "id": "jq_owner_9",
+  "repo": "jq",
+  "kind": "owner",
+  "target": "src/libm.h",
+  "truth_author": "Nicolas Williams",
+  "commits": 4
+ },
+ {
+  "id": "jq_owner_10",
+  "repo": "jq",
+  "kind": "owner",
+  "target": "src/jv_print.c",
+  "truth_author": "itchyny",
+  "commits": 6
+ },
+ {
+  "id": "jq_owner_11",
+  "repo": "jq",
+  "kind": "owner",
+  "target": "src/jv.h",
+  "truth_author": "itchyny",
+  "commits": 6
+ },
+ {
+  "id": "jq_owner_12",
+  "repo": "jq",
+  "kind": "owner",
+  "target": "src/builtin.c",
+  "truth_author": "itchyny",
+  "commits": 38
+ },
+ {
+  "id": "fmt_direct_0",
+  "repo": "fmt",
+  "kind": "direct",
+  "target": "include/fmt/ostream.h",
+  "truth": [
+   "include/fmt/std.h",
+   "include/fmt/xchar.h",
+   "src/fmt.cc"
+  ]
+ },
+ {
+  "id": "fmt_direct_1",
+  "repo": "fmt",
+  "kind": "direct",
+  "target": "include/fmt/base.h",
+  "truth": [
+   "include/fmt/core.h",
+   "include/fmt/format.h",
+   "src/fmt-c.cc"
+  ]
+ },
+ {
+  "id": "fmt_direct_2",
+  "repo": "fmt",
+  "kind": "direct",
+  "target": "include/fmt/format.h",
+  "truth": [
+   "include/fmt/args.h",
+   "include/fmt/base.h",
+   "include/fmt/chrono.h",
+   "include/fmt/color.h",
+   "include/fmt/compile.h",
+   "include/fmt/core.h",
+   "include/fmt/format-inl.h",
+   "include/fmt/os.h",
+   "include/fmt/printf.h",
+   "include/fmt/ranges.h",
+   "include/fmt/std.h",
+   "include/fmt/xchar.h",
+   "src/fmt.cc"
+  ]
+ },
+ {
+  "id": "fmt_size_3",
+  "repo": "fmt",
+  "kind": "size",
+  "target": "include/fmt/chrono.h",
+  "truth_n": 4
+ },
+ {
+  "id": "fmt_size_4",
+  "repo": "fmt",
+  "kind": "size",
+  "target": "include/fmt/format-inl.h",
+  "truth_n": 17
+ },
+ {
+  "id": "fmt_deps_5",
+  "repo": "fmt",
+  "kind": "deps",
+  "target": "src/os.cc",
+  "truth_n": 4
+ },
+ {
+  "id": "fmt_deps_6",
+  "repo": "fmt",
+  "kind": "deps",
+  "target": "src/fmt.cc",
+  "truth_n": 15
+ },
+ {
+  "id": "fmt_unreachable_7",
+  "repo": "fmt",
+  "kind": "unreachable",
+  "target": "src",
+  "truth": [
+   "src/fmt-c.cc",
+   "src/fmt.cc"
+  ],
+  "members": 4
+ },
+ {
+  "id": "fmt_owner_8",
+  "repo": "fmt",
+  "kind": "owner",
+  "target": "src/os.cc",
+  "truth_author": "Victor Zverovich",
+  "commits": 33
+ },
+ {
+  "id": "fmt_owner_9",
+  "repo": "fmt",
+  "kind": "owner",
+  "target": "include/fmt/ranges.h",
+  "truth_author": "Victor Zverovich",
+  "commits": 118
+ },
+ {
+  "id": "fmt_owner_10",
+  "repo": "fmt",
+  "kind": "owner",
+  "target": "include/fmt/xchar.h",
+  "truth_author": "Victor Zverovich",
+  "commits": 68
+ },
+ {
+  "id": "fmt_owner_11",
+  "repo": "fmt",
+  "kind": "owner",
+  "target": "include/fmt/compile.h",
+  "truth_author": "Victor Zverovich",
+  "commits": 121
+ },
+ {
+  "id": "guzzle_direct_0",
+  "repo": "guzzle",
+  "kind": "direct",
+  "target": "src/Utils.php",
+  "truth": [
+   "src/Client.php",
+   "src/Handler/CurlFactory.php",
+   "src/Handler/EasyHandle.php",
+   "src/Handler/HeaderProcessor.php",
+   "src/Handler/StreamHandler.php",
+   "src/HandlerStack.php"
+  ]
+ },
+ {
+  "id": "guzzle_direct_1",
+  "repo": "guzzle",
+  "kind": "direct",
+  "target": "src/Handler/HostValidator.php",
+  "truth": [
+   "src/Handler/CurlHandler.php",
+   "src/Handler/CurlMultiHandler.php",
+   "src/Handler/StreamHandler.php",
+   "src/HostIdentity.php"
+  ]
+ },
+ {
+  "id": "guzzle_direct_2",
+  "repo": "guzzle",
+  "kind": "direct",
+  "target": "src/Cookie/SetCookie.php",
+  "truth": [
+   "src/Cookie/CookieJar.php",
+   "src/Cookie/CookieJarInterface.php",
+   "src/Cookie/FileCookieJar.php",
+   "src/Cookie/SessionCookieJar.php"
+  ]
+ },
+ {
+  "id": "guzzle_direct_3",
+  "repo": "guzzle",
+  "kind": "direct",
+  "target": "src/Multiplexing.php",
+  "truth": [
+   "src/Client.php",
+   "src/Handler/CurlFactory.php",
+   "src/Handler/CurlMultiHandler.php",
+   "src/Handler/StreamHandler.php",
+   "src/Utils.php"
+  ]
+ },
+ {
+  "id": "guzzle_direct_4",
+  "repo": "guzzle",
+  "kind": "direct",
+  "target": "src/Exception/ResponseTransferException.php",
+  "truth": [
+   "src/Exception/ResponseTimeoutException.php",
+   "src/Handler/CurlFactory.php",
+   "src/Handler/EasyHandle.php",
+   "src/Handler/StreamHandler.php"
+  ]
+ },
+ {
+  "id": "guzzle_size_5",
+  "repo": "guzzle",
+  "kind": "size",
+  "target": "src/Auth/DigestAuth.php",
+  "truth_n": 5
+ },
+ {
+  "id": "guzzle_size_6",
+  "repo": "guzzle",
+  "kind": "size",
+  "target": "src/Utils.php",
+  "truth_n": 14
+ },
+ {
+  "id": "guzzle_size_7",
+  "repo": "guzzle",
+  "kind": "size",
+  "target": "src/Exception/GuzzleException.php",
+  "truth_n": 49
+ },
+ {
+  "id": "guzzle_deps_8",
+  "repo": "guzzle",
+  "kind": "deps",
+  "target": "src/Handler/HostValidator.php",
+  "truth_n": 10
+ },
+ {
+  "id": "guzzle_deps_9",
+  "repo": "guzzle",
+  "kind": "deps",
+  "target": "src/ClientTrait.php",
+  "truth_n": 14
+ },
+ {
+  "id": "guzzle_deps_10",
+  "repo": "guzzle",
+  "kind": "deps",
+  "target": "src/Utils.php",
+  "truth_n": 47
+ },
+ {
+  "id": "guzzle_unreachable_11",
+  "repo": "guzzle",
+  "kind": "unreachable",
+  "target": "src/Cookie",
+  "truth": [
+   "src/Cookie/FileCookieJar.php",
+   "src/Cookie/SessionCookieJar.php"
+  ],
+  "members": 5
+ },
+ {
+  "id": "guzzle_unreachable_12",
+  "repo": "guzzle",
+  "kind": "unreachable",
+  "target": "src",
+  "truth": [
+   "src/Client.php",
+   "src/Cookie/FileCookieJar.php",
+   "src/Cookie/SessionCookieJar.php",
+   "src/Handler/MockHandler.php",
+   "src/MessageFormatter.php",
+   "src/Pool.php"
+  ],
+  "members": 68
+ },
+ {
+  "id": "guzzle_owner_13",
+  "repo": "guzzle",
+  "kind": "owner",
+  "target": "src/ClientTrait.php",
+  "truth_author": "Graham Campbell",
+  "commits": 13
+ },
+ {
+  "id": "guzzle_owner_14",
+  "repo": "guzzle",
+  "kind": "owner",
+  "target": "src/Utils.php",
+  "truth_author": "Graham Campbell",
+  "commits": 49
+ },
+ {
+  "id": "guzzle_owner_15",
+  "repo": "guzzle",
+  "kind": "owner",
+  "target": "src/Cookie/SetCookie.php",
+  "truth_author": "Graham Campbell",
+  "commits": 34
+ },
+ {
+  "id": "guzzle_owner_16",
+  "repo": "guzzle",
+  "kind": "owner",
+  "target": "src/Handler/CurlMultiHandler.php",
+  "truth_author": "Graham Campbell",
+  "commits": 54
+ },
+ {
+  "id": "slim_direct_0",
+  "repo": "slim",
+  "kind": "direct",
+  "target": "Slim/Interfaces/RouteParserInterface.php",
+  "truth": [
+   "Slim/Interfaces/RouteCollectorInterface.php",
+   "Slim/Middleware/RoutingMiddleware.php",
+   "Slim/Routing/RouteCollector.php",
+   "Slim/Routing/RouteContext.php",
+   "Slim/Routing/RouteParser.php",
+   "Slim/Routing/RouteRunner.php"
+  ]
+ },
+ {
+  "id": "slim_direct_1",
+  "repo": "slim",
+  "kind": "direct",
+  "target": "Slim/Exception/HttpMethodNotAllowedException.php",
+  "truth": [
+   "Slim/Handlers/ErrorHandler.php",
+   "Slim/Middleware/RoutingMiddleware.php",
+   "Slim/Routing/RouteRunner.php"
+  ]
+ },
+ {
+  "id": "slim_direct_2",
+  "repo": "slim",
+  "kind": "direct",
+  "target": "Slim/Interfaces/Psr17FactoryProviderInterface.php",
+  "truth": [
+   "Slim/Factory/AppFactory.php",
+   "Slim/Factory/Psr17/Psr17FactoryProvider.php",
+   "Slim/Factory/ServerRequestCreatorFactory.php"
+  ]
+ },
+ {
+  "id": "slim_direct_3",
+  "repo": "slim",
+  "kind": "direct",
+  "target": "Slim/Factory/Psr17/Psr17Factory.php",
+  "truth": [
+   "Slim/Factory/AppFactory.php",
+   "Slim/Factory/Psr17/GuzzlePsr17Factory.php",
+   "Slim/Factory/Psr17/HttpSoftPsr17Factory.php",
+   "Slim/Factory/Psr17/LaminasDiactorosPsr17Factory.php",
+   "Slim/Factory/Psr17/NyholmPsr17Factory.php",
+   "Slim/Factory/Psr17/SlimHttpPsr17Factory.php",
+   "Slim/Factory/Psr17/SlimPsr17Factory.php",
+   "Slim/Factory/ServerRequestCreatorFactory.php"
+  ]
+ },
+ {
+  "id": "slim_direct_4",
+  "repo": "slim",
+  "kind": "direct",
+  "target": "Slim/Interfaces/RouteCollectorProxyInterface.php",
+  "truth": [
+   "Slim/Routing/RouteCollector.php",
+   "Slim/Routing/RouteCollectorProxy.php",
+   "Slim/Routing/RouteGroup.php",
+   "Slim/Routing/RouteRunner.php"
+  ]
+ },
+ {
+  "id": "slim_size_5",
+  "repo": "slim",
+  "kind": "size",
+  "target": "Slim/Exception/HttpMethodNotAllowedException.php",
+  "truth_n": 6
+ },
+ {
+  "id": "slim_size_6",
+  "repo": "slim",
+  "kind": "size",
+  "target": "Slim/Interfaces/RouteParserInterface.php",
+  "truth_n": 13
+ },
+ {
+  "id": "slim_deps_7",
+  "repo": "slim",
+  "kind": "deps",
+  "target": "Slim/Factory/Psr17/SlimHttpPsr17Factory.php",
+  "truth_n": 4
+ },
+ {
+  "id": "slim_deps_8",
+  "repo": "slim",
+  "kind": "deps",
+  "target": "Slim/Routing/RouteCollectorProxy.php",
+  "truth_n": 18
+ },
+ {
+  "id": "slim_deps_9",
+  "repo": "slim",
+  "kind": "deps",
+  "target": "Slim/App.php",
+  "truth_n": 57
+ },
+ {
+  "id": "slim_unreachable_10",
+  "repo": "slim",
+  "kind": "unreachable",
+  "target": "Slim/Handlers",
+  "truth": [
+   "Slim/Handlers/Strategies/RequestResponseArgs.php",
+   "Slim/Handlers/Strategies/RequestResponseNamedArgs.php"
+  ],
+  "members": 5
+ },
+ {
+  "id": "slim_unreachable_11",
+  "repo": "slim",
+  "kind": "unreachable",
+  "target": "Slim",
+  "truth": [
+   "Slim/Exception/HttpBadRequestException.php",
+   "Slim/Exception/HttpForbiddenException.php",
+   "Slim/Exception/HttpGoneException.php",
+   "Slim/Exception/HttpInternalServerErrorException.php",
+   "Slim/Exception/HttpNotImplementedException.php",
+   "Slim/Exception/HttpTooManyRequestsException.php",
+   "Slim/Exception/HttpUnauthorizedException.php",
+   "Slim/Factory/AppFactory.php",
+   "Slim/Handlers/Strategies/RequestResponseArgs.php",
+   "Slim/Handlers/Strategies/RequestResponseNamedArgs.php",
+   "Slim/Middleware/ContentLengthMiddleware.php",
+   "Slim/Middleware/MethodOverrideMiddleware.php",
+   "Slim/Middleware/OutputBufferingMiddleware.php"
+  ],
+  "members": 72
+ },
+ {
+  "id": "slim_unreachable_12",
+  "repo": "slim",
+  "kind": "unreachable",
+  "target": "Slim/Exception",
+  "truth": [
+   "Slim/Exception/HttpBadRequestException.php",
+   "Slim/Exception/HttpForbiddenException.php",
+   "Slim/Exception/HttpGoneException.php",
+   "Slim/Exception/HttpInternalServerErrorException.php",
+   "Slim/Exception/HttpNotImplementedException.php",
+   "Slim/Exception/HttpTooManyRequestsException.php",
+   "Slim/Exception/HttpUnauthorizedException.php"
+  ],
+  "members": 11
+ },
+ {
+  "id": "slim_owner_13",
+  "repo": "slim",
+  "kind": "owner",
+  "target": "Slim/Routing/RouteCollectorProxy.php",
+  "truth_author": "l0gicgate",
+  "commits": 8
+ },
+ {
+  "id": "slim_owner_14",
+  "repo": "slim",
+  "kind": "owner",
+  "target": "Slim/Interfaces/RouteParserInterface.php",
+  "truth_author": "l0gicgate",
+  "commits": 4
+ },
+ {
+  "id": "slim_owner_15",
+  "repo": "slim",
+  "kind": "owner",
+  "target": "Slim/Routing/Dispatcher.php",
+  "truth_author": "l0gicgate",
+  "commits": 7
+ },
+ {
+  "id": "slim_owner_16",
+  "repo": "slim",
+  "kind": "owner",
+  "target": "Slim/Handlers/Strategies/RequestResponse.php",
+  "truth_author": "Daniel Opitz",
+  "commits": 4
+ },
+ {
+  "id": "jekyll_direct_0",
+  "repo": "jekyll",
+  "kind": "direct",
+  "target": "lib/jekyll/entry_filter.rb",
+  "truth": [
+   "lib/jekyll.rb",
+   "lib/jekyll/collection.rb",
+   "lib/jekyll/reader.rb",
+   "lib/jekyll/readers/data_reader.rb",
+   "lib/jekyll/readers/layout_reader.rb"
+  ]
+ },
+ {
+  "id": "jekyll_direct_1",
+  "repo": "jekyll",
+  "kind": "direct",
+  "target": "lib/jekyll/page.rb",
+  "truth": [
+   "lib/jekyll.rb",
+   "lib/jekyll/convertible.rb",
+   "lib/jekyll/page_excerpt.rb",
+   "lib/jekyll/page_without_a_file.rb",
+   "lib/jekyll/readers/page_reader.rb",
+   "lib/jekyll/readers/theme_assets_reader.rb",
+   "lib/jekyll/regenerator.rb"
+  ]
+ },
+ {
+  "id": "jekyll_direct_2",
+  "repo": "jekyll",
+  "kind": "direct",
+  "target": "lib/jekyll/cache.rb",
+  "truth": [
+   "lib/jekyll.rb",
+   "lib/jekyll/converters/markdown.rb",
+   "lib/jekyll/site.rb"
+  ]
+ },
+ {
+  "id": "jekyll_direct_3",
+  "repo": "jekyll",
+  "kind": "direct",
+  "target": "lib/jekyll/version.rb",
+  "truth": [
+   "lib/jekyll.rb",
+   "lib/jekyll/command.rb",
+   "lib/jekyll/commands/new.rb",
+   "lib/jekyll/drops/jekyll_drop.rb",
+   "lib/jekyll/external.rb",
+   "lib/jekyll/log_adapter.rb",
+   "lib/jekyll/theme_builder.rb"
+  ]
+ },
+ {
+  "id": "jekyll_direct_4",
+  "repo": "jekyll",
+  "kind": "direct",
+  "target": "lib/jekyll/path_manager.rb",
+  "truth": [
+   "benchmark/path-manager.rb",
+   "lib/jekyll.rb",
+   "lib/jekyll/entry_filter.rb",
+   "lib/jekyll/inclusion.rb",
+   "lib/jekyll/liquid_renderer.rb",
+   "lib/jekyll/page.rb",
+   "lib/jekyll/reader.rb",
+   "lib/jekyll/tags/include.rb",
+   "lib/jekyll/tags/link.rb"
+  ]
+ },
+ {
+  "id": "jekyll_size_5",
+  "repo": "jekyll",
+  "kind": "size",
+  "target": "lib/jekyll/tags/highlight.rb",
+  "truth_n": 8
+ },
+ {
+  "id": "jekyll_size_6",
+  "repo": "jekyll",
+  "kind": "size",
+  "target": "lib/jekyll/collection.rb",
+  "truth_n": 13
+ },
+ {
+  "id": "jekyll_size_7",
+  "repo": "jekyll",
+  "kind": "size",
+  "target": "lib/jekyll/utils/win_tz.rb",
+  "truth_n": 51
+ },
+ {
+  "id": "jekyll_deps_8",
+  "repo": "jekyll",
+  "kind": "deps",
+  "target": "lib/jekyll/drops/static_file_drop.rb",
+  "truth_n": 11
+ },
+ {
+  "id": "jekyll_deps_9",
+  "repo": "jekyll",
+  "kind": "deps",
+  "target": "lib/jekyll/collection.rb",
+  "truth_n": 30
+ },
+ {
+  "id": "jekyll_deps_10",
+  "repo": "jekyll",
+  "kind": "deps",
+  "target": "features/support/helpers.rb",
+  "truth_n": 90
+ },
+ {
+  "id": "jekyll_owner_11",
+  "repo": "jekyll",
+  "kind": "owner",
+  "target": "lib/jekyll/collection.rb",
+  "truth_author": "Parker Moore",
+  "commits": 36
+ },
+ {
+  "id": "jekyll_owner_12",
+  "repo": "jekyll",
+  "kind": "owner",
+  "target": "lib/jekyll/version.rb",
+  "truth_author": "Parker Moore",
+  "commits": 57
+ },
+ {
+  "id": "jekyll_owner_13",
+  "repo": "jekyll",
+  "kind": "owner",
+  "target": "lib/jekyll/errors.rb",
+  "truth_author": "Parker Moore",
+  "commits": 7
+ },
+ {
+  "id": "jekyll_owner_14",
+  "repo": "jekyll",
+  "kind": "owner",
+  "target": "lib/jekyll/log_adapter.rb",
+  "truth_author": "Parker Moore",
+  "commits": 6
+ }
+]

@@ -1,0 +1,509 @@
+[
+ {
+  "id": "gin_direct_0",
+  "repo": "gin",
+  "kind": "direct",
+  "target": "render/yaml.go",
+  "truth": [
+   "context.go",
+   "gin.go",
+   "render/render.go"
+  ]
+ },
+ {
+  "id": "gin_direct_1",
+  "repo": "gin",
+  "kind": "direct",
+  "target": "codec/json/json.go",
+  "truth": [
+   "binding/form_mapping.go",
+   "binding/json.go",
+   "errors.go",
+   "render/json.go"
+  ]
+ },
+ {
+  "id": "gin_direct_2",
+  "repo": "gin",
+  "kind": "direct",
+  "target": "binding/json.go",
+  "truth": [
+   "binding/binding.go",
+   "context.go",
+   "deprecated.go",
+   "mode.go"
+  ]
+ },
+ {
+  "id": "gin_direct_3",
+  "repo": "gin",
+  "kind": "direct",
+  "target": "render/render.go",
+  "truth": [
+   "context.go",
+   "gin.go",
+   "render/bson.go",
+   "render/data.go",
+   "render/html.go",
+   "render/json.go",
+   "render/msgpack.go",
+   "render/pdf.go",
+   "render/protobuf.go",
+   "render/reader.go",
+   "render/text.go",
+   "render/toml.go",
+   "render/xml.go",
+   "render/yaml.go"
+  ]
+ },
+ {
+  "id": "gin_direct_4",
+  "repo": "gin",
+  "kind": "direct",
+  "target": "render/xml.go",
+  "truth": [
+   "context.go",
+   "gin.go",
+   "render/render.go"
+  ]
+ },
+ {
+  "id": "gin_size_5",
+  "repo": "gin",
+  "kind": "size",
+  "target": "render/yaml.go",
+  "truth_n": 26
+ },
+ {
+  "id": "gin_size_6",
+  "repo": "gin",
+  "kind": "size",
+  "target": "codec/json/json.go",
+  "truth_n": 41
+ },
+ {
+  "id": "gin_deps_7",
+  "repo": "gin",
+  "kind": "deps",
+  "target": "binding/multipart_form_mapping.go",
+  "truth_n": 4
+ },
+ {
+  "id": "gin_deps_8",
+  "repo": "gin",
+  "kind": "deps",
+  "target": "render/yaml.go",
+  "truth_n": 15
+ },
+ {
+  "id": "gin_deps_9",
+  "repo": "gin",
+  "kind": "deps",
+  "target": "auth.go",
+  "truth_n": 47
+ },
+ {
+  "id": "gin_owner_11",
+  "repo": "gin",
+  "kind": "owner",
+  "target": "binding/json.go",
+  "truth_author": "Manu Mtz-Almeida",
+  "commits": 6
+ },
+ {
+  "id": "gin_owner_12",
+  "repo": "gin",
+  "kind": "owner",
+  "target": "render/render.go",
+  "truth_author": "Manu Mtz-Almeida",
+  "commits": 18
+ },
+ {
+  "id": "gin_owner_13",
+  "repo": "gin",
+  "kind": "owner",
+  "target": "render/xml.go",
+  "truth_author": "Manu Mtz-Almeida",
+  "commits": 8
+ },
+ {
+  "id": "gin_owner_14",
+  "repo": "gin",
+  "kind": "owner",
+  "target": "version.go",
+  "truth_author": "Bo-Yi Wu",
+  "commits": 11
+ },
+ {
+  "id": "zod_direct_0",
+  "repo": "zod",
+  "kind": "direct",
+  "target": "packages/zod/src/v4-mini/index.ts",
+  "truth": [
+   "packages/resolution/src/index.cts",
+   "packages/resolution/src/index.mts",
+   "packages/resolution/src/index.ts"
+  ]
+ },
+ {
+  "id": "zod_direct_1",
+  "repo": "zod",
+  "kind": "direct",
+  "target": "packages/docs/loaders/source.ts",
+  "truth": [
+   "packages/docs/app/(doc)/[[...slug]]/page.tsx",
+   "packages/docs/app/(doc)/layout.tsx",
+   "packages/docs/app/api/search/route.ts",
+   "packages/docs/app/blog/[slug]/page.tsx",
+   "packages/docs/app/blog/page.tsx",
+   "packages/docs/app/llms-full.txt/route.ts",
+   "packages/docs/app/llms.txt/route.ts",
+   "packages/docs/loaders/get-llm-text.ts"
+  ]
+ },
+ {
+  "id": "zod_direct_2",
+  "repo": "zod",
+  "kind": "direct",
+  "target": "packages/zod/src/v4/mini/schemas.ts",
+  "truth": [
+   "packages/zod/src/v4/mini/coerce.ts",
+   "packages/zod/src/v4/mini/external.ts",
+   "packages/zod/src/v4/mini/iso.ts"
+  ]
+ },
+ {
+  "id": "zod_direct_3",
+  "repo": "zod",
+  "kind": "direct",
+  "target": "packages/zod/src/v4/core/registries.ts",
+  "truth": [
+   "packages/zod/src/v4/classic/from-json-schema.ts",
+   "packages/zod/src/v4/core/api.ts",
+   "packages/zod/src/v4/core/index.ts",
+   "packages/zod/src/v4/core/json-schema-generator.ts",
+   "packages/zod/src/v4/core/json-schema-processors.ts",
+   "packages/zod/src/v4/core/to-json-schema.ts"
+  ]
+ },
+ {
+  "id": "zod_direct_4",
+  "repo": "zod",
+  "kind": "direct",
+  "target": "packages/bench/object-setup.ts",
+  "truth": [
+   "packages/bench/object-async.ts",
+   "packages/bench/object-fail.ts",
+   "packages/bench/object-safe.ts",
+   "packages/bench/object-safeasync.ts"
+  ]
+ },
+ {
+  "id": "zod_size_5",
+  "repo": "zod",
+  "kind": "size",
+  "target": "packages/docs/loaders/source.ts",
+  "truth_n": 9
+ },
+ {
+  "id": "zod_size_6",
+  "repo": "zod",
+  "kind": "size",
+  "target": "packages/zod/src/v4/mini/schemas.ts",
+  "truth_n": 17
+ },
+ {
+  "id": "zod_size_7",
+  "repo": "zod",
+  "kind": "size",
+  "target": "packages/zod/src/v4/classic/compat.ts",
+  "truth_n": 50
+ },
+ {
+  "id": "zod_size_8",
+  "repo": "zod",
+  "kind": "size",
+  "target": "packages/zod/src/v4/locales/de.ts",
+  "truth_n": 141
+ },
+ {
+  "id": "zod_deps_9",
+  "repo": "zod",
+  "kind": "deps",
+  "target": "packages/docs/app/(doc)/[[...slug]]/page.tsx",
+  "truth_n": 5
+ },
+ {
+  "id": "zod_deps_10",
+  "repo": "zod",
+  "kind": "deps",
+  "target": "packages/zod/src/v3/errors.ts",
+  "truth_n": 12
+ },
+ {
+  "id": "zod_deps_11",
+  "repo": "zod",
+  "kind": "deps",
+  "target": "packages/bench/object-creation.ts",
+  "truth_n": 82
+ },
+ {
+  "id": "zod_unreachable_12",
+  "repo": "zod",
+  "kind": "unreachable",
+  "target": "packages/zod/src/v4/core",
+  "truth": [
+   "packages/zod/src/v4/core/config.ts",
+   "packages/zod/src/v4/core/zsf.ts"
+  ],
+  "members": 19
+ },
+ {
+  "id": "zod_unreachable_13",
+  "repo": "zod",
+  "kind": "unreachable",
+  "target": "packages/docs/app",
+  "truth": [
+   "packages/docs/app/(doc)/[[...slug]]/page.tsx",
+   "packages/docs/app/api/search/route.ts",
+   "packages/docs/app/blog/[slug]/page.tsx",
+   "packages/docs/app/blog/layout.tsx",
+   "packages/docs/app/blog/page.tsx",
+   "packages/docs/app/layout.tsx",
+   "packages/docs/app/llms-full.txt/route.ts",
+   "packages/docs/app/llms.txt/route.ts",
+   "packages/docs/app/not-found.tsx",
+   "packages/docs/app/og.png/route.tsx"
+  ],
+  "members": 12
+ },
+ {
+  "id": "zod_unreachable_14",
+  "repo": "zod",
+  "kind": "unreachable",
+  "target": "packages/docs/components",
+  "truth": [
+   "packages/docs/components/accordion.tsx",
+   "packages/docs/components/bronze.tsx",
+   "packages/docs/components/codec-image.tsx",
+   "packages/docs/components/ecosystem.tsx",
+   "packages/docs/components/featured.tsx",
+   "packages/docs/components/gold.tsx",
+   "packages/docs/components/hero-logo.tsx",
+   "packages/docs/components/if.tsx",
+   "packages/docs/components/platinum.tsx",
+   "packages/docs/components/silver.tsx",
+   "packages/docs/components/themed-image.tsx"
+  ],
+  "members": 19
+ },
+ {
+  "id": "zod_owner_15",
+  "repo": "zod",
+  "kind": "owner",
+  "target": "packages/zod/src/v4/locales/he.ts",
+  "truth_author": "Colin McDonnell",
+  "commits": 7
+ },
+ {
+  "id": "zod_owner_16",
+  "repo": "zod",
+  "kind": "owner",
+  "target": "packages/zod/src/v4/locales/ja.ts",
+  "truth_author": "Colin McDonnell",
+  "commits": 7
+ },
+ {
+  "id": "zod_owner_17",
+  "repo": "zod",
+  "kind": "owner",
+  "target": "packages/zod/src/v4/mini/schemas.ts",
+  "truth_author": "Colin McDonnell",
+  "commits": 48
+ },
+ {
+  "id": "zod_owner_18",
+  "repo": "zod",
+  "kind": "owner",
+  "target": "packages/zod/src/v4/core/registries.ts",
+  "truth_author": "Colin McDonnell",
+  "commits": 11
+ },
+ {
+  "id": "axios_direct_0",
+  "repo": "axios",
+  "kind": "direct",
+  "target": "lib/core/settle.js",
+  "truth": [
+   "lib/adapters/fetch.js",
+   "lib/adapters/http.js",
+   "lib/adapters/xhr.js"
+  ]
+ },
+ {
+  "id": "axios_direct_1",
+  "repo": "axios",
+  "kind": "direct",
+  "target": "lib/defaults/index.js",
+  "truth": [
+   "lib/axios.js",
+   "lib/core/dispatchRequest.js",
+   "lib/core/transformData.js"
+  ]
+ },
+ {
+  "id": "axios_direct_2",
+  "repo": "axios",
+  "kind": "direct",
+  "target": "index.js",
+  "truth": [
+   "docs/scripts/process-sponsors.js",
+   "examples/network_enhanced.js",
+   "sandbox/client.js",
+   "scripts/axios-build-instance.js"
+  ]
+ },
+ {
+  "id": "axios_direct_3",
+  "repo": "axios",
+  "kind": "direct",
+  "target": "lib/core/AxiosError.js",
+  "truth": [
+   "lib/adapters/adapters.js",
+   "lib/adapters/fetch.js",
+   "lib/adapters/http.js",
+   "lib/adapters/xhr.js",
+   "lib/axios.js",
+   "lib/cancel/CanceledError.js",
+   "lib/core/buildFullPath.js",
+   "lib/core/settle.js",
+   "lib/defaults/index.js",
+   "lib/helpers/composeSignals.js",
+   "lib/helpers/formDataToJSON.js",
+   "lib/helpers/fromDataURI.js",
+   "lib/helpers/resolveConfig.js",
+   "lib/helpers/toFormData.js",
+   "lib/helpers/validator.js"
+  ]
+ },
+ {
+  "id": "axios_direct_4",
+  "repo": "axios",
+  "kind": "direct",
+  "target": "lib/helpers/buildURL.js",
+  "truth": [
+   "lib/adapters/http.js",
+   "lib/core/Axios.js",
+   "lib/helpers/resolveConfig.js"
+  ]
+ },
+ {
+  "id": "axios_size_5",
+  "repo": "axios",
+  "kind": "size",
+  "target": "lib/helpers/Http2Sessions.js",
+  "truth_n": 11
+ },
+ {
+  "id": "axios_size_6",
+  "repo": "axios",
+  "kind": "size",
+  "target": "lib/helpers/estimateDataURLDecodedBytes.js",
+  "truth_n": 12
+ },
+ {
+  "id": "axios_size_7",
+  "repo": "axios",
+  "kind": "size",
+  "target": "lib/utils.js",
+  "truth_n": 42
+ },
+ {
+  "id": "axios_deps_8",
+  "repo": "axios",
+  "kind": "deps",
+  "target": "lib/core/settle.js",
+  "truth_n": 6
+ },
+ {
+  "id": "axios_deps_9",
+  "repo": "axios",
+  "kind": "deps",
+  "target": "lib/defaults/index.js",
+  "truth_n": 16
+ },
+ {
+  "id": "axios_deps_10",
+  "repo": "axios",
+  "kind": "deps",
+  "target": "sandbox/client.js",
+  "truth_n": 62
+ },
+ {
+  "id": "axios_unreachable_11",
+  "repo": "axios",
+  "kind": "unreachable",
+  "target": "lib",
+  "truth": [
+   "lib/env/classes/FormData.js",
+   "lib/helpers/deprecatedMethod.js",
+   "lib/helpers/null.js",
+   "lib/platform/browser/index.js"
+  ],
+  "members": 68
+ },
+ {
+  "id": "axios_unreachable_12",
+  "repo": "axios",
+  "kind": "unreachable",
+  "target": "docs/.vitepress",
+  "truth": [
+   "docs/.vitepress/config.mts",
+   "docs/.vitepress/theme/index.ts"
+  ],
+  "members": 4
+ },
+ {
+  "id": "axios_unreachable_13",
+  "repo": "axios",
+  "kind": "unreachable",
+  "target": "lib/helpers",
+  "truth": [
+   "lib/helpers/deprecatedMethod.js",
+   "lib/helpers/null.js"
+  ],
+  "members": 35
+ },
+ {
+  "id": "axios_owner_14",
+  "repo": "axios",
+  "kind": "owner",
+  "target": "lib/utils.js",
+  "truth_author": "Dmitriy Mozgovoy",
+  "commits": 21
+ },
+ {
+  "id": "axios_owner_15",
+  "repo": "axios",
+  "kind": "owner",
+  "target": "lib/defaults/index.js",
+  "truth_author": "Dmitriy Mozgovoy",
+  "commits": 13
+ },
+ {
+  "id": "axios_owner_16",
+  "repo": "axios",
+  "kind": "owner",
+  "target": "lib/helpers/trackStream.js",
+  "truth_author": "Dmitriy Mozgovoy",
+  "commits": 4
+ },
+ {
+  "id": "axios_owner_17",
+  "repo": "axios",
+  "kind": "owner",
+  "target": "index.d.ts",
+  "truth_author": "Dmitriy Mozgovoy",
+  "commits": 38
+ }
+]
