@@ -112,7 +112,7 @@ The one kind that separated anything was "which K files are imported by the most
 
 ### Fixes measured on unreleased code
 
-These come from branches that are not in a release: smaller MCP tool definitions and a new `lean` profile ([#1127](https://github.com/Aletheore/Aletheore/pull/1127)), and router answers for "most imported files" and "circular imports" (PR linked from the repository when merged). Same tasks, same model, so treat the "after" rows as what the release will be measured against, not as released numbers.
+These come from branches that are not in a release: smaller MCP tool definitions and a new `lean` profile ([#1127](https://github.com/Aletheore/Aletheore/pull/1127)), and router answers for "most imported files" and "circular imports" ([#1128](https://github.com/Aletheore/Aletheore/pull/1128)). Same tasks, same model, so treat the "after" rows as what the release will be measured against, not as released numbers.
 
 51 base tasks (importers, blast radius, dependency counts, unreachable, ownership; 12 repositories):
 
