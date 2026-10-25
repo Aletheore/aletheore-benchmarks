@@ -8,10 +8,42 @@ truth/ and the task files, and prints the accuracy, token and cost tables (also 
 import os
 import runpy
 import tarfile
+import tempfile
+from pathlib import PurePosixPath
 
-here = os.path.dirname(os.path.abspath(__file__))
-for name in sorted(os.listdir(os.path.join(here, "runs"))):
-    if name.endswith(".tar.gz") and not os.path.isdir(os.path.join(here, name[: -len(".tar.gz")])):
-        with tarfile.open(os.path.join(here, "runs", name)) as tar:
-            tar.extractall(here, filter="data")
-runpy.run_path(os.path.join(here, "publish_numbers.py"), run_name="__main__")
+
+def extract_run_archives(base_dir):
+    base_dir = os.path.abspath(base_dir)
+    runs_dir = os.path.join(base_dir, "runs")
+    for name in sorted(os.listdir(runs_dir)):
+        if not name.endswith(".tar.gz"):
+            continue
+        expected = name[:-len(".tar.gz")]
+        destination = os.path.join(base_dir, expected)
+        if os.path.exists(destination):
+            print(f"Skipping {name}: {expected} already exists; refusing to overwrite")
+            continue
+
+        archive_path = os.path.join(runs_dir, name)
+        with tarfile.open(archive_path) as archive:
+            members = archive.getmembers()
+            for member in members:
+                path = PurePosixPath(member.name)
+                if (path.is_absolute() or not path.parts or path.parts[0] != expected
+                        or ".." in path.parts or not (member.isdir() or member.isfile())):
+                    raise ValueError(f"unsafe or unexpected member in {name}: {member.name}")
+            with tempfile.TemporaryDirectory(dir=base_dir, prefix=".run-extract-") as staging:
+                archive.extractall(staging, members=members, filter="data")
+                extracted = os.path.join(staging, expected)
+                if not os.path.isdir(extracted):
+                    raise ValueError(f"{name} does not contain expected directory {expected}")
+                try:
+                    os.rename(extracted, destination)
+                except FileExistsError:
+                    print(f"Skipping {name}: {expected} appeared during extraction; refusing to overwrite")
+
+
+if __name__ == "__main__":
+    here = os.path.dirname(os.path.abspath(__file__))
+    extract_run_archives(here)
+    runpy.run_path(os.path.join(here, "publish_numbers.py"), run_name="__main__")

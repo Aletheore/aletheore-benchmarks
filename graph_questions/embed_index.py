@@ -1,20 +1,41 @@
-"""Hosted, concurrent embedding index (open PR #1121 code). Usage: embed_index.py repo [repo ...]
-Consent: the user approved hosted embedding of these public benchmark repos (one at a time, 8 workers)."""
-import json, os, sys, time
-S = os.path.dirname(os.path.abspath(__file__)) + "/"
+"""Hosted embedding index. Usage: embed_index.py --yes-hosted-embedding repo [repo ...]."""
+import argparse
+import json
+import os
+import sys
+import time
+from pathlib import Path
+
+S = str(Path(__file__).resolve().parent) + "/"
 os.environ["ALETHEORE_EMBED_WORKERS"] = "8"
 sys.path.insert(0, S + "ehr_embed/src")
-from pathlib import Path
 from aletheore import search_index as si
 
-print("code from", si.__file__)
-for repo in sys.argv[1:]:
-    root = Path(S + repo)
-    ev = json.load(open(root / ".aletheore/air.json"))
-    ticks = [0, 0]
-    def prog(done, total):
-        ticks[0], ticks[1] = done, total
-    t0 = time.time()
-    n = si.build_index(root, ev, allow_hosted=True, on_progress=prog, already_consented=True)
-    dt = time.time() - t0
-    print(f"{repo}: {n} chunks in {dt:.1f}s ({n / dt:.0f}/s) progress {ticks}", flush=True)
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--yes-hosted-embedding", action="store_true",
+                        help="explicitly allow sending benchmark repository content to the hosted embedding service")
+    parser.add_argument("repos", nargs="+", help="repository directories to index")
+    args = parser.parse_args()
+    if not args.yes_hosted_embedding:
+        parser.error("hosted embedding requires explicit --yes-hosted-embedding consent")
+
+    print("code from", si.__file__)
+    for repo in args.repos:
+        root = Path(S + repo)
+        with open(root / ".aletheore/air.json", encoding="utf-8") as evidence_file:
+            ev = json.load(evidence_file)
+        ticks = [0, 0]
+
+        def prog(done, total):
+            ticks[0], ticks[1] = done, total
+
+        t0 = time.time()
+        n = si.build_index(root, ev, allow_hosted=True, on_progress=prog, already_consented=True)
+        dt = time.time() - t0
+        rate = n / dt if dt > 0 else 0
+        print(f"{repo}: {n} chunks in {dt:.1f}s ({rate:.0f}/s) progress {ticks}", flush=True)
+
+
+if __name__ == "__main__":
+    main()

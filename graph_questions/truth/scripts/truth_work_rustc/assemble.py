@@ -17,7 +17,7 @@ EXTS = {"rust": (".rs",), "c": (".c", ".h"), "cpp": (".cc", ".cpp", ".cxx", ".h"
 def tracked():
     r = subprocess.run(["git", "-C", REPO, "ls-files", "-z"], capture_output=True, text=True)
     if r.returncode == 0 and r.stdout:
-        fl = [f for f in r.stdout.split("\\0") if f]
+        fl = [f for f in r.stdout.split("\0") if f]
     else:
         fl = []
         for dp, dn, fn in os.walk(REPO):

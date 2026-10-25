@@ -22,6 +22,10 @@ type edge struct {
 }
 
 func main() {
+	if len(os.Args) != 2 {
+		fmt.Fprintln(os.Stderr, "usage: gotypes <repository-root>")
+		os.Exit(2)
+	}
 	root := os.Args[1]
 	ctxt := build.Default
 	dirs := map[string]bool{}
@@ -95,4 +99,7 @@ func main() {
 	sort.Slice(out, func(i, j int) bool { return fmt.Sprint(out[i]) < fmt.Sprint(out[j]) })
 	json.NewEncoder(os.Stdout).Encode(out)
 	fmt.Fprintln(os.Stderr, "type errors:", errs)
+	if errs > 0 {
+		os.Exit(1)
+	}
 }

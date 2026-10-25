@@ -1,6 +1,19 @@
+"""Compare committed JVM/.NET truth with a supplied legacy regex graph module.
+
+Set TRUTH_REGEX_SOURCE to the legacy module path. The legacy implementation is
+intentionally not bundled with this repository; this script must not guess one.
+"""
+
 import json, sys, os, re, random
-src = open(".").read()
-src = re.sub(r'^L = .*$', 'L = "./"', src, flags=re.M)
+
+source_path = os.environ.get("TRUTH_REGEX_SOURCE")
+if not source_path:
+    raise SystemExit("TRUTH_REGEX_SOURCE must name the legacy graph module to compare")
+with open(source_path, encoding="utf-8") as source_file:
+    src = source_file.read()
+src, replacements = re.subn(r'^L = .*$', 'L = "./"', src, count=1, flags=re.M)
+if replacements != 1:
+    raise SystemExit(f"{source_path} must contain exactly one top-level `L = ...` assignment")
 ns = {}
 exec(compile(src, "truth_regex", "exec"), ns)
 for repo, lang in (("gson", "j"), ("thrift", "j"), ("automapper", "c")):

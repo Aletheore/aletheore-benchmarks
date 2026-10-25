@@ -180,4 +180,4 @@ The questions are graph-shaped and we chose them, one cheap model answers them, 
 | `ml_run.py` | the runner (needs Claude Code and, for arms B and C, an Aletheore checkout; `ML_EHR` selects the source tree) |
 | `ml_score2.py`, `publish_numbers.py` | scorers |
 | `gfy_llm.py`, `embed_index.py` | Graphify LLM extraction and hosted index build |
-| `check_bad.py`, `purge_bad.py`, `gq_purge_limit.py` | contamination checks used before scoring |
+| `check_bad.py`, `purge_bad.py`, `gq_purge_limit.py` | contamination checks used before scoring; purge tools default to dry-run and require `--apply` to move matches into `quarantine/` |

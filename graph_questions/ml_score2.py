@@ -1,5 +1,5 @@
 """Tables with task-level bootstrap CIs across languages/kinds. Usage: ml_score2.py tasks1.json,tasks2.json out1,out2 [arms-to-compare-with-A]"""
-import collections, glob, json, random, re, statistics, sys
+import collections, glob, json, os, random, re, statistics, sys
 
 S = os.path.dirname(os.path.abspath(__file__)) + "/"
 sys.path.insert(0, S)
@@ -82,7 +82,6 @@ for out in OUTS:
         rows[(r["id"], r["arm"])].append(ok)
         extra[r["arm"]]["turns"].append(r.get("turns") or 0)
         extra[r["arm"]]["cost"].append(r.get("cost_usd") or 0)
-import os
 arms = sorted({a for _, a in rows if a in os.environ.get("ARMS", "ABCDE")})
 per = {k: statistics.mean(v) for k, v in rows.items()}
 rng = random.Random(1)

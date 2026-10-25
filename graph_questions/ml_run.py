@@ -16,7 +16,7 @@ PY = "/opt/miniconda3/bin/python3"
 def mcp_conf(repo, profile):
     args = ["-m", "aletheore.cli", "mcp", S + repo, "--profile", profile, "--yes"] + (["--no-watch"] if profile == "full" else [])
     # keyed by the source tree: two processes with different ML_EHR must not overwrite each other's server config
-    tag = hashlib.md5(EHR.encode()).hexdigest()[:8]
+    tag = hashlib.sha256(EHR.encode()).hexdigest()[:8]
     path = f"{S}ml_mcp_{tag}_{repo}_{profile}.json"
     json.dump({"mcpServers": {"aletheore": {"command": PY, "args": args, "env": {"PYTHONPATH": EHR + "/src"}}}}, open(path, "w"))
     return path
