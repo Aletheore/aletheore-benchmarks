@@ -1,9 +1,9 @@
 """Task picker for the multi-language graph-question benchmark. Ground truth: truth/<repo>.json
 ({"files": [...], "edges": [[from, to], ...]}) built independently of Aletheore. Usage: ml_pick.py out.json repo [repo ...]"""
 import collections, json, os, random, re, sys
-from _tools import run_tool
-
 S = os.path.dirname(os.path.abspath(__file__)) + "/"
+sys.path.insert(0, S)
+from _tools import run_tool
 
 # one definition of "test file" per language, also stated in the prompts
 LANGS = {

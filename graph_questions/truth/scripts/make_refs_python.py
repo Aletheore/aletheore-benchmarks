@@ -1,7 +1,7 @@
 """Independent callers / subclasses ground truth for a Python repo (stdlib ast only).
 usage: make_refs_python.py <repo_dir> <out.json>"""
 import ast, collections, json, os, sys
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from _tools import run_tool
 
 repo, out = os.path.abspath(sys.argv[1]), sys.argv[2]

@@ -3,9 +3,9 @@
 Type-aware callers / heritage ground truth for a TS repo (TypeScript Program + TypeChecker;
 helper: truth_work_refs2/refs.cjs)."""
 import os, sys
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from _tools import run_tool
 here = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.abspath(os.path.join(here, "../..")))
+from _tools import run_tool
 cjs = os.path.join(here, "truth_work_refs2", "refs.cjs")
 repo, out = os.path.abspath(sys.argv[1]), os.path.abspath(sys.argv[2])
 try:

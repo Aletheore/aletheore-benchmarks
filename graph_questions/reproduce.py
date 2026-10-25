@@ -39,31 +39,18 @@ def extract_run_archives(base_dir):
                 extracted = os.path.join(staging, expected)
                 if not os.path.isdir(extracted):
                     raise ValueError(f"{name} does not contain expected directory {expected}")
-                lock_path = os.path.join(base_dir, f".{expected}.extract.lock")
-                try:
-                    lock_fd = os.open(lock_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
-                except FileExistsError:
-                    print(f"Skipping {name}: another extraction is handling {expected}")
+                if os.path.exists(destination):
+                    print(f"Skipping {name}: {expected} already exists; refusing to overwrite")
                     continue
                 try:
-                    os.close(lock_fd)
-                    lock_fd = None
+                    # Publish the complete staged tree atomically. Competing runs
+                    # cannot observe partial output; a loser never deletes the winner.
+                    os.rename(extracted, destination)
+                except OSError:
                     if os.path.exists(destination):
-                        print(f"Skipping {name}: {expected} already exists; refusing to overwrite")
+                        print(f"Skipping {name}: {expected} appeared during extraction; refusing to overwrite")
                         continue
-                    try:
-                        # The staged tree and destination share a filesystem, so publish
-                        # the complete extraction atomically rather than exposing partial data.
-                        os.rename(extracted, destination)
-                    except OSError:
-                        if os.path.exists(destination):
-                            print(f"Skipping {name}: {expected} appeared during extraction; refusing to overwrite")
-                            continue
-                        raise
-                finally:
-                    if lock_fd is not None:
-                        os.close(lock_fd)
-                    os.unlink(lock_path)
+                    raise
 
 
 if __name__ == "__main__":

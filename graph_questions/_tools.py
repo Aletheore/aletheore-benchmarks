@@ -16,10 +16,11 @@ def run_tool(argv, **kwargs):
     executable = command[0]
     if not os.path.isabs(executable):
         if os.sep in executable or (os.altsep and os.altsep in executable):
-            working_directory = kwargs.get("cwd") or os.getcwd()
-            executable = os.path.abspath(os.path.join(working_directory, executable))
+            raise ValueError("relative executable paths are not allowed; resolve the tool path explicitly")
         else:
-            executable = shutil.which(executable)
+            child_env = kwargs.get("env")
+            search_path = child_env.get("PATH", os.defpath) if child_env is not None else None
+            executable = shutil.which(executable, path=search_path)
             if executable is None:
                 raise FileNotFoundError(f"required executable not found on PATH: {command[0]}")
     command[0] = os.path.abspath(executable)

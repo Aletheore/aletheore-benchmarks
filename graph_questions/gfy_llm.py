@@ -1,7 +1,8 @@
 """Graphify extract WITH the LLM pass (docs/papers) via IndieRouter deepseek-v4.1-flash. Usage: gfy_llm.py repo [repo ...]"""
 import json, os, sys, time
-from _tools import run_tool
 S = os.path.dirname(os.path.abspath(__file__)) + "/"
+sys.path.insert(0, S)
+from _tools import run_tool
 env = dict(os.environ)  # the provider is registered once with: graphify provider add indierouter --base-url https://api.indierouter.ai/v1
 #   --default-model deepseek-v4.1-flash --env-key INDIEROUTER_API_KEY ; set INDIEROUTER_API_KEY in the environment
 if "INDIEROUTER_API_KEY" not in env:

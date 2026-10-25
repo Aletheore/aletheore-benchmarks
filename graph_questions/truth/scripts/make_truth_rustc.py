@@ -9,7 +9,7 @@ c/cpp: #include "x"/<x> resolved against includer dir, repo include dirs, then u
       tracked files; only repo-tracked files; comments stripped; all #if branches counted (no preprocessing).
 Tracked files = VCS file list (falls back to os.walk)."""
 import json, os, re, sys, collections
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 from _tools import run_tool
 mode, REPO, OUT = sys.argv[1], os.path.realpath(sys.argv[2]), sys.argv[3]
 R = REPO

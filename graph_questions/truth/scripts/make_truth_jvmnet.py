@@ -18,10 +18,11 @@ C#: Roslyn semantic model (helper CsScan, loads the SDK's Microsoft.CodeAnalysis
   extension methods (via their declaring type). `var` and unresolved (external NuGet) symbols are ignored.
 Helpers live in ./truth_work_jvmnet/."""
 import collections, json, os, re, sys
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+here = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.abspath(os.path.join(here, "../..")))
 from _tools import run_tool
 
-W = "./truth_work_jvmnet"
+W = os.path.join(here, "truth_work_jvmnet")
 lang, repo, out = sys.argv[1], os.path.abspath(sys.argv[2]), sys.argv[3]
 ext = {"java": ".java", "csharp": ".cs"}[lang]
 
@@ -53,7 +54,7 @@ def java():
     files = tracked(".java")
     lst = os.path.join(W, os.path.basename(repo) + ".java.list")
     open(lst, "w").write("\n".join(files) + "\n")
-    p = run_tool(["java", W + "/JavaScan.java", repo, lst], capture_output=True, text=True, check=True)
+    p = run_tool(["java", os.path.join(W, "JavaScan.java"), repo, lst], capture_output=True, text=True, check=True)
     info = {}
     for line in p.stdout.splitlines():
         d = json.loads(line)
@@ -202,7 +203,7 @@ def csharp():
     sp = os.path.join(W, os.path.basename(repo) + ".cs.spec.json")
     op = os.path.join(W, os.path.basename(repo) + ".cs.out.json")
     json.dump({"projects": spec}, open(sp, "w"))
-    run_tool(["dotnet", W + "/CsScan/out/CsScan.dll", repo, sp, op], check=True)
+    run_tool(["dotnet", os.path.join(W, "CsScan/out/CsScan.dll"), repo, sp, op], check=True)
     res = json.load(open(op))
     E = {(a, b) for a, bs in res.items() for b in bs if a != b and b in fset}
     return files, E, {"projects": len(spec)}

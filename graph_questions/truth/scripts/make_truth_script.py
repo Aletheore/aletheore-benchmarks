@@ -21,10 +21,11 @@ Ruby rules (Ripper):
     convention (Jekyll::Foo -> jekyll/foo.rb) is used, else the constant is skipped (ambiguous). Core constants skipped.
 """
 import collections, json, os, re, sys
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+here = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.abspath(os.path.join(here, "../..")))
 from _tools import run_tool
 
-W = "./truth_work_script"
+W = os.path.join(here, "truth_work_script")
 SKIP_DIRS = {".git", ".aletheore", "node_modules", "vendor"}
 
 PHP_HELPER = r'''<?php
