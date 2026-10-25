@@ -106,7 +106,7 @@ class ReproductionExtractionTests(unittest.TestCase):
 
     def test_extracts_under_output_dir_and_preserves_repo_root_file(self):
         with tempfile.TemporaryDirectory() as temporary:
-            base = Path(temporary)
+            base = Path(temporary).resolve()
             repo_file = base / "tracked.json"
             repo_file.write_text("tracked", encoding="utf-8")
             self.make_archive(base, "out_demo/result.json", "result")
@@ -145,33 +145,42 @@ class ReproductionExtractionTests(unittest.TestCase):
             base = Path(temporary)
             destination = base / "out_demo"
             self.make_archive(base, "out_demo/result.json", "replacement")
-            real_mkdir = os.mkdir
+            real_rename = os.rename
             raced = False
 
-            def create_racing_destination(path, *args, **kwargs):
+            def create_racing_destination(source, target):
                 nonlocal raced
-                if os.fspath(path) == str(destination) and not raced:
+                if os.fspath(target) == str(destination) and not raced:
                     raced = True
-                    real_mkdir(path, *args, **kwargs)
-                    raise FileExistsError(path)
-                return real_mkdir(path, *args, **kwargs)
+                    destination.mkdir()
+                    (destination / "raced.txt").write_text("keep", encoding="utf-8")
+                    raise FileExistsError(target)
+                return real_rename(source, target)
 
-            with patch("reproduce.os.mkdir", side_effect=create_racing_destination):
+            with patch("reproduce.os.rename", side_effect=create_racing_destination):
                 extract_run_archives(base)
 
-            self.assertEqual(list(destination.iterdir()), [])
+            self.assertEqual((destination / "raced.txt").read_text(encoding="utf-8"), "keep")
 
     def test_missing_runs_directory_is_a_no_op(self):
         with tempfile.TemporaryDirectory() as temporary:
             extract_run_archives(temporary)
 
     def test_running_purge_on_its_base_directory_is_allowed(self):
-        with patch.object(sys, "argv", ["gq_purge_limit.py", "."]):
-            output = io.StringIO()
-            with redirect_stdout(output):
-                from gq_purge_limit import main
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary).resolve()
+            (base / "empty.json").write_text("{}", encoding="utf-8")
+            previous_cwd = os.getcwd()
+            try:
+                os.chdir(base)
+                with patch("gq_purge_limit.BASE", base), patch.object(sys, "argv", ["gq_purge_limit.py", "."]):
+                    output = io.StringIO()
+                    with redirect_stdout(output):
+                        from gq_purge_limit import main
 
-                main()
+                        main()
+            finally:
+                os.chdir(previous_cwd)
             self.assertIn("0 candidate(s)", output.getvalue())
 
     def test_rejects_archive_path_traversal(self):
@@ -196,6 +205,22 @@ class SharedScoringTests(unittest.TestCase):
             task_file = Path(temporary) / "tasks.json"
             task_file.write_text('[{"id":"one"}]', encoding="utf-8")
             self.assertEqual(load_tasks(["tasks.json"], temporary), {"one": {"id": "one"}})
+
+    def test_task_loader_rejects_duplicate_ids_across_files(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            for name in ("first.json", "second.json"):
+                (Path(temporary) / name).write_text('[{"id":"same"}]', encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "duplicate task id: same"):
+                load_tasks(["first.json", "second.json"], temporary)
+
+    def test_zero_expected_count_scores_only_exact_zero(self):
+        task = {"kind": "size", "truth_n": 0}
+        self.assertEqual(score(task, "0"), (1.0, True))
+        self.assertEqual(score(task, "1"), (0.0, True))
+
+    def test_unknown_task_kind_fails_explicitly(self):
+        with self.assertRaisesRegex(ValueError, "unknown task kind: hub"):
+            score({"kind": "hub"}, "{}")
 
 
 if __name__ == "__main__":

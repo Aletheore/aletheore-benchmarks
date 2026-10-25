@@ -8,13 +8,15 @@ rust: own lexer + mod-tree builder (cargo metadata for crate roots/workspace dep
 c/cpp: #include "x"/<x> resolved against includer dir, repo include dirs, then unique path-suffix match among
       tracked files; only repo-tracked files; comments stripped; all #if branches counted (no preprocessing).
 Tracked files = VCS file list (falls back to os.walk)."""
-import json, os, re, subprocess, sys, collections
+import json, os, re, sys, collections
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from _tools import run_tool
 mode, REPO, OUT = sys.argv[1], os.path.realpath(sys.argv[2]), sys.argv[3]
 R = REPO
 EXTS = {"rust": (".rs",), "c": (".c", ".h"), "cpp": (".cc", ".cpp", ".cxx", ".h", ".hpp", ".hh", ".inl")}[mode]
 
 def tracked():
-    r = subprocess.run(["git", "-C", REPO, "ls-files", "-z"], capture_output=True, text=True)
+    r = run_tool(["git", "-C", REPO, "ls-files", "-z"], capture_output=True, text=True)
     if r.returncode == 0 and r.stdout:
         fl = [f for f in r.stdout.split("\0") if f]
     else:
@@ -241,7 +243,7 @@ if mode == "rust":
     # ---------------- crates ----------------
     collect_macros()
     print("expandable zero-arg macros:", sorted(MACROS))
-    md = json.loads(subprocess.run(["cargo", "metadata", "--format-version", "1", "--offline", "--no-deps"], cwd=R, capture_output=True, text=True).stdout)
+    md = json.loads(run_tool(["cargo", "metadata", "--format-version", "1", "--offline", "--no-deps"], cwd=R, capture_output=True, text=True).stdout)
     pkgs = {p["name"]: p for p in md["packages"]}
     crate_of_pkg_lib = {}   # extern name -> crate id
     crates = {}             # crate id -> dict(root, pkg, deps{extern name: crate id})

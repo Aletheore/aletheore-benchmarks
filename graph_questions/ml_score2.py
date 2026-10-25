@@ -25,7 +25,8 @@ for out in OUTS:
         extra[r["arm"]]["cost"].append(r.get("cost_usd") or 0)
 arms = sorted({a for _, a in rows if a in os.environ.get("ARMS", "ABCDE")})
 per = {k: statistics.mean(v) for k, v in rows.items()}
-rng = random.Random(1)
+# Seeded bootstrap resampling makes the reported confidence intervals reproducible.
+rng = random.Random(1)  # nosec B311
 
 
 def table(label, ids):

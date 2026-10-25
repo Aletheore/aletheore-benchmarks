@@ -77,7 +77,8 @@ if __name__ == "__main__":
     out, repos = sys.argv[1], sys.argv[2:]
     allt = []
     for r in repos:
-        ts = pick(r, random.Random("x" + r))
+        # Seeded sampling is for repeatable benchmark task selection, not cryptography.
+        ts = pick(r, random.Random("x" + r))  # nosec B311
         print(r, collections.Counter(t["kind"] for t in ts))
         allt += ts
     json.dump(allt, open(S + out, "w"), indent=1)

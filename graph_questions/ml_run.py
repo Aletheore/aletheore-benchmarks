@@ -1,6 +1,7 @@
 """Multi-language graph-question A/B/C/D. Usage: ml_run.py REPS [task_filter|all] [arms]; env ML_TASKS, ML_OUT."""
-import hashlib, json, os, random, subprocess, sys, time
+import hashlib, json, os, random, sys, time
 from concurrent.futures import ThreadPoolExecutor
+from _tools import run_tool
 
 sys.path.insert(0, S + "")
 from ml_pick import LANGS, REPOS, S  # noqa: E402
@@ -112,7 +113,7 @@ def run(tid, arm, rep):
                  f"`graphify explain \"X\" --graph {g}`, `graphify god-nodes --graph {g}`."]
     argv += ["--allowedTools", *allowed]
     t0 = time.time()
-    r = subprocess.run(argv, cwd=S + t["repo"], capture_output=True, text=True, timeout=1500)
+    r = run_tool(argv, cwd=S + t["repo"], capture_output=True, text=True, timeout=1500)
     rec = {"id": tid, "arm": arm, "rep": rep, "rc": r.returncode, "seconds": round(time.time() - t0)}
     try:
         d = json.loads(r.stdout)
@@ -128,7 +129,8 @@ def run(tid, arm, rep):
 
 def per_task(args):
     tid, reps, arms = args
-    rng = random.Random(tid)
+    # Seeded shuffling keeps the benchmark's tool order reproducible.
+    rng = random.Random(tid)  # nosec B311
     for rep in range(1, reps + 1):
         order = list(arms)
         rng.shuffle(order)

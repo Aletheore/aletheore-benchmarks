@@ -15,7 +15,8 @@ SETS = {
     "locate_path": ("Where is X defined / shortest import chain", ["out_x"]),
     "hard": ("Hubs, cycles, duplicate names, callers, subclasses", ["out_h"]),
 }
-rng = random.Random(1)
+# Seeded bootstrap resampling makes the published confidence intervals reproducible.
+rng = random.Random(1)  # nosec B311
 runs = collections.defaultdict(lambda: collections.defaultdict(list))  # (set, arm) -> task -> [(ok, in, out, turns, cost)]
 for key, (_, dirs) in SETS.items():
     for d in dirs:

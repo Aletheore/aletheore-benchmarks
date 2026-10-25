@@ -3,13 +3,15 @@
 Independent file-level import graph for a JS/TS repo. Wraps truth_work_js/truth.cjs
 (TypeScript compiler API + workspace package.json exports resolution) and converts to
 {"files": [...], "edges": [[from,to],...]}."""
-import json, os, subprocess, sys, tempfile
+import json, os, sys, tempfile
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from _tools import run_tool
 here = os.path.dirname(os.path.abspath(__file__))
 cjs = os.path.join(here, '..', 'truth_work_js', 'truth.cjs')
 repo, out = os.path.abspath(sys.argv[1]), sys.argv[2]
 with tempfile.TemporaryDirectory() as td:
     raw = os.path.join(td, 'raw.json')
-    print(subprocess.run(['node', cjs, repo, raw], check=True, capture_output=True, text=True).stdout.strip())
+    print(run_tool(['node', cjs, repo, raw], check=True, capture_output=True, text=True).stdout.strip())
     d = json.load(open(raw))
 files = sorted(set(d['src']))
 fs = set(files)

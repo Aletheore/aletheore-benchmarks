@@ -17,7 +17,9 @@ C#: Roslyn semantic model (helper CsScan, loads the SDK's Microsoft.CodeAnalysis
   to every file declaring the referenced type (partial types: all parts), constructor targets, static members and
   extension methods (via their declaring type). `var` and unresolved (external NuGet) symbols are ignored.
 Helpers live in ./truth_work_jvmnet/."""
-import collections, json, os, re, subprocess, sys
+import collections, json, os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from _tools import run_tool
 
 W = "./truth_work_jvmnet"
 lang, repo, out = sys.argv[1], os.path.abspath(sys.argv[2]), sys.argv[3]
@@ -26,7 +28,7 @@ ext = {"java": ".java", "csharp": ".cs"}[lang]
 
 def tracked(e):
     try:
-        r = subprocess.run(["git", "-C", repo, "ls-files", "-z"], capture_output=True, text=True, check=True)
+        r = run_tool(["git", "-C", repo, "ls-files", "-z"], capture_output=True, text=True, check=True)
         fs = [f for f in r.stdout.split("\0") if f]
         fs = [f for f in fs if os.path.isfile(os.path.join(repo, f))]
     except Exception:
@@ -51,7 +53,7 @@ def java():
     files = tracked(".java")
     lst = os.path.join(W, os.path.basename(repo) + ".java.list")
     open(lst, "w").write("\n".join(files) + "\n")
-    p = subprocess.run(["java", W + "/JavaScan.java", repo, lst], capture_output=True, text=True, check=True)
+    p = run_tool(["java", W + "/JavaScan.java", repo, lst], capture_output=True, text=True, check=True)
     info = {}
     for line in p.stdout.splitlines():
         d = json.loads(line)
@@ -155,7 +157,7 @@ def java():
 def csharp():
     files = tracked(".cs")
     fset = set(files)
-    allf = subprocess.run(["git", "-C", repo, "ls-files", "-z"], capture_output=True, text=True).stdout.split("\0")
+    allf = run_tool(["git", "-C", repo, "ls-files", "-z"], capture_output=True, text=True).stdout.split("\0")
     csprojs = sorted(f for f in allf if f.endswith(".csproj") and os.path.isfile(os.path.join(repo, f)))
     props = {os.path.dirname(f): f for f in allf if os.path.basename(f) == "Directory.Build.props" and os.path.isfile(os.path.join(repo, f))}
 
@@ -200,7 +202,7 @@ def csharp():
     sp = os.path.join(W, os.path.basename(repo) + ".cs.spec.json")
     op = os.path.join(W, os.path.basename(repo) + ".cs.out.json")
     json.dump({"projects": spec}, open(sp, "w"))
-    subprocess.run(["dotnet", W + "/CsScan/out/CsScan.dll", repo, sp, op], check=True)
+    run_tool(["dotnet", W + "/CsScan/out/CsScan.dll", repo, sp, op], check=True)
     res = json.load(open(op))
     E = {(a, b) for a, bs in res.items() for b in bs if a != b and b in fset}
     return files, E, {"projects": len(spec)}

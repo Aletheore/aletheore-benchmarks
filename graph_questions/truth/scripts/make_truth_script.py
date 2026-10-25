@@ -20,7 +20,9 @@ Ruby rules (Ripper):
     them. If several files define/reopen the constant, the one whose path matches the constant name by Zeitwerk
     convention (Jekyll::Foo -> jekyll/foo.rb) is used, else the constant is skipped (ambiguous). Core constants skipped.
 """
-import collections, json, os, re, subprocess, sys
+import collections, json, os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from _tools import run_tool
 
 W = "./truth_work_script"
 SKIP_DIRS = {".git", ".aletheore", "node_modules", "vendor"}
@@ -236,7 +238,7 @@ puts JSON.generate(out)
 def list_files(root, ext):
     out = []
     try:
-        r = subprocess.run(["git", "ls-files"], cwd=root, capture_output=True, text=True, check=True)
+        r = run_tool(["git", "ls-files"], cwd=root, capture_output=True, text=True, check=True)
         out = [l for l in r.stdout.splitlines() if l.endswith(ext) and os.path.isfile(os.path.join(root, l))]
     except Exception:
         for d, ds, fs in os.walk(root):
@@ -264,7 +266,7 @@ def run_helper(cmd, name, code, root, files):
     open(hp, "w").write(code)
     data = {}
     for i in range(0, len(files), 200):
-        r = subprocess.run([cmd, hp, root] + files[i:i + 200], capture_output=True, text=True)
+        r = run_tool([cmd, hp, root] + files[i:i + 200], capture_output=True, text=True)
         if r.returncode != 0 or not r.stdout:
             sys.exit(cmd + " helper failed: " + r.stderr[:500])
         data.update(json.loads(r.stdout))
@@ -340,7 +342,7 @@ def ruby_graph(root, files):
             for t in tgts:
                 if t:
                     E.add((f, t))
-    core = set(subprocess.run(["ruby", "-e", "puts Object.constants"], capture_output=True, text=True).stdout.split())
+    core = set(run_tool(["ruby", "-e", "puts Object.constants"], capture_output=True, text=True).stdout.split())
     definers = collections.defaultdict(set)
     for f, d in data.items():
         for fq in d["defs"]:

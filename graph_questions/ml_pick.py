@@ -1,6 +1,7 @@
 """Task picker for the multi-language graph-question benchmark. Ground truth: truth/<repo>.json
 ({"files": [...], "edges": [[from, to], ...]}) built independently of Aletheore. Usage: ml_pick.py out.json repo [repo ...]"""
-import collections, json, os, random, re, subprocess, sys
+import collections, json, os, random, re, sys
+from _tools import run_tool
 
 S = os.path.dirname(os.path.abspath(__file__)) + "/"
 
@@ -67,7 +68,7 @@ class Graph:
 
 
 def owners(root, f):
-    out = subprocess.run(["git", "-C", root, "shortlog", "-sn", "--no-merges", "HEAD", "--", f], capture_output=True, text=True).stdout
+    out = run_tool(["git", "-C", root, "shortlog", "-sn", "--no-merges", "HEAD", "--", f], capture_output=True, text=True).stdout
     rows = [line.strip().split("\t", 1) for line in out.splitlines() if "\t" in line]
     return [(int(n), name) for n, name in rows]
 
@@ -134,7 +135,8 @@ if __name__ == "__main__":
     out, repos = sys.argv[1], sys.argv[2:]
     allt = []
     for r in repos:
-        ts = pick(r, random.Random(r))
+        # Seeded sampling is for repeatable benchmark task selection, not cryptography.
+        ts = pick(r, random.Random(r))  # nosec B311
         print(r, collections.Counter(t["kind"] for t in ts))
         allt += ts
     json.dump(allt, open(S + out, "w"), indent=1)

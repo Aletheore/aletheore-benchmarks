@@ -24,7 +24,10 @@ def load_tasks(task_files, base_dir):
     tasks = {}
     for name in task_files:
         with open(f"{base_dir}/{name}", encoding="utf-8") as task_file:
-            tasks.update({task["id"]: task for task in json.load(task_file)})
+            for task in json.load(task_file):
+                if task["id"] in tasks:
+                    raise ValueError(f"duplicate task id: {task['id']}")
+                tasks[task["id"]] = task
     return tasks
 
 
@@ -75,7 +78,10 @@ def score(task, text):
         if not match:
             return 0.0, False
         value = int(match.group(0).replace(",", ""))
-        return (1.0 if abs(value - task["truth_n"]) / task["truth_n"] <= 0.10 else 0.0), True
+        expected = task["truth_n"]
+        if expected == 0:
+            return (1.0 if value == 0 else 0.0), True
+        return (1.0 if abs(value - expected) / expected <= 0.10 else 0.0), True
     if kind == "locate":
         match = re.search(r'"file"\s*:\s*"([^"]+)"', text or "")
         if not match:
@@ -97,6 +103,8 @@ def score(task, text):
         return (
             1.0 if valid and len(predicted) - 1 == task["truth_len"] else 0.0
         ), True
+    if kind != "owner":
+        raise ValueError(f"unknown task kind: {kind}")
     names = re.findall(r'"author"\s*:\s*"([^"]+)"', text or "")
     if not names:
         return 0.0, False

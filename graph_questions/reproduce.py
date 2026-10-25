@@ -7,7 +7,6 @@ truth/ and the task files, and prints the accuracy, token and cost tables (also 
 """
 import os
 import runpy
-import shutil
 import tarfile
 import tempfile
 from pathlib import PurePosixPath
@@ -40,17 +39,31 @@ def extract_run_archives(base_dir):
                 extracted = os.path.join(staging, expected)
                 if not os.path.isdir(extracted):
                     raise ValueError(f"{name} does not contain expected directory {expected}")
+                lock_path = os.path.join(base_dir, f".{expected}.extract.lock")
                 try:
-                    os.mkdir(destination)
+                    lock_fd = os.open(lock_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
                 except FileExistsError:
-                    print(f"Skipping {name}: {expected} appeared during extraction; refusing to overwrite")
+                    print(f"Skipping {name}: another extraction is handling {expected}")
                     continue
                 try:
-                    for entry in os.listdir(extracted):
-                        os.rename(os.path.join(extracted, entry), os.path.join(destination, entry))
-                except OSError:
-                    shutil.rmtree(destination)
-                    raise
+                    os.close(lock_fd)
+                    lock_fd = None
+                    if os.path.exists(destination):
+                        print(f"Skipping {name}: {expected} already exists; refusing to overwrite")
+                        continue
+                    try:
+                        # The staged tree and destination share a filesystem, so publish
+                        # the complete extraction atomically rather than exposing partial data.
+                        os.rename(extracted, destination)
+                    except OSError:
+                        if os.path.exists(destination):
+                            print(f"Skipping {name}: {expected} appeared during extraction; refusing to overwrite")
+                            continue
+                        raise
+                finally:
+                    if lock_fd is not None:
+                        os.close(lock_fd)
+                    os.unlink(lock_path)
 
 
 if __name__ == "__main__":

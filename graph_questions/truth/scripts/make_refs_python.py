@@ -1,10 +1,12 @@
 """Independent callers / subclasses ground truth for a Python repo (stdlib ast only).
 usage: make_refs_python.py <repo_dir> <out.json>"""
-import ast, collections, json, os, subprocess, sys
+import ast, collections, json, os, sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from _tools import run_tool
 
 repo, out = os.path.abspath(sys.argv[1]), sys.argv[2]
 try:
-    files = [f for f in subprocess.run(["git", "ls-files", "*.py"], cwd=repo, capture_output=True, text=True, check=True).stdout.split("\n") if f]
+    files = [f for f in run_tool(["git", "ls-files", "*.py"], cwd=repo, capture_output=True, text=True, check=True).stdout.split("\n") if f]
 except Exception:
     files = [os.path.relpath(os.path.join(b, n), repo) for b, ds, ns in os.walk(repo) if ".git" not in b.split(os.sep) for n in ns if n.endswith(".py")]
 files = [f for f in files if os.path.isfile(os.path.join(repo, f))]
